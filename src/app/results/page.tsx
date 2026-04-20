@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { computeRisk, type RiskResult } from "@/lib/riskEngine";
 import RiskGauge from "@/components/RiskGauge";
+import { sendGAEvent } from "@next/third-parties/google";
 
 export default function ResultsPage() {
   const [result, setResult] = useState<RiskResult | null>(null);
@@ -19,6 +20,11 @@ export default function ResultsPage() {
         const risk = computeRisk(answers);
         setResult(risk);
         fetchClaudeSummary(risk);
+        sendGAEvent("event", "screener_completed", {
+          risk_tier: risk.tier,
+          risk_score: risk.score,
+          has_urgent_symptom: risk.hasUrgentSymptom,
+        });
       }
     } catch {}
     setLoaded(true);

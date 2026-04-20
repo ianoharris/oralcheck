@@ -4,6 +4,7 @@ import "./globals.css";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import ServiceWorkerRegistration from "@/components/ServiceWorkerRegistration";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 const dmSerif = DM_Serif_Display({
   variable: "--font-dm-serif",
@@ -48,6 +49,7 @@ export default function RootLayout({
         <main className="flex-1">{children}</main>
         <Footer />
       </body>
+      <GoogleAnalytics gaId="G-9DPR4C91FM" />
     </html>
   );
 }
