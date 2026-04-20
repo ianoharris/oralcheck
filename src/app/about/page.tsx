@@ -28,9 +28,27 @@ export default function AboutPage() {
 
       <section className="bg-white rounded-2xl border border-warm-dim p-6 sm:p-8 mb-6">
         <h2 className="font-serif text-2xl text-ink mb-3">Who built this</h2>
+        <p className="text-ink-soft leading-relaxed mb-3">
+          OralCheck was built by a predental student at the University of
+          Wisconsin&nbsp;&ndash;&nbsp;Madison with a passion for community health
+          and prevention.
+        </p>
+        <p className="text-ink-soft leading-relaxed mb-3">
+          A few years ago, a personal health diagnosis changed the way I see
+          everything. Living with a chronic condition teaches you quickly that
+          your health isn&apos;t something you can put off — the decisions you
+          make (and the ones you delay) have real consequences. That experience
+          made me deeply committed to helping others take their health seriously
+          before a crisis forces them to.
+        </p>
+        <p className="text-ink-soft leading-relaxed mb-3">
+          Oral cancer is preventable, detectable early, and still routinely
+          missed — often because people simply didn&apos;t know the signs or
+          didn&apos;t think it could happen to them. I built OralCheck because
+          I believe spreading that awareness, one person at a time, is one of
+          the most meaningful things I can do for my community right now.
+        </p>
         <p className="text-ink-soft leading-relaxed">
-          OralCheck is a personal project built by a predental student. It&apos;s
-          part awareness tool, part portfolio piece, entirely mission-driven.
           The screening logic is informed by published risk factors from the
           American Cancer Society, NCI, and clinical research on oral cancer
           epidemiology.
