@@ -5,6 +5,7 @@ import Link from "next/link";
 import { computeRisk, type RiskResult } from "@/lib/riskEngine";
 import RiskGauge from "@/components/RiskGauge";
 import { sendGAEvent } from "@next/third-parties/google";
+import { track } from "@vercel/analytics";
 
 export default function ResultsPage() {
   const [result, setResult] = useState<RiskResult | null>(null);
@@ -25,6 +26,7 @@ export default function ResultsPage() {
           risk_score: risk.score,
           has_urgent_symptom: risk.hasUrgentSymptom,
         });
+        track("Screener Completed", { risk_tier: risk.tier });
       }
     } catch {}
     setLoaded(true);
