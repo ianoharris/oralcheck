@@ -1,5 +1,6 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { type NextRequest } from "next/server";
+import { checkRateLimit, getIp } from "@/lib/rateLimit";
 
 export const runtime = "nodejs";
 
@@ -11,6 +12,19 @@ type SummaryRequest = {
 };
 
 export async function POST(req: NextRequest) {
+  const { allowed, remaining, resetMs } = checkRateLimit(getIp(req), 10);
+  if (!allowed) {
+    return new Response(JSON.stringify({ error: "rate_limited" }), {
+      status: 429,
+      headers: {
+        "Content-Type": "application/json",
+        "Retry-After": String(Math.ceil(resetMs / 1000)),
+        "X-RateLimit-Limit": "10",
+        "X-RateLimit-Remaining": "0",
+      },
+    });
+  }
+
   if (!process.env.ANTHROPIC_API_KEY) {
     return new Response(JSON.stringify({ error: "not_configured" }), {
       status: 503,

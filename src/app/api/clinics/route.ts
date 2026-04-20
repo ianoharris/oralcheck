@@ -7,6 +7,7 @@ import {
   type ClinicSearchResult,
 } from "@/lib/clinics";
 import { mockClinics } from "@/lib/mockClinics";
+import { checkRateLimit, getIp } from "@/lib/rateLimit";
 
 type PlacesNearbyResponse = {
   places?: {
@@ -163,6 +164,21 @@ async function searchPlaces(
 }
 
 export async function GET(request: Request) {
+  const { allowed, resetMs } = checkRateLimit(getIp(request), 10);
+  if (!allowed) {
+    return NextResponse.json(
+      { error: "rate_limited" },
+      {
+        status: 429,
+        headers: {
+          "Retry-After": String(Math.ceil(resetMs / 1000)),
+          "X-RateLimit-Limit": "10",
+          "X-RateLimit-Remaining": "0",
+        },
+      },
+    );
+  }
+
   const { searchParams } = new URL(request.url);
   const lat = parseFloat(searchParams.get("lat") ?? "");
   const lng = parseFloat(searchParams.get("lng") ?? "");
