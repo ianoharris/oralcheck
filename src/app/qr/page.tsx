@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import QRCode from "react-qr-code";
 
 export default function QRPage() {
-  const [url, setUrl] = useState("https://oralcheck.vercel.app");
+  const [url, setUrl] = useState("https://oralcheck.org");
 
   useEffect(() => {
     setUrl(window.location.origin);

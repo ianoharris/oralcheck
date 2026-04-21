@@ -7,7 +7,7 @@ export const metadata: Metadata = {
     "Learn the early warning signs of oral cancer: red or white patches, sores that don't heal, lumps, and numbness. Early detection saves lives.",
 };
 
-const SITE_URL = "https://oralcheck.vercel.app";
+const SITE_URL = "https://oralcheck.org";
 
 const jsonLd = {
   "@context": "https://schema.org",

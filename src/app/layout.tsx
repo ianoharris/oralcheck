@@ -23,7 +23,7 @@ const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
 });
 
-const SITE_URL = "https://oralcheck.vercel.app";
+const SITE_URL = "https://oralcheck.org";
 
 const jsonLd = {
   "@context": "https://schema.org",
