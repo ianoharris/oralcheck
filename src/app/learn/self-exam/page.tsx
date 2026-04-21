@@ -1,4 +1,77 @@
 import Link from "next/link";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "How to Do an Oral Cancer Self-Exam | OralCheck",
+  description:
+    "A step-by-step guide to checking your own mouth for signs of oral cancer. Takes 2 minutes. Do it once a month.",
+};
+
+const SITE_URL = "https://oralcheck.org";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  name: "How to Do a 2-Minute Oral Cancer Self-Exam",
+  description:
+    "A step-by-step guide to checking your mouth for early signs of oral cancer. All you need is a mirror and good lighting.",
+  url: `${SITE_URL}/learn/self-exam`,
+  totalTime: "PT2M",
+  tool: [
+    { "@type": "HowToTool", name: "Mirror" },
+    { "@type": "HowToTool", name: "Good lighting" },
+  ],
+  step: [
+    {
+      "@type": "HowToStep",
+      name: "Face & Neck",
+      text: "Look in the mirror at your face. Check that both sides look symmetrical. Feel the sides of your neck for lumps or swelling.",
+      position: 1,
+    },
+    {
+      "@type": "HowToStep",
+      name: "Lips",
+      text: "Pull your upper lip up and lower lip down. Look and feel for sores, color changes, or lumps on the inside and outside.",
+      position: 2,
+    },
+    {
+      "@type": "HowToStep",
+      name: "Cheeks",
+      text: "Use your fingers to gently pull each cheek outward. Look for red, white, or dark patches. Press gently to feel for lumps.",
+      position: 3,
+    },
+    {
+      "@type": "HowToStep",
+      name: "Gums",
+      text: "Examine your gums — top and bottom, front and back. Look for color changes, swelling, or sores.",
+      position: 4,
+    },
+    {
+      "@type": "HowToStep",
+      name: "Tongue",
+      text: "Stick out your tongue and look at the top. Then lift it to check underneath and the sides. The sides of the tongue are the most common site for oral cancer.",
+      position: 5,
+    },
+    {
+      "@type": "HowToStep",
+      name: "Floor of Mouth",
+      text: "Lift your tongue to the roof of your mouth. Look at the floor underneath and feel it gently with a clean finger.",
+      position: 6,
+    },
+    {
+      "@type": "HowToStep",
+      name: "Roof of Mouth",
+      text: "Tilt your head back and open wide. Look at the hard and soft palate for any color changes, bumps, or sores.",
+      position: 7,
+    },
+    {
+      "@type": "HowToStep",
+      name: "Throat",
+      text: "Say 'ahh' and check the back of your throat. Look for asymmetry, patches, or sores.",
+      position: 8,
+    },
+  ],
+};
 
 const steps = [
   {
@@ -46,6 +119,10 @@ const steps = [
 export default function SelfExamPage() {
   return (
     <article className="max-w-3xl mx-auto px-5 py-10 sm:py-16">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Link
         href="/learn"
         className="text-sm font-medium text-ink-soft hover:text-ink mb-6 inline-block"

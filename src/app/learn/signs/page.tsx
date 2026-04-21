@@ -11,24 +11,73 @@ const SITE_URL = "https://oralcheck.org";
 
 const jsonLd = {
   "@context": "https://schema.org",
-  "@type": "MedicalWebPage",
-  url: `${SITE_URL}/learn/signs`,
-  name: "Signs & Warning Symptoms of Oral Cancer",
-  description:
-    "Early oral cancer rarely hurts. Learn the signs worth checking — especially if anything lasts longer than 2 weeks.",
-  about: {
-    "@type": "MedicalCondition",
-    name: "Oral Cancer",
-    signOrSymptom: [
-      { "@type": "MedicalSymptom", name: "Red or white patches in the mouth" },
-      { "@type": "MedicalSymptom", name: "Mouth sores that do not heal within 2 weeks" },
-      { "@type": "MedicalSymptom", name: "Lump or thickening in cheek, gums, or throat" },
-      { "@type": "MedicalSymptom", name: "Numbness or pain in the mouth or lips" },
-      { "@type": "MedicalSymptom", name: "Difficulty chewing, swallowing, or moving the jaw" },
-      { "@type": "MedicalSymptom", name: "Hoarseness or sore throat lasting more than 2 weeks" },
-    ],
-  },
-  audience: { "@type": "MedicalAudience", audienceType: "Patient" },
+  "@graph": [
+    {
+      "@type": "MedicalWebPage",
+      url: `${SITE_URL}/learn/signs`,
+      name: "Signs & Warning Symptoms of Oral Cancer",
+      description:
+        "Early oral cancer rarely hurts. Learn the signs worth checking — especially if anything lasts longer than 2 weeks.",
+      about: {
+        "@type": "MedicalCondition",
+        name: "Oral Cancer",
+        signOrSymptom: [
+          { "@type": "MedicalSymptom", name: "Red or white patches in the mouth" },
+          { "@type": "MedicalSymptom", name: "Mouth sores that do not heal within 2 weeks" },
+          { "@type": "MedicalSymptom", name: "Lump or thickening in cheek, gums, or throat" },
+          { "@type": "MedicalSymptom", name: "Numbness or pain in the mouth or lips" },
+          { "@type": "MedicalSymptom", name: "Difficulty chewing, swallowing, or moving the jaw" },
+          { "@type": "MedicalSymptom", name: "Hoarseness or sore throat lasting more than 2 weeks" },
+        ],
+      },
+      audience: { "@type": "MedicalAudience", audienceType: "Patient" },
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          name: "What are the warning signs of oral cancer?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "The main warning signs of oral cancer include: red or white patches inside the mouth, sores or ulcers that don't heal within 2 weeks, a lump or thickening in the cheek or gums, unexplained numbness or pain in the mouth or face, difficulty chewing or swallowing, and persistent hoarseness. Most early oral cancers are painless, which is why regular screening matters.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "What is the 2-week rule for oral cancer?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "The 2-week rule means that any sore, patch, lump, or other change in your mouth that hasn't healed or gone away after 2 weeks should be evaluated by a dentist or doctor. Canker sores typically heal in 7–10 days. Anything lasting longer deserves a professional look — not because it's definitely cancer, but because early detection dramatically improves outcomes.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Can oral cancer be painless?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Yes — early oral cancer is often completely painless, which is one reason it goes undetected. A red or white patch, a small lump, or a sore that doesn't heal may not cause any discomfort at all. This is why routine oral cancer screenings during dental visits are so important.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "What does oral cancer look like?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Oral cancer can appear as a red patch (erythroplakia), a white patch (leukoplakia), a speckled red-and-white patch, a sore that bleeds easily or doesn't heal, a lump or thickening of the skin or lining of the mouth, or loose teeth with no dental explanation. It can develop on the tongue, gums, lips, cheeks, floor of the mouth, or throat.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "How is oral cancer detected early?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Oral cancer is most often detected early through routine dental exams, which include a quick visual and physical check of the mouth and throat. You can also perform a monthly self-exam at home by looking inside your mouth with a flashlight and checking for any patches, sores, or lumps. A free online risk screener like OralCheck can also help you understand your personal risk factors.",
+          },
+        },
+      ],
+    },
+  ],
 };
 
 const signs = [
