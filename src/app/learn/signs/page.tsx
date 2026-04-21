@@ -1,4 +1,35 @@
 import Link from "next/link";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Signs & Symptoms of Oral Cancer | OralCheck",
+  description:
+    "Learn the early warning signs of oral cancer: red or white patches, sores that don't heal, lumps, and numbness. Early detection saves lives.",
+};
+
+const SITE_URL = "https://oralcheck.vercel.app";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "MedicalWebPage",
+  url: `${SITE_URL}/learn/signs`,
+  name: "Signs & Warning Symptoms of Oral Cancer",
+  description:
+    "Early oral cancer rarely hurts. Learn the signs worth checking — especially if anything lasts longer than 2 weeks.",
+  about: {
+    "@type": "MedicalCondition",
+    name: "Oral Cancer",
+    signOrSymptom: [
+      { "@type": "MedicalSymptom", name: "Red or white patches in the mouth" },
+      { "@type": "MedicalSymptom", name: "Mouth sores that do not heal within 2 weeks" },
+      { "@type": "MedicalSymptom", name: "Lump or thickening in cheek, gums, or throat" },
+      { "@type": "MedicalSymptom", name: "Numbness or pain in the mouth or lips" },
+      { "@type": "MedicalSymptom", name: "Difficulty chewing, swallowing, or moving the jaw" },
+      { "@type": "MedicalSymptom", name: "Hoarseness or sore throat lasting more than 2 weeks" },
+    ],
+  },
+  audience: { "@type": "MedicalAudience", audienceType: "Patient" },
+};
 
 const signs = [
   {
@@ -41,6 +72,10 @@ const signs = [
 export default function SignsPage() {
   return (
     <article className="max-w-3xl mx-auto px-5 py-10 sm:py-16">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Link
         href="/learn"
         className="text-sm font-medium text-ink-soft hover:text-ink mb-6 inline-block"
