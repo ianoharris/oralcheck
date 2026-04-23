@@ -11,6 +11,8 @@ const SITE_URL = "https://oralcheck.org";
 
 const jsonLd = {
   "@context": "https://schema.org",
+  "@graph": [
+  {
   "@type": "HowTo",
   name: "How to Do a 2-Minute Oral Cancer Self-Exam",
   description:
@@ -70,6 +72,16 @@ const jsonLd = {
       text: "Say 'ahh' and check the back of your throat. Look for asymmetry, patches, or sores.",
       position: 8,
     },
+  ],
+  },
+  {
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+      { "@type": "ListItem", position: 2, name: "Learn", item: `${SITE_URL}/learn` },
+      { "@type": "ListItem", position: 3, name: "How to Do a Self-Exam", item: `${SITE_URL}/learn/self-exam` },
+    ],
+  },
   ],
 };
 

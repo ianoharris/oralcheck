@@ -49,6 +49,14 @@ const articles = [
       "Six evidence-based steps: quit tobacco, limit alcohol, get vaccinated, protect your lips, and get screened regularly.",
     icon: "🛡️",
   },
+  {
+    href: "/learn/canker-sore-vs-oral-cancer",
+    tag: "Guide",
+    title: "Canker Sore vs Oral Cancer",
+    description:
+      "Canker sores heal in 7–10 days. Oral cancer doesn't. Here's how to tell them apart and when to see a doctor.",
+    icon: "🔬",
+  },
 ];
 
 export default function LearnPage() {

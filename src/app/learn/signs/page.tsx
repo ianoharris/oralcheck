@@ -31,6 +31,15 @@ const jsonLd = {
         ],
       },
       audience: { "@type": "MedicalAudience", audienceType: "Patient" },
+      lastReviewed: "2026-04-23",
+    },
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+        { "@type": "ListItem", position: 2, name: "Learn", item: `${SITE_URL}/learn` },
+        { "@type": "ListItem", position: 3, name: "Signs & Warning Symptoms", item: `${SITE_URL}/learn/signs` },
+      ],
     },
     {
       "@type": "FAQPage",

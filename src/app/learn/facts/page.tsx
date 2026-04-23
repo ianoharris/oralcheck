@@ -8,6 +8,31 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://oralcheck.org/learn/facts" },
 };
 
+const SITE_URL = "https://oralcheck.org";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "MedicalWebPage",
+      url: `${SITE_URL}/learn/facts`,
+      name: "Oral Cancer Facts & Statistics",
+      description:
+        "Key oral cancer statistics: 54,000+ US cases per year, 84% survival when caught early, and why HPV has overtaken tobacco as the top cause.",
+      about: { "@type": "MedicalCondition", name: "Oral Cancer" },
+      lastReviewed: "2026-04-23",
+    },
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+        { "@type": "ListItem", position: 2, name: "Learn", item: `${SITE_URL}/learn` },
+        { "@type": "ListItem", position: 3, name: "Oral Cancer Facts & Stats", item: `${SITE_URL}/learn/facts` },
+      ],
+    },
+  ],
+};
+
 const stats = [
   {
     value: "54,000+",
@@ -62,6 +87,10 @@ const facts = [
 export default function FactsPage() {
   return (
     <article className="max-w-3xl mx-auto px-5 py-10 sm:py-16">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Link
         href="/learn"
         className="text-sm font-medium text-ink-soft hover:text-ink mb-6 inline-block"

@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function Footer() {
   return (
     <footer className="border-t border-warm-dim bg-warm mt-24">
-      <div className="max-w-6xl mx-auto px-5 py-10 grid grid-cols-1 md:grid-cols-3 gap-8 text-sm">
+      <div className="max-w-6xl mx-auto px-5 py-10 grid grid-cols-1 md:grid-cols-4 gap-8 text-sm">
         <div>
           <div className="font-serif text-xl text-brand mb-2">OralCheck</div>
           <p className="text-ink-soft leading-relaxed">
@@ -16,9 +16,19 @@ export default function Footer() {
           <ul className="space-y-1.5 text-ink-soft">
             <li><Link href="/screener" className="hover:text-brand">Risk Screener</Link></li>
             <li><Link href="/find-care" className="hover:text-brand">Find Care</Link></li>
-            <li><Link href="/learn" className="hover:text-brand">Learn</Link></li>
             <li><Link href="/about" className="hover:text-brand">About</Link></li>
             <li><Link href="/qr" className="hover:text-brand">Print &amp; Share</Link></li>
+          </ul>
+        </div>
+        <div>
+          <div className="font-semibold text-ink mb-2">Learn</div>
+          <ul className="space-y-1.5 text-ink-soft">
+            <li><Link href="/learn/signs" className="hover:text-brand">Warning Signs</Link></li>
+            <li><Link href="/learn/self-exam" className="hover:text-brand">Self-Exam Guide</Link></li>
+            <li><Link href="/learn/hpv" className="hover:text-brand">HPV &amp; Oral Cancer</Link></li>
+            <li><Link href="/learn/prevention" className="hover:text-brand">Prevention</Link></li>
+            <li><Link href="/learn/facts" className="hover:text-brand">Facts &amp; Stats</Link></li>
+            <li><Link href="/learn/canker-sore-vs-oral-cancer" className="hover:text-brand">Canker Sore vs Cancer</Link></li>
           </ul>
         </div>
         <div>

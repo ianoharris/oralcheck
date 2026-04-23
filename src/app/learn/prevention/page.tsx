@@ -24,7 +24,15 @@ const jsonLd = {
         "@type": "MedicalCondition",
         name: "Oral Cancer",
       },
-      lastReviewed: "2025-01-01",
+      lastReviewed: "2026-04-23",
+    },
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+        { "@type": "ListItem", position: 2, name: "Learn", item: `${SITE_URL}/learn` },
+        { "@type": "ListItem", position: 3, name: "How to Prevent Oral Cancer", item: `${SITE_URL}/learn/prevention` },
+      ],
     },
     {
       "@type": "FAQPage",

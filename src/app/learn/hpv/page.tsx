@@ -32,7 +32,15 @@ const jsonLd = {
           name: "Human Papillomavirus (HPV-16)",
         },
       },
-      lastReviewed: "2025-01-01",
+      lastReviewed: "2026-04-23",
+    },
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+        { "@type": "ListItem", position: 2, name: "Learn", item: `${SITE_URL}/learn` },
+        { "@type": "ListItem", position: 3, name: "HPV and Oral Cancer", item: `${SITE_URL}/learn/hpv` },
+      ],
     },
     {
       "@type": "FAQPage",
