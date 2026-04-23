@@ -41,6 +41,14 @@ const articles = [
       "HPV-16 is now the leading cause of throat cancer in the US. What that means, who's at risk, and how the vaccine helps.",
     icon: "🦠",
   },
+  {
+    href: "/learn/prevention",
+    tag: "Prevention",
+    title: "How to Prevent Oral Cancer",
+    description:
+      "Six evidence-based steps: quit tobacco, limit alcohol, get vaccinated, protect your lips, and get screened regularly.",
+    icon: "🛡️",
+  },
 ];
 
 export default function LearnPage() {
