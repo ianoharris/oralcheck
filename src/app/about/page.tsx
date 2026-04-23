@@ -1,4 +1,12 @@
+import type { Metadata } from "next";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "About OralCheck | Free Oral Cancer Risk Screener",
+  description:
+    "OralCheck is a free, private oral cancer risk screener built by a UW-Madison predental student. Learn about the mission, how it works, and the sources behind the tool.",
+  alternates: { canonical: "https://oralcheck.org/about" },
+};
 
 export default function AboutPage() {
   return (

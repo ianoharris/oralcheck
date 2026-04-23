@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { questions } from "@/lib/questions";
@@ -16,11 +16,11 @@ export default function ScreenerPage() {
   const isLast = index === questions.length - 1;
   const selected = answers[q.id];
 
-  const handleSelect = (optionId: string) => {
+  const handleSelect = useCallback((optionId: string) => {
     setAnswers((a) => ({ ...a, [q.id]: optionId }));
-  };
+  }, [q.id]);
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     if (!selected) return;
     if (isLast) {
       try {
@@ -30,12 +30,38 @@ export default function ScreenerPage() {
     } else {
       setIndex((i) => i + 1);
     }
-  };
+  }, [selected, isLast, answers, router]);
 
   const handleBack = () => {
     if (index === 0) return;
     setIndex((i) => i - 1);
   };
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Ignore if user is typing in an input
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
+
+      const num = parseInt(e.key, 10);
+      if (!isNaN(num) && num >= 1 && num <= q.options.length) {
+        handleSelect(q.options[num - 1].id);
+        return;
+      }
+
+      if (e.key === "Enter") {
+        handleNext();
+        return;
+      }
+
+      if (e.key === "Backspace" || e.key === "ArrowLeft") {
+        handleBack();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [q.options, handleSelect, handleNext]);
 
   return (
     <div className="max-w-2xl mx-auto px-5 py-10 sm:py-16">

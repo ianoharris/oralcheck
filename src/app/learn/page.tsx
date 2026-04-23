@@ -1,4 +1,12 @@
+import type { Metadata } from "next";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "Learn About Oral Cancer | OralCheck",
+  description:
+    "Evidence-based guides on oral cancer signs, self-exams, HPV, and statistics. Written for regular people, not clinicians.",
+  alternates: { canonical: "https://oralcheck.org/learn" },
+};
 
 const articles = [
   {
@@ -24,6 +32,14 @@ const articles = [
     description:
       "Incidence, survival rates by stage, who's most affected, and the growing role of HPV.",
     icon: "📊",
+  },
+  {
+    href: "/learn/hpv",
+    tag: "Risk Factor",
+    title: "HPV and Oral Cancer",
+    description:
+      "HPV-16 is now the leading cause of throat cancer in the US. What that means, who's at risk, and how the vaccine helps.",
+    icon: "🦠",
   },
 ];
 
