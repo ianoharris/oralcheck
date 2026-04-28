@@ -32,6 +32,7 @@ const jsonLd = {
           name: "Human Papillomavirus (HPV-16)",
         },
       },
+      datePublished: "2026-04-23",
       lastReviewed: "2026-04-23",
     },
     {
@@ -307,6 +308,12 @@ export default function HpvPage() {
             className="bg-white hover:bg-warm-dim text-ink font-semibold px-6 py-3 rounded-full transition-colors border border-warm-dim"
           >
             See all warning signs
+          </Link>
+          <Link
+            href="/learn/prevention"
+            className="bg-white hover:bg-warm-dim text-ink font-semibold px-6 py-3 rounded-full transition-colors border border-warm-dim"
+          >
+            Prevention guide
           </Link>
         </div>
       </article>

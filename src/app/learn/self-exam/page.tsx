@@ -175,8 +175,11 @@ export default function SelfExamPage() {
           What&apos;s normal vs. what&apos;s not
         </h2>
         <p className="text-ink leading-relaxed mb-2">
-          Most mouths have asymmetries, small bumps, and occasional canker
-          sores — these heal in 1–2 weeks and aren&apos;t a concern.
+          Most mouths have asymmetries, small bumps, and occasional{" "}
+          <Link href="/learn/canker-sore-vs-oral-cancer" className="text-brand hover:underline font-medium">
+            canker sores
+          </Link>{" "}
+          — these heal in 1–2 weeks and aren&apos;t a concern.
         </p>
         <p className="text-ink leading-relaxed">
           What should prompt a visit: anything new, persistent (2+ weeks),

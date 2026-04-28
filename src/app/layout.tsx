@@ -75,6 +75,7 @@ const jsonLd = {
         "@type": "MedicalAudience",
         audienceType: "Patient",
       },
+      datePublished: "2024-12-01",
       lastReviewed: "2026-04-23",
       reviewedBy: {
         "@type": "Organization",

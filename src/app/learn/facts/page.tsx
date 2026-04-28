@@ -20,6 +20,7 @@ const jsonLd = {
       description:
         "Key oral cancer statistics: 54,000+ US cases per year, 84% survival when caught early, and why HPV has overtaken tobacco as the top cause.",
       about: { "@type": "MedicalCondition", name: "Oral Cancer" },
+      datePublished: "2025-01-01",
       lastReviewed: "2026-04-23",
     },
     {

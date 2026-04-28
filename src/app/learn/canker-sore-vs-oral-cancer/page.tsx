@@ -21,6 +21,7 @@ const jsonLd = {
       description:
         "Canker sores heal in 7–10 days. Oral cancer doesn't. Learn the key differences, what each looks like, and exactly when to see a doctor.",
       about: { "@type": "MedicalCondition", name: "Oral Cancer" },
+      datePublished: "2026-04-23",
       lastReviewed: "2026-04-23",
     },
     {

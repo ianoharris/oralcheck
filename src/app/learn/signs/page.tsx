@@ -31,6 +31,7 @@ const jsonLd = {
         ],
       },
       audience: { "@type": "MedicalAudience", audienceType: "Patient" },
+      datePublished: "2025-01-01",
       lastReviewed: "2026-04-23",
     },
     {
@@ -194,6 +195,12 @@ export default function SignsPage() {
           className="bg-white hover:bg-warm-dim text-ink font-semibold px-6 py-3 rounded-full transition-colors border border-warm-dim"
         >
           Check your risk
+        </Link>
+        <Link
+          href="/learn/canker-sore-vs-oral-cancer"
+          className="bg-white hover:bg-warm-dim text-ink font-semibold px-6 py-3 rounded-full transition-colors border border-warm-dim"
+        >
+          Canker sore vs oral cancer
         </Link>
       </div>
     </article>

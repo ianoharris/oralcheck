@@ -24,6 +24,7 @@ const jsonLd = {
         "@type": "MedicalCondition",
         name: "Oral Cancer",
       },
+      datePublished: "2026-04-23",
       lastReviewed: "2026-04-23",
     },
     {
