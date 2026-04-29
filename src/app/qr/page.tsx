@@ -1,16 +1,43 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import QRCode from "react-qr-code";
 
 export default function QRPage() {
   const [url, setUrl] = useState("https://oralcheck.org");
+  const qrRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setUrl(window.location.origin);
   }, []);
 
   const handlePrint = () => window.print();
+
+  const handleDownload = () => {
+    const svg = qrRef.current?.querySelector("svg");
+    if (!svg) return;
+    const serialized = new XMLSerializer().serializeToString(svg);
+    const canvas = document.createElement("canvas");
+    const size = 800;
+    canvas.width = size;
+    canvas.height = size;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(0, 0, size, size);
+    const img = new Image();
+    const blob = new Blob([serialized], { type: "image/svg+xml" });
+    const blobUrl = URL.createObjectURL(blob);
+    img.onload = () => {
+      ctx.drawImage(img, 0, 0, size, size);
+      URL.revokeObjectURL(blobUrl);
+      const a = document.createElement("a");
+      a.href = canvas.toDataURL("image/png");
+      a.download = "oralcheck-qr.png";
+      a.click();
+    };
+    img.src = blobUrl;
+  };
 
   return (
     <>
@@ -45,7 +72,7 @@ export default function QRPage() {
             Free oral cancer risk screener
           </p>
 
-          <div className="p-4 bg-white rounded-2xl border-2 border-warm-dim">
+          <div ref={qrRef} className="p-4 bg-white rounded-2xl border-2 border-warm-dim">
             <QRCode
               value={url}
               size={220}
@@ -73,6 +100,12 @@ export default function QRPage() {
             className="bg-brand hover:bg-brand-dark text-white font-semibold px-7 py-3 rounded-full transition-colors"
           >
             Print this page
+          </button>
+          <button
+            onClick={handleDownload}
+            className="bg-white hover:bg-warm-dim text-ink font-semibold px-7 py-3 rounded-full border border-warm-dim transition-colors"
+          >
+            Download PNG
           </button>
           <button
             onClick={() => {
