@@ -17,6 +17,7 @@ export default function Footer() {
             <li><Link href="/screener" className="hover:text-brand">Risk Screener</Link></li>
             <li><Link href="/find-care" className="hover:text-brand">Find Care</Link></li>
             <li><Link href="/about" className="hover:text-brand">About</Link></li>
+            <li><Link href="/about#feedback" className="hover:text-brand">Send Feedback</Link></li>
             <li><Link href="/qr" className="hover:text-brand">Print &amp; Share</Link></li>
           </ul>
         </div>

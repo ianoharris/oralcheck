@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import ContactForm from "@/components/ContactForm";
 
 export const metadata: Metadata = {
   title: "About OralCheck | Free Oral Cancer Risk Screener",
@@ -123,6 +124,16 @@ export default function AboutPage() {
           Find care
         </Link>
       </div>
+
+      <section id="feedback" className="bg-white rounded-2xl border border-warm-dim p-6 sm:p-8 mt-6">
+        <h2 className="font-serif text-2xl text-ink mb-1">Get in touch</h2>
+        <p className="text-ink-soft leading-relaxed mb-5 text-sm">
+          Found a bug, have a suggestion, or just want to say something? I read
+          everything. Email is optional — leave it blank if you&apos;d rather stay
+          anonymous.
+        </p>
+        <ContactForm />
+      </section>
     </div>
   );
 }
