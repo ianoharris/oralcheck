@@ -61,18 +61,40 @@ const stats = [
   { value: "2 min", label: "is all a dental screening takes" },
 ];
 
+// Country codes — +1 gets US auto-formatting, others are left as-is
+const countryCodes = [
+  { code: "+1",  label: "🇺🇸 +1" },
+  { code: "+44", label: "🇬🇧 +44" },
+  { code: "+61", label: "🇦🇺 +61" },
+  { code: "+64", label: "🇳🇿 +64" },
+  { code: "+353", label: "🇮🇪 +353" },
+  { code: "+52", label: "🇲🇽 +52" },
+  { code: "+55", label: "🇧🇷 +55" },
+];
+
+function formatUSPhone(raw: string): string {
+  const digits = raw.replace(/\D/g, "").slice(0, 10);
+  if (digits.length === 0) return "";
+  if (digits.length <= 3) return `(${digits}`;
+  if (digits.length <= 6) return `(${digits.slice(0, 3)}) ${digits.slice(3)}`;
+  return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
+}
+
 export default function PrintableFlyer() {
   const searchParams = useSearchParams();
   const router = useRouter();
+
   const [practice, setPractice] = useState(searchParams.get("practice") ?? "");
-  const [contact, setContact] = useState(searchParams.get("contact") ?? "");
+  const [countryCode, setCountryCode] = useState(searchParams.get("cc") ?? "+1");
+  const [phone, setPhone] = useState(searchParams.get("phone") ?? "");
   const [copied, setCopied] = useState(false);
 
   const updateParams = useCallback(
-    (newPractice: string, newContact: string) => {
+    (newPractice: string, newCc: string, newPhone: string) => {
       const params = new URLSearchParams();
       if (newPractice) params.set("practice", newPractice);
-      if (newContact) params.set("contact", newContact);
+      if (newCc && newCc !== "+1") params.set("cc", newCc);
+      if (newPhone) params.set("phone", newPhone);
       router.replace(params.toString() ? `?${params.toString()}` : "?", { scroll: false });
     },
     [router]
@@ -80,12 +102,19 @@ export default function PrintableFlyer() {
 
   const handlePracticeChange = (val: string) => {
     setPractice(val);
-    updateParams(val, contact);
+    updateParams(val, countryCode, phone);
   };
 
-  const handleContactChange = (val: string) => {
-    setContact(val);
-    updateParams(practice, val);
+  const handleCountryChange = (val: string) => {
+    setCountryCode(val);
+    setPhone(""); // reset phone when country changes
+    updateParams(practice, val, "");
+  };
+
+  const handlePhoneChange = (val: string) => {
+    const formatted = countryCode === "+1" ? formatUSPhone(val) : val;
+    setPhone(formatted);
+    updateParams(practice, countryCode, formatted);
   };
 
   const handleCopyLink = () => {
@@ -94,25 +123,43 @@ export default function PrintableFlyer() {
     setTimeout(() => setCopied(false), 2500);
   };
 
+  const displayContact = phone ? `${countryCode === "+1" ? "" : countryCode + " "}${phone}` : "";
+
   return (
     <>
       {/*
-        Print fix: visibility:hidden collapses everything including nested wrappers,
-        then we selectively restore just the flyer tree. Unlike display:none on body>*,
-        this works regardless of how deeply Next.js nests the app.
+        Print approach:
+        - @page { margin: 0 } removes browser-injected timestamps and URL footers
+        - visibility:hidden on all body children, then restore only the flyer tree
+        - zoom: 0.82 scales the flyer to fit letter size in one page
+        - print-color-adjust: exact forces background colors (teal, orange bars)
       */}
       <style>{`
         @media print {
+          @page { margin: 0; size: letter portrait; }
           body * { visibility: hidden; }
           #flyer-print-root,
-          #flyer-print-root * { visibility: visible; }
+          #flyer-print-root * {
+            visibility: visible;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+          }
           #flyer-print-root {
             position: fixed;
             inset: 0;
-            width: 100%;
-            height: 100%;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 0.25in;
+            box-sizing: border-box;
           }
-          @page { margin: 0.4in; size: letter portrait; }
+          #flyer-inner {
+            width: 100%;
+            border-radius: 0 !important;
+            border: none !important;
+            box-shadow: none !important;
+            zoom: 0.82;
+          }
         }
       `}</style>
 
@@ -120,8 +167,7 @@ export default function PrintableFlyer() {
       <div className="print:hidden mb-8 bg-white rounded-2xl border border-warm-dim p-6 sm:p-8">
         <h2 className="font-serif text-2xl text-ink mb-1">Customize your flyer</h2>
         <p className="text-sm text-ink-soft mb-5">
-          Your practice name appears as a prominent banner on the flyer. Add a phone
-          number or website and it shows up too.
+          Your practice name appears as a banner on the flyer. Add a phone number and it shows up too.
         </p>
         <div className="space-y-3 mb-5">
           <div>
@@ -138,18 +184,29 @@ export default function PrintableFlyer() {
             />
           </div>
           <div>
-            <label htmlFor="practice-contact" className="block text-sm font-semibold text-ink mb-1.5">
-              Phone or website{" "}
+            <label htmlFor="practice-phone" className="block text-sm font-semibold text-ink mb-1.5">
+              Phone number{" "}
               <span className="font-normal text-ink-soft">(optional)</span>
             </label>
-            <input
-              id="practice-contact"
-              type="text"
-              value={contact}
-              onChange={(e) => handleContactChange(e.target.value)}
-              placeholder="e.g. (608) 555-0100 or lakesidedental.com"
-              className="w-full max-w-md rounded-xl border border-warm-dim bg-warm px-4 py-2.5 text-sm text-ink placeholder:text-ink-soft/60 focus:outline-none focus:ring-2 focus:ring-brand/30"
-            />
+            <div className="flex gap-2 max-w-md">
+              <select
+                value={countryCode}
+                onChange={(e) => handleCountryChange(e.target.value)}
+                className="rounded-xl border border-warm-dim bg-warm px-3 py-2.5 text-sm text-ink focus:outline-none focus:ring-2 focus:ring-brand/30 flex-shrink-0"
+              >
+                {countryCodes.map((c) => (
+                  <option key={c.code} value={c.code}>{c.label}</option>
+                ))}
+              </select>
+              <input
+                id="practice-phone"
+                type="tel"
+                value={phone}
+                onChange={(e) => handlePhoneChange(e.target.value)}
+                placeholder={countryCode === "+1" ? "(555) 000-0000" : "Phone number"}
+                className="flex-1 rounded-xl border border-warm-dim bg-warm px-4 py-2.5 text-sm text-ink placeholder:text-ink-soft/60 focus:outline-none focus:ring-2 focus:ring-brand/30"
+              />
+            </div>
           </div>
         </div>
 
@@ -160,7 +217,7 @@ export default function PrintableFlyer() {
           >
             Print flyer
           </button>
-          {(practice || contact) && (
+          {(practice || phone) && (
             <button
               onClick={handleCopyLink}
               className="bg-white hover:bg-warm-dim text-ink font-semibold px-6 py-2.5 rounded-full text-sm border border-warm-dim transition-colors"
@@ -169,16 +226,16 @@ export default function PrintableFlyer() {
             </button>
           )}
         </div>
-        {(practice || contact) && (
+        {(practice || phone) && (
           <p className="text-xs text-ink-soft mt-3">
-            Share the link above and anyone who opens it sees the same customized flyer.
+            Share the link above — anyone who opens it sees the same customized flyer.
           </p>
         )}
       </div>
 
       {/* Flyer */}
       <div id="flyer-print-root">
-        <div className="bg-white w-full max-w-[800px] mx-auto shadow-sm border border-warm-dim overflow-hidden rounded-2xl print:rounded-none print:shadow-none print:border-0">
+        <div id="flyer-inner" className="bg-white w-full max-w-[800px] mx-auto shadow-sm border border-warm-dim overflow-hidden rounded-2xl">
 
           {/* Top teal bar */}
           <div className="h-2 bg-brand" />
@@ -194,20 +251,24 @@ export default function PrintableFlyer() {
             </div>
           </div>
 
-          {/* Practice banner — only shown when practice name is set */}
+          {/* Practice banner */}
           {practice && (
-            <div className="mx-6 mb-1 rounded-xl bg-brand px-6 py-3 flex items-center justify-between gap-4">
-              <div>
+            <div className="mx-6 mb-2 rounded-xl bg-brand px-6 py-3 relative overflow-hidden">
+              {/* Decorative quote mark — anchored to the right, not stretching the layout */}
+              <span
+                className="absolute right-5 top-1/2 -translate-y-1/2 font-serif text-6xl leading-none text-white/15 select-none pointer-events-none"
+                aria-hidden
+              >
+                ❝
+              </span>
+              <div className="relative">
                 <div className="text-white/70 text-[10px] font-semibold tracking-widest uppercase mb-0.5">
                   Presented by
                 </div>
-                <div className="text-white font-bold text-lg leading-tight">{practice}</div>
-                {contact && (
-                  <div className="text-white/80 text-xs mt-0.5">{contact}</div>
+                <div className="text-white font-bold text-lg leading-tight pr-12">{practice}</div>
+                {displayContact && (
+                  <div className="text-white/80 text-xs mt-0.5">{displayContact}</div>
                 )}
-              </div>
-              <div className="text-white/20 font-serif text-5xl leading-none select-none" aria-hidden>
-                ❝
               </div>
             </div>
           )}
