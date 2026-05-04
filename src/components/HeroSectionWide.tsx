@@ -55,15 +55,8 @@ export default function HeroSectionWide() {
         </Link>
       </motion.div>
 
-      <motion.div {...fadeItem(4)} className="mt-6 space-y-1">
+      <motion.div {...fadeItem(4)} className="mt-6">
         <p className="text-xs text-ink-soft">Not a medical diagnosis. An educational awareness tool.</p>
-        <div className="flex items-center gap-2 justify-center">
-          <span className="inline-block w-1.5 h-1.5 rounded-full bg-brand flex-shrink-0" />
-          <span className="text-xs text-ink-soft">
-            Shared by the{" "}
-            <span className="font-semibold text-ink">Wisconsin Dental Association</span>
-          </span>
-        </div>
       </motion.div>
 
     </section>
