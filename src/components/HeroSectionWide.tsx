@@ -66,26 +66,6 @@ export default function HeroSectionWide() {
         </div>
       </motion.div>
 
-      {/* Stat strip */}
-      <motion.div
-        {...(reduced ? {} : {
-          initial: { opacity: 0 },
-          animate: { opacity: 1 },
-          transition: { duration: 0.8, delay: 0.7 },
-        })}
-        className="mt-14 grid grid-cols-3 gap-6 border-t border-warm-dim pt-10"
-      >
-        {[
-          { stat: "54,000+", label: "new US cases each year" },
-          { stat: "84%", label: "survival rate if caught early" },
-          { stat: "2 min", label: "is all it takes to screen" },
-        ].map(({ stat, label }) => (
-          <div key={stat} className="text-center">
-            <div className="font-serif text-3xl text-brand">{stat}</div>
-            <div className="text-xs text-ink-soft mt-1">{label}</div>
-          </div>
-        ))}
-      </motion.div>
     </section>
   );
 }
