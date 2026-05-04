@@ -61,23 +61,76 @@ const stats = [
   { value: "2 min", label: "is all a dental screening takes" },
 ];
 
-// Country codes — +1 gets US auto-formatting, others are left as-is
 const countryCodes = [
-  { code: "+1",  label: "🇺🇸 +1" },
-  { code: "+44", label: "🇬🇧 +44" },
-  { code: "+61", label: "🇦🇺 +61" },
-  { code: "+64", label: "🇳🇿 +64" },
+  { code: "+1",   label: "🇺🇸 +1" },
+  { code: "+44",  label: "🇬🇧 +44" },
+  { code: "+61",  label: "🇦🇺 +61" },
+  { code: "+64",  label: "🇳🇿 +64" },
   { code: "+353", label: "🇮🇪 +353" },
-  { code: "+52", label: "🇲🇽 +52" },
-  { code: "+55", label: "🇧🇷 +55" },
+  { code: "+52",  label: "🇲🇽 +52" },
+  { code: "+55",  label: "🇧🇷 +55" },
 ];
 
 function formatUSPhone(raw: string): string {
-  const digits = raw.replace(/\D/g, "").slice(0, 10);
-  if (digits.length === 0) return "";
-  if (digits.length <= 3) return `(${digits}`;
-  if (digits.length <= 6) return `(${digits.slice(0, 3)}) ${digits.slice(3)}`;
-  return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
+  const d = raw.replace(/\D/g, "").slice(0, 10);
+  if (!d) return "";
+  if (d.length <= 3) return `(${d}`;
+  if (d.length <= 6) return `(${d.slice(0, 3)}) ${d.slice(3)}`;
+  return `(${d.slice(0, 3)}) ${d.slice(3, 6)}-${d.slice(6)}`;
+}
+
+function openPrintWindow(flyerEl: HTMLElement) {
+  // Collect Next.js stylesheet links from the current page
+  const cssLinks = Array.from(
+    document.querySelectorAll<HTMLLinkElement>('link[rel="stylesheet"]')
+  )
+    .map((l) => `<link rel="stylesheet" href="${l.href}">`)
+    .join("\n");
+
+  const win = window.open("", "_blank");
+  if (!win) { window.print(); return; }
+
+  win.document.write(`<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>OralCheck Flyer</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+  ${cssLinks}
+  <style>
+    *, *::before, *::after {
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+    html, body {
+      margin: 0;
+      padding: 0.28in;
+      background: white;
+      box-sizing: border-box;
+    }
+    @page { margin: 0; size: letter portrait; }
+    /* Flatten the card so there's no shadow/radius on paper */
+    #flyer-inner {
+      max-width: 100% !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      border: 0 !important;
+    }
+  </style>
+</head>
+<body>
+  ${flyerEl.outerHTML}
+</body>
+</html>`);
+
+  win.document.close();
+
+  // Give fonts and styles time to load before triggering print
+  setTimeout(() => {
+    win.focus();
+    win.print();
+  }, 700);
 }
 
 export default function PrintableFlyer() {
@@ -90,31 +143,28 @@ export default function PrintableFlyer() {
   const [copied, setCopied] = useState(false);
 
   const updateParams = useCallback(
-    (newPractice: string, newCc: string, newPhone: string) => {
+    (p: string, cc: string, ph: string) => {
       const params = new URLSearchParams();
-      if (newPractice) params.set("practice", newPractice);
-      if (newCc && newCc !== "+1") params.set("cc", newCc);
-      if (newPhone) params.set("phone", newPhone);
+      if (p) params.set("practice", p);
+      if (cc && cc !== "+1") params.set("cc", cc);
+      if (ph) params.set("phone", ph);
       router.replace(params.toString() ? `?${params.toString()}` : "?", { scroll: false });
     },
     [router]
   );
 
-  const handlePracticeChange = (val: string) => {
-    setPractice(val);
-    updateParams(val, countryCode, phone);
+  const handlePracticeChange = (val: string) => { setPractice(val); updateParams(val, countryCode, phone); };
+  const handleCountryChange  = (val: string) => { setCountryCode(val); setPhone(""); updateParams(practice, val, ""); };
+  const handlePhoneChange    = (val: string) => {
+    const fmt = countryCode === "+1" ? formatUSPhone(val) : val;
+    setPhone(fmt);
+    updateParams(practice, countryCode, fmt);
   };
 
-  const handleCountryChange = (val: string) => {
-    setCountryCode(val);
-    setPhone(""); // reset phone when country changes
-    updateParams(practice, val, "");
-  };
-
-  const handlePhoneChange = (val: string) => {
-    const formatted = countryCode === "+1" ? formatUSPhone(val) : val;
-    setPhone(formatted);
-    updateParams(practice, countryCode, formatted);
+  const handlePrint = () => {
+    const el = document.getElementById("flyer-inner");
+    if (el) openPrintWindow(el);
+    else window.print();
   };
 
   const handleCopyLink = () => {
@@ -123,46 +173,12 @@ export default function PrintableFlyer() {
     setTimeout(() => setCopied(false), 2500);
   };
 
-  const displayContact = phone ? `${countryCode === "+1" ? "" : countryCode + " "}${phone}` : "";
+  const displayPhone = phone
+    ? (countryCode === "+1" ? phone : `${countryCode} ${phone}`)
+    : "";
 
   return (
     <>
-      {/*
-        Print approach:
-        - @page { margin: 0 } removes browser-injected timestamps and URL footers
-        - visibility:hidden on all body children, then restore only the flyer tree
-        - zoom: 0.82 scales the flyer to fit letter size in one page
-        - print-color-adjust: exact forces background colors (teal, orange bars)
-      */}
-      <style>{`
-        @media print {
-          @page { margin: 0; size: letter portrait; }
-          body * { visibility: hidden; }
-          #flyer-print-root,
-          #flyer-print-root * {
-            visibility: visible;
-            -webkit-print-color-adjust: exact;
-            print-color-adjust: exact;
-          }
-          #flyer-print-root {
-            position: fixed;
-            inset: 0;
-            display: flex;
-            align-items: flex-start;
-            justify-content: center;
-            padding: 0.25in;
-            box-sizing: border-box;
-          }
-          #flyer-inner {
-            width: 100%;
-            border-radius: 0 !important;
-            border: none !important;
-            box-shadow: none !important;
-            zoom: 0.82;
-          }
-        }
-      `}</style>
-
       {/* Controls — hidden on print */}
       <div className="print:hidden mb-8 bg-white rounded-2xl border border-warm-dim p-6 sm:p-8">
         <h2 className="font-serif text-2xl text-ink mb-1">Customize your flyer</h2>
@@ -185,8 +201,7 @@ export default function PrintableFlyer() {
           </div>
           <div>
             <label htmlFor="practice-phone" className="block text-sm font-semibold text-ink mb-1.5">
-              Phone number{" "}
-              <span className="font-normal text-ink-soft">(optional)</span>
+              Phone number <span className="font-normal text-ink-soft">(optional)</span>
             </label>
             <div className="flex gap-2 max-w-md">
               <select
@@ -212,7 +227,7 @@ export default function PrintableFlyer() {
 
         <div className="flex flex-wrap gap-3">
           <button
-            onClick={() => window.print()}
+            onClick={handlePrint}
             className="bg-brand hover:bg-brand-dark text-white font-semibold px-6 py-2.5 rounded-full text-sm transition-colors"
           >
             Print flyer
@@ -233,10 +248,12 @@ export default function PrintableFlyer() {
         )}
       </div>
 
-      {/* Flyer */}
-      <div id="flyer-print-root">
-        <div id="flyer-inner" className="bg-white w-full max-w-[800px] mx-auto shadow-sm border border-warm-dim overflow-hidden rounded-2xl">
-
+      {/* Flyer preview */}
+      <div>
+        <div
+          id="flyer-inner"
+          className="bg-white w-full max-w-[800px] mx-auto shadow-sm border border-warm-dim overflow-hidden rounded-2xl"
+        >
           {/* Top teal bar */}
           <div className="h-2 bg-brand" />
 
@@ -251,25 +268,16 @@ export default function PrintableFlyer() {
             </div>
           </div>
 
-          {/* Practice banner */}
+          {/* Practice banner — compact, left-aligned, no decorative stretch */}
           {practice && (
-            <div className="mx-6 mb-2 rounded-xl bg-brand px-6 py-3 relative overflow-hidden">
-              {/* Decorative quote mark — anchored to the right, not stretching the layout */}
-              <span
-                className="absolute right-5 top-1/2 -translate-y-1/2 font-serif text-6xl leading-none text-white/15 select-none pointer-events-none"
-                aria-hidden
-              >
-                ❝
-              </span>
-              <div className="relative">
-                <div className="text-white/70 text-[10px] font-semibold tracking-widest uppercase mb-0.5">
-                  Presented by
-                </div>
-                <div className="text-white font-bold text-lg leading-tight pr-12">{practice}</div>
-                {displayContact && (
-                  <div className="text-white/80 text-xs mt-0.5">{displayContact}</div>
-                )}
+            <div className="mx-6 mb-2 rounded-xl bg-brand px-5 py-2.5 inline-block w-[calc(100%-48px)]">
+              <div className="text-white/70 text-[10px] font-semibold tracking-widest uppercase leading-none mb-1">
+                Presented by
               </div>
+              <div className="text-white font-bold text-base leading-snug">{practice}</div>
+              {displayPhone && (
+                <div className="text-white/80 text-xs mt-0.5">{displayPhone}</div>
+              )}
             </div>
           )}
 
@@ -280,11 +288,8 @@ export default function PrintableFlyer() {
             </div>
 
             <h2 className="font-serif text-[3rem] leading-[1.05] text-ink mb-4">
-              2 minutes
-              <br />
-              could{" "}
-              <span className="italic text-brand">save</span>
-              <br />
+              2 minutes<br />
+              could <span className="italic text-brand">save</span><br />
               your life.
             </h2>
 
@@ -311,16 +316,10 @@ export default function PrintableFlyer() {
                 ))}
               </div>
 
-              {/* QR code */}
+              {/* QR */}
               <div className="flex flex-col items-center gap-1.5 flex-shrink-0">
                 <div className="bg-white border-2 border-warm-dim rounded-xl p-3">
-                  <QRCode
-                    value="https://oralcheck.org"
-                    size={148}
-                    fgColor="#0d7377"
-                    bgColor="#ffffff"
-                    level="M"
-                  />
+                  <QRCode value="https://oralcheck.org" size={148} fgColor="#0d7377" bgColor="#ffffff" level="M" />
                 </div>
                 <span className="text-[10px] font-bold tracking-wider text-brand">↑ SCAN TO START</span>
                 <span className="text-[10px] text-ink-soft font-mono">oralcheck.org</span>
@@ -340,14 +339,9 @@ export default function PrintableFlyer() {
             {/* Warning signs */}
             <div className="bg-brand rounded-xl p-4 mt-5">
               <div className="flex flex-wrap gap-2 items-center">
-                <span className="text-white text-[10px] font-bold tracking-widest mr-1">
-                  WARNING SIGNS
-                </span>
+                <span className="text-white text-[10px] font-bold tracking-widest mr-1">WARNING SIGNS</span>
                 {warningSigns.map((sign) => (
-                  <span
-                    key={sign}
-                    className="border border-white/40 text-white text-[11px] px-2.5 py-0.5 rounded-full"
-                  >
+                  <span key={sign} className="border border-white/40 text-white text-[11px] px-2.5 py-0.5 rounded-full">
                     {sign}
                   </span>
                 ))}
@@ -359,12 +353,10 @@ export default function PrintableFlyer() {
           <div className="flex justify-between items-end px-8 py-3 border-t border-warm-dim">
             <p className="text-[10px] text-ink-soft max-w-md leading-relaxed">
               <strong className="text-ink">Not a medical diagnosis.</strong> OralCheck is a free
-              educational awareness tool. Consult a qualified clinician about any symptom or
-              concern. Free · Private · No account required.
+              educational awareness tool. Consult a qualified clinician about any symptom or concern.
+              Free · Private · No account required.
             </p>
-            <span className="text-[10px] font-bold tracking-[0.15em] text-ink-soft ml-4 flex-shrink-0">
-              ORALCHECK
-            </span>
+            <span className="text-[10px] font-bold tracking-[0.15em] text-ink-soft ml-4 flex-shrink-0">ORALCHECK</span>
           </div>
 
           {/* Bottom orange bar */}
