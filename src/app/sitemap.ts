@@ -59,6 +59,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
+      url: `${base}/learn/oral-cancer`,
+      lastModified: new Date("2026-04-23"),
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
+    {
+      url: `${base}/for-clinicians`,
+      lastModified: new Date("2026-05-04"),
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
+    {
       url: `${base}/find-care`,
       lastModified: new Date("2025-01-01"),
       changeFrequency: "monthly",
