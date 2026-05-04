@@ -16,7 +16,7 @@ export default function HeroSectionWide() {
         };
 
   return (
-    <section className="max-w-4xl mx-auto px-5 pt-32 sm:pt-44 pb-16 text-center">
+    <section className="max-w-4xl mx-auto px-5 pt-40 sm:pt-56 pb-20 text-center">
       <motion.div {...fadeItem(0)}>
         <span className="inline-block text-xs font-semibold uppercase tracking-wider text-brand bg-brand-soft px-3 py-1 rounded-full">
           Free · Private · Evidence-based
