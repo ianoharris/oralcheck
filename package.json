@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "commit": "git add -A && git commit -m \"restore package.json\""
+    "commit": "git add -A && git commit -m \"commit\""
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.90.0",
