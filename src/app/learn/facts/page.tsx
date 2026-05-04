@@ -105,7 +105,14 @@ export default function FactsPage() {
         Oral Cancer Facts &amp; Stats
       </h1>
       <p className="text-lg text-ink-soft leading-relaxed mb-10">
-        The numbers that shape why early detection matters so much.
+        The numbers that shape why early detection matters so much. New to the
+        topic?{" "}
+        <Link
+          href="/learn/oral-cancer"
+          className="text-brand underline underline-offset-2 hover:text-brand-dark"
+        >
+          Start with what oral cancer is.
+        </Link>
       </p>
 
       <div className="grid grid-cols-2 gap-4 mb-12">
@@ -150,9 +157,15 @@ export default function FactsPage() {
       <div className="mt-8 flex flex-wrap gap-3">
         <Link
           href="/screener"
-          className="bg-accent hover:bg-accent-dark text-white font-semibold px-6 py-3 rounded-full transition-colors"
+          className="bg-brand hover:bg-brand-dark text-white font-semibold px-6 py-3 rounded-full transition-colors"
         >
-          Check your risk →
+          Take the free screener →
+        </Link>
+        <Link
+          href="/learn/oral-cancer"
+          className="bg-white hover:bg-warm-dim text-ink font-semibold px-6 py-3 rounded-full transition-colors border border-warm-dim"
+        >
+          What is oral cancer?
         </Link>
         <Link
           href="/learn/self-exam"

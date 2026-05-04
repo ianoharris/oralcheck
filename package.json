@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "commit": "git add -A && git commit -m \"Add oral cancer SEO page, internal linking, footer credential note\n\nCo-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>\""
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.90.0",
@@ -27,6 +28,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.2.4",
     "puppeteer": "^24.42.0",
+    "qrcode": "^1.5.4",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

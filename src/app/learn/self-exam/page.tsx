@@ -150,7 +150,13 @@ export default function SelfExamPage() {
       <p className="text-lg text-ink-soft leading-relaxed mb-10">
         Do this once a month. All you need is a mirror, good lighting, and
         clean hands. If you notice something that lasts 2+ weeks, see a
-        dentist.
+        dentist. Not sure what you&apos;re looking for?{" "}
+        <Link
+          href="/learn/signs"
+          className="text-brand underline underline-offset-2 hover:text-brand-dark"
+        >
+          See the warning signs guide.
+        </Link>
       </p>
 
       <ol className="space-y-3">
@@ -189,16 +195,28 @@ export default function SelfExamPage() {
 
       <div className="mt-8 flex flex-wrap gap-3">
         <Link
-          href="/find-care"
+          href="/screener"
           className="bg-brand hover:bg-brand-dark text-white font-semibold px-6 py-3 rounded-full transition-colors"
         >
-          Find a dentist →
+          Take the free screener →
         </Link>
         <Link
           href="/learn/signs"
           className="bg-white hover:bg-warm-dim text-ink font-semibold px-6 py-3 rounded-full transition-colors border border-warm-dim"
         >
-          What signs to look for
+          Warning signs guide
+        </Link>
+        <Link
+          href="/learn/oral-cancer"
+          className="bg-white hover:bg-warm-dim text-ink font-semibold px-6 py-3 rounded-full transition-colors border border-warm-dim"
+        >
+          What is oral cancer?
+        </Link>
+        <Link
+          href="/find-care"
+          className="bg-white hover:bg-warm-dim text-ink font-semibold px-6 py-3 rounded-full transition-colors border border-warm-dim"
+        >
+          Find a dentist
         </Link>
       </div>
     </article>

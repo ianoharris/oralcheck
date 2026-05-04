@@ -138,7 +138,14 @@ export default function HpvPage() {
         </h1>
         <p className="text-lg text-ink-soft leading-relaxed mb-10">
           HPV-16 is now the leading cause of throat cancer in the US — overtaking
-          tobacco. Here's what that means, who's at risk, and what you can do.
+          tobacco. Here&apos;s what that means for{" "}
+          <Link
+            href="/learn/oral-cancer"
+            className="text-brand underline underline-offset-2 hover:text-brand-dark"
+          >
+            oral cancer
+          </Link>{" "}
+          risk, who&apos;s at risk, and what you can do.
         </p>
 
         {/* Key stat callout */}

@@ -148,9 +148,15 @@ export default function SignsPage() {
         Signs &amp; Warning Symptoms
       </h1>
       <p className="text-lg text-ink-soft leading-relaxed mb-10">
-        Early oral cancer rarely hurts. That&apos;s part of why it goes
-        unnoticed. These are the signs worth checking — especially if anything
-        lasts longer than 2 weeks.
+        Early{" "}
+        <Link
+          href="/learn/oral-cancer"
+          className="text-brand underline underline-offset-2 hover:text-brand-dark"
+        >
+          oral cancer
+        </Link>{" "}
+        rarely hurts. That&apos;s part of why it goes unnoticed. These are the
+        signs worth checking — especially if anything lasts longer than 2 weeks.
       </p>
 
       <div className="space-y-4">
@@ -185,16 +191,22 @@ export default function SignsPage() {
 
       <div className="mt-8 flex flex-wrap gap-3">
         <Link
-          href="/learn/self-exam"
+          href="/screener"
           className="bg-brand hover:bg-brand-dark text-white font-semibold px-6 py-3 rounded-full transition-colors"
         >
-          How to do a self-exam →
+          Take the free screener →
         </Link>
         <Link
-          href="/screener"
+          href="/learn/self-exam"
           className="bg-white hover:bg-warm-dim text-ink font-semibold px-6 py-3 rounded-full transition-colors border border-warm-dim"
         >
-          Check your risk
+          How to do a self-exam
+        </Link>
+        <Link
+          href="/learn/oral-cancer"
+          className="bg-white hover:bg-warm-dim text-ink font-semibold px-6 py-3 rounded-full transition-colors border border-warm-dim"
+        >
+          What is oral cancer?
         </Link>
         <Link
           href="/learn/canker-sore-vs-oral-cancer"

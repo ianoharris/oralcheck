@@ -174,9 +174,15 @@ export default function PreventionPage() {
           How to Prevent Oral Cancer
         </h1>
         <p className="text-lg text-ink-soft leading-relaxed mb-10">
-          Oral cancer isn't entirely preventable — some risk factors, like age
-          and genetics, aren't in your control. But the biggest ones are. Here's
-          what the evidence actually supports.
+          <Link
+            href="/learn/oral-cancer"
+            className="text-brand underline underline-offset-2 hover:text-brand-dark"
+          >
+            Oral cancer
+          </Link>{" "}
+          isn&apos;t entirely preventable — some risk factors, like age and
+          genetics, aren&apos;t in your control. But the biggest ones are.
+          Here&apos;s what the evidence actually supports.
         </p>
 
         {/* Steps */}
@@ -261,7 +267,13 @@ export default function PreventionPage() {
             href="/screener"
             className="bg-brand hover:bg-brand-dark text-white font-semibold px-6 py-3 rounded-full transition-colors"
           >
-            Check your risk →
+            Take the free screener →
+          </Link>
+          <Link
+            href="/learn/signs"
+            className="bg-white hover:bg-warm-dim text-ink font-semibold px-6 py-3 rounded-full transition-colors border border-warm-dim"
+          >
+            Warning signs to watch for
           </Link>
           <Link
             href="/learn/self-exam"
