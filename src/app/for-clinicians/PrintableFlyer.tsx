@@ -65,18 +65,28 @@ export default function PrintableFlyer() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [practice, setPractice] = useState(searchParams.get("practice") ?? "");
+  const [contact, setContact] = useState(searchParams.get("contact") ?? "");
   const [copied, setCopied] = useState(false);
 
-  const handlePracticeChange = useCallback(
-    (val: string) => {
-      setPractice(val);
-      const params = new URLSearchParams(searchParams.toString());
-      if (val) params.set("practice", val);
-      else params.delete("practice");
-      router.replace(`?${params.toString()}`, { scroll: false });
+  const updateParams = useCallback(
+    (newPractice: string, newContact: string) => {
+      const params = new URLSearchParams();
+      if (newPractice) params.set("practice", newPractice);
+      if (newContact) params.set("contact", newContact);
+      router.replace(params.toString() ? `?${params.toString()}` : "?", { scroll: false });
     },
-    [searchParams, router]
+    [router]
   );
+
+  const handlePracticeChange = (val: string) => {
+    setPractice(val);
+    updateParams(val, contact);
+  };
+
+  const handleContactChange = (val: string) => {
+    setContact(val);
+    updateParams(practice, val);
+  };
 
   const handleCopyLink = () => {
     navigator.clipboard.writeText(window.location.href);
@@ -86,12 +96,23 @@ export default function PrintableFlyer() {
 
   return (
     <>
+      {/*
+        Print fix: visibility:hidden collapses everything including nested wrappers,
+        then we selectively restore just the flyer tree. Unlike display:none on body>*,
+        this works regardless of how deeply Next.js nests the app.
+      */}
       <style>{`
         @media print {
-          body > * { display: none !important; }
-          #flyer-print-root { display: block !important; }
-          #flyer-print-root * { display: revert !important; }
-          @page { margin: 0.5in; size: letter portrait; }
+          body * { visibility: hidden; }
+          #flyer-print-root,
+          #flyer-print-root * { visibility: visible; }
+          #flyer-print-root {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+          }
+          @page { margin: 0.4in; size: letter portrait; }
         }
       `}</style>
 
@@ -99,13 +120,13 @@ export default function PrintableFlyer() {
       <div className="print:hidden mb-8 bg-white rounded-2xl border border-warm-dim p-6 sm:p-8">
         <h2 className="font-serif text-2xl text-ink mb-1">Customize your flyer</h2>
         <p className="text-sm text-ink-soft mb-5">
-          Add your practice name and it will appear on the flyer. Print it, post it, done.
+          Your practice name appears as a prominent banner on the flyer. Add a phone
+          number or website and it shows up too.
         </p>
-        <div className="space-y-4">
+        <div className="space-y-3 mb-5">
           <div>
             <label htmlFor="practice-name" className="block text-sm font-semibold text-ink mb-1.5">
-              Practice name{" "}
-              <span className="font-normal text-ink-soft">(optional)</span>
+              Practice name
             </label>
             <input
               id="practice-name"
@@ -116,39 +137,53 @@ export default function PrintableFlyer() {
               className="w-full max-w-md rounded-xl border border-warm-dim bg-warm px-4 py-2.5 text-sm text-ink placeholder:text-ink-soft/60 focus:outline-none focus:ring-2 focus:ring-brand/30"
             />
           </div>
-
-          <div className="flex flex-wrap gap-3">
-            <button
-              onClick={() => window.print()}
-              className="bg-brand hover:bg-brand-dark text-white font-semibold px-6 py-2.5 rounded-full text-sm transition-colors"
-            >
-              Print flyer
-            </button>
-            {practice && (
-              <button
-                onClick={handleCopyLink}
-                className="bg-white hover:bg-warm-dim text-ink font-semibold px-6 py-2.5 rounded-full text-sm border border-warm-dim transition-colors"
-              >
-                {copied ? "✓ Link copied!" : "Copy shareable link"}
-              </button>
-            )}
+          <div>
+            <label htmlFor="practice-contact" className="block text-sm font-semibold text-ink mb-1.5">
+              Phone or website{" "}
+              <span className="font-normal text-ink-soft">(optional)</span>
+            </label>
+            <input
+              id="practice-contact"
+              type="text"
+              value={contact}
+              onChange={(e) => handleContactChange(e.target.value)}
+              placeholder="e.g. (608) 555-0100 or lakesidedental.com"
+              className="w-full max-w-md rounded-xl border border-warm-dim bg-warm px-4 py-2.5 text-sm text-ink placeholder:text-ink-soft/60 focus:outline-none focus:ring-2 focus:ring-brand/30"
+            />
           </div>
+        </div>
 
-          {practice && (
-            <p className="text-xs text-ink-soft">
-              Share the link above with your office — anyone who opens it will see the same customized flyer.
-            </p>
+        <div className="flex flex-wrap gap-3">
+          <button
+            onClick={() => window.print()}
+            className="bg-brand hover:bg-brand-dark text-white font-semibold px-6 py-2.5 rounded-full text-sm transition-colors"
+          >
+            Print flyer
+          </button>
+          {(practice || contact) && (
+            <button
+              onClick={handleCopyLink}
+              className="bg-white hover:bg-warm-dim text-ink font-semibold px-6 py-2.5 rounded-full text-sm border border-warm-dim transition-colors"
+            >
+              {copied ? "✓ Link copied!" : "Copy shareable link"}
+            </button>
           )}
         </div>
+        {(practice || contact) && (
+          <p className="text-xs text-ink-soft mt-3">
+            Share the link above and anyone who opens it sees the same customized flyer.
+          </p>
+        )}
       </div>
 
       {/* Flyer */}
       <div id="flyer-print-root">
         <div className="bg-white w-full max-w-[800px] mx-auto shadow-sm border border-warm-dim overflow-hidden rounded-2xl print:rounded-none print:shadow-none print:border-0">
+
           {/* Top teal bar */}
           <div className="h-2 bg-brand" />
 
-          {/* Header */}
+          {/* Header row */}
           <div className="flex justify-between items-center px-8 pt-5 pb-3">
             <div className="flex items-center gap-2">
               <div className="w-2.5 h-2.5 rounded-full bg-accent flex-shrink-0" />
@@ -159,13 +194,31 @@ export default function PrintableFlyer() {
             </div>
           </div>
 
+          {/* Practice banner — only shown when practice name is set */}
+          {practice && (
+            <div className="mx-6 mb-1 rounded-xl bg-brand px-6 py-3 flex items-center justify-between gap-4">
+              <div>
+                <div className="text-white/70 text-[10px] font-semibold tracking-widest uppercase mb-0.5">
+                  Presented by
+                </div>
+                <div className="text-white font-bold text-lg leading-tight">{practice}</div>
+                {contact && (
+                  <div className="text-white/80 text-xs mt-0.5">{contact}</div>
+                )}
+              </div>
+              <div className="text-white/20 font-serif text-5xl leading-none select-none" aria-hidden>
+                ❝
+              </div>
+            </div>
+          )}
+
           {/* Main content */}
-          <div className="px-8 pb-6">
-            <div className="text-[10px] font-bold tracking-[0.2em] text-brand mb-4">
+          <div className="px-8 pt-4 pb-6">
+            <div className="text-[10px] font-bold tracking-[0.2em] text-brand mb-3">
               ORAL CANCER AWARENESS
             </div>
 
-            <h2 className="font-serif text-[3.25rem] leading-[1.05] text-ink mb-4">
+            <h2 className="font-serif text-[3rem] leading-[1.05] text-ink mb-4">
               2 minutes
               <br />
               could{" "}
@@ -174,12 +227,12 @@ export default function PrintableFlyer() {
               your life.
             </h2>
 
-            <p className="text-ink-soft text-[15px] leading-relaxed mb-6 max-w-lg">
+            <p className="text-ink-soft text-[15px] leading-relaxed mb-5 max-w-lg">
               Oral cancer is one of the most underdiagnosed cancers — largely because
               early symptoms look ordinary. Take a free, private risk check while you wait.
             </p>
 
-            <div className="border-t border-warm-dim mb-6" />
+            <div className="border-t border-warm-dim mb-5" />
 
             {/* Features + QR */}
             <div className="flex gap-8 items-start">
@@ -190,12 +243,8 @@ export default function PrintableFlyer() {
                       {f.icon}
                     </div>
                     <div>
-                      <div className="font-semibold text-ink text-sm leading-snug">
-                        {f.title}
-                      </div>
-                      <div className="text-ink-soft text-xs leading-relaxed mt-0.5">
-                        {f.desc}
-                      </div>
+                      <div className="font-semibold text-ink text-sm leading-snug">{f.title}</div>
+                      <div className="text-ink-soft text-xs leading-relaxed mt-0.5">{f.desc}</div>
                     </div>
                   </div>
                 ))}
@@ -212,20 +261,13 @@ export default function PrintableFlyer() {
                     level="M"
                   />
                 </div>
-                <span className="text-[10px] font-bold tracking-wider text-brand">
-                  ↑ SCAN TO START
-                </span>
+                <span className="text-[10px] font-bold tracking-wider text-brand">↑ SCAN TO START</span>
                 <span className="text-[10px] text-ink-soft font-mono">oralcheck.org</span>
-                {practice && (
-                  <span className="text-[10px] text-ink-soft text-center max-w-[160px] leading-snug mt-0.5">
-                    Provided by {practice}
-                  </span>
-                )}
               </div>
             </div>
 
             {/* Stats */}
-            <div className="flex gap-6 mt-6 pt-6 border-t border-warm-dim">
+            <div className="flex gap-6 mt-5 pt-5 border-t border-warm-dim">
               {stats.map((s) => (
                 <div key={s.value} className="flex-1 pb-2 border-b-2 border-brand">
                   <div className="text-[1.6rem] font-bold text-brand leading-none">{s.value}</div>
@@ -235,7 +277,7 @@ export default function PrintableFlyer() {
             </div>
 
             {/* Warning signs */}
-            <div className="bg-brand rounded-xl p-4 mt-6">
+            <div className="bg-brand rounded-xl p-4 mt-5">
               <div className="flex flex-wrap gap-2 items-center">
                 <span className="text-white text-[10px] font-bold tracking-widest mr-1">
                   WARNING SIGNS
