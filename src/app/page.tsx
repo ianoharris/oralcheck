@@ -127,6 +127,13 @@ export default function Home() {
             <p className="text-xs text-ink-soft pt-2">
               Not a medical diagnosis. An educational awareness tool.
             </p>
+            <div className="flex items-center gap-2 pt-1">
+              <span className="inline-block w-1.5 h-1.5 rounded-full bg-brand flex-shrink-0" />
+              <span className="text-xs text-ink-soft">
+                Shared by the{" "}
+                <span className="font-semibold text-ink">Wisconsin Dental Association</span>
+              </span>
+            </div>
           </div>
 
           <div className="md:col-span-2">

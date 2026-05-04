@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
 import PrintableFlyer from "./PrintableFlyer";
+import EmbedBlock from "./EmbedBlock";
 
 export const metadata: Metadata = {
   title: "For Dental Professionals | OralCheck",
@@ -107,6 +108,9 @@ export default function ForCliniciansPage() {
           screen result to schedule a full clinical evaluation.
         </p>
       </section>
+
+      {/* Embed code */}
+      <EmbedBlock />
 
       {/* Flyer section */}
       <div className="mb-2">
