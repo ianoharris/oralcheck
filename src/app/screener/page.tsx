@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { questions } from "@/lib/questions";
 import ProgressBar from "@/components/ProgressBar";
 import QuestionCard from "@/components/QuestionCard";
@@ -11,6 +12,8 @@ export default function ScreenerPage() {
   const router = useRouter();
   const [index, setIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
+  const dirRef = useRef(1); // 1 = forward, -1 = back
+  const reduced = useReducedMotion();
 
   const q = questions[index];
   const isLast = index === questions.length - 1;
@@ -22,6 +25,7 @@ export default function ScreenerPage() {
 
   const handleNext = useCallback(() => {
     if (!selected) return;
+    dirRef.current = 1;
     if (isLast) {
       try {
         sessionStorage.setItem("oralcheck:answers", JSON.stringify(answers));
@@ -34,12 +38,12 @@ export default function ScreenerPage() {
 
   const handleBack = () => {
     if (index === 0) return;
+    dirRef.current = -1;
     setIndex((i) => i - 1);
   };
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      // Ignore if user is typing in an input
       if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
 
       const num = parseInt(e.key, 10);
@@ -47,15 +51,8 @@ export default function ScreenerPage() {
         handleSelect(q.options[num - 1].id);
         return;
       }
-
-      if (e.key === "Enter") {
-        handleNext();
-        return;
-      }
-
-      if (e.key === "Backspace" || e.key === "ArrowLeft") {
-        handleBack();
-      }
+      if (e.key === "Enter") { handleNext(); return; }
+      if (e.key === "Backspace" || e.key === "ArrowLeft") { handleBack(); }
     };
 
     window.addEventListener("keydown", handleKeyDown);
@@ -63,23 +60,35 @@ export default function ScreenerPage() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [q.options, handleSelect, handleNext]);
 
+  const slideX = reduced ? 0 : 36;
+
   return (
     <div className="max-w-2xl mx-auto px-5 py-10 sm:py-16">
       <div className="mb-10">
         <ProgressBar current={index + 1} total={questions.length} />
       </div>
 
-      <QuestionCard
-        question={q}
-        selected={selected}
-        onSelect={handleSelect}
-      />
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.div
+          key={q.id}
+          initial={reduced ? false : { opacity: 0, x: dirRef.current * slideX }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={reduced ? {} : { opacity: 0, x: dirRef.current * -slideX }}
+          transition={{ duration: 0.22, ease: [0.32, 0, 0.67, 0] }}
+        >
+          <QuestionCard
+            question={q}
+            selected={selected}
+            onSelect={handleSelect}
+          />
+        </motion.div>
+      </AnimatePresence>
 
       <div className="mt-10 flex items-center justify-between">
         {index > 0 ? (
           <button
             onClick={handleBack}
-            className="text-sm font-medium text-ink-soft hover:text-ink px-4 py-2 rounded-full"
+            className="text-sm font-medium text-ink-soft hover:text-ink px-4 py-2 rounded-full transition-colors"
           >
             ← Back
           </button>
@@ -91,13 +100,14 @@ export default function ScreenerPage() {
             Exit
           </Link>
         )}
-        <button
+        <motion.button
           onClick={handleNext}
           disabled={!selected}
+          whileTap={selected && !reduced ? { scale: 0.97 } : {}}
           className="bg-brand hover:bg-brand-dark disabled:bg-warm-dim disabled:text-ink-soft disabled:cursor-not-allowed text-white font-semibold px-6 py-3 rounded-full transition-colors"
         >
           {isLast ? "See my results →" : "Next →"}
-        </button>
+        </motion.button>
       </div>
 
       <p className="text-xs text-ink-soft text-center mt-10">

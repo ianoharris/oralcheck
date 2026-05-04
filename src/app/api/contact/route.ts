@@ -2,7 +2,10 @@ import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 import { checkRateLimit, getIp } from "@/lib/rateLimit";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Lazy init so missing key at build time doesn't break static analysis
+function getResend() {
+  return new Resend(process.env.RESEND_API_KEY);
+}
 
 export async function POST(req: NextRequest) {
   const ip = getIp(req);
@@ -29,6 +32,7 @@ export async function POST(req: NextRequest) {
   }
 
   try {
+    const resend = getResend();
     await resend.emails.send({
       from: "OralCheck Feedback <onboarding@resend.dev>",
       to: "ioharris@wisc.edu",
