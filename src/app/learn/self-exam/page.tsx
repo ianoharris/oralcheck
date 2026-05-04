@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import LearnReadNext from "@/components/LearnReadNext";
 
 export const metadata: Metadata = {
   title: "How to Do an Oral Cancer Self-Exam | OralCheck",
@@ -219,6 +220,7 @@ export default function SelfExamPage() {
           Find a dentist
         </Link>
       </div>
+      <LearnReadNext currentHref="/learn/self-exam" />
     </article>
   );
 }

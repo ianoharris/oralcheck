@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import LearnReadNext from "@/components/LearnReadNext";
 
 export const metadata: Metadata = {
   title: "Canker Sore vs Oral Cancer: How to Tell the Difference | OralCheck",
@@ -337,6 +338,7 @@ export default function CankerSorePage() {
             Find a dentist →
           </Link>
         </div>
+        <LearnReadNext currentHref="/learn/canker-sore-vs-oral-cancer" />
       </article>
     </>
   );

@@ -2,58 +2,7 @@
 
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
-
-const articles = [
-  {
-    href: "/learn/signs",
-    tag: "Symptoms",
-    title: "Signs & Warning Symptoms",
-    description: "Red and white patches, sores that don't heal, lumps, and numbness — what to look for and when to act.",
-    icon: "⚠️",
-  },
-  {
-    href: "/learn/self-exam",
-    tag: "How-to",
-    title: "How to Do a 2-Minute Self-Exam",
-    description: "Step-by-step: lips, gums, tongue, floor of mouth, palate, throat. All you need is a mirror.",
-    icon: "🔎",
-  },
-  {
-    href: "/learn/facts",
-    tag: "Facts",
-    title: "Oral Cancer Facts & Stats",
-    description: "Incidence, survival rates by stage, who's most affected, and the growing role of HPV.",
-    icon: "📊",
-  },
-  {
-    href: "/learn/hpv",
-    tag: "Risk Factor",
-    title: "HPV and Oral Cancer",
-    description: "HPV-16 is now the leading cause of throat cancer in the US. What that means, who's at risk, and how the vaccine helps.",
-    icon: "🦠",
-  },
-  {
-    href: "/learn/prevention",
-    tag: "Prevention",
-    title: "How to Prevent Oral Cancer",
-    description: "Six evidence-based steps: quit tobacco, limit alcohol, get vaccinated, protect your lips, and get screened regularly.",
-    icon: "🛡️",
-  },
-  {
-    href: "/learn/oral-cancer",
-    tag: "Overview",
-    title: "What Is Oral Cancer?",
-    description: "Definition, types, key statistics, causes, and what the warning signs look like — a plain-English overview.",
-    icon: "📖",
-  },
-  {
-    href: "/learn/canker-sore-vs-oral-cancer",
-    tag: "Comparison",
-    title: "Canker Sore vs. Oral Cancer",
-    description: "They can look similar. Here's how to tell them apart — and when a sore in your mouth needs a clinical eye.",
-    icon: "🔬",
-  },
-];
+import { learnArticles as articles } from "@/lib/learnArticles";
 
 export default function AnimatedLearnCards() {
   const reduced = useReducedMotion();

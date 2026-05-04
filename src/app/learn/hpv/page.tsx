@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import LearnReadNext from "@/components/LearnReadNext";
 
 export const metadata: Metadata = {
   title: "HPV and Oral Cancer: What You Need to Know | OralCheck",
@@ -323,6 +324,7 @@ export default function HpvPage() {
             Prevention guide
           </Link>
         </div>
+        <LearnReadNext currentHref="/learn/hpv" />
       </article>
     </>
   );

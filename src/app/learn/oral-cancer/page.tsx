@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import LearnReadNext from "@/components/LearnReadNext";
 
 export const metadata: Metadata = {
   title: "What Is Oral Cancer? Definition, Types & Key Facts | OralCheck",
@@ -415,6 +416,7 @@ export default function OralCancerPage() {
             How to do a self-exam
           </Link>
         </div>
+        <LearnReadNext currentHref="/learn/oral-cancer" />
       </article>
     </>
   );

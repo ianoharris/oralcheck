@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import LearnReadNext from "@/components/LearnReadNext";
 
 export const metadata: Metadata = {
   title: "Signs & Symptoms of Oral Cancer | OralCheck",
@@ -215,6 +216,7 @@ export default function SignsPage() {
           Canker sore vs oral cancer
         </Link>
       </div>
+      <LearnReadNext currentHref="/learn/signs" />
     </article>
   );
 }
