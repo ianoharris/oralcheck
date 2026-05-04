@@ -2,7 +2,6 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import Link from "next/link";
-import HeroResultCard from "./HeroResultCard";
 
 const items = [0, 1, 2, 3, 4]; // stagger indices for left column children
 
@@ -77,9 +76,21 @@ export default function HeroSection() {
           </motion.div>
         </div>
 
-        {/* Right column — sample result card */}
+        {/* Right column — gentle float */}
         <div className="md:col-span-2">
-          <HeroResultCard />
+          <motion.div
+            aria-hidden
+            className="aspect-square rounded-3xl bg-gradient-to-br from-brand-soft via-warm-dim to-warm-dim flex items-center justify-center relative overflow-hidden"
+            animate={reduced ? {} : { y: [0, -10, 0] }}
+            transition={reduced ? {} : { duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <div className="absolute inset-6 rounded-2xl border border-brand/20" />
+            <div className="relative text-center px-6">
+              <div className="text-6xl mb-3">🦷</div>
+              <div className="font-serif text-2xl text-brand">Know early.</div>
+              <div className="font-serif text-2xl text-accent">Act early.</div>
+            </div>
+          </motion.div>
         </div>
 
       </div>
