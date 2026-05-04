@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "commit": "git add -A && git commit -m \"Add oral cancer SEO page, internal linking, footer credential note\n\nCo-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>\""
+    "commit": "git add -A && git commit -m \"cleanup\""
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.90.0",
