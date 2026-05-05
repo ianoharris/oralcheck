@@ -1,5 +1,5 @@
 import Link from "next/link";
-import HeroSection from "@/components/HeroSectionWide";
+import HeroSection from "@/components/HeroSection";
 import AnimatedStats from "@/components/AnimatedStats";
 import FadeUp from "@/components/FadeUp";
 
