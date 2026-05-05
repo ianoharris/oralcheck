@@ -51,12 +51,13 @@ export default function HeroHolographicCard() {
   const specBg = useMotionTemplate`radial-gradient(circle at ${specX}% ${specY}%, rgba(255,255,255,0.65) 0%, rgba(255,255,255,0.12) 32%, transparent 62%)`;
   const specOpacity = useTransform(sHov, [0, 1], [0, 1]);
 
-  // Iridescent layer — large 200% gradient shifts position with mouse
-  // so you see broad colour washes, not tight banded circles
-  const iriPosX = useTransform(smx, [0, 1], [0, 100]);
-  const iriPosY = useTransform(smy, [0, 1], [0, 100]);
+  // Iridescent layer — 400% gradient, mix-blend-mode:color so only the hue
+  // is applied (no brightness bloom). You see one smooth colour zone at a
+  // time as the mouse moves, never a rainbow circle.
+  const iriPosX = useTransform(smx, [0, 1], [0, 75]);
+  const iriPosY = useTransform(smy, [0, 1], [0, 75]);
   const iriPos = useMotionTemplate`${iriPosX}% ${iriPosY}%`;
-  const iriOpacity = useTransform(sHov, [0, 1], [0.0, 0.09]);
+  const iriOpacity = useTransform(sHov, [0, 1], [0.0, 0.55]);
 
   // Edge glow — soft radial from the lit side
   const edgeBg = useMotionTemplate`radial-gradient(ellipse at ${specX}% ${specY}%, rgba(13,115,119,0.18) 0%, transparent 70%)`;
@@ -114,18 +115,18 @@ export default function HeroHolographicCard() {
               />
             </svg>
 
-            {/* 3. Iridescent sheen — 200% gradient shifts position so colours
-                   sweep broadly rather than appearing as tight bands */}
+            {/* 3. Iridescent sheen — 400% gradient + mix-blend-mode:color
+                   Only the hue is blended; no brightness bloom or circle. */}
             <motion.div
               aria-hidden
               className="absolute inset-0 pointer-events-none rounded-3xl"
               style={{
                 backgroundImage:
-                  "linear-gradient(135deg, hsl(0,90%,68%), hsl(45,90%,68%), hsl(100,90%,68%), hsl(160,90%,68%), hsl(210,90%,68%), hsl(270,90%,68%), hsl(320,90%,68%), hsl(360,90%,68%))",
-                backgroundSize: "200% 200%",
+                  "linear-gradient(135deg, hsl(0,70%,60%), hsl(60,70%,60%), hsl(120,70%,60%), hsl(180,70%,60%), hsl(240,70%,60%), hsl(300,70%,60%), hsl(360,70%,60%))",
+                backgroundSize: "400% 400%",
                 backgroundPosition: iriPos,
                 opacity: iriOpacity,
-                mixBlendMode: "screen",
+                mixBlendMode: "color",
               }}
             />
 
