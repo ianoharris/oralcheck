@@ -2,7 +2,7 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import Link from "next/link";
-import HeroHolographicCard from "./HeroHolographicCard";
+import HeroToothIllustration from "./HeroToothIllustration";
 
 const items = [0, 1, 2, 3, 4]; // stagger indices for left column children
 
@@ -70,9 +70,9 @@ export default function HeroSection() {
           </motion.div>
         </div>
 
-        {/* Right column — holographic card */}
+        {/* Right column — faded tooth illustration */}
         <div className="md:col-span-2">
-          <HeroHolographicCard />
+          <HeroToothIllustration />
         </div>
 
       </div>
