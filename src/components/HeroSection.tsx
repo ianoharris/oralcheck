@@ -2,7 +2,7 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import Link from "next/link";
-import HeroToothCard from "./HeroToothCard";
+import HeroHolographicCard from "./HeroHolographicCard";
 
 const items = [0, 1, 2, 3, 4]; // stagger indices for left column children
 
@@ -67,19 +67,12 @@ export default function HeroSection() {
             <p className="text-xs text-ink-soft">
               Not a medical diagnosis. An educational awareness tool.
             </p>
-            <div className="flex items-center gap-2 pt-1">
-              <span className="inline-block w-1.5 h-1.5 rounded-full bg-brand flex-shrink-0" />
-              <span className="text-xs text-ink-soft">
-                Shared by the{" "}
-                <span className="font-semibold text-ink">Wisconsin Dental Association</span>
-              </span>
-            </div>
           </motion.div>
         </div>
 
-        {/* Right column — interactive tooth card */}
+        {/* Right column — holographic card */}
         <div className="md:col-span-2">
-          <HeroToothCard />
+          <HeroHolographicCard />
         </div>
 
       </div>
