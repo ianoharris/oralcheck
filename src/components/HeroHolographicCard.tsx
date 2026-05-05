@@ -40,27 +40,26 @@ export default function HeroHolographicCard() {
     my.set(0.5);
   }, [hov, mx, my]);
 
-  // 3-D tilt
-  const rotX = useTransform(smy, [0, 1], [16, -16]);
-  const rotY = useTransform(smx, [0, 1], [-16, 16]);
-  const scale = useTransform(sHov, [0, 1], [1, 1.035]);
+  // 3-D tilt — subtle
+  const rotX = useTransform(smy, [0, 1], [7, -7]);
+  const rotY = useTransform(smx, [0, 1], [-7, 7]);
+  const scale = useTransform(sHov, [0, 1], [1, 1.025]);
 
   // Specular highlight — sharp white blob that chases the cursor
   const specX = useTransform(smx, [0, 1], [0, 100]);
   const specY = useTransform(smy, [0, 1], [0, 100]);
-  const specBg = useMotionTemplate`radial-gradient(circle at ${specX}% ${specY}%, rgba(255,255,255,0.72) 0%, rgba(255,255,255,0.18) 28%, transparent 58%)`;
+  const specBg = useMotionTemplate`radial-gradient(circle at ${specX}% ${specY}%, rgba(255,255,255,0.65) 0%, rgba(255,255,255,0.12) 32%, transparent 62%)`;
   const specOpacity = useTransform(sHov, [0, 1], [0, 1]);
 
-  // Iridescent layer — hue rotates with X position
-  const iriDeg = useTransform(smx, [0, 1], [80, 280]);
-  const iriBg = useMotionTemplate`linear-gradient(${iriDeg}deg,
-    hsl(0,100%,68%), hsl(50,100%,68%), hsl(110,100%,68%),
-    hsl(180,100%,68%), hsl(230,100%,68%), hsl(280,100%,68%),
-    hsl(330,100%,68%), hsl(360,100%,68%))`;
-  const iriOpacity = useTransform(sHov, [0, 1], [0.0, 0.18]);
+  // Iridescent layer — large 200% gradient shifts position with mouse
+  // so you see broad colour washes, not tight banded circles
+  const iriPosX = useTransform(smx, [0, 1], [0, 100]);
+  const iriPosY = useTransform(smy, [0, 1], [0, 100]);
+  const iriPos = useMotionTemplate`${iriPosX}% ${iriPosY}%`;
+  const iriOpacity = useTransform(sHov, [0, 1], [0.0, 0.09]);
 
   // Edge glow — soft radial from the lit side
-  const edgeBg = useMotionTemplate`radial-gradient(ellipse at ${specX}% ${specY}%, rgba(13,115,119,0.22) 0%, transparent 70%)`;
+  const edgeBg = useMotionTemplate`radial-gradient(ellipse at ${specX}% ${specY}%, rgba(13,115,119,0.18) 0%, transparent 70%)`;
 
   if (reduced) {
     return (
@@ -115,12 +114,16 @@ export default function HeroHolographicCard() {
               />
             </svg>
 
-            {/* 3. Iridescent sheen */}
+            {/* 3. Iridescent sheen — 200% gradient shifts position so colours
+                   sweep broadly rather than appearing as tight bands */}
             <motion.div
               aria-hidden
               className="absolute inset-0 pointer-events-none rounded-3xl"
               style={{
-                background: iriBg,
+                backgroundImage:
+                  "linear-gradient(135deg, hsl(0,90%,68%), hsl(45,90%,68%), hsl(100,90%,68%), hsl(160,90%,68%), hsl(210,90%,68%), hsl(270,90%,68%), hsl(320,90%,68%), hsl(360,90%,68%))",
+                backgroundSize: "200% 200%",
+                backgroundPosition: iriPos,
                 opacity: iriOpacity,
                 mixBlendMode: "screen",
               }}
