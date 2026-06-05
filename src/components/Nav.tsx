@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import ThemeToggle from "@/components/ThemeToggle";
 
 const links = [
   { href: "/screener", label: "Screener" },
@@ -27,24 +28,27 @@ export default function Nav() {
           />
           OralCheck
         </Link>
-        <nav className="flex gap-1 sm:gap-2">
-          {links.map(({ href, label }) => {
-            const active = pathname === href || pathname.startsWith(href + "/");
-            return (
-              <Link
-                key={href}
-                href={href}
-                className={`text-sm font-medium px-3 py-1.5 rounded-full transition-colors ${
-                  active
-                    ? "bg-brand text-warm"
-                    : "text-ink-soft hover:text-ink hover:bg-warm-dim"
-                }`}
-              >
-                {label}
-              </Link>
-            );
-          })}
-        </nav>
+        <div className="flex items-center gap-1 sm:gap-2">
+          <nav className="flex gap-1 sm:gap-2">
+            {links.map(({ href, label }) => {
+              const active = pathname === href || pathname.startsWith(href + "/");
+              return (
+                <Link
+                  key={href}
+                  href={href}
+                  className={`text-sm font-medium px-3 py-1.5 rounded-full transition-colors ${
+                    active
+                      ? "bg-brand text-warm"
+                      : "text-ink-soft hover:text-ink hover:bg-warm-dim"
+                  }`}
+                >
+                  {label}
+                </Link>
+              );
+            })}
+          </nav>
+          <ThemeToggle />
+        </div>
       </div>
     </header>
   );

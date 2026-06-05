@@ -10,7 +10,6 @@ const PHOTO_URL =
 const EXPO = [0.16, 1, 0.3, 1] as const;
 
 // ── Word-by-word blur reveal ─────────────────────────────────────────────────
-// Each word enters with opacity + y-lift + blur clear — 21st.dev-style
 function WordBlur({
   words,
   startDelay = 0,
@@ -22,11 +21,12 @@ function WordBlur({
 }) {
   const reduced = useReducedMotion();
   return (
-    <>
+    // inline-flex + gap keeps words properly spaced regardless of display context
+    <span style={{ display: "inline-flex", gap: "0.24em", flexWrap: "nowrap" }}>
       {words.map((word, i) => (
         <motion.span
           key={`${word}-${i}`}
-          style={{ display: "inline-block", color, marginRight: "0.22em" }}
+          style={{ display: "inline-block", color }}
           initial={reduced ? false : { opacity: 0, y: 28, filter: "blur(10px)" }}
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
           transition={{
@@ -38,7 +38,7 @@ function WordBlur({
           {word}
         </motion.span>
       ))}
-    </>
+    </span>
   );
 }
 
@@ -60,7 +60,7 @@ export default function HeroSectionPhoto() {
     >
       {/* ── Left text panel ──────────────────────────── */}
       <div
-        className="flex flex-col px-6 sm:px-12 lg:px-20 pt-10 pb-12 flex-shrink-0"
+        className="flex flex-col px-6 sm:px-12 lg:px-20 pt-16 pb-12 flex-shrink-0"
         style={{ minHeight: "100dvh", width: "46%" }}
       >
         {/* Overline */}
@@ -71,7 +71,7 @@ export default function HeroSectionPhoto() {
             letterSpacing: "0.22em",
             textTransform: "uppercase",
             color: "#9b9790",
-            marginBottom: "3rem",
+            marginBottom: "2rem",
           }}
           initial={reduced ? false : { opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -95,8 +95,8 @@ export default function HeroSectionPhoto() {
           <span style={{ display: "block" }}>
             <WordBlur words={["2", "minutes"]} startDelay={0.15} color="#2d2d2d" />
           </span>
-          {/* Line 2: "could save" — mixed colors */}
-          <span style={{ display: "block" }}>
+          {/* Line 2: "could save" — mixed colors, flex row keeps spacing */}
+          <span style={{ display: "flex", gap: "0.24em" }}>
             <WordBlur words={["could"]} startDelay={0.32} color="#2d2d2d" />
             <WordBlur words={["save"]} startDelay={0.41} color="#e8634a" />
           </span>
@@ -193,14 +193,24 @@ export default function HeroSectionPhoto() {
           </motion.div>
         </motion.div>
 
-        <motion.p
-          style={{ fontSize: "11px", color: "#aaa89f", marginTop: "1.2rem" }}
+        <motion.div
+          style={{ marginTop: "1.2rem", display: "flex", flexDirection: "column", gap: "0.4rem" }}
           initial={reduced ? false : { opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 1.1 }}
         >
-          Not a medical diagnosis. An educational awareness tool.
-        </motion.p>
+          <p style={{ fontSize: "11px", color: "#aaa89f" }}>
+            Not a medical diagnosis. An educational awareness tool.
+          </p>
+          <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+            <span style={{ display: "inline-block", width: "6px", height: "6px", borderRadius: "50%", backgroundColor: "#0d7377", flexShrink: 0 }} />
+            <p style={{ fontSize: "11px", color: "#6b6b6b" }}>
+              Featured in{" "}
+              <span style={{ fontWeight: 600, color: "#2d2d2d" }}>The Drill</span>
+              {" · Wisconsin Dental Association"}
+            </p>
+          </div>
+        </motion.div>
       </div>
 
       {/* ── Right photo panel ────────────────────────── */}
