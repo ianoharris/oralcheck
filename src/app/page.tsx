@@ -1,7 +1,8 @@
 import Link from "next/link";
-import HeroSection from "@/components/HeroSection";
+import HeroSectionPhoto from "@/components/HeroSectionPhoto";
 import AnimatedStats from "@/components/AnimatedStats";
 import FadeUp from "@/components/FadeUp";
+import LogoMarquee from "@/components/LogoMarquee";
 
 const SITE_URL = "https://oralcheck.org";
 
@@ -84,8 +85,8 @@ export default function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      {/* Hero — animated client component */}
-      <HeroSection />
+      {/* Hero */}
+      <HeroSectionPhoto />
 
       {/* Stats — count-up on scroll */}
       <AnimatedStats />
@@ -130,6 +131,9 @@ export default function Home() {
           </blockquote>
         </section>
       </FadeUp>
+
+      {/* Logo marquee */}
+      <LogoMarquee />
     </div>
   );
 }
