@@ -19,7 +19,7 @@ export default function AnimatedLearnCards() {
         >
           <Link
             href={href}
-            className="group flex flex-col h-full bg-white rounded-2xl border border-warm-dim p-6 hover:border-brand/40 hover:shadow-md transition-all duration-200"
+            className="group flex flex-col h-full bg-warm-dim rounded-2xl border border-warm-dim p-6 hover:border-brand/40 hover:shadow-md transition-all duration-200"
           >
             <div className="flex items-center gap-2 mb-4">
               <span className="text-2xl" aria-hidden>{icon}</span>

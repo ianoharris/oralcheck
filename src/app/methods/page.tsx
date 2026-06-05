@@ -210,7 +210,7 @@ export default function MethodsPage() {
             </thead>
             <tbody className="divide-y divide-warm-dim">
               {factors.map((f) => (
-                <tr key={f.factor} className="bg-white hover:bg-warm/50 transition-colors">
+                <tr key={f.factor} className="bg-warm-dim hover:bg-warm/50 transition-colors">
                   <td className="px-4 py-3 text-ink font-medium">
                     {f.factor}
                     {f.note && (

@@ -110,11 +110,11 @@ export default function HeroToothCard() {
       )}
 
       {/* Frosted card */}
-      <div className="relative aspect-square rounded-3xl bg-white/70 backdrop-blur-lg border border-white/60 shadow-xl overflow-hidden flex flex-col items-center justify-center gap-6 px-8">
+      <div className="relative aspect-square rounded-3xl bg-warm/80 backdrop-blur-lg border border-white/60 shadow-xl overflow-hidden flex flex-col items-center justify-center gap-6 px-8">
         <ClinicalToothSVG />
 
         {/* Clinical footer bar */}
-        <div className="absolute bottom-0 inset-x-0 border-t border-brand/10 px-5 py-3 flex items-center justify-between bg-white/40 backdrop-blur-sm">
+        <div className="absolute bottom-0 inset-x-0 border-t border-brand/10 px-5 py-3 flex items-center justify-between bg-warm/50 backdrop-blur-sm">
           <span className="text-[10px] font-mono text-ink-soft uppercase tracking-widest">Oral examination</span>
           <span className="flex items-center gap-1.5">
             <span className="w-1.5 h-1.5 rounded-full bg-brand animate-pulse" />

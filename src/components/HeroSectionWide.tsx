@@ -49,7 +49,7 @@ export default function HeroSectionWide() {
         </Link>
         <Link
           href="/learn"
-          className="bg-white hover:bg-warm-dim text-ink px-8 py-4 rounded-full font-semibold text-lg transition-colors border border-warm-dim"
+          className="bg-warm-dim hover:bg-warm-dim text-ink px-8 py-4 rounded-full font-semibold text-lg transition-colors border border-warm-dim"
         >
           Learn the signs
         </Link>

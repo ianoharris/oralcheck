@@ -203,7 +203,7 @@ export default function OralCancerPage() {
         </p>
 
         {/* Definition */}
-        <div className="bg-white border border-warm-dim rounded-2xl p-6 sm:p-8 mb-6">
+        <div className="bg-warm-dim border border-warm-dim rounded-2xl p-6 sm:p-8 mb-6">
           <h2 className="font-serif text-2xl text-ink mb-3">Definition</h2>
           <p className="text-ink-soft leading-relaxed mb-3">
             <strong className="text-ink">Oral cancer</strong> is an umbrella
@@ -231,7 +231,7 @@ export default function OralCancerPage() {
             {types.map((t) => (
               <div
                 key={t.name}
-                className="bg-white border border-warm-dim rounded-2xl p-6 sm:p-8"
+                className="bg-warm-dim border border-warm-dim rounded-2xl p-6 sm:p-8"
               >
                 <div className="flex flex-wrap items-center gap-3 mb-2">
                   <h3 className="font-semibold text-ink text-lg">{t.name}</h3>
@@ -254,7 +254,7 @@ export default function OralCancerPage() {
             {stats.map((s) => (
               <div
                 key={s.label}
-                className="bg-white border border-warm-dim rounded-2xl p-5"
+                className="bg-warm-dim border border-warm-dim rounded-2xl p-5"
               >
                 <div className="font-mono text-3xl sm:text-4xl text-brand font-semibold">
                   {s.value}
@@ -284,7 +284,7 @@ export default function OralCancerPage() {
             {causes.map((c, i) => (
               <div
                 key={c.factor}
-                className="bg-white border border-warm-dim rounded-xl p-5 flex gap-4"
+                className="bg-warm-dim border border-warm-dim rounded-xl p-5 flex gap-4"
               >
                 <div className="flex-shrink-0 font-mono text-xs text-brand font-semibold w-6 mt-0.5">
                   {String(i + 1).padStart(2, "0")}
@@ -315,7 +315,7 @@ export default function OralCancerPage() {
 
         {/* What does it look like */}
         <section className="mb-6">
-          <div className="bg-white border border-warm-dim rounded-2xl p-6 sm:p-8">
+          <div className="bg-warm-dim border border-warm-dim rounded-2xl p-6 sm:p-8">
             <h2 className="font-serif text-2xl text-ink mb-3">
               What does it look like?
             </h2>
@@ -372,7 +372,7 @@ export default function OralCancerPage() {
             {faqs.map((faq) => (
               <details
                 key={faq.q}
-                className="bg-white border border-warm-dim rounded-2xl group"
+                className="bg-warm-dim border border-warm-dim rounded-2xl group"
               >
                 <summary className="flex items-center justify-between px-6 py-4 cursor-pointer list-none font-semibold text-ink">
                   {faq.q}
@@ -405,13 +405,13 @@ export default function OralCancerPage() {
           </Link>
           <Link
             href="/learn/signs"
-            className="bg-white hover:bg-warm-dim text-ink font-semibold px-6 py-3 rounded-full transition-colors border border-warm-dim"
+            className="bg-warm-dim hover:bg-warm-dim text-ink font-semibold px-6 py-3 rounded-full transition-colors border border-warm-dim"
           >
             Learn warning signs
           </Link>
           <Link
             href="/learn/self-exam"
-            className="bg-white hover:bg-warm-dim text-ink font-semibold px-6 py-3 rounded-full transition-colors border border-warm-dim"
+            className="bg-warm-dim hover:bg-warm-dim text-ink font-semibold px-6 py-3 rounded-full transition-colors border border-warm-dim"
           >
             How to do a self-exam
           </Link>

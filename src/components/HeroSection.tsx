@@ -55,7 +55,7 @@ export default function HeroSection() {
               </Link>
               <Link
                 href="/learn"
-                className="bg-white hover:bg-warm-dim text-ink px-7 py-3.5 rounded-full font-semibold transition-colors border border-warm-dim"
+                className="bg-warm-dim hover:bg-warm-dim text-ink px-7 py-3.5 rounded-full font-semibold transition-colors border border-warm-dim"
               >
                 Learn the signs
               </Link>

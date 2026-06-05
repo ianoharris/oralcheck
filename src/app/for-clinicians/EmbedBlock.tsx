@@ -19,7 +19,7 @@ export default function EmbedBlock() {
   };
 
   return (
-    <section className="bg-white rounded-2xl border border-warm-dim p-6 sm:p-8 mb-6">
+    <section className="bg-warm-dim rounded-2xl border border-warm-dim p-6 sm:p-8 mb-6">
       <h2 className="font-serif text-2xl text-ink mb-2">Embed on your practice website</h2>
       <p className="text-ink-soft text-sm leading-relaxed mb-4">
         Paste this anywhere on your website — a patient education page, an appointment

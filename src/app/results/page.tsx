@@ -291,7 +291,7 @@ export default function ResultsPage() {
       )}
 
       {/* Risk card */}
-      <div className="bg-white rounded-3xl border border-warm-dim p-6 sm:p-10">
+      <div className="bg-warm-dim rounded-3xl border border-warm-dim p-6 sm:p-10">
         <div className="grid grid-cols-1 md:grid-cols-5 gap-8 items-center">
           <div className="md:col-span-2">
             <RiskGauge result={result} />
@@ -336,7 +336,7 @@ export default function ResultsPage() {
             {result.factors.map((f) => (
               <div
                 key={f.questionId}
-                className="bg-white rounded-2xl border border-warm-dim p-5"
+                className="bg-warm-dim rounded-2xl border border-warm-dim p-5"
               >
                 <div className="flex items-start gap-4">
                   <div className="text-2xl" aria-hidden>
@@ -367,7 +367,7 @@ export default function ResultsPage() {
           {nextSteps.map((step, i) => (
             <div
               key={step.title}
-              className="bg-white rounded-2xl border border-warm-dim p-5 flex gap-4 items-start"
+              className="bg-warm-dim rounded-2xl border border-warm-dim p-5 flex gap-4 items-start"
             >
               <div className="flex-shrink-0 w-7 h-7 rounded-full bg-brand/10 text-brand text-xs font-bold flex items-center justify-center mt-0.5">
                 {i + 1}
@@ -402,7 +402,7 @@ export default function ResultsPage() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="group bg-white rounded-2xl border border-warm-dim p-5 hover:border-brand/40 transition-all"
+                className="group bg-warm-dim rounded-2xl border border-warm-dim p-5 hover:border-brand/40 transition-all"
               >
                 <div className="text-2xl mb-2" aria-hidden>
                   {link.icon}
@@ -432,7 +432,7 @@ export default function ResultsPage() {
         </Link>
         <button
           onClick={handleShare}
-          className="bg-white hover:bg-warm-dim text-ink font-semibold px-6 py-4 rounded-2xl transition-colors border border-warm-dim text-center"
+          className="bg-warm-dim hover:bg-warm text-ink font-semibold px-6 py-4 rounded-2xl transition-colors border border-warm-dim text-center"
         >
           {copied ? "✓ Link copied!" : "Share with someone you care about"}
         </button>

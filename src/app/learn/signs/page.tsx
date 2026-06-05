@@ -164,7 +164,7 @@ export default function SignsPage() {
         {signs.map((s, i) => (
           <div
             key={s.title}
-            className="bg-white rounded-2xl border border-warm-dim p-5"
+            className="bg-warm-dim rounded-2xl border border-warm-dim p-5"
           >
             <div className="flex gap-4">
               <div className="font-mono text-sm text-brand font-semibold shrink-0 w-8">
@@ -199,19 +199,19 @@ export default function SignsPage() {
         </Link>
         <Link
           href="/learn/self-exam"
-          className="bg-white hover:bg-warm-dim text-ink font-semibold px-6 py-3 rounded-full transition-colors border border-warm-dim"
+          className="bg-warm-dim hover:bg-warm-dim text-ink font-semibold px-6 py-3 rounded-full transition-colors border border-warm-dim"
         >
           How to do a self-exam
         </Link>
         <Link
           href="/learn/oral-cancer"
-          className="bg-white hover:bg-warm-dim text-ink font-semibold px-6 py-3 rounded-full transition-colors border border-warm-dim"
+          className="bg-warm-dim hover:bg-warm-dim text-ink font-semibold px-6 py-3 rounded-full transition-colors border border-warm-dim"
         >
           What is oral cancer?
         </Link>
         <Link
           href="/learn/canker-sore-vs-oral-cancer"
-          className="bg-white hover:bg-warm-dim text-ink font-semibold px-6 py-3 rounded-full transition-colors border border-warm-dim"
+          className="bg-warm-dim hover:bg-warm-dim text-ink font-semibold px-6 py-3 rounded-full transition-colors border border-warm-dim"
         >
           Canker sore vs oral cancer
         </Link>

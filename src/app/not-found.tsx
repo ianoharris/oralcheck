@@ -19,7 +19,7 @@ export default function NotFound() {
         </Link>
         <Link
           href="/learn"
-          className="bg-white hover:bg-warm-dim text-ink font-semibold px-6 py-3 rounded-full transition-colors border border-warm-dim"
+          className="bg-warm-dim hover:bg-warm-dim text-ink font-semibold px-6 py-3 rounded-full transition-colors border border-warm-dim"
         >
           Browse learn
         </Link>

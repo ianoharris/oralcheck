@@ -20,7 +20,7 @@ export default function AboutPage() {
         — and take the next step toward care.
       </p>
 
-      <section className="bg-white rounded-2xl border border-warm-dim p-6 sm:p-8 mb-6">
+      <section className="bg-warm-dim rounded-2xl border border-warm-dim p-6 sm:p-8 mb-6">
         <h2 className="font-serif text-2xl text-ink mb-3">Why this exists</h2>
         <p className="text-ink-soft leading-relaxed mb-3">
           Oral cancer is one of the most underdiagnosed cancers in the United
@@ -35,7 +35,7 @@ export default function AboutPage() {
         </p>
       </section>
 
-      <section className="bg-white rounded-2xl border border-warm-dim p-6 sm:p-8 mb-6">
+      <section className="bg-warm-dim rounded-2xl border border-warm-dim p-6 sm:p-8 mb-6">
         <h2 className="font-serif text-2xl text-ink mb-3">Who built this</h2>
         <p className="text-ink-soft leading-relaxed mb-3">
           OralCheck was built by me, a predental student at the University of
@@ -66,7 +66,7 @@ export default function AboutPage() {
         </p>
       </section>
 
-      <section className="bg-white rounded-2xl border border-warm-dim p-6 sm:p-8 mb-6">
+      <section className="bg-warm-dim rounded-2xl border border-warm-dim p-6 sm:p-8 mb-6">
         <h2 className="font-serif text-2xl text-ink mb-3">How it works</h2>
         <ul className="space-y-3 text-ink-soft leading-relaxed">
           <li>
@@ -87,7 +87,7 @@ export default function AboutPage() {
         </ul>
       </section>
 
-      <section className="bg-white rounded-2xl border border-warm-dim p-6 sm:p-8 mb-6">
+      <section className="bg-warm-dim rounded-2xl border border-warm-dim p-6 sm:p-8 mb-6">
         <h2 className="font-serif text-2xl text-ink mb-3">Sources &amp; references</h2>
         <ul className="space-y-2 text-sm text-ink-soft leading-relaxed list-disc pl-5">
           <li>American Cancer Society — Key Statistics for Oral Cavity and Oropharyngeal Cancers</li>
@@ -119,13 +119,13 @@ export default function AboutPage() {
         </Link>
         <Link
           href="/find-care"
-          className="bg-white hover:bg-warm-dim text-ink font-semibold px-6 py-3 rounded-full transition-colors border border-warm-dim"
+          className="bg-warm-dim hover:bg-warm-dim text-ink font-semibold px-6 py-3 rounded-full transition-colors border border-warm-dim"
         >
           Find care
         </Link>
       </div>
 
-      <section id="feedback" className="bg-white rounded-2xl border border-warm-dim p-6 sm:p-8 mt-6">
+      <section id="feedback" className="bg-warm-dim rounded-2xl border border-warm-dim p-6 sm:p-8 mt-6">
         <h2 className="font-serif text-2xl text-ink mb-1">Get in touch</h2>
         <p className="text-ink-soft leading-relaxed mb-5 text-sm">
           Found a bug, have a suggestion, or just want to say something? I read

@@ -18,7 +18,7 @@ export default function LearnReadNext({ currentHref }: Props) {
           <Link
             key={href}
             href={href}
-            className="group flex flex-col bg-white rounded-2xl border border-warm-dim p-5 hover:border-brand/40 hover:shadow-md transition-all duration-200"
+            className="group flex flex-col bg-warm-dim rounded-2xl border border-warm-dim p-5 hover:border-brand/40 hover:shadow-md transition-all duration-200"
           >
             <div className="flex items-center gap-2 mb-3">
               <span className="text-xl" aria-hidden>{icon}</span>
