@@ -50,13 +50,11 @@ export default function HeroSectionPhoto() {
   const photoY = useTransform(scrollY, [0, 600], ["0%", "-8%"]);
 
   const imgFilter = "blur(2px) brightness(1.15) saturate(0.85) contrast(1)";
-  const fadeGradient =
-    "linear-gradient(to right, #faf9f6 0%, rgba(250,249,246,0.80) 21%, transparent 60%)";
 
   return (
     <section
       className="min-h-[100dvh] flex flex-col lg:flex-row overflow-hidden"
-      style={{ background: "#faf9f6" }}
+      style={{ background: "var(--color-warm)" }}
     >
       {/* ── Left text panel ──────────────────────────── */}
       <div
@@ -70,7 +68,7 @@ export default function HeroSectionPhoto() {
             fontWeight: 700,
             letterSpacing: "0.22em",
             textTransform: "uppercase",
-            color: "#9b9790",
+            color: "var(--color-ink-soft)",
             marginBottom: "2rem",
           }}
           initial={reduced ? false : { opacity: 0 }}
@@ -87,17 +85,17 @@ export default function HeroSectionPhoto() {
             fontSize: "clamp(3.2rem, 6.8vw, 6.2rem)",
             letterSpacing: "-0.02em",
             lineHeight: 1.05,
-            color: "#2d2d2d",
+            color: "var(--color-ink)",
             marginBottom: "2.5rem",
           }}
         >
           {/* Line 1: "2 minutes" */}
           <span style={{ display: "block" }}>
-            <WordBlur words={["2", "minutes"]} startDelay={0.15} color="#2d2d2d" />
+            <WordBlur words={["2", "minutes"]} startDelay={0.15} color="var(--color-ink)" />
           </span>
           {/* Line 2: "could save" — mixed colors, flex row keeps spacing */}
           <span style={{ display: "flex", gap: "0.24em" }}>
-            <WordBlur words={["could"]} startDelay={0.32} color="#2d2d2d" />
+            <WordBlur words={["could"]} startDelay={0.32} color="var(--color-ink)" />
             <WordBlur words={["save"]} startDelay={0.41} color="#e8634a" />
           </span>
           {/* Line 3: "your life." */}
@@ -110,7 +108,7 @@ export default function HeroSectionPhoto() {
         <motion.div
           style={{
             height: "1px",
-            background: "#e0ddd6",
+            background: "var(--color-warm-dim)",
             marginBottom: "1.4rem",
             transformOrigin: "left",
           }}
@@ -124,7 +122,7 @@ export default function HeroSectionPhoto() {
           style={{
             fontSize: "0.97rem",
             lineHeight: "1.68",
-            color: "#6b6b6b",
+            color: "var(--color-ink-soft)",
             maxWidth: "38ch",
             marginBottom: "1.5rem",
           }}
@@ -177,8 +175,8 @@ export default function HeroSectionPhoto() {
             <Link
               href="/learn"
               style={{
-                border: "1px solid #d6d3cc",
-                color: "#2d2d2d",
+                border: "1px solid var(--color-warm-dim)",
+                color: "var(--color-ink)",
                 padding: "0.85rem 1.75rem",
                 borderRadius: "9999px",
                 fontWeight: 600,
@@ -199,14 +197,14 @@ export default function HeroSectionPhoto() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 1.1 }}
         >
-          <p style={{ fontSize: "11px", color: "#aaa89f" }}>
+          <p style={{ fontSize: "11px", color: "var(--color-ink-soft)" }}>
             Not a medical diagnosis. An educational awareness tool.
           </p>
           <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
             <span style={{ display: "inline-block", width: "6px", height: "6px", borderRadius: "50%", backgroundColor: "#0d7377", flexShrink: 0 }} />
-            <p style={{ fontSize: "11px", color: "#6b6b6b" }}>
+            <p style={{ fontSize: "11px", color: "var(--color-ink-soft)" }}>
               Featured in{" "}
-              <span style={{ fontWeight: 600, color: "#2d2d2d" }}>The Drill</span>
+              <span style={{ fontWeight: 600, color: "var(--color-ink)" }}>The Drill</span>
               {" · Wisconsin Dental Association"}
             </p>
           </div>
@@ -246,7 +244,7 @@ export default function HeroSectionPhoto() {
           style={{
             position: "absolute",
             inset: 0,
-            background: fadeGradient,
+            background: "var(--hero-photo-fade)",
             pointerEvents: "none",
           }}
         />
@@ -256,7 +254,7 @@ export default function HeroSectionPhoto() {
             position: "absolute",
             inset: "auto 0 0",
             height: "18%",
-            background: "linear-gradient(to top, rgba(250,249,246,0.5) 0%, transparent 100%)",
+            background: "var(--hero-photo-bottom)",
             pointerEvents: "none",
           }}
         />
