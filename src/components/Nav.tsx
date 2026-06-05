@@ -7,6 +7,7 @@ const links = [
   { href: "/screener", label: "Screener" },
   { href: "/find-care", label: "Find Care" },
   { href: "/learn", label: "Learn" },
+  { href: "/for-clinicians", label: "For Clinicians" },
   { href: "/about", label: "About" },
 ];
 

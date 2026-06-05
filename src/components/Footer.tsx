@@ -20,6 +20,7 @@ export default function Footer() {
             <li><Link href="/about" className="hover:text-brand">About</Link></li>
             <li><Link href="/about#feedback" className="hover:text-brand">Send Feedback</Link></li>
             <li><Link href="/qr" className="hover:text-brand">Print &amp; Share</Link></li>
+            <li><Link href="/methods" className="hover:text-brand">Methods</Link></li>
           </ul>
         </div>
         <div>
@@ -46,6 +47,7 @@ export default function Footer() {
       <div className="border-t border-warm-dim">
         <div className="max-w-6xl mx-auto px-5 py-4 text-xs text-ink-soft flex flex-col sm:flex-row justify-between gap-2">
           <span>© {new Date().getFullYear()} OralCheck</span>
+          <Link href="/methods" className="hover:text-brand transition-colors">Methods</Link>
           <span>Not affiliated with any medical institution.</span>
         </div>
       </div>
