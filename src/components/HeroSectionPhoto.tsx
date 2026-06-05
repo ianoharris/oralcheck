@@ -9,27 +9,36 @@ const PHOTO_URL =
 
 const EXPO = [0.16, 1, 0.3, 1] as const;
 
-function LineReveal({
-  children,
-  delay,
+// ── Word-by-word blur reveal ─────────────────────────────────────────────────
+// Each word enters with opacity + y-lift + blur clear — 21st.dev-style
+function WordBlur({
+  words,
+  startDelay = 0,
   color,
 }: {
-  children: React.ReactNode;
-  delay: number;
+  words: string[];
+  startDelay?: number;
   color?: string;
 }) {
   const reduced = useReducedMotion();
   return (
-    <span style={{ display: "block", overflow: "hidden", lineHeight: 1.08 }}>
-      <motion.span
-        style={{ display: "block", color }}
-        initial={reduced ? false : { y: "105%" }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.72, delay, ease: EXPO }}
-      >
-        {children}
-      </motion.span>
-    </span>
+    <>
+      {words.map((word, i) => (
+        <motion.span
+          key={`${word}-${i}`}
+          style={{ display: "inline-block", color, marginRight: "0.22em" }}
+          initial={reduced ? false : { opacity: 0, y: 28, filter: "blur(10px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          transition={{
+            duration: 0.65,
+            delay: startDelay + i * 0.09,
+            ease: EXPO,
+          }}
+        >
+          {word}
+        </motion.span>
+      ))}
+    </>
   );
 }
 
@@ -41,8 +50,6 @@ export default function HeroSectionPhoto() {
   const photoY = useTransform(scrollY, [0, 600], ["0%", "-8%"]);
 
   const imgFilter = "blur(2px) brightness(1.15) saturate(0.85) contrast(1)";
-
-  // fadeWidth: 60%, fadeStrength: 80% → mid-stop at 21%, opacity 0.80
   const fadeGradient =
     "linear-gradient(to right, #faf9f6 0%, rgba(250,249,246,0.80) 21%, transparent 60%)";
 
@@ -51,9 +58,9 @@ export default function HeroSectionPhoto() {
       className="min-h-[100dvh] flex flex-col lg:flex-row overflow-hidden"
       style={{ background: "#faf9f6" }}
     >
-      {/* ── Left text panel (46% wide) ───────────────── */}
+      {/* ── Left text panel ──────────────────────────── */}
       <div
-        className="flex flex-col justify-between px-6 sm:px-12 lg:px-20 pt-14 pb-10 flex-shrink-0"
+        className="flex flex-col px-6 sm:px-12 lg:px-20 pt-10 pb-12 flex-shrink-0"
         style={{ minHeight: "100dvh", width: "46%" }}
       >
         {/* Overline */}
@@ -64,6 +71,7 @@ export default function HeroSectionPhoto() {
             letterSpacing: "0.22em",
             textTransform: "uppercase",
             color: "#9b9790",
+            marginBottom: "3rem",
           }}
           initial={reduced ? false : { opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -72,121 +80,127 @@ export default function HeroSectionPhoto() {
           Free · Private · Evidence-based
         </motion.p>
 
-        {/* Headline */}
-        <div style={{ flex: 1, display: "flex", alignItems: "center", paddingBlock: "2.5rem" }}>
-          <h1
-            className="font-serif"
-            style={{
-              fontSize: "clamp(3.2rem, 6.8vw, 6.2rem)",
-              letterSpacing: "-0.02em",
-              color: "#2d2d2d",
-            }}
-          >
-            <LineReveal delay={0.18}>2 minutes</LineReveal>
-            <LineReveal delay={0.30}>
-              could <span style={{ color: "#e8634a" }}>save</span>
-            </LineReveal>
-            <LineReveal delay={0.42} color="#0d7377">
-              your life.
-            </LineReveal>
-          </h1>
-        </div>
+        {/* Headline — word-blur stagger */}
+        <h1
+          className="font-serif"
+          style={{
+            fontSize: "clamp(3.2rem, 6.8vw, 6.2rem)",
+            letterSpacing: "-0.02em",
+            lineHeight: 1.05,
+            color: "#2d2d2d",
+            marginBottom: "2.5rem",
+          }}
+        >
+          {/* Line 1: "2 minutes" */}
+          <span style={{ display: "block" }}>
+            <WordBlur words={["2", "minutes"]} startDelay={0.15} color="#2d2d2d" />
+          </span>
+          {/* Line 2: "could save" — mixed colors */}
+          <span style={{ display: "block" }}>
+            <WordBlur words={["could"]} startDelay={0.32} color="#2d2d2d" />
+            <WordBlur words={["save"]} startDelay={0.41} color="#e8634a" />
+          </span>
+          {/* Line 3: "your life." */}
+          <span style={{ display: "block" }}>
+            <WordBlur words={["your", "life."]} startDelay={0.52} color="#0d7377" />
+          </span>
+        </h1>
 
-        {/* Bottom: rule + body + CTAs */}
-        <div>
+        {/* Rule */}
+        <motion.div
+          style={{
+            height: "1px",
+            background: "#e0ddd6",
+            marginBottom: "1.4rem",
+            transformOrigin: "left",
+          }}
+          initial={reduced ? false : { scaleX: 0 }}
+          animate={{ scaleX: 1 }}
+          transition={{ duration: 0.7, delay: 0.7, ease: EXPO }}
+        />
+
+        {/* Body */}
+        <motion.p
+          style={{
+            fontSize: "0.97rem",
+            lineHeight: "1.68",
+            color: "#6b6b6b",
+            maxWidth: "38ch",
+            marginBottom: "1.5rem",
+          }}
+          initial={reduced ? false : { opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.55, delay: 0.82, ease: EXPO }}
+        >
+          Oral cancer is one of the most underdiagnosed cancers, largely
+          because early symptoms look ordinary. OralCheck helps you
+          understand your risk in minutes and points you toward care.
+        </motion.p>
+
+        {/* CTAs */}
+        <motion.div
+          className="flex flex-wrap gap-3"
+          initial={reduced ? false : { opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.94, ease: EXPO }}
+        >
           <motion.div
-            style={{
-              height: "1px",
-              background: "#e0ddd6",
-              marginBottom: "1.4rem",
-              transformOrigin: "left",
-            }}
-            initial={reduced ? false : { scaleX: 0 }}
-            animate={{ scaleX: 1 }}
-            transition={{ duration: 0.7, delay: 0.6, ease: EXPO }}
-          />
-
-          <motion.p
-            style={{
-              fontSize: "0.97rem",
-              lineHeight: "1.68",
-              color: "#6b6b6b",
-              maxWidth: "38ch",
-              marginBottom: "1.5rem",
-            }}
-            initial={reduced ? false : { opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, delay: 0.72, ease: EXPO }}
+            whileHover={reduced ? {} : { scale: 1.04, y: -2 }}
+            whileTap={reduced ? {} : { scale: 0.97 }}
+            transition={{ type: "spring", stiffness: 420, damping: 22 }}
           >
-            Oral cancer is one of the most underdiagnosed cancers, largely
-            because early symptoms look ordinary. OralCheck helps you
-            understand your risk in minutes and points you toward care.
-          </motion.p>
-
-          <motion.div
-            className="flex flex-wrap gap-3"
-            initial={reduced ? false : { opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.84, ease: EXPO }}
-          >
-            <motion.div
-              whileHover={reduced ? {} : { scale: 1.04, y: -2 }}
-              whileTap={reduced ? {} : { scale: 0.97 }}
-              transition={{ type: "spring", stiffness: 420, damping: 22 }}
+            <Link
+              href="/screener"
+              style={{
+                backgroundColor: "#e8634a",
+                color: "#fff",
+                padding: "0.85rem 1.75rem",
+                borderRadius: "9999px",
+                fontWeight: 600,
+                fontSize: "0.875rem",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "6px",
+                textDecoration: "none",
+                boxShadow: "0 4px 18px rgba(232,99,74,0.28)",
+              }}
             >
-              <Link
-                href="/screener"
-                style={{
-                  backgroundColor: "#e8634a",
-                  color: "#fff",
-                  padding: "0.85rem 1.75rem",
-                  borderRadius: "9999px",
-                  fontWeight: 600,
-                  fontSize: "0.875rem",
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "6px",
-                  textDecoration: "none",
-                  boxShadow: "0 4px 18px rgba(232,99,74,0.28)",
-                }}
-              >
-                Start Screening →
-              </Link>
-            </motion.div>
-
-            <motion.div
-              whileHover={reduced ? {} : { scale: 1.03, y: -1 }}
-              whileTap={reduced ? {} : { scale: 0.97 }}
-              transition={{ type: "spring", stiffness: 420, damping: 22 }}
-            >
-              <Link
-                href="/learn"
-                style={{
-                  border: "1px solid #d6d3cc",
-                  color: "#2d2d2d",
-                  padding: "0.85rem 1.75rem",
-                  borderRadius: "9999px",
-                  fontWeight: 600,
-                  fontSize: "0.875rem",
-                  display: "inline-flex",
-                  alignItems: "center",
-                  textDecoration: "none",
-                }}
-              >
-                Learn the signs
-              </Link>
-            </motion.div>
+              Start Screening →
+            </Link>
           </motion.div>
 
-          <motion.p
-            style={{ fontSize: "11px", color: "#aaa89f", marginTop: "1.2rem" }}
-            initial={reduced ? false : { opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 1.0 }}
+          <motion.div
+            whileHover={reduced ? {} : { scale: 1.03, y: -1 }}
+            whileTap={reduced ? {} : { scale: 0.97 }}
+            transition={{ type: "spring", stiffness: 420, damping: 22 }}
           >
-            Not a medical diagnosis. An educational awareness tool.
-          </motion.p>
-        </div>
+            <Link
+              href="/learn"
+              style={{
+                border: "1px solid #d6d3cc",
+                color: "#2d2d2d",
+                padding: "0.85rem 1.75rem",
+                borderRadius: "9999px",
+                fontWeight: 600,
+                fontSize: "0.875rem",
+                display: "inline-flex",
+                alignItems: "center",
+                textDecoration: "none",
+              }}
+            >
+              Learn the signs
+            </Link>
+          </motion.div>
+        </motion.div>
+
+        <motion.p
+          style={{ fontSize: "11px", color: "#aaa89f", marginTop: "1.2rem" }}
+          initial={reduced ? false : { opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 1.1 }}
+        >
+          Not a medical diagnosis. An educational awareness tool.
+        </motion.p>
       </div>
 
       {/* ── Right photo panel ────────────────────────── */}
@@ -217,7 +231,6 @@ export default function HeroSectionPhoto() {
           />
         </motion.div>
 
-        {/* Left-edge fade into cream */}
         <div
           aria-hidden
           style={{
@@ -227,8 +240,6 @@ export default function HeroSectionPhoto() {
             pointerEvents: "none",
           }}
         />
-
-        {/* Bottom fade */}
         <div
           aria-hidden
           style={{

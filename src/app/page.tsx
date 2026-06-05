@@ -3,6 +3,7 @@ import HeroSectionPhoto from "@/components/HeroSectionPhoto";
 import AnimatedStats from "@/components/AnimatedStats";
 import FadeUp from "@/components/FadeUp";
 import LogoMarquee from "@/components/LogoMarquee";
+import InstagramFeed from "@/components/InstagramFeed";
 
 const SITE_URL = "https://oralcheck.org";
 
@@ -134,6 +135,33 @@ export default function Home() {
 
       {/* Logo marquee */}
       <LogoMarquee />
+
+      {/* Instagram feed */}
+      {process.env.NEXT_PUBLIC_BEHOLD_WIDGET_ID && (
+        <section className="max-w-6xl mx-auto px-5 py-20">
+          <FadeUp>
+            <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-8">
+              <div>
+                <p className="text-xs font-semibold tracking-widest text-brand uppercase mb-2">
+                  Follow along
+                </p>
+                <h2 className="font-serif text-3xl sm:text-4xl text-ink">
+                  @oralcheckdotorg
+                </h2>
+              </div>
+              <a
+                href="https://www.instagram.com/oralcheckdotorg"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="self-start sm:self-auto border border-brand text-brand hover:bg-brand hover:text-white font-semibold px-5 py-2.5 rounded-full text-sm transition-colors"
+              >
+                Follow on Instagram →
+              </a>
+            </div>
+          </FadeUp>
+          <InstagramFeed widgetId={process.env.NEXT_PUBLIC_BEHOLD_WIDGET_ID} />
+        </section>
+      )}
     </div>
   );
 }
