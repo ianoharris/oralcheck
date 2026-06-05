@@ -5,13 +5,26 @@ import { useEffect, useState } from "react";
 export default function ThemeToggle() {
   const [dark, setDark] = useState(false);
 
-  // Initialise from localStorage on mount
+  // On mount: use stored preference, or fall back to system preference
   useEffect(() => {
     const stored = localStorage.getItem("theme");
-    if (stored === "dark") {
-      document.documentElement.setAttribute("data-theme", "dark");
-      setDark(true);
-    }
+    const prefersDark =
+      stored === "dark" ||
+      (stored === null && window.matchMedia("(prefers-color-scheme: dark)").matches);
+
+    setDark(prefersDark);
+    document.documentElement.setAttribute("data-theme", prefersDark ? "dark" : "light");
+
+    // Watch system preference changes — only apply if user hasn't manually set a preference
+    const mq = window.matchMedia("(prefers-color-scheme: dark)");
+    const handleSystemChange = (e: MediaQueryListEvent) => {
+      if (localStorage.getItem("theme") === null) {
+        setDark(e.matches);
+        document.documentElement.setAttribute("data-theme", e.matches ? "dark" : "light");
+      }
+    };
+    mq.addEventListener("change", handleSystemChange);
+    return () => mq.removeEventListener("change", handleSystemChange);
   }, []);
 
   const toggle = () => {

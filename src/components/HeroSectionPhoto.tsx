@@ -58,8 +58,8 @@ export default function HeroSectionPhoto() {
     >
       {/* ── Left text panel ──────────────────────────── */}
       <div
-        className="flex flex-col px-6 sm:px-12 lg:px-20 pt-16 pb-12 flex-shrink-0"
-        style={{ minHeight: "100dvh", width: "46%" }}
+        className="flex flex-col px-6 sm:px-10 lg:px-20 pt-16 pb-12 flex-shrink-0 w-full lg:w-[46%]"
+        style={{ minHeight: "100dvh" }}
       >
         {/* Overline */}
         <motion.p
@@ -214,8 +214,8 @@ export default function HeroSectionPhoto() {
       {/* ── Right photo panel ────────────────────────── */}
       <motion.div
         ref={photoRef}
-        className="relative overflow-hidden"
-        style={{ minHeight: "50vh", flex: 1 }}
+        className="hidden lg:block relative overflow-hidden"
+        style={{ minHeight: "100dvh", flex: 1 }}
         initial={reduced ? false : { clipPath: "inset(0 100% 0 0)" }}
         animate={{ clipPath: "inset(0 0% 0 0)" }}
         transition={{ duration: 1.0, delay: 0.1, ease: EXPO }}
