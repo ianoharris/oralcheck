@@ -106,7 +106,7 @@ export default function Home() {
             <FadeUp key={href} delay={i * 0.1}>
               <Link
                 href={href}
-                className="group flex flex-col h-full p-7 rounded-2xl bg-white border border-warm-dim hover:border-brand/40 hover:shadow-md transition-all duration-200"
+                className="group flex flex-col h-full p-7 rounded-2xl bg-warm-dim border border-warm-dim hover:border-brand/40 hover:shadow-md transition-all duration-200"
               >
                 <h3 className="font-serif text-2xl text-ink mb-3 group-hover:text-brand transition-colors">
                   {title}

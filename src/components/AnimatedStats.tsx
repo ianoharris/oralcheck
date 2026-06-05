@@ -57,7 +57,7 @@ export default function AnimatedStats() {
   const inView = useInView(ref, { once: true, margin: "-60px" });
 
   return (
-    <section className="border-y border-warm-dim bg-white/60">
+    <section className="border-y border-warm-dim bg-warm-dim/60">
       <div
         ref={ref}
         className="max-w-6xl mx-auto px-5 py-10 grid grid-cols-1 sm:grid-cols-3 gap-6"

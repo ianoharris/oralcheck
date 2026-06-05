@@ -48,7 +48,7 @@ body {
 /* ── Dark mode ───────────────────────────────────────────────────────────── */
 html[data-theme="dark"] {
   --color-warm: #111110;
-  --color-warm-dim: #1d1d1b;
+  --color-warm-dim: #242422; /* card surfaces — visibly elevated above page bg */
   --color-ink: #e6e2dc;
   --color-ink-soft: #8a8680;
   --color-brand-soft: #072223;
