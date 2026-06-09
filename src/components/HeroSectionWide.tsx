@@ -16,7 +16,7 @@ export default function HeroSectionWide() {
         };
 
   return (
-    <section className="max-w-4xl mx-auto px-5 pt-32 sm:pt-44 pb-16 text-center">
+    <section className="max-w-4xl mx-auto px-5 pt-40 sm:pt-56 pb-20 text-center">
       <motion.div {...fadeItem(0)}>
         <span className="inline-block text-xs font-semibold uppercase tracking-wider text-brand bg-brand-soft px-3 py-1 rounded-full">
           Free · Private · Evidence-based
@@ -49,21 +49,14 @@ export default function HeroSectionWide() {
         </Link>
         <Link
           href="/learn"
-          className="bg-white hover:bg-warm-dim text-ink px-8 py-4 rounded-full font-semibold text-lg transition-colors border border-warm-dim"
+          className="bg-warm-dim hover:bg-warm-dim text-ink px-8 py-4 rounded-full font-semibold text-lg transition-colors border border-warm-dim"
         >
           Learn the signs
         </Link>
       </motion.div>
 
-      <motion.div {...fadeItem(4)} className="mt-6 space-y-1">
+      <motion.div {...fadeItem(4)} className="mt-6">
         <p className="text-xs text-ink-soft">Not a medical diagnosis. An educational awareness tool.</p>
-        <div className="flex items-center gap-2 justify-center">
-          <span className="inline-block w-1.5 h-1.5 rounded-full bg-brand flex-shrink-0" />
-          <span className="text-xs text-ink-soft">
-            Shared by the{" "}
-            <span className="font-semibold text-ink">Wisconsin Dental Association</span>
-          </span>
-        </div>
       </motion.div>
 
     </section>

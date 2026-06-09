@@ -37,7 +37,7 @@ export default function QuestionCard({
               className={`text-left p-5 rounded-2xl border-2 transition-all ${
                 isSelected
                   ? "border-brand bg-brand-soft"
-                  : "border-warm-dim bg-white hover:border-brand/40"
+                  : "border-warm-dim bg-warm-dim hover:border-brand/40"
               }`}
             >
               <div className="flex items-start gap-3">

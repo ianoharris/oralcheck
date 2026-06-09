@@ -22,7 +22,7 @@ export default function HeroResultCard() {
       {/* Glow behind the card */}
       <div className="absolute -inset-3 bg-brand/10 rounded-3xl blur-xl" aria-hidden />
 
-      <div className="relative bg-white rounded-2xl border border-warm-dim shadow-sm overflow-hidden">
+      <div className="relative bg-warm-dim rounded-2xl border border-warm-dim shadow-sm overflow-hidden">
         {/* Card header */}
         <div className="bg-brand/5 border-b border-warm-dim px-5 py-3 flex items-center justify-between">
           <div className="flex items-center gap-2">

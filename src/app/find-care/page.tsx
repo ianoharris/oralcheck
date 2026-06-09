@@ -126,7 +126,7 @@ export default function FindCarePage() {
 
       <form
         onSubmit={searchByQuery}
-        className="bg-white rounded-2xl border border-warm-dim p-5 mb-6 flex flex-col sm:flex-row gap-3"
+        className="bg-warm-dim rounded-2xl border border-warm-dim p-5 mb-6 flex flex-col sm:flex-row gap-3"
       >
         <input
           type="text"
@@ -146,7 +146,7 @@ export default function FindCarePage() {
           type="button"
           onClick={useMyLocation}
           disabled={loading}
-          className="bg-white hover:bg-warm-dim text-ink font-semibold px-6 py-3 rounded-xl transition-colors border border-warm-dim"
+          className="bg-warm-dim hover:bg-warm-dim text-ink font-semibold px-6 py-3 rounded-xl transition-colors border border-warm-dim"
         >
           Use my location
         </button>
@@ -167,7 +167,7 @@ export default function FindCarePage() {
             className={`text-sm font-medium px-4 py-1.5 rounded-full transition-colors ${
               filter === f.id
                 ? "bg-brand text-white"
-                : "bg-white text-ink-soft border border-warm-dim hover:text-ink"
+                : "bg-warm-dim text-ink-soft border border-warm-dim hover:text-ink"
             }`}
           >
             {f.label}
@@ -187,7 +187,7 @@ export default function FindCarePage() {
           className="lg:col-span-2 space-y-3 order-2 lg:order-1 lg:max-h-[600px] lg:overflow-y-auto lg:pr-2"
         >
           {visible.length === 0 && !loading && (
-            <div className="text-sm text-ink-soft p-5 bg-white rounded-2xl border border-warm-dim">
+            <div className="text-sm text-ink-soft p-5 bg-warm-dim rounded-2xl border border-warm-dim">
               No clinics match this filter in your area.
             </div>
           )}
@@ -218,7 +218,7 @@ export default function FindCarePage() {
         </div>
       </div>
 
-      <div className="mt-12 p-6 rounded-2xl bg-white border border-warm-dim">
+      <div className="mt-12 p-6 rounded-2xl bg-warm-dim border border-warm-dim">
         <h2 className="font-serif text-2xl text-ink mb-2">
           Can&apos;t find affordable care?
         </h2>
@@ -266,7 +266,7 @@ function ClinicCard({
     <button
       id={`clinic-${clinic.id}`}
       onClick={onSelect}
-      className={`w-full text-left bg-white rounded-2xl border p-5 transition-colors ${
+      className={`w-full text-left bg-warm-dim rounded-2xl border p-5 transition-colors ${
         selected ? "border-brand bg-brand-soft" : "border-warm-dim hover:border-brand/40"
       }`}
     >
@@ -388,7 +388,7 @@ function MapPreviewFallback({ clinics }: { clinics: Clinic[] }) {
         );
       })}
 
-      <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur rounded-xl px-4 py-2 text-xs text-ink-soft">
+      <div className="absolute bottom-4 left-4 bg-warm/95 backdrop-blur rounded-xl px-4 py-2 text-xs text-ink-soft">
         Add <code className="font-mono">NEXT_PUBLIC_GOOGLE_MAPS_API_KEY</code>{" "}
         to see the live map
       </div>

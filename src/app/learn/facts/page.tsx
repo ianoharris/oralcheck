@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import LearnReadNext from "@/components/LearnReadNext";
 
 export const metadata: Metadata = {
   title: "Oral Cancer Facts & Statistics | OralCheck",
@@ -119,7 +120,7 @@ export default function FactsPage() {
         {stats.map((s) => (
           <div
             key={s.label}
-            className="bg-white rounded-2xl border border-warm-dim p-5"
+            className="bg-warm-dim rounded-2xl border border-warm-dim p-5"
           >
             <div className="font-mono text-3xl sm:text-4xl text-brand font-semibold">
               {s.value}
@@ -136,7 +137,7 @@ export default function FactsPage() {
 
       <div className="space-y-5">
         {facts.map((f, i) => (
-          <div key={f.title} className="bg-white rounded-2xl border border-warm-dim p-6">
+          <div key={f.title} className="bg-warm-dim rounded-2xl border border-warm-dim p-6">
             <div className="font-mono text-xs text-brand mb-2">
               FACT {String(i + 1).padStart(2, "0")}
             </div>
@@ -163,17 +164,18 @@ export default function FactsPage() {
         </Link>
         <Link
           href="/learn/oral-cancer"
-          className="bg-white hover:bg-warm-dim text-ink font-semibold px-6 py-3 rounded-full transition-colors border border-warm-dim"
+          className="bg-warm-dim hover:bg-warm-dim text-ink font-semibold px-6 py-3 rounded-full transition-colors border border-warm-dim"
         >
           What is oral cancer?
         </Link>
         <Link
           href="/learn/self-exam"
-          className="bg-white hover:bg-warm-dim text-ink font-semibold px-6 py-3 rounded-full transition-colors border border-warm-dim"
+          className="bg-warm-dim hover:bg-warm-dim text-ink font-semibold px-6 py-3 rounded-full transition-colors border border-warm-dim"
         >
           Learn the self-exam
         </Link>
       </div>
+      <LearnReadNext currentHref="/learn/facts" />
     </article>
   );
 }

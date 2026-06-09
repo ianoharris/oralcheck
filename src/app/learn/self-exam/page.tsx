@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import LearnReadNext from "@/components/LearnReadNext";
 
 export const metadata: Metadata = {
   title: "How to Do an Oral Cancer Self-Exam | OralCheck",
@@ -163,7 +164,7 @@ export default function SelfExamPage() {
         {steps.map((s, i) => (
           <li
             key={s.area}
-            className="bg-white rounded-2xl border border-warm-dim p-5 flex gap-4"
+            className="bg-warm-dim rounded-2xl border border-warm-dim p-5 flex gap-4"
           >
             <div className="flex-shrink-0 w-10 h-10 rounded-full bg-brand text-white flex items-center justify-center font-semibold font-mono">
               {i + 1}
@@ -202,23 +203,24 @@ export default function SelfExamPage() {
         </Link>
         <Link
           href="/learn/signs"
-          className="bg-white hover:bg-warm-dim text-ink font-semibold px-6 py-3 rounded-full transition-colors border border-warm-dim"
+          className="bg-warm-dim hover:bg-warm-dim text-ink font-semibold px-6 py-3 rounded-full transition-colors border border-warm-dim"
         >
           Warning signs guide
         </Link>
         <Link
           href="/learn/oral-cancer"
-          className="bg-white hover:bg-warm-dim text-ink font-semibold px-6 py-3 rounded-full transition-colors border border-warm-dim"
+          className="bg-warm-dim hover:bg-warm-dim text-ink font-semibold px-6 py-3 rounded-full transition-colors border border-warm-dim"
         >
           What is oral cancer?
         </Link>
         <Link
           href="/find-care"
-          className="bg-white hover:bg-warm-dim text-ink font-semibold px-6 py-3 rounded-full transition-colors border border-warm-dim"
+          className="bg-warm-dim hover:bg-warm-dim text-ink font-semibold px-6 py-3 rounded-full transition-colors border border-warm-dim"
         >
           Find a dentist
         </Link>
       </div>
+      <LearnReadNext currentHref="/learn/self-exam" />
     </article>
   );
 }

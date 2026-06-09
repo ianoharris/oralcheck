@@ -19,10 +19,41 @@
   --font-mono: var(--font-jetbrains), ui-monospace, monospace;
 }
 
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee 28s linear infinite;
+  will-change: transform;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
 html,
 body {
   background: var(--color-warm);
   color: var(--color-ink);
+}
+
+/* ── Hero photo gradients (theme-aware) ─────────────────────────────────── */
+:root {
+  --hero-photo-fade: linear-gradient(to right, #faf9f6 0%, rgba(250,249,246,0.80) 21%, transparent 60%);
+  --hero-photo-bottom: linear-gradient(to top, rgba(250,249,246,0.5) 0%, transparent 100%);
+}
+
+/* ── Dark mode ───────────────────────────────────────────────────────────── */
+html[data-theme="dark"] {
+  --color-warm: #111110;
+  --color-warm-dim: #242422; /* card surfaces — visibly elevated above page bg */
+  --color-ink: #e6e2dc;
+  --color-ink-soft: #8a8680;
+  --color-brand-soft: #072223;
+  --hero-photo-fade: linear-gradient(to right, #111110 0%, rgba(17,17,16,0.80) 21%, transparent 60%);
+  --hero-photo-bottom: linear-gradient(to top, rgba(17,17,16,0.5) 0%, transparent 100%);
 }
 
 body {

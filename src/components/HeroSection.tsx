@@ -55,7 +55,7 @@ export default function HeroSection() {
               </Link>
               <Link
                 href="/learn"
-                className="bg-white hover:bg-warm-dim text-ink px-7 py-3.5 rounded-full font-semibold transition-colors border border-warm-dim"
+                className="bg-warm-dim hover:bg-warm-dim text-ink px-7 py-3.5 rounded-full font-semibold transition-colors border border-warm-dim"
               >
                 Learn the signs
               </Link>
@@ -66,13 +66,6 @@ export default function HeroSection() {
             <p className="text-xs text-ink-soft">
               Not a medical diagnosis. An educational awareness tool.
             </p>
-            <div className="flex items-center gap-2 pt-1">
-              <span className="inline-block w-1.5 h-1.5 rounded-full bg-brand flex-shrink-0" />
-              <span className="text-xs text-ink-soft">
-                Shared by the{" "}
-                <span className="font-semibold text-ink">Wisconsin Dental Association</span>
-              </span>
-            </div>
           </motion.div>
         </div>
 
@@ -82,7 +75,7 @@ export default function HeroSection() {
             aria-hidden
             className="aspect-square rounded-3xl bg-gradient-to-br from-brand-soft via-warm-dim to-warm-dim flex items-center justify-center relative overflow-hidden"
             animate={reduced ? {} : { y: [0, -10, 0] }}
-            transition={reduced ? {} : { duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
+            transition={reduced ? {} : { duration: 4.5, repeat: Infinity, ease: "easeInOut" as const }}
           >
             <div className="absolute inset-6 rounded-2xl border border-brand/20" />
             <div className="relative text-center px-6">

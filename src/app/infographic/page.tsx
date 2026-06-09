@@ -30,7 +30,7 @@ export default function InfographicPage() {
             </button>
             <Link
               href="/qr"
-              className="bg-white hover:bg-warm-dim text-ink font-semibold px-5 py-2.5 rounded-full text-sm transition-colors border border-warm-dim"
+              className="bg-warm-dim hover:bg-warm-dim text-ink font-semibold px-5 py-2.5 rounded-full text-sm transition-colors border border-warm-dim"
             >
               Get QR code
             </Link>
@@ -41,7 +41,7 @@ export default function InfographicPage() {
         <div
           id="infographic"
           style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
-          className="bg-white rounded-3xl overflow-hidden shadow-sm border border-warm-dim"
+          className="bg-warm-dim rounded-3xl overflow-hidden shadow-sm border border-warm-dim"
         >
           {/* Header */}
           <div style={{ background: "#0d7377" }} className="px-10 py-8 text-white">

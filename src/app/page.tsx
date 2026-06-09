@@ -1,7 +1,9 @@
 import Link from "next/link";
-import HeroSection from "@/components/HeroSectionWide";
+import HeroSectionPhoto from "@/components/HeroSectionPhoto";
 import AnimatedStats from "@/components/AnimatedStats";
 import FadeUp from "@/components/FadeUp";
+import LogoMarquee from "@/components/LogoMarquee";
+import InstagramFeed from "@/components/InstagramFeed";
 
 const SITE_URL = "https://oralcheck.org";
 
@@ -84,8 +86,8 @@ export default function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      {/* Hero — animated client component */}
-      <HeroSection />
+      {/* Hero */}
+      <HeroSectionPhoto />
 
       {/* Stats — count-up on scroll */}
       <AnimatedStats />
@@ -104,7 +106,7 @@ export default function Home() {
             <FadeUp key={href} delay={i * 0.1}>
               <Link
                 href={href}
-                className="group flex flex-col h-full p-7 rounded-2xl bg-white border border-warm-dim hover:border-brand/40 hover:shadow-md transition-all duration-200"
+                className="group flex flex-col h-full p-7 rounded-2xl bg-warm-dim border border-warm-dim hover:border-brand/40 hover:shadow-md transition-all duration-200"
               >
                 <h3 className="font-serif text-2xl text-ink mb-3 group-hover:text-brand transition-colors">
                   {title}
@@ -130,6 +132,36 @@ export default function Home() {
           </blockquote>
         </section>
       </FadeUp>
+
+      {/* Logo marquee */}
+      <LogoMarquee />
+
+      {/* Instagram feed */}
+      {process.env.NEXT_PUBLIC_BEHOLD_WIDGET_ID && (
+        <section className="max-w-6xl mx-auto px-5 py-20">
+          <FadeUp>
+            <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-8">
+              <div>
+                <p className="text-xs font-semibold tracking-widest text-brand uppercase mb-2">
+                  Follow along
+                </p>
+                <h2 className="font-serif text-3xl sm:text-4xl text-ink">
+                  @oralcheckdotorg
+                </h2>
+              </div>
+              <a
+                href="https://www.instagram.com/oralcheckdotorg"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="self-start sm:self-auto border border-brand text-brand hover:bg-brand hover:text-white font-semibold px-5 py-2.5 rounded-full text-sm transition-colors"
+              >
+                Follow on Instagram →
+              </a>
+            </div>
+          </FadeUp>
+          <InstagramFeed widgetId={process.env.NEXT_PUBLIC_BEHOLD_WIDGET_ID} />
+        </section>
+      )}
     </div>
   );
 }

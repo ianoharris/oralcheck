@@ -12,19 +12,19 @@ export default function OfflinePage() {
       <div className="flex flex-col gap-3">
         <Link
           href="/learn"
-          className="bg-white border border-warm-dim rounded-2xl px-6 py-4 font-semibold text-brand hover:bg-warm-dim transition-colors"
+          className="bg-warm-dim border border-warm-dim rounded-2xl px-6 py-4 font-semibold text-brand hover:bg-warm-dim transition-colors"
         >
           Learn about oral cancer →
         </Link>
         <Link
           href="/learn/signs"
-          className="bg-white border border-warm-dim rounded-2xl px-6 py-4 font-semibold text-brand hover:bg-warm-dim transition-colors"
+          className="bg-warm-dim border border-warm-dim rounded-2xl px-6 py-4 font-semibold text-brand hover:bg-warm-dim transition-colors"
         >
           Signs & symptoms →
         </Link>
         <Link
           href="/learn/self-exam"
-          className="bg-white border border-warm-dim rounded-2xl px-6 py-4 font-semibold text-brand hover:bg-warm-dim transition-colors"
+          className="bg-warm-dim border border-warm-dim rounded-2xl px-6 py-4 font-semibold text-brand hover:bg-warm-dim transition-colors"
         >
           Self-exam guide →
         </Link>

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import LearnReadNext from "@/components/LearnReadNext";
 
 export const metadata: Metadata = {
   title: "Canker Sore vs Oral Cancer: How to Tell the Difference | OralCheck",
@@ -244,7 +245,7 @@ export default function CankerSorePage() {
             {comparison.map((row, i) => (
               <div
                 key={row.feature}
-                className={`grid grid-cols-3 text-sm ${i % 2 === 0 ? "bg-white" : "bg-warm/40"}`}
+                className={`grid grid-cols-3 text-sm ${i % 2 === 0 ? "bg-warm-dim" : "bg-warm/40"}`}
               >
                 <div className="px-5 py-4 font-semibold text-ink">{row.feature}</div>
                 <div className="px-5 py-4 text-ink-soft border-l border-warm-dim">{row.canker}</div>
@@ -278,7 +279,7 @@ export default function CankerSorePage() {
               ["It feels hard underneath", "Firmness or induration under a lesion is concerning."],
               ["You also have a lump in your neck", "Swollen lymph nodes alongside a mouth sore warrant prompt evaluation."],
             ].map(([title, desc]) => (
-              <div key={title} className="bg-white border border-warm-dim rounded-2xl p-5 flex gap-4 items-start">
+              <div key={title} className="bg-warm-dim border border-warm-dim rounded-2xl p-5 flex gap-4 items-start">
                 <span className="text-accent font-bold mt-0.5 flex-shrink-0">→</span>
                 <div>
                   <div className="font-semibold text-ink text-sm">{title}</div>
@@ -296,7 +297,7 @@ export default function CankerSorePage() {
             {faqs.map((faq) => (
               <details
                 key={faq.q}
-                className="bg-white border border-warm-dim rounded-2xl group"
+                className="bg-warm-dim border border-warm-dim rounded-2xl group"
               >
                 <summary className="flex items-center justify-between px-6 py-4 cursor-pointer list-none font-semibold text-ink">
                   {faq.q}
@@ -326,17 +327,18 @@ export default function CankerSorePage() {
           </Link>
           <Link
             href="/learn/signs"
-            className="bg-white hover:bg-warm-dim text-ink font-semibold px-6 py-3 rounded-full transition-colors border border-warm-dim"
+            className="bg-warm-dim hover:bg-warm-dim text-ink font-semibold px-6 py-3 rounded-full transition-colors border border-warm-dim"
           >
             See all warning signs
           </Link>
           <Link
             href="/find-care"
-            className="bg-white hover:bg-warm-dim text-ink font-semibold px-6 py-3 rounded-full transition-colors border border-warm-dim"
+            className="bg-warm-dim hover:bg-warm-dim text-ink font-semibold px-6 py-3 rounded-full transition-colors border border-warm-dim"
           >
             Find a dentist →
           </Link>
         </div>
+        <LearnReadNext currentHref="/learn/canker-sore-vs-oral-cancer" />
       </article>
     </>
   );

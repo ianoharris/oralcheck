@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import LearnReadNext from "@/components/LearnReadNext";
 
 export const metadata: Metadata = {
   title: "HPV and Oral Cancer: What You Need to Know | OralCheck",
@@ -211,7 +212,7 @@ export default function HpvPage() {
             ].map(([symptom, note]) => (
               <li
                 key={symptom}
-                className="bg-white border border-warm-dim rounded-xl p-4 flex gap-3 items-start"
+                className="bg-warm-dim border border-warm-dim rounded-xl p-4 flex gap-3 items-start"
               >
                 <span className="text-accent font-bold mt-0.5 flex-shrink-0">→</span>
                 <div>
@@ -280,7 +281,7 @@ export default function HpvPage() {
             {faqs.map((faq) => (
               <details
                 key={faq.q}
-                className="bg-white border border-warm-dim rounded-2xl group"
+                className="bg-warm-dim border border-warm-dim rounded-2xl group"
               >
                 <summary className="flex items-center justify-between px-6 py-4 cursor-pointer list-none font-semibold text-ink">
                   {faq.q}
@@ -312,17 +313,18 @@ export default function HpvPage() {
           </Link>
           <Link
             href="/learn/signs"
-            className="bg-white hover:bg-warm-dim text-ink font-semibold px-6 py-3 rounded-full transition-colors border border-warm-dim"
+            className="bg-warm-dim hover:bg-warm-dim text-ink font-semibold px-6 py-3 rounded-full transition-colors border border-warm-dim"
           >
             See all warning signs
           </Link>
           <Link
             href="/learn/prevention"
-            className="bg-white hover:bg-warm-dim text-ink font-semibold px-6 py-3 rounded-full transition-colors border border-warm-dim"
+            className="bg-warm-dim hover:bg-warm-dim text-ink font-semibold px-6 py-3 rounded-full transition-colors border border-warm-dim"
           >
             Prevention guide
           </Link>
         </div>
+        <LearnReadNext currentHref="/learn/hpv" />
       </article>
     </>
   );

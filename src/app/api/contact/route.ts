@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
     const resend = getResend();
     await resend.emails.send({
       from: "OralCheck Feedback <onboarding@resend.dev>",
-      to: "ioharris@wisc.edu",
+      to: "ianoharris321@gmail.com",
       subject: email ? `OralCheck feedback from ${email}` : "OralCheck anonymous feedback",
       text: [
         email ? `From: ${email}` : "From: Anonymous",

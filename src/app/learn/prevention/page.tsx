@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import LearnReadNext from "@/components/LearnReadNext";
 
 export const metadata: Metadata = {
   title: "How to Prevent Oral Cancer | OralCheck",
@@ -190,7 +191,7 @@ export default function PreventionPage() {
           {steps.map((step) => (
             <div
               key={step.number}
-              className="bg-white border border-warm-dim rounded-2xl p-6 sm:p-7"
+              className="bg-warm-dim border border-warm-dim rounded-2xl p-6 sm:p-7"
             >
               <div
                 className="font-mono text-xs font-semibold mb-2"
@@ -239,7 +240,7 @@ export default function PreventionPage() {
             {faqs.map((faq) => (
               <details
                 key={faq.q}
-                className="bg-white border border-warm-dim rounded-2xl group"
+                className="bg-warm-dim border border-warm-dim rounded-2xl group"
               >
                 <summary className="flex items-center justify-between px-6 py-4 cursor-pointer list-none font-semibold text-ink">
                   {faq.q}
@@ -271,17 +272,18 @@ export default function PreventionPage() {
           </Link>
           <Link
             href="/learn/signs"
-            className="bg-white hover:bg-warm-dim text-ink font-semibold px-6 py-3 rounded-full transition-colors border border-warm-dim"
+            className="bg-warm-dim hover:bg-warm-dim text-ink font-semibold px-6 py-3 rounded-full transition-colors border border-warm-dim"
           >
             Warning signs to watch for
           </Link>
           <Link
             href="/learn/self-exam"
-            className="bg-white hover:bg-warm-dim text-ink font-semibold px-6 py-3 rounded-full transition-colors border border-warm-dim"
+            className="bg-warm-dim hover:bg-warm-dim text-ink font-semibold px-6 py-3 rounded-full transition-colors border border-warm-dim"
           >
             Learn the self-exam
           </Link>
         </div>
+        <LearnReadNext currentHref="/learn/prevention" />
       </article>
     </>
   );

@@ -66,7 +66,7 @@ export default function ForCliniciansPage() {
       </p>
 
       {/* Why use it */}
-      <section className="bg-white rounded-2xl border border-warm-dim p-6 sm:p-8 mb-6">
+      <section className="bg-warm-dim rounded-2xl border border-warm-dim p-6 sm:p-8 mb-6">
         <h2 className="font-serif text-2xl text-ink mb-5">Why OralCheck</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {whyPoints.map((p) => (
@@ -82,7 +82,7 @@ export default function ForCliniciansPage() {
       </section>
 
       {/* How to use */}
-      <section className="bg-white rounded-2xl border border-warm-dim p-6 sm:p-8 mb-6">
+      <section className="bg-warm-dim rounded-2xl border border-warm-dim p-6 sm:p-8 mb-6">
         <h2 className="font-serif text-2xl text-ink mb-5">How to use it</h2>
         <div className="space-y-5">
           {howToUse.map((item) => (
@@ -134,7 +134,7 @@ export default function ForCliniciansPage() {
         </Link>
         <Link
           href="/about#feedback"
-          className="bg-white hover:bg-warm-dim text-ink font-semibold px-6 py-3 rounded-full border border-warm-dim transition-colors text-sm"
+          className="bg-warm-dim hover:bg-warm-dim text-ink font-semibold px-6 py-3 rounded-full border border-warm-dim transition-colors text-sm"
         >
           Contact us
         </Link>
