@@ -21,7 +21,6 @@ export default function Footer() {
             <li><Link href="/methods" className="hover:text-brand">Scoring Methodology</Link></li>
             <li><Link href="/about#feedback" className="hover:text-brand">Send Feedback</Link></li>
             <li><Link href="/qr" className="hover:text-brand">Print &amp; Share</Link></li>
-            <li><Link href="/methods" className="hover:text-brand">Methods</Link></li>
           </ul>
         </div>
         <div>
@@ -42,8 +41,7 @@ export default function Footer() {
             OralCheck is not a medical diagnosis. It is an educational tool.
             Consult a qualified clinician about any symptom or concern.
           </p>
-          <p className="text-ink-soft leading-relaxed mt-2 text-xs">Screening logic informed by ACS, NCI, and Oral Cancer Foundation clinical guidelines. <Link href="/methods" className="hover:text-brand underline underline-offset-2">See methodology →</Link></p>
-          <p className="mt-2 text-xs"><Link href="/privacy" className="text-ink-soft hover:text-brand underline underline-offset-2">Privacy policy →</Link></p>
+          <p className="text-ink-soft leading-relaxed mt-2 text-xs">Screening logic informed by ACS, NCI, and Oral Cancer Foundation clinical guidelines.</p>
         </div>
       </div>
       <div className="border-t border-warm-dim">
