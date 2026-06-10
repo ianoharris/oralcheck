@@ -9,18 +9,18 @@ export const metadata: Metadata = {
 
 const sections = [
   {
-    heading: "What we collect",
+    heading: "No personal information collected",
     body: "OralCheck does not collect your name, email address, or any information that identifies you. No account is required to use the screener.",
   },
   {
-    heading: "Your screener answers",
+    heading: "Screener answers stay on your device",
     body: "Your answers are used to calculate your result and are not stored on our servers. Nothing you enter is saved after your session ends.",
   },
   {
-    heading: "Analytics",
-    body: "This site uses Google Analytics to understand how people find and use OralCheck — which pages are visited, how long sessions last, and what country visitors are from. Google Analytics collects anonymous usage data including your approximate location, browser type, and device. It does not receive your screener answers. You can opt out at tools.google.com/dlpage/gaoptout.",
+    heading: "Google Analytics",
+    body: "This site uses Google Analytics to understand how people find and use OralCheck — which pages are visited, how long sessions last, and what country visitors are from. Google Analytics collects anonymous usage data including your approximate location, browser type, and device. It does not receive your screener answers.",
     link: {
-      label: "Google Analytics opt-out →",
+      label: "Opt out of Google Analytics →",
       href: "https://tools.google.com/dlpage/gaoptout",
     },
   },
@@ -44,41 +44,60 @@ export default function PrivacyPage() {
       </div>
 
       <h1 className="font-serif text-4xl sm:text-5xl text-ink mb-4">Privacy</h1>
-      <p className="text-ink-soft text-lg leading-relaxed mb-12 max-w-2xl">
-        OralCheck is designed to be private by default. Here is exactly what is and is not
-        collected when you use this site.
+      <p className="text-ink-soft text-lg leading-relaxed mb-10 max-w-2xl">
+        OralCheck is private by design. Here is exactly what is and is not collected when you use this site.
       </p>
 
-      <div className="space-y-10 max-w-2xl mb-16">
+      {/* Summary callout */}
+      <div className="bg-brand-soft border border-brand/20 rounded-2xl px-6 py-5 mb-14 max-w-2xl">
+        <p className="text-sm font-semibold text-brand mb-3">The short version</p>
+        <ul className="space-y-1.5 text-sm text-ink">
+          {[
+            "No name, email, or identifying information collected",
+            "Screener answers are never stored — they disappear when you close the page",
+            "Google Analytics tracks anonymous usage only (pages visited, country, device)",
+            "No data is sold or shared with third parties",
+          ].map((item) => (
+            <li key={item} className="flex items-start gap-2">
+              <span className="text-brand mt-0.5 flex-shrink-0">✓</span>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* Sections */}
+      <div className="max-w-2xl divide-y divide-warm-dim mb-14">
         {sections.map((s) => (
-          <section key={s.heading}>
-            <h2 className="font-serif text-xl text-ink mb-2">{s.heading}</h2>
+          <section key={s.heading} className="py-8 first:pt-0">
+            <h2 className="font-serif text-xl text-ink mb-3">{s.heading}</h2>
             <p className="text-ink-soft text-sm leading-relaxed">{s.body}</p>
             {s.link && (
               <a
                 href={s.link.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-block text-brand hover:underline text-sm mt-2"
+                className="inline-block text-brand hover:underline text-sm mt-3"
               >
                 {s.link.label}
               </a>
             )}
           </section>
         ))}
+
+        <section className="py-8">
+          <h2 className="font-serif text-xl text-ink mb-3">Contact</h2>
+          <p className="text-ink-soft text-sm leading-relaxed">
+            Questions about this policy? Email{" "}
+            <a href="mailto:hello@oralcheck.org" className="text-brand hover:underline">
+              hello@oralcheck.org
+            </a>
+          </p>
+        </section>
       </div>
 
-      <section className="max-w-2xl mb-16">
-        <h2 className="font-serif text-xl text-ink mb-2">Contact</h2>
-        <p className="text-ink-soft text-sm leading-relaxed">
-          Questions about this policy?{" "}
-          <a href="mailto:hello@oralcheck.org" className="text-brand hover:underline">
-            hello@oralcheck.org
-          </a>
-        </p>
-      </section>
-
-      <div className="border-t border-warm-dim pt-10 space-y-4 max-w-2xl">
+      {/* Disclaimer */}
+      <div className="border-t border-warm-dim pt-8 max-w-2xl space-y-2">
         <p className="text-xs text-ink-soft leading-relaxed">
           <strong className="text-ink">Disclaimer.</strong> OralCheck is not a medical diagnosis.
           It is an educational tool. Consult a qualified clinician about any symptom or concern.
@@ -86,7 +105,7 @@ export default function PrivacyPage() {
         <p className="text-xs text-ink-soft leading-relaxed">
           Screening logic informed by ACS, NCI, and Oral Cancer Foundation clinical guidelines.
         </p>
-        <p className="text-xs text-ink-soft mt-4">Last updated June 2026.</p>
+        <p className="text-xs text-ink-soft pt-2">Last updated June 2026.</p>
       </div>
     </div>
   );
