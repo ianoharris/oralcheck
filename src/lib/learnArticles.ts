@@ -1,5 +1,12 @@
 export const learnArticles = [
   {
+    href: "/learn/risk-factors",
+    tag: "Risk Factors",
+    title: "Oral Cancer Risk Factors",
+    description: "Tobacco, alcohol, HPV-16, age, sun exposure, and more — what raises your risk and how each factor works.",
+    icon: "⚡",
+  },
+  {
     href: "/learn/oral-cancer",
     tag: "Overview",
     title: "What Is Oral Cancer?",

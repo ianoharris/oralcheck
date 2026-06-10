@@ -1,9 +1,25 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import HeroSectionPhoto from "@/components/HeroSectionPhoto";
 import AnimatedStats from "@/components/AnimatedStats";
 import FadeUp from "@/components/FadeUp";
 import LogoMarquee from "@/components/LogoMarquee";
 import InstagramFeed from "@/components/InstagramFeed";
+
+export const metadata: Metadata = {
+  title: "OralCheck — Free Oral Cancer Risk Screener",
+  description:
+    "Answer 10 questions to understand your oral cancer risk. Free, private, takes 2 minutes. Based on ACS, NCI, and Oral Cancer Foundation risk data.",
+  alternates: { canonical: "https://oralcheck.org" },
+  openGraph: {
+    title: "OralCheck — Free Oral Cancer Risk Screener",
+    description:
+      "Answer 10 questions to understand your oral cancer risk. Free, private, takes 2 minutes.",
+    url: "https://oralcheck.org",
+    siteName: "OralCheck",
+    type: "website",
+  },
+};
 
 const SITE_URL = "https://oralcheck.org";
 
