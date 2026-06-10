@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Signs & Symptoms of Oral Cancer | OralCheck",
   description:
     "Learn the early warning signs of oral cancer: red or white patches, sores that don't heal, lumps, and numbness. Early detection saves lives.",
+  alternates: { canonical: "https://oralcheck.org/learn/signs" },
 };
 
 const SITE_URL = "https://oralcheck.org";
