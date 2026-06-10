@@ -68,6 +68,16 @@ export default function PrivacyPage() {
         ))}
       </div>
 
+      <section className="max-w-2xl mb-16">
+        <h2 className="font-serif text-xl text-ink mb-2">Contact</h2>
+        <p className="text-ink-soft text-sm leading-relaxed">
+          Questions about this policy?{" "}
+          <a href="mailto:hello@oralcheck.org" className="text-brand hover:underline">
+            hello@oralcheck.org
+          </a>
+        </p>
+      </section>
+
       <div className="border-t border-warm-dim pt-10 space-y-4 max-w-2xl">
         <p className="text-xs text-ink-soft leading-relaxed">
           <strong className="text-ink">Disclaimer.</strong> OralCheck is not a medical diagnosis.
