@@ -43,12 +43,16 @@ export default function Footer() {
             Consult a qualified clinician about any symptom or concern.
           </p>
           <p className="text-ink-soft leading-relaxed mt-2 text-xs">Screening logic informed by ACS, NCI, and Oral Cancer Foundation clinical guidelines. <Link href="/methods" className="hover:text-brand underline underline-offset-2">See methodology →</Link></p>
+          <p className="mt-2 text-xs"><Link href="/privacy" className="text-ink-soft hover:text-brand underline underline-offset-2">Privacy policy →</Link></p>
         </div>
       </div>
       <div className="border-t border-warm-dim">
         <div className="max-w-6xl mx-auto px-5 py-4 text-xs text-ink-soft flex flex-col sm:flex-row justify-between gap-2">
           <span>© {new Date().getFullYear()} OralCheck</span>
-          <Link href="/methods" className="hover:text-brand transition-colors">Methods</Link>
+          <div className="flex gap-4">
+            <Link href="/methods" className="hover:text-brand transition-colors">Methods</Link>
+            <Link href="/privacy" className="hover:text-brand transition-colors">Privacy</Link>
+          </div>
           <span>Not affiliated with any medical institution.</span>
         </div>
       </div>
