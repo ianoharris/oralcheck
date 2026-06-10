@@ -59,11 +59,22 @@ export default function ForCliniciansPage() {
       <h1 className="font-serif text-4xl sm:text-5xl text-ink mb-4">
         For Dental Professionals
       </h1>
-      <p className="text-lg text-ink-soft leading-relaxed mb-10">
+      <p className="text-lg text-ink-soft leading-relaxed mb-8">
         A free tool you can put in your waiting room today. Patients take a
         2-minute private risk check on their phone — no login, no data collected,
         no cost.
       </p>
+
+      {/* Flyer section — first thing they see */}
+      <div className="mb-10">
+        <h2 className="font-serif text-3xl text-ink mb-2">Waiting room flyer</h2>
+        <p className="text-ink-soft mb-6">
+          Customize with your practice name and print — letter size, portrait.
+        </p>
+        <Suspense fallback={<div className="h-32 bg-warm-dim rounded-2xl animate-pulse" />}>
+          <PrintableFlyer />
+        </Suspense>
+      </div>
 
       {/* Why use it */}
       <section className="bg-warm-dim rounded-2xl border border-warm-dim p-6 sm:p-8 mb-6">
@@ -111,18 +122,6 @@ export default function ForCliniciansPage() {
 
       {/* Embed code */}
       <EmbedBlock />
-
-      {/* Flyer section */}
-      <div className="mb-2">
-        <h2 className="font-serif text-3xl text-ink mb-2">Waiting room flyer</h2>
-        <p className="text-ink-soft mb-8">
-          Recreated from the official OralCheck poster. Customize with your
-          practice name and print — letter size, portrait.
-        </p>
-        <Suspense fallback={<div className="h-32 bg-warm-dim rounded-2xl animate-pulse" />}>
-          <PrintableFlyer />
-        </Suspense>
-      </div>
 
       {/* Bottom links */}
       <div className="mt-12 pt-8 border-t border-warm-dim flex flex-wrap gap-3">

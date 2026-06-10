@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ThemeToggle from "@/components/ThemeToggle";
 
 const links = [
@@ -17,8 +17,17 @@ export default function Nav() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
+  // Close menu on route change
+  useEffect(() => { setOpen(false); }, [pathname]);
+
+  // Lock body scroll when menu is open
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [open]);
+
   return (
-    <header className="border-b border-warm-dim bg-warm/90 backdrop-blur sticky top-0 z-20">
+    <header className="border-b border-warm-dim bg-warm/90 backdrop-blur sticky top-0 z-30">
       <div className="max-w-6xl mx-auto px-5 h-16 flex items-center justify-between">
         {/* Logo */}
         <Link
@@ -51,7 +60,7 @@ export default function Nav() {
           <ThemeToggle />
         </div>
 
-        {/* Mobile: toggle + hamburger */}
+        {/* Mobile: theme toggle + hamburger */}
         <div className="flex items-center gap-1 md:hidden">
           <ThemeToggle />
           <button

@@ -12,7 +12,7 @@ interface Props {
 export default function FadeUp({ children, delay = 0, className }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const reduced = useReducedMotion();
-  const inView = useInView(ref, { once: true, margin: "-40px" });
+  const inView = useInView(ref, { once: true, margin: "0px" });
 
   if (reduced) {
     return <div className={className}>{children}</div>;

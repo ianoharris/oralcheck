@@ -102,21 +102,28 @@ function openPrintWindow(flyerEl: HTMLElement) {
     *, *::before, *::after {
       -webkit-print-color-adjust: exact !important;
       print-color-adjust: exact !important;
-    }
-    html, body {
-      margin: 0;
-      padding: 0.28in;
-      background: white;
       box-sizing: border-box;
     }
     @page { margin: 0; size: letter portrait; }
-    /* Flatten the card so there's no shadow/radius on paper */
+    html, body {
+      margin: 0;
+      padding: 0.12in 0.18in;
+      background: white;
+    }
+    /* Flatten the card */
     #flyer-inner {
       max-width: 100% !important;
       border-radius: 0 !important;
       box-shadow: none !important;
       border: 0 !important;
     }
+    /* Tighten internal spacing so everything fits on one page */
+    #flyer-inner .space-y-4 > * + * { margin-top: 0.6rem !important; }
+    #flyer-inner .mt-5 { margin-top: 0.75rem !important; }
+    #flyer-inner .pb-6 { padding-bottom: 0.75rem !important; }
+    #flyer-inner .pt-4 { padding-top: 0.6rem !important; }
+    #flyer-inner .mb-4 { margin-bottom: 0.6rem !important; }
+    #flyer-inner .mb-5 { margin-bottom: 0.75rem !important; }
   </style>
 </head>
 <body>

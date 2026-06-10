@@ -18,8 +18,8 @@ export default function HeroSection() {
         };
 
   return (
-    <section className="max-w-6xl mx-auto px-5 pt-16 sm:pt-24 pb-12">
-      <div className="grid grid-cols-1 md:grid-cols-5 gap-10 items-center">
+    <section className="max-w-6xl mx-auto px-5 pt-10 sm:pt-24 pb-8 sm:pb-12">
+      <div className="grid grid-cols-1 md:grid-cols-5 gap-8 md:gap-10 items-center">
 
         {/* Left column — staggered entrance */}
         <div className="md:col-span-3 space-y-6">
@@ -30,7 +30,7 @@ export default function HeroSection() {
           </motion.div>
 
           <motion.div {...fadeItem(1)}>
-            <h1 className="font-serif text-5xl sm:text-6xl leading-[1.05] text-ink">
+            <h1 className="font-serif text-4xl sm:text-6xl leading-[1.05] text-ink">
               2 minutes could{" "}
               <span className="text-brand">save your life.</span>
             </h1>
@@ -66,11 +66,19 @@ export default function HeroSection() {
             <p className="text-xs text-ink-soft">
               Not a medical diagnosis. An educational awareness tool.
             </p>
+            <div className="flex items-center gap-2 pt-1">
+              <span className="inline-block w-1.5 h-1.5 rounded-full bg-brand flex-shrink-0" />
+              <span className="text-xs text-ink-soft">
+                Featured in{" "}
+                <span className="font-semibold text-ink">The Drill</span>
+                {" · Wisconsin Dental Association"}
+              </span>
+            </div>
           </motion.div>
         </div>
 
-        {/* Right column — gentle float */}
-        <div className="md:col-span-2">
+        {/* Right column — gentle float, hidden on mobile */}
+        <div className="hidden md:block md:col-span-2">
           <motion.div
             aria-hidden
             className="aspect-square rounded-3xl bg-gradient-to-br from-brand-soft via-warm-dim to-warm-dim flex items-center justify-center relative overflow-hidden"

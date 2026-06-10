@@ -7,6 +7,7 @@ import {
   type ClinicSearchResult,
 } from "@/lib/clinics";
 import { mockClinics } from "@/lib/mockClinics";
+import { pinnedClinics, PINNED_RADIUS_MI } from "@/lib/pinnedClinics";
 import { checkRateLimit, getIp } from "@/lib/rateLimit";
 
 type PlacesNearbyResponse = {
@@ -163,6 +164,26 @@ async function searchPlaces(
     .sort((a, b) => (a.distanceMi ?? 0) - (b.distanceMi ?? 0));
 }
 
+/** Inject pinned partner clinics that are within PINNED_RADIUS_MI of the search center. */
+function injectPinned(clinics: Clinic[], lat: number, lng: number): Clinic[] {
+  const center = { lat, lng };
+  const nearby = pinnedClinics
+    .map((p) => ({
+      ...p,
+      distanceMi: haversineMiles(center, { lat: p.lat, lng: p.lng }),
+    }))
+    .filter((p) => p.distanceMi <= PINNED_RADIUS_MI);
+
+  // Remove any Google-returned duplicate (same name, close coords)
+  const withoutDupes = clinics.filter(
+    (c) => !nearby.some((p) => p.id === c.id || p.name === c.name),
+  );
+
+  return [...nearby, ...withoutDupes].sort(
+    (a, b) => (a.distanceMi ?? 0) - (b.distanceMi ?? 0),
+  );
+}
+
 export async function GET(request: Request) {
   const { allowed, resetMs } = checkRateLimit(getIp(request), 10);
   if (!allowed) {
@@ -195,7 +216,7 @@ export async function GET(request: Request) {
 
   if (!key) {
     const result: ClinicSearchResult = {
-      clinics: mockClinics,
+      clinics: injectPinned(mockClinics, lat, lng),
       center: { lat, lng },
       source: "mock",
       configured: false,
@@ -206,7 +227,7 @@ export async function GET(request: Request) {
   try {
     const clinics = await searchPlaces(key, lat, lng, radiusMi * 1609.34);
     const result: ClinicSearchResult = {
-      clinics,
+      clinics: injectPinned(clinics, lat, lng),
       center: { lat, lng },
       source: "google-places",
       configured: true,
@@ -215,7 +236,7 @@ export async function GET(request: Request) {
   } catch (e) {
     console.error("[api/clinics] Places lookup failed:", e);
     const result: ClinicSearchResult = {
-      clinics: mockClinics,
+      clinics: injectPinned(mockClinics, lat, lng),
       center: { lat, lng },
       source: "mock",
       configured: true,

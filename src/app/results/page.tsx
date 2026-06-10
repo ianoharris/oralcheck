@@ -447,13 +447,14 @@ export default function ResultsPage() {
         </Link>
       </div>
 
-      {/* Disclaimer */}
-      <div className="mt-12 p-5 rounded-2xl bg-warm-dim/50 text-xs text-ink-soft leading-relaxed">
-        <strong className="text-ink">Disclaimer:</strong> OralCheck provides
-        general health information only. It is not medical advice, diagnosis, or
-        treatment. Scoring is an educational estimate informed by published risk
-        factors — not a clinical algorithm. Always consult a qualified health
-        provider for concerns about your health.
+      {/* Evidence basis + Disclaimer */}
+      <div className="mt-12 p-5 rounded-2xl bg-warm-dim/50 text-xs text-ink-soft leading-relaxed space-y-2">
+        <p>
+          <strong className="text-ink">Evidence basis:</strong> Risk factor weights are informed by published epidemiological evidence, including IARC Group 1 carcinogen classifications for tobacco (Gandini et al., <em>Oral Oncology</em>, 2008), alcohol (Bagnardi et al., <em>Annals of Oncology</em>, 2015), and betel quid (IARC Monograph 85), as well as HPV-16 odds ratios for oropharyngeal cancer (Gillison et al., <em>JAMA</em>, 2008) and SEER age-incidence data. The tobacco-alcohol interaction term reflects documented multiplicative — not merely additive — carcinogenic risk. Leukoplakia and erythroplakia transformation rates are drawn from Napier &amp; Speight, <em>Journal of Oral Pathology &amp; Medicine</em>, 2008.
+        </p>
+        <p>
+          <strong className="text-ink">Disclaimer:</strong> OralCheck is an educational risk stratification tool, not a validated clinical diagnostic instrument. It has not been tested against a clinical outcome dataset. It does not constitute medical advice, diagnosis, or treatment. Always consult a qualified dental or medical provider regarding any oral health concerns.
+        </p>
       </div>
     </div>
   );
