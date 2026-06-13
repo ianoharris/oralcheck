@@ -3,7 +3,7 @@ import FadeUp from "@/components/FadeUp";
 import AnimatedLearnCards from "@/components/AnimatedLearnCards";
 
 export const metadata: Metadata = {
-  title: "Learn About Oral Cancer | OralCheck",
+  title: "Learn About Oral Cancer",
   description:
     "Evidence-based guides on oral cancer signs, self-exams, HPV, and statistics. Written for regular people, not clinicians.",
   alternates: { canonical: "https://oralcheck.org/learn" },

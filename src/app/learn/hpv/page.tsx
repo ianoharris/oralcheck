@@ -3,7 +3,7 @@ import Link from "next/link";
 import LearnReadNext from "@/components/LearnReadNext";
 
 export const metadata: Metadata = {
-  title: "HPV and Oral Cancer: What You Need to Know | OralCheck",
+  title: "HPV and Oral Cancer: What You Need to Know",
   description:
     "HPV-16 is now the leading cause of oropharyngeal cancer in the US, overtaking tobacco. Learn who is at risk, what the symptoms are, and how the HPV vaccine helps.",
   alternates: { canonical: "https://oralcheck.org/learn/hpv" },

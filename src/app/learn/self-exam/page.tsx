@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import LearnReadNext from "@/components/LearnReadNext";
 
 export const metadata: Metadata = {
-  title: "How to Do an Oral Cancer Self-Exam | OralCheck",
+  title: "How to Do an Oral Cancer Self-Exam",
   description:
     "A step-by-step guide to checking your own mouth for signs of oral cancer. Takes 2 minutes. Do it once a month.",
   alternates: { canonical: "https://oralcheck.org/learn/self-exam" },

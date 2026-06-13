@@ -3,7 +3,7 @@ import Link from "next/link";
 import ContactForm from "@/components/ContactForm";
 
 export const metadata: Metadata = {
-  title: "About OralCheck | Free Oral Cancer Risk Screener",
+  title: { absolute: "About OralCheck | Free Oral Cancer Risk Screener" },
   description:
     "OralCheck is a free, private oral cancer risk screener built by a UW-Madison predental student. Learn about the mission, how it works, and the sources behind the tool.",
   alternates: { canonical: "https://oralcheck.org/about" },

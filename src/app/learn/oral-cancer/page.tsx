@@ -3,7 +3,7 @@ import Link from "next/link";
 import LearnReadNext from "@/components/LearnReadNext";
 
 export const metadata: Metadata = {
-  title: "What Is Oral Cancer? Definition, Types & Key Facts | OralCheck",
+  title: "What Is Oral Cancer? Definition, Types & Key Facts",
   description:
     "Oral cancer is cancer that forms in the mouth or throat. Learn the definition, types, key statistics, causes, and warning signs — and when to see a doctor.",
   alternates: { canonical: "https://oralcheck.org/learn/oral-cancer" },

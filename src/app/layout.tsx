@@ -95,7 +95,10 @@ const jsonLd = {
 };
 
 export const metadata: Metadata = {
-  title: "OralCheck — 2 Minutes Could Save Your Life",
+  title: {
+    default: "OralCheck | Free Oral Cancer Risk Screener",
+    template: "%s | OralCheck",
+  },
   description:
     "Free, private oral cancer risk screener. Understand your risk, learn the signs, and find care near you.",
   metadataBase: new URL(SITE_URL),

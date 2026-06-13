@@ -3,7 +3,7 @@ import Link from "next/link";
 import LearnReadNext from "@/components/LearnReadNext";
 
 export const metadata: Metadata = {
-  title: "Oral Cancer Facts & Statistics | OralCheck",
+  title: "Oral Cancer Facts & Statistics",
   description:
     "Key oral cancer statistics: 54,000+ US cases per year, 84% survival when caught early, and why HPV has overtaken tobacco as the top cause. Evidence-based, cited.",
   alternates: { canonical: "https://oralcheck.org/learn/facts" },

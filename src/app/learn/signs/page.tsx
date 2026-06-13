@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import LearnReadNext from "@/components/LearnReadNext";
 
 export const metadata: Metadata = {
-  title: "Signs & Symptoms of Oral Cancer: What to Look For | OralCheck",
+  title: "Signs & Symptoms of Oral Cancer: What to Look For",
   description:
     "Learn the early warning signs of oral cancer: red or white patches, sores that won't heal, unexplained lumps, and numbness. Know when to act.",
   alternates: { canonical: "https://oralcheck.org/learn/signs" },

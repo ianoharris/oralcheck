@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Scoring Methodology | OralCheck",
+  title: "Oral Cancer Risk Scoring Methodology",
   description:
     "How OralCheck calculates oral cancer risk scores — sources, weight derivation, interaction terms, and limitations.",
 };
@@ -75,8 +75,8 @@ const factors = [
     factor: "Family history (first-degree)",
     or: "~2.0×",
     weight: 3,
-    source: "General epidemiological consensus",
-    note: "",
+    source: "Negri et al., Eur J Cancer Prev, 2009",
+    note: "Pooled analysis, INHANCE Consortium; OR 2.0 for first-degree relative with oral/head-neck cancer",
   },
   {
     factor: "Diet low in fruit/vegetables",
@@ -100,11 +100,18 @@ const factors = [
     note: "Risk declines ~50% within 5 years of cessation",
   },
   {
-    factor: "HPV (not vaccinated)",
-    or: "~1.5×",
+    factor: "HPV (not vaccinated, no known history)",
+    or: "~1.5× (proxy)",
     weight: 2,
-    source: "Gillison et al., JAMA, 2008",
-    note: "",
+    source: "D'Souza et al., NEJM, 2007; population exposure estimate",
+    note: "Unvaccinated status is a behavioral proxy for HPV-16 exposure risk, not a serostatus measure. OR reflects elevated background exposure probability in unvaccinated adults, not confirmed infection.",
+  },
+  {
+    factor: "Sun exposure (lips, unprotected)",
+    or: "2 – 3×",
+    weight: 2,
+    source: "Perea-Milla López et al., Br J Cancer, 2003",
+    note: "Lower lip squamous cell carcinoma; outdoor workers vs indoor reference",
   },
 ];
 
@@ -151,6 +158,34 @@ const refs = [
     citation:
       "National Cancer Institute. SEER Cancer Statistics Review 1975–2021. Surveillance, Epidemiology, and End Results Program.",
     url: "https://seer.cancer.gov/csr/1975_2021/",
+  },
+  {
+    id: 8,
+    citation:
+      "Hashibe M, Brennan P, Chuang SC, et al. Interaction between tobacco and alcohol use and the risk of head and neck cancer: pooled analysis in the International Head and Neck Cancer Epidemiology Consortium. Cancer Epidemiology, Biomarkers & Prevention. 2009;18(2):541–550.",
+    url: "https://pubmed.ncbi.nlm.nih.gov/19190158/",
+    note: "Heavy combined users: OR 35.8× vs non-users of both, supporting supra-multiplicative interaction term",
+  },
+  {
+    id: 9,
+    citation:
+      "Negri E, Boffetta P, Berthiller J, et al. Family history of cancer: pooled analysis in the International Head and Neck Cancer Epidemiology Consortium. International Journal of Cancer. 2009;124(2):394–401.",
+    url: "https://pubmed.ncbi.nlm.nih.gov/18814267/",
+    note: "OR ~2.0 for first-degree relative with head and neck cancer",
+  },
+  {
+    id: 10,
+    citation:
+      "D'Souza G, Kreimer AR, Viscidi R, et al. Case-control study of human papillomavirus and oropharyngeal cancer. New England Journal of Medicine. 2007;356(19):1944–1956.",
+    url: "https://pubmed.ncbi.nlm.nih.gov/17494927/",
+    note: "HPV-16 seropositivity OR 32.2× for oropharyngeal cancer; behavioral exposure proxies used in screener",
+  },
+  {
+    id: 11,
+    citation:
+      "Perea-Milla López E, Minarro-Del Moral RM, Martinez-Garcia C, et al. Lifestyles, environmental and phenotypic factors associated with lip cancer: a case-control study in southern Spain. British Journal of Cancer. 2003;88(11):1702–1707.",
+    url: "https://pubmed.ncbi.nlm.nih.gov/12771986/",
+    note: "Sun exposure OR 2–3× for lower lip squamous cell carcinoma in outdoor vs indoor workers",
   },
 ];
 
@@ -246,7 +281,7 @@ export default function MethodsPage() {
             The +3 captures that gap.
           </p>
           <p className="text-xs">
-            Source: Bagnardi V, et al. Annals of Oncology, 2015.
+            Sources: Hashibe M, et al. Cancer Epidemiology, Biomarkers &amp; Prevention, 2009 (heavy combined users: OR 35.8×); Bagnardi V, et al. Annals of Oncology, 2015.
           </p>
         </div>
       </section>

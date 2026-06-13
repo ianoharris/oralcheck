@@ -5,7 +5,7 @@ import PrintableFlyer from "./PrintableFlyer";
 import EmbedBlock from "./EmbedBlock";
 
 export const metadata: Metadata = {
-  title: "For Dental Professionals | OralCheck",
+  title: "For Dental Professionals",
   description:
     "Help your patients take 2 minutes that could save their life. Free printable waiting room flyer, QR code, and patient education materials — no login required.",
   alternates: { canonical: "https://oralcheck.org/for-clinicians" },

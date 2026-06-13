@@ -3,7 +3,7 @@ import Link from "next/link";
 import LearnReadNext from "@/components/LearnReadNext";
 
 export const metadata: Metadata = {
-  title: "How to Prevent Oral Cancer | OralCheck",
+  title: "How to Prevent Oral Cancer",
   description:
     "Six evidence-based ways to lower your oral cancer risk: quit tobacco, limit alcohol, get the HPV vaccine, protect your lips, and get regular dental screenings.",
   alternates: { canonical: "https://oralcheck.org/learn/prevention" },

@@ -3,7 +3,7 @@ import Link from "next/link";
 import LearnReadNext from "@/components/LearnReadNext";
 
 export const metadata: Metadata = {
-  title: "Canker Sore vs Oral Cancer: How to Tell the Difference | OralCheck",
+  title: "Canker Sore vs Oral Cancer: How to Tell the Difference",
   description:
     "Canker sores heal in 7–10 days. Oral cancer doesn't. Learn the key differences, what each looks like, and exactly when to see a doctor.",
   alternates: { canonical: "https://oralcheck.org/learn/canker-sore-vs-oral-cancer" },

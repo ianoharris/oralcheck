@@ -3,7 +3,7 @@ import Link from "next/link";
 import LearnReadNext from "@/components/LearnReadNext";
 
 export const metadata: Metadata = {
-  title: "Oral Cancer Risk Factors: What Raises Your Risk | OralCheck",
+  title: "Oral Cancer Risk Factors: What Raises Your Risk",
   description:
     "The major risk factors for oral cancer include tobacco use, alcohol, HPV-16, age, and sun exposure. Learn how each factor works and how they combine.",
   alternates: { canonical: "https://oralcheck.org/learn/risk-factors" },

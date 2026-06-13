@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { sendGAEvent } from "@next/third-parties/google";
 import { questions } from "@/lib/questions";
 import ProgressBar from "@/components/ProgressBar";
 import QuestionCard from "@/components/QuestionCard";
@@ -18,6 +19,14 @@ export default function ScreenerPage() {
   const q = questions[index];
   const isLast = index === questions.length - 1;
   const selected = answers[q.id];
+
+  // Fire once when the screener loads — used to compute completion rate in GA4
+  useEffect(() => {
+    sendGAEvent("event", "screener_started", {
+      question_count: questions.length,
+    });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleSelect = useCallback((optionId: string) => {
     setAnswers((a) => ({ ...a, [q.id]: optionId }));
