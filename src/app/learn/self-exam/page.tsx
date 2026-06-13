@@ -14,76 +14,36 @@ const SITE_URL = "https://oralcheck.org";
 const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
-  {
-  "@type": "HowTo",
-  name: "How to Do a 2-Minute Oral Cancer Self-Exam",
-  description:
-    "A step-by-step guide to checking your mouth for early signs of oral cancer. All you need is a mirror and good lighting.",
-  url: `${SITE_URL}/learn/self-exam`,
-  totalTime: "PT2M",
-  tool: [
-    { "@type": "HowToTool", name: "Mirror" },
-    { "@type": "HowToTool", name: "Good lighting" },
-  ],
-  step: [
     {
-      "@type": "HowToStep",
-      name: "Face & Neck",
-      text: "Look in the mirror at your face. Check that both sides look symmetrical. Feel the sides of your neck for lumps or swelling.",
-      position: 1,
+      "@type": "MedicalWebPage",
+      "@id": `${SITE_URL}/learn/self-exam#webpage`,
+      url: `${SITE_URL}/learn/self-exam`,
+      name: "How to Do a 2-Minute Oral Cancer Self-Exam",
+      description:
+        "A step-by-step guide to checking your own mouth for signs of oral cancer. Takes 2 minutes. Do it once a month.",
+      about: {
+        "@type": "MedicalCondition",
+        name: "Oral Cancer",
+      },
+      audience: { "@type": "MedicalAudience", audienceType: "Patient" },
+      reviewedBy: {
+        "@type": "Person",
+        name: "Ian Harris",
+        affiliation: {
+          "@type": "Organization",
+          name: "University of Wisconsin-Madison",
+        },
+        url: `${SITE_URL}/about`,
+      },
     },
     {
-      "@type": "HowToStep",
-      name: "Lips",
-      text: "Pull your upper lip up and lower lip down. Look and feel for sores, color changes, or lumps on the inside and outside.",
-      position: 2,
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+        { "@type": "ListItem", position: 2, name: "Learn", item: `${SITE_URL}/learn` },
+        { "@type": "ListItem", position: 3, name: "How to Do a Self-Exam", item: `${SITE_URL}/learn/self-exam` },
+      ],
     },
-    {
-      "@type": "HowToStep",
-      name: "Cheeks",
-      text: "Use your fingers to gently pull each cheek outward. Look for red, white, or dark patches. Press gently to feel for lumps.",
-      position: 3,
-    },
-    {
-      "@type": "HowToStep",
-      name: "Gums",
-      text: "Examine your gums — top and bottom, front and back. Look for color changes, swelling, or sores.",
-      position: 4,
-    },
-    {
-      "@type": "HowToStep",
-      name: "Tongue",
-      text: "Stick out your tongue and look at the top. Then lift it to check underneath and the sides. The sides of the tongue are the most common site for oral cancer.",
-      position: 5,
-    },
-    {
-      "@type": "HowToStep",
-      name: "Floor of Mouth",
-      text: "Lift your tongue to the roof of your mouth. Look at the floor underneath and feel it gently with a clean finger.",
-      position: 6,
-    },
-    {
-      "@type": "HowToStep",
-      name: "Roof of Mouth",
-      text: "Tilt your head back and open wide. Look at the hard and soft palate for any color changes, bumps, or sores.",
-      position: 7,
-    },
-    {
-      "@type": "HowToStep",
-      name: "Throat",
-      text: "Say 'ahh' and check the back of your throat. Look for asymmetry, patches, or sores.",
-      position: 8,
-    },
-  ],
-  },
-  {
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
-      { "@type": "ListItem", position: 2, name: "Learn", item: `${SITE_URL}/learn` },
-      { "@type": "ListItem", position: 3, name: "How to Do a Self-Exam", item: `${SITE_URL}/learn/self-exam` },
-    ],
-  },
   ],
 };
 
@@ -221,6 +181,12 @@ export default function SelfExamPage() {
           Find a dentist
         </Link>
       </div>
+      <p className="text-xs text-ink-soft mt-8">
+        Written by Ian Harris, predental student at the University of Wisconsin-Madison.{" "}
+        <Link href="/about" className="underline underline-offset-2 hover:text-ink">
+          About OralCheck
+        </Link>
+      </p>
       <LearnReadNext currentHref="/learn/self-exam" />
     </article>
   );

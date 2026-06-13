@@ -388,12 +388,19 @@ export default function OralCancerPage() {
           </div>
         </section>
 
-        <div className="mt-4 p-5 rounded-2xl bg-warm-dim/50 text-xs text-ink-soft leading-relaxed mb-8">
+        <div className="mt-4 p-5 rounded-2xl bg-warm-dim/50 text-xs text-ink-soft leading-relaxed mb-4">
           <strong className="text-ink">Sources:</strong> American Cancer
           Society, National Cancer Institute SEER database, Oral Cancer
           Foundation, CDC, World Health Organization. This page is educational
           and does not constitute medical advice.
         </div>
+
+        <p className="text-xs text-ink-soft mb-8">
+          Written by Ian Harris, predental student at the University of Wisconsin-Madison.{" "}
+          <Link href="/about" className="underline underline-offset-2 hover:text-ink">
+            About OralCheck
+          </Link>
+        </p>
 
         {/* CTA row */}
         <div className="flex flex-wrap gap-3">

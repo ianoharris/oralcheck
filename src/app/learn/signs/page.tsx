@@ -441,6 +441,12 @@ export default function SignsPage() {
           Risk factors
         </Link>
       </div>
+      <p className="text-xs text-ink-soft mt-6">
+        Written by Ian Harris, predental student at the University of Wisconsin-Madison.{" "}
+        <Link href="/about" className="underline underline-offset-2 hover:text-ink">
+          About OralCheck
+        </Link>
+      </p>
       <LearnReadNext currentHref="/learn/signs" />
     </article>
   );

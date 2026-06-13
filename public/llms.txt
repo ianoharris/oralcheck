@@ -1,0 +1,22 @@
+# OralCheck — Free Oral Cancer Risk Screener
+# https://oralcheck.org
+
+OralCheck is a free, private oral cancer risk screener based on published clinical risk factors from the American Cancer Society, NCI, and Oral Cancer Foundation. No account required. Answers are not saved or transmitted. Takes 2 minutes.
+
+Oral cancer affects over 54,000 Americans each year. When caught early, the 5-year survival rate is over 84%. OralCheck helps people understand their personal risk and find affordable care.
+
+## Key pages
+
+- Screener: https://oralcheck.org/screener
+- Learn about oral cancer: https://oralcheck.org/learn
+- What is oral cancer (definition, types, stats): https://oralcheck.org/learn/oral-cancer
+- Early warning signs and symptoms: https://oralcheck.org/learn/signs
+- HPV and oral cancer: https://oralcheck.org/learn/hpv
+- Prevention guide: https://oralcheck.org/learn/prevention
+- Canker sore vs oral cancer: https://oralcheck.org/learn/canker-sore-vs-oral-cancer
+- How to do a self-exam: https://oralcheck.org/learn/self-exam
+- Oral cancer facts and statistics: https://oralcheck.org/learn/facts
+- Risk scoring methodology and sources: https://oralcheck.org/methods
+- For dental professionals (printable flyer): https://oralcheck.org/for-clinicians
+- Find affordable oral cancer care: https://oralcheck.org/find-care
+- About OralCheck: https://oralcheck.org/about

@@ -76,10 +76,15 @@ const jsonLd = {
         audienceType: "Patient",
       },
       datePublished: "2024-12-01",
-      lastReviewed: "2026-04-23",
+      lastReviewed: "2026-06-12",
       reviewedBy: {
-        "@type": "Organization",
-        name: "OralCheck",
+        "@type": "Person",
+        name: "Ian Harris",
+        affiliation: {
+          "@type": "Organization",
+          name: "University of Wisconsin-Madison",
+        },
+        url: `${SITE_URL}/about`,
       },
     },
     {
@@ -89,7 +94,10 @@ const jsonLd = {
       name: "OralCheck",
       description:
         "A free educational tool to help people understand oral cancer risk and find affordable care.",
-      sameAs: ["https://github.com/ianoharris/oralcheck"],
+      sameAs: [
+        "https://github.com/ianoharris/oralcheck",
+        "https://www.instagram.com/oralcheckdotorg",
+      ],
     },
   ],
 };
@@ -103,12 +111,13 @@ export const metadata: Metadata = {
     "Free, private oral cancer risk screener. Understand your risk, learn the signs, and find care near you.",
   metadataBase: new URL(SITE_URL),
   openGraph: {
-    title: "OralCheck — Free Oral Cancer Risk Screener",
+    title: "OralCheck | Free Oral Cancer Risk Screener",
     description:
       "Answer 10 questions to understand your oral cancer risk. Free, private, takes 2 minutes.",
     url: SITE_URL,
     siteName: "OralCheck",
     type: "website",
+    locale: "en_US",
   },
   alternates: {
     canonical: SITE_URL,

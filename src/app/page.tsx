@@ -23,53 +23,6 @@ export const metadata: Metadata = {
 
 const SITE_URL = "https://oralcheck.org";
 
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: [
-    {
-      "@type": "Question",
-      name: "What is oral cancer?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Oral cancer refers to cancer that develops in any part of the mouth or throat, including the lips, tongue, gums, floor of the mouth, palate, and oropharynx. It is one of the most underdiagnosed cancers in the US, with over 54,000 new cases diagnosed each year. When caught early, the five-year survival rate is over 84%.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "How common is oral cancer?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Oral and oropharyngeal cancers affect over 54,000 Americans each year and cause approximately 11,580 deaths annually — about one death every 50 minutes. Rates have been rising due to an increase in HPV-related throat cancers, which now outnumber tobacco-related cases in the oropharynx.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "What are the early warning signs of oral cancer?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Early warning signs include a sore or ulcer in the mouth that doesn't heal after 2 weeks, a red or white patch on the gums, tongue, or lining of the mouth, a lump or thickening in the cheek, unexplained numbness or pain, and difficulty chewing or swallowing. Many early oral cancers are painless, which is why regular dental screenings matter.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "How do I check for oral cancer at home?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "You can do a 2-minute self-exam at home using a mirror and good lighting. Check your lips, gums, tongue (top, sides, and underside), floor of the mouth, roof of the mouth, and throat. Look for any red or white patches, sores, lumps, or asymmetries. Anything that hasn't resolved after 2 weeks should be evaluated by a dentist.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "Is OralCheck free to use?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Yes. OralCheck is completely free. No account is required, nothing is saved to a server, and there is no tracking of your answers. The screener takes about 2 minutes and provides a personalized risk summary based on published risk factors from the American Cancer Society, NCI, and Oral Cancer Foundation.",
-      },
-    },
-  ],
-};
-
 const features = [
   {
     title: "Private risk screener",
@@ -97,10 +50,7 @@ const features = [
 export default function Home() {
   return (
     <div>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+      <h1 className="sr-only">Free Oral Cancer Risk Screener</h1>
 
       {/* Hero */}
       <HeroSectionPhoto />

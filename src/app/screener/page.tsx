@@ -73,6 +73,7 @@ export default function ScreenerPage() {
 
   return (
     <div className="max-w-2xl mx-auto px-5 py-10 sm:py-16">
+      <h1 className="sr-only">Free Oral Cancer Risk Screener</h1>
       <div className="mb-10">
         <ProgressBar current={index + 1} total={questions.length} />
       </div>
