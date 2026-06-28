@@ -1,0 +1,66 @@
+name: Instagram Content Pipeline
+
+on:
+  schedule:
+    - cron: '0 14 * * 1,4'  # Mon & Thu at 2pm UTC (9am EST)
+  workflow_dispatch:
+    inputs:
+      media_type:
+        description: 'Media type'
+        required: false
+        default: 'image'
+        type: choice
+        options: [image, carousel, infographic, reel]
+
+permissions:
+  contents: write
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    timeout-minutes: 200   # 3h+ for Telegram approval window
+
+    defaults:
+      run:
+        working-directory: oralcheck-agent
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install system deps
+        working-directory: .
+        run: sudo apt-get install -y ffmpeg
+
+      - name: Install Python deps
+        run: pip install anthropic httpx pillow python-dotenv
+
+      - name: Generate content
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+          UNSPLASH_ACCESS_KEY: ${{ secrets.UNSPLASH_ACCESS_KEY }}
+        run: python oralcheck_agent.py --auto --media-type ${{ inputs.media_type || 'image' }}
+
+      - name: Telegram review and post
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+          UNSPLASH_ACCESS_KEY: ${{ secrets.UNSPLASH_ACCESS_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          IMGBB_API_KEY: ${{ secrets.IMGBB_API_KEY }}
+          INSTAGRAM_USER_ID: ${{ secrets.INSTAGRAM_USER_ID }}
+          INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
+        run: python telegram_review.py
+
+      - name: Save pillar rotation state
+        working-directory: .
+        run: |
+          git config user.name "OralCheck Bot"
+          git config user.email "bot@oralcheck.org"
+          git add oralcheck-agent/pillars.json
+          git diff --staged --quiet || (git commit -m "chore: pillar rotation [skip ci]" && git push)
