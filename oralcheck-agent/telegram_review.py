@@ -20,10 +20,11 @@ load_dotenv()
 
 TELEGRAM_TOKEN    = os.environ["TELEGRAM_BOT_TOKEN"]
 TELEGRAM_CHAT_ID  = os.environ["TELEGRAM_CHAT_ID"]
-IMGBB_API_KEY     = os.environ["IMGBB_API_KEY"]
-INSTAGRAM_USER_ID = os.environ["INSTAGRAM_USER_ID"]
-IG_ACCESS_TOKEN   = os.environ["INSTAGRAM_ACCESS_TOKEN"]
+IMGBB_API_KEY     = os.environ.get("IMGBB_API_KEY", "")
+INSTAGRAM_USER_ID = os.environ.get("INSTAGRAM_USER_ID", "")
+IG_ACCESS_TOKEN   = os.environ.get("INSTAGRAM_ACCESS_TOKEN", "")
 GRAPH_BASE        = "https://graph.facebook.com/v21.0"
+IG_CONFIGURED     = bool(IMGBB_API_KEY and INSTAGRAM_USER_ID and IG_ACCESS_TOKEN)
 QUEUE_DIR         = Path(__file__).parent / "queue"
 APPROVAL_TIMEOUT  = 7200  # 2 hours
 
@@ -145,6 +146,13 @@ def post_to_instagram(manifest: dict, item_dir: Path) -> str:
     caption    = manifest["caption"]
     hashtags   = manifest.get("hashtags", [])
     full_caption = caption + ("\n\n" + " ".join(f"#{h}" for h in hashtags) if hashtags else "")
+
+    if not IG_CONFIGURED:
+        tg(
+            "Post approved. Instagram not configured yet -- post manually.\n\n"
+            f"Caption:\n{full_caption}"
+        )
+        return "manual-no-ig"
 
     media_files = [
         item_dir / f for f in manifest["files"]
@@ -282,8 +290,8 @@ def main() -> None:
         except Exception as exc:
             tg_err(f"Instagram post failed after approval: {exc}")
             raise
-        if post_id == "manual-video":
-            print("Video sent to Telegram for manual upload.")
+        if post_id in ("manual-video", "manual-no-ig"):
+            print(f"Manual upload required ({post_id}).")
         else:
             tg("sendMessage", chat_id=TELEGRAM_CHAT_ID, text=f"Posted to Instagram.\nPost ID: {post_id}")
             print(f"Done: {post_id}")
