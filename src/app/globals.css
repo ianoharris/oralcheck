@@ -67,3 +67,19 @@ h3 {
   font-family: var(--font-serif);
   letter-spacing: -0.01em;
 }
+
+/* ── Auto-generated article prose ───────────────────────────────────────── */
+.prose-article { color: var(--color-ink-soft); line-height: 1.75; font-size: 1rem; }
+.prose-article h1 { font-family: var(--font-serif); font-size: 2rem; color: var(--color-ink); margin: 2rem 0 0.75rem; }
+.prose-article h2 { font-family: var(--font-serif); font-size: 1.5rem; color: var(--color-ink); margin: 2.5rem 0 0.75rem; }
+.prose-article h3 { font-family: var(--font-serif); font-size: 1.15rem; color: var(--color-ink); margin: 1.75rem 0 0.5rem; }
+.prose-article p  { margin: 0 0 1.25rem; }
+.prose-article ul, .prose-article ol { padding-left: 1.5rem; margin: 0 0 1.25rem; }
+.prose-article ul { list-style: disc; }
+.prose-article ol { list-style: decimal; }
+.prose-article li { margin-bottom: 0.4rem; }
+.prose-article strong { color: var(--color-ink); font-weight: 600; }
+.prose-article a  { color: var(--color-brand); text-decoration: underline; text-underline-offset: 2px; }
+.prose-article a:hover { color: var(--color-brand-dark); }
+.prose-article hr { border: none; border-top: 1px solid var(--color-warm-dim); margin: 2rem 0; }
+.prose-article blockquote { border-left: 3px solid var(--color-brand); padding-left: 1rem; margin: 1.5rem 0; color: var(--color-ink-soft); font-style: italic; }

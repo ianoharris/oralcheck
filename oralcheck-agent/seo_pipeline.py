@@ -143,13 +143,11 @@ def main() -> None:
     record_keyword_used(state, keyword)
     save_keywords(state)
 
-    preview = article[:200].replace("\n", " ").strip()
     tg(
-        f"OralCheck SEO draft ready for review\n\n"
-        f"Keyword: {keyword}\n"
-        f"Title: {title}\n"
-        f"File: content/drafts/{filename}\n\n"
-        f"Preview: {preview}..."
+        f"New SEO draft ready:\n\n"
+        f"{title}\n\n"
+        f"Review and publish at:\n"
+        f"https://oralcheck.org/review/{slug}"
     )
 
 
