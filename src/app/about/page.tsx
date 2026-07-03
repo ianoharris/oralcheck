@@ -38,7 +38,7 @@ export default function AboutPage() {
       <section className="bg-warm-dim rounded-2xl border border-warm-dim p-6 sm:p-8 mb-6">
         <h2 className="font-serif text-2xl text-ink mb-3">Who built this</h2>
         <p className="text-ink-soft leading-relaxed mb-3">
-          OralCheck was built by me, a predental student at the University of
+          OralCheck was built by Ian Harris, a predental student at the University of
           Wisconsin-Madison. I care a lot about community health and finding
           ways to actually make a difference with the knowledge I&apos;m
           gaining in school.
