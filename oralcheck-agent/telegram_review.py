@@ -51,6 +51,8 @@ def tg_upload(method: str, field: str, file_path: str, **kwargs) -> dict:
             files={field: f},
             timeout=120,
         )
+    if not resp.is_success:
+        print(f"Telegram {method} failed {resp.status_code}: {resp.text}", flush=True)
     resp.raise_for_status()
     return resp.json()
 
