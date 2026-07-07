@@ -730,14 +730,14 @@ def add_text_overlay(image_path: str, hook: str, cta: str = "oralcheck.org") -> 
     img = Image.open(image_path).convert("RGBA")
     w, h = img.size
 
-    # Bottom gradient: transparent -> off-white
+    # Dark gradient from 35% down → cinematic, editorial feel
     gradient = Image.new("RGBA", (w, h), (0, 0, 0, 0))
     grad_draw = ImageDraw.Draw(gradient)
-    gradient_start = int(h * 0.45)
+    gradient_start = int(h * 0.35)
     for y in range(gradient_start, h):
         t = (y - gradient_start) / (h - gradient_start)
-        alpha = int(215 * (t ** 0.7))
-        grad_draw.line([(0, y), (w, y)], fill=(250, 249, 246, alpha))
+        alpha = int(224 * min(1.0, t ** 0.55))
+        grad_draw.line([(0, y), (w, y)], fill=(13, 26, 27, alpha))
 
     img = Image.alpha_composite(img, gradient)
     draw = ImageDraw.Draw(img)
@@ -745,21 +745,23 @@ def add_text_overlay(image_path: str, hook: str, cta: str = "oralcheck.org") -> 
     margin = int(w * 0.07)
     inner_w = w - 2 * margin
 
-    hook_size = int(w * 0.065)
+    hook_size = int(w * 0.075)
     hook_font = _load_font("DMSerifDisplay-Regular.ttf", hook_size)
-    cta_size  = int(w * 0.038)
+    cta_size  = int(w * 0.036)
     cta_font  = _load_font("SourceSans3-Regular.ttf", cta_size)
 
     wrapped_hook = _wrap_text(hook, hook_font, inner_w)
     line_count = wrapped_hook.count("\n") + 1
 
     cta_y  = h - int(h * 0.055)
-    hook_y = cta_y - (line_count * int(hook_size * 1.25)) - int(h * 0.025)
-    bar_y  = hook_y - int(h * 0.022)
+    hook_y = cta_y - (line_count * int(hook_size * 1.25)) - int(h * 0.03)
+    bar_y  = hook_y - int(h * 0.024)
 
-    draw.rectangle([(margin, bar_y), (margin + int(w * 0.08), bar_y + 4)], fill=C_TEAL)
-    draw.text((margin, hook_y), wrapped_hook, font=hook_font, fill=C_DARK, spacing=int(hook_size * 0.2))
-    draw.text((margin, cta_y), cta, font=cta_font, fill=C_TEAL)
+    # Coral accent line above hook text
+    draw.rectangle([(margin, bar_y), (margin + int(w * 0.06), bar_y + 4)], fill=(232, 99, 74, 255))
+    # Light text on dark gradient
+    draw.text((margin, hook_y), wrapped_hook, font=hook_font, fill=(232, 228, 222), spacing=int(hook_size * 0.2))
+    draw.text((margin, cta_y), cta, font=cta_font, fill=(13, 115, 119, 255))
 
     p = Path(image_path)
     out_path = str(p.parent / (p.stem + "_final" + p.suffix))
@@ -789,29 +791,31 @@ def _render_info_slide(headline: str, body: str) -> str:
     pad = 80
     inner_w = W - 2 * pad
 
-    headline_font = _load_font("DMSerifDisplay-Regular.ttf", 58)
+    headline_font = _load_font("DMSerifDisplay-Regular.ttf", 64)
     body_font     = _load_font("SourceSans3-Regular.ttf", 30)
-    mark_font     = _load_font("SourceSans3-Regular.ttf", 22)
+    mark_font     = _load_font("SourceSans3-Regular.ttf", 20)
 
-    # Brand mark at top
-    draw.ellipse([(pad - 14, pad), (pad, pad + 14)], fill=C_CORAL)
-    draw.text((pad + 14, pad + 2), "OralCheck", font=mark_font, fill=C_TEAL_RGB)
-    draw.rectangle([(pad, pad + 30), (pad + 64, pad + 34)], fill=C_TEAL_RGB)
+    # Brand mark
+    draw.ellipse([(pad, 52), (pad + 10, 62)], fill=C_CORAL)
+    draw.text((pad + 18, 50), "OralCheck", font=mark_font, fill=C_TEAL_RGB)
+    draw.rectangle([(pad, 78), (W - pad, 80)], fill=(22, 50, 52))
 
-    # Measure content block for vertical centering
     wrapped_headline = _wrap_text(headline, headline_font, inner_w)
     headline_lines = wrapped_headline.count("\n") + 1
-    headline_h = headline_lines * 74
+    headline_h = headline_lines * 80
 
     wrapped_body = _wrap_text(body, body_font, inner_w)
     body_lines = wrapped_body.count("\n") + 1
-    body_h = body_lines * 43
+    body_h = body_lines * 44
 
-    content_h = headline_h + 36 + body_h
-    content_y = max((H - content_h) // 2, 180)
+    content_h = headline_h + 48 + body_h
+    content_y = max((H - content_h) // 2, 160)
+
+    # Short coral accent above headline
+    draw.rectangle([(pad, content_y - 22), (pad + 48, content_y - 18)], fill=C_CORAL)
 
     draw.text((pad, content_y), wrapped_headline, font=headline_font, fill=C_TEXT, spacing=16)
-    draw.text((pad, content_y + headline_h + 36), wrapped_body, font=body_font, fill=C_MUTED, spacing=12)
+    draw.text((pad, content_y + headline_h + 48), wrapped_body, font=body_font, fill=C_MUTED, spacing=14)
 
     tmp = tempfile.NamedTemporaryFile(suffix=".jpg", delete=False)
     img.save(tmp.name, "JPEG", quality=95)
@@ -859,107 +863,89 @@ def _render_cta_slide() -> str:
 # ---------------------------------------------------------------------------
 
 def render_infographic_image(content: dict) -> str:
-    """Render a branded data infographic: bar chart comparison on dark brand background."""
+    """Render a branded data infographic: hero stats on dark brand background."""
     W, H = 1080, 1080
     img = Image.new("RGB", (W, H), C_BG)
     draw = ImageDraw.Draw(img)
 
     pad = 76
 
-    brand_font    = _load_font("SourceSans3-Regular.ttf", 22)
-    headline_font = _load_font("DMSerifDisplay-Regular.ttf", 56)
-    num_font      = _load_font("DMSerifDisplay-Regular.ttf", 76)
-    label_font    = _load_font("SourceSans3-Regular.ttf", 28)
-    context_font  = _load_font("SourceSans3-Regular.ttf", 22)
-    cta_font      = _load_font("SourceSans3-Regular.ttf", 22)
+    brand_font    = _load_font("SourceSans3-Regular.ttf", 20)
+    headline_font = _load_font("DMSerifDisplay-Regular.ttf", 52)
+    label_font    = _load_font("SourceSans3-Regular.ttf", 24)
+    fact_font     = _load_font("SourceSans3-Regular.ttf", 22)
+    cta_font      = _load_font("SourceSans3-Regular.ttf", 20)
 
-    # Brand mark
-    draw.ellipse([(pad - 14, 58), (pad, 72)], fill=C_CORAL)
-    draw.text((pad + 14, 58), "OralCheck", font=brand_font, fill=C_TEAL_RGB)
-
-    # Thin teal separator under brand mark
-    draw.rectangle([(pad, 92), (W - pad, 94)], fill=(22, 50, 52))
+    # Brand mark: coral dot + name + thin separator
+    draw.ellipse([(pad, 52), (pad + 10, 62)], fill=C_CORAL)
+    draw.text((pad + 18, 50), "OralCheck", font=brand_font, fill=C_TEAL_RGB)
+    draw.rectangle([(pad, 80), (W - pad, 82)], fill=(22, 50, 52))
 
     # Headline
     headline = content.get("headline", "")
     wrapped_headline = _wrap_text(headline, headline_font, W - 2 * pad)
-    draw.text((pad, 116), wrapped_headline, font=headline_font, fill=C_TEXT, spacing=14)
+    headline_y = 106
+    draw.text((pad, headline_y), wrapped_headline, font=headline_font, fill=C_TEXT, spacing=12)
     headline_lines = wrapped_headline.count("\n") + 1
-    after_headline_y = 116 + headline_lines * 70 + 12
-
-    # Context label (what the bars measure)
-    context = content.get("context", "")
-    if context:
-        draw.text((pad, after_headline_y), context.upper(), font=context_font, fill=C_MUTED, spacing=8)
-        after_headline_y += 38
+    after_headline_y = headline_y + headline_lines * 64 + 32
 
     bars = content.get("bars", [])
-    n_bars = max(len(bars), 1)
-    bar_colors = [C_CORAL, C_TEAL_RGB, C_MUTED]
+    n_bars = len(bars)
+    stat_colors = [C_CORAL, C_TEAL_RGB, (14, 145, 150)]
 
-    cta_reserve = 100
-    label_h = 40
-    fact_reserve = 50 if content.get("fact") else 0
-    bar_gap_ratio = 0.8
-    bar_w = W - 2 * pad
-    track_color = (20, 40, 42)
+    # Large font for ≤2 stats, smaller for 3+
+    stat_size = 108 if n_bars <= 2 else 82
+    stat_font = _load_font("DMSerifDisplay-Regular.ttf", stat_size)
 
-    # Target bar height: fill available space generously
-    available = H - after_headline_y - 28 - cta_reserve - fact_reserve
-    raw_h = available / (n_bars + (n_bars - 1) * bar_gap_ratio + n_bars * label_h / 80)
-    bar_h = min(max(int(raw_h), 70), 140)
-    bar_gap = int(bar_h * bar_gap_ratio)
+    # Layout: stat number + label + inter-stat gap
+    num_h_est    = int(stat_size * 1.05)
+    label_h_est  = 34
+    gap_between  = 44
+    stat_block_h = num_h_est + 8 + label_h_est
+    total_stats_h = n_bars * stat_block_h + max(0, n_bars - 1) * gap_between
 
-    # Center chart block vertically in remaining space
-    total_chart_h = n_bars * bar_h + (n_bars - 1) * bar_gap + n_bars * label_h + fact_reserve
-    remaining = H - cta_reserve - (after_headline_y + 28)
-    v_offset = max(0, (remaining - total_chart_h) // 2)
-    bar_start_y = after_headline_y + 28 + v_offset
-    current_y = bar_start_y
+    fact        = content.get("fact", "")
+    cta_reserve = 90
+    fact_reserve = 58 if fact else 0
+
+    available = H - after_headline_y - cta_reserve - fact_reserve
+    v_offset  = max(0, (available - total_stats_h) // 2)
+    current_y = after_headline_y + v_offset
 
     for idx, bar in enumerate(bars):
-        value = bar.get("value", 0)
-        label = bar.get("label", "")
-        value_str = bar.get("value_str", f"{value}%")
-        color = bar_colors[idx % len(bar_colors)]
+        value_str = bar.get("value_str", f"{bar.get('value', 0)}%")
+        label     = bar.get("label", "")
+        color     = stat_colors[idx % len(stat_colors)]
 
-        by = current_y
+        # Hero number — bbox returns absolute coords; use bbox bottom for label placement
+        draw.text((pad, current_y), value_str, font=stat_font, fill=color)
+        num_bbox = draw.textbbox((pad, current_y), value_str, font=stat_font)
+        text_bottom = num_bbox[3]  # absolute y of bounding box bottom
 
-        # Track
-        draw.rectangle([(pad, by), (pad + bar_w, by + bar_h)], fill=track_color)
+        # Label beneath number with a clear gap
+        label_y = text_bottom + 10
+        wrapped_label = _wrap_text(label, label_font, W - 2 * pad)
+        draw.text((pad, label_y), wrapped_label, font=label_font, fill=C_MUTED)
+        label_lines = wrapped_label.count("\n") + 1
+        block_bottom = label_y + label_lines * 32
 
-        # Fill
-        fill_w = max(int(bar_w * value / 100), 4)
-        draw.rectangle([(pad, by), (pad + fill_w, by + bar_h)], fill=color)
-
-        # Percentage number
-        num_bbox = draw.textbbox((0, 0), value_str, font=num_font)
-        num_w = num_bbox[2] - num_bbox[0]
-        num_h = num_bbox[3] - num_bbox[1]
-        num_y = by + (bar_h - num_h) // 2 - 2
-
-        if fill_w > num_w + 24:
-            num_x = pad + fill_w - num_w - 14
-            draw.text((num_x, num_y), value_str, font=num_font, fill=C_BG)
+        # Thin separator between stats (not after the last one)
+        if idx < n_bars - 1:
+            sep_y = block_bottom + gap_between // 2
+            draw.rectangle([(pad, sep_y), (W - pad, sep_y + 1)], fill=(28, 56, 58))
+            current_y = sep_y + gap_between // 2
         else:
-            num_x = pad + fill_w + 14
-            draw.text((num_x, num_y), value_str, font=num_font, fill=C_TEXT)
+            current_y = block_bottom + gap_between
 
-        # Label below bar
-        draw.text((pad, by + bar_h + 10), label, font=label_font, fill=C_MUTED)
-
-        current_y += bar_h + label_h + bar_gap
-
-    # Fact / supporting text (positioned after last bar label)
-    fact_y = current_y - bar_gap + 10
-    fact = content.get("fact", "")
+    # Supporting fact
     if fact:
-        wrapped_fact = _wrap_text(fact, context_font, W - 2 * pad)
-        draw.text((pad, fact_y), wrapped_fact, font=context_font, fill=(70, 100, 102), spacing=8)
+        fact_y = H - cta_reserve - fact_reserve + 6
+        wrapped_fact = _wrap_text(fact, fact_font, W - 2 * pad)
+        draw.text((pad, fact_y), wrapped_fact, font=fact_font, fill=C_MUTED, spacing=8)
 
-    # Bottom rule + CTA
-    draw.rectangle([(pad, H - 72), (pad + 56, H - 68)], fill=C_TEAL_RGB)
-    draw.text((pad, H - 56), "oralcheck.org", font=cta_font, fill=C_TEAL_RGB)
+    # CTA
+    draw.rectangle([(pad, H - 60), (pad + 44, H - 57)], fill=C_TEAL_RGB)
+    draw.text((pad, H - 46), "oralcheck.org", font=cta_font, fill=C_TEAL_RGB)
 
     tmp = tempfile.NamedTemporaryFile(suffix=".jpg", delete=False)
     img.save(tmp.name, "JPEG", quality=95)
