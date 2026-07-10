@@ -221,6 +221,78 @@ def record_pillar_used(state: dict, pillar: str) -> dict:
 # Content generation (Anthropic)
 # ---------------------------------------------------------------------------
 
+def _strip_dashes(text: str) -> str:
+    """Enforce the no-em-dash brand rule on any model-produced string."""
+    if not isinstance(text, str):
+        return text
+    return text.replace(" -- ", ", ").replace("--", ", ").replace(" — ", ", ").replace("—", ", ")
+
+
+_VALID_SLIDE_TYPES = {"stat", "fact", "list", "quote"}
+
+
+def _sanitize_carousel_slides(slides: list) -> list[dict]:
+    """Validate and clean typed carousel slides, dropping malformed ones.
+
+    Guarantees each returned slide has the fields its type needs, keeps at most
+    5 slides, and strips em dashes from every text field.
+    """
+    clean: list[dict] = []
+    for s in slides:
+        if not isinstance(s, dict):
+            continue
+        t = str(s.get("type", "fact")).lower().strip()
+        if t not in _VALID_SLIDE_TYPES:
+            t = "fact"
+        if t == "stat":
+            value = str(s.get("value", "")).strip()
+            label = _strip_dashes(str(s.get("label", "")).strip())
+            if not value or not label:
+                continue
+            clean.append({"type": "stat", "value": value, "label": label,
+                          "detail": _strip_dashes(str(s.get("detail", "")).strip())})
+        elif t == "list":
+            items = [_strip_dashes(str(i).strip()) for i in s.get("items", []) if str(i).strip()]
+            headline = _strip_dashes(str(s.get("headline", "")).strip())
+            if not headline or len(items) < 2:
+                continue
+            clean.append({"type": "list", "headline": headline, "items": items[:5]})
+        elif t == "quote":
+            text = _strip_dashes(str(s.get("text", "")).strip())
+            if not text:
+                continue
+            clean.append({"type": "quote", "text": text,
+                          "attribution": _strip_dashes(str(s.get("attribution", "")).strip())})
+        else:  # fact
+            headline = _strip_dashes(str(s.get("headline", "")).strip())
+            body = _strip_dashes(str(s.get("body", "")).strip())
+            if not headline or not body:
+                continue
+            clean.append({"type": "fact", "headline": headline, "body": body})
+    return clean[:5]
+
+
+def build_deck_from_content(content: dict, photo_path: str | None) -> dict:
+    """Map generated carousel content + a fetched photo into a render_html deck spec.
+
+    Inserts one mid-deck photo slide (after the first content slide) so every
+    carousel carries real imagery, which lifts engagement.
+    """
+    slides = list(content.get("slides", []))
+    photo_caption = _strip_dashes(content.get("photo_caption", "")).strip()
+
+    if photo_path and photo_caption:
+        insert_at = 1 if len(slides) >= 2 else len(slides)
+        slides.insert(insert_at, {"type": "photo", "photo": photo_path, "caption": photo_caption})
+
+    return {
+        "kicker": content.get("kicker", ""),
+        "cover": {"hook": content.get("hook", ""), "photo": photo_path},
+        "slides": slides,
+        "cta": {},
+    }
+
+
 def generate_content(brief: str, media_type: str) -> dict:
     if media_type == "infographic":
         media_note = (
@@ -267,18 +339,29 @@ def generate_content(brief: str, media_type: str) -> dict:
         )
     elif media_type == "carousel":
         media_note = (
-            "This is for an Instagram Carousel (4 slides total). "
-            "Slide 1: real stock photo background (searched from Pexels/Unsplash). Slides 2-3: branded info slides. "
-            "Slide 4: auto-generated CTA slide. Do NOT include slide 4 in your output.\n"
+            "This is for an Instagram Carousel with a designed template system. The renderer builds:\n"
+            "  - a cover slide (your hook, over a real stock photo)\n"
+            "  - a mid-deck photo slide (uses your photo_caption)\n"
+            "  - your typed content slides, rendered in distinct brand layouts\n"
+            "  - an auto-generated CTA closing slide (do NOT include it)\n\n"
             "Output JSON with these exact fields:\n"
-            "  hook: slide 1 headline text (10 words max, powerful stat or insight)\n"
-            "  search_query: 3-6 word Pexels/Unsplash search query for slide 1 background (real people, human-focused)\n"
-            "  slides: array of exactly 2 objects for slides 2-3, each with:\n"
-            "    headline (6 words max, punchy)\n"
-            "    body (20-30 words, one concrete supporting fact)\n"
-            "  caption: Instagram caption\n"
-            "  hashtags: exactly 5 lowercase tags\n"
-            "Slides should tell a cohesive story: hook stat -> supporting context -> key insight -> (auto CTA)."
+            "  hook: cover headline, 10 words max, the single strongest insight or surprising-true fact\n"
+            "  kicker: 2-4 word topic eyebrow in title case (e.g. 'HPV & Oral Cancer', 'Know The Signs')\n"
+            "  search_query: 3-6 word Pexels/Unsplash query for the photo (real people, human-focused)\n"
+            "  photo_caption: one line, 14 words max, that pairs with the photo mid-deck\n"
+            "  slides: array of 3 to 4 typed content slides. Each object has a 'type' plus fields:\n"
+            "    - {\"type\":\"stat\", \"value\":\"70%\", \"label\":\"6-10 word plain-language meaning\", \"detail\":\"one 12-18 word supporting sentence\"}\n"
+            "    - {\"type\":\"fact\", \"headline\":\"6-8 word serif headline\", \"body\":\"20-30 word supporting paragraph\"}\n"
+            "    - {\"type\":\"list\", \"headline\":\"4-6 word headline\", \"items\":[\"3 to 5 short items, 4-8 words each\"]}\n"
+            "    - {\"type\":\"quote\", \"text\":\"a short, human, 8-14 word line\", \"attribution\":\"who said it, optional\"}\n"
+            "  caption: full Instagram caption ending with an oralcheck.org CTA\n"
+            "  hashtags: exactly 5 lowercase tags\n\n"
+            "Rules for the slides array:\n"
+            "  - Include at least one 'stat' slide and at least one 'fact' slide.\n"
+            "  - Use a 'list' slide when the pillar is about signs, symptoms, or steps.\n"
+            "  - Vary the types, do not output three of the same type.\n"
+            "  - Slides must tell a cohesive story: surprising hook -> why it matters -> what to do -> (auto CTA).\n"
+            "  - Every stat 'value' must be a real, defensible number for oral cancer. No invented statistics."
         )
     else:
         media_note = (
@@ -314,6 +397,11 @@ def generate_content(brief: str, media_type: str) -> dict:
             required = {"hook", "caption", "hashtags", "stat", "stat_context", "fact"}
         elif media_type == "carousel":
             required = {"hook", "caption", "hashtags", "search_query", "slides"}
+            data.setdefault("kicker", "")
+            data.setdefault("photo_caption", "")
+            data["slides"] = _sanitize_carousel_slides(data.get("slides", []))
+            if not data["slides"]:
+                raise ValueError("carousel produced no valid content slides")
         elif media_type == "reel":
             required = {"hook", "caption", "hashtags", "search_query"}
         else:
@@ -967,37 +1055,45 @@ def render_infographic_image(content: dict) -> str:
 
 def generate_carousel_slides(content: dict) -> list[str]:
     """
-    Build the 4-slide carousel:
-      Slide 1: AI background (flux-pro) + hook text overlay
-      Slides 2-3: PIL-rendered brand info slides
-      Slide 4: PIL-rendered CTA slide (auto)
+    Build a designed carousel deck:
+      Cover (hook over stock photo) -> typed content slides (stat/fact/list/quote)
+      with one mid-deck photo slide -> auto CTA closing slide.
+    Rendered via the HTML/Playwright design system for crisp typography.
     """
+    log.info("Fetching stock photo for carousel (query: %s)...", content["search_query"])
+    try:
+        raw_path = fetch_stock_photo(content["search_query"])
+    except Exception as exc:
+        log.warning("Stock photo fetch failed (%s); rendering photo-less carousel.", exc)
+        raw_path = None
+
+    if _USE_HTML_RENDER:
+        deck = build_deck_from_content(content, raw_path)
+        log.info("Rendering carousel deck (%d slides + cover + CTA)...", len(deck["slides"]))
+        return _html_render.carousel_deck(deck)
+
+    # Fallback: PIL renderer with flattened typed slides
     paths = []
-
-    log.info("Fetching stock photo for carousel slide 1 (query: %s)...", content["search_query"])
-    raw_path = fetch_stock_photo(content["search_query"])
-    if _USE_HTML_RENDER:
-        hook_path = _html_render.image_overlay(raw_path, content["hook"])
-    else:
-        hook_path = add_text_overlay(raw_path, content["hook"])
-    paths.append(hook_path)
-
-    for i, slide in enumerate(content.get("slides", []), 2):
-        log.info("Rendering carousel slide %d (brand info)...", i)
-        if _USE_HTML_RENDER:
-            info_path = _html_render.info_slide_image(slide["headline"], slide["body"])
-        else:
-            info_path = _render_info_slide(slide["headline"], slide["body"])
-        paths.append(info_path)
-
-    log.info("Rendering carousel slide %d (CTA)...", len(paths) + 1)
-    if _USE_HTML_RENDER:
-        cta_path = _html_render.cta_slide_image()
-    else:
-        cta_path = _render_cta_slide()
-    paths.append(cta_path)
-
+    if raw_path:
+        paths.append(add_text_overlay(raw_path, content["hook"]))
+    for slide in content.get("slides", []):
+        headline, body = _flatten_slide(slide)
+        if headline or body:
+            paths.append(_render_info_slide(headline, body))
+    paths.append(_render_cta_slide())
     return paths
+
+
+def _flatten_slide(slide: dict) -> tuple[str, str]:
+    """Reduce a typed carousel slide to (headline, body) for the PIL fallback."""
+    t = slide.get("type", "fact")
+    if t == "stat":
+        return slide.get("value", ""), slide.get("label", "")
+    if t == "list":
+        return slide.get("headline", ""), "  •  ".join(slide.get("items", []))
+    if t == "quote":
+        return slide.get("text", ""), slide.get("attribution", "")
+    return slide.get("headline", ""), slide.get("body", "")
 
 
 def stitch_carousel_preview(slide_paths: list[str]) -> str:

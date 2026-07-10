@@ -41,6 +41,9 @@ jobs:
       - name: Install Playwright browsers
         run: python -m playwright install chromium --with-deps
 
+      - name: Verify render templates
+        run: python test_render.py
+
       - name: Generate content
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
