@@ -27,6 +27,12 @@ from PIL import Image, ImageDraw, ImageFont
 
 load_dotenv()
 
+try:
+    import render_html as _html_render
+    _USE_HTML_RENDER = True
+except ImportError:
+    _USE_HTML_RENDER = False
+
 # ---------------------------------------------------------------------------
 # Logging
 # ---------------------------------------------------------------------------
@@ -970,16 +976,25 @@ def generate_carousel_slides(content: dict) -> list[str]:
 
     log.info("Fetching stock photo for carousel slide 1 (query: %s)...", content["search_query"])
     raw_path = fetch_stock_photo(content["search_query"])
-    hook_path = add_text_overlay(raw_path, content["hook"])
+    if _USE_HTML_RENDER:
+        hook_path = _html_render.image_overlay(raw_path, content["hook"])
+    else:
+        hook_path = add_text_overlay(raw_path, content["hook"])
     paths.append(hook_path)
 
     for i, slide in enumerate(content.get("slides", []), 2):
         log.info("Rendering carousel slide %d (brand info)...", i)
-        info_path = _render_info_slide(slide["headline"], slide["body"])
+        if _USE_HTML_RENDER:
+            info_path = _html_render.info_slide_image(slide["headline"], slide["body"])
+        else:
+            info_path = _render_info_slide(slide["headline"], slide["body"])
         paths.append(info_path)
 
     log.info("Rendering carousel slide %d (CTA)...", len(paths) + 1)
-    cta_path = _render_cta_slide()
+    if _USE_HTML_RENDER:
+        cta_path = _html_render.cta_slide_image()
+    else:
+        cta_path = _render_cta_slide()
     paths.append(cta_path)
 
     return paths
@@ -1174,7 +1189,10 @@ def run_pipeline(
 
     if media_type == "infographic":
         log.info("Rendering infographic...")
-        file_paths = [render_infographic_image(content)]
+        if _USE_HTML_RENDER:
+            file_paths = [_html_render.infographic_image(content)]
+        else:
+            file_paths = [render_infographic_image(content)]
     elif media_type == "animated":
         log.info("Rendering Manim animated reel...")
         reel_path = render_manim_reel(content)
@@ -1184,7 +1202,10 @@ def run_pipeline(
     elif media_type == "image":
         log.info("Fetching stock photo (query: %s)...", content["search_query"])
         raw_path = fetch_stock_photo(content["search_query"])
-        composited = add_text_overlay(raw_path, content["hook"])
+        if _USE_HTML_RENDER:
+            composited = _html_render.image_overlay(raw_path, content["hook"])
+        else:
+            composited = add_text_overlay(raw_path, content["hook"])
         file_paths = [composited]
     else:  # reel
         log.info("Fetching stock video (query: %s)...", content["search_query"])
