@@ -44,6 +44,9 @@ jobs:
       - name: Verify render templates
         run: python test_render.py
 
+      - name: Verify content logic
+        run: python test_content.py
+
       - name: Generate content
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
@@ -67,10 +70,10 @@ jobs:
           INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
         run: python telegram_review.py
 
-      - name: Save pillar rotation state
+      - name: Save rotation + idea ledger state
         working-directory: .
         run: |
           git config user.name "OralCheck Bot"
           git config user.email "bot@oralcheck.org"
-          git add oralcheck-agent/pillars.json
-          git diff --staged --quiet || (git commit -m "chore: pillar rotation [skip ci]" && git push)
+          git add oralcheck-agent/pillars.json oralcheck-agent/ideas.json
+          git diff --staged --quiet || (git commit -m "chore: rotation + idea ledger [skip ci]" && git push)

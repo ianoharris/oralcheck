@@ -1,0 +1,66 @@
+[
+  {
+    "slug": "new-year-screening",
+    "name": "New Year",
+    "rule": {"type": "fixed", "month": 1, "day": 1},
+    "kind": "holiday",
+    "media": "carousel",
+    "brief": "A New Year, fresh-start angle framed around health. Position a two-minute oral cancer screening as the easiest health resolution someone can keep. Calm and encouraging, not preachy."
+  },
+  {
+    "slug": "world-cancer-day",
+    "name": "World Cancer Day",
+    "rule": {"type": "fixed", "month": 2, "day": 4},
+    "kind": "awareness",
+    "media": "carousel",
+    "brief": "World Cancer Day (February 4). Focus on early detection as the throughline. Where oral cancer fits in the wider cancer picture and why catching it early changes outcomes so dramatically."
+  },
+  {
+    "slug": "hpv-awareness-day",
+    "name": "International HPV Awareness Day",
+    "rule": {"type": "fixed", "month": 3, "day": 4},
+    "kind": "awareness",
+    "media": "carousel",
+    "brief": "International HPV Awareness Day (March 4). Explain the HPV to oral cancer connection plainly. HPV is now the leading cause in adults under 50 and most people do not know it can cause cancer in the mouth and throat."
+  },
+  {
+    "slug": "oral-cancer-awareness-month",
+    "name": "Oral Cancer Awareness Month",
+    "rule": {"type": "month", "month": 4},
+    "kind": "awareness",
+    "media": "carousel",
+    "brief": "Oral Cancer Awareness Month (April). The single most on-brand month of the year. Educational, hopeful, action-oriented. Signs to know, who is at risk now, and how a quick screening fits into a normal week."
+  },
+  {
+    "slug": "world-no-tobacco-day",
+    "name": "World No Tobacco Day",
+    "rule": {"type": "fixed", "month": 5, "day": 31},
+    "kind": "awareness",
+    "media": "infographic",
+    "brief": "World No Tobacco Day (May 31). Tobacco and oral cancer risk, framed supportively rather than as a scare. Pair the risk with the reassurance that risk drops after quitting and that screening helps in the meantime."
+  },
+  {
+    "slug": "world-head-neck-cancer-day",
+    "name": "World Head and Neck Cancer Day",
+    "rule": {"type": "fixed", "month": 7, "day": 27},
+    "kind": "awareness",
+    "media": "carousel",
+    "brief": "World Head and Neck Cancer Day (July 27). Oral cancer sits within head and neck cancers. Explain what that umbrella covers, why survival hinges on early detection, and what the warning signs look like."
+  },
+  {
+    "slug": "dental-hygiene-month",
+    "name": "National Dental Hygiene Month",
+    "rule": {"type": "month", "month": 10},
+    "kind": "awareness",
+    "media": "image",
+    "brief": "National Dental Hygiene Month (October). Connect routine dental care to oral cancer screening. A dental visit is a natural moment to get checked, and a self-exam fills the gaps between visits."
+  },
+  {
+    "slug": "great-american-smokeout",
+    "name": "Great American Smokeout",
+    "rule": {"type": "nth-weekday", "month": 11, "weekday": 3, "n": 3},
+    "kind": "awareness",
+    "media": "carousel",
+    "brief": "The Great American Smokeout (third Thursday of November). A supportive nudge for anyone thinking about quitting. Tie it to oral cancer risk reduction and the value of a baseline screening today."
+  }
+]

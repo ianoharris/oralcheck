@@ -10,6 +10,7 @@ import atexit
 import json
 import logging
 import os
+import re
 import shutil
 import sys
 import tempfile
@@ -26,6 +27,9 @@ from dotenv import load_dotenv
 from PIL import Image, ImageDraw, ImageFont
 
 load_dotenv()
+
+import content_calendar
+import ideas
 
 try:
     import render_html as _html_render
@@ -73,6 +77,8 @@ UNSPLASH_ACCESS_KEY = os.environ.get("UNSPLASH_ACCESS_KEY", "")
 PILLARS_FILE = Path(__file__).parent / "pillars.json"
 QUEUE_DIR    = Path(__file__).parent / "queue"
 
+CONTENT_MODEL = "claude-sonnet-4-6"
+
 PILLARS = ["stats", "myth_busting", "self_exam", "hpv_connection", "screener_cta"]
 
 PILLAR_BRIEFS = {
@@ -97,6 +103,15 @@ PILLAR_BRIEFS = {
     "screener_cta": (
         "Drive followers to take the free risk screener at oralcheck.org. "
         "Key message: 10 questions, 2 minutes, free. Make it feel low-effort and high-value."
+    ),
+    "awareness": (
+        "A branded post tied to a specific awareness day or holiday. Anchor the post to the date "
+        "and its meaning, then connect it back to oral cancer early detection and the free screener."
+    ),
+    "light_lane": (
+        "A lighter, more human or gently witty take that still respects the subject. Warmth and "
+        "relatability over shock, never a joke at the expense of patients or the disease. Keep the "
+        "brand voice calm and grounded, and still close with the oralcheck.org screener."
     ),
 }
 
@@ -373,7 +388,7 @@ def generate_content(brief: str, media_type: str) -> dict:
     def _call():
         client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
         response = client.messages.create(
-            model="claude-sonnet-4-6",
+            model=CONTENT_MODEL,
             max_tokens=1200,
             system=SYSTEM_PROMPT,
             messages=[
@@ -1478,7 +1493,7 @@ def generate_map_caption(country_data: dict[str, int], n_countries: int, total_u
 
     def _call():
         resp = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY).messages.create(
-            model="claude-sonnet-4-6",
+            model=CONTENT_MODEL,
             max_tokens=800,
             messages=[{"role": "user", "content": prompt}],
         )
@@ -1519,6 +1534,111 @@ def run_map_pipeline(days: int = 90) -> None:
 
 
 # ---------------------------------------------------------------------------
+# Idea suggestion + weekly planning
+# ---------------------------------------------------------------------------
+
+_PILLAR_EMOJI = ""  # keep output clean, no emoji
+
+
+def _print_ideas(batch: list[dict]) -> None:
+    upcoming = content_calendar.upcoming(within_days=30)
+    if upcoming:
+        near = upcoming[0]
+        print(f"\n  Upcoming: {near['name']} in {near['days_until']} days\n")
+    else:
+        print()
+    for n, idea in enumerate(batch, 1):
+        tag = f"{idea['media_type']} · {idea['pillar']}"
+        print(f"  {n:>2}. [{tag}]")
+        print(f"      {idea['title']}")
+    print(f"\n  Pick with:  python oralcheck_agent.py --pick \"1,3,5\"")
+    print(f"  (regenerate with --ideas to get a fresh batch)\n")
+
+
+def run_ideas(count: int) -> None:
+    """Generate a numbered batch of fresh ideas and record them as suggested."""
+    ledger = ideas.load_ledger()
+    upcoming = content_calendar.upcoming(within_days=30)
+    log.info("Generating %d ideas (avoiding %d used/recent)...",
+             count, len(ideas._avoid_titles(ledger)))
+    fresh = ideas.generate_ideas(
+        count, api_key=ANTHROPIC_API_KEY, model=CONTENT_MODEL,
+        system_prompt=SYSTEM_PROMPT, pillar_briefs=PILLAR_BRIEFS,
+        calendar_events=upcoming, ledger=ledger,
+    )
+    if not fresh:
+        print("No fresh ideas produced (they may all overlap with used ideas). Try again.")
+        return
+    ledger = ideas.record_suggested(ledger, fresh)
+    ideas.save_ledger(ledger)
+    _print_ideas(ideas.get_last_batch(ledger))
+
+
+def _queue_idea(idea: dict) -> dict | None:
+    brief = (f"Content pillar: {idea['pillar'].replace('_', ' ').title()}\n"
+             f"{idea['brief']}")
+    if idea.get("calendar_ref"):
+        brief += f"\n(Tied to awareness date: {idea['calendar_ref']})"
+    return run_pipeline(brief, idea["media_type"], pillar=idea["pillar"])
+
+
+def run_pick(numbers: list[int]) -> None:
+    """Turn selected idea numbers into queued posts for Telegram/web review."""
+    ledger = ideas.load_ledger()
+    chosen = ideas.select(ledger, numbers)
+    if not chosen:
+        print("No matching ideas in the last batch. Run --ideas first, then pick by number.")
+        return
+    ideas.save_ledger(ledger)  # persist 'selected' before the slow render work
+    for idea in chosen:
+        log.info("Generating post for idea: %s", idea["title"])
+        try:
+            manifest = _queue_idea(idea)
+        except Exception as exc:
+            log.error("Failed to generate '%s': %s", idea["title"], exc)
+            continue
+        if manifest:
+            ideas.mark_queued(ledger, idea["id"], manifest["id"])
+            ideas.save_ledger(ledger)
+            print(f"  queued {manifest['id']}  ({idea['media_type']})  {idea['title']}")
+    print("\n  Review at http://localhost:8765 or via the Telegram approval flow.")
+
+
+def run_plan_week(count: int) -> None:
+    """Auto-plan a week: generate a balanced batch and queue all of it for review."""
+    ledger = ideas.load_ledger()
+    upcoming = content_calendar.upcoming(within_days=14)
+    log.info("Planning a week of %d posts...", count)
+    fresh = ideas.generate_ideas(
+        count, api_key=ANTHROPIC_API_KEY, model=CONTENT_MODEL,
+        system_prompt=SYSTEM_PROMPT, pillar_briefs=PILLAR_BRIEFS,
+        calendar_events=upcoming, ledger=ledger,
+    )
+    if not fresh:
+        print("No fresh ideas produced for the week. Try again later.")
+        return
+    ledger = ideas.record_suggested(ledger, fresh)
+    ideas.save_ledger(ledger)
+    batch = ideas.get_last_batch(ledger)
+    print(f"\n  Weekly plan ({len(batch)} posts):")
+    for idea in batch:
+        print(f"    - [{idea['media_type']} · {idea['pillar']}] {idea['title']}")
+    print()
+    for idea in batch:
+        log.info("Generating: %s", idea["title"])
+        try:
+            manifest = _queue_idea(idea)
+        except Exception as exc:
+            log.error("Failed '%s': %s", idea["title"], exc)
+            continue
+        if manifest:
+            ideas.mark_queued(ledger, idea["id"], manifest["id"])
+            ideas.save_ledger(ledger)
+            print(f"  queued {manifest['id']}  ({idea['media_type']})  {idea['title']}")
+    print("\n  Review the whole batch at http://localhost:8765 or via Telegram.")
+
+
+# ---------------------------------------------------------------------------
 # Entry point
 # ---------------------------------------------------------------------------
 
@@ -1535,6 +1655,11 @@ def main():
             '  python oralcheck_agent.py --directed "HPV awareness for parents"\n'
             "  python oralcheck_agent.py --map\n"
             "\n"
+            "Idea workflow (suggest, then pick what you like):\n"
+            "  python oralcheck_agent.py --ideas 8\n"
+            '  python oralcheck_agent.py --pick "1,3,5"\n'
+            "  python oralcheck_agent.py --plan-week 3\n"
+            "\n"
             "Then start the review server:\n"
             "  python review_server.py\n"
             "  http://localhost:8765\n"
@@ -1544,6 +1669,12 @@ def main():
     mode.add_argument("--auto", action="store_true", help="Auto-pick next content pillar")
     mode.add_argument("--directed", metavar="BRIEF", help="Provide a specific content brief")
     mode.add_argument("--map", action="store_true", help="Generate world map post from Google Analytics data")
+    mode.add_argument("--ideas", type=int, metavar="N", nargs="?", const=8,
+                      help="Suggest N numbered content ideas (default 8) to pick from")
+    mode.add_argument("--pick", metavar="NUMS",
+                      help="Generate posts from picked idea numbers, e.g. \"1,3,5\"")
+    mode.add_argument("--plan-week", type=int, metavar="N", nargs="?", const=3,
+                      help="Auto-plan and queue a week of N posts (default 3) for batch review")
     parser.add_argument(
         "--media-type",
         choices=["reel", "image", "carousel", "animated", "infographic"],
@@ -1558,7 +1689,17 @@ def main():
     )
     args = parser.parse_args()
 
-    if args.map:
+    if args.ideas is not None:
+        run_ideas(args.ideas)
+    elif args.pick:
+        try:
+            nums = [int(x) for x in re.split(r"[,\s]+", args.pick.strip()) if x]
+        except ValueError:
+            parser.error('--pick expects numbers like "1,3,5"')
+        run_pick(nums)
+    elif args.plan_week is not None:
+        run_plan_week(args.plan_week)
+    elif args.map:
         run_map_pipeline(days=args.days)
     elif args.auto:
         state = load_pillar_state()
