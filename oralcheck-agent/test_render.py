@@ -13,6 +13,7 @@ Exit code 0 = all good, 1 = one or more failures.
 
 import sys
 import tempfile
+from io import BytesIO
 from pathlib import Path
 
 from PIL import Image
@@ -143,12 +144,16 @@ def main() -> int:
             dims = page.evaluate(OVERFLOW_JS)
             overflow = dims["w"] > 1081 or dims["h"] > 1081
 
+            # Match production: supersample at 2x, downscale to 1080 (render_html does this).
             out = OUT_DIR / f"{name}.jpg"
-            page.screenshot(path=str(out), type="jpeg", quality=92, full_page=False)
+            png = page.screenshot(type="png", full_page=False)
+            with Image.open(BytesIO(png)) as im:
+                im.convert("RGB").resize((1080, 1080), Image.LANCZOS).save(str(out), "JPEG", quality=90)
             Path(fh.name).unlink(missing_ok=True)
 
             with Image.open(out) as im:
-                size_ok = im.size == (2160, 2160)  # 1080 @ 2x
+                # Delivered at 1080 (supersampled from 2x); must be within IG's 1440 cap.
+                size_ok = im.size == (1080, 1080)
 
             status = "ok"
             if overflow:

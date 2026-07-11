@@ -109,7 +109,15 @@ def upload_to_imgbb(image_path: Path) -> str:
 def _ig_post(path: str, **params) -> dict:
     params["access_token"] = IG_ACCESS_TOKEN
     resp = httpx.post(f"{GRAPH_BASE}/{path}", params=params, timeout=30)
-    resp.raise_for_status()
+    if not resp.is_success:
+        # Surface Meta's actual error (message/code/subcode), not just the status.
+        # Strip the access token so it never lands in logs or Telegram.
+        try:
+            err = resp.json().get("error", {})
+            detail = f"{err.get('message', resp.text)} (code {err.get('code')}, subcode {err.get('error_subcode')})"
+        except Exception:
+            detail = resp.text
+        raise RuntimeError(f"Graph API {resp.status_code} on /{path.split('/')[-1]}: {detail}")
     return resp.json()
 
 

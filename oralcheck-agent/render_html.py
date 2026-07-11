@@ -12,12 +12,19 @@ theme-aware web pages, so there is no light mode by design.
 
 import base64
 import html as _html
+from io import BytesIO
+
+from PIL import Image
 import os
 import tempfile
 from pathlib import Path
 
 FONTS_DIR = Path(__file__).parent / "fonts"
 _FONT_CACHE: dict[str, str] = {}
+
+# Final delivery size. Rendered at 2x internally, downscaled to this. Must stay
+# <= 1440 (Instagram Graph API max image width).
+OUTPUT_PX = 1080
 
 # --- Brand tokens ----------------------------------------------------------
 BG        = "#0d1a1b"   # near-black teal ground
@@ -436,7 +443,13 @@ def _screenshot_many(htmls: list[str]) -> list[str]:
                 out = tempfile.NamedTemporaryFile(suffix=".jpg", delete=False); out.close()
                 page.goto(f"file://{fh.name}")
                 page.evaluate("async () => { await document.fonts.ready; }")
-                page.screenshot(path=out.name, type="jpeg", quality=92, full_page=False)
+                # Render at 2x (2160px) for supersampled crispness, then downscale to
+                # OUTPUT_PX. Instagram's Graph API rejects image widths over 1440px, and
+                # posts display at ~1080, so 1080 is the right delivery size.
+                png_bytes = page.screenshot(type="png", full_page=False)
+                with Image.open(BytesIO(png_bytes)) as im:
+                    im = im.convert("RGB").resize((OUTPUT_PX, OUTPUT_PX), Image.LANCZOS)
+                    im.save(out.name, "JPEG", quality=90)
                 out_paths.append(out.name)
             browser.close()
     finally:
