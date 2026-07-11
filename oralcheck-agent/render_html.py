@@ -129,43 +129,16 @@ def _brandrow(counter: str | None) -> str:
 
 def slide_cover(hook: str, kicker: str = "", photo: str | None = None,
                 counter: str | None = None) -> str:
-    """Opening slide: big serif hook, optional duotone photo band, swipe hint."""
+    """Opening slide: a clean, purely typographic hook. Photos live on their own
+    full-bleed slides mid-deck, never as an awkward band under the cover text."""
     kicker_html = f"<div class='kicker' style='margin-bottom:26px;'>{_e(kicker)}</div>" if kicker else ""
-    photo_band = ""
-    if photo:
-        uri = _img_data_uri(photo)
-        photo_band = f"""
-        <div style="position:absolute;left:0;right:0;bottom:0;height:46%;overflow:hidden;">
-          <img src="{uri}" style="width:100%;height:100%;object-fit:cover;" />
-          <div style="position:absolute;inset:0;background:{TEAL};mix-blend-mode:color;opacity:0.55;"></div>
-          <div style="position:absolute;inset:0;
-               background:linear-gradient(to bottom,{BG} 0%,rgba(13,26,27,0.35) 30%,rgba(13,26,27,0.55) 100%);"></div>
-        </div>"""
-        body = f"""
-        <div class="frame" style="position:relative;">
-          {_brandrow(counter)}
-          <div style="position:relative;z-index:2;margin-top:70px;">
-            {kicker_html}
-            <div class="serif" style="font-size:82px;line-height:1.06;letter-spacing:-0.01em;
-                 color:var(--text);text-wrap:balance;max-width:920px;">{_e(hook)}</div>
-          </div>
-          <div style="flex:1;"></div>
-          <div style="position:relative;z-index:2;display:flex;align-items:center;gap:12px;">
-            <span class="footurl">Swipe</span>
-            <span style="color:var(--teal);font-size:24px;">&rarr;</span>
-          </div>
-          {photo_band}
-        </div>"""
-        return _doc(body)
-
-    # No photo: pure typographic cover
     body = f"""
     <div class="frame">
       {_brandrow(counter)}
       <div style="flex:1;display:flex;flex-direction:column;justify-content:center;">
         {kicker_html}
-        <div class="accent" style="margin-bottom:30px;"></div>
-        <div class="serif" style="font-size:88px;line-height:1.05;letter-spacing:-0.01em;
+        <div class="accent" style="margin-bottom:32px;"></div>
+        <div class="serif" style="font-size:90px;line-height:1.04;letter-spacing:-0.015em;
              color:var(--text);text-wrap:balance;">{_e(hook)}</div>
       </div>
       <div style="display:flex;align-items:center;gap:12px;">

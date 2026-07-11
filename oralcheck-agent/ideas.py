@@ -98,6 +98,22 @@ def _coerce(idea: dict, valid_pillars: set[str]) -> dict | None:
     }
 
 
+def _extract_json_array(resp) -> list:
+    """Pull the JSON idea array out of a response that may include web-search blocks.
+
+    Concatenates all text blocks (the final one holds the JSON), strips any code
+    fences, and slices from the first '[' to the last ']'.
+    """
+    texts = [b.text for b in resp.content if getattr(b, "type", None) == "text"]
+    raw = "\n".join(texts).strip()
+    if "```" in raw:
+        raw = re.sub(r"```[a-zA-Z]*", "", raw).replace("```", "")
+    start, end = raw.find("["), raw.rfind("]")
+    if start == -1 or end == -1 or end < start:
+        raise ValueError("no JSON array found in idea-generation response")
+    return json.loads(raw[start:end + 1])
+
+
 def generate_ideas(count, *, api_key, model, system_prompt, pillar_briefs,
                    calendar_events, ledger) -> list[dict]:
     """Ask the model for `count` fresh ideas, filtered against the ledger.
@@ -121,11 +137,14 @@ def generate_ideas(count, *, api_key, model, system_prompt, pillar_briefs,
                      "and set calendar_ref to the ref slug:\n" + cal_lines)
 
     user_msg = (
-        f"Propose {count} distinct Instagram content ideas for OralCheck.\n\n"
+        f"First, briefly research the current landscape: search the web for recent oral cancer / HPV "
+        "news, awareness-day context, and what kinds of health-awareness posts are performing right now. "
+        "Use 2 to 4 searches, then stop researching and write the ideas.\n\n"
+        f"Then propose {count} distinct Instagram content ideas for OralCheck.\n\n"
         f"Content pillars to draw from (use the pillar key exactly):\n{pillar_lines}\n"
         f"{cal_block}\n{avoid_block}\n\n"
         "Requirements:\n"
-        f"  - Return a JSON array of exactly {count} objects, no markdown fences.\n"
+        f"  - Return a JSON array of exactly {count} objects as your final message, no markdown fences.\n"
         "  - Each object: title (<=12 words, the specific angle), pillar (one key from above), "
         "media_type (carousel, image, or infographic), brief (2 to 3 sentences that a content "
         "generator can act on), angle (one of: surprising-true, myth, how-to, timely, human), "
@@ -137,15 +156,21 @@ def generate_ideas(count, *, api_key, model, system_prompt, pillar_briefs,
     )
 
     client = anthropic.Anthropic(api_key=api_key)
-    resp = client.messages.create(
-        model=model, max_tokens=2000, system=system_prompt,
-        messages=[{"role": "user", "content": user_msg}],
-    )
-    raw = resp.content[0].text.strip()
-    if raw.startswith("```"):
-        lines = raw.split("\n")
-        raw = "\n".join(lines[1:-1]) if lines[-1].strip() == "```" else "\n".join(lines[1:])
-    parsed = json.loads(raw)
+    web_tool = [{"type": "web_search_20260209", "name": "web_search", "max_uses": 4}]
+    try:
+        resp = client.messages.create(
+            model=model, max_tokens=4000, system=system_prompt,
+            tools=web_tool, messages=[{"role": "user", "content": user_msg}],
+        )
+    except Exception as exc:
+        # Web search may be unavailable (plan/model); fall back to no-tools generation.
+        import logging
+        logging.getLogger("oralcheck").warning("Web search unavailable (%s); generating without it.", exc)
+        resp = client.messages.create(
+            model=model, max_tokens=2000, system=system_prompt,
+            messages=[{"role": "user", "content": user_msg}],
+        )
+    parsed = _extract_json_array(resp)
 
     used = _used_slugs(ledger)
     seen: set[str] = set()

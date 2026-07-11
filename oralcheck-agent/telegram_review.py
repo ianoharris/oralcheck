@@ -57,6 +57,36 @@ def tg_upload(method: str, field: str, file_path: str, **kwargs) -> dict:
     return resp.json()
 
 
+def tg_media_group(file_paths: list[str], caption: str | None = None) -> dict:
+    """Send up to 10 images as a single album so the whole carousel is reviewable."""
+    media = []
+    files = {}
+    handles = []
+    try:
+        for i, p in enumerate(file_paths[:10]):
+            name = f"photo{i}"
+            item = {"type": "photo", "media": f"attach://{name}"}
+            if i == 0 and caption:
+                item["caption"] = caption
+            media.append(item)
+            fh = open(p, "rb")
+            handles.append(fh)
+            files[name] = fh
+        resp = httpx.post(
+            f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMediaGroup",
+            data={"chat_id": TELEGRAM_CHAT_ID, "media": json.dumps(media)},
+            files=files,
+            timeout=180,
+        )
+    finally:
+        for fh in handles:
+            fh.close()
+    if not resp.is_success:
+        print(f"Telegram sendMediaGroup failed {resp.status_code}: {resp.text}", flush=True)
+    resp.raise_for_status()
+    return resp.json()
+
+
 def tg_err(message: str) -> None:
     """Send an error notification to Telegram without raising."""
     try:
@@ -270,13 +300,15 @@ def main() -> None:
     hashtags = manifest.get("hashtags", [])
     full_caption = caption + ("\n\n" + " ".join(f"#{h}" for h in hashtags) if hashtags else "")
 
-    method = "sendVideo" if is_video else "sendPhoto"
-    field  = "video"     if is_video else "photo"
-    tg_upload(
-        method, field, str(media_files[0]),
-        chat_id=TELEGRAM_CHAT_ID,
-        caption=f"OralCheck post ready\nPillar: {pillar}\n\n{manifest.get('hook', '')}",
-    )
+    slide_count = len(media_files)
+    label = f"OralCheck post ready\nPillar: {pillar}\n\n{manifest.get('hook', '')}"
+    if is_video:
+        tg_upload("sendVideo", "video", str(media_files[0]), chat_id=TELEGRAM_CHAT_ID, caption=label)
+    elif manifest["media_type"] == "carousel" and slide_count > 1:
+        # Show every slide as an album so the whole deck is reviewable, not just the cover.
+        tg_media_group([str(p) for p in media_files], caption=f"{label}\n\n({slide_count} slides, swipe to review all)")
+    else:
+        tg_upload("sendPhoto", "photo", str(media_files[0]), chat_id=TELEGRAM_CHAT_ID, caption=label)
 
     tg(
         "sendMessage",

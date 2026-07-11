@@ -290,19 +290,20 @@ def _sanitize_carousel_slides(slides: list) -> list[dict]:
 def build_deck_from_content(content: dict, photo_path: str | None) -> dict:
     """Map generated carousel content + a fetched photo into a render_html deck spec.
 
-    Inserts one mid-deck photo slide (after the first content slide) so every
-    carousel carries real imagery, which lifts engagement.
+    The cover is purely typographic. The photo appears as its own full-bleed slide
+    mid-deck so every carousel carries real imagery (which lifts engagement) without
+    the awkward text-over-photo cover composition.
     """
     slides = list(content.get("slides", []))
     photo_caption = _strip_dashes(content.get("photo_caption", "")).strip()
 
-    if photo_path and photo_caption:
+    if photo_path:
         insert_at = 1 if len(slides) >= 2 else len(slides)
         slides.insert(insert_at, {"type": "photo", "photo": photo_path, "caption": photo_caption})
 
     return {
         "kicker": content.get("kicker", ""),
-        "cover": {"hook": content.get("hook", ""), "photo": photo_path},
+        "cover": {"hook": content.get("hook", "")},
         "slides": slides,
         "cta": {},
     }
