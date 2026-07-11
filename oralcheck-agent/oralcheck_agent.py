@@ -1538,7 +1538,68 @@ def run_map_pipeline(days: int = 90) -> None:
 # Idea suggestion + weekly planning
 # ---------------------------------------------------------------------------
 
-_PILLAR_EMOJI = ""  # keep output clean, no emoji
+def _tg_send_message(text: str) -> bool:
+    """Send a Markdown message to the review Telegram chat. Non-fatal if unset."""
+    tok = os.environ.get("TELEGRAM_BOT_TOKEN")
+    cid = os.environ.get("TELEGRAM_CHAT_ID")
+    if not (tok and cid):
+        return False
+    try:
+        httpx.post(
+            f"https://api.telegram.org/bot{tok}/sendMessage",
+            json={"chat_id": cid, "text": text, "parse_mode": "Markdown"},
+            timeout=30,
+        )
+        return True
+    except Exception as exc:
+        log.warning("Telegram idea send failed: %s", exc)
+        return False
+
+
+def _ideas_telegram_text(batch: list[dict]) -> str:
+    upcoming = content_calendar.upcoming(within_days=30)
+    lines = ["*OralCheck content ideas*  (web-researched, none repeat past posts)"]
+    if upcoming:
+        lines.append(f"_Upcoming: {upcoming[0]['name']} in {upcoming[0]['days_until']} days_")
+    lines.append("")
+    for n, idea in enumerate(batch, 1):
+        lines.append(f"*{n}.*  _{idea['media_type']} · {idea['pillar'].replace('_', ' ')}_")
+        lines.append(idea["title"])
+        lines.append("")
+    lines.append("Reply with the numbers you want, e.g.  *1, 3, 8*")
+    return "\n".join(lines)
+
+
+def tg_wait_for_reply(timeout: int = 7200) -> str | None:
+    """Long-poll Telegram for the next text message from the review chat."""
+    tok = os.environ.get("TELEGRAM_BOT_TOKEN")
+    cid = os.environ.get("TELEGRAM_CHAT_ID")
+    if not (tok and cid):
+        return None
+    base = f"https://api.telegram.org/bot{tok}"
+    # Skip stale updates
+    last = None
+    stale = httpx.get(f"{base}/getUpdates", params={"offset": -1, "limit": 1}, timeout=10).json().get("result", [])
+    if stale:
+        last = stale[-1]["update_id"]
+    deadline = time.time() + timeout
+    while time.time() < deadline:
+        params = {"timeout": 30, "allowed_updates": '["message"]'}
+        if last is not None:
+            params["offset"] = last + 1
+        try:
+            resp = httpx.get(f"{base}/getUpdates", params=params, timeout=35)
+            resp.raise_for_status()
+        except Exception as exc:
+            log.warning("Poll error: %s", exc)
+            time.sleep(5)
+            continue
+        for update in resp.json().get("result", []):
+            last = update["update_id"]
+            msg = update.get("message", {})
+            if str(msg.get("chat", {}).get("id")) == str(cid) and msg.get("text"):
+                return msg["text"]
+    return None
 
 
 def _print_ideas(batch: list[dict]) -> None:
@@ -1572,7 +1633,10 @@ def run_ideas(count: int) -> None:
         return
     ledger = ideas.record_suggested(ledger, fresh)
     ideas.save_ledger(ledger)
-    _print_ideas(ideas.get_last_batch(ledger))
+    batch = ideas.get_last_batch(ledger)
+    _print_ideas(batch)
+    if _tg_send_message(_ideas_telegram_text(batch)):
+        log.info("Idea list sent to Telegram for review.")
 
 
 def _queue_idea(idea: dict) -> dict | None:
@@ -1603,6 +1667,43 @@ def run_pick(numbers: list[int]) -> None:
             ideas.save_ledger(ledger)
             print(f"  queued {manifest['id']}  ({idea['media_type']})  {idea['title']}")
     print("\n  Review at http://localhost:8765 or via the Telegram approval flow.")
+
+
+def run_await_picks(timeout: int = 7200) -> None:
+    """Wait for a Telegram reply naming idea numbers, then generate+queue those posts.
+
+    This is the hands-off step: after --ideas sends the batch to Telegram, this
+    listens for the reply (e.g. "1, 3, 8"), generates each picked post, and queues
+    it. Run telegram_review.py afterward to review and post the queued batch.
+    """
+    ledger = ideas.load_ledger()
+    batch = ideas.get_last_batch(ledger)
+    if not batch:
+        print("No idea batch to pick from. Run --ideas first.")
+        return
+    log.info("Waiting for your pick reply on Telegram (up to %dh)...", timeout // 3600)
+    reply = tg_wait_for_reply(timeout)
+    if not reply:
+        _tg_send_message("No pick received in time. Send the ideas again when you're ready.")
+        return
+    nums = [int(x) for x in re.findall(r"\d+", reply)]
+    chosen = ideas.select(ledger, nums)
+    if not chosen:
+        _tg_send_message("Couldn't read any valid numbers from that. Reply like `1, 3, 8`.")
+        return
+    ideas.save_ledger(ledger)
+    _tg_send_message(f"Got it, generating {len(chosen)} post(s) now. They'll come back for approval.")
+    for idea in chosen:
+        log.info("Generating post for idea: %s", idea["title"])
+        try:
+            manifest = _queue_idea(idea)
+        except Exception as exc:
+            log.error("Failed to generate '%s': %s", idea["title"], exc)
+            continue
+        if manifest:
+            ideas.mark_queued(ledger, idea["id"], manifest["id"])
+            ideas.save_ledger(ledger)
+    print("Picks generated and queued. Run telegram_review.py to review and post them.")
 
 
 def run_plan_week(count: int) -> None:
@@ -1674,6 +1775,8 @@ def main():
                       help="Suggest N numbered content ideas (default 8) to pick from")
     mode.add_argument("--pick", metavar="NUMS",
                       help="Generate posts from picked idea numbers, e.g. \"1,3,5\"")
+    mode.add_argument("--await-picks", action="store_true",
+                      help="Wait for a Telegram reply with idea numbers, then generate those posts")
     mode.add_argument("--plan-week", type=int, metavar="N", nargs="?", const=3,
                       help="Auto-plan and queue a week of N posts (default 3) for batch review")
     parser.add_argument(
@@ -1698,6 +1801,8 @@ def main():
         except ValueError:
             parser.error('--pick expects numbers like "1,3,5"')
         run_pick(nums)
+    elif args.await_picks:
+        run_await_picks()
     elif args.plan_week is not None:
         run_plan_week(args.plan_week)
     elif args.map:

@@ -275,24 +275,29 @@ def wait_for_callback(manifest_id: str) -> str:
 
 
 # ---------------------------------------------------------------------------
-# Main
+# Review one item
 # ---------------------------------------------------------------------------
 
-def main() -> None:
-    result = get_latest_queued()
-    if not result:
-        print("No pending posts in queue.")
-        sys.exit(0)
+def get_all_pending() -> list[tuple[dict, Path]]:
+    if not QUEUE_DIR.exists():
+        return []
+    out = []
+    for d in sorted(QUEUE_DIR.iterdir(), key=lambda d: d.name):
+        if d.is_dir() and (d / "manifest.json").exists():
+            manifest = json.loads((d / "manifest.json").read_text())
+            if manifest.get("status") == "pending":
+                out.append((manifest, d))
+    return out
 
-    manifest, item_dir = result
 
+def review_one(manifest: dict, item_dir: Path) -> None:
     media_files = [
         item_dir / f for f in manifest["files"]
         if f != "preview.jpg" and not f.endswith("_preview.jpg")
     ]
     if not media_files:
-        print("No media files in queue item.")
-        sys.exit(1)
+        print(f"No media files in {item_dir.name}.")
+        return
 
     is_video = manifest["media_type"] in ("reel", "animated")
     pillar   = (manifest.get("pillar") or "auto").replace("_", " ").title()
@@ -345,6 +350,20 @@ def main() -> None:
         print("Timed out.")
 
     shutil.rmtree(item_dir, ignore_errors=True)
+
+
+# ---------------------------------------------------------------------------
+# Main
+# ---------------------------------------------------------------------------
+
+def main() -> None:
+    pending = get_all_pending()
+    if not pending:
+        print("No pending posts in queue.")
+        sys.exit(0)
+    print(f"Reviewing {len(pending)} pending post(s)...", flush=True)
+    for manifest, item_dir in pending:
+        review_one(manifest, item_dir)
 
 
 if __name__ == "__main__":
