@@ -52,7 +52,9 @@ log = logging.getLogger("oralcheck")
 # Config
 # ---------------------------------------------------------------------------
 
-_REQUIRED_ENV = ["ANTHROPIC_API_KEY", "PUBLORA_API_KEY"]
+# PUBLORA is only used by the legacy publora_post path; the active poster
+# (telegram_review.py) uses the Instagram Graph API, so it isn't required here.
+_REQUIRED_ENV = ["ANTHROPIC_API_KEY"]
 _STOCK_ENV    = ["PEXELS_API_KEY", "UNSPLASH_ACCESS_KEY"]
 
 
@@ -70,7 +72,7 @@ def _validate_env() -> None:
 _validate_env()
 
 ANTHROPIC_API_KEY   = os.environ["ANTHROPIC_API_KEY"]
-PUBLORA_API_KEY     = os.environ["PUBLORA_API_KEY"]
+PUBLORA_API_KEY     = os.environ.get("PUBLORA_API_KEY", "")
 PEXELS_API_KEY      = os.environ.get("PEXELS_API_KEY", "")
 UNSPLASH_ACCESS_KEY = os.environ.get("UNSPLASH_ACCESS_KEY", "")
 
