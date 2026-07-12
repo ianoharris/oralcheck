@@ -172,7 +172,29 @@ def ig_create_carousel_container(child_ids: list[str], caption: str) -> str:
     return result["id"]
 
 
+def ig_wait_until_ready(creation_id: str, tries: int = 20, delay: float = 3.0) -> None:
+    """Poll a media container until Instagram reports it FINISHED (ready to publish).
+
+    Carousels in particular are often still IN_PROGRESS right after creation;
+    publishing too early returns a 'media not ready' 400.
+    """
+    for _ in range(tries):
+        resp = httpx.get(
+            f"{GRAPH_BASE}/{creation_id}",
+            params={"fields": "status_code", "access_token": IG_ACCESS_TOKEN},
+            timeout=30,
+        )
+        status = resp.json().get("status_code") if resp.is_success else None
+        if status == "FINISHED":
+            return
+        if status == "ERROR":
+            raise RuntimeError(f"Instagram container {creation_id} failed processing")
+        time.sleep(delay)
+    # Fall through and let publish attempt anyway (it will surface a clear error).
+
+
 def ig_publish(creation_id: str) -> str:
+    ig_wait_until_ready(creation_id)
     result = _ig_post(f"{INSTAGRAM_USER_ID}/media_publish", creation_id=creation_id)
     return result["id"]
 
@@ -231,26 +253,27 @@ def post_to_instagram(manifest: dict, item_dir: Path) -> str:
 # Approval polling
 # ---------------------------------------------------------------------------
 
+# Persistent getUpdates cursor shared across every review in this process. Advancing
+# it past each processed update (rather than skipping to the latest with offset=-1)
+# means a tap that arrives just before we poll is still in the queue and gets matched,
+# instead of being swallowed as a "baseline" and lost.
+_UPDATE_OFFSET: int | None = None
+
+
 def wait_for_callback(manifest_id: str) -> str:
-    """Long-poll Telegram for approve/reject. Returns 'approve', 'reject', or 'timeout'."""
+    """Long-poll Telegram for approve/reject on THIS post. Returns approve/reject/timeout.
+
+    Matches by manifest_id, so callbacks for other/older posts are consumed and
+    ignored rather than blocking. Never uses offset=-1 (which can skip a real tap).
+    """
+    global _UPDATE_OFFSET
     deadline = time.time() + APPROVAL_TIMEOUT
-    last_update_id = None
-
-    stale = httpx.get(
-        f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/getUpdates",
-        params={"offset": -1, "limit": 1},
-        timeout=10,
-    ).json().get("result", [])
-    if stale:
-        last_update_id = stale[-1]["update_id"]
-
-    print(f"Waiting up to {APPROVAL_TIMEOUT // 3600}h for approval on Telegram...", flush=True)
+    print(f"Waiting up to {APPROVAL_TIMEOUT // 3600}h for approval of {manifest_id}...", flush=True)
 
     while time.time() < deadline:
-        params: dict = {"timeout": 30, "allowed_updates": ["callback_query"]}
-        if last_update_id is not None:
-            params["offset"] = last_update_id + 1
-
+        params: dict = {"timeout": 30}
+        if _UPDATE_OFFSET is not None:
+            params["offset"] = _UPDATE_OFFSET
         try:
             resp = httpx.get(
                 f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/getUpdates",
@@ -264,11 +287,14 @@ def wait_for_callback(manifest_id: str) -> str:
             continue
 
         for update in resp.json().get("result", []):
-            last_update_id = update["update_id"]
+            _UPDATE_OFFSET = update["update_id"] + 1  # confirm/advance past it
             cb   = update.get("callback_query", {})
             data = cb.get("data", "")
             if data in (f"approve_{manifest_id}", f"reject_{manifest_id}"):
-                tg("answerCallbackQuery", callback_query_id=cb["id"])
+                try:
+                    tg("answerCallbackQuery", callback_query_id=cb["id"])
+                except Exception:
+                    pass
                 return "approve" if data.startswith("approve") else "reject"
 
     return "timeout"
@@ -332,6 +358,7 @@ def review_one(manifest: dict, item_dir: Path) -> None:
 
     if decision == "approve":
         print("Approved. Posting to Instagram...", flush=True)
+        tg("sendMessage", chat_id=TELEGRAM_CHAT_ID, text="Approved. Posting to Instagram...")
         try:
             post_id = post_to_instagram(manifest, item_dir)
         except Exception as exc:
