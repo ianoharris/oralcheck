@@ -146,11 +146,12 @@ SYSTEM_PROMPT = (
     "- hashtags must ALL be lowercase, no camelCase (e.g. 'oralcancer' not 'oralCancer')\n\n"
     "Caption writing style (apply these to all captions; brand voice rules above take priority on any conflict):\n"
     + WRITING_STYLE_RULES.strip()
-    + "\n\nStock photo search query guidance (for image and carousel posts):\n"
+    + "\n\nPhoto search query guidance (for image and carousel posts):\n"
     "- The photo MUST visibly illustrate THIS post's specific subject. Derive the query from the exact\n"
     "  angle of the post, not a generic health scene. If someone saw only the photo, it should hint at\n"
     "  the topic. A mismatched or generic photo is worse than none.\n"
-    "- Write a concise 3-6 word query of real photography on Pexels/Unsplash, with real people in frame.\n"
+    "- Write a concise 3-6 word query of real photography, with real people in frame. The pipeline\n"
+    "  searches openly-licensed photo libraries first (topic relevance), then stock as a fallback.\n"
     "- Map the topic to the scene, for example:\n"
     "    self-exam / symptoms  -> 'person checking mouth mirror', 'close up lips mouth'\n"
     "    HPV / adults under 50 -> 'young couple outdoors candid', 'thirties man woman casual'\n"
@@ -442,68 +443,98 @@ def generate_content(brief: str, media_type: str) -> dict:
 import random
 
 
-def fetch_stock_photo(query: str, size: int = 1080) -> tuple[str, dict | None]:
-    """Fetch a real stock photo from Pexels (primary) or Unsplash (fallback).
+OPENVERSE_BASE = "https://api.openverse.org/v1/images/"
 
-    Returns (local_jpeg_path, credit) where credit is a dict
-    {"photographer", "source", "url"} suitable for a caption attribution line
-    (both Pexels and Unsplash require crediting the photographer + platform)."""
+# Openverse origin platforms -> display name for attribution.
+_OPENVERSE_SOURCE_NAMES = {
+    "flickr": "Flickr",
+    "wikimedia": "Wikimedia Commons",
+    "wordpress": "Openverse",
+    "nasa": "NASA",
+    "rawpixel": "Rawpixel",
+    "smithsonian": "Smithsonian",
+    "met": "The Met",
+}
 
-    def _try_pexels() -> tuple[str, dict] | None:
-        if not PEXELS_API_KEY:
-            return None
-        url = "https://api.pexels.com/v1/search"
-        params = {"query": query, "per_page": 15, "orientation": "square"}
-        headers = {"Authorization": PEXELS_API_KEY}
-        with httpx.Client(timeout=15) as client:
-            resp = client.get(url, params=params, headers=headers)
-            resp.raise_for_status()
-        photos = resp.json().get("photos", [])
-        if not photos:
-            return None
-        photo = random.choice(photos[:10])
-        img_url = photo["src"].get("large2x") or photo["src"]["original"]
-        credit = {
-            "photographer": photo.get("photographer", "").strip(),
-            "source": "Pexels",
-            "url": photo.get("photographer_url") or photo.get("url", ""),
-        }
-        log.info("Pexels photo: %s (id=%s, by %s)",
-                 img_url[:60], photo["id"], credit["photographer"])
-        return img_url, credit
+# License code -> human label for the caption credit.
+_LICENSE_LABELS = {
+    "by": "CC BY", "by-sa": "CC BY-SA", "by-nc": "CC BY-NC",
+    "by-nd": "CC BY-ND", "cc0": "CC0", "pdm": "Public Domain",
+}
 
-    def _try_unsplash() -> tuple[str, dict] | None:
-        if not UNSPLASH_ACCESS_KEY:
-            return None
-        url = "https://api.unsplash.com/search/photos"
-        params = {"query": query, "per_page": 15, "orientation": "squarish"}
-        headers = {"Authorization": f"Client-ID {UNSPLASH_ACCESS_KEY}"}
-        with httpx.Client(timeout=15) as client:
-            resp = client.get(url, params=params, headers=headers)
-            resp.raise_for_status()
-        results = resp.json().get("results", [])
-        if not results:
-            return None
-        photo = random.choice(results[:10])
-        img_url = photo["urls"].get("regular") or photo["urls"]["full"]
-        credit = {
-            "photographer": (photo.get("user", {}) or {}).get("name", "").strip(),
-            "source": "Unsplash",
-            "url": ((photo.get("user", {}) or {}).get("links", {}) or {}).get("html", ""),
-        }
-        log.info("Unsplash photo: %s (id=%s, by %s)",
-                 img_url[:60], photo["id"], credit["photographer"])
-        return img_url, credit
 
-    result = _try_pexels() or _try_unsplash()
-    if not result:
-        raise RuntimeError(
-            f"No stock photos found for query '{query}'. "
-            "Check PEXELS_API_KEY / UNSPLASH_ACCESS_KEY in .env."
-        )
-    img_url, credit = result
+def _try_openverse(query: str) -> tuple[str, dict] | None:
+    """Search Openverse for an openly-licensed, topic-relevant photo.
 
-    with httpx.Client(timeout=60, follow_redirects=True) as client:
+    Restricted to licenses that permit commercial use AND modification
+    (we crop + overlay text): CC0, Public Domain, and CC BY. Returns
+    (img_url, credit) so the photographer can be attributed in the caption."""
+    params = {
+        "q": query,
+        "license": "cc0,pdm,by",     # commercial + modifiable
+        "page_size": 15,
+        "mature": "false",           # brand-safe
+    }
+    headers = {"User-Agent": "OralCheck/1.0 (+https://oralcheck.org)"}
+    with httpx.Client(timeout=15) as client:
+        resp = client.get(OPENVERSE_BASE, params=params, headers=headers)
+        resp.raise_for_status()
+    results = [r for r in resp.json().get("results", []) if r.get("url")]
+    if not results:
+        return None
+    photo = random.choice(results[:10])
+    src_raw = (photo.get("source") or "").lower()
+    credit = {
+        "photographer": (photo.get("creator") or "").strip(),
+        "source": _OPENVERSE_SOURCE_NAMES.get(src_raw, "Openverse"),
+        "license": (photo.get("license") or "").strip().lower(),
+        "url": photo.get("foreign_landing_url") or photo.get("creator_url") or "",
+    }
+    log.info("Openverse photo: %s (by %s, %s)",
+             photo["url"][:60], credit["photographer"] or "unknown", credit["license"])
+    return photo["url"], credit
+
+
+def _try_pexels(query: str) -> tuple[str, None] | None:
+    """Pexels stock photo. No attribution required, so credit is None."""
+    if not PEXELS_API_KEY:
+        return None
+    params = {"query": query, "per_page": 15, "orientation": "square"}
+    headers = {"Authorization": PEXELS_API_KEY}
+    with httpx.Client(timeout=15) as client:
+        resp = client.get("https://api.pexels.com/v1/search", params=params, headers=headers)
+        resp.raise_for_status()
+    photos = resp.json().get("photos", [])
+    if not photos:
+        return None
+    photo = random.choice(photos[:10])
+    img_url = photo["src"].get("large2x") or photo["src"]["original"]
+    log.info("Pexels photo: %s (id=%s)", img_url[:60], photo["id"])
+    return img_url, None
+
+
+def _try_unsplash(query: str) -> tuple[str, None] | None:
+    """Unsplash stock photo. Credit is None (not attributed on-post)."""
+    if not UNSPLASH_ACCESS_KEY:
+        return None
+    params = {"query": query, "per_page": 15, "orientation": "squarish"}
+    headers = {"Authorization": f"Client-ID {UNSPLASH_ACCESS_KEY}"}
+    with httpx.Client(timeout=15) as client:
+        resp = client.get("https://api.unsplash.com/search/photos", params=params, headers=headers)
+        resp.raise_for_status()
+    results = resp.json().get("results", [])
+    if not results:
+        return None
+    photo = random.choice(results[:10])
+    img_url = photo["urls"].get("regular") or photo["urls"]["full"]
+    log.info("Unsplash photo: %s (id=%s)", img_url[:60], photo["id"])
+    return img_url, None
+
+
+def _download_square(img_url: str, size: int) -> str:
+    """Download an image, center-crop to a square, resize to size x size."""
+    headers = {"User-Agent": "OralCheck/1.0 (+https://oralcheck.org)"}
+    with httpx.Client(timeout=60, follow_redirects=True, headers=headers) as client:
         resp = client.get(img_url)
         resp.raise_for_status()
         content = resp.content
@@ -521,23 +552,66 @@ def fetch_stock_photo(query: str, size: int = 1080) -> tuple[str, dict | None]:
     img  = img.crop((left, top, left + crop_size, top + crop_size))
     img  = img.resize((size, size), Image.LANCZOS)
     img.save(tmp.name, "JPEG", quality=95)
+    return tmp.name
 
-    log.info("Stock photo saved: %s (%dx%d)", tmp.name, size, size)
-    return tmp.name, credit
+
+def fetch_stock_photo(query: str, size: int = 1080) -> tuple[str, dict | None]:
+    """Fetch a topic-relevant photo for a post.
+
+    Tries Openverse first -- its openly-licensed corpus (Flickr, Wikimedia,
+    museums) is far more likely to hold a photo that actually matches the
+    subject than a generic stock library, and those images can be used with
+    attribution. Falls back to Pexels/Unsplash stock (no attribution needed)
+    when Openverse has nothing usable.
+
+    Returns (local_jpeg_path, credit). `credit` is a dict
+    {"photographer","source","license","url"} for openly-licensed web images
+    (which get a caption credit line), or None for stock (no credit)."""
+    for source in (_try_openverse, _try_pexels, _try_unsplash):
+        try:
+            result = source(query)
+        except Exception as exc:
+            log.warning("Photo source %s failed: %s", source.__name__, exc)
+            continue
+        if not result:
+            continue
+        img_url, credit = result
+        try:
+            path = _download_square(img_url, size)
+        except Exception as exc:
+            log.warning("Download failed (%s: %s); trying next source",
+                        source.__name__, exc)
+            continue
+        log.info("Photo saved: %s (%dx%d, credit=%s)",
+                 path, size, size, "yes" if credit else "no (stock)")
+        return path, credit
+
+    raise RuntimeError(
+        f"No usable photo found for query '{query}'. "
+        "Check network / PEXELS_API_KEY / UNSPLASH_ACCESS_KEY."
+    )
 
 
 def _credit_line(credit: dict | None) -> str:
-    """Format a photo credit for an Instagram caption, e.g.
-    'Photo: Jane Doe / Pexels'. Returns '' when no usable credit."""
+    """Format a photo credit for a caption, e.g.
+    'Photo: Jane Doe (CC BY) via Flickr'. Stock photos pass credit=None and
+    get no line. Returns '' when there is nothing meaningful to credit."""
     if not credit:
         return ""
     who = (credit.get("photographer") or "").strip()
     src = (credit.get("source") or "").strip()
-    if who and src:
-        return f"Photo: {who} / {src}"
+    lic = (credit.get("license") or "").strip().lower()
+    lic_label = _LICENSE_LABELS.get(lic, lic.upper())
+    if who:
+        line = f"Photo: {who}"
+        if lic_label:
+            line += f" ({lic_label})"
+    else:
+        # No named creator (common for public-domain/CC0) -- credit license instead.
+        line = f"Photo: {lic_label or 'Open license'}"
     if src:
-        return f"Photo: {src}"
-    return ""
+        line += f" via {src}"
+    return line
 
 
 def fetch_stock_video(query: str) -> str:
