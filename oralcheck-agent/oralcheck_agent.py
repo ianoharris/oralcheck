@@ -442,11 +442,14 @@ def generate_content(brief: str, media_type: str) -> dict:
 import random
 
 
-def fetch_stock_photo(query: str, size: int = 1080) -> str:
+def fetch_stock_photo(query: str, size: int = 1080) -> tuple[str, dict | None]:
     """Fetch a real stock photo from Pexels (primary) or Unsplash (fallback).
-    Returns local JPEG path cropped/resized to size x size."""
 
-    def _try_pexels() -> str | None:
+    Returns (local_jpeg_path, credit) where credit is a dict
+    {"photographer", "source", "url"} suitable for a caption attribution line
+    (both Pexels and Unsplash require crediting the photographer + platform)."""
+
+    def _try_pexels() -> tuple[str, dict] | None:
         if not PEXELS_API_KEY:
             return None
         url = "https://api.pexels.com/v1/search"
@@ -460,10 +463,16 @@ def fetch_stock_photo(query: str, size: int = 1080) -> str:
             return None
         photo = random.choice(photos[:10])
         img_url = photo["src"].get("large2x") or photo["src"]["original"]
-        log.info("Pexels photo: %s (id=%s)", img_url[:60], photo["id"])
-        return img_url
+        credit = {
+            "photographer": photo.get("photographer", "").strip(),
+            "source": "Pexels",
+            "url": photo.get("photographer_url") or photo.get("url", ""),
+        }
+        log.info("Pexels photo: %s (id=%s, by %s)",
+                 img_url[:60], photo["id"], credit["photographer"])
+        return img_url, credit
 
-    def _try_unsplash() -> str | None:
+    def _try_unsplash() -> tuple[str, dict] | None:
         if not UNSPLASH_ACCESS_KEY:
             return None
         url = "https://api.unsplash.com/search/photos"
@@ -477,15 +486,22 @@ def fetch_stock_photo(query: str, size: int = 1080) -> str:
             return None
         photo = random.choice(results[:10])
         img_url = photo["urls"].get("regular") or photo["urls"]["full"]
-        log.info("Unsplash photo: %s (id=%s)", img_url[:60], photo["id"])
-        return img_url
+        credit = {
+            "photographer": (photo.get("user", {}) or {}).get("name", "").strip(),
+            "source": "Unsplash",
+            "url": ((photo.get("user", {}) or {}).get("links", {}) or {}).get("html", ""),
+        }
+        log.info("Unsplash photo: %s (id=%s, by %s)",
+                 img_url[:60], photo["id"], credit["photographer"])
+        return img_url, credit
 
-    img_url = _try_pexels() or _try_unsplash()
-    if not img_url:
+    result = _try_pexels() or _try_unsplash()
+    if not result:
         raise RuntimeError(
             f"No stock photos found for query '{query}'. "
             "Check PEXELS_API_KEY / UNSPLASH_ACCESS_KEY in .env."
         )
+    img_url, credit = result
 
     with httpx.Client(timeout=60, follow_redirects=True) as client:
         resp = client.get(img_url)
@@ -507,7 +523,21 @@ def fetch_stock_photo(query: str, size: int = 1080) -> str:
     img.save(tmp.name, "JPEG", quality=95)
 
     log.info("Stock photo saved: %s (%dx%d)", tmp.name, size, size)
-    return tmp.name
+    return tmp.name, credit
+
+
+def _credit_line(credit: dict | None) -> str:
+    """Format a photo credit for an Instagram caption, e.g.
+    'Photo: Jane Doe / Pexels'. Returns '' when no usable credit."""
+    if not credit:
+        return ""
+    who = (credit.get("photographer") or "").strip()
+    src = (credit.get("source") or "").strip()
+    if who and src:
+        return f"Photo: {who} / {src}"
+    if src:
+        return f"Photo: {src}"
+    return ""
 
 
 def fetch_stock_video(query: str) -> str:
@@ -1084,7 +1114,8 @@ def generate_carousel_slides(content: dict) -> list[str]:
     """
     log.info("Fetching stock photo for carousel (query: %s)...", content["search_query"])
     try:
-        raw_path = fetch_stock_photo(content["search_query"])
+        raw_path, credit = fetch_stock_photo(content["search_query"])
+        content["photo_credit"] = credit
     except Exception as exc:
         log.warning("Stock photo fetch failed (%s); rendering photo-less carousel.", exc)
         raw_path = None
@@ -1271,13 +1302,21 @@ def save_to_queue(
         shutil.copy2(preview_path, item_dir / "preview.jpg")
         saved_files.append("preview.jpg")
 
+    # Credit the stock photographer in the caption (Pexels/Unsplash both require it).
+    caption = content.get("caption", "")
+    photo_credit = content.get("photo_credit")
+    credit_line = _credit_line(photo_credit)
+    if credit_line and credit_line not in caption:
+        caption = f"{caption}\n\n{credit_line}" if caption else credit_line
+
     manifest = {
         "id": f"{timestamp}_{short_id}",
         "created_at": datetime.now(timezone.utc).isoformat(),
         "pillar": pillar,
         "media_type": media_type,
         "hook": content.get("hook", ""),
-        "caption": content.get("caption", ""),
+        "caption": caption,
+        "photo_credit": photo_credit,
         "hashtags": content.get("hashtags", []),
         "search_query": content.get("search_query", ""),
         "visual_prompt": content.get("visual_prompt", ""),
@@ -1321,7 +1360,8 @@ def run_pipeline(
         file_paths = generate_carousel_slides(content)
     elif media_type == "image":
         log.info("Fetching stock photo (query: %s)...", content["search_query"])
-        raw_path = fetch_stock_photo(content["search_query"])
+        raw_path, credit = fetch_stock_photo(content["search_query"])
+        content["photo_credit"] = credit
         if _USE_HTML_RENDER:
             composited = _html_render.image_overlay(raw_path, content["hook"])
         else:
