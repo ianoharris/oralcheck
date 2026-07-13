@@ -271,7 +271,7 @@ def wait_for_callback(manifest_id: str) -> str:
     print(f"Waiting up to {APPROVAL_TIMEOUT // 3600}h for approval of {manifest_id}...", flush=True)
 
     while time.time() < deadline:
-        params: dict = {"timeout": 30}
+        params: dict = {"timeout": 30, "allowed_updates": '["message","callback_query"]'}
         if _UPDATE_OFFSET is not None:
             params["offset"] = _UPDATE_OFFSET
         try:
@@ -316,14 +316,15 @@ def get_all_pending() -> list[tuple[dict, Path]]:
     return out
 
 
-def review_one(manifest: dict, item_dir: Path) -> None:
+def send_deck(manifest: dict, item_dir: Path, index: int, total: int) -> bool:
+    """Send one post's media + caption + Approve/Reject buttons. Returns True if sent."""
     media_files = [
         item_dir / f for f in manifest["files"]
         if f != "preview.jpg" and not f.endswith("_preview.jpg")
     ]
     if not media_files:
         print(f"No media files in {item_dir.name}.")
-        return
+        return False
 
     is_video = manifest["media_type"] in ("reel", "animated")
     pillar   = (manifest.get("pillar") or "auto").replace("_", " ").title()
@@ -332,11 +333,10 @@ def review_one(manifest: dict, item_dir: Path) -> None:
     full_caption = caption + ("\n\n" + " ".join(f"#{h}" for h in hashtags) if hashtags else "")
 
     slide_count = len(media_files)
-    label = f"OralCheck post ready\nPillar: {pillar}\n\n{manifest.get('hook', '')}"
+    label = f"Post {index} of {total}\nPillar: {pillar}\n\n{manifest.get('hook', '')}"
     if is_video:
         tg_upload("sendVideo", "video", str(media_files[0]), chat_id=TELEGRAM_CHAT_ID, caption=label)
     elif manifest["media_type"] == "carousel" and slide_count > 1:
-        # Show every slide as an album so the whole deck is reviewable, not just the cover.
         tg_media_group([str(p) for p in media_files], caption=f"{label}\n\n({slide_count} slides, swipe to review all)")
     else:
         tg_upload("sendPhoto", "photo", str(media_files[0]), chat_id=TELEGRAM_CHAT_ID, caption=label)
@@ -344,7 +344,7 @@ def review_one(manifest: dict, item_dir: Path) -> None:
     tg(
         "sendMessage",
         chat_id=TELEGRAM_CHAT_ID,
-        text=f"*Caption:*\n{full_caption}",
+        text=f"*Post {index} of {total} — caption:*\n{full_caption}",
         parse_mode="Markdown",
         reply_markup={
             "inline_keyboard": [[
@@ -353,30 +353,80 @@ def review_one(manifest: dict, item_dir: Path) -> None:
             ]]
         },
     )
+    return True
 
-    decision = wait_for_callback(manifest["id"])
 
+def handle_decision(manifest: dict, item_dir: Path, decision: str) -> None:
     if decision == "approve":
-        print("Approved. Posting to Instagram...", flush=True)
-        tg("sendMessage", chat_id=TELEGRAM_CHAT_ID, text="Approved. Posting to Instagram...")
+        print(f"Approved {manifest['id']}. Posting to Instagram...", flush=True)
+        tg("sendMessage", chat_id=TELEGRAM_CHAT_ID, text=f"Approved \"{manifest.get('hook','')[:60]}\". Posting to Instagram...")
         try:
             post_id = post_to_instagram(manifest, item_dir)
         except Exception as exc:
             tg_err(f"Instagram post failed after approval: {exc}")
-            raise
+            shutil.rmtree(item_dir, ignore_errors=True)
+            return
         if post_id in ("manual-video", "manual-no-ig"):
             print(f"Manual upload required ({post_id}).")
         else:
             tg("sendMessage", chat_id=TELEGRAM_CHAT_ID, text=f"Posted to Instagram.\nPost ID: {post_id}")
             print(f"Done: {post_id}")
-    elif decision == "reject":
+    else:  # reject
         tg("sendMessage", chat_id=TELEGRAM_CHAT_ID, text="Post rejected and discarded.")
-        print("Rejected.")
-    else:
-        tg("sendMessage", chat_id=TELEGRAM_CHAT_ID, text="No response in 2 hours. Post discarded.")
-        print("Timed out.")
-
+        print(f"Rejected {manifest['id']}.")
     shutil.rmtree(item_dir, ignore_errors=True)
+
+
+def review_batch() -> None:
+    """Send every pending post at once, then accept approve/reject on any of them,
+    in any order, until all are resolved or the window times out."""
+    global _UPDATE_OFFSET
+    pending = get_all_pending()
+    if not pending:
+        print("No pending posts in queue.")
+        return
+
+    posts: dict[str, tuple[dict, Path]] = {}
+    for i, (manifest, item_dir) in enumerate(pending, 1):
+        if send_deck(manifest, item_dir, i, len(pending)):
+            posts[manifest["id"]] = (manifest, item_dir)
+    if not posts:
+        return
+    tg("sendMessage", chat_id=TELEGRAM_CHAT_ID,
+       text=f"{len(posts)} post(s) above, each with its own Approve / Reject. Tap on the ones you want.")
+    print(f"Sent {len(posts)} post(s) for review. Waiting for decisions...", flush=True)
+
+    deadline = time.time() + APPROVAL_TIMEOUT
+    while posts and time.time() < deadline:
+        # Must request callback_query explicitly: Telegram persists the last
+        # allowed_updates, and an earlier message-only poll would otherwise drop taps.
+        params: dict = {"timeout": 30, "allowed_updates": '["message","callback_query"]'}
+        if _UPDATE_OFFSET is not None:
+            params["offset"] = _UPDATE_OFFSET
+        try:
+            resp = httpx.get(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/getUpdates", params=params, timeout=35)
+            resp.raise_for_status()
+        except Exception as exc:
+            print(f"Poll error: {exc}", flush=True)
+            time.sleep(5)
+            continue
+        for update in resp.json().get("result", []):
+            _UPDATE_OFFSET = update["update_id"] + 1
+            cb = update.get("callback_query", {})
+            data = cb.get("data", "")
+            for pid in list(posts):
+                if data == f"approve_{pid}" or data == f"reject_{pid}":
+                    try:
+                        tg("answerCallbackQuery", callback_query_id=cb["id"])
+                    except Exception:
+                        pass
+                    manifest, item_dir = posts.pop(pid)
+                    handle_decision(manifest, item_dir, "approve" if data.startswith("approve") else "reject")
+                    break
+
+    for pid, (manifest, item_dir) in posts.items():
+        tg("sendMessage", chat_id=TELEGRAM_CHAT_ID, text=f"No response for \"{manifest.get('hook','')[:60]}\". Discarded.")
+        shutil.rmtree(item_dir, ignore_errors=True)
 
 
 # ---------------------------------------------------------------------------
@@ -384,13 +434,7 @@ def review_one(manifest: dict, item_dir: Path) -> None:
 # ---------------------------------------------------------------------------
 
 def main() -> None:
-    pending = get_all_pending()
-    if not pending:
-        print("No pending posts in queue.")
-        sys.exit(0)
-    print(f"Reviewing {len(pending)} pending post(s)...", flush=True)
-    for manifest, item_dir in pending:
-        review_one(manifest, item_dir)
+    review_batch()
 
 
 if __name__ == "__main__":

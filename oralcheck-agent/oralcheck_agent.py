@@ -1586,7 +1586,9 @@ def tg_wait_for_reply(timeout: int = 7200) -> str | None:
         last = stale[-1]["update_id"]
     deadline = time.time() + timeout
     while time.time() < deadline:
-        params = {"timeout": 30, "allowed_updates": '["message"]'}
+        # Include callback_query so Telegram's persisted allowed_updates doesn't
+        # drop button taps for the later approval step.
+        params = {"timeout": 30, "allowed_updates": '["message","callback_query"]'}
         if last is not None:
             params["offset"] = last + 1
         try:
