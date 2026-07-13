@@ -11,6 +11,7 @@ import os
 import shutil
 import sys
 import time
+from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
 import httpx
@@ -25,6 +26,10 @@ INSTAGRAM_USER_ID = os.environ.get("INSTAGRAM_USER_ID", "")
 IG_ACCESS_TOKEN   = os.environ.get("INSTAGRAM_ACCESS_TOKEN", "")
 GRAPH_BASE        = "https://graph.facebook.com/v21.0"
 IG_CONFIGURED     = bool(IMGBB_API_KEY and INSTAGRAM_USER_ID and IG_ACCESS_TOKEN)
+# Publora is the preferred publisher: the accounts are connected on Publora's side,
+# so we never touch Meta Graph API tokens/permissions.
+PUBLORA_API_KEY   = os.environ.get("PUBLORA_API_KEY", "")
+PUBLORA_BASE      = "https://api.publora.com/api/v1"
 QUEUE_DIR         = Path(__file__).parent / "queue"
 APPROVAL_TIMEOUT  = 7200  # 2 hours
 
@@ -133,7 +138,58 @@ def upload_to_imgbb(image_path: Path) -> str:
 
 
 # ---------------------------------------------------------------------------
-# Meta Graph API helpers
+# Publora publishing (preferred — no Meta tokens needed)
+# ---------------------------------------------------------------------------
+
+def _publora_platform_id() -> str:
+    r = httpx.get(f"{PUBLORA_BASE}/platform-connections",
+                  headers={"x-publora-key": PUBLORA_API_KEY}, timeout=20)
+    r.raise_for_status()
+    for c in r.json().get("connections", []):
+        if str(c.get("platformId", "")).startswith("instagram-"):
+            return c["platformId"]
+    raise RuntimeError("No Instagram account connected in Publora.")
+
+
+def post_via_publora(manifest: dict, media_files: list[Path]) -> str:
+    """Create a Publora post, upload the media, and schedule it to go live shortly.
+    Returns the Publora post group id."""
+    headers = {"x-publora-key": PUBLORA_API_KEY, "Content-Type": "application/json"}
+    is_video = manifest["media_type"] in ("reel", "animated")
+    mime = "video/mp4" if is_video else "image/jpeg"
+    ext  = "mp4" if is_video else "jpg"
+    typ  = "video" if is_video else "image"
+
+    platform_id = _publora_platform_id()
+    caption  = manifest.get("caption", "")
+    hashtags = manifest.get("hashtags", [])
+    full = caption + ("\n\n" + " ".join(f"#{h}" for h in hashtags) if hashtags else "")
+
+    pr = httpx.post(f"{PUBLORA_BASE}/create-post", headers=headers,
+                    json={"content": full, "platforms": [platform_id]}, timeout=30)
+    pr.raise_for_status()
+    post_group_id = pr.json()["postGroupId"]
+
+    for i, path in enumerate(media_files, 1):
+        fn = f"oralcheck_{int(time.time())}_{i}.{ext}"
+        ur = httpx.post(f"{PUBLORA_BASE}/get-upload-url", headers=headers,
+                        json={"fileName": fn, "contentType": mime,
+                              "postGroupId": post_group_id, "type": typ}, timeout=30)
+        ur.raise_for_status()
+        upload_url = ur.json()["uploadUrl"]
+        with open(path, "rb") as f:
+            httpx.put(upload_url, content=f.read(),
+                      headers={"Content-Type": mime}, timeout=180).raise_for_status()
+
+    when = (datetime.now(timezone.utc) + timedelta(minutes=2)).strftime("%Y-%m-%dT%H:%M:%S.000Z")
+    sr = httpx.put(f"{PUBLORA_BASE}/update-post/{post_group_id}", headers=headers,
+                   json={"status": "scheduled", "scheduledTime": when}, timeout=30)
+    sr.raise_for_status()
+    return post_group_id
+
+
+# ---------------------------------------------------------------------------
+# Meta Graph API helpers (legacy fallback)
 # ---------------------------------------------------------------------------
 
 def _ig_post(path: str, **params) -> dict:
@@ -358,19 +414,29 @@ def send_deck(manifest: dict, item_dir: Path, index: int, total: int) -> bool:
 
 def handle_decision(manifest: dict, item_dir: Path, decision: str) -> None:
     if decision == "approve":
-        print(f"Approved {manifest['id']}. Posting to Instagram...", flush=True)
-        tg("sendMessage", chat_id=TELEGRAM_CHAT_ID, text=f"Approved \"{manifest.get('hook','')[:60]}\". Posting to Instagram...")
+        print(f"Approved {manifest['id']}. Publishing...", flush=True)
+        tg("sendMessage", chat_id=TELEGRAM_CHAT_ID,
+           text=f"Approved \"{manifest.get('hook','')[:60]}\". Publishing to Instagram...")
+        media_files = [
+            item_dir / f for f in manifest["files"]
+            if f != "preview.jpg" and not f.endswith("_preview.jpg")
+        ]
         try:
-            post_id = post_to_instagram(manifest, item_dir)
+            if PUBLORA_API_KEY:
+                pg = post_via_publora(manifest, media_files)
+                tg("sendMessage", chat_id=TELEGRAM_CHAT_ID,
+                   text=f"Scheduled via Publora, it posts to Instagram in ~2 minutes.\n(post {pg})")
+                print(f"Publora scheduled: {pg}")
+            else:
+                post_id = post_to_instagram(manifest, item_dir)
+                if post_id in ("manual-video", "manual-no-ig"):
+                    print(f"Manual upload required ({post_id}).")
+                else:
+                    tg("sendMessage", chat_id=TELEGRAM_CHAT_ID, text=f"Posted to Instagram.\nPost ID: {post_id}")
         except Exception as exc:
-            tg_err(f"Instagram post failed after approval: {exc}")
+            tg_err(f"Publish failed after approval: {exc}")
             shutil.rmtree(item_dir, ignore_errors=True)
             return
-        if post_id in ("manual-video", "manual-no-ig"):
-            print(f"Manual upload required ({post_id}).")
-        else:
-            tg("sendMessage", chat_id=TELEGRAM_CHAT_ID, text=f"Posted to Instagram.\nPost ID: {post_id}")
-            print(f"Done: {post_id}")
     else:  # reject
         tg("sendMessage", chat_id=TELEGRAM_CHAT_ID, text="Post rejected and discarded.")
         print(f"Rejected {manifest['id']}.")
