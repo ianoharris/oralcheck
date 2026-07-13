@@ -109,8 +109,16 @@ EDGE_CASES = [
 
 
 def _cases():
-    deck_htmls = R.render_deck(SAMPLE_DECK)
-    cases = [(f"deck_{i+1:02d}", h) for i, h in enumerate(deck_htmls)]
+    dark_htmls = R.render_deck(SAMPLE_DECK, "dark")
+    cases = [(f"deck_dark_{i+1:02d}", h) for i, h in enumerate(dark_htmls)]
+    light_htmls = R.render_deck(SAMPLE_DECK, "light")
+    cases += [(f"deck_light_{i+1:02d}", h) for i, h in enumerate(light_htmls)]
+    cases.append(("light_infographic", R.render_infographic({
+        "headline": "Two numbers that reframe oral cancer risk",
+        "bars": [{"value_str": "84%", "label": "survival when caught early"},
+                 {"value_str": "39%", "label": "survival when caught late"}],
+        "fact": "Early detection more than doubles the odds of a good outcome.",
+    }, "light")))
     cases.extend(EDGE_CASES)
     return cases
 
@@ -133,7 +141,7 @@ def main() -> int:
         browser = p.chromium.launch(args=["--no-sandbox", "--disable-dev-shm-usage",
                                            "--force-color-profile=srgb"])
         page = browser.new_page(viewport={"width": 1080, "height": 1080},
-                                device_scale_factor=2)
+                                device_scale_factor=3)
         for name, html in cases:
             fh = tempfile.NamedTemporaryFile(suffix=".html", mode="w",
                                              encoding="utf-8", delete=False)
@@ -144,16 +152,16 @@ def main() -> int:
             dims = page.evaluate(OVERFLOW_JS)
             overflow = dims["w"] > 1081 or dims["h"] > 1081
 
-            # Match production: supersample at 2x, downscale to 1080 (render_html does this).
+            # Match production: supersample at 3x, downscale to OUTPUT_PX (render_html does this).
             out = OUT_DIR / f"{name}.jpg"
             png = page.screenshot(type="png", full_page=False)
             with Image.open(BytesIO(png)) as im:
-                im.convert("RGB").resize((1080, 1080), Image.LANCZOS).save(str(out), "JPEG", quality=90)
+                im.convert("RGB").resize((R.OUTPUT_PX, R.OUTPUT_PX), Image.LANCZOS).save(str(out), "JPEG", quality=R.JPEG_QUALITY)
             Path(fh.name).unlink(missing_ok=True)
 
             with Image.open(out) as im:
-                # Delivered at 1080 (supersampled from 2x); must be within IG's 1440 cap.
-                size_ok = im.size == (1080, 1080)
+                # Delivered at OUTPUT_PX (1440, Instagram's max), supersampled from 3x.
+                size_ok = im.size == (R.OUTPUT_PX, R.OUTPUT_PX)
 
             status = "ok"
             if overflow:

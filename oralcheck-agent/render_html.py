@@ -22,20 +22,39 @@ from pathlib import Path
 FONTS_DIR = Path(__file__).parent / "fonts"
 _FONT_CACHE: dict[str, str] = {}
 
-# Final delivery size. Rendered at 2x internally, downscaled to this. Must stay
-# <= 1440 (Instagram Graph API max image width).
-OUTPUT_PX = 1080
+# Final delivery size. Rendered at 2x internally, downscaled to this. Instagram
+# feed images are capped at 1440px wide by the Graph API (and shown ~1080), so
+# 1440 is the practical maximum — anything larger is rejected or downscaled by IG.
+OUTPUT_PX = 1440
+JPEG_QUALITY = 95
 
-# --- Brand tokens ----------------------------------------------------------
-BG        = "#0d1a1b"   # near-black teal ground
-SURFACE   = "#10201f"   # barely-raised panel tint
+# --- Brand palette (shared accents) ----------------------------------------
 TEAL      = "#0d7377"   # primary
-TEAL_BRT  = "#14a8ae"   # bright teal (kickers, links)
-CORAL     = "#e8634a"   # accent, used sparingly
-TEXT      = "#e8e4de"   # warm off-white
-TEXT_SOFT = "#b8cfd1"   # body on dark
-HAIRLINE  = "#1c3a3c"   # thin rules / dividers
-MUTED2    = "#5a8082"   # muted label / secondary
+TEAL_BRT  = "#14a8ae"   # bright teal
+CORAL     = "#e8634a"   # accent
+
+# Two visual worlds we rotate between for variety. Dark is the moody editorial
+# look; light is the warm-paper look (higher legibility, which Ian prefers).
+THEMES = {
+    "dark": {
+        "bg": "#0d1a1b", "text": "#e8e4de", "text_soft": "#b8cfd1",
+        "muted": "#5a8082", "hair": "#1c3a3c",
+        "teal": "#0d7377", "teal_brt": "#14a8ae", "coral": "#e8634a",
+    },
+    "light": {
+        "bg": "#f4f1ea", "text": "#14201f", "text_soft": "#3f5453",
+        "muted": "#7c8b8a", "hair": "#ded7c8",
+        "teal": "#0d7377", "teal_brt": "#0d7377", "coral": "#d9552f",
+    },
+}
+
+# Back-compat aliases (dark values) for any single-theme callers.
+BG        = THEMES["dark"]["bg"]
+SURFACE   = "#10201f"
+TEXT      = THEMES["dark"]["text"]
+TEXT_SOFT = THEMES["dark"]["text_soft"]
+HAIRLINE  = THEMES["dark"]["hair"]
+MUTED2    = THEMES["dark"]["muted"]
 
 
 def _font_b64(name: str) -> str:
@@ -58,9 +77,10 @@ def _e(text) -> str:
 # --- Shared stylesheet (font faces + tokens + components) ------------------
 # Source Sans 3 is a variable font; one file covers weights 300–700.
 
-def _style() -> str:
+def _style(theme: str = "dark") -> str:
     dm = _font_b64("DMSerifDisplay-Regular.ttf")
     ss = _font_b64("SourceSans3-Regular.ttf")
+    t = THEMES.get(theme, THEMES["dark"])
     return f"""
 @font-face {{
   font-family: 'DM Serif Display';
@@ -73,9 +93,9 @@ def _style() -> str:
   font-weight: 300 700; font-display: block;
 }}
 :root {{
-  --bg:{BG}; --surface:{SURFACE}; --teal:{TEAL}; --teal-brt:{TEAL_BRT};
-  --coral:{CORAL}; --text:{TEXT}; --text-soft:{TEXT_SOFT};
-  --muted:{MUTED2}; --hair:{HAIRLINE};
+  --bg:{t['bg']}; --teal:{t['teal']}; --teal-brt:{t['teal_brt']};
+  --coral:{t['coral']}; --text:{t['text']}; --text-soft:{t['text_soft']};
+  --muted:{t['muted']}; --hair:{t['hair']};
 }}
 *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
 html, body {{ width: 1080px; height: 1080px; }}
@@ -108,9 +128,9 @@ body {{
 """
 
 
-def _doc(body_html: str, bg: str = BG) -> str:
-    style = _style()
-    if bg != BG:
+def _doc(body_html: str, theme: str = "dark", bg: str | None = None) -> str:
+    style = _style(theme)
+    if bg is not None:
         style += f"\nbody {{ background: {bg}; }}"
     return (f"<!DOCTYPE html><html><head><meta charset='utf-8'><style>{style}</style></head>"
             f"<body>{body_html}</body></html>")
@@ -128,7 +148,7 @@ def _brandrow(counter: str | None) -> str:
 # ---------------------------------------------------------------------------
 
 def slide_cover(hook: str, kicker: str = "", photo: str | None = None,
-                counter: str | None = None) -> str:
+                counter: str | None = None, theme: str = "dark") -> str:
     """Opening slide: a clean, purely typographic hook. Photos live on their own
     full-bleed slides mid-deck, never as an awkward band under the cover text."""
     kicker_html = f"<div class='kicker' style='margin-bottom:26px;'>{_e(kicker)}</div>" if kicker else ""
@@ -145,11 +165,11 @@ def slide_cover(hook: str, kicker: str = "", photo: str | None = None,
         <span class="footurl">Swipe</span><span style="color:var(--teal);font-size:24px;">&rarr;</span>
       </div>
     </div>"""
-    return _doc(body)
+    return _doc(body, theme)
 
 
 def slide_stat(value: str, label: str, detail: str = "", counter: str | None = None,
-               color: str = CORAL) -> str:
+               color: str = CORAL, theme: str = "dark") -> str:
     detail_html = (f"<div class='body' style='margin-top:38px;font-size:27px;'>{_e(detail)}</div>"
                    if detail else "")
     body = f"""
@@ -163,11 +183,11 @@ def slide_stat(value: str, label: str, detail: str = "", counter: str | None = N
         {detail_html}
       </div>
     </div>"""
-    return _doc(body)
+    return _doc(body, theme)
 
 
 def slide_fact(headline: str, body_text: str, counter: str | None = None,
-               kicker: str = "") -> str:
+               kicker: str = "", theme: str = "dark") -> str:
     kicker_html = f"<div class='kicker' style='margin-bottom:24px;'>{_e(kicker)}</div>" if kicker else ""
     accent = "" if kicker else "<div class='accent' style='margin-bottom:28px;'></div>"
     body = f"""
@@ -180,11 +200,11 @@ def slide_fact(headline: str, body_text: str, counter: str | None = None,
         <div class="body">{_e(body_text)}</div>
       </div>
     </div>"""
-    return _doc(body)
+    return _doc(body, theme)
 
 
 def slide_list(headline: str, items: list[str], counter: str | None = None,
-               kicker: str = "") -> str:
+               kicker: str = "", theme: str = "dark") -> str:
     kicker_html = f"<div class='kicker' style='margin-bottom:22px;'>{_e(kicker)}</div>" if kicker else ""
     rows = []
     for i, it in enumerate(items, 1):
@@ -204,10 +224,11 @@ def slide_list(headline: str, items: list[str], counter: str | None = None,
         <div>{"".join(rows)}</div>
       </div>
     </div>"""
-    return _doc(body)
+    return _doc(body, theme)
 
 
-def slide_quote(text: str, attribution: str = "", counter: str | None = None) -> str:
+def slide_quote(text: str, attribution: str = "", counter: str | None = None,
+                theme: str = "dark") -> str:
     attr_html = (f"<div style='font-size:24px;font-weight:600;letter-spacing:0.04em;"
                  f"color:var(--muted);margin-top:36px;'>{_e(attribution)}</div>"
                  if attribution else "")
@@ -221,7 +242,7 @@ def slide_quote(text: str, attribution: str = "", counter: str | None = None) ->
         {attr_html}
       </div>
     </div>"""
-    return _doc(body)
+    return _doc(body, theme)
 
 
 def slide_photo(photo: str, caption: str = "", counter: str | None = None) -> str:
@@ -280,7 +301,7 @@ def slide_cta(headline: str = "Take the free screener.",
 # Deck assembly
 # ---------------------------------------------------------------------------
 
-def render_deck(deck: dict) -> list[str]:
+def render_deck(deck: dict, theme: str = "dark") -> list[str]:
     """Turn a deck spec into a list of rendered slide HTML strings.
 
     deck = {
@@ -289,7 +310,9 @@ def render_deck(deck: dict) -> list[str]:
       "slides": [ {"type": "stat"|"fact"|"list"|"quote"|"photo", ...}, ... ],
       "cta":    {"headline": str, "sub": str, "url": str}  # optional overrides
     }
+    theme picks the visual world (dark | light) for the typographic slides.
     """
+    theme = deck.get("theme", theme)
     kicker = deck.get("kicker", "")
     slides_spec = deck.get("slides", [])
     total = 1 + len(slides_spec) + 1  # cover + content + cta
@@ -300,9 +323,9 @@ def render_deck(deck: dict) -> list[str]:
 
     cover = deck.get("cover", {})
     htmls.append(slide_cover(cover.get("hook", ""), kicker,
-                             cover.get("photo"), ctr(1)))
+                             cover.get("photo"), ctr(1), theme))
 
-    stat_palette = [CORAL, TEAL_BRT, TEAL]
+    stat_palette = [CORAL, TEAL_BRT, TEAL] if theme == "dark" else [CORAL, TEAL, TEAL]
     stat_i = 0
     for idx, s in enumerate(slides_spec, start=2):
         t = s.get("type", "fact")
@@ -310,17 +333,17 @@ def render_deck(deck: dict) -> list[str]:
         if t == "stat":
             color = stat_palette[stat_i % len(stat_palette)]; stat_i += 1
             htmls.append(slide_stat(s.get("value", ""), s.get("label", ""),
-                                    s.get("detail", ""), c, color))
+                                    s.get("detail", ""), c, color, theme))
         elif t == "list":
             htmls.append(slide_list(s.get("headline", ""), s.get("items", []),
-                                    c, s.get("kicker", "")))
+                                    c, s.get("kicker", ""), theme))
         elif t == "quote":
-            htmls.append(slide_quote(s.get("text", ""), s.get("attribution", ""), c))
+            htmls.append(slide_quote(s.get("text", ""), s.get("attribution", ""), c, theme))
         elif t == "photo":
             htmls.append(slide_photo(s.get("photo", ""), s.get("caption", ""), c))
         else:  # fact
             htmls.append(slide_fact(s.get("headline", ""), s.get("body", ""),
-                                    c, s.get("kicker", "")))
+                                    c, s.get("kicker", ""), theme))
 
     cta = deck.get("cta", {})
     htmls.append(slide_cta(cta.get("headline", "Take the free screener."),
@@ -333,7 +356,7 @@ def render_deck(deck: dict) -> list[str]:
 # Single-image post types (reuse tokens)
 # ---------------------------------------------------------------------------
 
-def render_infographic(content: dict) -> str:
+def render_infographic(content: dict, theme: str = "dark") -> str:
     """Data card: headline + up to three stacked hero stats + supporting fact."""
     headline = content.get("headline", "")
     bars = content.get("bars", [])
@@ -364,7 +387,7 @@ def render_infographic(content: dict) -> str:
       <div class="foot" style="margin-top:26px;"><div class="footline"></div>
         <span class="footurl">oralcheck.org</span></div>
     </div>"""
-    return _doc(body)
+    return _doc(body, theme)
 
 
 def render_image_overlay(image_path: str, hook: str, cta: str = "oralcheck.org",
@@ -407,8 +430,11 @@ def _screenshot_many(htmls: list[str]) -> list[str]:
         with sync_playwright() as p:
             browser = p.chromium.launch(args=["--no-sandbox", "--disable-dev-shm-usage",
                                                "--force-color-profile=srgb"])
+            # Layout is a fixed 1080px frame; render it at 3x (3240px) for heavy
+            # supersampling, then downscale to OUTPUT_PX (1440, Instagram's max) so
+            # type stays razor-sharp. Larger than 1440 is rejected/downscaled by IG.
             page = browser.new_page(viewport={"width": 1080, "height": 1080},
-                                    device_scale_factor=2)
+                                    device_scale_factor=3)
             for html in htmls:
                 fh = tempfile.NamedTemporaryFile(suffix=".html", mode="w",
                                                  encoding="utf-8", delete=False)
@@ -416,13 +442,10 @@ def _screenshot_many(htmls: list[str]) -> list[str]:
                 out = tempfile.NamedTemporaryFile(suffix=".jpg", delete=False); out.close()
                 page.goto(f"file://{fh.name}")
                 page.evaluate("async () => { await document.fonts.ready; }")
-                # Render at 2x (2160px) for supersampled crispness, then downscale to
-                # OUTPUT_PX. Instagram's Graph API rejects image widths over 1440px, and
-                # posts display at ~1080, so 1080 is the right delivery size.
                 png_bytes = page.screenshot(type="png", full_page=False)
                 with Image.open(BytesIO(png_bytes)) as im:
                     im = im.convert("RGB").resize((OUTPUT_PX, OUTPUT_PX), Image.LANCZOS)
-                    im.save(out.name, "JPEG", quality=90)
+                    im.save(out.name, "JPEG", quality=JPEG_QUALITY)
                 out_paths.append(out.name)
             browser.close()
     finally:
@@ -452,18 +475,24 @@ def _screenshot(html: str) -> str:
 # Public API — each returns a path (or list of paths) to JPEG(s)
 # ---------------------------------------------------------------------------
 
-def carousel_deck(deck: dict) -> list[str]:
+def carousel_deck(deck: dict, theme: str = "dark") -> list[str]:
     """Render a full carousel deck. Returns one JPEG path per slide, in order."""
-    return _screenshot_many(render_deck(deck))
+    return _screenshot_many(render_deck(deck, theme))
 
 
-def infographic_image(content: dict) -> str:
-    return _screenshot(render_infographic(content))
+def infographic_image(content: dict, theme: str = "dark") -> str:
+    return _screenshot(render_infographic(content, theme))
 
 
 def image_overlay(image_path: str, hook: str, cta: str = "oralcheck.org",
                   kicker: str = "") -> str:
     return _screenshot(render_image_overlay(image_path, hook, cta, kicker))
+
+
+def pick_theme() -> str:
+    """Rotate visual themes, biased toward the light (higher-legibility) look."""
+    import random
+    return random.choice(["light", "light", "dark"])
 
 
 # Back-compat shims for the older carousel path -----------------------------

@@ -1087,8 +1087,10 @@ def generate_carousel_slides(content: dict) -> list[str]:
 
     if _USE_HTML_RENDER:
         deck = build_deck_from_content(content, raw_path)
-        log.info("Rendering carousel deck (%d slides + cover + CTA)...", len(deck["slides"]))
-        return _html_render.carousel_deck(deck)
+        theme = _html_render.pick_theme()
+        log.info("Rendering carousel deck (%d slides + cover + CTA, %s theme)...",
+                 len(deck["slides"]), theme)
+        return _html_render.carousel_deck(deck, theme)
 
     # Fallback: PIL renderer with flattened typed slides
     paths = []
@@ -1304,7 +1306,7 @@ def run_pipeline(
     if media_type == "infographic":
         log.info("Rendering infographic...")
         if _USE_HTML_RENDER:
-            file_paths = [_html_render.infographic_image(content)]
+            file_paths = [_html_render.infographic_image(content, _html_render.pick_theme())]
         else:
             file_paths = [render_infographic_image(content)]
     elif media_type == "animated":

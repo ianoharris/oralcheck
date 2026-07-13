@@ -18,6 +18,8 @@ from pathlib import Path
 import anthropic
 
 LEDGER_FILE = Path(__file__).parent / "ideas.json"
+# Topics already posted outside this system (hand-maintained). Never re-suggested.
+SEED_FILE = Path(__file__).parent / "used_topics.json"
 
 VALID_MEDIA = {"carousel", "image", "infographic"}
 # Extra pillars beyond the core rotation.
@@ -28,7 +30,22 @@ EXTRA_PILLARS = {
         "Never a joke at the expense of patients or the disease. Warmth and relatability, "
         "not shock. This lane always goes to manual review."
     ),
+    "trend_comparison": (
+        "Connect an oral cancer fact to a current event or trending topic with a striking, "
+        "true comparison (e.g. a World Cup stadium holds ~65,000, and ~60,000 Americans are "
+        "diagnosed with oral cancer each year). Timely and shareable, but never flippant about "
+        "the disease and never an invented number."
+    ),
 }
+
+
+def load_seed_topics() -> list[str]:
+    if SEED_FILE.exists():
+        try:
+            return [str(t) for t in json.loads(SEED_FILE.read_text())]
+        except Exception:
+            return []
+    return []
 
 
 def slugify(text: str) -> str:
@@ -124,8 +141,9 @@ def generate_ideas(count, *, api_key, model, system_prompt, pillar_briefs,
     valid_pillars = set(all_pillars.keys())
 
     pillar_lines = "\n".join(f"  - {p}: {desc}" for p, desc in all_pillars.items())
-    avoid = _avoid_titles(ledger)
-    avoid_block = ("\nDo NOT propose anything similar in topic or angle to these already-used ideas:\n"
+    avoid = _avoid_titles(ledger) + load_seed_topics()
+    avoid_block = ("\nDo NOT propose anything similar in topic or angle to these already-used ideas "
+                   "(the brand has already posted these). Every idea must be a genuinely new angle:\n"
                    + "\n".join(f"  - {t}" for t in avoid)) if avoid else ""
 
     cal_block = ""
@@ -138,7 +156,8 @@ def generate_ideas(count, *, api_key, model, system_prompt, pillar_briefs,
 
     user_msg = (
         f"First, briefly research the current landscape: search the web for recent oral cancer / HPV "
-        "news, awareness-day context, and what kinds of health-awareness posts are performing right now. "
+        "news, awareness-day context, culturally trending topics and current events (sports, holidays, "
+        "viral moments), and what kinds of health-awareness posts are performing right now. "
         "Use 2 to 4 searches, then stop researching and write the ideas.\n\n"
         f"Then propose {count} distinct Instagram content ideas for OralCheck.\n\n"
         f"Content pillars to draw from (use the pillar key exactly):\n{pillar_lines}\n"
@@ -147,12 +166,14 @@ def generate_ideas(count, *, api_key, model, system_prompt, pillar_briefs,
         f"  - Return a JSON array of exactly {count} objects as your final message, no markdown fences.\n"
         "  - Each object: title (<=12 words, the specific angle), pillar (one key from above), "
         "media_type (carousel, image, or infographic), brief (2 to 3 sentences that a content "
-        "generator can act on), angle (one of: surprising-true, myth, how-to, timely, human), "
+        "generator can act on), angle (one of: surprising-true, myth, how-to, timely, human, trend-comparison), "
         "calendar_ref (a ref slug or null).\n"
         "  - Bias the mix toward carousels (about 60 percent), with some infographics and images.\n"
         "  - Every idea must be genuinely distinct from the others and from the avoid list.\n"
         "  - Only real, defensible oral cancer facts. No invented statistics.\n"
-        "  - Include at least one light_lane idea and, if a calendar event is near, at least one awareness idea."
+        "  - Include at least one light_lane idea, at least one trend_comparison idea that ties an oral "
+        "cancer fact to something current or trending with a striking true comparison, and, if a calendar "
+        "event is near, at least one awareness idea. Keep every comparison tasteful, never flippant about the disease."
     )
 
     client = anthropic.Anthropic(api_key=api_key)
