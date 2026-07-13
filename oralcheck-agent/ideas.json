@@ -1,4 +1,126 @@
 {
-  "ideas": [],
-  "last_batch": []
+  "ideas": [
+    {
+      "title": "The Head and Neck Cancer Umbrella Most People Have Never Heard Of",
+      "pillar": "awareness",
+      "media_type": "carousel",
+      "brief": "World Head and Neck Cancer Day (July 27) is a chance to show followers where oral cancer sits within the broader head and neck category, which also includes throat, thyroid, and salivary gland cancers. Slide 1 opens with the stat that head and neck cancers account for nearly 4% of all U.S. cancers, then each slide names one site in plain language, closes on why early detection across all these sites is the factor that most determines outcome. Final slide directs to the free screener.",
+      "angle": "surprising-true",
+      "calendar_ref": "world-head-neck-cancer-day",
+      "slug": "the-head-and-neck-cancer-umbrella-most-people-have-never-hea",
+      "id": "idea_33b9d3f4",
+      "status": "suggested",
+      "suggested_at": "2026-07-13T14:16:13.340315+00:00",
+      "used_at": null,
+      "manifest_id": null
+    },
+    {
+      "title": "July 27 Is One Day. Early Detection Is Every Day.",
+      "pillar": "screener_cta",
+      "media_type": "image",
+      "brief": "A World Head and Neck Cancer Day tie-in that keeps the focus narrow and actionable: one day on the calendar is a prompt, but the screener at oralcheck.org is available 365 days a year. The copy leads with the awareness day date, explains that 10 questions and 2 minutes is all it takes, and frames the screener as the practical thing anyone can do right now to mark the occasion.",
+      "angle": "timely",
+      "calendar_ref": "world-head-neck-cancer-day",
+      "slug": "july-27-is-one-day-early-detection-is-every-day",
+      "id": "idea_3c1df151",
+      "status": "queued",
+      "suggested_at": "2026-07-13T14:16:13.340315+00:00",
+      "used_at": "2026-07-13T14:20:25.694818+00:00",
+      "manifest_id": "20260713_142025_7bcf2d08"
+    },
+    {
+      "title": "Tour de France Riders Cover More Miles Than Most People Know About Oral Cancer",
+      "pillar": "trend_comparison",
+      "media_type": "image",
+      "brief": "The Tour de France covers roughly 3,400 kilometers over 21 stages, a number most cycling fans know by heart. Fewer people know that roughly 54,000 Americans are diagnosed with oral cancer every year, a figure that has climbed steadily for a decade. The post pairs both numbers to make the point that we track athletic endurance with precision but miss a cancer whose survival rate jumps dramatically when it's caught early.",
+      "angle": "trend-comparison",
+      "calendar_ref": null,
+      "slug": "tour-de-france-riders-cover-more-miles-than-most-people-know",
+      "id": "idea_e89450ba",
+      "status": "queued",
+      "suggested_at": "2026-07-13T14:16:13.340315+00:00",
+      "used_at": "2026-07-13T14:20:35.535048+00:00",
+      "manifest_id": "20260713_142035_a29e8426"
+    },
+    {
+      "title": "What Happens Inside Your Mouth When HPV Goes Undetected",
+      "pillar": "hpv_connection",
+      "media_type": "carousel",
+      "brief": "Most people associate HPV with cervical cancer, not the mouth. This carousel closes that gap: Slide 1 opens on the fact that oropharyngeal cancer rates have risen sharply in adults 35 to 55 while tobacco-related oral cancers have declined, Slide 2 explains how HPV-related oral cancers often develop at the back of the throat where a home mirror check won't catch them, Slide 3 explains what a clinical screening adds that a self-exam alone cannot, and the final slide points to oralcheck.org as a first step toward knowing personal risk.",
+      "angle": "surprising-true",
+      "calendar_ref": null,
+      "slug": "what-happens-inside-your-mouth-when-hpv-goes-undetected",
+      "id": "idea_d0c124e1",
+      "status": "suggested",
+      "suggested_at": "2026-07-13T14:16:13.340315+00:00",
+      "used_at": null,
+      "manifest_id": null
+    },
+    {
+      "title": "Five Things Your Dentist Checks That Have Nothing to Do With Teeth",
+      "pillar": "self_exam",
+      "media_type": "carousel",
+      "brief": "Framed from the dentist's perspective rather than the patient's, this carousel walks through five non-tooth findings a trained clinician looks for during a routine exam: lymph node size and firmness, the floor of the mouth, the soft palate, the lateral tongue borders, and the oropharynx. Each slide is one finding, one plain-language explanation, and one thing the reader can ask their provider about. The angle is that a twice-yearly dental visit is already a partial cancer screening, most patients just don't realize it.",
+      "angle": "how-to",
+      "calendar_ref": null,
+      "slug": "five-things-your-dentist-checks-that-have-nothing-to-do-with",
+      "id": "idea_30a8c197",
+      "status": "suggested",
+      "suggested_at": "2026-07-13T14:16:13.340315+00:00",
+      "used_at": null,
+      "manifest_id": null
+    },
+    {
+      "title": "The Symptom People Ignore for Months Because It Seems Minor",
+      "pillar": "stats",
+      "media_type": "carousel",
+      "brief": "Research consistently shows that a significant share of oral cancer patients waited more than 90 days from first noticing a symptom to seeking care, often because the sore, patch, or lump seemed like it would resolve on its own. The carousel opens on that delay finding, then walks through four symptoms that commonly get dismissed (a sore that doesn't heal in three weeks, a white or red patch, unexplained numbness, a lump in the neck), and closes with a plain-language explanation of why earlier presentation changes outcomes. Points to oralcheck.org.",
+      "angle": "surprising-true",
+      "calendar_ref": null,
+      "slug": "the-symptom-people-ignore-for-months-because-it-seems-minor",
+      "id": "idea_c3510d93",
+      "status": "queued",
+      "suggested_at": "2026-07-13T14:16:13.340315+00:00",
+      "used_at": "2026-07-13T14:20:55.012040+00:00",
+      "manifest_id": "20260713_142054_e777a180"
+    },
+    {
+      "title": "Oral Cancer Rates Are Rising in People Who Have Never Touched a Cigarette",
+      "pillar": "myth_busting",
+      "media_type": "infographic",
+      "brief": "This post does not revisit the smoker-only myth directly (already posted) but approaches it from the data trend angle: incidence in never-smokers under 50 has grown while incidence in heavy smokers has declined, driven by HPV prevalence. The infographic shows two diverging trend lines in plain, visual terms and lands on the key takeaway that lifestyle assumptions are not a reliable proxy for risk. Ends with the oralcheck.org screener prompt.",
+      "angle": "myth",
+      "calendar_ref": null,
+      "slug": "oral-cancer-rates-are-rising-in-people-who-have-never-touche",
+      "id": "idea_8649523a",
+      "status": "suggested",
+      "suggested_at": "2026-07-13T14:16:13.340315+00:00",
+      "used_at": null,
+      "manifest_id": null
+    },
+    {
+      "title": "Brushing Twice a Day and Still Missing a Two-Minute Check That Matters",
+      "pillar": "light_lane",
+      "media_type": "image",
+      "brief": "A warm, relatable post that starts from a universal truth: most people have a thorough tooth-brushing routine they never skip but have never once done a structured oral cancer self-check in the same two minutes. The tone is gently knowing, not guilt-inducing. The copy acknowledges that the self-check isn't something anyone teaches you, normalizes not knowing, and then offers oralcheck.org as the easy next step. Flagged for manual review per light_lane protocol.",
+      "angle": "human",
+      "calendar_ref": null,
+      "slug": "brushing-twice-a-day-and-still-missing-a-two-minute-check-th",
+      "id": "idea_8a155839",
+      "status": "suggested",
+      "suggested_at": "2026-07-13T14:16:13.340315+00:00",
+      "used_at": null,
+      "manifest_id": null
+    }
+  ],
+  "last_batch": [
+    "idea_33b9d3f4",
+    "idea_3c1df151",
+    "idea_e89450ba",
+    "idea_d0c124e1",
+    "idea_30a8c197",
+    "idea_c3510d93",
+    "idea_8649523a",
+    "idea_8a155839"
+  ]
 }
