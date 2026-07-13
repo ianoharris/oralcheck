@@ -147,14 +147,18 @@ SYSTEM_PROMPT = (
     "Caption writing style (apply these to all captions; brand voice rules above take priority on any conflict):\n"
     + WRITING_STYLE_RULES.strip()
     + "\n\nStock photo search query guidance (for image and carousel posts):\n"
-    "- Write a concise 3-6 word search query that will surface real photography on Pexels/Unsplash.\n"
-    "- Focus on real human subjects: faces, smiling people, doctor-patient moments, close-up dental/mouth shots.\n"
-    "- Avoid abstract or object-only queries -- we need people in the frame.\n"
-    "- No cliches: no white coats, no stethoscopes, no generic 'doctor smiling at camera'.\n"
-    "- Good examples: 'person smiling natural light', 'close up mouth teeth', 'young adult medical appointment',\n"
-    "  'worried person health checkup', 'diverse people wellness'.\n"
-    "- For video (reels), search_query should be portrait-friendly and human-focused\n"
-    "  (e.g. 'person dental exam', 'smiling woman health checkup', 'close up mouth teeth').\n"
+    "- The photo MUST visibly illustrate THIS post's specific subject. Derive the query from the exact\n"
+    "  angle of the post, not a generic health scene. If someone saw only the photo, it should hint at\n"
+    "  the topic. A mismatched or generic photo is worse than none.\n"
+    "- Write a concise 3-6 word query of real photography on Pexels/Unsplash, with real people in frame.\n"
+    "- Map the topic to the scene, for example:\n"
+    "    self-exam / symptoms  -> 'person checking mouth mirror', 'close up lips mouth'\n"
+    "    HPV / adults under 50 -> 'young couple outdoors candid', 'thirties man woman casual'\n"
+    "    dentist / screening   -> 'patient dental chair checkup', 'dentist examining patient mouth'\n"
+    "    tobacco               -> 'person quitting cigarette', 'hand breaking cigarette'\n"
+    "    survival / early detection -> 'relieved patient doctor good news', 'older adult health checkup'\n"
+    "- No cliches: no white coats posing, no stethoscopes, no generic 'doctor smiling at camera'.\n"
+    "- For video (reels), keep it portrait-friendly and human-focused and still topic-specific.\n"
 )
 
 MAX_RETRIES = 3
