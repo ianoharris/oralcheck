@@ -848,47 +848,6 @@ def _media_duration(path: str) -> float:
         return 0.0
 
 
-def _caption_png(text: str) -> str:
-    """Render one on-screen caption: centered text on a scrim that hugs the
-    text, with a centered coral tick above. Transparent PNG, lower third."""
-    img = Image.new("RGBA", (REEL_W, REEL_H), (0, 0, 0, 0))
-    draw = ImageDraw.Draw(img)
-    cx = REEL_W // 2
-    max_text_w = int(REEL_W * 0.82)
-    size = int(REEL_W * 0.064)
-    font = _load_font("SourceSans3-Regular.ttf", size)
-    lines = _wrap_text(text, font, max_text_w).split("\n")
-
-    line_h = int(size * 1.32)
-    widths = [draw.textlength(ln, font=font) for ln in lines]
-    text_w = max(widths) if widths else 0
-    block_h = line_h * len(lines)
-
-    padx, pady = int(size * 0.85), int(size * 0.55)
-    box_w = text_w + 2 * padx
-    top = int(REEL_H * 0.66)
-    box = [(cx - box_w / 2, top), (cx + box_w / 2, top + block_h + 2 * pady)]
-    draw.rounded_rectangle(box, radius=int(size * 0.38), fill=(13, 26, 27, 212))
-
-    # centered coral tick above the box
-    tick_w, tick_h = int(REEL_W * 0.10), 6
-    draw.rounded_rectangle(
-        [(cx - tick_w / 2, top - 20), (cx + tick_w / 2, top - 20 + tick_h)],
-        radius=3, fill=(232, 99, 74, 255),
-    )
-
-    ty = top + pady
-    for ln, w in zip(lines, widths):
-        draw.text((cx - w / 2, ty), ln, font=font, fill=(232, 228, 222, 255))
-        ty += line_h
-
-    tmp = tempfile.NamedTemporaryFile(suffix="_cap.png", delete=False)
-    img.save(tmp.name)
-    tmp.close()
-    _register_tmp(tmp.name)
-    return tmp.name
-
-
 def _reel_outro_png() -> str:
     """Branded end card (logo mark + CTA) as a full-frame PNG."""
     img = Image.new("RGB", (REEL_W, REEL_H), C_BG)
@@ -922,27 +881,33 @@ def _draw_centered(draw, text, font, cx, y, fill, spacing):
         draw.text((cx - w/2, y + i * (font.size + spacing)), ln, font=font, fill=fill)
 
 
-def _build_reel_segment(broll_path: str, caption_png: str,
-                        narration_wav: str, dur: float) -> str:
-    """One captioned segment: b-roll (looped/cropped to 9:16) + fading caption
-    + its narration audio, trimmed to the narration length plus a short tail."""
-    seg_dur = round(dur + 0.35, 2)
+CAP_FPS = 24   # animation capture rate; frames hold after the animation completes
+
+
+def _build_kinetic_segment(segment: dict, narration_wav: str,
+                           dur: float, theme: str) -> str:
+    """One reel segment: a seekable kinetic-typography scene animated over
+    ~KINETIC_TOTAL s, then frozen on its end state for the rest of the
+    narration, with the narration audio muxed in."""
+    n_frames = max(2, round(_html_render.KINETIC_TOTAL * CAP_FPS))
+    frame_dir, n = _html_render.render_kinetic_frames(segment, n_frames, theme)
+    anim_dur = n / CAP_FPS
+    seg_dur  = round(dur + 0.5, 2)                 # tail so nothing is clipped
+    pad      = max(0.0, round(seg_dur - anim_dur, 2))
+
     out = tempfile.NamedTemporaryFile(suffix="_seg.mp4", delete=False)
     out.close()
     _register_tmp(out.name)
     filt = (
-        f"[0:v]scale={REEL_W}:{REEL_H}:force_original_aspect_ratio=increase,"
-        f"crop={REEL_W}:{REEL_H},fps={REEL_FPS},setsar=1[bg];"
-        f"[1:v]fps={REEL_FPS},format=rgba,fade=in:st=0:d=0.35:alpha=1[cap];"
-        f"[bg][cap]overlay=0:0[outv]"
+        f"[0:v]fps={REEL_FPS},"
+        f"tpad=stop_mode=clone:stop_duration={pad},setsar=1[v]"
     )
     result = subprocess.run(
         ["ffmpeg", "-y",
-         "-stream_loop", "-1", "-i", broll_path,
-         "-loop", "1", "-i", caption_png,
+         "-framerate", str(CAP_FPS), "-i", os.path.join(frame_dir, "frame_%04d.png"),
          "-i", narration_wav,
          "-filter_complex", filt,
-         "-map", "[outv]", "-map", "2:a",
+         "-map", "[v]", "-map", "1:a",
          "-t", str(seg_dur),
          "-c:v", "libx264", "-pix_fmt", "yuv420p", "-r", str(REEL_FPS),
          "-c:a", "aac", "-ar", "44100", "-ac", "2",
@@ -997,10 +962,10 @@ def _concat_reel(segment_paths: list[str]) -> str:
     return out.name
 
 
-def build_faceless_reel(content: dict) -> str:
-    """Assemble a faceless UGC-style reel from a structured script:
-    per segment -> fal TTS narration + topic b-roll + on-screen caption,
-    then a branded outro. Returns the final 1080x1920 mp4 path."""
+def build_faceless_reel(content: dict, theme: str = "dark") -> str:
+    """Assemble a faceless reel from a structured script: per segment -> fal TTS
+    narration + a kinetic-typography scene animating that line, then a branded
+    outro. Returns the final 1080x1920 mp4 path."""
     segments = content.get("segments", [])
     if not segments:
         raise ValueError("reel script has no segments")
@@ -1008,23 +973,16 @@ def build_faceless_reel(content: dict) -> str:
     seg_paths = []
     for idx, seg in enumerate(segments, 1):
         narration = seg["narration"].strip()
-        caption   = (seg.get("caption") or narration).strip()
-        query     = seg.get("broll_query", "").strip() or "health lifestyle candid"
-        log.info("Reel segment %d/%d: TTS + b-roll (%s)", idx, len(segments), query)
+        on_screen = seg.get("stat", {}).get("value") or seg.get("caption", "")
+        log.info("Reel segment %d/%d: TTS + kinetic scene (%s)",
+                 idx, len(segments), on_screen)
 
         wav = _fal_tts(narration)
         dur = _media_duration(wav)
         if dur <= 0:
             raise RuntimeError(f"TTS produced empty audio for segment {idx}")
 
-        try:
-            broll = fetch_stock_video(query)
-        except Exception as exc:
-            log.warning("b-roll query '%s' failed (%s); retrying generic", query, exc)
-            broll = fetch_stock_video("health lifestyle candid")
-
-        cap_png = _caption_png(caption)
-        seg_paths.append(_build_reel_segment(broll, cap_png, wav, dur))
+        seg_paths.append(_build_kinetic_segment(seg, wav, dur, theme))
 
     seg_paths.append(_build_reel_outro())
     final = _concat_reel(seg_paths)
@@ -1034,23 +992,27 @@ def build_faceless_reel(content: dict) -> str:
 
 def generate_reel_script(brief: str) -> dict:
     """Ask Claude for a faceless-reel script: a spoken narration broken into
-    4-6 short segments, each with its own b-roll query and on-screen caption,
+    4-6 short segments, each rendered as an animated kinetic-typography scene,
     plus the IG caption + hashtags. Returns a validated dict."""
     reel_note = (
-        "This is a FACELESS Instagram Reel (9:16, ~15-22s): a calm voiceover over topic "
-        "b-roll with on-screen captions. No presenter, no face. Break the script into 4-6 "
-        "segments that flow as one continuous narration.\n"
+        "This is a FACELESS Instagram Reel (9:16, ~20-25s): a calm voiceover over ANIMATED "
+        "kinetic typography (the words animate on screen in the brand palette). There is NO "
+        "footage and NO presenter. Break the script into EXACTLY 4-5 segments that flow as one "
+        "continuous narration (keep it tight -- the whole thing should read in about 22 seconds).\n"
         "Output valid JSON only (no markdown fences) with fields:\n"
         "  hook: the opening spoken line (also segment 1's narration)\n"
-        "  segments: array of 4-6 objects, each:\n"
-        "    - narration: ONE spoken sentence, 8-16 words, calm and grounded (this is read aloud)\n"
-        "    - caption: 3-6 word on-screen text distilling that line (punchy, no period)\n"
-        "    - broll_query: 3-6 word Pexels VIDEO search that literally shows this line's subject\n"
-        "      (real people/scenes; map to the topic, e.g. 'dentist examining patient mouth',\n"
-        "      'person quitting cigarette', 'young couple outdoors', 'doctor patient good news')\n"
+        "  segments: array of 4-5 objects. Each object has:\n"
+        "    - narration: ONE spoken sentence, 7-13 words, calm and grounded (read aloud)\n"
+        "    - caption: the on-screen headline for this line, 3-7 words, punchy, NO period\n"
+        "    - emphasis: ONE or TWO words taken verbatim from `caption` to highlight in coral\n"
+        "    - kicker (optional): a 2-3 word uppercase eyebrow (only worth it on segment 1)\n"
+        "    - stat (optional): ONLY when the line's whole point is a number. Then set\n"
+        "        stat = {\"value\": \"84%\", \"label\": \"survival when caught early\"} and you may\n"
+        "        omit caption/emphasis. The number animates by counting up.\n"
         "  caption: the Instagram caption (calm, evidence-based, ends by pointing to oralcheck.org)\n"
         "  hashtags: exactly 5 tags without the # symbol\n"
-        "Keep the final segment a gentle nudge toward the free screener."
+        "Make the on-screen captions read as a punchy sequence, not full sentences. Keep the "
+        "final segment a gentle nudge toward the free screener."
     )
 
     def _call() -> dict:
@@ -1072,10 +1034,20 @@ def generate_reel_script(brief: str) -> dict:
         if len(segs) < 3:
             raise ValueError("reel script needs at least 3 usable segments")
         for s in segs:
-            s["narration"]   = _strip_dashes(s["narration"].strip())
-            s["caption"]     = _strip_dashes(str(s.get("caption", "")).strip())
-            s["broll_query"] = str(s.get("broll_query", "")).strip()
-        data["segments"] = segs[:6]
+            s["narration"] = _strip_dashes(s["narration"].strip())
+            s["caption"]   = _strip_dashes(str(s.get("caption", "")).strip())
+            s["emphasis"]  = str(s.get("emphasis", "")).strip()
+            s["kicker"]    = str(s.get("kicker", "")).strip()
+            stat = s.get("stat")
+            if isinstance(stat, dict) and str(stat.get("value", "")).strip():
+                s["stat"] = {"value": str(stat["value"]).strip(),
+                             "label": _strip_dashes(str(stat.get("label", "")).strip())}
+            else:
+                s.pop("stat", None)
+            # every segment must have SOMETHING on screen
+            if not s["caption"] and not s.get("stat"):
+                s["caption"] = " ".join(s["narration"].split()[:6])
+        data["segments"] = segs[:5]
         data.setdefault("hook", segs[0]["narration"])
         data.setdefault("caption", "")
         hashtags = data.get("hashtags", [])
@@ -2224,8 +2196,9 @@ def run_faceless_reel(brief: str, out_path: str | None = None) -> str:
         "hook": content["hook"],
         "caption": content.get("caption", ""),
         "hashtags": content.get("hashtags", []),
-        "on_screen_captions": [s.get("caption") for s in content["segments"]],
-        "broll_queries": [s.get("broll_query") for s in content["segments"]],
+        "scenes": [s.get("stat", {}).get("value") or s.get("caption")
+                   for s in content["segments"]],
+        "emphasis": [s.get("emphasis") for s in content["segments"]],
         "duration_s": round(_media_duration(path), 1),
         "file": path,
     }, indent=2))

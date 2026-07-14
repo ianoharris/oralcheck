@@ -503,3 +503,193 @@ def info_slide_image(headline: str, body: str) -> str:
 
 def cta_slide_image() -> str:
     return _screenshot(slide_cta())
+
+
+# ---------------------------------------------------------------------------
+# Kinetic typography (reel scenes)
+#
+# One animated 1080x1920 scene per reel segment. Every animation is *seekable*:
+# all animations are paused and their delay is driven by a single --t (0..1)
+# progress variable, so a given frame is rendered deterministically by setting
+# --t and screenshotting. This gives perfect, reproducible frames (and thus
+# perfect audio sync) instead of relying on real-time playback.
+# ---------------------------------------------------------------------------
+
+KINETIC_W, KINETIC_H = 1080, 1920
+KINETIC_TOTAL = 2.6   # seconds of animation before the scene holds its end state
+
+
+def _kinetic_style(theme: str) -> str:
+    dm = _font_b64("DMSerifDisplay-Regular.ttf")
+    ss = _font_b64("SourceSans3-Regular.ttf")
+    t = THEMES.get(theme, THEMES["dark"])
+    return f"""
+@font-face {{ font-family:'DM Serif Display'; src:url('data:font/truetype;base64,{dm}') format('truetype'); font-weight:400; font-display:block; }}
+@font-face {{ font-family:'Source Sans 3'; src:url('data:font/truetype;base64,{ss}') format('truetype'); font-weight:300 700; font-display:block; }}
+:root {{
+  --t:0; --total:{KINETIC_TOTAL};
+  --bg:{t['bg']}; --teal:{t['teal']}; --teal-brt:{t['teal_brt']}; --coral:{t['coral']};
+  --text:{t['text']}; --text-soft:{t['text_soft']}; --muted:{t['muted']};
+}}
+*, *::before, *::after {{ box-sizing:border-box; margin:0; padding:0; }}
+html, body {{ width:{KINETIC_W}px; height:{KINETIC_H}px; }}
+body {{ overflow:hidden; background:var(--bg); color:var(--text);
+  font-family:'Source Sans 3', system-ui, sans-serif;
+  -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }}
+.serif {{ font-family:'DM Serif Display', Georgia, serif; }}
+
+/* every animated element is paused and seeked by --t */
+.anim {{ animation-fill-mode:both; animation-play-state:paused;
+  animation-timing-function:cubic-bezier(0.22,1,0.36,1);
+  animation-delay:calc(var(--d,0) * 1s - var(--t) * var(--total) * 1s); }}
+
+@keyframes riseIn {{ from{{opacity:0; transform:translateY(46px);}} to{{opacity:1; transform:translateY(0);}} }}
+@keyframes fadeDown {{ from{{opacity:0; transform:translateY(-18px);}} to{{opacity:1; transform:translateY(0);}} }}
+@keyframes fadeUp {{ from{{opacity:0; transform:translateY(24px);}} to{{opacity:1; transform:translateY(0);}} }}
+@keyframes sweep {{ from{{transform:scaleX(0);}} to{{transform:scaleX(1);}} }}
+@keyframes popIn {{ from{{opacity:0; transform:scale(0.72);}} to{{opacity:1; transform:scale(1);}} }}
+@keyframes drift {{ from{{transform:translate(0,0) scale(1);}} to{{transform:translate(60px,-90px) scale(1.18);}} }}
+
+.scene {{ position:relative; width:{KINETIC_W}px; height:{KINETIC_H}px; overflow:hidden; }}
+.blob {{ position:absolute; border-radius:50%; filter:blur(70px); opacity:0.5;
+  animation-name:drift; animation-duration:{KINETIC_TOTAL}s; animation-timing-function:ease-in-out; }}
+.blob.a {{ width:760px; height:760px; left:-160px; top:-120px;
+  background:radial-gradient(circle, var(--teal) 0%, transparent 70%); }}
+.blob.b {{ width:680px; height:680px; right:-200px; bottom:-140px; opacity:0.4;
+  background:radial-gradient(circle, var(--teal-brt) 0%, transparent 70%);
+  animation-direction:reverse; }}
+
+.content {{ position:absolute; inset:0; display:flex; flex-direction:column;
+  justify-content:center; padding:0 104px; }}
+.brandrow {{ position:absolute; top:120px; left:104px; display:flex; align-items:center; gap:16px;
+  animation-name:fadeDown; animation-duration:0.5s; }}
+.dot {{ width:20px; height:20px; border-radius:50%; background:var(--coral); }}
+.wordmark {{ font-size:38px; font-weight:600; letter-spacing:0.06em; color:var(--teal-brt); }}
+
+.kicker {{ font-size:34px; font-weight:600; letter-spacing:0.16em; text-transform:uppercase;
+  color:var(--coral); margin-bottom:40px; animation-name:fadeUp; animation-duration:0.5s; }}
+
+.headline {{ font-family:'DM Serif Display', Georgia, serif; font-size:104px; line-height:1.1;
+  color:var(--text); letter-spacing:-0.01em; }}
+.word {{ display:inline-block; animation-name:riseIn; animation-duration:0.62s; }}
+.em {{ position:relative; display:inline-block; color:var(--coral); }}
+.uline {{ position:absolute; left:0; right:0; bottom:0.02em; height:0.085em; border-radius:4px;
+  background:var(--coral); transform-origin:left center;
+  animation-name:sweep; animation-duration:0.5s; }}
+
+.statwrap {{ display:flex; flex-direction:column; }}
+.stat {{ font-family:'DM Serif Display', Georgia, serif; font-size:340px; line-height:0.95;
+  color:var(--teal-brt); font-variant-numeric:tabular-nums;
+  animation-name:popIn; animation-duration:0.6s; }}
+.statbar {{ height:10px; width:280px; background:var(--coral); border-radius:5px; margin:24px 0 34px;
+  transform-origin:left center; animation-name:sweep; animation-duration:0.55s; }}
+.statlabel {{ font-size:52px; line-height:1.25; color:var(--text); max-width:820px;
+  animation-name:fadeUp; animation-duration:0.6s; }}
+
+.foot {{ position:absolute; bottom:130px; left:104px; display:flex; align-items:center; gap:18px;
+  animation-name:fadeUp; animation-duration:0.55s; }}
+.footline {{ width:54px; height:5px; background:var(--teal); border-radius:3px; }}
+.footurl {{ font-size:40px; font-weight:600; letter-spacing:0.03em; color:var(--teal); }}
+"""
+
+
+def _kinetic_words_html(phrase: str, emphasis: str) -> str:
+    """Wrap each word in a staggered .word span; emphasis words get coral + a
+    sweeping underline. Stagger begins after the kicker settles."""
+    em_set = {w.strip(".,;:!?'\"").lower() for w in emphasis.split() if w.strip()}
+    out, start = [], 0.55
+    words = phrase.split()
+    for i, w in enumerate(words):
+        d = round(start + i * 0.10, 3)
+        bare = w.strip(".,;:!?'\"").lower()
+        if em_set and bare in em_set:
+            u_d = round(start + (i + 1) * 0.10 + 0.05, 3)
+            inner = (f"<span class='em'>{_e(w)}"
+                     f"<span class='anim uline' style='--d:{u_d}'></span></span>")
+            out.append(f"<span class='anim word' style='--d:{d}'>{inner}</span>")
+        else:
+            out.append(f"<span class='anim word' style='--d:{d}'>{_e(w)}</span>")
+    return " ".join(out)
+
+
+def kinetic_scene_html(segment: dict, theme: str = "dark") -> str:
+    """Build one animated reel scene. `segment` may carry:
+      caption   -> the on-screen phrase (kinetic words)
+      emphasis  -> word(s) to highlight in coral
+      stat      -> {"value": "84%", "label": "..."} for a big-number scene
+      is_last   -> show the oralcheck.org footer
+    """
+    t = THEMES.get(theme, THEMES["dark"])
+    stat = segment.get("stat") or {}
+    blobs = "<div class='blob a'></div><div class='blob b'></div>"
+    brand = ("<div class='brandrow'><div class='dot'></div>"
+             "<span class='wordmark'>OralCheck</span></div>")
+    foot = ("<div class='foot'><div class='footline'></div>"
+            "<span class='footurl'>oralcheck.org</span></div>"
+            if segment.get("is_last") else "")
+
+    if stat.get("value"):
+        digits = "".join(ch for ch in str(stat["value"]) if ch.isdigit())
+        target = digits or "0"
+        suffix = str(stat["value"]).replace(target, "", 1) if digits else str(stat["value"])
+        body = (
+            "<div class='statwrap'>"
+            f"<div class='content-stat'><span class='anim stat serif' "
+            f"data-target='{target}' data-suffix='{_e(suffix)}' data-d='0.35'>0{_e(suffix)}</span></div>"
+            "<div class='anim statbar' style='--d:0.7'></div>"
+            f"<div class='anim statlabel' style='--d:0.85'>{_e(stat.get('label',''))}</div>"
+            "</div>"
+        )
+        update_js = (
+            "window.__update=function(t){var el=document.querySelector('.stat');"
+            "if(!el)return;var tgt=+el.dataset.target,d=+el.dataset.d,dur=0.9;"
+            "var p=Math.max(0,Math.min(1,(t*%s - d)/dur));"
+            "el.textContent=Math.round(p*tgt)+el.dataset.suffix;};" % KINETIC_TOTAL
+        )
+    else:
+        kicker = segment.get("kicker", "")
+        kicker_html = f"<div class='anim kicker'>{_e(kicker)}</div>" if kicker else ""
+        words = _kinetic_words_html(segment.get("caption", ""), segment.get("emphasis", ""))
+        body = f"{kicker_html}<div class='headline'>{words}</div>"
+        update_js = "window.__update=function(t){};"
+
+    return (
+        f"<!DOCTYPE html><html><head><meta charset='utf-8'>"
+        f"<style>{_kinetic_style(theme)}</style></head><body>"
+        f"<div class='scene' style='background:{t['bg']}'>{blobs}{brand}"
+        f"<div class='content'>{body}</div>{foot}</div>"
+        f"<script>{update_js}</script></body></html>"
+    )
+
+
+def render_kinetic_frames(segment: dict, n_frames: int, theme: str = "dark") -> tuple[str, int]:
+    """Render a seekable kinetic scene to a directory of PNG frames (frame_%04d.png).
+    Returns (frame_dir, n_frames). Frames are captured at native 1080x1920."""
+    from playwright.sync_api import sync_playwright
+    html = kinetic_scene_html(segment, theme)
+    frame_dir = tempfile.mkdtemp(prefix="kinetic_")
+    fh = tempfile.NamedTemporaryFile(suffix=".html", mode="w", encoding="utf-8", delete=False)
+    fh.write(html); fh.close()
+    try:
+        with sync_playwright() as p:
+            browser = p.chromium.launch(args=["--no-sandbox", "--disable-dev-shm-usage",
+                                               "--force-color-profile=srgb"])
+            page = browser.new_page(viewport={"width": KINETIC_W, "height": KINETIC_H},
+                                    device_scale_factor=1)
+            page.goto(f"file://{fh.name}")
+            page.evaluate("async () => { await document.fonts.ready; }")
+            for i in range(n_frames):
+                tt = i / max(n_frames - 1, 1)
+                page.evaluate(
+                    "(t) => { document.documentElement.style.setProperty('--t', t);"
+                    " if (window.__update) window.__update(t); }", tt)
+                png = page.screenshot(type="png", full_page=False)
+                with open(os.path.join(frame_dir, f"frame_{i:04d}.png"), "wb") as out:
+                    out.write(png)
+            browser.close()
+    finally:
+        try:
+            os.unlink(fh.name)
+        except OSError:
+            pass
+    return frame_dir, n_frames
