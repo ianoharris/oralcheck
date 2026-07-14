@@ -798,16 +798,27 @@ FAL_TTS_VOICE = "af_heart"       # calm, warm -- fits the grounded brand voice
 REEL_W, REEL_H, REEL_FPS = 1080, 1920, 30
 
 
+_TTS_DOMAIN_RE = re.compile(r"\b([A-Za-z0-9][A-Za-z0-9-]*)\.(org|com|app|net|io|gov|edu)\b", re.I)
+
+
+def _normalize_for_tts(text: str) -> str:
+    """Make text sound right when spoken. Domains like 'oralcheck.org' get a
+    literal-period pause from the TTS, so say them aloud as 'oralcheck dot org'."""
+    return _TTS_DOMAIN_RE.sub(lambda m: f"{m.group(1)} dot {m.group(2).lower()}", text)
+
+
 def _fal_tts(text: str, voice: str = FAL_TTS_VOICE) -> str:
     """Synthesize narration with fal Kokoro TTS. Returns a local WAV path."""
     if not FAL_KEY:
         raise RuntimeError("FAL_KEY required for reel voiceover. Set it in .env.")
 
+    spoken = _normalize_for_tts(text)
+
     def _gen() -> str:
         r = httpx.post(
             f"https://fal.run/{FAL_TTS_MODEL}",
             headers={"Authorization": f"Key {FAL_KEY}", "Content-Type": "application/json"},
-            json={"prompt": text, "voice": voice},
+            json={"prompt": spoken, "voice": voice},
             timeout=120,
         )
         r.raise_for_status()
@@ -838,30 +849,39 @@ def _media_duration(path: str) -> float:
 
 
 def _caption_png(text: str) -> str:
-    """Render one on-screen caption (lower third, brand scrim) as a transparent PNG."""
+    """Render one on-screen caption: centered text on a scrim that hugs the
+    text, with a centered coral tick above. Transparent PNG, lower third."""
     img = Image.new("RGBA", (REEL_W, REEL_H), (0, 0, 0, 0))
     draw = ImageDraw.Draw(img)
-    margin = int(REEL_W * 0.09)
-    inner = REEL_W - 2 * margin
-    size = int(REEL_W * 0.060)
+    cx = REEL_W // 2
+    max_text_w = int(REEL_W * 0.82)
+    size = int(REEL_W * 0.064)
     font = _load_font("SourceSans3-Regular.ttf", size)
-    wrapped = _wrap_text(text, font, inner)
-    lines = wrapped.split("\n")
-    line_h = int(size * 1.28)
+    lines = _wrap_text(text, font, max_text_w).split("\n")
+
+    line_h = int(size * 1.32)
+    widths = [draw.textlength(ln, font=font) for ln in lines]
+    text_w = max(widths) if widths else 0
     block_h = line_h * len(lines)
-    y0 = int(REEL_H * 0.64)
-    pad = int(size * 0.55)
+
+    padx, pady = int(size * 0.85), int(size * 0.55)
+    box_w = text_w + 2 * padx
+    top = int(REEL_H * 0.66)
+    box = [(cx - box_w / 2, top), (cx + box_w / 2, top + block_h + 2 * pady)]
+    draw.rounded_rectangle(box, radius=int(size * 0.38), fill=(13, 26, 27, 212))
+
+    # centered coral tick above the box
+    tick_w, tick_h = int(REEL_W * 0.10), 6
     draw.rounded_rectangle(
-        [(margin - pad, y0 - pad - 14), (margin + inner + pad, y0 + block_h + pad - line_h + int(size*0.4))],
-        radius=int(size * 0.32), fill=(13, 26, 27, 210),
+        [(cx - tick_w / 2, top - 20), (cx + tick_w / 2, top - 20 + tick_h)],
+        radius=3, fill=(232, 99, 74, 255),
     )
-    draw.rectangle(
-        [(margin - pad + 6, y0 - pad - 14), (margin - pad + 6 + int(REEL_W * 0.11), y0 - pad - 8)],
-        fill=(232, 99, 74, 255),   # coral accent tick
-    )
-    for i, ln in enumerate(lines):
-        draw.text((margin, y0 + i * line_h - int(size * 0.15)), ln,
-                  font=font, fill=(232, 228, 222, 255))
+
+    ty = top + pady
+    for ln, w in zip(lines, widths):
+        draw.text((cx - w / 2, ty), ln, font=font, fill=(232, 228, 222, 255))
+        ty += line_h
+
     tmp = tempfile.NamedTemporaryFile(suffix="_cap.png", delete=False)
     img.save(tmp.name)
     tmp.close()
