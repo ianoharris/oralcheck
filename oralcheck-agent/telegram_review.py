@@ -17,6 +17,8 @@ from pathlib import Path
 import httpx
 from dotenv import load_dotenv
 
+import ideas
+
 load_dotenv()
 
 TELEGRAM_TOKEN    = os.environ["TELEGRAM_BOT_TOKEN"]
@@ -151,8 +153,22 @@ def _publora_platform_id() -> str:
     raise RuntimeError("No Instagram account connected in Publora.")
 
 
-def post_via_publora(manifest: dict, media_files: list[Path]) -> str:
-    """Create a Publora post, upload the media, and schedule it to go live shortly.
+def _weekly_slots(n: int, start: datetime | None = None) -> list[datetime]:
+    """n posting times spread across the coming week (evening slot, ~5pm CT)."""
+    base = start or datetime.now(timezone.utc)
+    slots = []
+    for i in range(n):
+        day_offset = 1 + round(i * (6 / max(n, 1)))
+        d = (base + timedelta(days=day_offset)).replace(
+            hour=22, minute=0, second=0, microsecond=0)
+        slots.append(d)
+    return slots
+
+
+def post_via_publora(manifest: dict, media_files: list[Path],
+                     when: datetime | None = None) -> str:
+    """Create a Publora post, upload the media, and schedule it. Defaults to ~2
+    minutes out; pass `when` to schedule it for a specific time (weekly spread).
     Returns the Publora post group id."""
     headers = {"x-publora-key": PUBLORA_API_KEY, "Content-Type": "application/json"}
     is_video = manifest["media_type"] in ("reel", "animated")
@@ -181,9 +197,10 @@ def post_via_publora(manifest: dict, media_files: list[Path]) -> str:
             httpx.put(upload_url, content=f.read(),
                       headers={"Content-Type": mime}, timeout=180).raise_for_status()
 
-    when = (datetime.now(timezone.utc) + timedelta(minutes=2)).strftime("%Y-%m-%dT%H:%M:%S.000Z")
+    when_dt = when or (datetime.now(timezone.utc) + timedelta(minutes=2))
+    when_str = when_dt.astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.000Z")
     sr = httpx.put(f"{PUBLORA_BASE}/update-post/{post_group_id}", headers=headers,
-                   json={"status": "scheduled", "scheduledTime": when}, timeout=30)
+                   json={"status": "scheduled", "scheduledTime": when_str}, timeout=30)
     sr.raise_for_status()
     return post_group_id
 
@@ -412,21 +429,24 @@ def send_deck(manifest: dict, item_dir: Path, index: int, total: int) -> bool:
     return True
 
 
-def handle_decision(manifest: dict, item_dir: Path, decision: str) -> None:
+def handle_decision(manifest: dict, item_dir: Path, decision: str,
+                    when: datetime | None = None) -> bool:
+    """Publish (approve) or discard (reject) a post. Returns True if it was
+    approved and scheduled. `when` schedules it for a specific time."""
     if decision == "approve":
-        print(f"Approved {manifest['id']}. Publishing...", flush=True)
-        tg("sendMessage", chat_id=TELEGRAM_CHAT_ID,
-           text=f"Approved \"{manifest.get('hook','')[:60]}\". Publishing to Instagram...")
+        print(f"Approved {manifest['id']}. Scheduling...", flush=True)
         media_files = [
             item_dir / f for f in manifest["files"]
             if f != "preview.jpg" and not f.endswith("_preview.jpg")
         ]
         try:
             if PUBLORA_API_KEY:
-                pg = post_via_publora(manifest, media_files)
+                pg = post_via_publora(manifest, media_files, when=when)
+                when_txt = (f"scheduled for {when.strftime('%a %b %d, %-I%p UTC')}"
+                            if when else "posting in ~2 minutes")
                 tg("sendMessage", chat_id=TELEGRAM_CHAT_ID,
-                   text=f"Scheduled via Publora, it posts to Instagram in ~2 minutes.\n(post {pg})")
-                print(f"Publora scheduled: {pg}")
+                   text=f"Approved and {when_txt} via Publora.\n(post {pg})")
+                print(f"Publora scheduled: {pg} ({when})")
             else:
                 post_id = post_to_instagram(manifest, item_dir)
                 if post_id in ("manual-video", "manual-no-ig"):
@@ -436,21 +456,56 @@ def handle_decision(manifest: dict, item_dir: Path, decision: str) -> None:
         except Exception as exc:
             tg_err(f"Publish failed after approval: {exc}")
             shutil.rmtree(item_dir, ignore_errors=True)
-            return
-    else:  # reject
-        tg("sendMessage", chat_id=TELEGRAM_CHAT_ID, text="Post rejected and discarded.")
-        print(f"Rejected {manifest['id']}.")
+            return False
+        shutil.rmtree(item_dir, ignore_errors=True)
+        return True
+    # reject
+    tg("sendMessage", chat_id=TELEGRAM_CHAT_ID, text="Rejected. I'll bring a replacement.")
+    print(f"Rejected {manifest['id']}.")
     shutil.rmtree(item_dir, ignore_errors=True)
+    return False
+
+
+def _generate_replacement(ledger: dict):
+    """Generate a fresh post from the next un-picked idea in the batch, so a
+    rejection still leaves the target number of posts scheduled. Returns
+    (manifest, item_dir) or None when there are no spare ideas left."""
+    spares = ideas.spare_ideas(ledger)
+    if not spares:
+        return None
+    idea = spares[0]
+    idea["status"] = "selected"   # claim it so it isn't picked twice
+    ideas.save_ledger(ledger)
+    tg("sendMessage", chat_id=TELEGRAM_CHAT_ID,
+       text=f"Building a replacement: \"{idea['title']}\" ({idea['media_type']})...")
+    try:
+        import oralcheck_agent as agent   # lazy: heavy import, needs content-gen env
+        manifest = agent._queue_idea(idea)
+    except Exception as exc:
+        print(f"Replacement generation failed: {exc}", flush=True)
+        return None
+    if not manifest:
+        return None
+    ideas.mark_queued(ledger, idea["id"], manifest["id"])
+    ideas.save_ledger(ledger)
+    return manifest, QUEUE_DIR / manifest["id"]
 
 
 def review_batch() -> None:
-    """Send every pending post at once, then accept approve/reject on any of them,
-    in any order, until all are resolved or the window times out."""
+    """Weekly review: send the picked posts, take approve/reject on each, and
+    schedule approvals spread across the coming week. When a post is rejected,
+    generate a replacement from the leftover ideas so the target number of posts
+    still gets scheduled."""
     global _UPDATE_OFFSET
     pending = get_all_pending()
     if not pending:
         print("No pending posts in queue.")
         return
+
+    ledger = ideas.load_ledger()
+    target = len(pending)                 # however many were picked -> how many to schedule
+    slots = _weekly_slots(target)
+    approved = 0
 
     posts: dict[str, tuple[dict, Path]] = {}
     for i, (manifest, item_dir) in enumerate(pending, 1):
@@ -459,11 +514,12 @@ def review_batch() -> None:
     if not posts:
         return
     tg("sendMessage", chat_id=TELEGRAM_CHAT_ID,
-       text=f"{len(posts)} post(s) above, each with its own Approve / Reject. Tap on the ones you want.")
+       text=(f"{len(posts)} post(s) above. Approve the ones you want and I'll spread them across "
+             f"the week. Reject any and I'll generate a replacement so {target} go out."))
     print(f"Sent {len(posts)} post(s) for review. Waiting for decisions...", flush=True)
 
     deadline = time.time() + APPROVAL_TIMEOUT
-    while posts and time.time() < deadline:
+    while posts and approved < target and time.time() < deadline:
         # Must request callback_query explicitly: Telegram persists the last
         # allowed_updates, and an earlier message-only poll would otherwise drop taps.
         params: dict = {"timeout": 30, "allowed_updates": '["message","callback_query"]'}
@@ -487,11 +543,31 @@ def review_batch() -> None:
                     except Exception:
                         pass
                     manifest, item_dir = posts.pop(pid)
-                    handle_decision(manifest, item_dir, "approve" if data.startswith("approve") else "reject")
+                    if data.startswith("approve"):
+                        when = slots[approved] if approved < len(slots) else None
+                        if handle_decision(manifest, item_dir, "approve", when=when):
+                            approved += 1
+                    else:
+                        handle_decision(manifest, item_dir, "reject")
+                        idea = ideas.idea_for_manifest(ledger, pid)
+                        if idea:
+                            ideas.mark_rejected(ledger, idea["id"])
+                            ideas.save_ledger(ledger)
+                        # bring a replacement so `target` still get scheduled
+                        repl = _generate_replacement(ledger)
+                        if repl:
+                            rm, rdir = repl
+                            if send_deck(rm, rdir, len(posts) + approved + 1, target):
+                                posts[rm["id"]] = (rm, rdir)
+                        else:
+                            tg("sendMessage", chat_id=TELEGRAM_CHAT_ID,
+                               text="No spare ideas left for a replacement.")
                     break
 
+    if approved >= target:
+        tg("sendMessage", chat_id=TELEGRAM_CHAT_ID,
+           text=f"Done. {approved} post(s) scheduled across the week.")
     for pid, (manifest, item_dir) in posts.items():
-        tg("sendMessage", chat_id=TELEGRAM_CHAT_ID, text=f"No response for \"{manifest.get('hook','')[:60]}\". Discarded.")
         shutil.rmtree(item_dir, ignore_errors=True)
 
 

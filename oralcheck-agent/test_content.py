@@ -78,8 +78,10 @@ def test_coerce():
     good = I._coerce({"title": "T", "pillar": "stats", "media_type": "carousel",
                       "brief": "b", "angle": "a"}, {"stats"})
     check("coerce keeps valid", good is not None and good["media_type"] == "carousel")
-    bad_media = I._coerce({"title": "T", "media_type": "reel", "pillar": "stats"}, {"stats"})
+    bad_media = I._coerce({"title": "T", "media_type": "hologram", "pillar": "stats"}, {"stats"})
     check("coerce fixes bad media", bad_media["media_type"] == "carousel")
+    reel_ok = I._coerce({"title": "T", "media_type": "reel", "pillar": "stats"}, {"stats"})
+    check("coerce keeps reel", reel_ok["media_type"] == "reel")
     bad_pillar = I._coerce({"title": "T", "pillar": "nope"}, {"stats"})
     check("coerce fixes bad pillar", bad_pillar["pillar"] == "stats")
     check("coerce drops empty title", I._coerce({"title": ""}, {"stats"}) is None)

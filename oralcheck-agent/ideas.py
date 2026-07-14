@@ -21,7 +21,7 @@ LEDGER_FILE = Path(__file__).parent / "ideas.json"
 # Topics already posted outside this system (hand-maintained). Never re-suggested.
 SEED_FILE = Path(__file__).parent / "used_topics.json"
 
-VALID_MEDIA = {"carousel", "image", "infographic"}
+VALID_MEDIA = {"carousel", "image", "reel"}
 # Extra pillars beyond the core rotation.
 EXTRA_PILLARS = {
     "awareness": "A branded post tied to a specific awareness day or holiday from the content calendar.",
@@ -165,10 +165,12 @@ def generate_ideas(count, *, api_key, model, system_prompt, pillar_briefs,
         "Requirements:\n"
         f"  - Return a JSON array of exactly {count} objects as your final message, no markdown fences.\n"
         "  - Each object: title (<=12 words, the specific angle), pillar (one key from above), "
-        "media_type (carousel, image, or infographic), brief (2 to 3 sentences that a content "
+        "media_type (carousel, image, or reel), brief (2 to 3 sentences that a content "
         "generator can act on), angle (one of: surprising-true, myth, how-to, timely, human, trend-comparison), "
         "calendar_ref (a ref slug or null).\n"
-        "  - Bias the mix toward carousels (about 60 percent), with some infographics and images.\n"
+        "  - Mix the formats: mostly carousels (about half), plus a couple of reels "
+        "(short animated voiceover videos, great for a myth, a single stat, or a timely hook) "
+        "and a couple of single images. Aim for at least 2 reels in a batch of 8.\n"
         "  - Every idea must be genuinely distinct from the others and from the avoid list.\n"
         "  - Only real, defensible oral cancer facts. No invented statistics.\n"
         "  - Include at least one light_lane idea, at least one trend_comparison idea that ties an oral "
@@ -248,4 +250,25 @@ def mark_queued(ledger: dict, idea_id: str, manifest_id: str) -> None:
             i["status"] = "queued"
             i["used_at"] = datetime.now(timezone.utc).isoformat()
             i["manifest_id"] = manifest_id
+            return
+
+
+def spare_ideas(ledger: dict) -> list[dict]:
+    """Ideas from the last batch that were suggested but not picked -- the pool
+    to draw a replacement from when a generated post gets rejected."""
+    return [i for i in get_last_batch(ledger) if i.get("status") == "suggested"]
+
+
+def idea_for_manifest(ledger: dict, manifest_id: str) -> dict | None:
+    for i in ledger["ideas"]:
+        if i.get("manifest_id") == manifest_id:
+            return i
+    return None
+
+
+def mark_rejected(ledger: dict, idea_id: str) -> None:
+    """A generated post was rejected in review; don't reuse or count the idea."""
+    for i in ledger["ideas"]:
+        if i["id"] == idea_id:
+            i["status"] = "rejected"
             return

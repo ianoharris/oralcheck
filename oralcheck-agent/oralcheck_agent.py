@@ -962,10 +962,48 @@ def _concat_reel(segment_paths: list[str]) -> str:
     return out.name
 
 
+REEL_MUSIC = Path(__file__).parent / "assets" / "reel_music.mp3"
+REEL_MUSIC_VOL = 0.17   # low, so it sits under the voice
+
+
+def _add_music_bed(video_path: str) -> str:
+    """Mix the chill music bed under the existing voiceover: loop it to length,
+    keep it quiet, and fade it in/out. Returns a new mp4 path. If the bundled
+    track is missing, returns the input unchanged."""
+    if not REEL_MUSIC.exists():
+        log.warning("Music bed %s missing; leaving reel with voice only.", REEL_MUSIC)
+        return video_path
+    dur = _media_duration(video_path)
+    fade_out = max(0.0, round(dur - 1.5, 2))
+    out = tempfile.NamedTemporaryFile(suffix="_music.mp4", delete=False)
+    out.close()
+    _register_tmp(out.name)
+    filt = (
+        f"[1:a]volume={REEL_MUSIC_VOL},afade=in:st=0:d=1.5,"
+        f"afade=out:st={fade_out}:d=1.5[m];"
+        f"[0:a][m]amix=inputs=2:duration=first:normalize=0[a]"
+    )
+    result = subprocess.run(
+        ["ffmpeg", "-y",
+         "-i", video_path,
+         "-stream_loop", "-1", "-i", str(REEL_MUSIC),
+         "-filter_complex", filt,
+         "-map", "0:v", "-map", "[a]",
+         "-c:v", "copy", "-c:a", "aac", "-ar", "44100", "-ac", "2",
+         "-shortest", out.name],
+        capture_output=True,
+    )
+    if result.returncode != 0:
+        log.warning("Music mix failed (%s); using voice-only reel.",
+                    result.stderr.decode()[-300:])
+        return video_path
+    return out.name
+
+
 def build_faceless_reel(content: dict, theme: str = "dark") -> str:
     """Assemble a faceless reel from a structured script: per segment -> fal TTS
     narration + a kinetic-typography scene animating that line, then a branded
-    outro. Returns the final 1080x1920 mp4 path."""
+    outro, with a chill music bed under the voice. Returns the 1080x1920 mp4."""
     segments = content.get("segments", [])
     if not segments:
         raise ValueError("reel script has no segments")
@@ -985,7 +1023,8 @@ def build_faceless_reel(content: dict, theme: str = "dark") -> str:
         seg_paths.append(_build_kinetic_segment(seg, wav, dur, theme))
 
     seg_paths.append(_build_reel_outro())
-    final = _concat_reel(seg_paths)
+    stitched = _concat_reel(seg_paths)
+    final = _add_music_bed(stitched)
     log.info("Faceless reel assembled: %s (%.1fs)", final, _media_duration(final))
     return final
 
@@ -1726,6 +1765,17 @@ def run_pipeline(
     pillar: str | None = None,
 ) -> dict | None:
     """Generate content, create media, and save to queue for review."""
+    # Reels use their own script format (kinetic-typography segments), not the
+    # single-hook content schema, so they bypass generate_content entirely.
+    if media_type == "reel":
+        log.info("Generating reel script...")
+        content = generate_reel_script(brief)
+        log.info("Hook: %s", content["hook"])
+        reel_path = build_faceless_reel(content)
+        manifest = save_to_queue(content, "reel", pillar, [reel_path])
+        log.info("Queued reel: %s", manifest["id"])
+        return manifest
+
     log.info("Generating content...")
     content = generate_content(brief, media_type)
     log.info("Hook: %s", content["hook"])
@@ -1998,7 +2048,8 @@ def _ideas_telegram_text(batch: list[dict]) -> str:
         lines.append(f"*{n}.*  _{idea['media_type']} · {idea['pillar'].replace('_', ' ')}_")
         lines.append(idea["title"])
         lines.append("")
-    lines.append("Reply with the numbers you want, e.g.  *1, 3, 8*")
+    lines.append("Pick *3* to post this week. Reply with the numbers, e.g.  *1, 3, 8*")
+    lines.append("_(reject any in review and I'll build a replacement)_")
     return "\n".join(lines)
 
 
