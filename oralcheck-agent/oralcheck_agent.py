@@ -75,6 +75,11 @@ ANTHROPIC_API_KEY   = os.environ["ANTHROPIC_API_KEY"]
 PUBLORA_API_KEY     = os.environ.get("PUBLORA_API_KEY", "")
 PEXELS_API_KEY      = os.environ.get("PEXELS_API_KEY", "")
 UNSPLASH_ACCESS_KEY = os.environ.get("UNSPLASH_ACCESS_KEY", "")
+FAL_KEY             = os.environ.get("FAL_KEY", "")
+# Openverse works anonymously but is heavily rate-limited; a free registered
+# client (https://api.openverse.org/v1/auth_tokens/register/) raises the limit.
+OPENVERSE_CLIENT_ID     = os.environ.get("OPENVERSE_CLIENT_ID", "")
+OPENVERSE_CLIENT_SECRET = os.environ.get("OPENVERSE_CLIENT_SECRET", "")
 
 PILLARS_FILE = Path(__file__).parent / "pillars.json"
 QUEUE_DIR    = Path(__file__).parent / "queue"
@@ -463,6 +468,40 @@ _LICENSE_LABELS = {
 }
 
 
+_OPENVERSE_TOKEN: dict = {"value": "", "expires_at": 0.0}
+
+
+def _openverse_token() -> str:
+    """Return a cached Openverse bearer token, or '' when no client is
+    configured (anonymous, rate-limited). Free registration raises the limit
+    from ~a handful of requests to thousands per day."""
+    if not (OPENVERSE_CLIENT_ID and OPENVERSE_CLIENT_SECRET):
+        return ""
+    now = time.time()
+    if _OPENVERSE_TOKEN["value"] and now < _OPENVERSE_TOKEN["expires_at"]:
+        return _OPENVERSE_TOKEN["value"]
+    try:
+        with httpx.Client(timeout=15) as client:
+            resp = client.post(
+                "https://api.openverse.org/v1/auth_tokens/token/",
+                data={
+                    "client_id": OPENVERSE_CLIENT_ID,
+                    "client_secret": OPENVERSE_CLIENT_SECRET,
+                    "grant_type": "client_credentials",
+                },
+            )
+            resp.raise_for_status()
+        payload = resp.json()
+        _OPENVERSE_TOKEN["value"] = payload["access_token"]
+        # refresh a minute early
+        _OPENVERSE_TOKEN["expires_at"] = now + int(payload.get("expires_in", 3600)) - 60
+        log.info("Openverse: authenticated (higher rate limit)")
+        return _OPENVERSE_TOKEN["value"]
+    except Exception as exc:
+        log.warning("Openverse auth failed (%s); falling back to anonymous", exc)
+        return ""
+
+
 def _try_openverse(query: str) -> tuple[str, dict] | None:
     """Search Openverse for an openly-licensed, topic-relevant photo.
 
@@ -476,6 +515,9 @@ def _try_openverse(query: str) -> tuple[str, dict] | None:
         "mature": "false",           # brand-safe
     }
     headers = {"User-Agent": "OralCheck/1.0 (+https://oralcheck.org)"}
+    token = _openverse_token()
+    if token:
+        headers["Authorization"] = f"Bearer {token}"
     with httpx.Client(timeout=15) as client:
         resp = client.get(OPENVERSE_BASE, params=params, headers=headers)
         resp.raise_for_status()
@@ -745,6 +787,282 @@ def add_animated_text_overlay_video(video_path: str, hook: str, cta: str = "oral
 
     log.info("Animated video overlay applied -> %s", out_tmp.name)
     return out_tmp.name
+
+
+# ---------------------------------------------------------------------------
+# Faceless reel: fal TTS voiceover + topic b-roll + burned-in captions
+# ---------------------------------------------------------------------------
+
+FAL_TTS_MODEL = "fal-ai/kokoro/american-english"
+FAL_TTS_VOICE = "af_heart"       # calm, warm -- fits the grounded brand voice
+REEL_W, REEL_H, REEL_FPS = 1080, 1920, 30
+
+
+def _fal_tts(text: str, voice: str = FAL_TTS_VOICE) -> str:
+    """Synthesize narration with fal Kokoro TTS. Returns a local WAV path."""
+    if not FAL_KEY:
+        raise RuntimeError("FAL_KEY required for reel voiceover. Set it in .env.")
+
+    def _gen() -> str:
+        r = httpx.post(
+            f"https://fal.run/{FAL_TTS_MODEL}",
+            headers={"Authorization": f"Key {FAL_KEY}", "Content-Type": "application/json"},
+            json={"prompt": text, "voice": voice},
+            timeout=120,
+        )
+        r.raise_for_status()
+        return r.json()["audio"]["url"]
+
+    audio_url = _with_retry(_gen)
+    with httpx.Client(timeout=120, follow_redirects=True) as client:
+        resp = client.get(audio_url)
+        resp.raise_for_status()
+    tmp = tempfile.NamedTemporaryFile(suffix=".wav", delete=False)
+    tmp.write(resp.content)
+    tmp.close()
+    _register_tmp(tmp.name)
+    return tmp.name
+
+
+def _media_duration(path: str) -> float:
+    """Duration of an audio/video file in seconds via ffprobe."""
+    out = subprocess.run(
+        ["ffprobe", "-v", "error", "-show_entries", "format=duration",
+         "-of", "default=noprint_wrappers=1:nokey=1", path],
+        capture_output=True, text=True,
+    )
+    try:
+        return float(out.stdout.strip())
+    except ValueError:
+        return 0.0
+
+
+def _caption_png(text: str) -> str:
+    """Render one on-screen caption (lower third, brand scrim) as a transparent PNG."""
+    img = Image.new("RGBA", (REEL_W, REEL_H), (0, 0, 0, 0))
+    draw = ImageDraw.Draw(img)
+    margin = int(REEL_W * 0.09)
+    inner = REEL_W - 2 * margin
+    size = int(REEL_W * 0.060)
+    font = _load_font("SourceSans3-Regular.ttf", size)
+    wrapped = _wrap_text(text, font, inner)
+    lines = wrapped.split("\n")
+    line_h = int(size * 1.28)
+    block_h = line_h * len(lines)
+    y0 = int(REEL_H * 0.64)
+    pad = int(size * 0.55)
+    draw.rounded_rectangle(
+        [(margin - pad, y0 - pad - 14), (margin + inner + pad, y0 + block_h + pad - line_h + int(size*0.4))],
+        radius=int(size * 0.32), fill=(13, 26, 27, 210),
+    )
+    draw.rectangle(
+        [(margin - pad + 6, y0 - pad - 14), (margin - pad + 6 + int(REEL_W * 0.11), y0 - pad - 8)],
+        fill=(232, 99, 74, 255),   # coral accent tick
+    )
+    for i, ln in enumerate(lines):
+        draw.text((margin, y0 + i * line_h - int(size * 0.15)), ln,
+                  font=font, fill=(232, 228, 222, 255))
+    tmp = tempfile.NamedTemporaryFile(suffix="_cap.png", delete=False)
+    img.save(tmp.name)
+    tmp.close()
+    _register_tmp(tmp.name)
+    return tmp.name
+
+
+def _reel_outro_png() -> str:
+    """Branded end card (logo mark + CTA) as a full-frame PNG."""
+    img = Image.new("RGB", (REEL_W, REEL_H), C_BG)
+    draw = ImageDraw.Draw(img)
+    cx = REEL_W // 2
+    mark_font = _load_font("SourceSans3-Regular.ttf", int(REEL_W * 0.052))
+    cta_font  = _load_font("DMSerifDisplay-Regular.ttf", int(REEL_W * 0.085))
+    url_font  = _load_font("SourceSans3-Regular.ttf", int(REEL_W * 0.050))
+    # brand mark (coral dot + wordmark), centered
+    mark = "OralCheck"
+    mw = draw.textlength(mark, font=mark_font)
+    dot_r = int(REEL_W * 0.011)
+    draw.ellipse([(cx - mw/2 - dot_r*2 - 12, REEL_H*0.40 + int(REEL_W*0.020)),
+                  (cx - mw/2 - 12, REEL_H*0.40 + int(REEL_W*0.020) + dot_r*2)], fill=C_CORAL)
+    draw.text((cx - mw/2, REEL_H * 0.40), mark, font=mark_font, fill=C_TEAL_RGB)
+    cta = "Take the 2-minute\nscreener"
+    _draw_centered(draw, cta, cta_font, cx, int(REEL_H * 0.46), C_TEXT, int(REEL_W*0.085*0.28))
+    url = "oralcheck.org"
+    uw = draw.textlength(url, font=url_font)
+    draw.text((cx - uw/2, REEL_H * 0.60), url, font=url_font, fill=C_CORAL)
+    tmp = tempfile.NamedTemporaryFile(suffix="_outro.png", delete=False)
+    img.save(tmp.name)
+    tmp.close()
+    _register_tmp(tmp.name)
+    return tmp.name
+
+
+def _draw_centered(draw, text, font, cx, y, fill, spacing):
+    for i, ln in enumerate(text.split("\n")):
+        w = draw.textlength(ln, font=font)
+        draw.text((cx - w/2, y + i * (font.size + spacing)), ln, font=font, fill=fill)
+
+
+def _build_reel_segment(broll_path: str, caption_png: str,
+                        narration_wav: str, dur: float) -> str:
+    """One captioned segment: b-roll (looped/cropped to 9:16) + fading caption
+    + its narration audio, trimmed to the narration length plus a short tail."""
+    seg_dur = round(dur + 0.35, 2)
+    out = tempfile.NamedTemporaryFile(suffix="_seg.mp4", delete=False)
+    out.close()
+    _register_tmp(out.name)
+    filt = (
+        f"[0:v]scale={REEL_W}:{REEL_H}:force_original_aspect_ratio=increase,"
+        f"crop={REEL_W}:{REEL_H},fps={REEL_FPS},setsar=1[bg];"
+        f"[1:v]fps={REEL_FPS},format=rgba,fade=in:st=0:d=0.35:alpha=1[cap];"
+        f"[bg][cap]overlay=0:0[outv]"
+    )
+    result = subprocess.run(
+        ["ffmpeg", "-y",
+         "-stream_loop", "-1", "-i", broll_path,
+         "-loop", "1", "-i", caption_png,
+         "-i", narration_wav,
+         "-filter_complex", filt,
+         "-map", "[outv]", "-map", "2:a",
+         "-t", str(seg_dur),
+         "-c:v", "libx264", "-pix_fmt", "yuv420p", "-r", str(REEL_FPS),
+         "-c:a", "aac", "-ar", "44100", "-ac", "2",
+         out.name],
+        capture_output=True,
+    )
+    if result.returncode != 0:
+        raise RuntimeError(f"segment build failed:\n{result.stderr.decode()[-800:]}")
+    return out.name
+
+
+def _build_reel_outro(seconds: float = 2.4) -> str:
+    outro_png = _reel_outro_png()
+    out = tempfile.NamedTemporaryFile(suffix="_outroseg.mp4", delete=False)
+    out.close()
+    _register_tmp(out.name)
+    result = subprocess.run(
+        ["ffmpeg", "-y",
+         "-loop", "1", "-i", outro_png,
+         "-f", "lavfi", "-i", "anullsrc=r=44100:cl=stereo",
+         "-t", str(seconds),
+         "-vf", f"scale={REEL_W}:{REEL_H},fps={REEL_FPS},fade=in:st=0:d=0.4",
+         "-c:v", "libx264", "-pix_fmt", "yuv420p", "-r", str(REEL_FPS),
+         "-c:a", "aac", "-ar", "44100", "-ac", "2",
+         out.name],
+        capture_output=True,
+    )
+    if result.returncode != 0:
+        raise RuntimeError(f"outro build failed:\n{result.stderr.decode()[-800:]}")
+    return out.name
+
+
+def _concat_reel(segment_paths: list[str]) -> str:
+    list_file = tempfile.NamedTemporaryFile(suffix="_concat.txt", mode="w", delete=False)
+    for p in segment_paths:
+        list_file.write(f"file '{p}'\n")
+    list_file.close()
+    _register_tmp(list_file.name)
+    out = tempfile.NamedTemporaryFile(suffix="_reel.mp4", delete=False)
+    out.close()
+    _register_tmp(out.name)
+    result = subprocess.run(
+        ["ffmpeg", "-y", "-f", "concat", "-safe", "0", "-i", list_file.name,
+         "-c:v", "libx264", "-pix_fmt", "yuv420p", "-r", str(REEL_FPS),
+         "-c:a", "aac", "-ar", "44100", "-ac", "2",
+         "-movflags", "+faststart",
+         out.name],
+        capture_output=True,
+    )
+    if result.returncode != 0:
+        raise RuntimeError(f"reel concat failed:\n{result.stderr.decode()[-800:]}")
+    return out.name
+
+
+def build_faceless_reel(content: dict) -> str:
+    """Assemble a faceless UGC-style reel from a structured script:
+    per segment -> fal TTS narration + topic b-roll + on-screen caption,
+    then a branded outro. Returns the final 1080x1920 mp4 path."""
+    segments = content.get("segments", [])
+    if not segments:
+        raise ValueError("reel script has no segments")
+
+    seg_paths = []
+    for idx, seg in enumerate(segments, 1):
+        narration = seg["narration"].strip()
+        caption   = (seg.get("caption") or narration).strip()
+        query     = seg.get("broll_query", "").strip() or "health lifestyle candid"
+        log.info("Reel segment %d/%d: TTS + b-roll (%s)", idx, len(segments), query)
+
+        wav = _fal_tts(narration)
+        dur = _media_duration(wav)
+        if dur <= 0:
+            raise RuntimeError(f"TTS produced empty audio for segment {idx}")
+
+        try:
+            broll = fetch_stock_video(query)
+        except Exception as exc:
+            log.warning("b-roll query '%s' failed (%s); retrying generic", query, exc)
+            broll = fetch_stock_video("health lifestyle candid")
+
+        cap_png = _caption_png(caption)
+        seg_paths.append(_build_reel_segment(broll, cap_png, wav, dur))
+
+    seg_paths.append(_build_reel_outro())
+    final = _concat_reel(seg_paths)
+    log.info("Faceless reel assembled: %s (%.1fs)", final, _media_duration(final))
+    return final
+
+
+def generate_reel_script(brief: str) -> dict:
+    """Ask Claude for a faceless-reel script: a spoken narration broken into
+    4-6 short segments, each with its own b-roll query and on-screen caption,
+    plus the IG caption + hashtags. Returns a validated dict."""
+    reel_note = (
+        "This is a FACELESS Instagram Reel (9:16, ~15-22s): a calm voiceover over topic "
+        "b-roll with on-screen captions. No presenter, no face. Break the script into 4-6 "
+        "segments that flow as one continuous narration.\n"
+        "Output valid JSON only (no markdown fences) with fields:\n"
+        "  hook: the opening spoken line (also segment 1's narration)\n"
+        "  segments: array of 4-6 objects, each:\n"
+        "    - narration: ONE spoken sentence, 8-16 words, calm and grounded (this is read aloud)\n"
+        "    - caption: 3-6 word on-screen text distilling that line (punchy, no period)\n"
+        "    - broll_query: 3-6 word Pexels VIDEO search that literally shows this line's subject\n"
+        "      (real people/scenes; map to the topic, e.g. 'dentist examining patient mouth',\n"
+        "      'person quitting cigarette', 'young couple outdoors', 'doctor patient good news')\n"
+        "  caption: the Instagram caption (calm, evidence-based, ends by pointing to oralcheck.org)\n"
+        "  hashtags: exactly 5 tags without the # symbol\n"
+        "Keep the final segment a gentle nudge toward the free screener."
+    )
+
+    def _call() -> dict:
+        client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
+        response = client.messages.create(
+            model=CONTENT_MODEL,
+            max_tokens=1500,
+            system=SYSTEM_PROMPT,
+            messages=[{"role": "user", "content": f"{brief}\n\n{reel_note}"}],
+        )
+        raw = response.content[0].text.strip()
+        if raw.startswith("```"):
+            lines = raw.split("\n")
+            raw = "\n".join(lines[1:-1]) if lines[-1].strip() == "```" else "\n".join(lines[1:])
+        data = json.loads(raw)
+
+        segs = [s for s in data.get("segments", [])
+                if isinstance(s, dict) and s.get("narration", "").strip()]
+        if len(segs) < 3:
+            raise ValueError("reel script needs at least 3 usable segments")
+        for s in segs:
+            s["narration"]   = _strip_dashes(s["narration"].strip())
+            s["caption"]     = _strip_dashes(str(s.get("caption", "")).strip())
+            s["broll_query"] = str(s.get("broll_query", "")).strip()
+        data["segments"] = segs[:6]
+        data.setdefault("hook", segs[0]["narration"])
+        data.setdefault("caption", "")
+        hashtags = data.get("hashtags", [])
+        data["hashtags"] = [h.lstrip("#") for h in hashtags][:5]
+        return data
+
+    return _with_retry(_call)
 
 
 # ---------------------------------------------------------------------------
@@ -1864,6 +2182,36 @@ def run_plan_week(count: int) -> None:
     print("\n  Review the whole batch at http://localhost:8765 or via Telegram.")
 
 
+def run_faceless_reel(brief: str, out_path: str | None = None) -> str:
+    """Prototype path: generate a script and assemble a faceless voiceover reel.
+    Writes to out_path if given; otherwise leaves it in the temp dir."""
+    if not brief or brief == "__auto__":
+        state = load_pillar_state()
+        pillar = pick_next_pillar(state)
+        brief = f"Content pillar: {pillar.replace('_', ' ').title()}\n{PILLAR_BRIEFS[pillar]}"
+        log.info("Auto brief -> pillar: %s", pillar)
+
+    log.info("Generating reel script...")
+    content = generate_reel_script(brief)
+    log.info("Hook: %s", content["hook"])
+    path = build_faceless_reel(content)
+
+    if out_path:
+        shutil.copy2(path, out_path)
+        path = out_path
+
+    print(json.dumps({
+        "hook": content["hook"],
+        "caption": content.get("caption", ""),
+        "hashtags": content.get("hashtags", []),
+        "on_screen_captions": [s.get("caption") for s in content["segments"]],
+        "broll_queries": [s.get("broll_query") for s in content["segments"]],
+        "duration_s": round(_media_duration(path), 1),
+        "file": path,
+    }, indent=2))
+    return path
+
+
 # ---------------------------------------------------------------------------
 # Entry point
 # ---------------------------------------------------------------------------
@@ -1901,6 +2249,8 @@ def main():
                       help="Generate posts from picked idea numbers, e.g. \"1,3,5\"")
     mode.add_argument("--await-picks", action="store_true",
                       help="Wait for a Telegram reply with idea numbers, then generate those posts")
+    mode.add_argument("--faceless-reel", metavar="BRIEF", nargs="?", const="__auto__",
+                      help="Prototype a voiceover + b-roll + captions reel (optional brief)")
     mode.add_argument("--plan-week", type=int, metavar="N", nargs="?", const=3,
                       help="Auto-plan and queue a week of N posts (default 3) for batch review")
     parser.add_argument(
@@ -1915,9 +2265,16 @@ def main():
         default=90,
         help="Days of GA history for --map mode (default: 90)",
     )
+    parser.add_argument(
+        "--out",
+        metavar="PATH",
+        help="Output file path for --faceless-reel",
+    )
     args = parser.parse_args()
 
-    if args.ideas is not None:
+    if args.faceless_reel is not None:
+        run_faceless_reel(args.faceless_reel, args.out)
+    elif args.ideas is not None:
         run_ideas(args.ideas)
     elif args.pick:
         try:
