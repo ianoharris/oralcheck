@@ -121,10 +121,10 @@
       "calendar_ref": "world-head-neck-cancer-day",
       "slug": "the-head-and-neck-cancer-umbrella-most-people-have-never-hea",
       "id": "idea_33b9d3f4",
-      "status": "suggested",
+      "status": "rejected",
       "suggested_at": "2026-07-13T14:16:13.340315+00:00",
-      "used_at": null,
-      "manifest_id": null
+      "used_at": "2026-07-23T16:00:15.703000+00:00",
+      "manifest_id": "20260723_160015_af6a8d9d"
     },
     {
       "title": "July 27 Is One Day. Early Detection Is Every Day.",
@@ -163,10 +163,10 @@
       "calendar_ref": null,
       "slug": "what-happens-inside-your-mouth-when-hpv-goes-undetected",
       "id": "idea_d0c124e1",
-      "status": "suggested",
+      "status": "rejected",
       "suggested_at": "2026-07-13T14:16:13.340315+00:00",
-      "used_at": null,
-      "manifest_id": null
+      "used_at": "2026-07-23T16:01:27.827182+00:00",
+      "manifest_id": "20260723_160127_6fcb135f"
     },
     {
       "title": "Five Things Your Dentist Checks That Have Nothing to Do With Teeth",
@@ -177,10 +177,10 @@
       "calendar_ref": null,
       "slug": "five-things-your-dentist-checks-that-have-nothing-to-do-with",
       "id": "idea_30a8c197",
-      "status": "suggested",
+      "status": "queued",
       "suggested_at": "2026-07-13T14:16:13.340315+00:00",
-      "used_at": null,
-      "manifest_id": null
+      "used_at": "2026-07-23T16:02:43.434001+00:00",
+      "manifest_id": "20260723_160243_6607f12a"
     },
     {
       "title": "The Symptom People Ignore for Months Because It Seems Minor",

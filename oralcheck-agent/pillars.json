@@ -1,10 +1,10 @@
 {
-  "last_pillar": "screener_cta",
+  "last_pillar": "stats",
   "history": [
-    "stats",
     "myth_busting",
     "self_exam",
     "hpv_connection",
-    "screener_cta"
+    "screener_cta",
+    "stats"
   ]
 }
