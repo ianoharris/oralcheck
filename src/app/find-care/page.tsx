@@ -9,9 +9,6 @@ type ClinicTypeFilter = "all" | "community-health" | "dental-school" | "free";
 const DEFAULT_CENTER = { lat: 40.7527, lng: -73.9772 };
 
 export default function FindCarePage() {
-  const mapsKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ?? "";
-  const hasMaps = Boolean(mapsKey);
-
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<ClinicTypeFilter>("all");
   const [loading, setLoading] = useState(false);
@@ -69,13 +66,6 @@ export default function FindCarePage() {
         const geo = await fetch(
           `/api/geocode?q=${encodeURIComponent(query)}`,
         );
-        if (geo.status === 503) {
-          setError(
-            "Address search needs a Google Maps API key. Try 'Use my location' instead.",
-          );
-          setLoading(false);
-          return;
-        }
         if (!geo.ok) throw new Error(`geocode ${geo.status}`);
         const { lat, lng } = await geo.json();
         await fetchClinics(lat, lng);
@@ -115,12 +105,11 @@ export default function FindCarePage() {
         </p>
       </div>
 
-      {result && !result.configured && (
+      {result && result.source === "mock" && (
         <div className="mb-6 p-4 rounded-2xl bg-warm-dim/60 border border-warm-dim text-sm text-ink-soft">
-          <strong className="text-ink">Demo mode:</strong> showing sample
-          clinics. Add a <code className="font-mono text-xs bg-warm px-1.5 py-0.5 rounded">GOOGLE_PLACES_API_KEY</code>{" "}
-          in <code className="font-mono text-xs bg-warm px-1.5 py-0.5 rounded">.env.local</code>{" "}
-          to see real providers near you.
+          <strong className="text-ink">Showing sample clinics.</strong> We
+          couldn&apos;t find listed providers for this spot right now. Try a
+          nearby city, or use the national directories at the bottom of the page.
         </div>
       )}
 
@@ -203,17 +192,12 @@ export default function FindCarePage() {
 
         <div className="lg:col-span-3 order-1 lg:order-2">
           <div className="aspect-square lg:aspect-auto lg:h-[600px] rounded-2xl overflow-hidden border border-warm-dim bg-brand-soft relative">
-            {hasMaps ? (
-              <ClinicMap
-                apiKey={mapsKey}
-                clinics={visible}
-                center={center}
-                selectedId={selectedId}
-                onSelect={handleSelect}
-              />
-            ) : (
-              <MapPreviewFallback clinics={visible} />
-            )}
+            <ClinicMap
+              clinics={visible}
+              center={center}
+              selectedId={selectedId}
+              onSelect={handleSelect}
+            />
           </div>
         </div>
       </div>
@@ -335,63 +319,5 @@ function ClinicCard({
         </div>
       )}
     </button>
-  );
-}
-
-function MapPreviewFallback({ clinics }: { clinics: Clinic[] }) {
-  return (
-    <div aria-hidden className="absolute inset-0">
-      <svg
-        className="absolute inset-0 w-full h-full opacity-30"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <defs>
-          <pattern
-            id="grid"
-            width="40"
-            height="40"
-            patternUnits="userSpaceOnUse"
-          >
-            <path
-              d="M 40 0 L 0 0 0 40"
-              fill="none"
-              stroke="var(--color-brand)"
-              strokeWidth="0.5"
-            />
-          </pattern>
-        </defs>
-        <rect width="100%" height="100%" fill="url(#grid)" />
-      </svg>
-
-      {clinics.slice(0, 5).map((c, i) => {
-        const positions = [
-          { top: "20%", left: "25%" },
-          { top: "45%", left: "60%" },
-          { top: "35%", left: "40%" },
-          { top: "65%", left: "30%" },
-          { top: "55%", left: "75%" },
-        ];
-        const pos = positions[i % positions.length];
-        return (
-          <div
-            key={c.id}
-            className="absolute -translate-x-1/2 -translate-y-full"
-            style={pos}
-          >
-            <div className="flex flex-col items-center">
-              <div className="w-6 h-6 rounded-full bg-accent border-2 border-white shadow-md flex items-center justify-center text-white text-xs font-bold">
-                {i + 1}
-              </div>
-              <div className="w-0.5 h-3 bg-accent" />
-            </div>
-          </div>
-        );
-      })}
-
-      <div className="absolute bottom-4 left-4 bg-warm/95 backdrop-blur rounded-xl px-4 py-2 text-xs text-ink-soft">
-        Add <code className="font-mono">NEXT_PUBLIC_GOOGLE_MAPS_API_KEY</code>{" "}
-        to see the live map
-      </div>
-    </div>
   );
 }

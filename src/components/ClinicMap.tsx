@@ -1,41 +1,9 @@
 "use client";
 
-import { useMemo } from "react";
-import {
-  APIProvider,
-  Map,
-  AdvancedMarker,
-  Pin,
-  useMap,
-} from "@vis.gl/react-google-maps";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
+import "leaflet/dist/leaflet.css";
+import type * as LeafletNS from "leaflet";
 import type { Clinic } from "@/lib/clinics";
-
-const MAP_ID = "oralcheck-map";
-
-function FitToBounds({
-  center,
-  clinics,
-}: {
-  center: { lat: number; lng: number };
-  clinics: Clinic[];
-}) {
-  const map = useMap();
-
-  useEffect(() => {
-    if (!map) return;
-    if (clinics.length === 0) {
-      map.panTo(center);
-      return;
-    }
-    const bounds = new google.maps.LatLngBounds();
-    bounds.extend(center);
-    for (const c of clinics) bounds.extend({ lat: c.lat, lng: c.lng });
-    map.fitBounds(bounds, 60);
-  }, [map, center, clinics]);
-
-  return null;
-}
 
 function pinColor(type: Clinic["type"]): { bg: string; border: string } {
   switch (type) {
@@ -50,56 +18,105 @@ function pinColor(type: Clinic["type"]): { bg: string; border: string } {
   }
 }
 
+function pinHtml(bg: string, border: string, size: number): string {
+  return `<div style="width:${size}px;height:${size}px;background:${bg};border:2px solid ${border};border-radius:50% 50% 50% 0;transform:rotate(-45deg);box-shadow:0 2px 4px rgba(0,0,0,.35)"></div>`;
+}
+
+const CENTER_HTML =
+  '<div style="width:14px;height:14px;background:#fff;border:4px solid #0d7377;border-radius:50%;box-shadow:0 2px 4px rgba(0,0,0,.4)"></div>';
+
 export default function ClinicMap({
-  apiKey,
   clinics,
   center,
   selectedId,
   onSelect,
 }: {
-  apiKey: string;
   clinics: Clinic[];
   center: { lat: number; lng: number };
   selectedId?: string;
   onSelect?: (id: string) => void;
 }) {
-  const defaultCenter = useMemo(() => center, [center]);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const mapRef = useRef<LeafletNS.Map | null>(null);
+  const layerRef = useRef<LeafletNS.LayerGroup | null>(null);
+  const LRef = useRef<typeof LeafletNS | null>(null);
+  const onSelectRef = useRef(onSelect);
+  onSelectRef.current = onSelect;
 
-  return (
-    <APIProvider apiKey={apiKey}>
-      <Map
-        mapId={MAP_ID}
-        defaultCenter={defaultCenter}
-        defaultZoom={12}
-        gestureHandling="greedy"
-        disableDefaultUI={false}
-        className="w-full h-full rounded-2xl"
-      >
-        <AdvancedMarker position={center}>
-          <div className="w-4 h-4 rounded-full bg-white border-4 border-brand shadow-md" />
-        </AdvancedMarker>
+  // Initialise the map once (Leaflet is imported dynamically so it never runs
+  // during SSR). OpenStreetMap tiles are free and need no API key.
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      const L = await import("leaflet");
+      if (cancelled || !containerRef.current || mapRef.current) return;
+      const map = L.map(containerRef.current, {
+        center: [center.lat, center.lng],
+        zoom: 12,
+        scrollWheelZoom: true,
+      });
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: "&copy; OpenStreetMap contributors",
+        maxZoom: 19,
+      }).addTo(map);
+      LRef.current = L;
+      layerRef.current = L.layerGroup().addTo(map);
+      mapRef.current = map;
+      setTimeout(() => map.invalidateSize(), 0);
+      renderMarkers();
+    })();
+    return () => {
+      cancelled = true;
+      mapRef.current?.remove();
+      mapRef.current = null;
+      layerRef.current = null;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-        {clinics.map((c) => {
-          const colors = pinColor(c.type);
-          const selected = c.id === selectedId;
-          return (
-            <AdvancedMarker
-              key={c.id}
-              position={{ lat: c.lat, lng: c.lng }}
-              onClick={() => onSelect?.(c.id)}
-            >
-              <Pin
-                background={colors.bg}
-                borderColor={colors.border}
-                glyphColor="#ffffff"
-                scale={selected ? 1.4 : 1}
-              />
-            </AdvancedMarker>
-          );
-        })}
+  function renderMarkers() {
+    const L = LRef.current;
+    const map = mapRef.current;
+    const layer = layerRef.current;
+    if (!L || !map || !layer) return;
+    layer.clearLayers();
 
-        <FitToBounds center={center} clinics={clinics} />
-      </Map>
-    </APIProvider>
-  );
+    const bounds = L.latLngBounds([]);
+    L.marker([center.lat, center.lng], {
+      icon: L.divIcon({ className: "", html: CENTER_HTML, iconSize: [14, 14], iconAnchor: [7, 7] }),
+      interactive: false,
+      keyboard: false,
+    }).addTo(layer);
+    bounds.extend([center.lat, center.lng]);
+
+    for (const c of clinics) {
+      const { bg, border } = pinColor(c.type);
+      const size = c.id === selectedId ? 30 : 22;
+      const marker = L.marker([c.lat, c.lng], {
+        icon: L.divIcon({
+          className: "",
+          html: pinHtml(bg, border, size),
+          iconSize: [size, size],
+          iconAnchor: [size / 2, size],
+        }),
+        title: c.name,
+      }).addTo(layer);
+      marker.on("click", () => onSelectRef.current?.(c.id));
+      bounds.extend([c.lat, c.lng]);
+    }
+
+    if (clinics.length > 0) {
+      map.fitBounds(bounds, { padding: [50, 50], maxZoom: 15 });
+    } else {
+      map.setView([center.lat, center.lng], 12);
+    }
+  }
+
+  // Redraw markers whenever the data, centre, or selection changes.
+  useEffect(() => {
+    renderMarkers();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [clinics, center.lat, center.lng, selectedId]);
+
+  return <div ref={containerRef} className="w-full h-full rounded-2xl" />;
 }

@@ -9,160 +9,102 @@ import {
 import { mockClinics } from "@/lib/mockClinics";
 import { checkRateLimit, getIp } from "@/lib/rateLimit";
 
-type PlacesNearbyResponse = {
-  places?: {
-    id: string;
-    displayName?: { text: string };
-    formattedAddress?: string;
-    location?: { latitude: number; longitude: number };
-    rating?: number;
-    userRatingCount?: number;
-    types?: string[];
-    nationalPhoneNumber?: string;
-    websiteUri?: string;
-    currentOpeningHours?: { openNow?: boolean };
-  }[];
+// Free clinic search via the OpenStreetMap Overpass API (no key, no billing).
+type OverpassElement = {
+  type: "node" | "way" | "relation";
+  id: number;
+  lat?: number;
+  lon?: number;
+  center?: { lat: number; lon: number };
+  tags?: Record<string, string>;
 };
+type OverpassResponse = { elements?: OverpassElement[] };
 
-const FIELD_MASK = [
-  "places.id",
-  "places.displayName",
-  "places.formattedAddress",
-  "places.location",
-  "places.rating",
-  "places.userRatingCount",
-  "places.types",
-  "places.nationalPhoneNumber",
-  "places.websiteUri",
-  "places.currentOpeningHours.openNow",
-].join(",");
+const OVERPASS_URL = "https://overpass-api.de/api/interpreter";
 
-async function nearbySearch(
-  key: string,
-  lat: number,
-  lng: number,
-  radiusMeters: number,
-  includedTypes: string[],
-): Promise<PlacesNearbyResponse["places"]> {
-  const res = await fetch(
-    "https://places.googleapis.com/v1/places:searchNearby",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "X-Goog-Api-Key": key,
-        "X-Goog-FieldMask": FIELD_MASK,
-      },
-      body: JSON.stringify({
-        includedTypes,
-        maxResultCount: 20,
-        locationRestriction: {
-          circle: {
-            center: { latitude: lat, longitude: lng },
-            radius: radiusMeters,
-          },
-        },
-      }),
-      cache: "no-store",
-    },
-  );
-
-  if (!res.ok) {
-    throw new Error(`Places API ${res.status}: ${await res.text()}`);
-  }
-
-  const data = (await res.json()) as PlacesNearbyResponse;
-  return data.places ?? [];
+function buildQuery(lat: number, lng: number, radiusMeters: number): string {
+  const r = Math.round(radiusMeters);
+  const around = `(around:${r},${lat},${lng})`;
+  // Dental / oral-health facilities only. Generic amenity=clinic/doctors pull in
+  // unrelated places (OB/GYN, diabetes centres), so we stick to dentists and
+  // anything tagged with a dental or oral speciality.
+  return `[out:json][timeout:25];
+(
+  nwr["amenity"="dentist"]${around};
+  nwr["healthcare"="dentist"]${around};
+  nwr["healthcare:speciality"~"dent|oral|maxillofacial",i]${around};
+);
+out center tags 60;`;
 }
 
-async function textSearch(
-  key: string,
-  query: string,
-  lat: number,
-  lng: number,
-  radiusMeters: number,
-): Promise<PlacesNearbyResponse["places"]> {
-  const res = await fetch(
-    "https://places.googleapis.com/v1/places:searchText",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "X-Goog-Api-Key": key,
-        "X-Goog-FieldMask": FIELD_MASK,
-      },
-      body: JSON.stringify({
-        textQuery: query,
-        maxResultCount: 10,
-        locationBias: {
-          circle: {
-            center: { latitude: lat, longitude: lng },
-            radius: radiusMeters,
-          },
-        },
-      }),
-      cache: "no-store",
-    },
-  );
-
-  if (!res.ok) return [];
-  const data = (await res.json()) as PlacesNearbyResponse;
-  return data.places ?? [];
+function addressFromTags(t: Record<string, string>): string {
+  const line1 = [t["addr:housenumber"], t["addr:street"]].filter(Boolean).join(" ");
+  const line2 = [t["addr:city"], t["addr:state"], t["addr:postcode"]]
+    .filter(Boolean)
+    .join(", ")
+    .replace(", " + (t["addr:postcode"] ?? ""), " " + (t["addr:postcode"] ?? ""));
+  return [line1, line2].filter(Boolean).join(", ");
 }
 
-async function searchPlaces(
-  key: string,
+function toClinic(el: OverpassElement, from: { lat: number; lng: number }): Clinic | null {
+  const t = el.tags ?? {};
+  const name = t.name || t["operator"] || "";
+  if (!name) return null;
+  const lat = el.lat ?? el.center?.lat;
+  const lng = el.lon ?? el.center?.lon;
+  if (lat === undefined || lng === undefined) return null;
+
+  // Give classify() the OSM signal so dentist offices are labelled correctly.
+  const osmTypes: string[] = [];
+  if (t.amenity === "dentist" || t.healthcare === "dentist") osmTypes.push("dentist");
+  const type = classify(name, osmTypes);
+
+  return {
+    id: `osm-${el.type}-${el.id}`,
+    name,
+    address: addressFromTags(t),
+    lat,
+    lng,
+    distanceMi: haversineMiles(from, { lat, lng }),
+    type,
+    typeLabel: typeLabel(type),
+    phone: t.phone || t["contact:phone"] || undefined,
+    website: t.website || t["contact:website"] || undefined,
+  };
+}
+
+async function searchOverpass(
   lat: number,
   lng: number,
   radiusMeters: number,
 ): Promise<Clinic[]> {
-  // Run searches in parallel: dentists + text searches for affordable care types
-  const [dentistPlaces, communityPlaces, freePlaces] = await Promise.all([
-    nearbySearch(key, lat, lng, radiusMeters, ["dentist"]),
-    textSearch(key, "community health center dental", lat, lng, radiusMeters).catch(() => []),
-    textSearch(key, "free dental clinic FQHC federally qualified health center", lat, lng, radiusMeters).catch(() => []),
-  ]);
-
-  // Merge and deduplicate by place id
-  const seen = new Set<string>();
-  const merged = [
-    ...(dentistPlaces ?? []),
-    ...(communityPlaces ?? []),
-    ...(freePlaces ?? []),
-  ].filter((p) => {
-    if (!p.location || !p.displayName?.text) return false;
-    if (seen.has(p.id)) return false;
-    seen.add(p.id);
-    return true;
+  const res = await fetch(OVERPASS_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      // Overpass returns 406 without a descriptive User-Agent.
+      "User-Agent": "OralCheck/1.0 (+https://oralcheck.org)",
+      Accept: "application/json",
+    },
+    body: new URLSearchParams({ data: buildQuery(lat, lng, radiusMeters) }).toString(),
+    cache: "no-store",
+    signal: AbortSignal.timeout(25_000),
   });
+  if (!res.ok) throw new Error(`Overpass ${res.status}`);
+  const data = (await res.json()) as OverpassResponse;
 
-  return merged
-    .map((p) => {
-      const name = p.displayName!.text;
-      const type = classify(name, p.types);
-      const clinic: Clinic = {
-        id: p.id,
-        name,
-        address: p.formattedAddress ?? "",
-        lat: p.location!.latitude,
-        lng: p.location!.longitude,
-        distanceMi: haversineMiles(
-          { lat, lng },
-          { lat: p.location!.latitude, lng: p.location!.longitude },
-        ),
-        rating: p.rating,
-        totalRatings: p.userRatingCount,
-        type,
-        typeLabel: typeLabel(type),
-        phone: p.nationalPhoneNumber,
-        website: p.websiteUri,
-        openNow: p.currentOpeningHours?.openNow,
-      };
-      return clinic;
+  const seen = new Set<string>();
+  return (data.elements ?? [])
+    .map((el) => toClinic(el, { lat, lng }))
+    .filter((c): c is Clinic => {
+      if (!c) return false;
+      if (seen.has(c.id)) return false;
+      seen.add(c.id);
+      return true;
     })
-    .sort((a, b) => (a.distanceMi ?? 0) - (b.distanceMi ?? 0));
+    .sort((a, b) => (a.distanceMi ?? 0) - (b.distanceMi ?? 0))
+    .slice(0, 40);
 }
-
 
 export async function GET(request: Request) {
   const { allowed, resetMs } = checkRateLimit(getIp(request), 10);
@@ -192,29 +134,27 @@ export async function GET(request: Request) {
     );
   }
 
-  const key = process.env.GOOGLE_PLACES_API_KEY;
-
-  if (!key) {
-    const result: ClinicSearchResult = {
-      clinics: mockClinics,
-      center: { lat, lng },
-      source: "mock",
-      configured: false,
-    };
-    return NextResponse.json(result);
-  }
-
   try {
-    const clinics = await searchPlaces(key, lat, lng, radiusMi * 1609.34);
+    const clinics = await searchOverpass(lat, lng, radiusMi * 1609.34);
+    // Overpass coverage is sparse in some areas; fall back to samples if empty.
+    if (clinics.length === 0) {
+      const result: ClinicSearchResult = {
+        clinics: mockClinics,
+        center: { lat, lng },
+        source: "mock",
+        configured: true,
+      };
+      return NextResponse.json(result);
+    }
     const result: ClinicSearchResult = {
-      clinics: clinics,
+      clinics,
       center: { lat, lng },
-      source: "google-places",
+      source: "openstreetmap",
       configured: true,
     };
     return NextResponse.json(result);
   } catch (e) {
-    console.error("[api/clinics] Places lookup failed:", e);
+    console.error("[api/clinics] Overpass lookup failed:", e);
     const result: ClinicSearchResult = {
       clinics: mockClinics,
       center: { lat, lng },

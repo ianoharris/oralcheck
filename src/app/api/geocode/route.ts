@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server";
 
-type GeocodeResponse = {
-  results?: {
-    formatted_address: string;
-    geometry: { location: { lat: number; lng: number } };
-  }[];
-  status: string;
+// Free geocoding via OpenStreetMap Nominatim (no API key, no billing).
+// Usage policy: send a descriptive User-Agent and keep volume modest.
+type NominatimResult = {
+  lat: string;
+  lon: string;
+  display_name: string;
 };
 
 export async function GET(request: Request) {
@@ -19,40 +19,43 @@ export async function GET(request: Request) {
     );
   }
 
-  const key =
-    process.env.GOOGLE_PLACES_API_KEY ??
-    process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
+  const url =
+    "https://nominatim.openstreetmap.org/search?" +
+    new URLSearchParams({
+      q: q.trim(),
+      format: "json",
+      limit: "1",
+      countrycodes: "us",
+      addressdetails: "0",
+    }).toString();
 
-  if (!key) {
-    return NextResponse.json(
-      { error: "geocoding not configured", configured: false },
-      { status: 503 },
-    );
+  let res: Response;
+  try {
+    res = await fetch(url, {
+      headers: {
+        "User-Agent": "OralCheck/1.0 (+https://oralcheck.org)",
+        "Accept-Language": "en",
+      },
+      cache: "no-store",
+    });
+  } catch {
+    return NextResponse.json({ error: "geocode unavailable" }, { status: 502 });
   }
-
-  const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(q)}&key=${key}`;
-  const res = await fetch(url, { cache: "no-store" });
 
   if (!res.ok) {
-    return NextResponse.json(
-      { error: `geocode ${res.status}` },
-      { status: 502 },
-    );
+    return NextResponse.json({ error: `geocode ${res.status}` }, { status: 502 });
   }
 
-  const data = (await res.json()) as GeocodeResponse;
-  const first = data.results?.[0];
+  const data = (await res.json()) as NominatimResult[];
+  const first = data[0];
   if (!first) {
-    return NextResponse.json(
-      { error: "no results", status: data.status },
-      { status: 404 },
-    );
+    return NextResponse.json({ error: "no results" }, { status: 404 });
   }
 
   return NextResponse.json({
-    address: first.formatted_address,
-    lat: first.geometry.location.lat,
-    lng: first.geometry.location.lng,
+    address: first.display_name,
+    lat: parseFloat(first.lat),
+    lng: parseFloat(first.lon),
     configured: true,
   });
 }

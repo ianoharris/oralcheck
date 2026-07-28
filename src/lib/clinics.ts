@@ -18,7 +18,7 @@ export type Clinic = {
 export type ClinicSearchResult = {
   clinics: Clinic[];
   center: { lat: number; lng: number };
-  source: "google-places" | "mock";
+  source: "openstreetmap" | "google-places" | "mock";
   configured: boolean;
 };
 
