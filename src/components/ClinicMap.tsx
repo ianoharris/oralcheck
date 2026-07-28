@@ -8,13 +8,13 @@ import type { Clinic } from "@/lib/clinics";
 function pinColor(type: Clinic["type"]): { bg: string; border: string } {
   switch (type) {
     case "community-health":
-      return { bg: "#0d7377", border: "#095458" };
+      return { bg: "#14a8ae", border: "#0d7377" }; // bright teal
     case "dental-school":
-      return { bg: "#7ba882", border: "#5e8866" };
+      return { bg: "#7ba882", border: "#5e8866" }; // green
     case "free":
-      return { bg: "#e8634a", border: "#c84d35" };
-    default:
-      return { bg: "#6b6b6b", border: "#2d2d2d" };
+      return { bg: "#e8634a", border: "#c84d35" }; // coral
+    default: // dental practices (the common case) in brand teal
+      return { bg: "#0d7377", border: "#095458" };
   }
 }
 
