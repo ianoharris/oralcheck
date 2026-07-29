@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import ContactForm from "@/components/ContactForm";
 
@@ -21,22 +22,22 @@ export default function AboutPage() {
       </p>
 
       <section className="bg-warm-dim rounded-2xl border border-warm-dim p-6 sm:p-8 mb-6">
-        <h2 className="font-serif text-2xl text-ink mb-3">Why this exists</h2>
-        <p className="text-ink-soft leading-relaxed mb-3">
-          Oral cancer is one of the most underdiagnosed cancers in the United
-          States. Its earliest symptoms look ordinary: a patch on the tongue,
-          a sore that doesn&apos;t heal, a lump that doesn&apos;t hurt. Many
-          people wait months or years before seeing a clinician.
-        </p>
-        <p className="text-ink-soft leading-relaxed">
-          OralCheck is built on a simple premise: if people had a fast, private
-          way to understand their risk and learn the signs, more cases would
-          be caught at Stage I — where the 5-year survival rate is over 80%.
-        </p>
-      </section>
-
-      <section className="bg-warm-dim rounded-2xl border border-warm-dim p-6 sm:p-8 mb-6">
-        <h2 className="font-serif text-2xl text-ink mb-3">Who built this</h2>
+        <h2 className="font-serif text-2xl text-ink mb-5">Who built this</h2>
+        <div className="flex items-center gap-4 mb-6">
+          <Image
+            src="/ian-harris.jpg"
+            alt="Ian Harris, founder of OralCheck"
+            width={200}
+            height={200}
+            className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl object-cover object-[center_25%] border border-warm-dim shrink-0"
+          />
+          <div>
+            <div className="font-serif text-xl text-ink">Ian Harris</div>
+            <div className="text-sm text-ink-soft">
+              Founder · Predental student, UW&#8211;Madison
+            </div>
+          </div>
+        </div>
         <p className="text-ink-soft leading-relaxed mb-3">
           OralCheck was built by Ian Harris, a predental student at the University of
           Wisconsin-Madison. I care a lot about community health and finding
@@ -52,17 +53,12 @@ export default function AboutPage() {
           experience is a big reason I want to go into dentistry and why I
           built this.
         </p>
-        <p className="text-ink-soft leading-relaxed mb-3">
+        <p className="text-ink-soft leading-relaxed">
           I really believe that keeping your community healthier and more
           informed, even just one person at a time, is worth something. Oral
           cancer is one of those things that a lot of people have never even
           thought about, and it&apos;s so much more treatable when it&apos;s
           caught early. I wanted to build something that could help with that.
-        </p>
-        <p className="text-ink-soft leading-relaxed">
-          The screening logic is informed by published risk factors from the
-          American Cancer Society, NCI, and clinical research on oral cancer
-          epidemiology.
         </p>
       </section>
 
@@ -84,18 +80,6 @@ export default function AboutPage() {
             OralCheck can suggest you should talk to a clinician. It cannot
             tell you whether you have cancer.
           </li>
-        </ul>
-      </section>
-
-      <section className="bg-warm-dim rounded-2xl border border-warm-dim p-6 sm:p-8 mb-6">
-        <h2 className="font-serif text-2xl text-ink mb-3">Sources &amp; references</h2>
-        <ul className="space-y-2 text-sm text-ink-soft leading-relaxed list-disc pl-5">
-          <li>American Cancer Society — Key Statistics for Oral Cavity and Oropharyngeal Cancers</li>
-          <li>National Cancer Institute — SEER Cancer Statistics Review</li>
-          <li>Oral Cancer Foundation — Risk Factors &amp; Early Detection</li>
-          <li>CDC — Human Papillomavirus (HPV) and Cancer</li>
-          <li>HRSA — Find a Health Center directory</li>
-          <li>CAMBRA risk assessment framework — adapted for educational use</li>
         </ul>
       </section>
 
