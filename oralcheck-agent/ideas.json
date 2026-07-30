@@ -205,10 +205,10 @@
       "calendar_ref": null,
       "slug": "oral-cancer-rates-are-rising-in-people-who-have-never-touche",
       "id": "idea_8649523a",
-      "status": "suggested",
+      "status": "queued",
       "suggested_at": "2026-07-13T14:16:13.340315+00:00",
-      "used_at": null,
-      "manifest_id": null
+      "used_at": "2026-07-30T16:22:17.449464+00:00",
+      "manifest_id": "20260730_162217_24b9e8aa"
     },
     {
       "title": "Brushing Twice a Day and Still Missing a Two-Minute Check That Matters",
