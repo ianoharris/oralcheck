@@ -219,10 +219,10 @@
       "calendar_ref": null,
       "slug": "brushing-twice-a-day-and-still-missing-a-two-minute-check-th",
       "id": "idea_8a155839",
-      "status": "suggested",
+      "status": "rejected",
       "suggested_at": "2026-07-13T14:16:13.340315+00:00",
-      "used_at": null,
-      "manifest_id": null
+      "used_at": "2026-08-03T16:37:26.667024+00:00",
+      "manifest_id": "20260803_163726_66a3314c"
     }
   ],
   "last_batch": [
