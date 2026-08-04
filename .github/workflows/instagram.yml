@@ -1,8 +1,8 @@
 name: Instagram Content Pipeline
 
 on:
-  schedule:
-    - cron: '0 14 * * 1,4'  # Mon & Thu at 2pm UTC (9am EST)
+  # Weekly curated posting is handled by ideas.yml (pick 3 -> spread across the week).
+  # This one-off single-post flow stays manual-only so it doesn't compete with it.
   workflow_dispatch:
     inputs:
       media_type:

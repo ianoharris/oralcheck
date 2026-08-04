@@ -33,7 +33,7 @@ IG_CONFIGURED     = bool(IMGBB_API_KEY and INSTAGRAM_USER_ID and IG_ACCESS_TOKEN
 PUBLORA_API_KEY   = os.environ.get("PUBLORA_API_KEY", "")
 PUBLORA_BASE      = "https://api.publora.com/api/v1"
 QUEUE_DIR         = Path(__file__).parent / "queue"
-APPROVAL_TIMEOUT  = 7200  # 2 hours
+APPROVAL_TIMEOUT  = 21600  # 6 hours -- gives you the day to approve, not a rushed window
 
 
 # ---------------------------------------------------------------------------

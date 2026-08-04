@@ -2090,7 +2090,7 @@ def _ideas_telegram_text(batch: list[dict]) -> str:
     return "\n".join(lines)
 
 
-def tg_wait_for_reply(timeout: int = 7200) -> str | None:
+def tg_wait_for_reply(timeout: int = 21600) -> str | None:
     """Long-poll Telegram for the next text message from the review chat."""
     tok = os.environ.get("TELEGRAM_BOT_TOKEN")
     cid = os.environ.get("TELEGRAM_CHAT_ID")
@@ -2191,7 +2191,7 @@ def run_pick(numbers: list[int]) -> None:
     print("\n  Review at http://localhost:8765 or via the Telegram approval flow.")
 
 
-def run_await_picks(timeout: int = 7200) -> None:
+def run_await_picks(timeout: int = 21600) -> None:
     """Wait for a Telegram reply naming idea numbers, then generate+queue those posts.
 
     This is the hands-off step: after --ideas sends the batch to Telegram, this

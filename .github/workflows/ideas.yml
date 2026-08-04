@@ -6,6 +6,8 @@ name: OralCheck Idea Flow
 #   3. Generates those posts and sends each back as a swipeable deck to approve
 #   4. Posts approved decks to Instagram
 on:
+  schedule:
+    - cron: '0 14 * * 1'   # every Monday 14:00 UTC (~8am Central) — start of the week
   workflow_dispatch:
     inputs:
       count:
@@ -19,7 +21,7 @@ permissions:
 jobs:
   ideas:
     runs-on: ubuntu-latest
-    timeout-minutes: 350   # two approval windows; plenty of slack
+    timeout-minutes: 840   # pick window + approval window across the day (public repo, free minutes)
 
     defaults:
       run:
