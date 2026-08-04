@@ -368,15 +368,18 @@ def generate_content(brief: str, media_type: str) -> dict:
     elif media_type == "carousel":
         media_note = (
             "This is for an Instagram Carousel with a designed template system. The renderer builds:\n"
-            "  - a cover slide (your hook, over a real stock photo)\n"
-            "  - a mid-deck photo slide (uses your photo_caption)\n"
+            "  - a cover slide (your hook), optionally over a real photo\n"
+            "  - a mid-deck photo slide (only when you supply a photo)\n"
             "  - your typed content slides, rendered in distinct brand layouts\n"
             "  - an auto-generated CTA closing slide (do NOT include it)\n\n"
             "Output JSON with these exact fields:\n"
             "  hook: cover headline, 10 words max, the single strongest insight or surprising-true fact\n"
             "  kicker: 2-4 word topic eyebrow in title case (e.g. 'HPV & Oral Cancer', 'Know The Signs')\n"
-            "  search_query: 3-6 word Pexels/Unsplash query for the photo (real people, human-focused)\n"
-            "  photo_caption: one line, 14 words max, that pairs with the photo mid-deck\n"
+            "  search_query: a 3-6 word web photo query ONLY IF a real photo genuinely strengthens this\n"
+            "    specific post (e.g. a person doing a self-exam, a dentist visit, quitting tobacco). If a\n"
+            "    photo would just be generic decoration, leave this an EMPTY STRING \"\" -- the deck looks\n"
+            "    great as pure typography and a weak or generic photo is worse than none.\n"
+            "  photo_caption: one line, 14 words max, paired with the photo (only if search_query is set)\n"
             "  slides: array of 3 to 4 typed content slides. Each object has a 'type' plus fields:\n"
             "    - {\"type\":\"stat\", \"value\":\"70%\", \"label\":\"6-10 word plain-language meaning\", \"detail\":\"one 12-18 word supporting sentence\"}\n"
             "    - {\"type\":\"fact\", \"headline\":\"6-8 word serif headline\", \"body\":\"20-30 word supporting paragraph\"}\n"
@@ -424,9 +427,10 @@ def generate_content(brief: str, media_type: str) -> dict:
         elif media_type == "animated":
             required = {"hook", "caption", "hashtags", "stat", "stat_context", "fact"}
         elif media_type == "carousel":
-            required = {"hook", "caption", "hashtags", "search_query", "slides"}
+            required = {"hook", "caption", "hashtags", "slides"}  # search_query optional
             data.setdefault("kicker", "")
             data.setdefault("photo_caption", "")
+            data.setdefault("search_query", "")
             data["slides"] = _sanitize_carousel_slides(data.get("slides", []))
             if not data["slides"]:
                 raise ValueError("carousel produced no valid content slides")
@@ -502,18 +506,35 @@ def _openverse_token() -> str:
         return ""
 
 
-def _try_openverse(query: str) -> tuple[str, dict] | None:
-    """Search Openverse for an openly-licensed, topic-relevant photo.
+# Photos already used on a post, so the same image never appears twice.
+USED_PHOTOS_FILE = Path(__file__).parent / "used_photos.json"
+_USED_PHOTOS: set | None = None
 
-    Restricted to licenses that permit commercial use AND modification
-    (we crop + overlay text): CC0, Public Domain, and CC BY. Returns
-    (img_url, credit) so the photographer can be attributed in the caption."""
-    params = {
-        "q": query,
-        "license": "cc0,pdm,by",     # commercial + modifiable
-        "page_size": 15,
-        "mature": "false",           # brand-safe
-    }
+
+def _load_used_photos() -> set:
+    global _USED_PHOTOS
+    if _USED_PHOTOS is None:
+        try:
+            _USED_PHOTOS = set(json.loads(USED_PHOTOS_FILE.read_text()))
+        except Exception:
+            _USED_PHOTOS = set()
+    return _USED_PHOTOS
+
+
+def _record_used_photo(url: str) -> None:
+    used = _load_used_photos()
+    used.add(url)
+    try:
+        USED_PHOTOS_FILE.write_text(json.dumps(sorted(used), indent=2))
+    except Exception as exc:
+        log.warning("Could not persist used_photos.json: %s", exc)
+
+
+def _try_openverse(query: str) -> list[tuple[str, dict]]:
+    """Openly-licensed, topic-relevant candidates from Openverse (Flickr,
+    Wikimedia, museums). Restricted to licenses permitting commercial use AND
+    modification (CC0, Public Domain, CC BY). Returns up to ~15 (url, credit)."""
+    params = {"q": query, "license": "cc0,pdm,by", "page_size": 15, "mature": "false"}
     headers = {"User-Agent": "OralCheck/1.0 (+https://oralcheck.org)"}
     token = _openverse_token()
     if token:
@@ -521,56 +542,53 @@ def _try_openverse(query: str) -> tuple[str, dict] | None:
     with httpx.Client(timeout=15) as client:
         resp = client.get(OPENVERSE_BASE, params=params, headers=headers)
         resp.raise_for_status()
-    results = [r for r in resp.json().get("results", []) if r.get("url")]
-    if not results:
-        return None
-    photo = random.choice(results[:10])
-    src_raw = (photo.get("source") or "").lower()
-    credit = {
-        "photographer": (photo.get("creator") or "").strip(),
-        "source": _OPENVERSE_SOURCE_NAMES.get(src_raw, "Openverse"),
-        "license": (photo.get("license") or "").strip().lower(),
-        "url": photo.get("foreign_landing_url") or photo.get("creator_url") or "",
-    }
-    log.info("Openverse photo: %s (by %s, %s)",
-             photo["url"][:60], credit["photographer"] or "unknown", credit["license"])
-    return photo["url"], credit
+    out = []
+    for photo in resp.json().get("results", []):
+        if not photo.get("url"):
+            continue
+        src_raw = (photo.get("source") or "").lower()
+        credit = {
+            "photographer": (photo.get("creator") or "").strip(),
+            "source": _OPENVERSE_SOURCE_NAMES.get(src_raw, "Openverse"),
+            "license": (photo.get("license") or "").strip().lower(),
+            "url": photo.get("foreign_landing_url") or photo.get("creator_url") or "",
+        }
+        out.append((photo["url"], credit))
+    return out
 
 
-def _try_pexels(query: str) -> tuple[str, None] | None:
-    """Pexels stock photo. No attribution required, so credit is None."""
+def _try_pexels(query: str) -> list[tuple[str, None]]:
+    """Pexels stock candidates. No attribution required, so credit is None."""
     if not PEXELS_API_KEY:
-        return None
+        return []
     params = {"query": query, "per_page": 15, "orientation": "square"}
     headers = {"Authorization": PEXELS_API_KEY}
     with httpx.Client(timeout=15) as client:
         resp = client.get("https://api.pexels.com/v1/search", params=params, headers=headers)
         resp.raise_for_status()
-    photos = resp.json().get("photos", [])
-    if not photos:
-        return None
-    photo = random.choice(photos[:10])
-    img_url = photo["src"].get("large2x") or photo["src"]["original"]
-    log.info("Pexels photo: %s (id=%s)", img_url[:60], photo["id"])
-    return img_url, None
+    out = []
+    for photo in resp.json().get("photos", []):
+        img_url = photo["src"].get("large2x") or photo["src"].get("original")
+        if img_url:
+            out.append((img_url, None))
+    return out
 
 
-def _try_unsplash(query: str) -> tuple[str, None] | None:
-    """Unsplash stock photo. Credit is None (not attributed on-post)."""
+def _try_unsplash(query: str) -> list[tuple[str, None]]:
+    """Unsplash stock candidates. Credit is None (not attributed on-post)."""
     if not UNSPLASH_ACCESS_KEY:
-        return None
+        return []
     params = {"query": query, "per_page": 15, "orientation": "squarish"}
     headers = {"Authorization": f"Client-ID {UNSPLASH_ACCESS_KEY}"}
     with httpx.Client(timeout=15) as client:
         resp = client.get("https://api.unsplash.com/search/photos", params=params, headers=headers)
         resp.raise_for_status()
-    results = resp.json().get("results", [])
-    if not results:
-        return None
-    photo = random.choice(results[:10])
-    img_url = photo["urls"].get("regular") or photo["urls"]["full"]
-    log.info("Unsplash photo: %s (id=%s)", img_url[:60], photo["id"])
-    return img_url, None
+    out = []
+    for photo in resp.json().get("results", []):
+        img_url = photo["urls"].get("regular") or photo["urls"].get("full")
+        if img_url:
+            out.append((img_url, None))
+    return out
 
 
 def _download_square(img_url: str, size: int) -> str:
@@ -608,30 +626,41 @@ def fetch_stock_photo(query: str, size: int = 1080) -> tuple[str, dict | None]:
 
     Returns (local_jpeg_path, credit). `credit` is a dict
     {"photographer","source","license","url"} for openly-licensed web images
-    (which get a caption credit line), or None for stock (no credit)."""
+    (which get a caption credit line), or None for stock (no credit).
+
+    Never reuses a photo that's already been posted (tracked in used_photos.json):
+    unused candidates are tried first, a previously-used one only as a last
+    resort if nothing fresh is available."""
+    used = _load_used_photos()
+    candidates: list[tuple[str, dict | None]] = []
     for source in (_try_openverse, _try_pexels, _try_unsplash):
         try:
-            result = source(query)
+            candidates.extend(source(query))
         except Exception as exc:
             log.warning("Photo source %s failed: %s", source.__name__, exc)
-            continue
-        if not result:
-            continue
-        img_url, credit = result
+
+    if not candidates:
+        raise RuntimeError(
+            f"No photos found for query '{query}'. "
+            "Check network / PEXELS_API_KEY / UNSPLASH_ACCESS_KEY."
+        )
+
+    # fresh (never-posted) first, keeping source priority; used ones last resort
+    ordered = ([c for c in candidates if c[0] not in used] +
+               [c for c in candidates if c[0] in used])
+    for img_url, credit in ordered:
         try:
             path = _download_square(img_url, size)
         except Exception as exc:
-            log.warning("Download failed (%s: %s); trying next source",
-                        source.__name__, exc)
+            log.warning("Download failed (%s); trying next candidate", exc)
             continue
-        log.info("Photo saved: %s (%dx%d, credit=%s)",
-                 path, size, size, "yes" if credit else "no (stock)")
+        _record_used_photo(img_url)
+        log.info("Photo saved: %s (%dx%d, credit=%s, fresh=%s)",
+                 path, size, size, "yes" if credit else "no (stock)",
+                 img_url not in used)
         return path, credit
 
-    raise RuntimeError(
-        f"No usable photo found for query '{query}'. "
-        "Check network / PEXELS_API_KEY / UNSPLASH_ACCESS_KEY."
-    )
+    raise RuntimeError(f"No downloadable photo for query '{query}'.")
 
 
 def _credit_line(credit: dict | None) -> str:
@@ -1535,13 +1564,21 @@ def generate_carousel_slides(content: dict) -> list[str]:
       with one mid-deck photo slide -> auto CTA closing slide.
     Rendered via the HTML/Playwright design system for crisp typography.
     """
-    log.info("Fetching stock photo for carousel (query: %s)...", content["search_query"])
-    try:
-        raw_path, credit = fetch_stock_photo(content["search_query"])
-        content["photo_credit"] = credit
-    except Exception as exc:
-        log.warning("Stock photo fetch failed (%s); rendering photo-less carousel.", exc)
-        raw_path = None
+    # Photos are optional on carousels: only add one when it genuinely helps.
+    # The content model leaves search_query empty (or "none") when the deck reads
+    # better as pure typography, which is often the case.
+    query = str(content.get("search_query", "")).strip()
+    raw_path = None
+    if query and query.lower() not in ("none", "n/a", "no photo"):
+        log.info("Fetching photo for carousel (query: %s)...", query)
+        try:
+            raw_path, credit = fetch_stock_photo(query)
+            content["photo_credit"] = credit
+        except Exception as exc:
+            log.warning("Photo fetch failed (%s); rendering photo-less carousel.", exc)
+            raw_path = None
+    else:
+        log.info("No photo query -> rendering pure typographic carousel.")
 
     if _USE_HTML_RENDER:
         deck = build_deck_from_content(content, raw_path)

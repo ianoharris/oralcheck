@@ -468,27 +468,38 @@ def handle_decision(manifest: dict, item_dir: Path, decision: str,
 
 def _generate_replacement(ledger: dict):
     """Generate a fresh post from the next un-picked idea in the batch, so a
-    rejection still leaves the target number of posts scheduled. Returns
-    (manifest, item_dir) or None when there are no spare ideas left."""
-    spares = ideas.spare_ideas(ledger)
-    if not spares:
-        return None
-    idea = spares[0]
-    idea["status"] = "selected"   # claim it so it isn't picked twice
-    ideas.save_ledger(ledger)
-    tg("sendMessage", chat_id=TELEGRAM_CHAT_ID,
-       text=f"Building a replacement: \"{idea['title']}\" ({idea['media_type']})...")
-    try:
-        import oralcheck_agent as agent   # lazy: heavy import, needs content-gen env
-        manifest = agent._queue_idea(idea)
-    except Exception as exc:
-        print(f"Replacement generation failed: {exc}", flush=True)
-        return None
-    if not manifest:
-        return None
-    ideas.mark_queued(ledger, idea["id"], manifest["id"])
-    ideas.save_ledger(ledger)
-    return manifest, QUEUE_DIR / manifest["id"]
+    rejection still leaves the target number of posts scheduled.
+
+    Tries spare ideas in order: if one fails to generate, it's marked failed and
+    the next is tried, rather than mistaking a generation error for "out of
+    ideas". Returns (manifest, item_dir), or None only when the spare pool is
+    genuinely exhausted."""
+    import oralcheck_agent as agent   # lazy: heavy import, needs content-gen env
+
+    while True:
+        spares = ideas.spare_ideas(ledger)
+        if not spares:
+            return None                      # genuinely out of spare ideas
+        idea = spares[0]
+        idea["status"] = "selected"          # claim it so it isn't picked twice
+        ideas.save_ledger(ledger)
+        tg("sendMessage", chat_id=TELEGRAM_CHAT_ID,
+           text=f"Building a replacement: \"{idea['title']}\" ({idea['media_type']})...")
+        try:
+            manifest = agent._queue_idea(idea)
+        except Exception as exc:
+            print(f"Replacement generation failed for {idea['id']}: {exc}", flush=True)
+            manifest = None
+        if manifest:
+            ideas.mark_queued(ledger, idea["id"], manifest["id"])
+            ideas.save_ledger(ledger)
+            return manifest, QUEUE_DIR / manifest["id"]
+        # generation failed -> don't burn the whole idea pool on one bad apple;
+        # mark it failed (so spare_ideas skips it) and try the next spare.
+        ideas.mark_failed(ledger, idea["id"])
+        ideas.save_ledger(ledger)
+        tg("sendMessage", chat_id=TELEGRAM_CHAT_ID,
+           text="That one wouldn't build, trying the next idea...")
 
 
 def review_batch() -> None:
@@ -561,7 +572,9 @@ def review_batch() -> None:
                                 posts[rm["id"]] = (rm, rdir)
                         else:
                             tg("sendMessage", chat_id=TELEGRAM_CHAT_ID,
-                               text="No spare ideas left for a replacement.")
+                               text=(f"I've used every idea in this week's batch, so I can't add "
+                                     f"another replacement. {approved} of {target} are scheduled. "
+                                     f"Run the idea flow again for a fresh set."))
                     break
 
     if approved >= target:

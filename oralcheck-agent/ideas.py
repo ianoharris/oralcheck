@@ -272,3 +272,12 @@ def mark_rejected(ledger: dict, idea_id: str) -> None:
         if i["id"] == idea_id:
             i["status"] = "rejected"
             return
+
+
+def mark_failed(ledger: dict, idea_id: str) -> None:
+    """A spare idea couldn't be generated into a post; skip it so the
+    replacement loop moves on to the next spare instead of retrying it."""
+    for i in ledger["ideas"]:
+        if i["id"] == idea_id:
+            i["status"] = "failed"
+            return
