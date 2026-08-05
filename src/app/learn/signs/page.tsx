@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import LearnReadNext from "@/components/LearnReadNext";
+import SignsVisualGuide from "@/components/SignsVisualGuide";
 
 export const metadata: Metadata = {
   title: "Signs & Symptoms of Oral Cancer: What to Look For",
@@ -213,6 +214,8 @@ export default function SignsPage() {
           — 2 weeks is the threshold.
         </p>
       </div>
+
+      <SignsVisualGuide />
 
       {/* Signs list */}
       <section className="mb-14">
