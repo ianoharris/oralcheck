@@ -162,6 +162,9 @@ export default function ResultsPage() {
   const [claudeSummary, setClaudeSummary] = useState<string>("");
   const [summaryLoading, setSummaryLoading] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [email, setEmail] = useState("");
+  const [emailStatus, setEmailStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [emailError, setEmailError] = useState("");
 
   useEffect(() => {
     try {
@@ -229,6 +232,32 @@ export default function ResultsPage() {
         setCopied(true);
         setTimeout(() => setCopied(false), 2500);
       } catch {}
+    }
+  };
+
+  const handleEmailResult = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (emailStatus === "sending") return;
+    setEmailStatus("sending");
+    setEmailError("");
+    let answers: Record<string, string> = {};
+    try {
+      answers = JSON.parse(sessionStorage.getItem("oralcheck:answers") || "{}");
+    } catch {}
+    try {
+      const res = await fetch("/api/email-result", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, answers }),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || "Couldn't send. Try again.");
+      }
+      setEmailStatus("sent");
+    } catch (err) {
+      setEmailStatus("error");
+      setEmailError(err instanceof Error ? err.message : "Couldn't send. Try again.");
     }
   };
 
@@ -436,6 +465,47 @@ export default function ResultsPage() {
         >
           {copied ? "✓ Link copied!" : "Share with someone you care about"}
         </button>
+      </div>
+
+      {/* Email a copy */}
+      <div className="mt-8 p-6 rounded-2xl bg-brand-soft border border-brand/15">
+        {emailStatus === "sent" ? (
+          <div className="text-center">
+            <div className="font-serif text-xl text-ink mb-1">Sent. Check your inbox.</div>
+            <p className="text-sm text-ink-soft">
+              Your result and next steps are on the way. We didn&apos;t store your answers.
+            </p>
+          </div>
+        ) : (
+          <>
+            <div className="font-serif text-xl text-ink mb-1">Keep a copy of your result</div>
+            <p className="text-sm text-ink-soft mb-4 leading-relaxed">
+              We&apos;ll email your risk summary and next steps so you have them when you book.
+              No account, and we don&apos;t store your answers or add you to a list.
+            </p>
+            <form onSubmit={handleEmailResult} className="flex flex-col sm:flex-row gap-3">
+              <input
+                type="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="you@email.com"
+                aria-label="Your email"
+                className="flex-1 bg-warm px-5 py-3 rounded-xl border border-warm-dim focus:outline-none focus:ring-2 focus:ring-brand text-ink placeholder:text-ink-soft"
+              />
+              <button
+                type="submit"
+                disabled={emailStatus === "sending" || !email.trim()}
+                className="bg-brand hover:bg-brand-dark disabled:opacity-60 text-white font-semibold px-6 py-3 rounded-xl transition-colors whitespace-nowrap"
+              >
+                {emailStatus === "sending" ? "Sending…" : "Email me my result"}
+              </button>
+            </form>
+            {emailStatus === "error" && (
+              <p className="mt-2 text-sm text-accent">{emailError}</p>
+            )}
+          </>
+        )}
       </div>
 
       <div className="mt-6 flex justify-center">
