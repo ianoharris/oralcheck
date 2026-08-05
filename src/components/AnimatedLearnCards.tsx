@@ -1,10 +1,13 @@
 "use client";
 
-import Link from "next/link";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import { motion, useReducedMotion } from "framer-motion";
-import { learnArticles as articles } from "@/lib/learnArticles";
+import { useLearnArticles } from "@/lib/learnArticles";
 
 export default function AnimatedLearnCards() {
+  const t = useTranslations("LearnCards");
+  const articles = useLearnArticles();
   const reduced = useReducedMotion();
 
   return (
@@ -32,7 +35,7 @@ export default function AnimatedLearnCards() {
             </h2>
             <p className="text-ink-soft text-sm leading-relaxed flex-1">{description}</p>
             <span className="mt-4 text-sm font-semibold text-brand group-hover:underline">
-              Read →
+              {t("read")}
             </span>
           </Link>
         </motion.div>

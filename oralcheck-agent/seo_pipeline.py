@@ -20,6 +20,8 @@ CONTENT_DIR   = Path(__file__).parent.parent / "content"
 KEYWORDS_FILE = Path(__file__).parent / "seo_keywords.json"
 DRAFTS_DIR    = CONTENT_DIR / "drafts"
 PUBLISHED_DIR = CONTENT_DIR / "published"
+DRAFTS_ES_DIR    = DRAFTS_DIR / "es"
+PUBLISHED_ES_DIR = PUBLISHED_DIR / "es"
 
 
 def tg(text: str) -> None:
@@ -185,6 +187,49 @@ def generate_article(keyword: str, covered: list[dict] | None = None) -> str:
     return resp.json()["content"][0]["text"]
 
 
+def translate_article_to_spanish(article_md: str, title: str, keyword: str) -> str:
+    """Full Spanish translation of a generated article, same markdown structure,
+    same medical accuracy, adapted to natural Spanish rather than translated
+    word-for-word. Raises on failure — caller decides whether that's fatal."""
+    payload = {
+        "model": "claude-sonnet-4-6",
+        "max_tokens": 2400,
+        "temperature": 0.5,
+        "system": (
+            "You are a bilingual medical content translator for OralCheck (oralcheck.org), "
+            "a free oral cancer risk screener serving the US Hispanic community. Translate "
+            "the given English blog article into natural, neutral Spanish suitable for the "
+            "general US Hispanic public (not clinicians). Keep the same brand voice: direct, "
+            "calm, never alarmist, no exclamation marks, no em dashes (use commas or periods "
+            "instead). Preserve the markdown structure exactly: same heading levels, same "
+            "number of sections, same H1. Do not add or remove content, this is a translation, "
+            "not a rewrite. Medical terms should read the way a Spanish-speaking patient would "
+            "expect to see them, not overly clinical."
+        ),
+        "messages": [
+            {
+                "role": "user",
+                "content": (
+                    f"Translate this article (English keyword target: \"{keyword}\") into Spanish. "
+                    "Output valid markdown only, no preamble, no commentary.\n\n" + article_md
+                ),
+            }
+        ],
+    }
+    resp = httpx.post(
+        "https://api.anthropic.com/v1/messages",
+        headers={
+            "x-api-key": ANTHROPIC_API_KEY,
+            "anthropic-version": "2023-06-01",
+            "content-type": "application/json",
+        },
+        json=payload,
+        timeout=120,
+    )
+    resp.raise_for_status()
+    return resp.json()["content"][0]["text"]
+
+
 def extract_title(article: str) -> str:
     for line in article.splitlines():
         if line.startswith("# "):
@@ -194,6 +239,7 @@ def extract_title(article: str) -> str:
 
 def main() -> None:
     DRAFTS_DIR.mkdir(parents=True, exist_ok=True)
+    DRAFTS_ES_DIR.mkdir(parents=True, exist_ok=True)
 
     state = load_keywords()
     covered = load_covered()
@@ -227,6 +273,17 @@ def main() -> None:
 
     (DRAFTS_DIR / filename).write_text(frontmatter + article)
     print(f"Saved: content/drafts/{filename}", flush=True)
+
+    # Spanish translation, same filename, under drafts/es/, published together
+    # with the English draft by /api/publish (see route.ts). Best-effort: a
+    # translation failure shouldn't block the English article from shipping.
+    try:
+        es_article = translate_article_to_spanish(article, title, keyword)
+        es_frontmatter = frontmatter.replace(f'title: "{title}"', f'title: "{extract_title(es_article)}"')
+        (DRAFTS_ES_DIR / filename).write_text(es_frontmatter + es_article)
+        print(f"Saved: content/drafts/es/{filename}", flush=True)
+    except Exception as exc:
+        print(f"Spanish translation failed for '{keyword}' ({exc}); English draft still saved.", flush=True)
 
     record_keyword_used(state, keyword)
     save_keywords(state)

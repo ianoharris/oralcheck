@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 
 const items = [0, 1, 2, 3, 4]; // stagger indices for left column children
 

@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "commit": "git add -A && git commit"
+    "commit": "git add -A && git commit",
+    "i18n:sync": "node scripts/i18n-sync.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.90.0",
@@ -19,10 +20,12 @@
     "leaflet": "^1.9.4",
     "marked": "^18.0.5",
     "next": "16.2.4",
+    "next-intl": "^4.13.5",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "react-qr-code": "^2.0.18",
-    "resend": "^6.12.2"
+    "resend": "^6.12.2",
+    "use-intl": "^4.13.5"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

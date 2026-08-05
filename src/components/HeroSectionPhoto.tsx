@@ -1,7 +1,8 @@
 "use client";
 
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
-import Link from "next/link";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import { useRef } from "react";
 
 const PHOTO_URL =
@@ -43,6 +44,7 @@ function WordBlur({
 }
 
 export default function HeroSectionPhoto() {
+  const t = useTranslations("HeroSectionPhoto");
   const reduced = useReducedMotion();
   const photoRef = useRef<HTMLDivElement>(null);
 
@@ -75,7 +77,7 @@ export default function HeroSectionPhoto() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.05 }}
         >
-          Free · Private · Evidence-based
+          {t("overline")}
         </motion.p>
 
         {/* Headline — word-blur stagger */}
@@ -89,18 +91,18 @@ export default function HeroSectionPhoto() {
             marginBottom: "2.5rem",
           }}
         >
-          {/* Line 1: "2 minutes" */}
+          {/* Line 1 */}
           <span style={{ display: "block" }}>
-            <WordBlur words={["2", "minutes"]} startDelay={0.15} color="var(--color-ink)" />
+            <WordBlur words={t.raw("headlineLine1")} startDelay={0.15} color="var(--color-ink)" />
           </span>
-          {/* Line 2: "could save" — mixed colors, flex row keeps spacing */}
+          {/* Line 2 — mixed colors, flex row keeps spacing */}
           <span style={{ display: "flex", gap: "0.24em" }}>
-            <WordBlur words={["could"]} startDelay={0.32} color="var(--color-ink)" />
-            <WordBlur words={["save"]} startDelay={0.41} color="#e8634a" />
+            <WordBlur words={t.raw("headlineLine2a")} startDelay={0.32} color="var(--color-ink)" />
+            <WordBlur words={t.raw("headlineLine2b")} startDelay={0.41} color="#e8634a" />
           </span>
-          {/* Line 3: "your life." */}
+          {/* Line 3 */}
           <span style={{ display: "block" }}>
-            <WordBlur words={["your", "life."]} startDelay={0.52} color="#0d7377" />
+            <WordBlur words={t.raw("headlineLine3")} startDelay={0.52} color="#0d7377" />
           </span>
         </h1>
 
@@ -130,9 +132,7 @@ export default function HeroSectionPhoto() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.55, delay: 0.82, ease: EXPO }}
         >
-          Oral cancer is one of the most underdiagnosed cancers, largely
-          because early symptoms look ordinary. OralCheck helps you
-          understand your risk in minutes and points you toward care.
+          {t("body")}
         </motion.p>
 
         {/* CTAs */}
@@ -163,7 +163,7 @@ export default function HeroSectionPhoto() {
                 boxShadow: "0 4px 18px rgba(232,99,74,0.28)",
               }}
             >
-              Start Screening →
+              {t("startScreening")}
             </Link>
           </motion.div>
 
@@ -186,7 +186,7 @@ export default function HeroSectionPhoto() {
                 textDecoration: "none",
               }}
             >
-              Learn the signs
+              {t("learnSigns")}
             </Link>
           </motion.div>
         </motion.div>
@@ -198,14 +198,14 @@ export default function HeroSectionPhoto() {
           transition={{ duration: 0.5, delay: 1.1 }}
         >
           <p style={{ fontSize: "11px", color: "var(--color-ink-soft)" }}>
-            Not a medical diagnosis. An educational awareness tool.
+            {t("disclaimer")}
           </p>
           <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
             <span style={{ display: "inline-block", width: "6px", height: "6px", borderRadius: "50%", backgroundColor: "#0d7377", flexShrink: 0 }} />
             <p style={{ fontSize: "11px", color: "var(--color-ink-soft)" }}>
-              Featured in{" "}
-              <span style={{ fontWeight: 600, color: "var(--color-ink)" }}>The Drill</span>
-              {" · Wisconsin Dental Association"}
+              {t.rich("featured", {
+                b: (chunks) => <span style={{ fontWeight: 600, color: "var(--color-ink)" }}>{chunks}</span>,
+              })}
             </p>
           </div>
         </motion.div>

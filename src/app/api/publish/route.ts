@@ -79,5 +79,28 @@ export async function POST(req: NextRequest) {
   // Delete from content/drafts/
   await ghDelete(`content/drafts/${draft.name}`, fileData.sha, `chore: remove published draft ${slug}`);
 
+  // Best-effort: promote the Spanish translation alongside it, if the SEO
+  // pipeline generated one (content/drafts/es/<same filename>). Its absence
+  // (older drafts, or a translation that failed) is not an error — the
+  // English article ships regardless, and the site falls back to English
+  // for /es/learn/<slug> until a translation exists.
+  try {
+    const esFileData = await ghGet(`content/drafts/es/${draft.name}`);
+    if (esFileData && !esFileData.message && esFileData.content) {
+      const esPublished = esFileData.content; // already base64, status line differs only in the copy we already translated
+      const esCreateRes = await ghPut(`content/published/es/${draft.name}`, {
+        message:   `publish: ${slug} (es)`,
+        content:   esPublished,
+        branch:    BRANCH,
+        committer: { name: "OralCheck Bot", email: "bot@oralcheck.org" },
+      });
+      if (esCreateRes.ok) {
+        await ghDelete(`content/drafts/es/${draft.name}`, esFileData.sha, `chore: remove published draft ${slug} (es)`);
+      }
+    }
+  } catch {
+    // no Spanish draft present — fine, English-only publish proceeds
+  }
+
   return NextResponse.json({ success: true, slug, url: `/learn/${slug}` });
 }

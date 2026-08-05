@@ -1,0 +1,409 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { useLocale, useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
+import { computeRisk, type RiskResult, type RiskTier } from "@/lib/riskEngine";
+import type { Question } from "@/lib/questions";
+import RiskGauge from "@/components/RiskGauge";
+import { sendGAEvent } from "@next/third-parties/google";
+import { track } from "@vercel/analytics";
+
+// href/icon are locale-independent; title/tag/desc come from messages.ResultsPage.
+const nextStepsHref: Record<RiskTier, (string | undefined)[]> = {
+  low: [undefined, "/learn/self-exam", "/learn/signs"],
+  moderate: [undefined, "/learn/signs", "/learn/prevention"],
+  elevated: ["/find-care", "/learn/signs", "/learn/prevention"],
+  high: ["/find-care", undefined, "/learn/self-exam"],
+};
+
+const categoryLearnMeta: Partial<Record<Question["category"], { href: string; icon: string }>> = {
+  tobacco: { href: "/learn/prevention", icon: "🛡️" },
+  alcohol: { href: "/learn/prevention", icon: "🛡️" },
+  hpv: { href: "/learn/hpv", icon: "🦠" },
+  sun: { href: "/learn/prevention", icon: "🛡️" },
+  symptoms: { href: "/learn/signs", icon: "⚠️" },
+  family: { href: "/learn/facts", icon: "📊" },
+  diet: { href: "/learn/prevention", icon: "🛡️" },
+  dental: { href: "/learn/self-exam", icon: "🔎" },
+  other: { href: "/learn/prevention", icon: "🛡️" },
+};
+
+export default function ResultsPage() {
+  const t = useTranslations("ResultsPage");
+  const locale = useLocale();
+  const [result, setResult] = useState<RiskResult | null>(null);
+  const [loaded, setLoaded] = useState(false);
+  const [claudeSummary, setClaudeSummary] = useState<string>("");
+  const [summaryLoading, setSummaryLoading] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const [email, setEmail] = useState("");
+  const [emailStatus, setEmailStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [emailError, setEmailError] = useState("");
+
+  useEffect(() => {
+    try {
+      const raw = sessionStorage.getItem("oralcheck:answers");
+      if (raw) {
+        const answers = JSON.parse(raw);
+        const risk = computeRisk(answers, locale);
+        setResult(risk);
+        fetchClaudeSummary(risk);
+        sendGAEvent("event", "screener_completed", {
+          risk_tier: risk.tier,
+          risk_score: risk.score,
+          has_urgent_symptom: risk.hasUrgentSymptom,
+        });
+        track("Screener Completed", { risk_tier: risk.tier });
+      }
+    } catch {}
+    setLoaded(true);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  async function fetchClaudeSummary(risk: RiskResult) {
+    setSummaryLoading(true);
+    try {
+      const res = await fetch("/api/summary", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          tier: risk.tier,
+          tierLabel: risk.tierLabel,
+          factors: risk.factors.map((f) => ({
+            label: f.label,
+            answerLabel: f.answerLabel,
+          })),
+          hasUrgentSymptom: risk.hasUrgentSymptom,
+          locale,
+        }),
+      });
+      if (!res.ok || !res.body) return;
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder();
+      let text = "";
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        text += decoder.decode(value, { stream: true });
+        setClaudeSummary(text);
+      }
+    } catch {
+      // fall through — static summary shown as fallback
+    } finally {
+      setSummaryLoading(false);
+    }
+  }
+
+  const handleShare = async () => {
+    if (!result) return;
+    const url = typeof window !== "undefined" ? window.location.origin : "";
+    const text = t("shareText", { url });
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: "OralCheck", text, url });
+      } catch {}
+    } else if (navigator.clipboard) {
+      try {
+        await navigator.clipboard.writeText(text);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2500);
+      } catch {}
+    }
+  };
+
+  const handleEmailResult = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (emailStatus === "sending") return;
+    setEmailStatus("sending");
+    setEmailError("");
+    let answers: Record<string, string> = {};
+    try {
+      answers = JSON.parse(sessionStorage.getItem("oralcheck:answers") || "{}");
+    } catch {}
+    try {
+      const res = await fetch("/api/email-result", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, answers, locale }),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || t("emailGenericError"));
+      }
+      setEmailStatus("sent");
+    } catch (err) {
+      setEmailStatus("error");
+      setEmailError(err instanceof Error ? err.message : t("emailGenericError"));
+    }
+  };
+
+  // ── Loading / empty states ────────────────────────────────────────────────
+
+  if (!loaded) {
+    return (
+      <div className="max-w-2xl mx-auto px-5 py-20 text-center text-ink-soft">
+        {t("loading")}
+      </div>
+    );
+  }
+
+  if (!result) {
+    return (
+      <div className="max-w-2xl mx-auto px-5 py-20 text-center">
+        <h1 className="font-serif text-3xl text-ink mb-3">{t("noResultsTitle")}</h1>
+        <p className="text-ink-soft mb-8">{t("noResultsDesc")}</p>
+        <Link
+          href="/screener"
+          className="inline-block bg-accent hover:bg-accent-dark text-white font-semibold px-7 py-3.5 rounded-full transition-colors"
+        >
+          {t("startScreener")}
+        </Link>
+      </div>
+    );
+  }
+
+  // ── Derive contextual learn links from top factors ────────────────────────
+
+  type NextStep = { title: string; desc: string; linkLabel?: string };
+  const nextSteps: NextStep[] = t.raw(`nextSteps.${result.tier}`);
+  const hrefs = nextStepsHref[result.tier];
+
+  type CategoryLearn = { tag: string; title: string };
+  const categoryLearn: Partial<Record<Question["category"], CategoryLearn>> = t.raw("categoryLearn");
+
+  const learnLinks = result.factors
+    .map((f) => {
+      const meta = categoryLearnMeta[f.category];
+      const copy = categoryLearn[f.category];
+      if (!meta || !copy) return undefined;
+      return { href: meta.href, icon: meta.icon, tag: copy.tag, title: copy.title };
+    })
+    .filter((l): l is NonNullable<typeof l> => l !== undefined)
+    .filter((l, i, arr) => arr.findIndex((x) => x.href === l.href) === i)
+    .slice(0, 2);
+
+  const primaryCTA: Record<RiskTier, string> = t.raw("primaryCTA");
+
+  // ── Main render ───────────────────────────────────────────────────────────
+
+  return (
+    <div className="max-w-3xl mx-auto px-5 py-10 sm:py-16">
+
+      {/* Urgent symptom banner */}
+      {result.hasUrgentSymptom && (
+        <div className="mb-8 p-4 rounded-2xl bg-high/10 border border-high/30">
+          <div className="flex gap-3 items-start">
+            <div className="text-2xl">⚠️</div>
+            <div className="text-sm text-ink leading-relaxed">
+              <span className="font-semibold">{t("urgentBannerBold")}</span>{" "}
+              {t("urgentBannerRest")}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Risk card */}
+      <div className="bg-warm-dim rounded-3xl border border-warm-dim p-6 sm:p-10">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-8 items-center">
+          <div className="md:col-span-2">
+            <RiskGauge result={result} />
+          </div>
+          <div className="md:col-span-3 space-y-3">
+            <h1 className="font-serif text-3xl sm:text-4xl text-ink leading-tight">
+              {result.headline}
+            </h1>
+
+            {/* Summary with skeleton loading state */}
+            {summaryLoading && !claudeSummary ? (
+              <div className="space-y-2 pt-1">
+                <div className="flex items-center gap-1.5 mb-3">
+                  <span className="inline-block w-1.5 h-1.5 rounded-full bg-brand animate-pulse" />
+                  <span className="text-xs text-ink-soft/70 font-medium">
+                    {t("personalizing")}
+                  </span>
+                </div>
+                <div className="h-3 bg-warm-dim rounded-full w-full animate-pulse" />
+                <div className="h-3 bg-warm-dim rounded-full w-5/6 animate-pulse" />
+                <div className="h-3 bg-warm-dim rounded-full w-4/6 animate-pulse" />
+              </div>
+            ) : (
+              <p className="text-ink-soft leading-relaxed">
+                {claudeSummary || result.summary}
+                {summaryLoading && claudeSummary && (
+                  <span className="inline-block w-1.5 h-4 bg-ink-soft/40 ml-0.5 animate-pulse rounded-sm align-middle" />
+                )}
+              </p>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* What's driving your risk */}
+      {result.factors.length > 0 && (
+        <div className="mt-10">
+          <h2 className="font-serif text-2xl text-ink mb-4">{t("drivingHeading")}</h2>
+          <div className="space-y-3">
+            {result.factors.map((f) => (
+              <div
+                key={f.questionId}
+                className="bg-warm-dim rounded-2xl border border-warm-dim p-5"
+              >
+                <div className="flex items-start gap-4">
+                  <div className="text-2xl" aria-hidden>
+                    {f.icon}
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                      <div className="font-semibold text-ink">{f.label}</div>
+                      <div className="text-sm text-ink-soft">
+                        {f.answerLabel}
+                      </div>
+                    </div>
+                    <p className="text-sm text-ink-soft mt-1.5 leading-relaxed">
+                      {f.guidance}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Next steps */}
+      <div className="mt-10">
+        <h2 className="font-serif text-2xl text-ink mb-4">{t("nextStepsHeading")}</h2>
+        <div className="space-y-3">
+          {nextSteps.map((step, i) => (
+            <div
+              key={step.title}
+              className="bg-warm-dim rounded-2xl border border-warm-dim p-5 flex gap-4 items-start"
+            >
+              <div className="flex-shrink-0 w-7 h-7 rounded-full bg-brand/10 text-brand text-xs font-bold flex items-center justify-center mt-0.5">
+                {i + 1}
+              </div>
+              <div className="flex-1">
+                <div className="font-semibold text-ink mb-1">{step.title}</div>
+                <p className="text-sm text-ink-soft leading-relaxed">
+                  {step.desc}
+                </p>
+                {step.linkLabel && hrefs[i] && (
+                  <Link
+                    href={hrefs[i]!}
+                    className="inline-block mt-2 text-sm font-semibold text-brand hover:underline"
+                  >
+                    {step.linkLabel}
+                  </Link>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Contextual learn links */}
+      {learnLinks.length > 0 && (
+        <div className="mt-10">
+          <h2 className="font-serif text-2xl text-ink mb-4">
+            {t("relatedReadingHeading")}
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {learnLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="group bg-warm-dim rounded-2xl border border-warm-dim p-5 hover:border-brand/40 transition-all"
+              >
+                <div className="text-2xl mb-2" aria-hidden>
+                  {link.icon}
+                </div>
+                <span className="inline-block text-xs font-semibold uppercase tracking-wider text-brand bg-brand-soft px-2 py-0.5 rounded-full mb-2">
+                  {link.tag}
+                </span>
+                <div className="font-serif text-lg text-ink group-hover:text-brand transition-colors leading-snug">
+                  {link.title}
+                </div>
+                <div className="mt-2 text-xs font-semibold text-brand">
+                  {t("read")}
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* CTAs */}
+      <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <Link
+          href="/find-care"
+          className="bg-brand hover:bg-brand-dark text-white font-semibold px-6 py-4 rounded-2xl transition-colors text-center"
+        >
+          {primaryCTA[result.tier]}
+        </Link>
+        <button
+          onClick={handleShare}
+          className="bg-warm-dim hover:bg-warm text-ink font-semibold px-6 py-4 rounded-2xl transition-colors border border-warm-dim text-center"
+        >
+          {copied ? t("linkCopied") : t("shareCta")}
+        </button>
+      </div>
+
+      {/* Email a copy */}
+      <div className="mt-8 p-6 rounded-2xl bg-brand-soft border border-brand/15">
+        {emailStatus === "sent" ? (
+          <div className="text-center">
+            <div className="font-serif text-xl text-ink mb-1">{t("emailSentTitle")}</div>
+            <p className="text-sm text-ink-soft">{t("emailSentDesc")}</p>
+          </div>
+        ) : (
+          <>
+            <div className="font-serif text-xl text-ink mb-1">{t("emailKeepCopy")}</div>
+            <p className="text-sm text-ink-soft mb-4 leading-relaxed">{t("emailBody")}</p>
+            <form onSubmit={handleEmailResult} className="flex flex-col sm:flex-row gap-3">
+              <input
+                type="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder={t("emailPlaceholder")}
+                aria-label={t("emailLabel")}
+                className="flex-1 bg-warm px-5 py-3 rounded-xl border border-warm-dim focus:outline-none focus:ring-2 focus:ring-brand text-ink placeholder:text-ink-soft"
+              />
+              <button
+                type="submit"
+                disabled={emailStatus === "sending" || !email.trim()}
+                className="bg-brand hover:bg-brand-dark disabled:opacity-60 text-white font-semibold px-6 py-3 rounded-xl transition-colors whitespace-nowrap"
+              >
+                {emailStatus === "sending" ? t("emailSending") : t("emailMe")}
+              </button>
+            </form>
+            {emailStatus === "error" && (
+              <p className="mt-2 text-sm text-accent">{emailError}</p>
+            )}
+          </>
+        )}
+      </div>
+
+      <div className="mt-6 flex justify-center">
+        <Link
+          href="/screener"
+          className="text-sm font-medium text-ink-soft hover:text-ink"
+        >
+          {t("retake")}
+        </Link>
+      </div>
+
+      {/* Evidence basis + Disclaimer */}
+      <div className="mt-12 p-5 rounded-2xl bg-warm-dim/50 text-xs text-ink-soft leading-relaxed space-y-2">
+        <p>
+          <strong className="text-ink">{t("evidenceBasisLabel")}</strong>{" "}
+          {t.rich("evidenceBasisBody", { i: (chunks) => <em>{chunks}</em> })}
+        </p>
+        <p>
+          <strong className="text-ink">{t("disclaimerLabel")}</strong> {t("disclaimerBody")}
+        </p>
+      </div>
+    </div>
+  );
+}

@@ -1,58 +1,24 @@
-export const learnArticles = [
-  {
-    href: "/learn/risk-factors",
-    tag: "Risk Factors",
-    title: "Oral Cancer Risk Factors",
-    description: "Tobacco, alcohol, HPV-16, age, sun exposure, and more — what raises your risk and how each factor works.",
-    icon: "⚡",
-  },
-  {
-    href: "/learn/oral-cancer",
-    tag: "Overview",
-    title: "What Is Oral Cancer?",
-    description: "Definition, types, key statistics, causes, and what the warning signs look like — a plain-English overview.",
-    icon: "📖",
-  },
-  {
-    href: "/learn/signs",
-    tag: "Symptoms",
-    title: "Signs & Warning Symptoms",
-    description: "Red and white patches, sores that don't heal, lumps, and numbness — what to look for and when to act.",
-    icon: "⚠️",
-  },
-  {
-    href: "/learn/self-exam",
-    tag: "How-to",
-    title: "How to Do a 2-Minute Self-Exam",
-    description: "Step-by-step: lips, gums, tongue, floor of mouth, palate, throat. All you need is a mirror.",
-    icon: "🔎",
-  },
-  {
-    href: "/learn/facts",
-    tag: "Facts",
-    title: "Oral Cancer Facts & Stats",
-    description: "Incidence, survival rates by stage, who's most affected, and the growing role of HPV.",
-    icon: "📊",
-  },
-  {
-    href: "/learn/hpv",
-    tag: "Risk Factor",
-    title: "HPV and Oral Cancer",
-    description: "HPV-16 is now the leading cause of throat cancer in the US. What that means, who's at risk, and how the vaccine helps.",
-    icon: "🦠",
-  },
-  {
-    href: "/learn/prevention",
-    tag: "Prevention",
-    title: "How to Prevent Oral Cancer",
-    description: "Six evidence-based steps: quit tobacco, limit alcohol, get vaccinated, protect your lips, and get screened regularly.",
-    icon: "🛡️",
-  },
-  {
-    href: "/learn/canker-sore-vs-oral-cancer",
-    tag: "Comparison",
-    title: "Canker Sore vs. Oral Cancer",
-    description: "They can look similar. Here's how to tell them apart — and when a sore in your mouth needs a clinical eye.",
-    icon: "🔬",
-  },
-];
+import { useTranslations } from "next-intl";
+
+const HREFS_ICONS = [
+  { key: "riskFactors", href: "/learn/risk-factors", icon: "⚡" },
+  { key: "oralCancer", href: "/learn/oral-cancer", icon: "📖" },
+  { key: "signs", href: "/learn/signs", icon: "⚠️" },
+  { key: "selfExam", href: "/learn/self-exam", icon: "🔎" },
+  { key: "facts", href: "/learn/facts", icon: "📊" },
+  { key: "hpv", href: "/learn/hpv", icon: "🦠" },
+  { key: "prevention", href: "/learn/prevention", icon: "🛡️" },
+  { key: "cankerVsCancer", href: "/learn/canker-sore-vs-oral-cancer", icon: "🔬" },
+] as const;
+
+/** Client-component hook: returns the fully localized learn-index card list. */
+export function useLearnArticles() {
+  const t = useTranslations("LearnCards");
+  return HREFS_ICONS.map(({ key, href, icon }) => ({
+    href,
+    icon,
+    tag: t(`${key}.tag`),
+    title: t(`${key}.title`),
+    description: t(`${key}.description`),
+  }));
+}

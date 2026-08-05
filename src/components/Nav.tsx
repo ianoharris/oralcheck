@@ -1,21 +1,23 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { useState, useEffect } from "react";
+import { Link, usePathname } from "@/i18n/navigation";
 import ThemeToggle from "@/components/ThemeToggle";
-
-const links = [
-  { href: "/screener", label: "Screener" },
-  { href: "/find-care", label: "Find Care" },
-  { href: "/learn", label: "Learn" },
-  { href: "/for-clinicians", label: "For Clinicians" },
-  { href: "/about", label: "About" },
-];
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 export default function Nav() {
+  const t = useTranslations("Nav");
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+
+  const links = [
+    { href: "/screener", label: t("screener") },
+    { href: "/find-care", label: t("findCare") },
+    { href: "/learn", label: t("learn") },
+    { href: "/for-clinicians", label: t("forClinicians") },
+    { href: "/about", label: t("about") },
+  ];
 
   // Close menu on route change
   useEffect(() => { setOpen(false); }, [pathname]);
@@ -57,14 +59,16 @@ export default function Nav() {
               );
             })}
           </nav>
+          <LanguageSwitcher />
           <ThemeToggle />
         </div>
 
-        {/* Mobile: theme toggle + hamburger */}
+        {/* Mobile: language + theme toggle + hamburger */}
         <div className="flex items-center gap-1 md:hidden">
+          <LanguageSwitcher />
           <ThemeToggle />
           <button
-            aria-label={open ? "Close menu" : "Open menu"}
+            aria-label={open ? t("closeMenu") : t("openMenu")}
             onClick={() => setOpen(o => !o)}
             className="w-9 h-9 flex flex-col items-center justify-center gap-[5px] rounded-full hover:bg-warm-dim transition-colors"
           >

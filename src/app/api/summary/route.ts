@@ -9,6 +9,7 @@ type SummaryRequest = {
   tierLabel: string;
   factors: { label: string; answerLabel: string }[];
   hasUrgentSymptom: boolean;
+  locale?: string;
 };
 
 export async function POST(req: NextRequest) {
@@ -34,7 +35,8 @@ export async function POST(req: NextRequest) {
 
   try {
     const body: SummaryRequest = await req.json();
-    const { tier, tierLabel, factors, hasUrgentSymptom } = body;
+    const { tier, tierLabel, factors, hasUrgentSymptom, locale } = body;
+    const isSpanish = locale === "es";
 
     const factorLines =
       factors.length > 0
@@ -55,12 +57,16 @@ Risk tier: ${tierLabel} (${tier})
 Contributing factors:
 ${factorLines}${urgentNote}${interactionNote}
 
-Write a clinically precise, personalized 2–3 sentence summary. Reference specific risk implications for their top factors. If elevated or high tier, mention that oral cancer detected at Stage I has an 84% five-year survival rate versus 38% at Stage IV — that gap is why early action matters. If the tobacco+alcohol interaction is present, note the multiplicative risk. End with one specific, actionable next step. Do not diagnose. No markdown. Plain sentences only.`;
+Write a clinically precise, personalized 2–3 sentence summary. Reference specific risk implications for their top factors. If elevated or high tier, mention that oral cancer detected at Stage I has an 84% five-year survival rate versus 38% at Stage IV — that gap is why early action matters. If the tobacco+alcohol interaction is present, note the multiplicative risk. End with one specific, actionable next step. Do not diagnose. No markdown. Plain sentences only.${
+      isSpanish
+        ? " Write your entire response in Spanish (neutral, suitable for the US Hispanic community). Do not use em dashes; use commas or periods instead."
+        : ""
+    }`;
 
     const client = new Anthropic();
 
     const stream = await client.messages.stream({
-      model: "claude-haiku-4-5-20251001",
+      model: "claude-haiku-4-5",
       max_tokens: 220,
       system:
         "You are a health educator providing evidence-based oral cancer risk summaries. Be specific and clinically direct — do not soften or vague-ify the science. Reference actual statistics when available (survival rates, odds ratios). Never diagnose or replace professional evaluation. No markdown, no bullet points. Plain sentences only. 2–3 sentences maximum.",

@@ -1,4 +1,7 @@
-import { questions, type Question } from "./questions";
+import { createTranslator } from "use-intl/core";
+import enMessages from "../../messages/en.json";
+import esMessages from "../../messages/es.json";
+import { QUESTION_SKELETON, type Question } from "./questions";
 
 export type Answers = Record<string, string>;
 
@@ -27,44 +30,24 @@ export type RiskResult = {
   hasUrgentSymptom: boolean;
 };
 
-const guidanceByCategory: Record<Question["category"], string> = {
-  demographics:
-    "Age is the strongest non-modifiable risk factor. After 40, screening at every dental visit is especially important — oral cancer caught at Stage I has an 84% five-year survival rate versus 38% at Stage IV.",
-  tobacco:
-    "Cessation reduces risk by approximately 50% within 5 years of quitting. Nicotine replacement therapy doubles long-term quit success rates. Ask your dentist or physician about free cessation programs — the Wisconsin Tobacco Quit Line is available at 1-800-QUIT-NOW.",
-  alcohol:
-    "Risk decreases with reduced consumption. For people using both tobacco and alcohol, tobacco cessation has the greatest individual impact. Even reducing drinking from daily to occasional lowers mucosal carcinogen exposure significantly.",
-  hpv:
-    "The HPV vaccine (Gardasil 9) is FDA-approved through age 45 and is highly effective against HPV-16, the strain most strongly linked to oropharyngeal cancer. Ask your clinician whether vaccination is appropriate for you.",
-  sun:
-    "Lower lip squamous cell carcinoma is highly preventable with consistent SPF lip balm use and wide-brim hat wearing. Unlike skin cancer, lip cancer often goes unnoticed — check your lips during any monthly oral self-exam.",
-  symptoms:
-    "Persistent red patches (erythroplakia), white patches (leukoplakia), non-healing ulcers, unexplained lumps, or difficulty swallowing lasting 2+ weeks are established clinical warning signs. These should not be observed for longer — they require professional evaluation this week, not at a future appointment.",
-  family:
-    "Tell your dentist about your family history. They may recommend more frequent oral cancer screenings or a referral to an oral medicine specialist. Genetic counseling is available through most academic medical centers.",
-  diet:
-    "Aim for 5+ servings of colorful fruits and vegetables daily. Evidence supports that diets high in vitamins A, C, and E reduce oral epithelial dysplasia. Processed meat intake has also been linked to elevated head and neck cancer risk in some cohort studies.",
-  dental:
-    "Book a dental visit as soon as possible. A visual oral cancer screening takes about 2 minutes and is performed as part of a routine examination. Over 60% of oral cancers are diagnosed at Stage III or IV — regular dental care changes this.",
-  other:
-    "Stopping betel/paan/gutka use lowers risk, though some changes to oral mucosa from prior use may persist. Ask your dentist to examine any areas of discoloration, thickening, or ulceration. Many communities have culturally specific cessation resources.",
-};
+const MESSAGES = { en: enMessages, es: esMessages } as const;
 
-const factorLabels: Record<string, string> = {
-  age: "Age",
-  tobacco: "Tobacco use",
-  alcohol: "Alcohol use",
-  hpv: "HPV exposure",
-  sun: "Sun exposure",
-  symptom: "Current symptoms",
-  family: "Family history",
-  diet: "Diet",
-  dental: "Dental care",
-  betel: "Betel / paan / gutka",
-};
+// riskEngine runs both in the browser (results page) and on the server
+// (email-result API route), outside of any React tree, so it can't use the
+// useTranslations()/getTranslations() hooks — createTranslator is next-intl's
+// underlying, framework-agnostic primitive for exactly this case.
+function getTranslator(locale: string) {
+  const messages = locale === "es" ? MESSAGES.es : MESSAGES.en;
+  return createTranslator({ locale, messages, namespace: "RiskEngine" });
+}
+
+function getQuestionsTranslator(locale: string) {
+  const messages = locale === "es" ? MESSAGES.es : MESSAGES.en;
+  return createTranslator({ locale, messages, namespace: "Questions" });
+}
 
 export function computeMaxScore(): number {
-  return questions.reduce((sum, q) => {
+  return QUESTION_SKELETON.reduce((sum, q) => {
     const max = Math.max(...q.options.map((o) => o.weight));
     return sum + max;
   }, 0);
@@ -101,12 +84,15 @@ export function computeMaxScore(): number {
  *   outcome dataset. This tool is a risk stratification instrument, not a
  *   validated diagnostic screener. Dental or medical evaluation is always required.
  */
-export function computeRisk(answers: Answers): RiskResult {
+export function computeRisk(answers: Answers, locale: string = "en"): RiskResult {
+  const t = getTranslator(locale);
+  const qt = getQuestionsTranslator(locale);
+
   const factors: RiskFactor[] = [];
   let score = 0;
   let hasUrgentSymptom = false;
 
-  for (const q of questions) {
+  for (const q of QUESTION_SKELETON) {
     const answerId = answers[q.id];
     if (!answerId) continue;
     const option = q.options.find((o) => o.id === answerId);
@@ -122,10 +108,10 @@ export function computeRisk(answers: Answers): RiskResult {
         questionId: q.id,
         category: q.category,
         icon: q.icon,
-        label: factorLabels[q.id] ?? q.id,
-        answerLabel: option.label,
+        label: t(`factorLabels.${q.id}` as never) as string,
+        answerLabel: qt(`${q.id}.options.${option.id}` as never) as string,
         weight: option.weight,
-        guidance: guidanceByCategory[q.category],
+        guidance: t(`categoryGuidance.${q.category}` as never) as string,
       });
     }
   }
@@ -146,11 +132,10 @@ export function computeRisk(answers: Answers): RiskResult {
       questionId: "tobacco_alcohol_interaction",
       category: "tobacco",
       icon: "⚡",
-      label: "Tobacco + alcohol interaction",
-      answerLabel: "Both present",
+      label: t("interaction.label"),
+      answerLabel: t("interaction.answerLabel"),
       weight: interactionBonus,
-      guidance:
-        "When tobacco and alcohol are used together, they produce a multiplicative — not merely additive — increase in oral cancer risk. Combined regular use raises risk up to 15× above baseline, far exceeding the sum of either factor alone. Addressing both together is the most effective risk-reduction strategy (Bagnardi et al., Annals of Oncology, 2015).",
+      guidance: t("interaction.guidance"),
     });
   }
 
@@ -171,32 +156,32 @@ export function computeRisk(answers: Answers): RiskResult {
   // betel+tobacco+alcohol+interaction (25) = high.
   if (hasUrgentSymptom) {
     tier = "high";
-    tierLabel = "See a dentist soon";
+    tierLabel = t("tier.seeADentist");
     tierColor = "high";
-    headline = "A symptom you mentioned deserves a close look.";
+    headline = t("tier.urgentHeadline");
   } else if (score <= 4) {
     tier = "low";
-    tierLabel = "Low risk";
+    tierLabel = t("tier.low.label");
     tierColor = "low";
-    headline = "Your current risk profile looks low.";
+    headline = t("tier.low.headline");
   } else if (score <= 13) {
     tier = "moderate";
-    tierLabel = "Moderate risk";
+    tierLabel = t("tier.moderate.label");
     tierColor = "mid";
-    headline = "A few factors are worth paying attention to.";
+    headline = t("tier.moderate.headline");
   } else if (score <= 22) {
     tier = "elevated";
-    tierLabel = "Elevated risk";
+    tierLabel = t("tier.elevated.label");
     tierColor = "mid";
-    headline = "Several risk factors are stacking up.";
+    headline = t("tier.elevated.headline");
   } else {
     tier = "high";
-    tierLabel = "See a dentist soon";
+    tierLabel = t("tier.high.label");
     tierColor = "high";
-    headline = "Your risk profile is high enough that screening matters.";
+    headline = t("tier.high.headline");
   }
 
-  const summary = buildSummary(tier, factors, hasUrgentSymptom);
+  const summary = buildSummary(t, tier, factors, hasUrgentSymptom);
 
   return {
     score,
@@ -213,30 +198,30 @@ export function computeRisk(answers: Answers): RiskResult {
 }
 
 function buildSummary(
+  t: ReturnType<typeof getTranslator>,
   tier: RiskTier,
   factors: RiskFactor[],
   urgent: boolean,
 ): string {
   const top = factors.slice(0, 2).map((f) => f.label.toLowerCase());
+  const and = t("and");
   const topPhrase =
     top.length === 2
-      ? `${top[0]} and ${top[1]}`
+      ? `${top[0]} ${and} ${top[1]}`
       : top.length === 1
         ? top[0]
-        : "your responses";
+        : t("summary.fallback");
 
-  if (urgent) {
-    return `A symptom you reported — combined with ${topPhrase} — warrants prompt professional evaluation. Oral cancer detected at Stage I has an 84% five-year survival rate versus 38% at Stage IV. That gap is why timing matters. Please book a dental or medical visit this week and mention your symptom specifically when you call.`;
-  }
+  if (urgent) return t("summary.urgent", { topPhrase });
 
   switch (tier) {
     case "low":
-      return `No major risk factors stand out in your profile right now. Maintain annual dental visits — a visual oral cancer screening takes about 2 minutes and is included in a routine examination. Familiarize yourself with the warning signs so you can act early if anything changes.`;
+      return t("summary.low");
     case "moderate":
-      return `Your ${topPhrase} elevate your risk modestly above baseline. These are factors you can act on. Mention your risk history to your dentist at your next visit and ask for an oral cancer screening. Early detection at Stage I carries an 84% five-year survival rate.`;
+      return t("summary.moderate", { topPhrase });
     case "elevated":
-      return `Several factors — particularly ${topPhrase} — are stacking your risk. Consider booking a dental visit this month and asking specifically for an oral cancer screening. The 5-year survival rate is 84% when oral cancer is caught early, versus 38% when caught late. Don't wait for a symptom to appear.`;
+      return t("summary.elevated", { topPhrase });
     case "high":
-      return `Your combination of risk factors — including ${topPhrase} — places you in a higher-risk group where proactive screening is strongly warranted. Please schedule a dental or medical visit soon. The difference between Stage I and Stage IV oral cancer survival is dramatic: 84% versus 38%. The exam takes 2 minutes and could be the most important appointment you make this year.`;
+      return t("summary.high", { topPhrase });
   }
 }

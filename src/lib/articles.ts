@@ -60,26 +60,40 @@ function listDir(dir: string): string[] {
     .reverse();
 }
 
-export function getAllPublishedArticles(): ArticleMeta[] {
+// English is the canonical article list (slugs/dates); Spanish is an
+// optional same-filename translation living in a `es/` subdirectory,
+// produced by oralcheck-agent/seo_pipeline.py and promoted alongside the
+// English article on publish (see src/app/api/publish/route.ts). Any
+// article not yet translated falls back to English rather than 404ing.
+
+export function getAllPublishedArticles(locale: string = "en"): ArticleMeta[] {
   return listDir(PUBLISHED_DIR).map((f) => {
-    const raw = fs.readFileSync(path.join(PUBLISHED_DIR, f), "utf8");
-    const { data, content } = matter(raw);
+    const enRaw = fs.readFileSync(path.join(PUBLISHED_DIR, f), "utf8");
+    const en = matter(enRaw);
+    const esPath = path.join(PUBLISHED_DIR, "es", f);
+    const useEs = locale === "es" && fs.existsSync(esPath);
+    const { data, content } = useEs ? matter(fs.readFileSync(esPath, "utf8")) : en;
     return {
       slug:     slugFromFilename(f),
-      title:    data.title  ?? slugFromFilename(f),
-      date:     data.date   ?? "",
-      keyword:  data.keyword ?? "",
+      title:    data.title  ?? en.data.title ?? slugFromFilename(f),
+      date:     data.date   ?? en.data.date ?? "",
+      keyword:  data.keyword ?? en.data.keyword ?? "",
       excerpt:  firstParagraph(content),
       filename: f,
     };
   });
 }
 
-export function getPublishedArticle(slug: string): Article | null {
+export function getPublishedArticle(slug: string, locale: string = "en"): Article | null {
   const match = listDir(PUBLISHED_DIR).find(
     (f) => slugFromFilename(f) === slug
   );
-  return match ? parseFile(PUBLISHED_DIR, match) : null;
+  if (!match) return null;
+  if (locale === "es") {
+    const esPath = path.join(PUBLISHED_DIR, "es");
+    if (fs.existsSync(path.join(esPath, match))) return parseFile(esPath, match);
+  }
+  return parseFile(PUBLISHED_DIR, match);
 }
 
 export function getAllDraftArticles(): ArticleMeta[] {

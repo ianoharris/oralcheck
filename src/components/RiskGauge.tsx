@@ -1,6 +1,10 @@
+"use client";
+
+import { useTranslations } from "next-intl";
 import type { RiskResult } from "@/lib/riskEngine";
 
 export default function RiskGauge({ result }: { result: RiskResult }) {
+  const t = useTranslations("RiskGauge");
   const colorVar =
     result.tierColor === "low"
       ? "var(--color-low)"
@@ -16,7 +20,7 @@ export default function RiskGauge({ result }: { result: RiskResult }) {
       <svg
         viewBox="0 0 200 120"
         className="w-full max-w-sm"
-        aria-label={`Risk gauge showing ${result.tierLabel}`}
+        aria-label={t("ariaLabel", { tier: result.tierLabel })}
       >
         <defs>
           <linearGradient id="gauge-grad" x1="0%" x2="100%" y1="0%" y2="0%">
@@ -70,7 +74,7 @@ export default function RiskGauge({ result }: { result: RiskResult }) {
           {result.tierLabel}
         </div>
         <div className="mt-3 font-mono text-xs text-ink-soft">
-          Score: {result.score} / {result.maxScore}
+          {t("score", { score: result.score, maxScore: result.maxScore })}
         </div>
       </div>
     </div>

@@ -1,13 +1,14 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 import { useInView, useReducedMotion } from "framer-motion";
 
-const stats = [
-  { raw: 54000, display: "54,000+", label: "new US oral & oropharyngeal cancer cases each year" },
-  { raw: 84,    display: "84%",     label: "five-year survival when caught early" },
-  { raw: 2,     display: "2 min",   label: "is all a dental screening takes", suffix: " min" },
-];
+const STATS = [
+  { raw: 54000, display: "54,000+", labelKey: "cases" },
+  { raw: 84,    display: "84%",     labelKey: "survival" },
+  { raw: 2,     display: "2 min",   labelKey: "screeningTime", suffix: " min" },
+] as const;
 
 function useCountUp(target: number, duration = 1400, active: boolean) {
   const [value, setValue] = useState(0);
@@ -53,6 +54,7 @@ function StatItem({ raw, display, label, suffix, active }: {
 }
 
 export default function AnimatedStats() {
+  const t = useTranslations("AnimatedStats");
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
 
@@ -62,8 +64,8 @@ export default function AnimatedStats() {
         ref={ref}
         className="max-w-6xl mx-auto px-5 py-10 grid grid-cols-1 sm:grid-cols-3 gap-6"
       >
-        {stats.map((s) => (
-          <StatItem key={s.label} {...s} active={inView} />
+        {STATS.map((s) => (
+          <StatItem key={s.labelKey} {...s} label={t(s.labelKey)} active={inView} />
         ))}
       </div>
     </section>

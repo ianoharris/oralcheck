@@ -1,18 +1,23 @@
-import Link from "next/link";
-import { learnArticles } from "@/lib/learnArticles";
+"use client";
+
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
+import { useLearnArticles } from "@/lib/learnArticles";
 
 interface Props {
   currentHref: string;
 }
 
 export default function LearnReadNext({ currentHref }: Props) {
+  const t = useTranslations("LearnCards");
+  const learnArticles = useLearnArticles();
   const related = learnArticles
     .filter((a) => a.href !== currentHref)
     .slice(0, 3);
 
   return (
     <div className="border-t border-warm-dim mt-16 pt-12">
-      <p className="text-xs font-bold uppercase tracking-widest text-ink-soft mb-6">Read next</p>
+      <p className="text-xs font-bold uppercase tracking-widest text-ink-soft mb-6">{t("readNext")}</p>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         {related.map(({ href, tag, title, description, icon }) => (
           <Link
@@ -30,7 +35,7 @@ export default function LearnReadNext({ currentHref }: Props) {
               {title}
             </h3>
             <p className="text-xs text-ink-soft leading-relaxed flex-1">{description}</p>
-            <span className="mt-3 text-xs font-semibold text-brand group-hover:underline">Read →</span>
+            <span className="mt-3 text-xs font-semibold text-brand group-hover:underline">{t("read")}</span>
           </Link>
         ))}
       </div>

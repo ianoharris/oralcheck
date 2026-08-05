@@ -1,71 +1,19 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 
-type Sign = {
-  id: string;
-  name: string;
-  also?: string;
-  where: string;
-  desc: string;
-  watch: string;
-  tone: "watch" | "higher"; // colours the risk cue
-};
-
-const SIGNS: Sign[] = [
-  {
-    id: "white",
-    name: "White patch",
-    also: "Leukoplakia",
-    where: "Often on the tongue, gums, or inner cheek",
-    desc: "A white or grayish patch that can't be wiped or scraped off. Usually painless.",
-    watch: "Most are harmless, but any that lasts more than 2 weeks should be checked.",
-    tone: "watch",
-  },
-  {
-    id: "red",
-    name: "Red patch",
-    also: "Erythroplakia",
-    where: "Floor of the mouth or under the tongue",
-    desc: "A bright red, velvety patch. Less common than white patches, but carries the highest risk of the visible signs.",
-    watch: "Get any persistent red patch looked at promptly.",
-    tone: "higher",
-  },
-  {
-    id: "mixed",
-    name: "Red-and-white patch",
-    also: "Erythroleukoplakia",
-    where: "Anywhere in the mouth",
-    desc: "A patch that mixes red and white areas together.",
-    watch: "Mixed patches carry elevated risk. Worth a prompt professional look.",
-    tone: "higher",
-  },
-  {
-    id: "sore",
-    name: "Sore that won't heal",
-    also: "Non-healing ulcer",
-    where: "Lips, tongue, or inside the mouth",
-    desc: "An ulcer or sore, often painless, that simply stays put.",
-    watch: "A canker sore heals in about 2 weeks. One that doesn't is the classic warning sign.",
-    tone: "higher",
-  },
-  {
-    id: "lump",
-    name: "Lump or thickening",
-    where: "Cheek, gum, lip, or floor of the mouth",
-    desc: "A raised bump or a thickened area you can feel with your tongue or finger.",
-    watch: "New or growing lumps deserve a look, feel for them during a self-exam.",
-    tone: "watch",
-  },
-  {
-    id: "lip",
-    name: "Rough spot on the lip",
-    where: "Usually the lower lip",
-    desc: "A scaly, crusted, or persistently chapped patch that doesn't clear up.",
-    watch: "Common with sun exposure. Persistent rough spots should be checked.",
-    tone: "watch",
-  },
+type SignCopy = { name: string; also?: string; where: string; desc: string; watch: string };
+// tone is layout metadata (which color the risk cue gets), kept separate from
+// the translated copy in messages.SignsVisualGuide.signs (same array order).
+const SIGN_META = [
+  { id: "white", tone: "watch" as const },
+  { id: "red", tone: "higher" as const },
+  { id: "mixed", tone: "higher" as const },
+  { id: "sore", tone: "higher" as const },
+  { id: "lump", tone: "watch" as const },
+  { id: "lip", tone: "watch" as const },
 ];
 
 const TISSUE = "#e7d9d2"; // stylised oral-surface tone (single visual world, on purpose)
@@ -131,24 +79,27 @@ function SignArt({ id }: { id: string }) {
 }
 
 export default function SignsVisualGuide() {
+  const t = useTranslations("SignsVisualGuide");
   const [active, setActive] = useState(0);
   const reduce = useReducedMotion();
+
+  const copy = t.raw("signs") as SignCopy[];
+  const SIGNS = SIGN_META.map((meta, i) => ({ ...meta, ...copy[i] }));
   const sign = SIGNS[active];
 
   return (
     <section
-      aria-label="What oral cancer can look like"
+      aria-label={t("heading")}
       className="not-prose my-10 rounded-3xl border border-warm-dim bg-warm-dim/50 p-5 sm:p-7"
     >
       <div className="mb-1 text-xs font-semibold uppercase tracking-wider text-brand">
-        Interactive guide
+        {t("eyebrow")}
       </div>
       <h2 className="font-serif text-2xl sm:text-3xl text-ink mb-1">
-        What to look for
+        {t("heading")}
       </h2>
       <p className="text-sm text-ink-soft mb-5 max-w-xl leading-relaxed">
-        Tap through the signs worth knowing. These are simplified diagrams, not photos.
-        The thing they share: if it hasn&apos;t cleared up in about 2 weeks, have it checked.
+        {t("subheading")}
       </p>
 
       {/* chips */}
@@ -223,7 +174,7 @@ export default function SignsVisualGuide() {
               }`}
             >
               <span className="font-semibold">
-                {sign.tone === "higher" ? "Worth prompt attention. " : "When to act. "}
+                {sign.tone === "higher" ? `${t("higherAction")} ` : `${t("watchAction")} `}
               </span>
               {sign.watch}
             </div>
@@ -235,9 +186,7 @@ export default function SignsVisualGuide() {
       <div className="mt-6 flex items-center gap-3 rounded-2xl bg-brand px-5 py-4 text-white">
         <span className="text-2xl leading-none" aria-hidden>⏱</span>
         <p className="text-sm sm:text-[15px] leading-snug">
-          <span className="font-semibold">The 2-week rule:</span>{" "}anything in your mouth or on your
-          lips that hasn&apos;t healed within two weeks deserves a professional look. Early oral
-          cancer rarely hurts, so don&apos;t wait for pain.
+          <span className="font-semibold">{t("twoWeekBold")}</span>{" "}{t("twoWeekRest")}
         </p>
       </div>
     </section>
