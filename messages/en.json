@@ -994,7 +994,7 @@
   "SignsVisualGuide": {
     "eyebrow": "Interactive guide",
     "heading": "What to look for",
-    "subheading": "Tap through the signs worth knowing. These are simplified diagrams, not photos. The thing they share: if it hasn't cleared up in about 2 weeks, have it checked.",
+    "subheading": "Tap through the signs worth knowing. Each one starts as a simple diagram; where an openly licensed clinical photo exists, you can choose to see it. The thing they share: if it hasn't cleared up in about 2 weeks, have it checked.",
     "watchAction": "When to act.",
     "higherAction": "Worth prompt attention.",
     "twoWeekBold": "The 2-week rule:",
@@ -1040,7 +1040,11 @@
         "desc": "A scaly, crusted, or persistently chapped patch that doesn't clear up.",
         "watch": "Common with sun exposure. Persistent rough spots should be checked."
       }
-    ]
+    ],
+    "showPhoto": "Show a real photo",
+    "hidePhoto": "Show the diagram",
+    "photoSource": "source",
+    "noPhoto": "No openly licensed clinical photo available for this sign yet."
   },
   "LearnSubpage": {
     "backToLearn": "← Back to Learn"

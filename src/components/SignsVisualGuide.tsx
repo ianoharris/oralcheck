@@ -1,9 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Image from "next/image";
 import Icon from "@/components/Icon";
 import { useTranslations } from "next-intl";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import signPhotos from "@/lib/signPhotos.json";
+
+type SignPhoto = {
+  src: string; width: number; height: number;
+  author: string; license: string; licenseUrl: string; source: string;
+};
+const PHOTOS = signPhotos as Record<string, SignPhoto>;
 
 type SignCopy = { name: string; also?: string; where: string; desc: string; watch: string };
 // tone is layout metadata (which color the risk cue gets), kept separate from
@@ -84,9 +92,16 @@ export default function SignsVisualGuide() {
   const [active, setActive] = useState(0);
   const reduce = useReducedMotion();
 
+  // Real clinical photos stay hidden until asked for, so the page reads calm by
+  // default. Resets on every sign change: revealing one photo shouldn't
+  // silently opt you into the next one.
+  const [showPhoto, setShowPhoto] = useState(false);
+  useEffect(() => { setShowPhoto(false); }, [active]);
+
   const copy = t.raw("signs") as SignCopy[];
   const SIGNS = SIGN_META.map((meta, i) => ({ ...meta, ...copy[i] }));
   const sign = SIGNS[active];
+  const photo = PHOTOS[sign.id];
 
   return (
     <section
@@ -126,29 +141,86 @@ export default function SignsVisualGuide() {
         ))}
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
-        {/* diagram viewer */}
-        <div className="relative rounded-2xl overflow-hidden bg-warm aspect-[4/3]">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={sign.id}
-              initial={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.96 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={reduce ? { opacity: 0 } : { opacity: 0, scale: 1.02 }}
-              transition={{ duration: 0.3, ease: "easeOut" }}
-              className="absolute inset-0 p-4"
-            >
-              <SignArt id={sign.id} />
-            </motion.div>
-          </AnimatePresence>
-          {!reduce && (
-            <motion.span
-              key={`ring-${sign.id}`}
-              className="pointer-events-none absolute left-1/2 top-1/2 h-24 w-24 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-brand"
-              initial={{ opacity: 0.5, scale: 0.6 }}
-              animate={{ opacity: 0, scale: 1.8 }}
-              transition={{ duration: 1.4, ease: "easeOut" }}
-            />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+        {/* diagram viewer, with the real photo layered over it on request */}
+        <div>
+          <div className="relative rounded-2xl overflow-hidden bg-warm aspect-[4/3]">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={sign.id}
+                initial={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.96 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={reduce ? { opacity: 0 } : { opacity: 0, scale: 1.02 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+                className="absolute inset-0 p-4"
+              >
+                <SignArt id={sign.id} />
+              </motion.div>
+            </AnimatePresence>
+            {!reduce && !showPhoto && (
+              <motion.span
+                key={`ring-${sign.id}`}
+                className="pointer-events-none absolute left-1/2 top-1/2 h-24 w-24 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-brand"
+                initial={{ opacity: 0.5, scale: 0.6 }}
+                animate={{ opacity: 0, scale: 1.8 }}
+                transition={{ duration: 1.4, ease: "easeOut" }}
+              />
+            )}
+
+            <AnimatePresence>
+              {showPhoto && photo && (
+                <motion.div
+                  key={`photo-${sign.id}`}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.25, ease: "easeOut" }}
+                  className="absolute inset-0 bg-warm"
+                >
+                  <Image
+                    src={photo.src}
+                    alt={sign.name}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 420px"
+                    className="object-cover"
+                  />
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
+          {photo ? (
+            <div className="mt-3">
+              <button
+                onClick={() => setShowPhoto((v) => !v)}
+                aria-pressed={showPhoto}
+                className="inline-flex items-center gap-2 text-sm font-semibold text-brand hover:text-brand-dark transition-colors"
+              >
+                <Icon name={showPhoto ? "overview" : "selfExam"} size={17} />
+                {showPhoto ? t("hidePhoto") : t("showPhoto")}
+              </button>
+              {showPhoto && (
+                <p className="mt-1.5 text-[11px] text-ink-soft leading-relaxed">
+                  {photo.author}
+                  {" · "}
+                  {photo.licenseUrl ? (
+                    <a href={photo.licenseUrl} target="_blank" rel="noopener noreferrer"
+                       className="underline underline-offset-2 hover:text-ink">
+                      {photo.license}
+                    </a>
+                  ) : (
+                    photo.license
+                  )}
+                  {" · "}
+                  <a href={photo.source} target="_blank" rel="noopener noreferrer"
+                     className="underline underline-offset-2 hover:text-ink">
+                    {t("photoSource")}
+                  </a>
+                </p>
+              )}
+            </div>
+          ) : (
+            <p className="mt-3 text-[11px] text-ink-soft">{t("noPhoto")}</p>
           )}
         </div>
 

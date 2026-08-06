@@ -994,7 +994,7 @@
   "SignsVisualGuide": {
     "eyebrow": "Guía interactiva",
     "heading": "Qué buscar",
-    "subheading": "Toca las señales que vale la pena conocer. Estos son diagramas simplificados, no fotos. Lo que todas tienen en común: si no ha desaparecido en unas 2 semanas, revísalo con un profesional.",
+    "subheading": "Toca las señales que vale la pena conocer. Cada una comienza como un diagrama simple; cuando existe una foto clínica con licencia abierta, puedes elegir verla. Lo que todas tienen en común: si no ha desaparecido en unas 2 semanas, revísalo con un profesional.",
     "watchAction": "Cuándo actuar.",
     "higherAction": "Merece atención pronta.",
     "twoWeekBold": "La regla de las 2 semanas:",
@@ -1040,7 +1040,11 @@
         "desc": "Una mancha escamosa, con costra, o persistentemente agrietada que no desaparece.",
         "watch": "Común con la exposición al sol. Las manchas rugosas persistentes deben revisarse."
       }
-    ]
+    ],
+    "showPhoto": "Ver una foto real",
+    "hidePhoto": "Ver el diagrama",
+    "photoSource": "fuente",
+    "noPhoto": "Aún no hay una foto clínica con licencia abierta para esta señal."
   },
   "LearnSubpage": {
     "backToLearn": "← Volver a Aprender"
