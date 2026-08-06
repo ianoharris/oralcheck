@@ -1580,7 +1580,9 @@
         "tag": "Prevention",
         "title": "Reducing betel / paan risk"
       }
-    }
+    },
+    "alsoContributing": "Also contributing:",
+    "hideOthers": "Hide these"
   },
   "ScreenerMeta": {
     "title": "Free Oral Cancer Risk Screener",

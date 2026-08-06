@@ -72,7 +72,7 @@ export default async function CankerSorePage({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <article className="max-w-3xl mx-auto px-5 py-10 sm:py-16">
+      <article className="max-w-5xl mx-auto px-5 py-10 sm:py-16">
         <Link
           href="/learn"
           className="text-sm font-medium text-ink-soft hover:text-ink mb-6 inline-block"
@@ -85,7 +85,7 @@ export default async function CankerSorePage({ params }: Props) {
         <h1 className="font-serif text-4xl sm:text-5xl text-ink mb-4 leading-tight">
           {t("heading")}
         </h1>
-        <p className="text-lg text-ink-soft leading-relaxed mb-10">{t("intro")}</p>
+        <p className="text-lg text-ink-soft leading-relaxed mb-10 max-w-3xl">{t("intro")}</p>
 
         {/* Quick answer callout */}
         <div className="bg-brand/5 border border-brand/20 rounded-2xl p-6 mb-10">
@@ -100,7 +100,7 @@ export default async function CankerSorePage({ params }: Props) {
         {/* What is a canker sore */}
         <section className="mb-10">
           <h2 className="font-serif text-3xl text-ink mb-4">{t("cankerHeading")}</h2>
-          <p className="text-ink-soft leading-relaxed mb-4">{t("cankerP1")}</p>
+          <p className="text-ink-soft leading-relaxed mb-4 max-w-prose">{t("cankerP1")}</p>
           <ul className="space-y-2 mb-4">
             {cankerTraits.map((item) => (
               <li key={item} className="flex gap-3 text-sm text-ink-soft">
@@ -115,7 +115,7 @@ export default async function CankerSorePage({ params }: Props) {
         {/* What does oral cancer look like */}
         <section className="mb-10">
           <h2 className="font-serif text-3xl text-ink mb-4">{t("cancerLookHeading")}</h2>
-          <p className="text-ink-soft leading-relaxed mb-4">{t("cancerLookP1")}</p>
+          <p className="text-ink-soft leading-relaxed mb-4 max-w-prose">{t("cancerLookP1")}</p>
           <ul className="space-y-2 mb-4">
             {cancerTraits.map((item) => (
               <li key={item} className="flex gap-3 text-sm text-ink-soft">
@@ -160,7 +160,7 @@ export default async function CankerSorePage({ params }: Props) {
         {/* When to see a doctor */}
         <section className="mb-10">
           <h2 className="font-serif text-3xl text-ink mb-4">{t("whenToSeeHeading")}</h2>
-          <div className="space-y-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {whenToSee.map(({ title, desc }) => (
               <div key={title} className="bg-warm-dim border border-warm-dim rounded-2xl p-5 flex gap-4 items-start">
                 <span className="text-accent font-bold mt-0.5 flex-shrink-0">→</span>
@@ -176,7 +176,7 @@ export default async function CankerSorePage({ params }: Props) {
         {/* FAQ */}
         <section className="mb-12">
           <h2 className="font-serif text-3xl text-ink mb-6">{t("faqHeading")}</h2>
-          <div className="space-y-4">
+          <div className="space-y-4 max-w-3xl">
             {faqs.map((faq) => (
               <details
                 key={faq.q}

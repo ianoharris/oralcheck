@@ -1580,7 +1580,9 @@
         "tag": "Prevención",
         "title": "Cómo reducir el riesgo del betel / paan"
       }
-    }
+    },
+    "alsoContributing": "También contribuyen:",
+    "hideOthers": "Ocultar estos"
   },
   "ScreenerMeta": {
     "title": "Evaluación gratuita de riesgo de cáncer oral",

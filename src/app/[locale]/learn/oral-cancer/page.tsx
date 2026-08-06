@@ -78,7 +78,7 @@ export default async function OralCancerPage({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <article className="max-w-3xl mx-auto px-5 py-10 sm:py-16">
+      <article className="max-w-5xl mx-auto px-5 py-10 sm:py-16">
         <Link
           href="/learn"
           className="text-sm font-medium text-ink-soft hover:text-ink mb-6 inline-block"
@@ -91,7 +91,7 @@ export default async function OralCancerPage({ params }: Props) {
         <h1 className="font-serif text-4xl sm:text-5xl text-ink mb-4 leading-tight">
           {t("heading")}
         </h1>
-        <p className="text-lg text-ink-soft leading-relaxed mb-10">{t("intro")}</p>
+        <p className="text-lg text-ink-soft leading-relaxed mb-10 max-w-3xl">{t("intro")}</p>
 
         {/* Definition */}
         <div className="bg-warm-dim border border-warm-dim rounded-2xl p-6 sm:p-8 mb-6">
@@ -101,7 +101,7 @@ export default async function OralCancerPage({ params }: Props) {
             <strong className="text-ink">{t("definitionBold2")}</strong> {t("definitionMid")}{" "}
             <strong className="text-ink">{t("definitionBold3")}</strong> {t("definitionEnd")}
           </p>
-          <p className="text-ink-soft leading-relaxed">
+          <p className="text-ink-soft leading-relaxed max-w-prose">
             {t("definitionP2Start")} <strong className="text-ink">{t("definitionBold4")}</strong>,{" "}
             {t("definitionP2End")}
           </p>
@@ -110,7 +110,7 @@ export default async function OralCancerPage({ params }: Props) {
         {/* Types */}
         <section className="mb-6">
           <h2 className="font-serif text-3xl text-ink mb-4">{t("typesHeading")}</h2>
-          <div className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
             {types.map((ty) => (
               <div
                 key={ty.name}
@@ -150,8 +150,8 @@ export default async function OralCancerPage({ params }: Props) {
         {/* What causes it */}
         <section className="mb-6">
           <h2 className="font-serif text-3xl text-ink mb-4">{t("causesHeading")}</h2>
-          <p className="text-ink-soft leading-relaxed mb-5">{t("causesIntro")}</p>
-          <div className="space-y-3">
+          <p className="text-ink-soft leading-relaxed mb-5 max-w-prose">{t("causesIntro")}</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 items-start">
             {causes.map((c, i) => (
               <div
                 key={c.factor}
@@ -184,7 +184,7 @@ export default async function OralCancerPage({ params }: Props) {
         <section className="mb-6">
           <div className="bg-warm-dim border border-warm-dim rounded-2xl p-6 sm:p-8">
             <h2 className="font-serif text-2xl text-ink mb-3">{t("lookLikeHeading")}</h2>
-            <p className="text-ink-soft leading-relaxed mb-4">{t("lookLikeIntro")}</p>
+            <p className="text-ink-soft leading-relaxed mb-4 max-w-prose">{t("lookLikeIntro")}</p>
             <ul className="space-y-2 mb-4">
               {signs.map((sign) => (
                 <li key={sign} className="flex gap-3 items-start text-sm text-ink-soft">
@@ -217,7 +217,7 @@ export default async function OralCancerPage({ params }: Props) {
         {/* FAQ */}
         <section className="mb-6">
           <h2 className="font-serif text-3xl text-ink mb-6">{t("faqHeading")}</h2>
-          <div className="space-y-4">
+          <div className="space-y-4 max-w-3xl">
             {faqs.map((faq) => (
               <details
                 key={faq.q}

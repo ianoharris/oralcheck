@@ -74,7 +74,7 @@ export default async function SignsPage({ params }: Props) {
   };
 
   return (
-    <article className="max-w-3xl mx-auto px-5 py-10 sm:py-16">
+    <article className="max-w-5xl mx-auto px-5 py-10 sm:py-16">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -91,7 +91,7 @@ export default async function SignsPage({ params }: Props) {
       <h1 className="font-serif text-4xl sm:text-5xl text-ink mb-4 leading-tight">
         {t("heading")}
       </h1>
-      <p className="text-lg text-ink-soft leading-relaxed mb-10">
+      <p className="text-lg text-ink-soft leading-relaxed mb-10 max-w-3xl">
         {t("introStart")}{" "}
         <Link
           href="/learn/oral-cancer"
@@ -116,7 +116,7 @@ export default async function SignsPage({ params }: Props) {
       {/* Signs list */}
       <section className="mb-14">
         <h2 className="font-serif text-3xl text-ink mb-6">{t("signsHeading")}</h2>
-        <div className="space-y-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
           {signs.map((s, i) => (
             <div
               key={s.title}
@@ -152,7 +152,7 @@ export default async function SignsPage({ params }: Props) {
       {/* Where it develops */}
       <section className="mb-14">
         <h2 className="font-serif text-3xl text-ink mb-3">{t("whereHeading")}</h2>
-        <p className="text-ink-soft leading-relaxed mb-6 text-sm">{t("whereIntro")}</p>
+        <p className="text-ink-soft leading-relaxed mb-6 text-sm max-w-prose">{t("whereIntro")}</p>
         <div className="overflow-hidden rounded-2xl border border-warm-dim">
           {locations.map((loc, i) => (
             <div
@@ -176,15 +176,15 @@ export default async function SignsPage({ params }: Props) {
       {/* Painlessness callout */}
       <section className="mb-14">
         <h2 className="font-serif text-3xl text-ink mb-4">{t("painlessHeading")}</h2>
-        <p className="text-ink-soft leading-relaxed mb-4">{t("painlessP1")}</p>
-        <p className="text-ink-soft leading-relaxed mb-4">{t("painlessP2")}</p>
-        <p className="text-ink-soft leading-relaxed">{t("painlessP3")}</p>
+        <p className="text-ink-soft leading-relaxed mb-4 max-w-prose">{t("painlessP1")}</p>
+        <p className="text-ink-soft leading-relaxed mb-4 max-w-prose">{t("painlessP2")}</p>
+        <p className="text-ink-soft leading-relaxed max-w-prose">{t("painlessP3")}</p>
       </section>
 
       {/* Oral cancer vs canker sore quick comparison */}
       <section className="mb-14">
         <h2 className="font-serif text-3xl text-ink mb-4">{t("comparisonHeading")}</h2>
-        <p className="text-ink-soft leading-relaxed mb-6 text-sm">
+        <p className="text-ink-soft leading-relaxed mb-6 text-sm max-w-prose">
           {t("comparisonIntroStart")}{" "}
           <Link href="/learn/canker-sore-vs-oral-cancer" className="text-brand hover:underline">
             {t("comparisonIntroLink")}
@@ -215,7 +215,7 @@ export default async function SignsPage({ params }: Props) {
       {/* What to do */}
       <section className="mb-12">
         <h2 className="font-serif text-3xl text-ink mb-4">{t("whatToDoHeading")}</h2>
-        <div className="space-y-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {whatToDo.map(({ title, desc }) => (
             <div key={title} className="flex gap-4 bg-warm-dim border border-warm-dim rounded-2xl p-5">
               <span className="text-brand font-bold mt-0.5 shrink-0">→</span>

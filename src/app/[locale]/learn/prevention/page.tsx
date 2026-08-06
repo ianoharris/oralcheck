@@ -70,7 +70,7 @@ export default async function PreventionPage({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <article className="max-w-3xl mx-auto px-5 py-10 sm:py-16">
+      <article className="max-w-5xl mx-auto px-5 py-10 sm:py-16">
         <Link
           href="/learn"
           className="text-sm font-medium text-ink-soft hover:text-ink mb-6 inline-block"
@@ -83,7 +83,7 @@ export default async function PreventionPage({ params }: Props) {
         <h1 className="font-serif text-4xl sm:text-5xl text-ink mb-4 leading-tight">
           {t("heading")}
         </h1>
-        <p className="text-lg text-ink-soft leading-relaxed mb-10">
+        <p className="text-lg text-ink-soft leading-relaxed mb-10 max-w-3xl">
           <Link
             href="/learn/oral-cancer"
             className="text-brand underline underline-offset-2 hover:text-brand-dark"
@@ -94,7 +94,7 @@ export default async function PreventionPage({ params }: Props) {
         </p>
 
         {/* Steps */}
-        <div className="space-y-5 mb-14">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start mb-14">
           {steps.map((step, i) => (
             <div
               key={step.number}
@@ -139,7 +139,7 @@ export default async function PreventionPage({ params }: Props) {
           <h2 className="font-serif text-3xl text-ink mb-6">
             {t("faqHeading")}
           </h2>
-          <div className="space-y-4">
+          <div className="space-y-4 max-w-3xl">
             {faqs.map((faq) => (
               <details
                 key={faq.q}

@@ -73,7 +73,7 @@ export default async function HpvPage({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <article className="max-w-3xl mx-auto px-5 py-10 sm:py-16">
+      <article className="max-w-5xl mx-auto px-5 py-10 sm:py-16">
         <Link
           href="/learn"
           className="text-sm font-medium text-ink-soft hover:text-ink mb-6 inline-block"
@@ -86,7 +86,7 @@ export default async function HpvPage({ params }: Props) {
         <h1 className="font-serif text-4xl sm:text-5xl text-ink mb-4 leading-tight">
           {t("heading")}
         </h1>
-        <p className="text-lg text-ink-soft leading-relaxed mb-10">
+        <p className="text-lg text-ink-soft leading-relaxed mb-10 max-w-3xl">
           {t("introStart")}{" "}
           <Link
             href="/learn/oral-cancer"
@@ -109,25 +109,25 @@ export default async function HpvPage({ params }: Props) {
         {/* What is HPV-related oral cancer */}
         <section className="mb-10">
           <h2 className="font-serif text-3xl text-ink mb-4">{t("whatIsHeading")}</h2>
-          <p className="text-ink-soft leading-relaxed mb-4">
+          <p className="text-ink-soft leading-relaxed mb-4 max-w-prose">
             {t("whatIsP1Start")} <strong className="text-ink">{t("whatIsP1Bold")}</strong>{" "}
             {t("whatIsP1End")}
           </p>
-          <p className="text-ink-soft leading-relaxed mb-4">
+          <p className="text-ink-soft leading-relaxed mb-4 max-w-prose">
             {t("whatIsP2Start")} <strong className="text-ink">{t("whatIsP2Bold")}</strong>
             {t("whatIsP2End")}
           </p>
-          <p className="text-ink-soft leading-relaxed">{t("whatIsP3")}</p>
+          <p className="text-ink-soft leading-relaxed max-w-prose">{t("whatIsP3")}</p>
         </section>
 
         {/* Symptoms */}
         <section className="mb-10">
           <h2 className="font-serif text-3xl text-ink mb-4">{t("symptomsHeading")}</h2>
-          <p className="text-ink-soft leading-relaxed mb-5">
+          <p className="text-ink-soft leading-relaxed mb-5 max-w-prose">
             {t("symptomsIntroStart")} <strong className="text-ink">{t("symptomsIntroBold")}</strong>,{" "}
             {t("symptomsIntroEnd")}
           </p>
-          <ul className="space-y-3">
+          <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {symptoms.map(({ symptom, note }) => (
               <li
                 key={symptom}
@@ -146,29 +146,29 @@ export default async function HpvPage({ params }: Props) {
         {/* Who is at risk */}
         <section className="mb-10">
           <h2 className="font-serif text-3xl text-ink mb-4">{t("whoHeading")}</h2>
-          <p className="text-ink-soft leading-relaxed mb-4">
+          <p className="text-ink-soft leading-relaxed mb-4 max-w-prose">
             {t("whoP1Start")} <strong className="text-ink">{t("whoP1Bold")}</strong>{" "}
             {t("whoP1End")}
           </p>
-          <p className="text-ink-soft leading-relaxed mb-4">{t("whoP2")}</p>
-          <p className="text-ink-soft leading-relaxed">{t("whoP3")}</p>
+          <p className="text-ink-soft leading-relaxed mb-4 max-w-prose">{t("whoP2")}</p>
+          <p className="text-ink-soft leading-relaxed max-w-prose">{t("whoP3")}</p>
         </section>
 
         {/* Vaccine */}
         <section className="bg-brand/5 border border-brand/20 rounded-2xl p-7 mb-10">
           <h2 className="font-serif text-3xl text-ink mb-3">{t("vaccineHeading")}</h2>
-          <p className="text-ink-soft leading-relaxed mb-4">
+          <p className="text-ink-soft leading-relaxed mb-4 max-w-prose">
             <strong className="text-ink">{t("vaccineP1Bold")}</strong> {t("vaccineP1Rest")}{" "}
             <strong className="text-ink">{t("vaccineP1Ages")}</strong>.
           </p>
-          <p className="text-ink-soft leading-relaxed mb-4">{t("vaccineP2")}</p>
-          <p className="text-ink-soft leading-relaxed">{t("vaccineP3")}</p>
+          <p className="text-ink-soft leading-relaxed mb-4 max-w-prose">{t("vaccineP2")}</p>
+          <p className="text-ink-soft leading-relaxed max-w-prose">{t("vaccineP3")}</p>
         </section>
 
         {/* FAQ */}
         <section className="mb-12">
           <h2 className="font-serif text-3xl text-ink mb-6">{t("faqHeading")}</h2>
-          <div className="space-y-4">
+          <div className="space-y-4 max-w-3xl">
             {faqs.map((faq) => (
               <details
                 key={faq.q}

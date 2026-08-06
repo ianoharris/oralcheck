@@ -40,6 +40,7 @@ export default function ResultsPage() {
   const [email, setEmail] = useState("");
   const [emailStatus, setEmailStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const [emailError, setEmailError] = useState("");
+  const [showAllFactors, setShowAllFactors] = useState(false);
 
   useEffect(() => {
     try {
@@ -185,10 +186,15 @@ export default function ResultsPage() {
 
   const primaryCTA: Record<RiskTier, string> = t.raw("primaryCTA");
 
+  // factors arrive sorted by weight, so the first few are the ones worth explaining
+  const PRIMARY_COUNT = 4;
+  const primaryFactors = result.factors.slice(0, PRIMARY_COUNT);
+  const minorFactors = result.factors.slice(PRIMARY_COUNT);
+
   // ── Main render ───────────────────────────────────────────────────────────
 
   return (
-    <div className="max-w-3xl mx-auto px-5 py-10 sm:py-16">
+    <div className="max-w-5xl mx-auto px-5 py-10 sm:py-16">
 
       {/* Urgent symptom banner */}
       {result.hasUrgentSymptom && (
@@ -239,12 +245,15 @@ export default function ResultsPage() {
         </div>
       </div>
 
-      {/* What's driving your risk */}
+      {/* What's driving your risk.
+          Only the factors that actually move the score get a full write-up.
+          Listing all ten with a paragraph each read as padding and buried the
+          ones that matter, so the tail collapses behind a toggle. */}
       {result.factors.length > 0 && (
         <div className="mt-10">
           <h2 className="font-serif text-2xl text-ink mb-4">{t("drivingHeading")}</h2>
-          <div className="space-y-3">
-            {result.factors.map((f) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            {primaryFactors.map((f) => (
               <div
                 key={f.questionId}
                 className="bg-warm-dim rounded-2xl border border-warm-dim p-5"
@@ -268,13 +277,54 @@ export default function ResultsPage() {
               </div>
             ))}
           </div>
+
+          {minorFactors.length > 0 && (
+            <div className="mt-3">
+              <button
+                onClick={() => setShowAllFactors((v) => !v)}
+                aria-expanded={showAllFactors}
+                className="w-full text-left bg-warm-dim/60 rounded-2xl border border-warm-dim px-5 py-3.5 hover:border-brand/40 transition-colors"
+              >
+                <span className="text-sm font-semibold text-ink">
+                  {showAllFactors ? t("hideOthers") : t("alsoContributing")}
+                </span>
+                <span className="text-sm text-ink-soft">
+                  {" "}
+                  {minorFactors.map((f) => f.label).join(" · ")}
+                </span>
+              </button>
+              {showAllFactors && (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3">
+                  {minorFactors.map((f) => (
+                    <div
+                      key={f.questionId}
+                      className="bg-warm-dim rounded-2xl border border-warm-dim p-5"
+                    >
+                      <div className="flex items-start gap-4">
+                        <div className="text-2xl" aria-hidden>{f.icon}</div>
+                        <div className="flex-1">
+                          <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                            <div className="font-semibold text-ink">{f.label}</div>
+                            <div className="text-sm text-ink-soft">{f.answerLabel}</div>
+                          </div>
+                          <p className="text-sm text-ink-soft mt-1.5 leading-relaxed">
+                            {f.guidance}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
         </div>
       )}
 
       {/* Next steps */}
       <div className="mt-10">
         <h2 className="font-serif text-2xl text-ink mb-4">{t("nextStepsHeading")}</h2>
-        <div className="space-y-3">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           {nextSteps.map((step, i) => (
             <div
               key={step.title}
@@ -394,15 +444,21 @@ export default function ResultsPage() {
         </Link>
       </div>
 
-      {/* Evidence basis + Disclaimer */}
-      <div className="mt-12 p-5 rounded-2xl bg-warm-dim/50 text-xs text-ink-soft leading-relaxed space-y-2">
-        <p>
-          <strong className="text-ink">{t("evidenceBasisLabel")}</strong>{" "}
-          {t.rich("evidenceBasisBody", { i: (chunks) => <em>{chunks}</em> })}
-        </p>
+      {/* Disclaimer stays visible; the citation list is long and only a few
+          readers want it, so it collapses instead of padding every result. */}
+      <div className="mt-12 p-5 rounded-2xl bg-warm-dim/50 text-xs text-ink-soft leading-relaxed">
         <p>
           <strong className="text-ink">{t("disclaimerLabel")}</strong> {t("disclaimerBody")}
         </p>
+        <details className="mt-3 group">
+          <summary className="cursor-pointer list-none font-semibold text-ink hover:text-brand transition-colors">
+            {t("evidenceBasisLabel")}
+            <span className="ml-1.5 inline-block text-brand group-open:rotate-45 transition-transform">+</span>
+          </summary>
+          <p className="mt-2 max-w-prose">
+            {t.rich("evidenceBasisBody", { i: (chunks) => <em>{chunks}</em> })}
+          </p>
+        </details>
       </div>
     </div>
   );
