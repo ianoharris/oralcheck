@@ -1285,7 +1285,7 @@
     "weightP1": "Each risk factor is assigned a weight proportional to the natural log of its published odds ratio (OR), scaled by a constant <i>k</i>:",
     "weightFormula": "weight = round( ln(OR) × k )",
     "weightP2": "The scaling constant <i>k = 4.47</i> was chosen so that daily tobacco use (the highest-weighted modifiable factor, OR 6.0× per Gandini et al. 2008) maps to a weight of 8. That anchors all other weights to a consistent ordinal scale from the same evidence base.",
-    "weightP3": "Where studies report a range of ORs, we use the midpoint or a conservative estimate. Symptoms like erythroplakia, leukoplakia, and non-healing ulcers work as clinical overrides rather than additive scores. They're better understood as possible in-situ pathology than as population-level risk exposures, so they're treated differently in the model.",
+    "weightP3": "Where studies report a range of ORs, we use the midpoint or a conservative estimate. Symptoms like erythroplakia, leukoplakia, and non-healing ulcers are treated two ways at once: they add to the score, and they also override the tier to See-a-Dentist-Soon regardless of the total. They're better understood as possible in-situ pathology than as population-level risk exposures, so a reported symptom always surfaces the same recommendation even when every other factor is low.",
     "factorTableHeading": "Risk Factor Weights",
     "colFactor": "Factor",
     "colOR": "Published OR",
@@ -1331,7 +1331,17 @@
       "age35": "Age 35 – 54",
       "tobaccoFormer": "Tobacco (former)",
       "hpvUnvaccinated": "HPV (not vaccinated, no known history)",
-      "sunExposure": "Sun exposure (lips, unprotected)"
+      "sunExposure": "Sun exposure (lips, unprotected)",
+      "symptomPresent": "Current symptom lasting 2+ weeks",
+      "symptomUnsure": "Possible symptom (unsure)",
+      "dentalNever": "Never seen a dentist",
+      "dentalLongAgo": "Last dental visit 3+ years ago",
+      "dentalFewYears": "Last dental visit 1–3 years ago",
+      "alcoholRarely": "Alcohol (rarely)",
+      "sunRegular": "Sun exposure (regular, sometimes protected)",
+      "familyDistant": "Family history (distant relative)",
+      "dietWeekly": "Fruit/vegetables a few times a week",
+      "hpvUnknown": "HPV status unknown"
     },
     "factorNotes": {
       "tobaccoDaily": "Anchor for the scaling constant k = 4.47",

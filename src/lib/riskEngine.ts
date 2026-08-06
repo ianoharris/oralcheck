@@ -46,11 +46,20 @@ function getQuestionsTranslator(locale: string) {
   return createTranslator({ locale, messages, namespace: "Questions" });
 }
 
+/** Points added when tobacco and alcohol are both used at meaningful levels. */
+const INTERACTION_BONUS = 3;
+
+/**
+ * Highest score a real answer set can produce. The tobacco+alcohol interaction
+ * bonus is reachable (daily tobacco and daily alcohol are both max-weight
+ * answers), so it has to be included here — otherwise a worst-case profile
+ * scores 53 against a stated max of 50 and reports 106%.
+ */
 export function computeMaxScore(): number {
-  return QUESTION_SKELETON.reduce((sum, q) => {
-    const max = Math.max(...q.options.map((o) => o.weight));
-    return sum + max;
+  const optionMax = QUESTION_SKELETON.reduce((sum, q) => {
+    return sum + Math.max(...q.options.map((o) => o.weight));
   }, 0);
+  return optionMax + INTERACTION_BONUS;
 }
 
 /**
@@ -126,15 +135,14 @@ export function computeRisk(answers: Answers, locale: string = "en"): RiskResult
   const hasActiveAlcohol = alcoholAnswer === "daily" || alcoholAnswer === "weekly";
 
   if (hasActiveTobacco && hasActiveAlcohol) {
-    const interactionBonus = 3;
-    score += interactionBonus;
+    score += INTERACTION_BONUS;
     factors.push({
       questionId: "tobacco_alcohol_interaction",
       category: "tobacco",
       icon: "⚡",
       label: t("interaction.label"),
       answerLabel: t("interaction.answerLabel"),
-      weight: interactionBonus,
+      weight: INTERACTION_BONUS,
       guidance: t("interaction.guidance"),
     });
   }

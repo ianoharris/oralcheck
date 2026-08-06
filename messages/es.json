@@ -1285,7 +1285,7 @@
     "weightP1": "A cada factor de riesgo se le asigna un peso proporcional al logaritmo natural de su razón de momios (OR) publicada, escalado por una constante <i>k</i>:",
     "weightFormula": "peso = round( ln(OR) × k )",
     "weightP2": "La constante de escala <i>k = 4.47</i> se eligió para que el uso diario de tabaco (el factor modificable con mayor peso, OR 6.0× según Gandini et al. 2008) corresponda a un peso de 8. Eso ancla todos los demás pesos a una escala ordinal consistente basada en la misma evidencia.",
-    "weightP3": "Cuando los estudios reportan un rango de OR, usamos el punto medio o una estimación conservadora. Síntomas como la eritroplasia, la leucoplasia y las úlceras que no sanan funcionan como anulaciones clínicas en lugar de puntajes aditivos. Se entienden mejor como posible patología in situ que como exposiciones de riesgo a nivel poblacional, por lo que se tratan de forma diferente en el modelo.",
+    "weightP3": "Cuando los estudios reportan un rango de OR, usamos el punto medio o una estimación conservadora. Síntomas como la eritroplasia, la leucoplasia y las úlceras que no sanan se tratan de dos formas a la vez: suman al puntaje y además anulan el nivel a Consulta a un dentista pronto sin importar el total. Se entienden mejor como posible patología in situ que como exposiciones de riesgo a nivel poblacional, por lo que un síntoma reportado siempre genera la misma recomendación, incluso cuando todos los demás factores son bajos.",
     "factorTableHeading": "Pesos de los factores de riesgo",
     "colFactor": "Factor",
     "colOR": "OR publicada",
@@ -1331,7 +1331,17 @@
       "age35": "35 – 54 años",
       "tobaccoFormer": "Tabaco (exfumador)",
       "hpvUnvaccinated": "VPH (no vacunado, sin antecedentes conocidos)",
-      "sunExposure": "Exposición al sol (labios, sin protección)"
+      "sunExposure": "Exposición al sol (labios, sin protección)",
+      "symptomPresent": "Síntoma actual que dura 2 semanas o más",
+      "symptomUnsure": "Posible síntoma (no está seguro)",
+      "dentalNever": "Nunca ha visitado al dentista",
+      "dentalLongAgo": "Última visita dental hace más de 3 años",
+      "dentalFewYears": "Última visita dental hace 1 a 3 años",
+      "alcoholRarely": "Alcohol (rara vez)",
+      "sunRegular": "Exposición al sol (regular, a veces protegido)",
+      "familyDistant": "Antecedentes familiares (familiar lejano)",
+      "dietWeekly": "Frutas y verduras algunas veces por semana",
+      "hpvUnknown": "Estado de VPH desconocido"
     },
     "factorNotes": {
       "tobaccoDaily": "Ancla para la constante de escala k = 4.47",

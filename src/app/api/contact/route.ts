@@ -7,6 +7,9 @@ function getResend() {
   return new Resend(process.env.RESEND_API_KEY);
 }
 
+// Where site feedback lands. Env-overridable so it isn't hardcoded to one inbox.
+const FEEDBACK_TO = process.env.FEEDBACK_TO || "ianoharris321@gmail.com";
+
 export async function POST(req: NextRequest) {
   const ip = getIp(req);
   const { allowed } = checkRateLimit(ip, 3, 60 * 60 * 1000); // 3 per hour
@@ -34,8 +37,9 @@ export async function POST(req: NextRequest) {
   try {
     const resend = getResend();
     await resend.emails.send({
-      from: "OralCheck Feedback <onboarding@resend.dev>",
-      to: "ianoharris321@gmail.com",
+      from: "OralCheck Feedback <noreply@oralcheck.org>",
+      to: FEEDBACK_TO,
+      replyTo: email || undefined,
       subject: email ? `OralCheck feedback from ${email}` : "OralCheck anonymous feedback",
       text: [
         email ? `From: ${email}` : "From: Anonymous",

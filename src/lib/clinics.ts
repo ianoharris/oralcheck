@@ -38,24 +38,27 @@ export function haversineMiles(
   return 2 * R * Math.asin(Math.sqrt(h));
 }
 
+const FREE_RE = /free clinic|free dental|charitable|volunteers in medicine|mission of mercy/;
+const COMMUNITY_RE =
+  /community health|health cent|health clinic|neighborhood health|family health|federally qualified|fqhc|public health/;
+// Never use a bare /dent/ or /oral/ here: "dent" is inside "indepenDENT"
+// (which tagged "Houston Independent School District" as a dental school) and
+// "oral" is inside "corpORAL"/"tempORAL".
+export const DENTAL_RE = /dental|dentist|dentistry|orthodont|periodont|endodont|\boral\b|maxillofacial/;
+
+// Requires an unambiguous academic-dental phrase. A loose "academic word AND
+// dental word" test misfired on private practices like "University Square Dental".
+// Genuinely institution-tagged places are caught by the OSM amenity override
+// in the clinics route instead.
+const DENTAL_SCHOOL_RE =
+  /school of dent|dental school|college of dent|dental college|school of dental|dental medicine|faculty of dent|dental hygiene program/;
+
 export function classify(name: string, types: string[] = []): Clinic["type"] {
   const n = name.toLowerCase();
-  if (n.includes("free clinic") || n.includes("free dental")) return "free";
-  if (
-    n.includes("community health") ||
-    n.includes("health center") ||
-    n.includes("fqhc") ||
-    n.includes("public health")
-  )
-    return "community-health";
-  if (
-    n.includes("school of dent") ||
-    n.includes("dental school") ||
-    n.includes("college of dent") ||
-    (n.includes("university") && types.includes("dentist"))
-  )
-    return "dental-school";
-  if (types.includes("dentist") || n.includes("dent")) return "dental";
+  if (FREE_RE.test(n)) return "free";
+  if (DENTAL_SCHOOL_RE.test(n)) return "dental-school";
+  if (COMMUNITY_RE.test(n)) return "community-health";
+  if (types.includes("dentist") || DENTAL_RE.test(n)) return "dental";
   return "other";
 }
 

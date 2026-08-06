@@ -34,6 +34,16 @@ const factors = [
   { id: "tobaccoFormer", or: "~1.5×", weight: 2, source: "Gandini et al., Oral Oncology, 2008" },
   { id: "hpvUnvaccinated", or: "~1.5× (proxy)", weight: 2, source: "D'Souza et al., NEJM, 2007; population exposure estimate" },
   { id: "sunExposure", or: "2 – 3×", weight: 2, source: "Perea-Milla López et al., Br J Cancer, 2003" },
+  { id: "symptomPresent", or: "override", weight: 6, source: "Napier & Speight, J Oral Pathol Med, 2008" },
+  { id: "symptomUnsure", or: "override", weight: 3, source: "Napier & Speight, J Oral Pathol Med, 2008" },
+  { id: "dentalNever", or: "detection proxy", weight: 3, source: "SEER stage-at-diagnosis distribution" },
+  { id: "dentalLongAgo", or: "detection proxy", weight: 2, source: "SEER stage-at-diagnosis distribution" },
+  { id: "dentalFewYears", or: "detection proxy", weight: 1, source: "SEER stage-at-diagnosis distribution" },
+  { id: "alcoholRarely", or: "~1.2×", weight: 1, source: "Bagnardi et al., Annals of Oncology, 2015" },
+  { id: "sunRegular", or: "~1.5×", weight: 1, source: "Perea-Milla López et al., Br J Cancer, 2003" },
+  { id: "familyDistant", or: "~1.3×", weight: 1, source: "Negri et al., Eur J Cancer Prev, 2009" },
+  { id: "dietWeekly", or: "~1.3×", weight: 1, source: "Pavia et al., Oral Oncology, 2006" },
+  { id: "hpvUnknown", or: "~1.2× (proxy)", weight: 1, source: "D'Souza et al., NEJM, 2007; population exposure estimate" },
 ] as const;
 
 // Bibliographic references: never translated (citations stay in their

@@ -8,10 +8,9 @@ function getResend() {
   return new Resend(process.env.RESEND_API_KEY);
 }
 
-// Sending to arbitrary users requires a verified domain in Resend. Set
-// RESEND_FROM="OralCheck <noreply@oralcheck.org>" once oralcheck.org is verified;
-// until then the resend.dev sender can only deliver to your own Resend account.
-const FROM = process.env.RESEND_FROM || "OralCheck <onboarding@resend.dev>";
+// oralcheck.org is verified in Resend, so this sender can deliver to any
+// recipient. RESEND_FROM remains an override if the address ever changes.
+const FROM = process.env.RESEND_FROM || "OralCheck <noreply@oralcheck.org>";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
