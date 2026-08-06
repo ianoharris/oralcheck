@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Icon from "@/components/Icon";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import LearnReadNext from "@/components/LearnReadNext";
@@ -147,7 +148,7 @@ export default async function RiskFactorsPage({ params }: Props) {
                 key={title}
                 className="flex gap-4 bg-warm-dim border border-warm-dim rounded-2xl p-5"
               >
-                <span className="text-brand font-bold mt-0.5 shrink-0">✓</span>
+                <span className="text-brand mt-0.5 shrink-0" aria-hidden><Icon name="check" size={16} weight="bold" /></span>
                 <div>
                   <div className="font-semibold text-ink text-sm">{title}</div>
                   <div className="text-xs text-ink-soft mt-0.5">{desc}</div>

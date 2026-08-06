@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Icon, { type IconName } from "@/components/Icon";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { Suspense } from "react";
@@ -18,7 +19,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-type WhyPoint = { icon: string; title: string; desc: string };
+type WhyPoint = { icon: IconName; title: string; desc: string };
 type Step = { title: string; desc: string };
 
 export default async function ForCliniciansPage({ params }: Props) {
@@ -52,7 +53,7 @@ export default async function ForCliniciansPage({ params }: Props) {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {whyPoints.map((p) => (
             <div key={p.title} className="flex gap-3 items-start">
-              <span className="text-xl leading-none mt-0.5">{p.icon}</span>
+              <span className="text-brand mt-0.5 shrink-0" aria-hidden><Icon name={p.icon} size={22} /></span>
               <div>
                 <div className="font-semibold text-ink text-sm">{p.title}</div>
                 <div className="text-ink-soft text-sm leading-relaxed mt-0.5">{p.desc}</div>

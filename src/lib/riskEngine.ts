@@ -2,6 +2,7 @@ import { createTranslator } from "use-intl/core";
 import enMessages from "../../messages/en.json";
 import esMessages from "../../messages/es.json";
 import { QUESTION_SKELETON, type Question } from "./questions";
+import type { IconName } from "@/components/Icon";
 
 export type Answers = Record<string, string>;
 
@@ -10,7 +11,7 @@ export type RiskTier = "low" | "moderate" | "elevated" | "high";
 export type RiskFactor = {
   questionId: string;
   category: Question["category"];
-  icon: string;
+  icon: IconName;
   label: string;
   answerLabel: string;
   weight: number;
@@ -139,7 +140,7 @@ export function computeRisk(answers: Answers, locale: string = "en"): RiskResult
     factors.push({
       questionId: "tobacco_alcohol_interaction",
       category: "tobacco",
-      icon: "⚡",
+      icon: "interaction",
       label: t("interaction.label"),
       answerLabel: t("interaction.answerLabel"),
       weight: INTERACTION_BONUS,

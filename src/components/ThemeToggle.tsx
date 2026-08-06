@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Icon from "@/components/Icon";
 
 export default function ThemeToggle() {
   const [dark, setDark] = useState(false);
@@ -39,9 +40,8 @@ export default function ThemeToggle() {
       onClick={toggle}
       aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
       className="w-8 h-8 flex items-center justify-center rounded-full text-ink-soft hover:text-ink hover:bg-warm-dim transition-colors"
-      style={{ fontSize: "1rem" }}
     >
-      {dark ? "☀︎" : "☾"}
+      <Icon name={dark ? "sunDim" : "moon"} size={18} />
     </button>
   );
 }

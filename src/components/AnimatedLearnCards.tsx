@@ -1,6 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import Icon from "@/components/Icon";
 import { Link } from "@/i18n/navigation";
 import { motion, useReducedMotion } from "framer-motion";
 import { useLearnArticles } from "@/lib/learnArticles";
@@ -25,7 +26,7 @@ export default function AnimatedLearnCards() {
             className="group flex flex-col h-full bg-warm-dim rounded-2xl border border-warm-dim p-6 hover:border-brand/40 hover:shadow-md transition-all duration-200"
           >
             <div className="flex items-center gap-2 mb-4">
-              <span className="text-2xl" aria-hidden>{icon}</span>
+              <span className="text-brand" aria-hidden><Icon name={icon} size={26} /></span>
               <span className="text-xs font-semibold uppercase tracking-wider text-brand bg-brand-soft px-2 py-0.5 rounded-full">
                 {tag}
               </span>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Icon from "@/components/Icon";
 import { useTranslations } from "next-intl";
 
 export default function ContactForm() {
@@ -36,7 +37,7 @@ export default function ContactForm() {
   if (status === "sent") {
     return (
       <div className="text-center py-6">
-        <div className="text-3xl mb-3">✓</div>
+        <div className="flex justify-center mb-3 text-low" aria-hidden><Icon name="check" size={34} weight="bold" /></div>
         <p className="font-semibold text-ink">{t("sentTitle")}</p>
         <p className="text-sm text-ink-soft mt-1">{t("sentDesc")}</p>
         <button

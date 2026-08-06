@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Icon from "@/components/Icon";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import LearnReadNext from "@/components/LearnReadNext";
@@ -104,7 +105,7 @@ export default async function CankerSorePage({ params }: Props) {
           <ul className="space-y-2 mb-4">
             {cankerTraits.map((item) => (
               <li key={item} className="flex gap-3 text-sm text-ink-soft">
-                <span className="text-low font-bold mt-0.5 flex-shrink-0">✓</span>
+                <span className="text-low mt-0.5 flex-shrink-0" aria-hidden><Icon name="check" size={16} weight="bold" /></span>
                 {item}
               </li>
             ))}

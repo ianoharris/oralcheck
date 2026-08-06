@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import Icon from "@/components/Icon";
 import { useTranslations } from "next-intl";
 import type { Clinic, ClinicSearchResult } from "@/lib/clinics";
 import ClinicMap from "@/components/ClinicMap";
@@ -309,7 +310,7 @@ function ClinicCard({
       )}
       {clinic.rating !== undefined && (
         <div className="mt-2 text-xs text-ink-soft">
-          ★ {clinic.rating.toFixed(1)}
+          <Icon name="star" size={13} weight="fill" className="inline-block -mt-0.5 mr-0.5" /> {clinic.rating.toFixed(1)}
           {clinic.totalRatings !== undefined && (
             <span> {t("reviews", { count: clinic.totalRatings })}</span>
           )}

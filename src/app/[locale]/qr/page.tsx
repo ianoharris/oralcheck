@@ -88,9 +88,9 @@ export default function QRPage() {
           <p className="mt-3 text-sm text-ink-soft font-mono">{url}</p>
 
           <div className="mt-8 flex gap-6 text-xs text-ink-soft">
-            <span>✓ Free</span>
-            <span>✓ Private</span>
-            <span>✓ No account needed</span>
+            <span>Free</span>
+            <span>Private</span>
+            <span>No account needed</span>
           </div>
         </div>
 

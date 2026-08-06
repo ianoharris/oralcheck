@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Icon from "@/components/Icon";
 import { useTranslations } from "next-intl";
 
 const EMBED_CODE = `<iframe
@@ -31,7 +32,7 @@ export default function EmbedBlock() {
         onClick={handleCopy}
         className="bg-brand hover:bg-brand-dark text-white font-semibold px-5 py-2.5 rounded-full text-sm transition-colors"
       >
-        {copied ? t("copied") : t("copy")}
+        {copied ? <span className="inline-flex items-center gap-1.5"><Icon name="check" size={15} weight="bold" />{t("copied")}</span> : t("copy")}
       </button>
     </section>
   );

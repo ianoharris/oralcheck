@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Icon, { type IconName } from "@/components/Icon";
 import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { computeRisk, type RiskResult, type RiskTier } from "@/lib/riskEngine";
@@ -17,16 +18,16 @@ const nextStepsHref: Record<RiskTier, (string | undefined)[]> = {
   high: ["/find-care", undefined, "/learn/self-exam"],
 };
 
-const categoryLearnMeta: Partial<Record<Question["category"], { href: string; icon: string }>> = {
-  tobacco: { href: "/learn/prevention", icon: "🛡️" },
-  alcohol: { href: "/learn/prevention", icon: "🛡️" },
-  hpv: { href: "/learn/hpv", icon: "🦠" },
-  sun: { href: "/learn/prevention", icon: "🛡️" },
-  symptoms: { href: "/learn/signs", icon: "⚠️" },
-  family: { href: "/learn/facts", icon: "📊" },
-  diet: { href: "/learn/prevention", icon: "🛡️" },
-  dental: { href: "/learn/self-exam", icon: "🔎" },
-  other: { href: "/learn/prevention", icon: "🛡️" },
+const categoryLearnMeta: Partial<Record<Question["category"], { href: string; icon: IconName }>> = {
+  tobacco: { href: "/learn/prevention", icon: "prevention" },
+  alcohol: { href: "/learn/prevention", icon: "prevention" },
+  hpv: { href: "/learn/hpv", icon: "virus" },
+  sun: { href: "/learn/prevention", icon: "prevention" },
+  symptoms: { href: "/learn/signs", icon: "signs" },
+  family: { href: "/learn/facts", icon: "facts" },
+  diet: { href: "/learn/prevention", icon: "prevention" },
+  dental: { href: "/learn/self-exam", icon: "selfExam" },
+  other: { href: "/learn/prevention", icon: "prevention" },
 };
 
 export default function ResultsPage() {
@@ -200,7 +201,7 @@ export default function ResultsPage() {
       {result.hasUrgentSymptom && (
         <div className="mb-8 p-4 rounded-2xl bg-high/10 border border-high/30">
           <div className="flex gap-3 items-start">
-            <div className="text-2xl">⚠️</div>
+            <div className="text-high shrink-0" aria-hidden><Icon name="signs" size={24} weight="fill" /></div>
             <div className="text-sm text-ink leading-relaxed">
               <span className="font-semibold">{t("urgentBannerBold")}</span>{" "}
               {t("urgentBannerRest")}
@@ -259,8 +260,8 @@ export default function ResultsPage() {
                 className="bg-warm-dim rounded-2xl border border-warm-dim p-5"
               >
                 <div className="flex items-start gap-4">
-                  <div className="text-2xl" aria-hidden>
-                    {f.icon}
+                  <div className="text-brand shrink-0" aria-hidden>
+                    <Icon name={f.icon} size={26} />
                   </div>
                   <div className="flex-1">
                     <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
@@ -301,7 +302,7 @@ export default function ResultsPage() {
                       className="bg-warm-dim rounded-2xl border border-warm-dim p-5"
                     >
                       <div className="flex items-start gap-4">
-                        <div className="text-2xl" aria-hidden>{f.icon}</div>
+                        <div className="text-brand shrink-0" aria-hidden><Icon name={f.icon} size={26} /></div>
                         <div className="flex-1">
                           <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
                             <div className="font-semibold text-ink">{f.label}</div>
@@ -365,8 +366,8 @@ export default function ResultsPage() {
                 href={link.href}
                 className="group bg-warm-dim rounded-2xl border border-warm-dim p-5 hover:border-brand/40 transition-all"
               >
-                <div className="text-2xl mb-2" aria-hidden>
-                  {link.icon}
+                <div className="text-brand mb-2" aria-hidden>
+                  <Icon name={link.icon} size={26} />
                 </div>
                 <span className="inline-block text-xs font-semibold uppercase tracking-wider text-brand bg-brand-soft px-2 py-0.5 rounded-full mb-2">
                   {link.tag}
@@ -395,7 +396,7 @@ export default function ResultsPage() {
           onClick={handleShare}
           className="bg-warm-dim hover:bg-warm text-ink font-semibold px-6 py-4 rounded-2xl transition-colors border border-warm-dim text-center"
         >
-          {copied ? t("linkCopied") : t("shareCta")}
+          {copied ? <span className="inline-flex items-center justify-center gap-1.5"><Icon name="check" size={16} weight="bold" />{t("linkCopied")}</span> : t("shareCta")}
         </button>
       </div>
 

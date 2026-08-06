@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Icon from "@/components/Icon";
 import { useTranslations } from "next-intl";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 
@@ -184,7 +185,7 @@ export default function SignsVisualGuide() {
 
       {/* the unifying rule */}
       <div className="mt-6 flex items-center gap-3 rounded-2xl bg-brand px-5 py-4 text-white">
-        <span className="text-2xl leading-none" aria-hidden>⏱</span>
+        <span className="shrink-0" aria-hidden><Icon name="timer" size={26} /></span>
         <p className="text-sm sm:text-[15px] leading-snug">
           <span className="font-semibold">{t("twoWeekBold")}</span>{" "}{t("twoWeekRest")}
         </p>

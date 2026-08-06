@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback } from "react";
+import Icon from "@/components/Icon";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import QRCode from "react-qr-code";
@@ -216,7 +217,7 @@ export default function PrintableFlyer() {
               onClick={handleCopyLink}
               className="bg-white hover:bg-warm-dim text-ink font-semibold px-6 py-2.5 rounded-full text-sm border border-warm-dim transition-colors"
             >
-              {copied ? t("linkCopied") : t("copyLink")}
+              {copied ? <span className="inline-flex items-center gap-1.5"><Icon name="check" size={15} weight="bold" />{t("linkCopied")}</span> : t("copyLink")}
             </button>
           )}
         </div>

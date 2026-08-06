@@ -1119,22 +1119,22 @@
     "whyHeading": "Why OralCheck",
     "whyPoints": [
       {
-        "icon": "🔒",
+        "icon": "private",
         "title": "Zero PHI collected",
         "desc": "Answers never leave the patient's device. No HIPAA concerns, no data liability."
       },
       {
-        "icon": "✓",
+        "icon": "check",
         "title": "Evidence-based risk factors",
         "desc": "Scoring logic draws from ACS, NCI, and Oral Cancer Foundation clinical guidelines."
       },
       {
-        "icon": "⚡",
+        "icon": "noCost",
         "title": "No setup, no login",
         "desc": "Send a link or hang a QR code. Nothing to install, nothing to manage."
       },
       {
-        "icon": "🆓",
+        "icon": "care",
         "title": "Free, permanently",
         "desc": "There is no paid tier. No vendor relationship to manage."
       }
@@ -1163,7 +1163,7 @@
     "heading": "Embed on your practice website",
     "body": "Paste this anywhere on your website, a patient education page, an appointment prep page, or your homepage. It runs entirely in the browser; no data ever reaches your server.",
     "copy": "Copy embed code",
-    "copied": "✓ Copied!"
+    "copied": "Copied"
   },
   "PrintableFlyer": {
     "customizeHeading": "Customize your flyer",
@@ -1174,7 +1174,7 @@
     "phoneOptional": "(optional)",
     "printFlyer": "Print flyer",
     "copyLink": "Copy shareable link",
-    "linkCopied": "✓ Link copied!",
+    "linkCopied": "Link copied",
     "shareLinkNote": "Share the link above, anyone who opens it sees the same customized flyer.",
     "presentedBy": "Presented by",
     "tagline": "FREE · PRIVATE · EVIDENCE-BASED",
@@ -1453,7 +1453,7 @@
     "nextStepsHeading": "Your next steps",
     "relatedReadingHeading": "Related reading",
     "read": "Read →",
-    "linkCopied": "✓ Link copied!",
+    "linkCopied": "Link copied",
     "shareCta": "Share with someone you care about",
     "shareText": "I just used OralCheck to understand my oral cancer risk. 2 minutes could save your life. {url}",
     "emailSentTitle": "Sent. Check your inbox.",

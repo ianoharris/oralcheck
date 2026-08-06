@@ -1,9 +1,10 @@
 import { Link } from "@/i18n/navigation";
+import Icon from "@/components/Icon";
 
 export default function OfflinePage() {
   return (
     <div className="max-w-md mx-auto px-5 py-24 text-center">
-      <div className="text-5xl mb-6">📡</div>
+      <div className="flex justify-center mb-6 text-ink-soft" aria-hidden><Icon name="offline" size={56} /></div>
       <h1 className="font-serif text-3xl text-ink mb-3">You're offline</h1>
       <p className="text-ink-soft leading-relaxed mb-8">
         The screener and clinic finder need an internet connection. These pages

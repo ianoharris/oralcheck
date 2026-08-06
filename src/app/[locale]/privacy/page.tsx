@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Icon from "@/components/Icon";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { localizedAlternates } from "@/lib/pageMetadata";
@@ -43,7 +44,7 @@ export default async function PrivacyPage({ params }: Props) {
         <ul className="space-y-1.5 text-sm text-ink">
           {shortVersion.map((item) => (
             <li key={item} className="flex items-start gap-2">
-              <span className="text-brand mt-0.5 flex-shrink-0">✓</span>
+              <span className="text-brand mt-0.5 flex-shrink-0" aria-hidden><Icon name="check" size={16} weight="bold" /></span>
               <span>{item}</span>
             </li>
           ))}

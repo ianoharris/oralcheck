@@ -1119,22 +1119,22 @@
     "whyHeading": "Por qué OralCheck",
     "whyPoints": [
       {
-        "icon": "🔒",
+        "icon": "private",
         "title": "Cero información de salud protegida recopilada",
         "desc": "Las respuestas nunca salen del dispositivo del paciente. Sin preocupaciones de HIPAA, sin responsabilidad de datos."
       },
       {
-        "icon": "✓",
+        "icon": "check",
         "title": "Factores de riesgo basados en evidencia",
         "desc": "La lógica de puntuación se basa en las guías clínicas de la ACS, el NCI y la Oral Cancer Foundation."
       },
       {
-        "icon": "⚡",
+        "icon": "noCost",
         "title": "Sin configuración, sin inicio de sesión",
         "desc": "Envía un enlace o cuelga un código QR. Nada que instalar, nada que administrar."
       },
       {
-        "icon": "🆓",
+        "icon": "care",
         "title": "Gratis, de forma permanente",
         "desc": "No hay un nivel de pago. No hay relación con proveedores que gestionar."
       }
@@ -1163,7 +1163,7 @@
     "heading": "Insértalo en el sitio web de tu consultorio",
     "body": "Pega esto en cualquier parte de tu sitio web: una página de educación para pacientes, una página de preparación para citas o tu página de inicio. Se ejecuta completamente en el navegador; ningún dato llega jamás a tu servidor.",
     "copy": "Copiar código de inserción",
-    "copied": "✓ ¡Copiado!"
+    "copied": "Copiado"
   },
   "PrintableFlyer": {
     "customizeHeading": "Personaliza tu folleto",
@@ -1174,7 +1174,7 @@
     "phoneOptional": "(opcional)",
     "printFlyer": "Imprimir folleto",
     "copyLink": "Copiar enlace para compartir",
-    "linkCopied": "✓ ¡Enlace copiado!",
+    "linkCopied": "Enlace copiado",
     "shareLinkNote": "Comparte el enlace de arriba, cualquiera que lo abra verá el mismo folleto personalizado.",
     "presentedBy": "Presentado por",
     "tagline": "GRATIS · PRIVADO · BASADO EN EVIDENCIA",
@@ -1453,7 +1453,7 @@
     "nextStepsHeading": "Tus próximos pasos",
     "relatedReadingHeading": "Lecturas relacionadas",
     "read": "Leer →",
-    "linkCopied": "✓ ¡Enlace copiado!",
+    "linkCopied": "Enlace copiado",
     "shareCta": "Comparte con alguien que te importa",
     "shareText": "Acabo de usar OralCheck para entender mi riesgo de cáncer oral. 2 minutos podrían salvar tu vida. {url}",
     "emailSentTitle": "Enviado. Revisa tu bandeja de entrada.",

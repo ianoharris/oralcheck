@@ -1,4 +1,5 @@
 import { useTranslations } from "next-intl";
+import type { IconName } from "@/components/Icon";
 
 export type AnswerOption = {
   id: string;
@@ -20,7 +21,7 @@ export type Question = {
     | "diet"
     | "dental"
     | "other";
-  icon: string;
+  icon: IconName;
   title: string;
   subtitle?: string;
   options: AnswerOption[];
@@ -31,7 +32,7 @@ export type Question = {
 type QuestionSkeleton = {
   id: string;
   category: Question["category"];
-  icon: string;
+  icon: IconName;
   options: { id: string; weight: number }[];
 };
 
@@ -39,7 +40,7 @@ export const QUESTION_SKELETON: QuestionSkeleton[] = [
   {
     id: "age",
     category: "demographics",
-    icon: "🎂",
+    icon: "age",
     options: [
       { id: "under35", weight: 0 },
       { id: "35to54", weight: 2 },
@@ -50,7 +51,7 @@ export const QUESTION_SKELETON: QuestionSkeleton[] = [
   {
     id: "tobacco",
     category: "tobacco",
-    icon: "🚬",
+    icon: "tobacco",
     options: [
       { id: "daily", weight: 8 },
       { id: "occasional", weight: 5 },
@@ -61,7 +62,7 @@ export const QUESTION_SKELETON: QuestionSkeleton[] = [
   {
     id: "alcohol",
     category: "alcohol",
-    icon: "🍷",
+    icon: "alcohol",
     options: [
       { id: "daily", weight: 5 },
       { id: "weekly", weight: 3 },
@@ -72,7 +73,7 @@ export const QUESTION_SKELETON: QuestionSkeleton[] = [
   {
     id: "hpv",
     category: "hpv",
-    icon: "🧬",
+    icon: "hpv",
     options: [
       { id: "vaccinated", weight: 0 },
       { id: "neither", weight: 2 },
@@ -83,7 +84,7 @@ export const QUESTION_SKELETON: QuestionSkeleton[] = [
   {
     id: "sun",
     category: "sun",
-    icon: "☀️",
+    icon: "sun",
     options: [
       { id: "daily", weight: 2 },
       { id: "regular", weight: 1 },
@@ -93,7 +94,7 @@ export const QUESTION_SKELETON: QuestionSkeleton[] = [
   {
     id: "symptom",
     category: "symptoms",
-    icon: "⚠️",
+    icon: "symptom",
     options: [
       { id: "yes", weight: 6 },
       { id: "unsure", weight: 3 },
@@ -103,7 +104,7 @@ export const QUESTION_SKELETON: QuestionSkeleton[] = [
   {
     id: "family",
     category: "family",
-    icon: "👨‍👩‍👧",
+    icon: "family",
     options: [
       { id: "yes", weight: 3 },
       { id: "distant", weight: 1 },
@@ -114,7 +115,7 @@ export const QUESTION_SKELETON: QuestionSkeleton[] = [
   {
     id: "diet",
     category: "diet",
-    icon: "🥗",
+    icon: "diet",
     options: [
       { id: "daily", weight: 0 },
       { id: "weekly", weight: 1 },
@@ -124,7 +125,7 @@ export const QUESTION_SKELETON: QuestionSkeleton[] = [
   {
     id: "dental",
     category: "dental",
-    icon: "🦷",
+    icon: "dental",
     options: [
       { id: "recent", weight: 0 },
       { id: "fewyears", weight: 1 },
@@ -135,7 +136,7 @@ export const QUESTION_SKELETON: QuestionSkeleton[] = [
   {
     id: "betel",
     category: "other",
-    icon: "🌿",
+    icon: "betel",
     options: [
       { id: "current", weight: 9 },
       { id: "past", weight: 4 },

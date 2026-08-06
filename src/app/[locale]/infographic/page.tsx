@@ -1,6 +1,7 @@
 "use client";
 
 import { Link } from "@/i18n/navigation";
+import Icon, { type IconName } from "@/components/Icon";
 
 export default function InfographicPage() {
   return (
@@ -91,15 +92,17 @@ export default function InfographicPage() {
               </h3>
               <ul style={{ listStyle: "none", margin: 0, padding: 0 }}>
                 {[
-                  ["🚬", "Tobacco use (any form)"],
-                  ["🍷", "Heavy alcohol use"],
-                  ["☀️", "Prolonged sun exposure (lips)"],
-                  ["🦠", "HPV infection"],
-                  ["👨‍👩‍👦", "Family history of oral cancer"],
-                  ["🦷", "Infrequent dental visits"],
+                  ["tobacco", "Tobacco use (any form)"],
+                  ["alcohol", "Heavy alcohol use"],
+                  ["sun", "Prolonged sun exposure (lips)"],
+                  ["virus", "HPV infection"],
+                  ["family", "Family history of oral cancer"],
+                  ["dental", "Infrequent dental visits"],
                 ].map(([icon, label]) => (
                   <li key={label} style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10, fontFamily: "system-ui, sans-serif", fontSize: 14, color: "#2d2d2d" }}>
-                    <span style={{ fontSize: 18, flexShrink: 0 }}>{icon}</span>
+                    <span style={{ flexShrink: 0, color: "#0d7377", display: "flex" }}>
+                      <Icon name={icon as IconName} size={18} />
+                    </span>
                     {label}
                   </li>
                 ))}

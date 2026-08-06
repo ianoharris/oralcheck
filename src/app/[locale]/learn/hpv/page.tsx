@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Icon from "@/components/Icon";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import LearnReadNext from "@/components/LearnReadNext";
@@ -99,7 +100,7 @@ export default async function HpvPage({ params }: Props) {
 
         {/* Key stat callout */}
         <div className="bg-brand/5 border border-brand/20 rounded-2xl p-6 mb-10 flex gap-5 items-start">
-          <div className="text-4xl" aria-hidden>🦠</div>
+          <div className="text-brand shrink-0" aria-hidden><Icon name="virus" size={40} /></div>
           <div>
             <div className="font-serif text-2xl text-ink mb-1">{t("statHeading")}</div>
             <p className="text-ink-soft leading-relaxed text-sm">{t("statBody")}</p>

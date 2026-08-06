@@ -1,6 +1,7 @@
 "use client";
 
 import type { Question } from "@/lib/questions";
+import Icon from "@/components/Icon";
 
 export default function QuestionCard({
   question,
@@ -14,8 +15,8 @@ export default function QuestionCard({
   return (
     <div className="space-y-8">
       <div className="space-y-3">
-        <div className="text-4xl" aria-hidden>
-          {question.icon}
+        <div className="text-brand" aria-hidden>
+          <Icon name={question.icon} size={40} />
         </div>
         <h2 className="text-3xl sm:text-4xl font-serif text-ink leading-tight">
           {question.title}
