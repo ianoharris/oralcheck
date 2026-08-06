@@ -1417,8 +1417,6 @@
   "FindCarePage": {
     "heading": "Encuentra atención accesible",
     "subheading": "Centros de salud comunitarios, escuelas de odontología y clínicas gratuitas cerca de ti. La mayoría ofrece evaluaciones de cáncer oral como parte de una visita de rutina.",
-    "mockBannerBold": "Mostrando clínicas de ejemplo.",
-    "mockBannerRest": "No pudimos encontrar proveedores registrados para este lugar en este momento. Intenta con una ciudad cercana o usa los directorios nacionales al final de la página.",
     "searchPlaceholder": "Ingresa tu código postal o ciudad",
     "searching": "Buscando…",
     "search": "Buscar",
@@ -1443,7 +1441,11 @@
     "dentalSchoolsLabel": "Escuelas de odontología:",
     "dentalSchoolsBody": "La mayoría de las escuelas de odontología en EE. UU. operan clínicas docentes con tarifas considerablemente reducidas.",
     "lifelineLabel": "Dental Lifeline Network:",
-    "lifelineBody": "Conecta a personas con discapacidades, adultos mayores y pacientes médicamente frágiles con dentistas voluntarios."
+    "lifelineBody": "Conecta a personas con discapacidades, adultos mayores y pacientes médicamente frágiles con dentistas voluntarios.",
+    "searchingNearby": "Buscando atención cercana",
+    "searchingNote": "Consultando clínicas en OpenStreetMap. Esto puede tardar unos segundos.",
+    "loadingMore": "Aún buscando centros de salud comunitarios, clínicas gratuitas y escuelas de odontología…",
+    "retry": "Intentar de nuevo"
   },
   "ResultsPage": {
     "loading": "Cargando tus resultados…",

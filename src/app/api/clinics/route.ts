@@ -7,7 +7,6 @@ import {
   type Clinic,
   type ClinicSearchResult,
 } from "@/lib/clinics";
-import { mockClinics } from "@/lib/mockClinics";
 import { checkRateLimit, getIp } from "@/lib/rateLimit";
 
 // Free clinic search via the OpenStreetMap Overpass API (no key, no billing).
@@ -21,13 +20,25 @@ type OverpassElement = {
 };
 type OverpassResponse = { elements?: OverpassElement[]; remark?: string };
 
-// Public Overpass mirrors, tried in order. The main instance rate-limits (429)
-// and 504s under load, so a fallback keeps the map working.
+// Public Overpass mirrors, raced against each other.
+//
+// Every entry here must carry PLANET-WIDE data. overpass.osm.ch was in this
+// list and is Switzerland-only: it answered US queries in ~0.4s with zero
+// results, won the race every time, and the empty result silently demoted the
+// whole map to sample data. Verified before adding: each of these returns 100+
+// dentists for a Manhattan bounding box.
 const OVERPASS_MIRRORS = [
   "https://overpass-api.de/api/interpreter",
   "https://overpass.kumi.systems/api/interpreter",
-  "https://overpass.osm.ch/api/interpreter",
+  "https://overpass.private.coffee/api/interpreter",
 ];
+
+// Two-phase lookup. The plain dentist clauses answer in ~8s, while the
+// name-regex clauses that populate the community-health / free / dental-school
+// filters cost another ~13s no matter how few of them there are (the cost is
+// the scan, not the clause count). Fetching them separately lets the map paint
+// real results at ~8s instead of showing nothing for ~21s.
+export type Scope = "dental" | "specialty" | "all";
 
 // Name patterns that map onto the UI's filter buttons. Overpass can't classify
 // these for us: OSM has no "community health centre" tag, so we match on name.
@@ -44,36 +55,42 @@ function boundingBox(lat: number, lng: number, meters: number): string {
   return `(${(lat - dLat).toFixed(5)},${(lng - dLng).toFixed(5)},${(lat + dLat).toFixed(5)},${(lng + dLng).toFixed(5)})`;
 }
 
-function buildQuery(lat: number, lng: number, radiusMeters: number): string {
+function buildQuery(lat: number, lng: number, radiusMeters: number, scope: Scope = "all"): string {
   // Deliberately a BOUNDING BOX, not (around:). Overpass can't use its spatial
   // index for `around` combined with a name regex — measured at 70s+ / timeout
   // versus ~4s for the identical bbox query. We trim to the true circular
   // radius in JS afterwards using haversine, so results are identical.
   const b = boundingBox(lat, lng, radiusMeters);
-  const lines = [
-    // Dental practices: the always-present backbone of the results.
-    `nwr["amenity"="dentist"]${b};`,
-    `nwr["healthcare"="dentist"]${b};`,
-  ];
-  // Community health centres / FQHCs. Anchored on an exact (indexed) tag value
-  // then narrowed by name, so we don't pull in unrelated OB/GYN or diabetes clinics.
-  for (const am of ["clinic", "doctors", "hospital"]) {
-    lines.push(`nwr["amenity"="${am}"]["name"~"${COMMUNITY_PAT}",i]${b};`);
+  const lines: string[] = [];
+
+  if (scope === "dental" || scope === "all") {
+    // Dental practices: the always-present backbone of the results, and the
+    // only clauses cheap enough to answer quickly.
+    lines.push(`nwr["amenity"="dentist"]${b};`);
+    lines.push(`nwr["healthcare"="dentist"]${b};`);
   }
-  for (const hc of ["centre", "clinic", "hospital"]) {
-    lines.push(`nwr["healthcare"="${hc}"]["name"~"${COMMUNITY_PAT}",i]${b};`);
-  }
-  // Free / charitable clinics.
-  for (const am of ["clinic", "doctors", "social_facility"]) {
-    lines.push(`nwr["amenity"="${am}"]["name"~"${FREE_PAT}",i]${b};`);
-  }
-  // Dental schools: academic amenities whose name mentions dentistry. Many US
-  // dental schools carry only building=university with no amenity tag at all
-  // (NYU College of Dentistry, Columbia's College of Dental Medicine), so both
-  // tagging styles have to be queried or the dental-school filter stays empty.
-  for (const am of ["university", "college", "school"]) {
-    lines.push(`nwr["amenity"="${am}"]["name"~"${SCHOOL_PAT}",i]${b};`);
-    lines.push(`nwr["building"="${am}"]["name"~"${SCHOOL_PAT}",i]${b};`);
+
+  if (scope === "specialty" || scope === "all") {
+    // Community health centres / FQHCs. Anchored on an exact (indexed) tag value
+    // then narrowed by name, so we don't pull in unrelated OB/GYN or diabetes clinics.
+    for (const am of ["clinic", "doctors", "hospital"]) {
+      lines.push(`nwr["amenity"="${am}"]["name"~"${COMMUNITY_PAT}",i]${b};`);
+    }
+    for (const hc of ["centre", "clinic", "hospital"]) {
+      lines.push(`nwr["healthcare"="${hc}"]["name"~"${COMMUNITY_PAT}",i]${b};`);
+    }
+    // Free / charitable clinics.
+    for (const am of ["clinic", "doctors", "social_facility"]) {
+      lines.push(`nwr["amenity"="${am}"]["name"~"${FREE_PAT}",i]${b};`);
+    }
+    // Dental schools: academic amenities whose name mentions dentistry. Many US
+    // dental schools carry only building=university with no amenity tag at all
+    // (NYU College of Dentistry, Columbia's College of Dental Medicine), so both
+    // tagging styles have to be queried or the dental-school filter stays empty.
+    for (const am of ["university", "college", "school"]) {
+      lines.push(`nwr["amenity"="${am}"]["name"~"${SCHOOL_PAT}",i]${b};`);
+      lines.push(`nwr["building"="${am}"]["name"~"${SCHOOL_PAT}",i]${b};`);
+    }
   }
   return `[out:json][timeout:30];\n(\n  ${lines.join("\n  ")}\n);\nout center tags 200;`;
 }
@@ -153,57 +170,115 @@ function toClinic(el: OverpassElement, from: { lat: number; lng: number }): Clin
   };
 }
 
+const MIRROR_TIMEOUT_MS = 15_000;
+
+// Overpass is the slow part and OSM clinic data barely moves, so results are
+// worth holding onto. Coordinates are rounded to ~1km before keying, which
+// means panning slightly or re-searching the same town is an instant hit
+// instead of another multi-second lookup.
+const CACHE_TTL_MS = 24 * 60 * 60 * 1000;
+const CACHE_MAX = 200;
+const cache = new Map<string, { at: number; clinics: Clinic[] }>();
+
+function cacheKey(lat: number, lng: number, radiusMi: number, scope: Scope): string {
+  return `${scope}:${lat.toFixed(2)},${lng.toFixed(2)},${Math.round(radiusMi)}`;
+}
+
+function cacheGet(key: string): Clinic[] | null {
+  const hit = cache.get(key);
+  if (!hit) return null;
+  if (Date.now() - hit.at > CACHE_TTL_MS) {
+    cache.delete(key);
+    return null;
+  }
+  // refresh recency for the LRU eviction below
+  cache.delete(key);
+  cache.set(key, hit);
+  return hit.clinics;
+}
+
+function cacheSet(key: string, clinics: Clinic[]): void {
+  cache.set(key, { at: Date.now(), clinics });
+  while (cache.size > CACHE_MAX) {
+    const oldest = cache.keys().next().value;
+    if (oldest === undefined) break;
+    cache.delete(oldest);
+  }
+}
+
+async function queryMirror(
+  url: string,
+  query: string,
+  lat: number,
+  lng: number,
+  radiusMi: number,
+): Promise<Clinic[]> {
+  const res = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      // Overpass returns 406 without a descriptive User-Agent.
+      "User-Agent": "OralCheck/1.0 (+https://oralcheck.org)",
+      Accept: "application/json",
+    },
+    body: new URLSearchParams({ data: query }).toString(),
+    cache: "no-store",
+    signal: AbortSignal.timeout(MIRROR_TIMEOUT_MS),
+  });
+  if (!res.ok) throw new Error(`Overpass ${res.status}`);
+  const data = (await res.json()) as OverpassResponse;
+  // A timed-out query still returns 200 with a `remark`; treat that as a failure
+  // so this mirror loses the race rather than resolving with an empty map.
+  if (data.remark && !(data.elements ?? []).length) {
+    throw new Error(`Overpass remark: ${data.remark}`);
+  }
+
+  const seen = new Set<string>();
+  const clinics = (data.elements ?? [])
+    .map((el) => toClinic(el, { lat, lng }))
+    .filter((c): c is Clinic => {
+      if (!c) return false;
+      // Trim the bbox down to the true circular radius.
+      if ((c.distanceMi ?? 0) > radiusMi) return false;
+      if (seen.has(c.id)) return false;
+      seen.add(c.id);
+      return true;
+    })
+    .sort((a, b) => (a.distanceMi ?? 0) - (b.distanceMi ?? 0));
+
+  // A mirror that lacks coverage for this area answers fast and empty. Treat
+  // that as a loss so it can't beat a mirror that actually has the data; if
+  // every mirror genuinely finds nothing, the caller still falls back.
+  if (clinics.length === 0) throw new Error("no results from this mirror");
+
+  return selectBalanced(clinics, 60);
+}
+
 async function searchOverpass(
   lat: number,
   lng: number,
   radiusMeters: number,
+  scope: Scope,
 ): Promise<Clinic[]> {
-  const query = buildQuery(lat, lng, radiusMeters);
+  const query = buildQuery(lat, lng, radiusMeters, scope);
   const radiusMi = radiusMeters / 1609.34;
-  let lastErr: unknown;
 
-  for (const url of OVERPASS_MIRRORS) {
-    try {
-      const res = await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-          // Overpass returns 406 without a descriptive User-Agent.
-          "User-Agent": "OralCheck/1.0 (+https://oralcheck.org)",
-          Accept: "application/json",
-        },
-        body: new URLSearchParams({ data: query }).toString(),
-        cache: "no-store",
-        signal: AbortSignal.timeout(30_000),
-      });
-      if (!res.ok) throw new Error(`Overpass ${res.status}`);
-      const data = (await res.json()) as OverpassResponse;
-      // A timed-out query still returns 200 with a `remark`; treat that as failure
-      // so we fall through to the next mirror instead of showing an empty map.
-      if (data.remark && !(data.elements ?? []).length) {
-        throw new Error(`Overpass remark: ${data.remark}`);
-      }
-
-      const seen = new Set<string>();
-      const clinics = (data.elements ?? [])
-        .map((el) => toClinic(el, { lat, lng }))
-        .filter((c): c is Clinic => {
-          if (!c) return false;
-          // Trim the bbox down to the true circular radius.
-          if ((c.distanceMi ?? 0) > radiusMi) return false;
-          if (seen.has(c.id)) return false;
-          seen.add(c.id);
-          return true;
-        })
-        .sort((a, b) => (a.distanceMi ?? 0) - (b.distanceMi ?? 0));
-
-      return selectBalanced(clinics, 60);
-    } catch (e) {
-      lastErr = e;
-      console.warn(`[api/clinics] mirror failed (${url}):`, e);
-    }
+  // Race every mirror at once and take the first that answers. Trying them in
+  // sequence meant a single overloaded instance cost its full timeout before
+  // the next was attempted, which is how a lookup reached 40s. Public Overpass
+  // load varies minute to minute, so whichever is healthy right now wins.
+  try {
+    return await Promise.any(
+      OVERPASS_MIRRORS.map((url) =>
+        queryMirror(url, query, lat, lng, radiusMi).catch((e) => {
+          console.warn(`[api/clinics] mirror lost (${url}):`, e?.message ?? e);
+          throw e;
+        }),
+      ),
+    );
+  } catch {
+    throw new Error("All Overpass mirrors failed");
   }
-  throw lastErr ?? new Error("All Overpass mirrors failed");
 }
 
 export async function GET(request: Request) {
@@ -226,6 +301,9 @@ export async function GET(request: Request) {
   const lat = parseFloat(searchParams.get("lat") ?? "");
   const lng = parseFloat(searchParams.get("lng") ?? "");
   const radiusMi = parseFloat(searchParams.get("radius") ?? "10");
+  const scopeParam = searchParams.get("scope");
+  const scope: Scope =
+    scopeParam === "dental" || scopeParam === "specialty" ? scopeParam : "all";
 
   if (!Number.isFinite(lat) || !Number.isFinite(lng)) {
     return NextResponse.json(
@@ -234,33 +312,36 @@ export async function GET(request: Request) {
     );
   }
 
+  // Served straight from cache when we've looked up this area recently.
+  const key = cacheKey(lat, lng, radiusMi, scope);
+  const cached = cacheGet(key);
+  if (cached) {
+    return NextResponse.json(
+      { clinics: cached, center: { lat, lng }, source: "openstreetmap", configured: true } satisfies ClinicSearchResult,
+      { headers: { "X-Cache": "HIT", "Cache-Control": "public, s-maxage=86400, stale-while-revalidate=604800" } },
+    );
+  }
+
   try {
-    const clinics = await searchOverpass(lat, lng, radiusMi * 1609.34);
-    // Overpass coverage is sparse in some areas; fall back to samples if empty.
-    if (clinics.length === 0) {
-      const result: ClinicSearchResult = {
-        clinics: mockClinics,
-        center: { lat, lng },
-        source: "mock",
-        configured: true,
-      };
-      return NextResponse.json(result);
-    }
+    const clinics = await searchOverpass(lat, lng, radiusMi * 1609.34, scope);
+    cacheSet(key, clinics);
     const result: ClinicSearchResult = {
       clinics,
       center: { lat, lng },
       source: "openstreetmap",
       configured: true,
     };
-    return NextResponse.json(result);
+    return NextResponse.json(result, {
+      headers: { "X-Cache": "MISS", "Cache-Control": "public, s-maxage=86400, stale-while-revalidate=604800" },
+    });
   } catch (e) {
     console.error("[api/clinics] Overpass lookup failed:", e);
-    const result: ClinicSearchResult = {
-      clinics: mockClinics,
-      center: { lat, lng },
-      source: "mock",
-      configured: true,
-    };
-    return NextResponse.json(result, { status: 200 });
+    // Deliberately an error, not sample data. This page exists to send someone
+    // to real care; a fabricated clinic listing is worse than telling them the
+    // directory is temporarily unreachable.
+    return NextResponse.json(
+      { error: "upstream_unavailable" },
+      { status: 503, headers: { "Cache-Control": "no-store" } },
+    );
   }
 }

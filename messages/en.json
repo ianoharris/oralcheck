@@ -1417,8 +1417,6 @@
   "FindCarePage": {
     "heading": "Find affordable care",
     "subheading": "Community health centers, dental schools, and free clinics near you. Most offer oral cancer screenings as part of a routine visit.",
-    "mockBannerBold": "Showing sample clinics.",
-    "mockBannerRest": "We couldn't find listed providers for this spot right now. Try a nearby city, or use the national directories at the bottom of the page.",
     "searchPlaceholder": "Enter zip code or city",
     "searching": "Searching…",
     "search": "Search",
@@ -1443,7 +1441,11 @@
     "dentalSchoolsLabel": "Dental schools:",
     "dentalSchoolsBody": "Most US dental schools operate teaching clinics with significantly reduced fees.",
     "lifelineLabel": "Dental Lifeline Network:",
-    "lifelineBody": "Connects people with disabilities, elderly, and medically fragile patients to volunteer dentists."
+    "lifelineBody": "Connects people with disabilities, elderly, and medically fragile patients to volunteer dentists.",
+    "searchingNearby": "Searching nearby care",
+    "searchingNote": "Looking up clinics from OpenStreetMap. This can take a few seconds.",
+    "loadingMore": "Still checking for community health centres, free clinics and dental schools…",
+    "retry": "Try again"
   },
   "ResultsPage": {
     "loading": "Loading your results…",

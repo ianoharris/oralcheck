@@ -16,23 +16,5 @@
     "license": "Public domain",
     "licenseUrl": "",
     "source": "https://commons.wikimedia.org/wiki/File:NIH%20DOC%2019%20Erythroleukoplakia.jpg"
-  },
-  "sore": {
-    "src": "/signs/sore.jpg",
-    "width": 1200,
-    "height": 900,
-    "author": "Mandana Donoghue",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Oral%20Carcinoma%20Cuniculatum.jpg"
-  },
-  "lip": {
-    "src": "/signs/lip.jpg",
-    "width": 678,
-    "height": 449,
-    "author": "Beardfiercely",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Actinic%20Cheilitis%20Photo.jpg"
   }
 }
