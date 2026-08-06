@@ -540,14 +540,18 @@ body {{ overflow:hidden; background:var(--bg); color:var(--text);
 
 /* every animated element is paused and seeked by --t */
 .anim {{ animation-fill-mode:both; animation-play-state:paused;
-  animation-timing-function:cubic-bezier(0.22,1,0.36,1);
-  animation-delay:calc(var(--d,0) * 1s - var(--t) * var(--total) * 1s); }}
+  animation-timing-function:cubic-bezier(0.16,1,0.3,1);   /* ease-out-expo: long, soft settle */
+  animation-delay:calc(var(--d,0) * 1s - var(--t) * var(--total) * 1s);
+  will-change:transform, opacity; }}
 
-@keyframes riseIn {{ from{{opacity:0; transform:translateY(46px);}} to{{opacity:1; transform:translateY(0);}} }}
-@keyframes fadeDown {{ from{{opacity:0; transform:translateY(-18px);}} to{{opacity:1; transform:translateY(0);}} }}
-@keyframes fadeUp {{ from{{opacity:0; transform:translateY(24px);}} to{{opacity:1; transform:translateY(0);}} }}
+/* Shorter travel distances read as smoother at 30fps: a 46px drop across a
+   0.5s ease has to move ~3px per frame at the start, which strobes. Halving
+   the distance and lengthening the ease keeps per-frame deltas small. */
+@keyframes riseIn {{ from{{opacity:0; transform:translateY(26px);}} to{{opacity:1; transform:translateY(0);}} }}
+@keyframes fadeDown {{ from{{opacity:0; transform:translateY(-12px);}} to{{opacity:1; transform:translateY(0);}} }}
+@keyframes fadeUp {{ from{{opacity:0; transform:translateY(14px);}} to{{opacity:1; transform:translateY(0);}} }}
 @keyframes sweep {{ from{{transform:scaleX(0);}} to{{transform:scaleX(1);}} }}
-@keyframes popIn {{ from{{opacity:0; transform:scale(0.72);}} to{{opacity:1; transform:scale(1);}} }}
+@keyframes popIn {{ from{{opacity:0; transform:scale(0.86);}} to{{opacity:1; transform:scale(1);}} }}
 @keyframes drift {{ from{{transform:translate(0,0) scale(1);}} to{{transform:translate(60px,-90px) scale(1.18);}} }}
 
 .scene {{ position:relative; width:{KINETIC_W}px; height:{KINETIC_H}px; overflow:hidden; }}
@@ -562,32 +566,32 @@ body {{ overflow:hidden; background:var(--bg); color:var(--text);
 .content {{ position:absolute; inset:0; display:flex; flex-direction:column;
   justify-content:center; padding:0 104px; }}
 .brandrow {{ position:absolute; top:120px; left:104px; display:flex; align-items:center; gap:16px;
-  animation-name:fadeDown; animation-duration:0.5s; }}
+  animation-name:fadeDown; animation-duration:0.72s; }}
 .dot {{ width:20px; height:20px; border-radius:50%; background:var(--coral); }}
 .wordmark {{ font-size:38px; font-weight:600; letter-spacing:0.06em; color:var(--teal-brt); }}
 
 .kicker {{ font-size:34px; font-weight:600; letter-spacing:0.16em; text-transform:uppercase;
-  color:var(--coral); margin-bottom:40px; animation-name:fadeUp; animation-duration:0.5s; }}
+  color:var(--coral); margin-bottom:40px; animation-name:fadeUp; animation-duration:0.72s; }}
 
 .headline {{ font-family:'DM Serif Display', Georgia, serif; font-size:104px; line-height:1.1;
   color:var(--text); letter-spacing:-0.01em; }}
-.word {{ display:inline-block; animation-name:riseIn; animation-duration:0.62s; }}
+.word {{ display:inline-block; animation-name:riseIn; animation-duration:0.85s; }}
 .em {{ position:relative; display:inline-block; color:var(--coral); }}
 .uline {{ position:absolute; left:0; right:0; bottom:0.02em; height:0.085em; border-radius:4px;
   background:var(--coral); transform-origin:left center;
-  animation-name:sweep; animation-duration:0.5s; }}
+  animation-name:sweep; animation-duration:0.72s; }}
 
 .statwrap {{ display:flex; flex-direction:column; }}
 .stat {{ font-family:'DM Serif Display', Georgia, serif; font-size:340px; line-height:0.95;
   color:var(--teal-brt); font-variant-numeric:tabular-nums;
-  animation-name:popIn; animation-duration:0.6s; }}
+  animation-name:popIn; animation-duration:0.8s; }}
 .statbar {{ height:10px; width:280px; background:var(--coral); border-radius:5px; margin:24px 0 34px;
-  transform-origin:left center; animation-name:sweep; animation-duration:0.55s; }}
+  transform-origin:left center; animation-name:sweep; animation-duration:0.75s; }}
 .statlabel {{ font-size:52px; line-height:1.25; color:var(--text); max-width:820px;
-  animation-name:fadeUp; animation-duration:0.6s; }}
+  animation-name:fadeUp; animation-duration:0.8s; }}
 
 .foot {{ position:absolute; bottom:130px; left:104px; display:flex; align-items:center; gap:18px;
-  animation-name:fadeUp; animation-duration:0.55s; }}
+  animation-name:fadeUp; animation-duration:0.75s; }}
 .footline {{ width:54px; height:5px; background:var(--teal); border-radius:3px; }}
 .footurl {{ font-size:40px; font-weight:600; letter-spacing:0.03em; color:var(--teal); }}
 """

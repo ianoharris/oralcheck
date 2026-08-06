@@ -1,5 +1,31 @@
-[
-  "https://images.pexels.com/photos/19601385/pexels-photo-19601385.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-  "https://images.pexels.com/photos/6703866/pexels-photo-6703866.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-  "https://images.pexels.com/photos/9951386/pexels-photo-9951386.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-]
+{
+  "urls": [
+    "https://images.pexels.com/photos/19601385/pexels-photo-19601385.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "https://images.pexels.com/photos/6703866/pexels-photo-6703866.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "https://images.pexels.com/photos/9951386/pexels-photo-9951386.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+  ],
+  "hashes": [
+    "090a94e5d61914e2394fd89a4b06f7226d31870f",
+    "27f2114c52531c97cb47c27a0d2f0b0d4da98192",
+    "403a92d3d5f5249182bb23832987bcca86f100af",
+    "4490c7155a94bcc9abe4b5915c3190200f5fc525",
+    "5ab671c464bf2fafc702917cbc9a397d22dc8fb8",
+    "81ceb39325addac0cc6b7f715cb650bbca88ed42",
+    "83d637945149cf6467612f2cec3ab2d653ada58b",
+    "b020d0148d778fd8beea64c46f687800926ae705",
+    "bea75d4444b87e8331f69e38b51cb4d487493493",
+    "f0d66830da96c0cfd3cc9ec37c403bbd53c6de6f"
+  ],
+  "phashes": [
+    "000000fe7e000000",
+    "0020783879c9cbff",
+    "00c4fcfce0e00000",
+    "00dce0e0fcf8f800",
+    "00fefee060000000",
+    "1920010307ffffff",
+    "7e66e2e2e2c0c0ff",
+    "800018fce0000000",
+    "c3c383c3c3c3c3c3",
+    "ffffff013fffffff"
+  ]
+}

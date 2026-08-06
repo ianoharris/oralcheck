@@ -1,0 +1,41 @@
+{
+  "id": "20260614_161800_50865f1b",
+  "created_at": "2026-06-14T21:18:00.092828+00:00",
+  "pillar": "hpv_connection",
+  "media_type": "carousel",
+  "hook": "HPV now causes more throat cancers than tobacco",
+  "caption": "Most people associate HPV with cervical cancer, but it's now the leading cause of throat and oral cancers in the United States. Adults between 35 and 55 are the fastest-growing group being diagnosed, and the majority had no idea the virus could put them at risk in the first place. That gap in awareness is exactly why so many cases get caught late. A two-minute screener can flag your personal risk level and tell you whether a conversation with your dentist or doctor makes sense. Take the free risk assessment at oralcheck.org.",
+  "hashtags": [
+    "oralcancer",
+    "hpvawareness",
+    "hpv",
+    "oralhealth",
+    "throatcancer",
+    "cancerprevention",
+    "earlydetection",
+    "knowyourrisk",
+    "oralcancerawareness",
+    "adulthealth"
+  ],
+  "search_query": "adults talking candid natural light",
+  "visual_prompt": "",
+  "slides": [
+    {
+      "headline": "HPV is reshaping who gets diagnosed",
+      "body": "Adults aged 35 to 55 are the fastest-growing group for oral cancer, and HPV is the leading driver behind that shift."
+    },
+    {
+      "headline": "Most people don't know their risk",
+      "body": "HPV-related oral cancers often develop without obvious symptoms, and most adults have never been told the virus can affect the mouth and throat."
+    }
+  ],
+  "files": [
+    "slide_01.jpg",
+    "slide_02.jpg",
+    "slide_03.jpg",
+    "slide_04.jpg",
+    "preview.jpg"
+  ],
+  "status": "rejected",
+  "rejected_at": "2026-06-14T22:34:45.114870+00:00"
+}

@@ -7,8 +7,10 @@ Use review_server.py to preview and approve posts.
 
 import argparse
 import atexit
+import hashlib
 import json
 import logging
+import math
 import os
 import re
 import shutil
@@ -17,6 +19,7 @@ import tempfile
 import time
 import uuid
 from datetime import datetime, timezone, timedelta
+from io import BytesIO
 from pathlib import Path
 
 import anthropic
@@ -507,25 +510,75 @@ def _openverse_token() -> str:
 
 
 # Photos already used on a post, so the same image never appears twice.
+#
+# Tracked by image CONTENT as well as URL. URL alone is not enough: Pexels and
+# Unsplash serve the same photograph under many URLs (different size/crop/dpr
+# params), so a URL-only ledger happily lets the same picture through twice.
 USED_PHOTOS_FILE = Path(__file__).parent / "used_photos.json"
-_USED_PHOTOS: set | None = None
+_USED_PHOTOS: dict | None = None
 
 
-def _load_used_photos() -> set:
+def _photo_hashes(data: bytes) -> tuple[str, str]:
+    """(exact, perceptual) fingerprints for an encoded image.
+
+    The perceptual one is a 64-bit average hash, which stays stable across
+    re-encoding and resizing, so the same photo fetched at a different size
+    still registers as already used.
+    """
+    exact = hashlib.sha1(data).hexdigest()
+    try:
+        im = Image.open(BytesIO(data)).convert("L").resize((8, 8), Image.LANCZOS)
+        px = list(im.getdata())
+        avg = sum(px) / len(px)
+        bits = "".join("1" if p >= avg else "0" for p in px)
+        perceptual = f"{int(bits, 2):016x}"
+    except Exception:
+        perceptual = ""
+    return exact, perceptual
+
+
+def _load_used_photos() -> dict:
     global _USED_PHOTOS
     if _USED_PHOTOS is None:
         try:
-            _USED_PHOTOS = set(json.loads(USED_PHOTOS_FILE.read_text()))
+            raw = json.loads(USED_PHOTOS_FILE.read_text())
+            # Older ledgers were a plain list of URLs.
+            if isinstance(raw, list):
+                raw = {"urls": raw, "hashes": [], "phashes": []}
         except Exception:
-            _USED_PHOTOS = set()
+            raw = {"urls": [], "hashes": [], "phashes": []}
+        _USED_PHOTOS = {
+            "urls": set(raw.get("urls", [])),
+            "hashes": set(raw.get("hashes", [])),
+            "phashes": set(raw.get("phashes", [])),
+        }
     return _USED_PHOTOS
 
 
-def _record_used_photo(url: str) -> None:
+def _photo_already_used(url: str, data: bytes | None = None) -> bool:
     used = _load_used_photos()
-    used.add(url)
+    if url in used["urls"]:
+        return True
+    if data is not None:
+        exact, perceptual = _photo_hashes(data)
+        if exact in used["hashes"]:
+            return True
+        if perceptual and perceptual in used["phashes"]:
+            return True
+    return False
+
+
+def _record_used_photo(url: str, data: bytes | None = None) -> None:
+    used = _load_used_photos()
+    used["urls"].add(url)
+    if data is not None:
+        exact, perceptual = _photo_hashes(data)
+        used["hashes"].add(exact)
+        if perceptual:
+            used["phashes"].add(perceptual)
     try:
-        USED_PHOTOS_FILE.write_text(json.dumps(sorted(used), indent=2))
+        USED_PHOTOS_FILE.write_text(json.dumps(
+            {k: sorted(v) for k, v in used.items()}, indent=2))
     except Exception as exc:
         log.warning("Could not persist used_photos.json: %s", exc)
 
@@ -591,7 +644,7 @@ def _try_unsplash(query: str) -> list[tuple[str, None]]:
     return out
 
 
-def _download_square(img_url: str, size: int) -> str:
+def _download_square(img_url: str, size: int) -> tuple[str, bytes]:
     """Download an image, center-crop to a square, resize to size x size."""
     headers = {"User-Agent": "OralCheck/1.0 (+https://oralcheck.org)"}
     with httpx.Client(timeout=60, follow_redirects=True, headers=headers) as client:
@@ -612,7 +665,9 @@ def _download_square(img_url: str, size: int) -> str:
     img  = img.crop((left, top, left + crop_size, top + crop_size))
     img  = img.resize((size, size), Image.LANCZOS)
     img.save(tmp.name, "JPEG", quality=95)
-    return tmp.name
+    # Hand back the original bytes too, so the caller can fingerprint the
+    # source image for the used-photo ledger.
+    return tmp.name, content
 
 
 def fetch_stock_photo(query: str, size: int = 1080) -> tuple[str, dict | None]:
@@ -645,19 +700,35 @@ def fetch_stock_photo(query: str, size: int = 1080) -> tuple[str, dict | None]:
             "Check network / PEXELS_API_KEY / UNSPLASH_ACCESS_KEY."
         )
 
-    # fresh (never-posted) first, keeping source priority; used ones last resort
-    ordered = ([c for c in candidates if c[0] not in used] +
-               [c for c in candidates if c[0] in used])
+    # Fresh (never-posted) first by URL, keeping source priority.
+    ordered = ([c for c in candidates if c[0] not in used["urls"]] +
+               [c for c in candidates if c[0] in used["urls"]])
+
+    fallback: tuple[str, dict | None, bytes, str] | None = None
     for img_url, credit in ordered:
         try:
-            path = _download_square(img_url, size)
+            path, raw = _download_square(img_url, size)
         except Exception as exc:
             log.warning("Download failed (%s); trying next candidate", exc)
             continue
-        _record_used_photo(img_url)
-        log.info("Photo saved: %s (%dx%d, credit=%s, fresh=%s)",
-                 path, size, size, "yes" if credit else "no (stock)",
-                 img_url not in used)
+        # The URL check above can't catch the same photo served under a
+        # different URL, so re-check by content now that we have the bytes.
+        if _photo_already_used(img_url, raw):
+            log.info("Skipping already-used image (matched by content): %s", img_url[:80])
+            if fallback is None:
+                fallback = (path, credit, raw, img_url)
+            continue
+        _record_used_photo(img_url, raw)
+        log.info("Photo saved: %s (%dx%d, credit=%s, fresh=yes)",
+                 path, size, size, "yes" if credit else "no (stock)")
+        return path, credit
+
+    # Everything available has been posted before. Reuse the closest match
+    # rather than failing the post outright.
+    if fallback is not None:
+        path, credit, raw, img_url = fallback
+        log.warning("All candidates for '%s' were already used; reusing one.", query)
+        _record_used_photo(img_url, raw)
         return path, credit
 
     raise RuntimeError(f"No downloadable photo for query '{query}'.")
@@ -910,7 +981,10 @@ def _draw_centered(draw, text, font, cx, y, fill, spacing):
         draw.text((cx - w/2, y + i * (font.size + spacing)), ln, font=font, fill=fill)
 
 
-CAP_FPS = 24   # animation capture rate; frames hold after the animation completes
+# Capture at the reel's own frame rate. Capturing at 24 and outputting at 30
+# made ffmpeg duplicate every 4th frame, and that uneven cadence is what made
+# the motion look like it was stuttering.
+CAP_FPS = REEL_FPS   # animation capture rate; frames hold after the animation completes
 
 
 def _build_kinetic_segment(segment: dict, narration_wav: str,
@@ -991,18 +1065,121 @@ def _concat_reel(segment_paths: list[str]) -> str:
     return out.name
 
 
-REEL_MUSIC = Path(__file__).parent / "assets" / "reel_music.mp3"
+REEL_MUSIC = Path(__file__).parent / "assets" / "reel_music.mp3"   # fallback only
 REEL_MUSIC_VOL = 0.17   # low, so it sits under the voice
+FAL_MUSIC_MODEL = "fal-ai/stable-audio"
+
+# Varied so consecutive reels don't share a bed. One is picked per reel from the
+# reel's own hook, which keeps the choice stable for a given reel but different
+# across reels.
+MUSIC_PROMPTS = [
+    "calm ambient lo-fi bed, soft warm keys, gentle pulse, no drums, no vocals, "
+    "reassuring and understated, suitable under a health explainer voiceover",
+    "slow cinematic ambient pad, warm analog texture, subtle low pulse, no vocals, "
+    "calm and grounded, sits quietly under narration",
+    "minimal ambient piano bed, soft sustained strings underneath, unhurried, "
+    "no percussion, no vocals, calm documentary tone",
+    "gentle downtempo ambient loop, mellow rhodes, airy pad, very soft rhythmic "
+    "pulse, no vocals, steady and calm throughout",
+    "soft ambient texture with warm bass tone and light shimmer, no drums, "
+    "no vocals, patient and quietly hopeful",
+]
 
 
-def _add_music_bed(video_path: str) -> str:
-    """Mix the chill music bed under the existing voiceover: loop it to length,
-    keep it quiet, and fade it in/out. Returns a new mp4 path. If the bundled
-    track is missing, returns the input unchanged."""
-    if not REEL_MUSIC.exists():
-        log.warning("Music bed %s missing; leaving reel with voice only.", REEL_MUSIC)
-        return video_path
+def _generate_music_bed(seconds: float, variant_key: str) -> str | None:
+    """Generate a music bed at least `seconds` long via fal stable-audio.
+
+    Generating to length is what keeps the audio continuous: the bundled
+    fallback is a fixed 20s clip, so any reel longer than that used to loop it
+    and the restart was audible mid-reel. Returns a local mp3 path, or None so
+    the caller can fall back.
+    """
+    if not FAL_KEY:
+        return None
+    # A few seconds of headroom so the fade-out never runs past the track.
+    total = int(min(47, max(12, math.ceil(seconds) + 4)))
+    prompt = MUSIC_PROMPTS[
+        int(hashlib.sha1(variant_key.encode()).hexdigest(), 16) % len(MUSIC_PROMPTS)
+    ]
+
+    def _gen() -> str:
+        r = httpx.post(
+            f"https://fal.run/{FAL_MUSIC_MODEL}",
+            headers={"Authorization": f"Key {FAL_KEY}", "Content-Type": "application/json"},
+            json={"prompt": prompt, "seconds_total": total},
+            timeout=180,
+        )
+        r.raise_for_status()
+        return r.json()["audio_file"]["url"]
+
+    try:
+        url = _with_retry(_gen)
+        with httpx.Client(timeout=180, follow_redirects=True) as client:
+            resp = client.get(url)
+            resp.raise_for_status()
+        tmp = tempfile.NamedTemporaryFile(suffix="_bed.mp3", delete=False)
+        tmp.write(resp.content)
+        tmp.close()
+        _register_tmp(tmp.name)
+        log.info("Generated %ss music bed for reel.", total)
+        return tmp.name
+    except Exception as exc:
+        log.warning("Music generation failed (%s); falling back to bundled bed.", exc)
+        return None
+
+
+def _loop_music_seamless(path: str, target: float) -> str:
+    """Extend a short track past `target` seconds by crossfading copies of it
+    into each other, so the seam isn't the audible restart a hard loop gives."""
+    src = _media_duration(path)
+    if src <= 0 or src >= target:
+        return path
+    xf = 1.5                       # crossfade length at each seam
+    copies = math.ceil((target + xf) / max(1.0, src - xf)) + 1
+    copies = min(copies, 8)
+    out = tempfile.NamedTemporaryFile(suffix="_loop.mp3", delete=False)
+    out.close()
+    _register_tmp(out.name)
+
+    inputs: list[str] = []
+    for _ in range(copies):
+        inputs += ["-i", path]
+    # Chain acrossfade: [0][1]->a1, [a1][2]->a2, ...
+    steps, prev = [], "[0:a]"
+    for i in range(1, copies):
+        label = f"[a{i}]"
+        steps.append(f"{prev}[{i}:a]acrossfade=d={xf}:c1=tri:c2=tri{label}")
+        prev = label
+    filt = ";".join(steps)
+
+    result = subprocess.run(
+        ["ffmpeg", "-y", *inputs, "-filter_complex", filt,
+         "-map", prev, "-c:a", "libmp3lame", "-q:a", "4", out.name],
+        capture_output=True,
+    )
+    if result.returncode != 0:
+        log.warning("Seamless loop failed (%s); using raw track.",
+                    result.stderr.decode()[-200:])
+        return path
+    return out.name
+
+
+def _add_music_bed(video_path: str, variant_key: str = "") -> str:
+    """Mix a quiet music bed under the finished voiceover.
+
+    Called once on the fully assembled reel (not per segment) so the bed runs
+    continuously end to end. The track is generated to match the reel's length,
+    which is what removes the mid-reel restart; only the fallback path ever
+    needs looping, and that loop is crossfaded.
+    """
     dur = _media_duration(video_path)
+    music = _generate_music_bed(dur, variant_key or video_path)
+    if music is None:
+        if not REEL_MUSIC.exists():
+            log.warning("No music bed available; leaving reel with voice only.")
+            return video_path
+        music = _loop_music_seamless(str(REEL_MUSIC), dur + 2)
+
     fade_out = max(0.0, round(dur - 1.5, 2))
     out = tempfile.NamedTemporaryFile(suffix="_music.mp4", delete=False)
     out.close()
@@ -1015,7 +1192,7 @@ def _add_music_bed(video_path: str) -> str:
     result = subprocess.run(
         ["ffmpeg", "-y",
          "-i", video_path,
-         "-stream_loop", "-1", "-i", str(REEL_MUSIC),
+         "-i", music,
          "-filter_complex", filt,
          "-map", "0:v", "-map", "[a]",
          "-c:v", "copy", "-c:a", "aac", "-ar", "44100", "-ac", "2",
@@ -1053,7 +1230,8 @@ def build_faceless_reel(content: dict, theme: str = "dark") -> str:
 
     seg_paths.append(_build_reel_outro())
     stitched = _concat_reel(seg_paths)
-    final = _add_music_bed(stitched)
+    # Key the bed off this reel's hook so two reels never share a track.
+    final = _add_music_bed(stitched, variant_key=str(content.get("hook", ""))[:120])
     log.info("Faceless reel assembled: %s (%.1fs)", final, _media_duration(final))
     return final
 
