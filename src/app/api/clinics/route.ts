@@ -3,11 +3,13 @@ import {
   classify,
   haversineMiles,
   typeLabel,
+  isPatientCare,
   DENTAL_RE,
   type Clinic,
   type ClinicSearchResult,
 } from "@/lib/clinics";
 import { checkRateLimit, getIp } from "@/lib/rateLimit";
+import { searchGooglePlaces, googleConfigured } from "@/lib/googlePlaces";
 
 // Free clinic search via the OpenStreetMap Overpass API (no key, no billing).
 type OverpassElement = {
@@ -138,6 +140,7 @@ function toClinic(el: OverpassElement, from: { lat: number; lng: number }): Clin
   const t = el.tags ?? {};
   const name = t.name || t["operator"] || "";
   if (!name) return null;
+  if (!isPatientCare(name)) return null;
   const lat = el.lat ?? el.center?.lat;
   const lng = el.lon ?? el.center?.lon;
   if (lat === undefined || lng === undefined) return null;
@@ -178,13 +181,15 @@ const MIRROR_TIMEOUT_MS = 15_000;
 // instead of another multi-second lookup.
 const CACHE_TTL_MS = 24 * 60 * 60 * 1000;
 const CACHE_MAX = 200;
-const cache = new Map<string, { at: number; clinics: Clinic[] }>();
+type Source = ClinicSearchResult["source"];
+type CacheEntry = { at: number; clinics: Clinic[]; source: Source };
+const cache = new Map<string, CacheEntry>();
 
 function cacheKey(lat: number, lng: number, radiusMi: number, scope: Scope): string {
   return `${scope}:${lat.toFixed(2)},${lng.toFixed(2)},${Math.round(radiusMi)}`;
 }
 
-function cacheGet(key: string): Clinic[] | null {
+function cacheGet(key: string): CacheEntry | null {
   const hit = cache.get(key);
   if (!hit) return null;
   if (Date.now() - hit.at > CACHE_TTL_MS) {
@@ -194,11 +199,11 @@ function cacheGet(key: string): Clinic[] | null {
   // refresh recency for the LRU eviction below
   cache.delete(key);
   cache.set(key, hit);
-  return hit.clinics;
+  return hit;
 }
 
-function cacheSet(key: string, clinics: Clinic[]): void {
-  cache.set(key, { at: Date.now(), clinics });
+function cacheSet(key: string, clinics: Clinic[], source: Source): void {
+  cache.set(key, { at: Date.now(), clinics, source });
   while (cache.size > CACHE_MAX) {
     const oldest = cache.keys().next().value;
     if (oldest === undefined) break;
@@ -312,19 +317,43 @@ export async function GET(request: Request) {
     );
   }
 
-  // Served straight from cache when we've looked up this area recently.
+  // Served straight from cache when we've looked up this area recently. This is
+  // also the main cost control on the Google side: a repeated search for the
+  // same area costs nothing for 24h.
   const key = cacheKey(lat, lng, radiusMi, scope);
   const cached = cacheGet(key);
   if (cached) {
     return NextResponse.json(
-      { clinics: cached, center: { lat, lng }, source: "openstreetmap", configured: true } satisfies ClinicSearchResult,
-      { headers: { "X-Cache": "HIT", "Cache-Control": "public, s-maxage=86400, stale-while-revalidate=604800" } },
+      { clinics: cached.clinics, center: { lat, lng }, source: cached.source, configured: true } satisfies ClinicSearchResult,
+      { headers: { "X-Cache": "HIT", "X-Source": cached.source, "Cache-Control": "public, s-maxage=86400, stale-while-revalidate=604800" } },
     );
   }
 
+  const radiusMeters = radiusMi * 1609.34;
+
+  // Google first: better coverage of US dental practices, and it fills in the
+  // phone / website / hours / rating that OSM almost always leaves blank.
+  if (googleConfigured()) {
+    try {
+      const clinics = await searchGooglePlaces(lat, lng, radiusMeters, scope);
+      if (clinics.length > 0) {
+        cacheSet(key, clinics, "google");
+        return NextResponse.json(
+          { clinics, center: { lat, lng }, source: "google", configured: true } satisfies ClinicSearchResult,
+          { headers: { "X-Cache": "MISS", "X-Source": "google", "Cache-Control": "public, s-maxage=86400, stale-while-revalidate=604800" } },
+        );
+      }
+      console.warn("[api/clinics] Google returned no results, falling back to Overpass");
+    } catch (e) {
+      // Quota caps (429) and billing/key problems (403) land here. Falling back
+      // keeps the map working instead of turning a spend cap into an outage.
+      console.warn("[api/clinics] Google lookup failed, falling back to Overpass:", e);
+    }
+  }
+
   try {
-    const clinics = await searchOverpass(lat, lng, radiusMi * 1609.34, scope);
-    cacheSet(key, clinics);
+    const clinics = await searchOverpass(lat, lng, radiusMeters, scope);
+    cacheSet(key, clinics, "openstreetmap");
     const result: ClinicSearchResult = {
       clinics,
       center: { lat, lng },
@@ -332,7 +361,7 @@ export async function GET(request: Request) {
       configured: true,
     };
     return NextResponse.json(result, {
-      headers: { "X-Cache": "MISS", "Cache-Control": "public, s-maxage=86400, stale-while-revalidate=604800" },
+      headers: { "X-Cache": "MISS", "X-Source": "openstreetmap", "Cache-Control": "public, s-maxage=86400, stale-while-revalidate=604800" },
     });
   } catch (e) {
     console.error("[api/clinics] Overpass lookup failed:", e);

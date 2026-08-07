@@ -18,7 +18,9 @@ export type Clinic = {
 export type ClinicSearchResult = {
   clinics: Clinic[];
   center: { lat: number; lng: number };
-  source: "openstreetmap";
+  // Google is primary; OpenStreetMap is the fallback when Google is
+  // unconfigured, over quota, or failing.
+  source: "google" | "openstreetmap";
   configured: boolean;
 };
 
@@ -60,6 +62,19 @@ export function classify(name: string, types: string[] = []): Clinic["type"] {
   if (COMMUNITY_RE.test(n)) return "community-health";
   if (types.includes("dentist") || DENTAL_RE.test(n)) return "dental";
   return "other";
+}
+
+// Places that match a dental/health name but where nobody can be seen as a
+// patient. Google's text search for "dental school" in particular returns
+// professional societies, trade meetings, and continuing-education providers
+// ("Greater NY Dental Meeting", "New York County Dental Society", "Trinon
+// Courses"), and putting those on a map meant to route someone to a screening
+// is worse than returning fewer results.
+const NON_CARE_RE =
+  /\b(society|societies|association|academy|meeting|conference|convention|expo|seminar|symposium|courses?|continuing education|supply|supplies|laborator(y|ies)|distributor|manufactur\w*|insurance|billing|marketing|staffing|recruit\w*|board of|council)\b/;
+
+export function isPatientCare(name: string): boolean {
+  return !NON_CARE_RE.test(name.toLowerCase());
 }
 
 export function typeLabel(type: Clinic["type"]): string {
