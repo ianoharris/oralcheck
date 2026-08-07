@@ -1,8 +1,10 @@
 import { Link } from "@/i18n/navigation";
+import Image from "next/image";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import LearnReadNext from "@/components/LearnReadNext";
 import { localizedAlternates } from "@/lib/pageMetadata";
+import selfExamPhotos from "@/lib/selfExamPhotos.json";
 
 type Props = { params: Promise<{ locale: string }> };
 
@@ -50,6 +52,18 @@ const jsonLd = {
 
 type Step = { area: string; instruction: string };
 
+type ExamPhoto = { src: string; width: number; height: number };
+
+// Locale-independent ids for the steps, kept parallel to the translated `steps`
+// array in messages/*.json. Photos key off these rather than off the step name,
+// so the Spanish page shows the same images without a second manifest.
+const STEP_SLUGS = [
+  "face-neck", "lips", "cheeks", "gums",
+  "tongue", "floor", "palate", "throat",
+] as const;
+
+const PHOTOS = selfExamPhotos as Record<string, ExamPhoto[]>;
+
 export default async function SelfExamPage({ params }: Props) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "SelfExamPage" });
@@ -85,21 +99,44 @@ export default async function SelfExamPage({ params }: Props) {
       </p>
 
       <ol className="space-y-3">
-        {steps.map((s, i) => (
-          <li
-            key={s.area}
-            className="bg-warm-dim rounded-2xl border border-warm-dim p-5 flex gap-4"
-          >
-            <div className="flex-shrink-0 w-10 h-10 rounded-full bg-brand text-white flex items-center justify-center font-semibold font-mono">
-              {i + 1}
-            </div>
-            <div>
-              <h2 className="font-semibold text-ink mb-1">{s.area}</h2>
-              <p className="text-ink-soft leading-relaxed">{s.instruction}</p>
-            </div>
-          </li>
-        ))}
+        {steps.map((s, i) => {
+          const photos = PHOTOS[STEP_SLUGS[i]] ?? [];
+          return (
+            <li
+              key={s.area}
+              className="bg-warm-dim rounded-2xl border border-warm-dim p-5 flex gap-4"
+            >
+              <div className="flex-shrink-0 w-10 h-10 rounded-full bg-brand text-white flex items-center justify-center font-semibold font-mono">
+                {i + 1}
+              </div>
+              {/* min-w-0 so the photo row can wrap instead of forcing the li wide */}
+              <div className="min-w-0">
+                <h2 className="font-semibold text-ink mb-1">{s.area}</h2>
+                <p className="text-ink-soft leading-relaxed">{s.instruction}</p>
+                {photos.length > 0 && (
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {photos.map((p, n) => (
+                      <Image
+                        key={p.src}
+                        src={p.src}
+                        alt={t("photoAlt", { area: s.area, n: n + 1 })}
+                        width={p.width}
+                        height={p.height}
+                        sizes="160px"
+                        className="h-[88px] w-auto rounded-lg border border-warm-dim"
+                      />
+                    ))}
+                  </div>
+                )}
+              </div>
+            </li>
+          );
+        })}
       </ol>
+
+      <p className="mt-3 text-[11px] text-ink-soft leading-relaxed">
+        {t("photoCredit")}
+      </p>
 
       <div className="mt-10 p-6 rounded-2xl bg-low/10 border border-low/20">
         <h2 className="font-serif text-2xl text-ink mb-2">

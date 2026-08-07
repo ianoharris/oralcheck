@@ -1,0 +1,168 @@
+{
+  "face-neck": [
+    {
+      "src": "/self-exam/face-neck.jpg",
+      "width": 400,
+      "height": 261,
+      "description": "These images are part of the 2013 publication from the NIH \"Detecting Oral Cancer: A Guide for Health Care Professionals\". Available on the 15/7/14 at http://www.nidcr.nih.gov/oralhealth/topics/oralcancer/detectingoralcancer.htm FACE: (Figure 1) The extraoral assessment includes inspection of the fa",
+      "author": "BodyParts3D/Anatomography",
+      "license": "Public domain",
+      "licenseUrl": "",
+      "source": "https://commons.wikimedia.org/wiki/File:NIH%20DOC%201%20face.jpg"
+    }
+  ],
+  "lips": [
+    {
+      "src": "/self-exam/lips-1.jpg",
+      "width": 400,
+      "height": 263,
+      "description": "These images are part of the 2013 publication from the NIH \"Detecting Oral Cancer: A Guide for Health Care Professionals\". Available on the 15/7/14 at http://www.nidcr.nih.gov/oralhealth/topics/oralcancer/detectingoralcancer.htm LIPS: (Figure 2) Begin examination by observing the lips with the patie",
+      "author": "BodyParts3D/Anatomography",
+      "license": "Public domain",
+      "licenseUrl": "",
+      "source": "https://commons.wikimedia.org/wiki/File:NIH%20DOC%202%20lip.jpg"
+    },
+    {
+      "src": "/self-exam/lips-2.jpg",
+      "width": 400,
+      "height": 261,
+      "description": "These images are part of the 2013 publication from the NIH \"Detecting Oral Cancer: A Guide for Health Care Professionals\". Available on the 15/7/14 at http://www.nidcr.nih.gov/oralhealth/topics/oralcancer/detectingoralcancer.htm LABIAL MUCOSA: (Figures 3 and 4) With the patient's mouth partially ope",
+      "author": "BodyParts3D/Anatomography",
+      "license": "Public domain",
+      "licenseUrl": "",
+      "source": "https://commons.wikimedia.org/wiki/File:NIH%20DOC%203%20labialmucosa.jpg"
+    },
+    {
+      "src": "/self-exam/lips-3.jpg",
+      "width": 400,
+      "height": 262,
+      "description": "These images are part of the 2013 publication from the NIH \"Detecting Oral Cancer: A Guide for Health Care Professionals\". Available on the 15/7/14 at http://www.nidcr.nih.gov/oralhealth/topics/oralcancer/detectingoralcancer.htm LABIAL MUCOSA: (Figures 3 and 4) With the patient's mouth partially ope",
+      "author": "BodyParts3D/Anatomography",
+      "license": "Public domain",
+      "licenseUrl": "",
+      "source": "https://commons.wikimedia.org/wiki/File:NIH%20DOC%204%20labialmucosa.jpg"
+    }
+  ],
+  "cheeks": [
+    {
+      "src": "/self-exam/cheeks-1.jpg",
+      "width": 400,
+      "height": 296,
+      "description": "These images are part of the 2013 publication from the NIH \"Detecting Oral Cancer: A Guide for Health Care Professionals\". Available on the 15/7/14 at http://www.nidcr.nih.gov/oralhealth/topics/oralcancer/detectingoralcancer.htm BUCCAL MUCOSA: (Figures 5 and 6) Retract the buccal mucosa. Examine fir",
+      "author": "BodyParts3D/Anatomography",
+      "license": "Public domain",
+      "licenseUrl": "",
+      "source": "https://commons.wikimedia.org/wiki/File:NIH%20DOC%205%20buccalmucosa1.jpg"
+    },
+    {
+      "src": "/self-exam/cheeks-2.jpg",
+      "width": 400,
+      "height": 261,
+      "description": "These images are part of the 2013 publication from the NIH \"Detecting Oral Cancer: A Guide for Health Care Professionals\". Available on the 15/7/14 at http://www.nidcr.nih.gov/oralhealth/topics/oralcancer/detectingoralcancer.htm BUCCAL MUCOSA: (Figures 5 and 6) Retract the buccal mucosa. Examine fir",
+      "author": "BodyParts3D/Anatomography",
+      "license": "Public domain",
+      "licenseUrl": "",
+      "source": "https://commons.wikimedia.org/wiki/File:NIH%20DOC%206%20buccalmucosa2.jpg"
+    }
+  ],
+  "gums": [
+    {
+      "src": "/self-exam/gums.jpg",
+      "width": 400,
+      "height": 261,
+      "description": "These images are part of the 2013 publication from the NIH \"Detecting Oral Cancer: A Guide for Health Care Professionals\". Available on the 15/7/14 at http://www.nidcr.nih.gov/oralhealth/topics/oralcancer/detectingoralcancer.htm GINGIVA: (Figure 7) First, examine the buccal and labial aspects of the",
+      "author": "BodyParts3D/Anatomography",
+      "license": "Public domain",
+      "licenseUrl": "",
+      "source": "https://commons.wikimedia.org/wiki/File:NIH%20DOC%207%20gingiva.jpg"
+    }
+  ],
+  "tongue": [
+    {
+      "src": "/self-exam/tongue-1.jpg",
+      "width": 400,
+      "height": 263,
+      "description": "These images are part of the 2013 publication from the NIH \"Detecting Oral Cancer: A Guide for Health Care Professionals\". Available on the 15/7/14 at http://www.nidcr.nih.gov/oralhealth/topics/oralcancer/detectingoralcancer.htm TONGUE: (Figure 8) With the patient's tongue at rest, and mouth partial",
+      "author": "BodyParts3D/Anatomography",
+      "license": "Public domain",
+      "licenseUrl": "",
+      "source": "https://commons.wikimedia.org/wiki/File:NIH%20DOC%208%20TongueDorsum.jpg"
+    },
+    {
+      "src": "/self-exam/tongue-2.jpg",
+      "width": 400,
+      "height": 262,
+      "description": "These images are part of the 2013 publication from the NIH \"Detecting Oral Cancer: A Guide for Health Care Professionals\". Available on the 15/7/14 at https://www.nidcr.nih.gov/oralhealth/topics/oralcancer/detectingoralcancer.htm (Figure 9) With the aid of mouth mirrors, inspect the right and left l",
+      "author": "BodyParts3D/Anatomography",
+      "license": "Public domain",
+      "licenseUrl": "",
+      "source": "https://commons.wikimedia.org/wiki/File:NIH%20DOC%209%20TongueLeftMargin.jpg"
+    },
+    {
+      "src": "/self-exam/tongue-3.jpg",
+      "width": 400,
+      "height": 262,
+      "description": "These images are part of the 2013 publication from the NIH \"Detecting Oral Cancer: A Guide for Health Care Professionals\". Available on the 15/7/14 at http://www.nidcr.nih.gov/oralhealth/topics/oralcancer/detectingoralcancer.htm (Figure 10) Grasping the tip of the tongue with a piece of gauze will a",
+      "author": "BodyParts3D/Anatomography",
+      "license": "Public domain",
+      "licenseUrl": "",
+      "source": "https://commons.wikimedia.org/wiki/File:NIH%20DOC%2010%20TongueRightMargin.jpg"
+    },
+    {
+      "src": "/self-exam/tongue-4.jpg",
+      "width": 400,
+      "height": 262,
+      "description": "These images are part of the 2013 publication from the NIH \"Detecting Oral Cancer: A Guide for Health Care Professionals\". Available on the 15/7/14 at http://www.nidcr.nih.gov/oralhealth/topics/oralcancer/detectingoralcancer.htm (Figure 11) Then examine the ventral surface. Palpate the tongue to det",
+      "author": "BodyParts3D/Anatomography",
+      "license": "Public domain",
+      "licenseUrl": "",
+      "source": "https://commons.wikimedia.org/wiki/File:NIH%20DOC%2011%20TongueVentral.jpg"
+    }
+  ],
+  "floor": [
+    {
+      "src": "/self-exam/floor-1.jpg",
+      "width": 400,
+      "height": 260,
+      "description": "These images are part of the 2013 publication from the NIH \"Detecting Oral Cancer: A Guide for Health Care Professionals\". Available on the 15/7/14 at http://www.nidcr.nih.gov/oralhealth/topics/oralcancer/detectingoralcancer.htm FLOOR: (Figure 12) With the tongue still elevated, inspect the floor of",
+      "author": "BodyParts3D/Anatomography",
+      "license": "Public domain",
+      "licenseUrl": "",
+      "source": "https://commons.wikimedia.org/wiki/File:NIH%20DOC%2012%20MouthFloor.jpg"
+    },
+    {
+      "src": "/self-exam/floor-2.jpg",
+      "width": 266,
+      "height": 400,
+      "description": "These images are part of the 2013 publication from the NIH \"Detecting Oral Cancer: A Guide for Health Care Professionals\". Available on the 15/7/14 at http://www.nidcr.nih.gov/oralhealth/topics/oralcancer/detectingoralcancer.htm (Figure 15) Bimanually palpate the floor of the mouth for any abnormali",
+      "author": "BodyParts3D/Anatomography",
+      "license": "Public domain",
+      "licenseUrl": "",
+      "source": "https://commons.wikimedia.org/wiki/File:NIH%20DOC%2015%20palpation.jpg"
+    }
+  ],
+  "palate": [
+    {
+      "src": "/self-exam/palate.jpg",
+      "width": 400,
+      "height": 259,
+      "description": "These images are part of the 2013 publication from the NIH \"Detecting Oral Cancer: A Guide for Health Care Professionals\". Available on the 15/7/14 at http://www.nidcr.nih.gov/oralhealth/topics/oralcancer/detectingoralcancer.htm PALATE: (Figures 13 and 14) With the mouth wide open and the patient's ",
+      "author": "BodyParts3D/Anatomography",
+      "license": "Public domain",
+      "licenseUrl": "",
+      "source": "https://commons.wikimedia.org/wiki/File:NIH%20DOC%2013%20HardPalate.jpg"
+    }
+  ],
+  "throat": [
+    {
+      "src": "/self-exam/throat.jpg",
+      "width": 266,
+      "height": 400,
+      "description": "These images are part of the 2013 publication from the NIH \"Detecting Oral Cancer: A Guide for Health Care Professionals\". Available on the 15/7/14 at https://www.nidcr.nih.gov/oralhealth/topics/oralcancer/detectingoralcancer.htm (Figure 14) Examine all soft palate and oropharyngeal tissues.",
+      "author": "BodyParts3D/Anatomography",
+      "license": "Public domain",
+      "licenseUrl": "",
+      "source": "https://commons.wikimedia.org/wiki/File:NIH%20DOC%2014%20Oropharynx.jpg"
+    }
+  ]
+}

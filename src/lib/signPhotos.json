@@ -1,8 +1,8 @@
 {
   "white": {
     "src": "/signs/white.jpg",
-    "width": 2700,
-    "height": 1800,
+    "width": 1200,
+    "height": 800,
     "author": "Unknown photographer",
     "license": "Public domain",
     "licenseUrl": "",
@@ -12,9 +12,19 @@
     "src": "/signs/mixed.jpg",
     "width": 325,
     "height": 400,
-    "author": "BodyParts3D/Anatomography",
+    "author": "National Institutes of Health",
     "license": "Public domain",
     "licenseUrl": "",
     "source": "https://commons.wikimedia.org/wiki/File:NIH%20DOC%2019%20Erythroleukoplakia.jpg"
+  },
+  "sore": {
+    "src": "/signs/sore.jpg",
+    "width": 600,
+    "height": 400
+  },
+  "lip": {
+    "src": "/signs/lip.jpg",
+    "width": 1155,
+    "height": 648
   }
 }

@@ -181,6 +181,8 @@
         "instruction": "Di \"ahh\" y revisa el fondo de tu garganta. Busca asimetría, manchas o llagas."
       }
     ],
+    "photoAlt": "{area}, vista de referencia {n}",
+    "photoCredit": "Fotos de referencia de \"Detección del cáncer oral: una guía para profesionales de la salud\" (Institutos Nacionales de la Salud). Dominio público.",
     "normalHeading": "Qué es normal y qué no",
     "normalP1Rest": "La mayoría de las bocas tienen asimetrías, pequeños bultos y ocasionalmente",
     "normalP1Link": "aftas",

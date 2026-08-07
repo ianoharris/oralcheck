@@ -7,9 +7,12 @@ import { useTranslations } from "next-intl";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import signPhotos from "@/lib/signPhotos.json";
 
+// Attribution is optional: we only ever print a credit line we can actually
+// stand behind. A photo whose provenance we can't verify ships without one
+// rather than with a guessed author or licence.
 type SignPhoto = {
   src: string; width: number; height: number;
-  author: string; license: string; licenseUrl: string; source: string;
+  author?: string; license?: string; licenseUrl?: string; source?: string;
 };
 const PHOTOS = signPhotos as Record<string, SignPhoto>;
 
@@ -199,23 +202,31 @@ export default function SignsVisualGuide() {
                 <Icon name={showPhoto ? "overview" : "selfExam"} size={17} />
                 {showPhoto ? t("hidePhoto") : t("showPhoto")}
               </button>
-              {showPhoto && (
+              {showPhoto && photo.author && (
                 <p className="mt-1.5 text-[11px] text-ink-soft leading-relaxed">
                   {photo.author}
-                  {" · "}
-                  {photo.licenseUrl ? (
-                    <a href={photo.licenseUrl} target="_blank" rel="noopener noreferrer"
-                       className="underline underline-offset-2 hover:text-ink">
-                      {photo.license}
-                    </a>
-                  ) : (
-                    photo.license
+                  {photo.license && (
+                    <>
+                      {" · "}
+                      {photo.licenseUrl ? (
+                        <a href={photo.licenseUrl} target="_blank" rel="noopener noreferrer"
+                           className="underline underline-offset-2 hover:text-ink">
+                          {photo.license}
+                        </a>
+                      ) : (
+                        photo.license
+                      )}
+                    </>
                   )}
-                  {" · "}
-                  <a href={photo.source} target="_blank" rel="noopener noreferrer"
-                     className="underline underline-offset-2 hover:text-ink">
-                    {t("photoSource")}
-                  </a>
+                  {photo.source && (
+                    <>
+                      {" · "}
+                      <a href={photo.source} target="_blank" rel="noopener noreferrer"
+                         className="underline underline-offset-2 hover:text-ink">
+                        {t("photoSource")}
+                      </a>
+                    </>
+                  )}
                 </p>
               )}
             </div>
