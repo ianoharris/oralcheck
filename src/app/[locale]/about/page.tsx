@@ -4,8 +4,13 @@ import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { localizedAlternates } from "@/lib/pageMetadata";
 import ContactForm from "@/components/ContactForm";
+import Icon from "@/components/Icon";
 
 type Props = { params: Promise<{ locale: string }> };
+
+// Set to the profile URL to show the link. Left empty rather than pointing at
+// a guessed slug, since a 404 next to the founder's name is worse than no link.
+const LINKEDIN_URL = "";
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
@@ -43,6 +48,17 @@ export default async function AboutPage({ params }: Props) {
           <div>
             <div className="font-serif text-xl text-ink">{t("founderName")}</div>
             <div className="text-sm text-ink-soft">{t("founderTitle")}</div>
+            {LINKEDIN_URL && (
+              <a
+                href={LINKEDIN_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 mt-1.5 text-sm font-medium text-brand hover:text-brand-dark transition-colors"
+              >
+                <Icon name="linkedin" size={16} weight="fill" />
+                {t("linkedin")}
+              </a>
+            )}
           </div>
         </div>
         <p className="text-ink-soft leading-relaxed mb-3">{t("bio1")}</p>

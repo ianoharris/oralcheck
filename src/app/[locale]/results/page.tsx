@@ -7,6 +7,7 @@ import { Link } from "@/i18n/navigation";
 import { computeRisk, type RiskResult, type RiskTier } from "@/lib/riskEngine";
 import type { Question } from "@/lib/questions";
 import RiskGauge from "@/components/RiskGauge";
+import Modal from "@/components/Modal";
 import { sendGAEvent } from "@next/third-parties/google";
 import { track } from "@vercel/analytics";
 
@@ -42,6 +43,7 @@ export default function ResultsPage() {
   const [emailStatus, setEmailStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const [emailError, setEmailError] = useState("");
   const [showAllFactors, setShowAllFactors] = useState(false);
+  const [emailModalOpen, setEmailModalOpen] = useState(false);
 
   useEffect(() => {
     try {
@@ -62,6 +64,28 @@ export default function ResultsPage() {
     setLoaded(true);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // Offer the emailed copy as a dialog rather than a block at the foot of the
+  // page, which most people never scrolled to. It waits for the personalised
+  // summary to finish so it doesn't cover the result the moment it appears,
+  // and it fires at most once per session so a retake isn't nagged.
+  useEffect(() => {
+    if (!result || summaryLoading || emailStatus === "sent") return;
+    let prompted = false;
+    try {
+      prompted = sessionStorage.getItem("oralcheck:emailPrompted") === "1";
+    } catch {}
+    if (prompted) return;
+
+    const timer = setTimeout(() => {
+      try {
+        sessionStorage.setItem("oralcheck:emailPrompted", "1");
+      } catch {}
+      setEmailModalOpen(true);
+      sendGAEvent("event", "email_prompt_shown", { risk_tier: result.tier });
+    }, 1200);
+    return () => clearTimeout(timer);
+  }, [result, summaryLoading, emailStatus]);
 
   async function fetchClaudeSummary(risk: RiskResult) {
     setSummaryLoading(true);
@@ -84,12 +108,16 @@ export default function ResultsPage() {
       const reader = res.body.getReader();
       const decoder = new TextDecoder();
       let text = "";
+      // Drain the stream into a buffer and commit it once, rather than setting
+      // state per chunk. Streaming still avoids the request timeout on a slow
+      // generation, but the reader sees the skeleton resolve into finished
+      // prose instead of watching it type itself out.
       while (true) {
         const { done, value } = await reader.read();
         if (done) break;
         text += decoder.decode(value, { stream: true });
-        setClaudeSummary(text);
       }
+      setClaudeSummary(text);
     } catch {
       // fall through — static summary shown as fallback
     } finally {
@@ -192,6 +220,37 @@ export default function ResultsPage() {
   const primaryFactors = result.factors.slice(0, PRIMARY_COUNT);
   const minorFactors = result.factors.slice(PRIMARY_COUNT);
 
+  // Rendered in two places (inline block and dialog) from one definition, so
+  // the two can't drift apart. `stacked` is for the narrow dialog column.
+  const renderEmailForm = (stacked: boolean) => (
+    <>
+      <form
+        onSubmit={handleEmailResult}
+        className={stacked ? "flex flex-col gap-2.5" : "flex flex-col sm:flex-row gap-3"}
+      >
+        <input
+          type="email"
+          required
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder={t("emailPlaceholder")}
+          aria-label={t("emailLabel")}
+          className="flex-1 bg-warm px-5 py-3 rounded-xl border border-warm-dim focus:outline-none focus:ring-2 focus:ring-brand text-ink placeholder:text-ink-soft"
+        />
+        <button
+          type="submit"
+          disabled={emailStatus === "sending" || !email.trim()}
+          className="bg-brand hover:bg-brand-dark disabled:opacity-60 text-white font-semibold px-6 py-3 rounded-xl transition-colors whitespace-nowrap"
+        >
+          {emailStatus === "sending" ? t("emailSending") : t("emailMe")}
+        </button>
+      </form>
+      {emailStatus === "error" && (
+        <p className="mt-2 text-sm text-accent">{emailError}</p>
+      )}
+    </>
+  );
+
   // ── Main render ───────────────────────────────────────────────────────────
 
   return (
@@ -237,11 +296,19 @@ export default function ResultsPage() {
             ) : (
               <p className="text-ink-soft leading-relaxed">
                 {claudeSummary || result.summary}
-                {summaryLoading && claudeSummary && (
-                  <span className="inline-block w-1.5 h-4 bg-ink-soft/40 ml-0.5 animate-pulse rounded-sm align-middle" />
-                )}
               </p>
             )}
+
+            {/* The scoring rationale lived only in the footer. On a health tool
+                the "how was this calculated" answer belongs next to the number
+                it explains, not three scrolls away. */}
+            <Link
+              href="/methods"
+              className="inline-flex items-center gap-1.5 text-sm font-medium text-brand hover:text-brand-dark transition-colors pt-1"
+            >
+              <Icon name="overview" size={15} />
+              {t("howScored")}
+            </Link>
           </div>
         </div>
       </div>
@@ -400,7 +467,8 @@ export default function ResultsPage() {
         </button>
       </div>
 
-      {/* Email a copy */}
+      {/* Email a copy. Stays on the page as well as in the dialog, so anyone
+          who dismissed the prompt can still find it. */}
       <div className="mt-8 p-6 rounded-2xl bg-brand-soft border border-brand/15">
         {emailStatus === "sent" ? (
           <div className="text-center">
@@ -411,30 +479,46 @@ export default function ResultsPage() {
           <>
             <div className="font-serif text-xl text-ink mb-1">{t("emailKeepCopy")}</div>
             <p className="text-sm text-ink-soft mb-4 leading-relaxed">{t("emailBody")}</p>
-            <form onSubmit={handleEmailResult} className="flex flex-col sm:flex-row gap-3">
-              <input
-                type="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder={t("emailPlaceholder")}
-                aria-label={t("emailLabel")}
-                className="flex-1 bg-warm px-5 py-3 rounded-xl border border-warm-dim focus:outline-none focus:ring-2 focus:ring-brand text-ink placeholder:text-ink-soft"
-              />
-              <button
-                type="submit"
-                disabled={emailStatus === "sending" || !email.trim()}
-                className="bg-brand hover:bg-brand-dark disabled:opacity-60 text-white font-semibold px-6 py-3 rounded-xl transition-colors whitespace-nowrap"
-              >
-                {emailStatus === "sending" ? t("emailSending") : t("emailMe")}
-              </button>
-            </form>
-            {emailStatus === "error" && (
-              <p className="mt-2 text-sm text-accent">{emailError}</p>
-            )}
+            {renderEmailForm(false)}
           </>
         )}
       </div>
+
+      <Modal
+        open={emailModalOpen}
+        onClose={() => setEmailModalOpen(false)}
+        labelledBy="email-modal-title"
+        closeLabel={t("emailDismiss")}
+      >
+        {emailStatus === "sent" ? (
+          <div className="text-center py-2">
+            <div className="w-11 h-11 rounded-full bg-brand-soft text-brand flex items-center justify-center mx-auto mb-3">
+              <Icon name="check" size={22} weight="bold" />
+            </div>
+            <div id="email-modal-title" className="font-serif text-xl text-ink mb-1">
+              {t("emailSentTitle")}
+            </div>
+            <p className="text-sm text-ink-soft">{t("emailSentDesc")}</p>
+          </div>
+        ) : (
+          <>
+            <div className="w-11 h-11 rounded-full bg-brand-soft text-brand flex items-center justify-center mb-3">
+              <Icon name="email" size={22} />
+            </div>
+            <div id="email-modal-title" className="font-serif text-2xl text-ink mb-1.5 pr-6">
+              {t("emailKeepCopy")}
+            </div>
+            <p className="text-sm text-ink-soft mb-4 leading-relaxed">{t("emailBody")}</p>
+            {renderEmailForm(true)}
+            <button
+              onClick={() => setEmailModalOpen(false)}
+              className="mt-3 w-full text-sm font-medium text-ink-soft hover:text-ink transition-colors py-1"
+            >
+              {t("emailDismiss")}
+            </button>
+          </>
+        )}
+      </Modal>
 
       <div className="mt-6 flex justify-center">
         <Link

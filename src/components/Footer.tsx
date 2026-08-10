@@ -19,6 +19,7 @@ export default async function Footer() {
             <li><Link href="/for-clinicians" className="hover:text-brand">{t("forClinicians")}</Link></li>
             <li><Link href="/about" className="hover:text-brand">{t("about")}</Link></li>
             <li><Link href="/methods" className="hover:text-brand">{t("scoringMethodology")}</Link></li>
+            <li><Link href="/press" className="hover:text-brand">{t("press")}</Link></li>
             <li><Link href="/about#feedback" className="hover:text-brand">{t("sendFeedback")}</Link></li>
             <li><Link href="/qr" className="hover:text-brand">{t("printShare")}</Link></li>
           </ul>

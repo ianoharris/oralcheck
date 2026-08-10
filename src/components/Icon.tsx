@@ -12,7 +12,8 @@ import {
   Cake, Cigarette, Wine, Dna, Sun, Warning, UsersThree, Carrot, Tooth, Leaf,
   Lightning, BookOpen, MagnifyingGlass, ChartBar, Virus, ShieldCheck, Microscope,
   Lock, Check, WifiSlash, Star, Timer, Moon, SunDim, Printer, Bandaids,
-  FirstAidKit, CalendarCheck, Prohibit, HandHeart,
+  FirstAidKit, CalendarCheck, Prohibit, HandHeart, X, EnvelopeSimple,
+  LinkedinLogo, DownloadSimple, Newspaper,
 } from "@phosphor-icons/react/dist/ssr";
 import type { Icon as PhosphorIcon } from "@phosphor-icons/react";
 
@@ -54,6 +55,11 @@ export const ICONS = {
   appointment: CalendarCheck,
   noCost: Prohibit,
   care: HandHeart,
+  close: X,
+  email: EnvelopeSimple,
+  linkedin: LinkedinLogo,
+  download: DownloadSimple,
+  press: Newspaper,
 } as const;
 
 export type IconName = keyof typeof ICONS;

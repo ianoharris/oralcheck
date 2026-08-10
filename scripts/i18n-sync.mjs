@@ -75,15 +75,36 @@ Translate every value in this JSON object from English to Spanish (Latin America
 
 ${JSON.stringify(payload, null, 2)}`;
 
-  const msg = await client.messages.create({
-    model: "claude-opus-4-8",
-    max_tokens: 8192,
-    messages: [{ role: "user", content: prompt }],
-  });
+  // Streamed: at this max_tokens the SDK rejects a non-streaming call outright,
+  // since a slow generation could outrun the request timeout.
+  const msg = await client.messages
+    .stream({
+      model: "claude-opus-4-8",
+      max_tokens: 32000,
+      messages: [{ role: "user", content: prompt }],
+    })
+    .finalMessage();
 
   const text = msg.content.find((b) => b.type === "text")?.text ?? "{}";
   const cleaned = text.trim().replace(/^```(json)?/, "").replace(/```$/, "").trim();
-  return JSON.parse(cleaned);
+
+  try {
+    return JSON.parse(cleaned);
+  } catch (err) {
+    // A batch of long values can still outrun the output limit and come back
+    // truncated mid-string. Halve it and retry rather than losing the whole run
+    // (which previously died on the first oversized batch and translated none).
+    if (entries.length > 1) {
+      const mid = Math.ceil(entries.length / 2);
+      console.warn(`    response unparseable for ${entries.length} keys, splitting`);
+      const [a, b] = [entries.slice(0, mid), entries.slice(mid)];
+      return {
+        ...(await translateBatch(client, a)),
+        ...(await translateBatch(client, b)),
+      };
+    }
+    throw err;
+  }
 }
 
 async function main() {

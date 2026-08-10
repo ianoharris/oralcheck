@@ -38,7 +38,8 @@
     "copyright": "© {year} OralCheck",
     "methods": "Methods",
     "privacy": "Privacy",
-    "notAffiliated": "Not affiliated with any medical institution."
+    "notAffiliated": "Not affiliated with any medical institution.",
+    "press": "Press kit"
   },
   "HeroSectionPhoto": {
     "headlineLine1": [
@@ -1398,7 +1399,8 @@
     "startScreener": "Start the screener →",
     "findCare": "Find care",
     "getInTouchHeading": "Get in touch",
-    "getInTouchBody": "Found a bug, have a suggestion, or just want to say something? I read everything. Email is optional, leave it blank if you'd rather stay anonymous."
+    "getInTouchBody": "Found a bug, have a suggestion, or just want to say something? I read everything. Email is optional, leave it blank if you'd rather stay anonymous.",
+    "linkedin": "Connect on LinkedIn"
   },
   "AnimatedStats": {
     "cases": "new US oral & oropharyngeal cancer cases each year",
@@ -1457,6 +1459,7 @@
     "urgentBannerBold": "You mentioned a symptom lasting 2+ weeks.",
     "urgentBannerRest": "This isn't something to wait on. Please book a dental or medical visit this week.",
     "personalizing": "Personalizing your summary…",
+    "howScored": "How this score is calculated",
     "drivingHeading": "What's driving your risk",
     "nextStepsHeading": "Your next steps",
     "relatedReadingHeading": "Related reading",
@@ -1468,6 +1471,7 @@
     "emailSentDesc": "Your result and next steps are on the way. We didn't store your answers.",
     "emailKeepCopy": "Keep a copy of your result",
     "emailBody": "We'll email your risk summary and next steps so you have them when you book. No account, and we don't store your answers or add you to a list.",
+    "emailDismiss": "No thanks",
     "emailPlaceholder": "you@email.com",
     "emailLabel": "Your email",
     "emailSending": "Sending…",
@@ -1770,5 +1774,66 @@
       "high": "Your combination of risk factors, including {topPhrase}, places you in a higher-risk group where proactive screening is strongly warranted. Please schedule a dental or medical visit soon. The difference between Stage I and Stage IV oral cancer survival is dramatic: 84% versus 38%. The exam takes 2 minutes and could be the most important appointment you make this year.",
       "fallback": "your responses"
     }
+  },
+  "PressMeta": {
+    "title": "Press & Media Kit",
+    "description": "Boilerplate, fast facts, founder bio, logo files, and brand colors for anyone writing about OralCheck."
+  },
+  "PressPage": {
+    "tag": "Press kit",
+    "heading": "Press & Media Kit",
+    "subheading": "Everything needed to write about OralCheck accurately, in one place. Assets are free to use in coverage of the project.",
+    "boilerplateHeading": "Boilerplate",
+    "boilerplateShort": "OralCheck is a free, private oral cancer risk screener. It asks ten questions, takes about two minutes, requires no account, and does not store answers.",
+    "boilerplateLong": "Oral cancer is often caught late, which is the main reason it remains deadly. Survival is far better when it is found early, and HPV has become a leading cause in adults under 50. OralCheck turns published risk factors into a short self-assessment, explains which answers moved the score and why, and points people toward nearby care that can actually screen them. It is built and maintained by Ian Harris, a predental student at the University of Wisconsin-Madison, and is available in English and Spanish.",
+    "factsHeading": "Fast facts",
+    "facts": [
+      {
+        "label": "What it is",
+        "value": "A free oral cancer risk screener, available on the web with no app to install."
+      },
+      {
+        "label": "Length",
+        "value": "10 questions, roughly 2 minutes."
+      },
+      {
+        "label": "Cost",
+        "value": "Free. No account, no paywall, no ads."
+      },
+      {
+        "label": "Privacy",
+        "value": "Answers are scored in the browser and are not stored."
+      },
+      {
+        "label": "Languages",
+        "value": "English and Spanish."
+      },
+      {
+        "label": "Methodology",
+        "value": "Scoring is derived from published risk factors and is documented publicly, with sources, on the methodology page."
+      },
+      {
+        "label": "Founded",
+        "value": "2026, by a predental student at the University of Wisconsin-Madison."
+      },
+      {
+        "label": "Clinic finder",
+        "value": "Directs users to nearby dental practices, community health centers, dental schools, and free clinics."
+      }
+    ],
+    "founderHeading": "Founder",
+    "founderName": "Ian Harris",
+    "founderTitle": "Founder, OralCheck. Predental student, University of Wisconsin-Madison.",
+    "founderBio": "Ian Harris built OralCheck as an undergraduate, motivated by how routinely oral cancer is caught at a stage where treatment is harder and outcomes are worse. He designed the risk model from published literature, wrote the clinical explainers, and built the site and its clinic finder.",
+    "assetsHeading": "Logos & brand assets",
+    "assetsBody": "Please use the logo as provided, without recoloring, stretching, or adding effects.",
+    "assetLogoSvg": "Logo",
+    "assetLogoPng": "Logo",
+    "assetIcon": "App icon",
+    "paletteHeading": "Brand colors",
+    "contactHeading": "Press inquiries",
+    "contactBody": "For interviews, questions about the methodology, or anything not covered here, get in touch and expect a reply within a couple of days.",
+    "contactCta": "Contact",
+    "contactInstagram": "Instagram"
   }
 }
