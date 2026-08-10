@@ -32,6 +32,10 @@ IG_CONFIGURED     = bool(IMGBB_API_KEY and INSTAGRAM_USER_ID and IG_ACCESS_TOKEN
 # so we never touch Meta Graph API tokens/permissions.
 PUBLORA_API_KEY   = os.environ.get("PUBLORA_API_KEY", "")
 PUBLORA_BASE      = "https://api.publora.com/api/v1"
+# Which connected Publora accounts a post goes to, in order. Override with a
+# comma-separated list of platform prefixes to add or drop a network without
+# touching code.
+PUBLORA_PLATFORMS = os.environ.get("PUBLORA_PLATFORMS", "instagram,linkedin")
 QUEUE_DIR         = Path(__file__).parent / "queue"
 APPROVAL_TIMEOUT  = 21600  # 6 hours -- gives you the day to approve, not a rushed window
 
@@ -143,26 +147,102 @@ def upload_to_imgbb(image_path: Path) -> str:
 # Publora publishing (preferred — no Meta tokens needed)
 # ---------------------------------------------------------------------------
 
-def _publora_platform_id() -> str:
-    r = httpx.get(f"{PUBLORA_BASE}/platform-connections",
-                  headers={"x-publora-key": PUBLORA_API_KEY}, timeout=20)
-    r.raise_for_status()
-    for c in r.json().get("connections", []):
-        if str(c.get("platformId", "")).startswith("instagram-"):
-            return c["platformId"]
-    raise RuntimeError("No Instagram account connected in Publora.")
+class _Log:
+    """This module reports progress with print(); GitHub Actions captures stdout.
+    Thin shim so the Publora code can read like the rest of the agent."""
+    @staticmethod
+    def info(msg, *a):
+        print(msg % a if a else msg, flush=True)
+
+    @staticmethod
+    def warning(msg, *a):
+        print("WARN: " + (msg % a if a else msg), flush=True)
+
+
+log = _Log()
+
+
+class PubloraError(RuntimeError):
+    pass
+
+
+def _publora_check(resp: httpx.Response, what: str) -> httpx.Response:
+    """Raise with Publora's actual explanation attached.
+
+    httpx's raise_for_status() reports only the status line, which is why the
+    recurring "403 Forbidden on update-post" reports carried no reason at all
+    and could not be diagnosed.
+    """
+    if resp.is_success:
+        return resp
+    try:
+        body = json.dumps(resp.json())
+    except Exception:
+        body = resp.text
+    raise PubloraError(f"Publora {resp.status_code} on {what}: {body[:600]}")
+
+
+def _publora_platforms() -> list[str]:
+    """Every connected platform we publish to, Instagram first.
+
+    Previously hard-coded to the first instagram- connection, so the LinkedIn
+    page could be connected in Publora and still never receive anything.
+    """
+    r = _publora_check(
+        httpx.get(f"{PUBLORA_BASE}/platform-connections",
+                  headers={"x-publora-key": PUBLORA_API_KEY}, timeout=20),
+        "platform-connections",
+    )
+    conns = r.json().get("connections", [])
+
+    wanted = [p.strip() for p in PUBLORA_PLATFORMS.split(",") if p.strip()]
+    ids: list[str] = []
+    for prefix in wanted:
+        for c in conns:
+            pid = str(c.get("platformId", ""))
+            if not pid.startswith(prefix + "-"):
+                continue
+            # A platform whose token has expired accepts the draft and then
+            # fails at publish time, which is invisible until the post silently
+            # never appears.
+            if c.get("tokenStatus") not in (None, "valid"):
+                log.warning("Skipping %s: tokenStatus=%s", pid, c.get("tokenStatus"))
+                continue
+            ids.append(pid)
+    if not ids:
+        raise PubloraError(
+            f"No connected Publora account matched {wanted}. "
+            f"Connected: {[c.get('platformId') for c in conns]}"
+        )
+    return ids
 
 
 def _weekly_slots(n: int, start: datetime | None = None) -> list[datetime]:
-    """n posting times spread across the coming week (evening slot, ~5pm CT)."""
+    """n posting times spread across the coming week (evening slot, ~5pm CT).
+
+    Spacing is computed over n-1 gaps, not n. Dividing by n left the last slot
+    short of the end of the week and, combined with rounding, put two posts on
+    the same day at the identical minute: n=7 produced days 1,2,3,4,4,5,6 and
+    n=4 produced 1,3,4,5. Days are now assigned by even division and then
+    de-duplicated, so no two posts ever collide.
+    """
     base = start or datetime.now(timezone.utc)
+    span = 6  # day 1 (tomorrow) through day 7
+    POST_HOUR = 22  # ~5pm CT
+
+    used: set[datetime] = set()
     slots = []
     for i in range(n):
-        day_offset = 1 + round(i * (6 / max(n, 1)))
-        d = (base + timedelta(days=day_offset)).replace(
-            hour=22, minute=0, second=0, microsecond=0)
-        slots.append(d)
-    return slots
+        day = 1 + (round(i * span / (n - 1)) if n > 1 else 0)
+        when = (base + timedelta(days=day)).replace(
+            hour=POST_HOUR, minute=0, second=0, microsecond=0)
+        # More posts than days is legitimate (a heavy week). Shift the hour
+        # rather than stacking two posts on the same timestamp.
+        while when in used:
+            when += timedelta(hours=1)
+        used.add(when)
+        slots.append(when)
+    return sorted(slots)
 
 
 def post_via_publora(manifest: dict, media_files: list[Path],
@@ -176,33 +256,115 @@ def post_via_publora(manifest: dict, media_files: list[Path],
     ext  = "mp4" if is_video else "jpg"
     typ  = "video" if is_video else "image"
 
-    platform_id = _publora_platform_id()
+    platforms = _publora_platforms()
     caption  = manifest.get("caption", "")
     hashtags = manifest.get("hashtags", [])
     full = caption + ("\n\n" + " ".join(f"#{h}" for h in hashtags) if hashtags else "")
 
-    pr = httpx.post(f"{PUBLORA_BASE}/create-post", headers=headers,
-                    json={"content": full, "platforms": [platform_id]}, timeout=30)
-    pr.raise_for_status()
+    pr = _publora_check(
+        httpx.post(f"{PUBLORA_BASE}/create-post", headers=headers,
+                   json={"content": full, "platforms": platforms}, timeout=30),
+        "create-post",
+    )
     post_group_id = pr.json()["postGroupId"]
+    log.info("Publora draft %s -> %s", post_group_id, ", ".join(platforms))
 
     for i, path in enumerate(media_files, 1):
         fn = f"oralcheck_{int(time.time())}_{i}.{ext}"
-        ur = httpx.post(f"{PUBLORA_BASE}/get-upload-url", headers=headers,
-                        json={"fileName": fn, "contentType": mime,
-                              "postGroupId": post_group_id, "type": typ}, timeout=30)
-        ur.raise_for_status()
+        ur = _publora_check(
+            httpx.post(f"{PUBLORA_BASE}/get-upload-url", headers=headers,
+                       json={"fileName": fn, "contentType": mime,
+                             "postGroupId": post_group_id, "type": typ}, timeout=30),
+            "get-upload-url",
+        )
         upload_url = ur.json()["uploadUrl"]
         with open(path, "rb") as f:
-            httpx.put(upload_url, content=f.read(),
-                      headers={"Content-Type": mime}, timeout=180).raise_for_status()
+            _publora_check(
+                httpx.put(upload_url, content=f.read(),
+                          headers={"Content-Type": mime}, timeout=180),
+                f"upload {fn}",
+            )
+        # A carousel fires this loop up to 10 times back to back. Pace it a
+        # little so a burst can't trip Publora's rate limiting, which is one of
+        # the things that can surface later as a 403 on scheduling.
+        if i < len(media_files):
+            time.sleep(1.0)
 
-    when_dt = when or (datetime.now(timezone.utc) + timedelta(minutes=2))
+    _publora_wait_for_media(post_group_id, len(media_files))
+
+    when_dt = when or (datetime.now(timezone.utc) + timedelta(minutes=5))
+    now = datetime.now(timezone.utc)
+    if when_dt <= now + timedelta(minutes=2):
+        # Publora rejects a scheduledTime that is already past or imminent, and
+        # approval can land well after the slots were computed.
+        when_dt = now + timedelta(minutes=5)
     when_str = when_dt.astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.000Z")
-    sr = httpx.put(f"{PUBLORA_BASE}/update-post/{post_group_id}", headers=headers,
-                   json={"status": "scheduled", "scheduledTime": when_str}, timeout=30)
-    sr.raise_for_status()
-    return post_group_id
+
+    # The schedule call is the step that has been failing. Retry it: the failure
+    # is intermittent (posts go out fine most days), which points at a
+    # server-side race or rate limit rather than anything wrong with the post.
+    last: Exception | None = None
+    for attempt in range(4):
+        try:
+            _publora_check(
+                httpx.put(f"{PUBLORA_BASE}/update-post/{post_group_id}", headers=headers,
+                          json={"status": "scheduled", "scheduledTime": when_str}, timeout=30),
+                f"update-post/{post_group_id}",
+            )
+            log.info("Scheduled %s for %s", post_group_id, when_str)
+            return post_group_id
+        except PubloraError as e:
+            last = e
+            wait = 5 * (2 ** attempt)
+            log.warning("Schedule attempt %d failed (%s). Retrying in %ds.",
+                        attempt + 1, e, wait)
+            time.sleep(wait)
+
+    # Out of retries. Say plainly that a draft is sitting in Publora with the
+    # media attached, so it can be scheduled by hand instead of being lost.
+    raise PubloraError(
+        f"Could not schedule after 4 attempts. A draft with the media is in "
+        f"Publora as {post_group_id} and can be scheduled manually. Last error: {last}"
+    )
+
+
+def _publora_wait_for_media(post_group_id: str, expected: int, timeout_s: int = 90) -> None:
+    """Wait for uploaded media to settle before scheduling.
+
+    Publora validates media at the scheduling gate, so scheduling straight after
+    the upload PUT is a race. Note its `status` field is not fully reliable: a
+    post has been observed with all seven files fetchable at their media URLs
+    while every one still read "uploading". So a stuck status is logged and
+    allowed through rather than treated as fatal, and the retry loop around the
+    schedule call is what actually absorbs the race.
+    """
+    deadline = time.time() + timeout_s
+    while time.time() < deadline:
+        try:
+            r = httpx.get(f"{PUBLORA_BASE}/get-post/{post_group_id}",
+                          headers={"x-publora-key": PUBLORA_API_KEY}, timeout=20)
+            if not r.is_success:
+                time.sleep(3)
+                continue
+            media = r.json().get("media", []) or []
+            if len(media) < expected:
+                time.sleep(3)
+                continue
+            failed = [m for m in media if m.get("status") == "failed"]
+            if failed:
+                raise PubloraError(
+                    "Publora reported failed media: "
+                    + ", ".join(f"{m.get('sourceFileName')}: {m.get('failureReason')}" for m in failed)
+                )
+            if all(m.get("status") != "uploading" for m in media):
+                return
+        except PubloraError:
+            raise
+        except Exception:
+            pass
+        time.sleep(3)
+    log.warning("Media on %s still reads 'uploading' after %ds; scheduling anyway.",
+                post_group_id, timeout_s)
 
 
 # ---------------------------------------------------------------------------

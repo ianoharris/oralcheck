@@ -208,7 +208,51 @@ def generate_ideas(count, *, api_key, model, system_prompt, pillar_briefs,
         seen.add(slug)
         idea["slug"] = slug
         out.append(idea)
-    return out
+    return _balance_formats(out)
+
+
+def _balance_formats(ideas: list[dict]) -> list[dict]:
+    """Guarantee every format is represented in a batch.
+
+    The prompt asks for a mix, but nothing enforced it, so a batch could come
+    back as eight carousels and the week would ship one format. Reassigns the
+    media_type of surplus ideas from the most common format until each of
+    image, carousel, and reel appears at least once.
+
+    Order is preserved: a week is picked off the front of the batch, so
+    front-loading the variety is what makes "one of each per week" hold.
+    """
+    if len(ideas) < len(VALID_MEDIA):
+        return ideas
+
+    def counts() -> dict[str, int]:
+        c = {m: 0 for m in VALID_MEDIA}
+        for i in ideas:
+            c[i["media_type"]] += 1
+        return c
+
+    for fmt in ("reel", "image", "carousel"):
+        c = counts()
+        if c[fmt] > 0:
+            continue
+        # Take from whichever format is most over-represented, and take the
+        # last one so the earliest (best) ideas keep their intended treatment.
+        donor = max(c, key=lambda m: c[m])
+        for idea in reversed(ideas):
+            if idea["media_type"] == donor:
+                idea["media_type"] = fmt
+                break
+
+    # Interleave so the first three ideas are three different formats.
+    by_fmt: dict[str, list[dict]] = {m: [] for m in VALID_MEDIA}
+    for i in ideas:
+        by_fmt[i["media_type"]].append(i)
+    ordered: list[dict] = []
+    while any(by_fmt.values()):
+        for fmt in ("carousel", "reel", "image"):
+            if by_fmt[fmt]:
+                ordered.append(by_fmt[fmt].pop(0))
+    return ordered
 
 
 def record_suggested(ledger: dict, ideas: list[dict]) -> dict:
