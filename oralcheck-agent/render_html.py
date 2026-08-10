@@ -462,6 +462,71 @@ def _screenshot_many(htmls: list[str]) -> list[str]:
 _TMP: list[str] = []
 
 
+# Real screens from the product, for posts where stock photography has nothing
+# honest to offer. A post about rising incidence used to get "a photo of
+# someone's mouth" because that is all a stock search can return for an
+# abstract claim; the actual screener is both on-topic and on-brand.
+#
+# Each entry is a page path plus an optional CSS selector to frame on. The
+# selector keeps the shot on the meaningful element instead of a full page of
+# whitespace.
+SITE_SHOTS: dict[str, dict] = {
+    "screener":   {"path": "/screener",         "selector": "main", "label": "the screener"},
+    "result":     {"path": "/results",          "selector": "main", "label": "a result page"},
+    "find_care":  {"path": "/find-care",        "selector": "main", "label": "the clinic finder"},
+    "signs":      {"path": "/learn/signs",      "selector": "main", "label": "the warning signs guide"},
+    "self_exam":  {"path": "/learn/self-exam",  "selector": "main", "label": "the self-exam guide"},
+    "home":       {"path": "/",                 "selector": "main", "label": "oralcheck.org"},
+}
+
+SITE_BASE = os.environ.get("SITE_BASE_URL", "https://oralcheck.org")
+
+
+def site_screenshot(shot: str, theme: str = "dark") -> str | None:
+    """Screenshot a real page of the site, cropped to a 1080x1080 square.
+
+    Returns None rather than raising: a missing screenshot should downgrade the
+    post to pure typography, never fail the run.
+    """
+    spec = SITE_SHOTS.get(shot)
+    if not spec:
+        return None
+    from playwright.sync_api import sync_playwright
+
+    out = tempfile.NamedTemporaryFile(suffix=".jpg", delete=False)
+    out.close()
+    try:
+        with sync_playwright() as p:
+            browser = p.chromium.launch(args=["--no-sandbox", "--disable-dev-shm-usage",
+                                              "--force-color-profile=srgb"])
+            page = browser.new_page(viewport={"width": 1200, "height": 1200},
+                                    device_scale_factor=2,
+                                    color_scheme="dark" if theme == "dark" else "light")
+            page.goto(f"{SITE_BASE}{spec['path']}", wait_until="networkidle", timeout=45_000)
+            page.evaluate("async () => { await document.fonts.ready; }")
+            target = page.locator(spec["selector"]).first
+            png = target.screenshot(type="png") if target.count() else page.screenshot(type="png")
+            browser.close()
+
+        with Image.open(BytesIO(png)) as im:
+            im = im.convert("RGB")
+            # Centre-crop to a square on the top of the element, which is where
+            # the headline and the primary control live.
+            side = min(im.width, im.height)
+            left = max(0, (im.width - side) // 2)
+            im = im.crop((left, 0, left + side, side))
+            im = im.resize((OUTPUT_PX, OUTPUT_PX), Image.LANCZOS)
+            im.save(out.name, "JPEG", quality=JPEG_QUALITY)
+        return _register(out.name)
+    except Exception as exc:  # noqa: BLE001
+        print(f"site_screenshot({shot}) failed: {exc}", flush=True)
+        try:
+            os.unlink(out.name)
+        except OSError:
+            pass
+        return None
+
+
 def _register(path: str) -> str:
     _TMP.append(path)
     return path
@@ -563,6 +628,33 @@ body {{ overflow:hidden; background:var(--bg); color:var(--text);
   background:radial-gradient(circle, var(--teal-brt) 0%, transparent 70%);
   animation-direction:reverse; }}
 
+/* Alternate backdrops. Each animates off the same seekable timeline as
+   everything else, so a rendered frame at time t is always reproducible. */
+@keyframes bgpan {{ from{{transform:scale(1.04) translateY(0);}}
+                    to{{transform:scale(1.12) translateY(-28px);}} }}
+@keyframes rayrise {{ from{{transform:scaleY(0.35); opacity:0.10;}}
+                      to{{transform:scaleY(1); opacity:0.34;}} }}
+
+.bgsweep, .bggrid, .bghalo {{ position:absolute; inset:-4%;
+  animation-name:bgpan; animation-duration:{KINETIC_TOTAL}s;
+  animation-timing-function:ease-out; animation-fill-mode:both; }}
+.bghalo {{ opacity:0.9; }}
+
+.bgrays {{ position:absolute; inset:0; overflow:hidden; }}
+.bgrays span {{ position:absolute; bottom:0; width:36px; height:100%;
+  background:linear-gradient(to top, var(--ray) 0%, transparent 78%);
+  transform-origin:bottom center; opacity:0.2;
+  animation-name:rayrise; animation-duration:{KINETIC_TOTAL}s;
+  animation-timing-function:ease-out; animation-fill-mode:both; }}
+
+.photobg {{ position:absolute; inset:-4%; background-size:cover;
+  background-position:center;
+  animation-name:bgpan; animation-duration:{KINETIC_TOTAL}s;
+  animation-timing-function:ease-out; animation-fill-mode:both; }}
+.photoscrim {{ position:absolute; inset:0;
+  background:linear-gradient(180deg, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.30) 42%,
+    rgba(0,0,0,0.78) 100%); }}
+
 .content {{ position:absolute; inset:0; display:flex; flex-direction:column;
   justify-content:center; padding:0 104px; }}
 .brandrow {{ position:absolute; top:120px; left:104px; display:flex; align-items:center; gap:16px;
@@ -616,6 +708,40 @@ def _kinetic_words_html(phrase: str, emphasis: str) -> str:
     return " ".join(out)
 
 
+# Background treatments a reel rotates through. Each is CSS-only and seekable
+# (driven by --t like everything else), so frames stay reproducible.
+BG_VARIANTS = ("blobs", "sweep", "grid", "halo", "rays")
+
+
+def _kinetic_backdrop(variant: str, t: dict) -> str:
+    if variant == "sweep":
+        return (
+            f"<div class='bgsweep' style=\"background:linear-gradient(135deg,"
+            f"{t['bg']} 0%,{t['bg']} 45%,{t['teal']} 130%)\"></div>"
+        )
+    if variant == "grid":
+        line = f"{t['text']}14"
+        return (
+            "<div class='bggrid' style=\"background-image:"
+            f"linear-gradient(to right,{line} 1px,transparent 1px),"
+            f"linear-gradient(to bottom,{line} 1px,transparent 1px);"
+            "background-size:120px 120px\"></div>"
+            f"<div class='blob b' style='background:{t['teal']}'></div>"
+        )
+    if variant == "halo":
+        return (
+            "<div class='bghalo' style=\"background:radial-gradient(circle at 50% 38%,"
+            f"{t['teal_brt']}40 0%,transparent 62%)\"></div>"
+        )
+    if variant == "rays":
+        bars = "".join(
+            f"<span style='left:{8 + i * 12}%;animation-delay:{i * 0.09:.2f}s'></span>"
+            for i in range(8)
+        )
+        return f"<div class='bgrays' style=\"--ray:{t['teal']}\">{bars}</div>"
+    return "<div class='blob a'></div><div class='blob b'></div>"
+
+
 def kinetic_scene_html(segment: dict, theme: str = "dark") -> str:
     """Build one animated reel scene. `segment` may carry:
       caption   -> the on-screen phrase (kinetic words)
@@ -625,12 +751,25 @@ def kinetic_scene_html(segment: dict, theme: str = "dark") -> str:
     """
     t = THEMES.get(theme, THEMES["dark"])
     stat = segment.get("stat") or {}
-    blobs = "<div class='blob a'></div><div class='blob b'></div>"
     brand = ("<div class='brandrow'><div class='dot'></div>"
              "<span class='wordmark'>OralCheck</span></div>")
     foot = ("<div class='foot'><div class='footline'></div>"
             "<span class='footurl'>oralcheck.org</span></div>"
             if segment.get("is_last") else "")
+
+    # Every scene used to be the same two drifting blobs on the same flat
+    # background, which is most of why a finished reel felt repetitive. The
+    # caller varies `bg` across a reel's segments.
+    backdrop = _kinetic_backdrop(segment.get("bg", "blobs"), t)
+
+    # A photo scene breaks up a run of pure-type scenes. Sits behind a scrim so
+    # the headline stays legible over any image.
+    photo = segment.get("photo")
+    if photo:
+        backdrop = (
+            f"<div class='photobg' style=\"background-image:url('{_img_data_uri(photo)}')\"></div>"
+            "<div class='photoscrim'></div>"
+        )
 
     if stat.get("value"):
         digits = "".join(ch for ch in str(stat["value"]) if ch.isdigit())
@@ -660,7 +799,7 @@ def kinetic_scene_html(segment: dict, theme: str = "dark") -> str:
     return (
         f"<!DOCTYPE html><html><head><meta charset='utf-8'>"
         f"<style>{_kinetic_style(theme)}</style></head><body>"
-        f"<div class='scene' style='background:{t['bg']}'>{blobs}{brand}"
+        f"<div class='scene' style='background:{t['bg']}'>{backdrop}{brand}"
         f"<div class='content'>{body}</div>{foot}</div>"
         f"<script>{update_js}</script></body></html>"
     )

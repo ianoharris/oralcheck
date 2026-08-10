@@ -37,8 +37,10 @@ import ideas
 try:
     import render_html as _html_render
     _USE_HTML_RENDER = True
+    SITE_SHOT_KEYS = tuple(_html_render.SITE_SHOTS.keys())
 except ImportError:
     _USE_HTML_RENDER = False
+    SITE_SHOT_KEYS = ()
 
 # ---------------------------------------------------------------------------
 # Logging
@@ -378,11 +380,19 @@ def generate_content(brief: str, media_type: str) -> dict:
             "Output JSON with these exact fields:\n"
             "  hook: cover headline, 10 words max, the single strongest insight or surprising-true fact\n"
             "  kicker: 2-4 word topic eyebrow in title case (e.g. 'HPV & Oral Cancer', 'Know The Signs')\n"
-            "  search_query: a 3-6 word web photo query ONLY IF a real photo genuinely strengthens this\n"
-            "    specific post (e.g. a person doing a self-exam, a dentist visit, quitting tobacco). If a\n"
-            "    photo would just be generic decoration, leave this an EMPTY STRING \"\" -- the deck looks\n"
-            "    great as pure typography and a weak or generic photo is worse than none.\n"
-            "  photo_caption: one line, 14 words max, paired with the photo (only if search_query is set)\n"
+            "  image_source: pick ONE of \"photo\", \"site\", or \"none\".\n"
+            "    - \"photo\": only when a real photograph genuinely shows this post's subject (a person\n"
+            "      doing a self-exam, a dentist visit, quitting tobacco). Stock libraries have nothing\n"
+            "      for abstract claims like rising incidence or survival percentages -- asking for one\n"
+            "      returns a generic mouth that contradicts the caption. Do not force it.\n"
+            "    - \"site\": for posts about what the tool does, what a result looks like, finding care,\n"
+            "      or any stat where the honest illustration is the product itself.\n"
+            "    - \"none\": the default. Pure typography is a strong, on-brand look.\n"
+            "  site_shot: required when image_source is \"site\". One of: "
+            + ", ".join(f'\"{k}\"' for k in SITE_SHOT_KEYS) + ".\n"
+            "  search_query: required when image_source is \"photo\". A 3-6 word web photo query.\n"
+            "    Leave an EMPTY STRING \"\" otherwise.\n"
+            "  photo_caption: one line, 14 words max, paired with the image (only if not \"none\")\n"
             "  slides: array of 3 to 4 typed content slides. Each object has a 'type' plus fields:\n"
             "    - {\"type\":\"stat\", \"value\":\"70%\", \"label\":\"6-10 word plain-language meaning\", \"detail\":\"one 12-18 word supporting sentence\"}\n"
             "    - {\"type\":\"fact\", \"headline\":\"6-8 word serif headline\", \"body\":\"20-30 word supporting paragraph\"}\n"
@@ -434,6 +444,13 @@ def generate_content(brief: str, media_type: str) -> dict:
             data.setdefault("kicker", "")
             data.setdefault("photo_caption", "")
             data.setdefault("search_query", "")
+            data.setdefault("image_source", "photo" if data.get("search_query") else "none")
+            data.setdefault("site_shot", "")
+            # An unknown shot key would silently produce no image at all.
+            if data["image_source"] == "site" and data["site_shot"] not in SITE_SHOT_KEYS:
+                data["site_shot"] = "screener"
+            if data["image_source"] == "photo" and not data["search_query"]:
+                data["image_source"] = "none"
             data["slides"] = _sanitize_carousel_slides(data.get("slides", []))
             if not data["slides"]:
                 raise ValueError("carousel produced no valid content slides")
@@ -1210,9 +1227,53 @@ def build_faceless_reel(content: dict, theme: str = "dark") -> str:
     """Assemble a faceless reel from a structured script: per segment -> fal TTS
     narration + a kinetic-typography scene animating that line, then a branded
     outro, with a chill music bed under the voice. Returns the 1080x1920 mp4."""
+    return _render_reel_segments(content, theme)
+
+
+def _assign_reel_visuals(segments: list[dict], content: dict) -> None:
+    """Give each segment a distinct backdrop, and drop one real image in.
+
+    Every scene previously rendered on the same two drifting blobs, so a reel
+    read as one long identical shot no matter what it said. Backdrops now rotate
+    through the available treatments, offset per reel so two reels in a week
+    don't open the same way, and one middle segment gets a real image (a site
+    screenshot, or the photo the script asked for) to break up the typography.
+    """
+    if not _USE_HTML_RENDER:
+        return
+    variants = list(_html_render.BG_VARIANTS)
+    # Offset by the hook so the sequence differs reel to reel but stays
+    # deterministic for a given script.
+    start = abs(hash(str(content.get("hook", "")))) % len(variants)
+    for i, seg in enumerate(segments):
+        seg.setdefault("bg", variants[(start + i) % len(variants)])
+
+    if len(segments) < 3:
+        return
+    mid = len(segments) // 2
+    if segments[mid].get("stat", {}).get("value"):
+        mid = max(1, mid - 1)  # keep the big-number scene as clean typography
+
+    shot = str(content.get("site_shot", "")).strip()
+    img = None
+    if shot in SITE_SHOT_KEYS:
+        img = _html_render.site_screenshot(shot, "dark")
+    elif content.get("search_query"):
+        try:
+            img, _ = fetch_stock_photo(str(content["search_query"]))
+        except Exception as exc:  # noqa: BLE001
+            log.warning("Reel photo fetch failed (%s); staying typographic.", exc)
+    if img:
+        segments[mid]["photo"] = img
+        log.info("Reel segment %d uses a real image.", mid + 1)
+
+
+def _render_reel_segments(content: dict, theme: str):
     segments = content.get("segments", [])
     if not segments:
         raise ValueError("reel script has no segments")
+
+    _assign_reel_visuals(segments, content)
 
     seg_paths = []
     for idx, seg in enumerate(segments, 1):
@@ -1746,8 +1807,21 @@ def generate_carousel_slides(content: dict) -> list[str]:
     # The content model leaves search_query empty (or "none") when the deck reads
     # better as pure typography, which is often the case.
     query = str(content.get("search_query", "")).strip()
+    source = str(content.get("image_source", "")).strip().lower()
+    if not source:
+        source = "photo" if query and query.lower() not in ("none", "n/a", "no photo") else "none"
     raw_path = None
-    if query and query.lower() not in ("none", "n/a", "no photo"):
+    theme = _html_render.pick_theme() if _USE_HTML_RENDER else "dark"
+
+    if source == "site":
+        shot = str(content.get("site_shot", "screener")).strip()
+        log.info("Capturing site screenshot for carousel (%s)...", shot)
+        raw_path = _html_render.site_screenshot(shot, theme)
+        if raw_path:
+            content["photo_credit"] = "oralcheck.org"
+        else:
+            log.warning("Site screenshot failed; rendering photo-less carousel.")
+    elif source == "photo" and query and query.lower() not in ("none", "n/a", "no photo"):
         log.info("Fetching photo for carousel (query: %s)...", query)
         try:
             raw_path, credit = fetch_stock_photo(query)
@@ -1756,11 +1830,10 @@ def generate_carousel_slides(content: dict) -> list[str]:
             log.warning("Photo fetch failed (%s); rendering photo-less carousel.", exc)
             raw_path = None
     else:
-        log.info("No photo query -> rendering pure typographic carousel.")
+        log.info("No image requested -> rendering pure typographic carousel.")
 
     if _USE_HTML_RENDER:
         deck = build_deck_from_content(content, raw_path)
-        theme = _html_render.pick_theme()
         log.info("Rendering carousel deck (%d slides + cover + CTA, %s theme)...",
                  len(deck["slides"]), theme)
         return _html_render.carousel_deck(deck, theme)

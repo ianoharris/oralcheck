@@ -95,6 +95,44 @@ def _avoid_titles(ledger: dict, fresh_days: int = 45) -> list[str]:
     return out
 
 
+# Statistics the account leans on. The 84% five-year survival figure had been
+# appearing in post after post: good shorthand, but a follower who sees it four
+# times in a row learns nothing new the last three. Recently used figures are
+# fed back into the prompt as a do-not-reuse list so the pool actually rotates.
+STAT_PATTERNS = [
+    (r"\b84\s?%", "84% five-year survival when caught early"),
+    (r"\b(?:66|65)\s?%", "~66% overall five-year survival"),
+    (r"\b(?:38|39)\s?%", "~38% survival at late stage"),
+    (r"\b60[,.]?\d{3}\b", "~60,000 Americans diagnosed a year"),
+    (r"\b1 in 10\b", "1 in 10 cases in nonsmokers"),
+    (r"\b(?:11|12),?\d{3}\b", "~11,000 deaths a year"),
+    (r"\b70\s?%", "~70% of oropharyngeal cancers are HPV-linked"),
+    (r"\b3x\b|\bthree times\b", "men diagnosed ~3x more often than women"),
+    (r"\btwo weeks\b|\b2 weeks\b", "the two-week rule for a non-healing sore"),
+]
+
+STAT_RECENCY = 6  # how many recent ideas to consider "fresh in the feed"
+
+
+def _recent_stats_block(ledger: dict) -> str:
+    """List the statistics used in the most recent ideas so they get benched."""
+    recent = [i for i in ledger.get("ideas", []) if i.get("used_at")]
+    recent.sort(key=lambda i: i.get("used_at") or "", reverse=True)
+    haystack = " ".join(
+        f"{i.get('title','')} {i.get('brief','')}" for i in recent[:STAT_RECENCY]
+    ).lower()
+
+    hits = [label for pat, label in STAT_PATTERNS if re.search(pat, haystack)]
+    if not hits:
+        return ""
+    return (
+        "\nStatistics already used in recent posts. Do NOT build an idea around any of these; "
+        "the feed has covered them and repeating a number teaches the audience nothing:\n"
+        + "\n".join(f"  - {h}" for h in hits)
+        + "\nReach for a different, equally defensible figure or a non-numeric angle instead."
+    )
+
+
 def _coerce(idea: dict, valid_pillars: set[str]) -> dict | None:
     title = str(idea.get("title", "")).strip()
     if not title:
@@ -146,6 +184,8 @@ def generate_ideas(count, *, api_key, model, system_prompt, pillar_briefs,
                    "(the brand has already posted these). Every idea must be a genuinely new angle:\n"
                    + "\n".join(f"  - {t}" for t in avoid)) if avoid else ""
 
+    stat_block = _recent_stats_block(ledger)
+
     cal_block = ""
     if calendar_events:
         cal_lines = "\n".join(
@@ -161,7 +201,7 @@ def generate_ideas(count, *, api_key, model, system_prompt, pillar_briefs,
         "Use 2 to 4 searches, then stop researching and write the ideas.\n\n"
         f"Then propose {count} distinct Instagram content ideas for OralCheck.\n\n"
         f"Content pillars to draw from (use the pillar key exactly):\n{pillar_lines}\n"
-        f"{cal_block}\n{avoid_block}\n\n"
+        f"{cal_block}\n{avoid_block}\n{stat_block}\n\n"
         "Requirements:\n"
         f"  - Return a JSON array of exactly {count} objects as your final message, no markdown fences.\n"
         "  - Each object: title (<=12 words, the specific angle), pillar (one key from above), "
