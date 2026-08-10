@@ -1241,6 +1241,10 @@ def _assign_reel_visuals(segments: list[dict], content: dict) -> None:
     """
     if not _USE_HTML_RENDER:
         return
+    # The opening scene has to be readable in frame 0: that frame is the feed
+    # thumbnail and the moment the skip decision gets made.
+    segments[0]["lead"] = True
+
     variants = list(_html_render.BG_VARIANTS)
     # Offset by the hook so the sequence differs reel to reel but stays
     # deterministic for a given script.

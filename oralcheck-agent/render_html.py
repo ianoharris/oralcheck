@@ -668,6 +668,15 @@ body {{ overflow:hidden; background:var(--bg); color:var(--text);
 .headline {{ font-family:'DM Serif Display', Georgia, serif; font-size:104px; line-height:1.1;
   color:var(--text); letter-spacing:-0.01em; }}
 .word {{ display:inline-block; animation-name:riseIn; animation-duration:0.85s; }}
+
+/* Opening scene. Words settle from a soft blur at full opacity instead of
+   fading up from nothing, so frame 0 already shows the whole hook. The reel's
+   first frame is its feed thumbnail; a blank one asks the viewer to wait to
+   find out what this is, and most will not. */
+.lead .word {{ animation-name:leadIn; animation-duration:0.42s; }}
+.lead .kicker {{ animation-name:leadIn; animation-duration:0.32s; }}
+@keyframes leadIn {{ from{{opacity:1; transform:translateY(9px) scale(0.985); filter:blur(7px);}}
+                     to{{opacity:1; transform:none; filter:blur(0);}} }}
 .em {{ position:relative; display:inline-block; color:var(--coral); }}
 .uline {{ position:absolute; left:0; right:0; bottom:0.02em; height:0.085em; border-radius:4px;
   background:var(--coral); transform-origin:left center;
@@ -689,14 +698,22 @@ body {{ overflow:hidden; background:var(--bg); color:var(--text);
 """
 
 
-def _kinetic_words_html(phrase: str, emphasis: str) -> str:
+def _kinetic_words_html(phrase: str, emphasis: str, lead: bool = False) -> str:
     """Wrap each word in a staggered .word span; emphasis words get coral + a
-    sweeping underline. Stagger begins after the kicker settles."""
+    sweeping underline. Stagger begins after the kicker settles.
+
+    `lead` is for the opening scene, where the stagger has to be near-zero.
+    The old timing started words at 0.55s and stepped 0.10s with a 0.85s
+    animation, so a seven-word hook was not fully readable until ~2.0s and
+    frame 0 was blank. That blank frame is the feed thumbnail and the first
+    thing autoplay shows, which is a good way to get scrolled past.
+    """
     em_set = {w.strip(".,;:!?'\"").lower() for w in emphasis.split() if w.strip()}
-    out, start = [], 0.55
+    start, step = (0.0, 0.035) if lead else (0.55, 0.10)
+    out = []
     words = phrase.split()
     for i, w in enumerate(words):
-        d = round(start + i * 0.10, 3)
+        d = round(start + i * step, 3)
         bare = w.strip(".,;:!?'\"").lower()
         if em_set and bare in em_set:
             u_d = round(start + (i + 1) * 0.10 + 0.05, 3)
@@ -792,14 +809,15 @@ def kinetic_scene_html(segment: dict, theme: str = "dark") -> str:
     else:
         kicker = segment.get("kicker", "")
         kicker_html = f"<div class='anim kicker'>{_e(kicker)}</div>" if kicker else ""
-        words = _kinetic_words_html(segment.get("caption", ""), segment.get("emphasis", ""))
+        words = _kinetic_words_html(segment.get("caption", ""), segment.get("emphasis", ""),
+                                    lead=bool(segment.get("lead")))
         body = f"{kicker_html}<div class='headline'>{words}</div>"
         update_js = "window.__update=function(t){};"
 
     return (
         f"<!DOCTYPE html><html><head><meta charset='utf-8'>"
         f"<style>{_kinetic_style(theme)}</style></head><body>"
-        f"<div class='scene' style='background:{t['bg']}'>{backdrop}{brand}"
+        f"<div class='scene{' lead' if segment.get('lead') else ''}' style='background:{t['bg']}'>{backdrop}{brand}"
         f"<div class='content'>{body}</div>{foot}</div>"
         f"<script>{update_js}</script></body></html>"
     )
