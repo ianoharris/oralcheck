@@ -24,6 +24,11 @@ export default function ScreenerPage() {
 
   // Fire once when the screener loads — used to compute completion rate in GA4
   useEffect(() => {
+    // Starting a screener arms the completion counter again, so a second run in
+    // the same session is still counted exactly once.
+    try {
+      sessionStorage.removeItem("oralcheck:completionCounted");
+    } catch {}
     sendGAEvent("event", "screener_started", {
       question_count: questions.length,
     });

@@ -53,12 +53,25 @@ export default function ResultsPage() {
         const risk = computeRisk(answers, locale);
         setResult(risk);
         fetchClaudeSummary(risk);
-        sendGAEvent("event", "screener_completed", {
-          risk_tier: risk.tier,
-          risk_score: risk.score,
-          has_urgent_symptom: risk.hasUrgentSymptom,
-        });
-        track("Screener Completed", { risk_tier: risk.tier });
+        // Count a completion once per finished screener, not once per view of
+        // this page. Results renders from sessionStorage, so a refresh, a back
+        // navigation, or reopening the tab used to re-fire this: completions
+        // outran starts and the completion rate read over 100%.
+        let alreadyCounted = false;
+        try {
+          alreadyCounted = sessionStorage.getItem("oralcheck:completionCounted") === "1";
+        } catch {}
+        if (!alreadyCounted) {
+          try {
+            sessionStorage.setItem("oralcheck:completionCounted", "1");
+          } catch {}
+          sendGAEvent("event", "screener_completed", {
+            risk_tier: risk.tier,
+            risk_score: risk.score,
+            has_urgent_symptom: risk.hasUrgentSymptom,
+          });
+          track("Screener Completed", { risk_tier: risk.tier });
+        }
       }
     } catch {}
     setLoaded(true);

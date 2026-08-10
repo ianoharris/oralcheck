@@ -128,7 +128,15 @@ def collect(property_id: str, start: str, end: str = "today") -> dict:
         "screener": {
             "started": started,
             "completed": completed,
-            "completion_rate": round(completed / started * 100, 1) if started else None,
+            # More completions than starts means the events are miscounting, not
+            # that everyone finished. Report nothing rather than a number that
+            # would get quoted. (Historic cause: screener_completed re-fired on
+            # every view of the results page, including refreshes.)
+            "completion_rate": (
+                round(completed / started * 100, 1)
+                if started and completed <= started else None
+            ),
+            "reliable": bool(started) and completed <= started,
         },
     }
 
@@ -167,7 +175,10 @@ def main() -> int:
     if sc["started"]:
         print(f"\n  Screener started    {sc['started']:,}")
         print(f"  Screener completed  {sc['completed']:,}")
-        print(f"  Completion rate     {sc['completion_rate']}%")
+        if sc["reliable"]:
+            print(f"  Completion rate     {sc['completion_rate']}%")
+        else:
+            print("  Completion rate     not reliable (completions exceed starts)")
 
     print("\nTop countries")
     for name, n in list(data["countries"].items())[:10]:
