@@ -1,5 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
+import Icon from "@/components/Icon";
 
 export default async function Footer() {
   const t = await getTranslations("Footer");
@@ -45,9 +46,27 @@ export default async function Footer() {
       <div className="border-t border-warm-dim">
         <div className="max-w-6xl mx-auto px-5 py-4 text-xs text-ink-soft flex flex-col sm:flex-row justify-between gap-2">
           <span>{t("copyright", { year: new Date().getFullYear() })}</span>
-          <div className="flex gap-4">
+          <div className="flex gap-4 items-center">
             <Link href="/methods" className="hover:text-brand transition-colors">{t("methods")}</Link>
             <Link href="/privacy" className="hover:text-brand transition-colors">{t("privacy")}</Link>
+            <a
+              href="https://www.linkedin.com/company/oralcheckdotorg/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="OralCheck on LinkedIn"
+              className="hover:text-brand transition-colors"
+            >
+              <Icon name="linkedin" size={16} weight="fill" />
+            </a>
+            <a
+              href="https://www.instagram.com/oralcheckdotorg/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="OralCheck on Instagram"
+              className="hover:text-brand transition-colors"
+            >
+              <Icon name="instagram" size={16} />
+            </a>
           </div>
           <span>{t("notAffiliated")}</span>
         </div>

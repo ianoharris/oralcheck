@@ -36,7 +36,10 @@ const jsonLd = {
       name: "University of Wisconsin-Madison",
     },
   },
-  sameAs: ["https://www.instagram.com/oralcheckdotorg/"],
+  sameAs: [
+    "https://www.instagram.com/oralcheckdotorg/",
+    "https://www.linkedin.com/company/oralcheckdotorg/",
+  ],
 };
 
 // Downloadable brand assets. Kept to what actually exists in /public so the
@@ -173,6 +176,15 @@ export default async function PressPage({ params }: Props) {
             className="inline-flex items-center gap-2 bg-warm text-ink font-semibold px-6 py-3 rounded-full border border-warm-dim hover:border-brand transition-colors"
           >
             {t("contactInstagram")}
+          </a>
+          <a
+            href="https://www.linkedin.com/company/oralcheckdotorg/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 bg-warm text-ink font-semibold px-6 py-3 rounded-full border border-warm-dim hover:border-brand transition-colors"
+          >
+            <Icon name="linkedin" size={17} weight="fill" />
+            LinkedIn
           </a>
         </div>
       </section>

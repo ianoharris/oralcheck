@@ -4,13 +4,14 @@ import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { localizedAlternates } from "@/lib/pageMetadata";
 import ContactForm from "@/components/ContactForm";
+import ReviewForm from "@/components/ReviewForm";
 import Icon from "@/components/Icon";
 
 type Props = { params: Promise<{ locale: string }> };
 
 // Set to the profile URL to show the link. Left empty rather than pointing at
 // a guessed slug, since a 404 next to the founder's name is worse than no link.
-const LINKEDIN_URL = "";
+const LINKEDIN_URL = "https://www.linkedin.com/in/ianoharris/";
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
@@ -105,6 +106,15 @@ export default async function AboutPage({ params }: Props) {
         <h2 className="font-serif text-2xl text-ink mb-1">{t("getInTouchHeading")}</h2>
         <p className="text-ink-soft leading-relaxed mb-5 text-sm">{t("getInTouchBody")}</p>
         <ContactForm />
+      </section>
+
+      <section id="review" className="bg-warm-dim rounded-2xl border border-warm-dim p-6 sm:p-8 mt-6">
+        <h2 className="font-serif text-2xl text-ink mb-1 flex items-center gap-2">
+          <Icon name="review" size={22} />
+          {t("reviewHeading")}
+        </h2>
+        <p className="text-ink-soft leading-relaxed mb-5 text-sm">{t("reviewBody")}</p>
+        <ReviewForm />
       </section>
     </div>
   );

@@ -13,7 +13,7 @@ import {
   Lightning, BookOpen, MagnifyingGlass, ChartBar, Virus, ShieldCheck, Microscope,
   Lock, Check, WifiSlash, Star, Timer, Moon, SunDim, Printer, Bandaids,
   FirstAidKit, CalendarCheck, Prohibit, HandHeart, X, EnvelopeSimple,
-  LinkedinLogo, DownloadSimple, Newspaper,
+  LinkedinLogo, InstagramLogo, DownloadSimple, Newspaper, ChatCircleText,
 } from "@phosphor-icons/react/dist/ssr";
 import type { Icon as PhosphorIcon } from "@phosphor-icons/react";
 
@@ -58,6 +58,8 @@ export const ICONS = {
   close: X,
   email: EnvelopeSimple,
   linkedin: LinkedinLogo,
+  instagram: InstagramLogo,
+  review: ChatCircleText,
   download: DownloadSimple,
   press: Newspaper,
 } as const;
