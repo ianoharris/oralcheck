@@ -35,11 +35,17 @@ PUBLORA_BASE      = "https://api.publora.com/api/v1"
 # Which connected Publora accounts a post goes to, in order. Override with a
 # comma-separated list of platform prefixes to add or drop a network without
 # touching code.
-PUBLORA_PLATFORMS = os.environ.get("PUBLORA_PLATFORMS", "instagram,linkedin")
+PUBLORA_PLATFORMS = os.environ.get("PUBLORA_PLATFORMS", "instagram")
 # Sent on every Publora call. Default python client user agents get blocked by
 # some edge configurations (Cloudflare returns "error code: 1010" to
 # Python-urllib), and an identifiable agent is the polite default anyway.
 PUBLORA_UA = "OralCheckBot/1.0 (+https://oralcheck.org)"
+# Publora's Starter plan caps active scheduled posts at 3 counted per platform
+# target, so Instagram alone fills it and LinkedIn cannot be added there. When
+# this is on, an approved post also arrives in Telegram as a LinkedIn-ready
+# package to drop into LinkedIn's own (free, unlimited) scheduler. Set to "0"
+# once LinkedIn is published automatically.
+LINKEDIN_HANDOFF = os.environ.get("LINKEDIN_HANDOFF", "1") != "0"
 QUEUE_DIR         = Path(__file__).parent / "queue"
 APPROVAL_TIMEOUT  = 21600  # 6 hours -- gives you the day to approve, not a rushed window
 
@@ -613,6 +619,90 @@ def send_deck(manifest: dict, item_dir: Path, index: int, total: int) -> bool:
     return True
 
 
+LINKEDIN_SYSTEM = (
+    "You rewrite social copy for LinkedIn. The brand is OralCheck, a free, private "
+    "oral cancer risk screener built by Ian Harris, a predental student at the "
+    "University of Wisconsin-Madison. Voice is calm, grounded and evidence-based: "
+    "no hype, no exclamation points, no em dashes, and never flippant about the "
+    "disease."
+)
+
+
+def _linkedin_caption(manifest: dict) -> str:
+    """Rewrite the Instagram caption for LinkedIn.
+
+    Not a copy-paste of the Instagram text. LinkedIn rewards a longer,
+    professional register and punishes hashtag stuffing, and the audience skews
+    toward clinicians, students and public-health people rather than patients.
+    """
+    ig = manifest.get("caption", "").strip()
+    if not ig:
+        return ""
+    key = os.environ.get("ANTHROPIC_API_KEY", "")
+    if not key:
+        return ig
+    try:
+        import anthropic
+        msg = anthropic.Anthropic(api_key=key).messages.create(
+            model=os.environ.get("CONTENT_MODEL", "claude-opus-4-8"),
+            max_tokens=900,
+            system=LINKEDIN_SYSTEM,
+            messages=[{"role": "user", "content": (
+                "Rewrite this Instagram caption as a LinkedIn post.\n"
+                "- 90 to 160 words, short paragraphs with blank lines between them\n"
+                "- Open with the single most surprising true fact, on its own line\n"
+                "- Written for clinicians, dental students and public-health readers\n"
+                "- Keep every number and claim exactly as given. Invent nothing.\n"
+                "- End pointing to oralcheck.org\n"
+                "- At most 3 hashtags, on the final line\n"
+                "- Return only the post text.\n\n"
+                f"{ig}"
+            )}],
+        )
+        out = "".join(b.text for b in msg.content if getattr(b, "type", None) == "text").strip()
+        return out or ig
+    except Exception as exc:  # noqa: BLE001
+        log.warning("LinkedIn rewrite failed (%s); sending the Instagram caption.", exc)
+        return ig
+
+
+def _send_linkedin_handoff(manifest: dict, media_files: list[Path],
+                           when: datetime | None) -> None:
+    """Deliver a ready-to-post LinkedIn package to Telegram.
+
+    Publora's Starter plan counts every platform target against a 3 scheduled
+    post cap, so Instagram alone fills it. LinkedIn's own scheduler is free and
+    takes posts up to 3 months out, so the fastest path is to hand over the copy
+    and the image and schedule it there.
+    """
+    try:
+        caption = _linkedin_caption(manifest)
+        if not caption:
+            return
+
+        slot = when.strftime("%a %b %d, %-I%p UTC") if when else "whenever suits"
+        tg("sendMessage", chat_id=TELEGRAM_CHAT_ID,
+           text=(f"LinkedIn version, ready to schedule (suggested slot: {slot}).\n"
+                 "Post as the OralCheck page, then use LinkedIn's own scheduler.\n"
+                 "Caption is the next message so you can copy it cleanly."))
+        tg("sendMessage", chat_id=TELEGRAM_CHAT_ID, text=caption)
+
+        # As a document, not a photo: Telegram re-compresses photos, and the
+        # single image is what LinkedIn will actually display.
+        if media_files:
+            tg_upload("sendDocument", "document", str(media_files[0]),
+                      chat_id=TELEGRAM_CHAT_ID,
+                      caption="Image for the LinkedIn post (uncompressed).")
+        if len(media_files) > 1:
+            tg("sendMessage", chat_id=TELEGRAM_CHAT_ID,
+               text=(f"This post has {len(media_files)} images. LinkedIn's native "
+                     "scheduler does not accept multi-image posts, so either post "
+                     "the first image alone or schedule it as a document carousel."))
+    except Exception as exc:  # noqa: BLE001
+        # Never let the handoff break an otherwise successful Instagram schedule.
+        log.warning("LinkedIn handoff failed: %s", exc)
+
+
 def handle_decision(manifest: dict, item_dir: Path, decision: str,
                     when: datetime | None = None) -> bool:
     """Publish (approve) or discard (reject) a post. Returns True if it was
@@ -631,6 +721,8 @@ def handle_decision(manifest: dict, item_dir: Path, decision: str,
                 tg("sendMessage", chat_id=TELEGRAM_CHAT_ID,
                    text=f"Approved and {when_txt} via Publora.\n(post {pg})")
                 print(f"Publora scheduled: {pg} ({when})")
+                if LINKEDIN_HANDOFF:
+                    _send_linkedin_handoff(manifest, media_files, when)
             else:
                 post_id = post_to_instagram(manifest, item_dir)
                 if post_id in ("manual-video", "manual-no-ig"):
