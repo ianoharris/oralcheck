@@ -36,6 +36,10 @@ PUBLORA_BASE      = "https://api.publora.com/api/v1"
 # comma-separated list of platform prefixes to add or drop a network without
 # touching code.
 PUBLORA_PLATFORMS = os.environ.get("PUBLORA_PLATFORMS", "instagram,linkedin")
+# Sent on every Publora call. Default python client user agents get blocked by
+# some edge configurations (Cloudflare returns "error code: 1010" to
+# Python-urllib), and an identifiable agent is the polite default anyway.
+PUBLORA_UA = "OralCheckBot/1.0 (+https://oralcheck.org)"
 QUEUE_DIR         = Path(__file__).parent / "queue"
 APPROVAL_TIMEOUT  = 21600  # 6 hours -- gives you the day to approve, not a rushed window
 
@@ -166,19 +170,34 @@ class PubloraError(RuntimeError):
     pass
 
 
+class PubloraQuotaError(PubloraError):
+    """Plan limit hit. Retrying cannot help, so the retry loop must not."""
+
+
 def _publora_check(resp: httpx.Response, what: str) -> httpx.Response:
     """Raise with Publora's actual explanation attached.
 
     httpx's raise_for_status() reports only the status line, which is why the
     recurring "403 Forbidden on update-post" reports carried no reason at all
-    and could not be diagnosed.
+    and could not be diagnosed. The reason turned out to be a plan quota.
     """
     if resp.is_success:
         return resp
     try:
-        body = json.dumps(resp.json())
+        payload = resp.json()
+        body = json.dumps(payload)
     except Exception:
-        body = resp.text
+        payload, body = {}, resp.text
+
+    if payload.get("code") == "SCHEDULED_POST_LIMIT_REACHED":
+        raise PubloraQuotaError(
+            "Publora will not accept another scheduled post: "
+            f"{payload.get('message', '').strip()} "
+            "Every platform a post targets counts separately, so three posts on "
+            "two networks needs six slots. Either publish or delete something "
+            "already scheduled, or raise the Publora plan."
+        )
+
     raise PubloraError(f"Publora {resp.status_code} on {what}: {body[:600]}")
 
 
@@ -190,7 +209,7 @@ def _publora_platforms() -> list[str]:
     """
     r = _publora_check(
         httpx.get(f"{PUBLORA_BASE}/platform-connections",
-                  headers={"x-publora-key": PUBLORA_API_KEY}, timeout=20),
+                  headers={"x-publora-key": PUBLORA_API_KEY, "User-Agent": PUBLORA_UA}, timeout=20),
         "platform-connections",
     )
     conns = r.json().get("connections", [])
@@ -250,7 +269,8 @@ def post_via_publora(manifest: dict, media_files: list[Path],
     """Create a Publora post, upload the media, and schedule it. Defaults to ~2
     minutes out; pass `when` to schedule it for a specific time (weekly spread).
     Returns the Publora post group id."""
-    headers = {"x-publora-key": PUBLORA_API_KEY, "Content-Type": "application/json"}
+    headers = {"x-publora-key": PUBLORA_API_KEY, "Content-Type": "application/json",
+               "User-Agent": PUBLORA_UA}
     is_video = manifest["media_type"] in ("reel", "animated")
     mime = "video/mp4" if is_video else "image/jpeg"
     ext  = "mp4" if is_video else "jpg"
@@ -313,6 +333,8 @@ def post_via_publora(manifest: dict, media_files: list[Path],
             )
             log.info("Scheduled %s for %s", post_group_id, when_str)
             return post_group_id
+        except PubloraQuotaError:
+            raise          # a quota will not clear by waiting
         except PubloraError as e:
             last = e
             wait = 5 * (2 ** attempt)
@@ -342,7 +364,7 @@ def _publora_wait_for_media(post_group_id: str, expected: int, timeout_s: int = 
     while time.time() < deadline:
         try:
             r = httpx.get(f"{PUBLORA_BASE}/get-post/{post_group_id}",
-                          headers={"x-publora-key": PUBLORA_API_KEY}, timeout=20)
+                          headers={"x-publora-key": PUBLORA_API_KEY, "User-Agent": PUBLORA_UA}, timeout=20)
             if not r.is_success:
                 time.sleep(3)
                 continue
