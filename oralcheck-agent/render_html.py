@@ -22,10 +22,20 @@ from pathlib import Path
 FONTS_DIR = Path(__file__).parent / "fonts"
 _FONT_CACHE: dict[str, str] = {}
 
-# Final delivery size. Rendered at 2x internally, downscaled to this. Instagram
-# feed images are capped at 1440px wide by the Graph API (and shown ~1080), so
-# 1440 is the practical maximum — anything larger is rejected or downscaled by IG.
-OUTPUT_PX = 1440
+# Feed posts are 4:5 portrait, not square.
+#
+# Instagram's profile grid uses 4:5 cells. A 1:1 post is scaled to fill the
+# taller cell, which makes it wider than the cell and crops 108px off EACH side
+# (measured: 1080 * 4/5 = 864 visible). Horizontal padding was 78px, so 30px of
+# every headline was inside the cropped region and posts read cut off in the
+# grid. Rendering 4:5 natively removes the crop and takes ~25% more vertical
+# space in the feed.
+POST_W, POST_H = 1080, 1350
+
+# Final delivery size, same 4:5 ratio. Instagram caps feed images at 1440px wide
+# via the Graph API, so 1440 is the practical maximum on the long edge.
+OUTPUT_W, OUTPUT_H = 1440, 1800
+OUTPUT_PX = OUTPUT_W  # back-compat for callers that referenced the square size
 JPEG_QUALITY = 95
 
 # --- Brand palette (shared accents) ----------------------------------------
@@ -98,7 +108,7 @@ def _style(theme: str = "dark") -> str:
   --muted:{t['muted']}; --hair:{t['hair']};
 }}
 *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
-html, body {{ width: 1080px; height: 1080px; }}
+html, body {{ width: {POST_W}px; height: {POST_H}px; }}
 body {{
   overflow: hidden; background: var(--bg); color: var(--text);
   font-family: 'Source Sans 3', system-ui, sans-serif;
@@ -108,7 +118,7 @@ body {{
 .serif {{ font-family: 'DM Serif Display', Georgia, serif; font-weight: 400; }}
 .tnum {{ font-variant-numeric: tabular-nums; }}
 
-.frame {{ width: 1080px; height: 1080px; padding: 76px 78px; display: flex; flex-direction: column; }}
+.frame {{ width: {POST_W}px; height: {POST_H}px; padding: 92px 96px; display: flex; flex-direction: column; }}
 
 /* top brand row */
 .brandrow {{ display: flex; align-items: center; justify-content: space-between; }}
@@ -260,7 +270,7 @@ def slide_photo(photo: str, caption: str = "", counter: str | None = None) -> st
         counter_html = (f"<div style='position:absolute;top:76px;right:78px;z-index:2;' "
                         f"class='counter tnum'>{_e(counter)}</div>")
     body = f"""
-    <div style="width:1080px;height:1080px;position:relative;overflow:hidden;">
+    <div style="width:{POST_W}px;height:{POST_H}px;position:relative;overflow:hidden;">
       <img src="{uri}" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;" />
       <div style="position:absolute;inset:0;background:{TEAL};mix-blend-mode:color;opacity:0.4;"></div>
       <div style="position:absolute;inset:0;
@@ -276,7 +286,7 @@ def slide_cta(headline: str = "Take the free screener.",
               url: str = "oralcheck.org") -> str:
     """Closing slide on a teal ground for contrast against dark content slides."""
     body = f"""
-    <div style="width:1080px;height:1080px;display:flex;flex-direction:column;background:{TEAL};">
+    <div style="width:{POST_W}px;height:{POST_H}px;display:flex;flex-direction:column;background:{TEAL};">
       <div style="padding:76px 78px 0;">
         <div class="brandrow">
           <div class="brand"><div class="dot"></div>
@@ -396,7 +406,7 @@ def render_image_overlay(image_path: str, hook: str, cta: str = "oralcheck.org",
     kicker_html = f"<div class='kicker' style='margin-bottom:22px;'>{_e(kicker)}</div>" if kicker else \
                   "<div class='accent' style='margin-bottom:24px;'></div>"
     body = f"""
-    <div style="width:1080px;height:1080px;position:relative;overflow:hidden;">
+    <div style="width:{POST_W}px;height:{POST_H}px;position:relative;overflow:hidden;">
       <img src="{uri}" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;" />
       <div style="position:absolute;inset:0;background:{TEAL};mix-blend-mode:color;opacity:0.35;"></div>
       <div style="position:absolute;inset:0;
@@ -433,7 +443,7 @@ def _screenshot_many(htmls: list[str]) -> list[str]:
             # Layout is a fixed 1080px frame; render it at 3x (3240px) for heavy
             # supersampling, then downscale to OUTPUT_PX (1440, Instagram's max) so
             # type stays razor-sharp. Larger than 1440 is rejected/downscaled by IG.
-            page = browser.new_page(viewport={"width": 1080, "height": 1080},
+            page = browser.new_page(viewport={"width": POST_W, "height": POST_H},
                                     device_scale_factor=3)
             for html in htmls:
                 fh = tempfile.NamedTemporaryFile(suffix=".html", mode="w",
@@ -444,7 +454,7 @@ def _screenshot_many(htmls: list[str]) -> list[str]:
                 page.evaluate("async () => { await document.fonts.ready; }")
                 png_bytes = page.screenshot(type="png", full_page=False)
                 with Image.open(BytesIO(png_bytes)) as im:
-                    im = im.convert("RGB").resize((OUTPUT_PX, OUTPUT_PX), Image.LANCZOS)
+                    im = im.convert("RGB").resize((OUTPUT_W, OUTPUT_H), Image.LANCZOS)
                     im.save(out.name, "JPEG", quality=JPEG_QUALITY)
                 out_paths.append(out.name)
             browser.close()
