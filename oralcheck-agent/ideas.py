@@ -209,7 +209,8 @@ def _extract_json_array(resp) -> list:
 
 
 def generate_by_type(per_type, *, api_key, model, system_prompt, pillar_briefs,
-                     calendar_events, ledger, only: str | None = None) -> list[dict]:
+                     calendar_events, ledger, only: str | None = None,
+                     hook_block: str = "") -> list[dict]:
     """Generate `per_type` ideas for each format, kept in format order.
 
     A single mixed batch made the weekly format quota a matter of luck, and
@@ -227,7 +228,7 @@ def generate_by_type(per_type, *, api_key, model, system_prompt, pillar_briefs,
         got = generate_ideas(
             per_type, api_key=api_key, model=model, system_prompt=system_prompt,
             pillar_briefs=pillar_briefs, calendar_events=calendar_events,
-            ledger=ledger, force_media=media,
+            ledger=ledger, force_media=media, hook_block=hook_block,
             # A batch already in hand must not be re-suggested by the next
             # format's call, which happens within one run before anything is
             # written to the ledger.
@@ -241,7 +242,8 @@ def generate_by_type(per_type, *, api_key, model, system_prompt, pillar_briefs,
 
 def generate_ideas(count, *, api_key, model, system_prompt, pillar_briefs,
                    calendar_events, ledger, force_media: str | None = None,
-                   extra_avoid: list[str] | None = None) -> list[dict]:
+                   extra_avoid: list[str] | None = None,
+                   hook_block: str = "") -> list[dict]:
     """Ask the model for `count` fresh ideas, filtered against the ledger.
 
     Returns coerced idea dicts (not yet written to the ledger).
@@ -257,6 +259,7 @@ def generate_ideas(count, *, api_key, model, system_prompt, pillar_briefs,
 
     stat_block = _recent_stats_block(ledger)
     fb_block = _feedback_block(ledger)
+    hooks_txt = hook_block or ""
 
     cal_block = ""
     if calendar_events:
@@ -273,7 +276,7 @@ def generate_ideas(count, *, api_key, model, system_prompt, pillar_briefs,
         "Use 2 to 4 searches, then stop researching and write the ideas.\n\n"
         f"Then propose {count} distinct Instagram content ideas for OralCheck.\n\n"
         f"Content pillars to draw from (use the pillar key exactly):\n{pillar_lines}\n"
-        f"{fb_block}\n{cal_block}\n{avoid_block}\n{stat_block}\n\n"
+        f"{fb_block}\n{hooks_txt}\n{cal_block}\n{avoid_block}\n{stat_block}\n\n"
         "Requirements:\n"
         f"  - Return a JSON array of exactly {count} objects as your final message, no markdown fences.\n"
         "  - Each object: title (<=12 words, the specific angle), pillar (one key from above), "

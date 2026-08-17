@@ -10,7 +10,7 @@ The running list. Two rules:
    named. This is the list's whole purpose: the things that come up once, sound
    good, and are never mentioned again.
 
-Last updated: 2026-08-10
+Last updated: 2026-08-16
 
 ---
 
@@ -37,12 +37,6 @@ Last updated: 2026-08-10
 - [ ] **More post templates.** Sixteen built in `oralcheck-agent/template_demo.py`,
       all approved. Keep going: the goal is enough that the feed never looks
       repetitive.
-- [ ] **Topical hooks need a source of topics.** Templates 11-16 carry a
-      pop-culture or calendar hook, but something has to *find* the hook: a
-      product launch, a film, a holiday, a study in the news. The content
-      calendar covers fixed dates; product launches and news do not have a feed
-      yet. Idea generation already has web search, so this is mostly a prompt
-      and a freshness check.
 - [ ] **Promote approved templates** from `template_demo.py` into `render_html.py`
       as real slide layouts the generator can select.
 - [ ] Two of six signs on `/learn/signs` still have **no clinical photo**: red patch
@@ -93,6 +87,11 @@ Last updated: 2026-08-10
 ## Shipped
 
 Newest first.
+
+### 2026-08-16
+- Topical hook finder (`hooks.py`), feeding dated cultural hooks into idea generation
+- Six topical, image-carrying templates (16 total)
+- Roadmap (this file)
 
 ### 2026-08-10
 - Reel cover images, chosen by scoring candidate frames rather than a fixed timestamp

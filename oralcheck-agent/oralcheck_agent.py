@@ -32,6 +32,7 @@ from PIL import Image, ImageDraw, ImageFont
 load_dotenv()
 
 import content_calendar
+import hooks as hooks_mod
 import ideas
 
 try:
@@ -2477,6 +2478,49 @@ def _grouped_ideas_text(batch: list[dict]) -> str:
     return "\n".join(lines)
 
 
+
+def _refresh_hooks() -> str:
+    """Find current hooks and return the prompt fragment offering them.
+
+    Runs before idea generation so ideas can be built on something happening
+    this fortnight. Failing here is not fatal: no hooks simply means the week's
+    ideas are evergreen, which is the behaviour that existed before.
+    """
+    try:
+        hl = hooks_mod.load_ledger()
+        found = hooks_mod.find_hooks(5, api_key=ANTHROPIC_API_KEY,
+                                     model=CONTENT_MODEL, ledger=hl)
+        if found:
+            hl = hooks_mod.record(hl, found)
+            hooks_mod.save_ledger(hl)
+            for h in found:
+                log.info("Hook: %s (%s, %s/5) - %s",
+                         h["title"], h["kind"], h["strength"], h["angle"])
+        else:
+            log.info("No timely hooks found; ideas will be evergreen this week.")
+        return hooks_mod.hooks_block(hl)
+    except Exception as exc:  # noqa: BLE001
+        log.warning("Hook step failed (%s); continuing without hooks.", exc)
+        return ""
+
+
+def run_hooks() -> None:
+    """Search for hooks and print them, without generating any ideas."""
+    hl = hooks_mod.load_ledger()
+    found = hooks_mod.find_hooks(6, api_key=ANTHROPIC_API_KEY,
+                                 model=CONTENT_MODEL, ledger=hl)
+    if not found:
+        print("\n  No timely hooks worth building on right now.\n")
+        return
+    hl = hooks_mod.record(hl, found)
+    hooks_mod.save_ledger(hl)
+    print()
+    for h in found:
+        print(f"  [{h['strength']}/5] {h['title']}  ({h['kind']}, {h['when']})")
+        print(f"        why now: {h['why_now']}")
+        print(f"        angle:   {h['angle']}\n")
+
+
 def run_ideas(count: int = 3, per_type: int = 3) -> None:
     """Generate fresh ideas, `per_type` of each format, and record them.
 
@@ -2487,12 +2531,13 @@ def run_ideas(count: int = 3, per_type: int = 3) -> None:
     """
     ledger = ideas.load_ledger()
     upcoming = content_calendar.upcoming(within_days=30)
+    hook_block = _refresh_hooks()
     log.info("Generating %d ideas per format (avoiding %d used/recent)...",
              per_type, len(ideas._avoid_titles(ledger)))
     fresh = ideas.generate_by_type(
         per_type, api_key=ANTHROPIC_API_KEY, model=CONTENT_MODEL,
         system_prompt=SYSTEM_PROMPT, pillar_briefs=PILLAR_BRIEFS,
-        calendar_events=upcoming, ledger=ledger,
+        calendar_events=upcoming, ledger=ledger, hook_block=hook_block,
     )
     if not fresh:
         print("No fresh ideas produced (they may all overlap with used ideas). Try again.")
@@ -2514,6 +2559,8 @@ def run_more_ideas(media: str, per_type: int = 3) -> list[dict]:
         per_type, api_key=ANTHROPIC_API_KEY, model=CONTENT_MODEL,
         system_prompt=SYSTEM_PROMPT, pillar_briefs=PILLAR_BRIEFS,
         calendar_events=upcoming, ledger=ledger, only=media,
+        # Reuse what was already found; a top-up should not pay for another search.
+        hook_block=hooks_mod.hooks_block(hooks_mod.load_ledger()),
     )
     if not fresh:
         return []
@@ -2710,6 +2757,8 @@ def main():
     mode.add_argument("--map", action="store_true", help="Generate world map post from Google Analytics data")
     mode.add_argument("--ideas", type=int, metavar="N", nargs="?", const=3,
                       help="Suggest N ideas PER FORMAT (carousel, reel, image); default 3 each")
+    mode.add_argument("--hooks", action="store_true",
+                      help="Search for timely cultural hooks and print them")
     mode.add_argument("--pick", metavar="NUMS",
                       help="Generate posts from picked idea numbers, e.g. \"1,3,5\"")
     mode.add_argument("--await-picks", action="store_true",
@@ -2741,6 +2790,8 @@ def main():
         run_faceless_reel(args.faceless_reel, args.out)
     elif args.ideas is not None:
         run_ideas(args.ideas, per_type=args.ideas)
+    elif args.hooks:
+        run_hooks()
     elif args.pick:
         try:
             nums = [int(x) for x in re.split(r"[,\s]+", args.pick.strip()) if x]
