@@ -336,5 +336,201 @@ def main() -> None:
         print("wrote", dest)
 
 
+
+# =========================================================================
+# Topical templates.
+#
+# The Truist Park post worked because it was about something else. These are
+# built to hang an oral-cancer point on a thing the reader already cares
+# about: a product launch, a film, a holiday, a piece of news. Each carries a
+# real image, because a topical hook without the picture of the thing is just
+# a claim.
+#
+# ASSETS is only for these mockups. In the pipeline the image comes from the
+# same photo/site-screenshot chooser the carousels already use.
+# =========================================================================
+
+ASSETS = Path(__file__).parent / "template_demo" / "assets"
+
+
+def _photo(name: str, height: int, radius: int = 22, fit: str = "cover") -> str:
+    p = ASSETS / name
+    if not p.exists():
+        p = Path(__file__).parent.parent / "public" / "self-exam" / name
+    return (f"<div style=\"height:{height}px;border-radius:{radius}px;overflow:hidden;\">"
+            f"<img src='{R._img_data_uri(str(p))}' "
+            f"style='width:100%;height:100%;object-fit:{fit};display:block;'></div>")
+
+
+# --- 11. Product verdict -------------------------------------------------
+# Hangs on a launch people are already discussing, and answers the question
+# honestly. The honest answer is the reason it gets shared.
+def t_product_verdict(theme: str = "light") -> str:
+    t = R.THEMES[theme]
+    return _frame(f"""
+      {R._brandrow("01 / 06")}
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:center;">
+        <div class="kicker" style="margin-bottom:18px;">New this month</div>
+        <div class="serif" style="font-size:66px;line-height:1.05;margin-bottom:26px;">
+          A $300 toothbrush<br>and your cancer risk
+        </div>
+        {_photo("electric-toothbrush.jpg", 380)}
+        <div style="display:flex;gap:16px;margin-top:26px;align-items:center;">
+          <span style="background:{t['coral']};color:#fff;font-size:23px;font-weight:700;
+                letter-spacing:.08em;text-transform:uppercase;padding:12px 22px;
+                border-radius:100px;">Short answer: no</span>
+          <span style="font-size:27px;color:{t['text_soft']};">but it is not useless either</span>
+        </div>
+      </div>
+      <div style="font-size:25px;color:{t['muted']};">Swipe for what actually moves the needle &rarr;</div>
+    """, theme)
+
+
+# --- 12. Tier list -------------------------------------------------------
+# A native internet format. People argue with tier lists, and arguing is
+# engagement.
+def t_tier_list(theme: str = "dark") -> str:
+    t = R.THEMES[theme]
+    tiers = [("S", "Not smoking", t["coral"]),
+             ("A", "Regular dental visits", t["teal_brt"]),
+             ("B", "HPV vaccination", t["teal"]),
+             ("C", "Whitening strips", t["muted"])]
+    rows = "".join(
+        f"""<div style="display:flex;align-items:center;gap:24px;margin-bottom:16px;">
+          <span style="width:86px;height:86px;border-radius:20px;background:{c};
+                color:#0d1a1b;font-family:'DM Serif Display',Georgia,serif;font-size:46px;
+                display:flex;align-items:center;justify-content:center;flex-shrink:0;">{k}</span>
+          <span style="font-size:36px;color:{t['text']};">{v}</span>
+        </div>""" for k, v, c in tiers)
+    return _frame(f"""
+      {R._brandrow("01 / 07")}
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:center;">
+        <div class="serif" style="font-size:64px;line-height:1.05;margin-bottom:34px;">
+          Oral health habits,<br>ranked by what<br>actually matters
+        </div>
+        {rows}
+      </div>
+      <div style="font-size:26px;color:{t['teal_brt']};font-weight:600;">
+        Disagree? That is the comments section right there.
+      </div>
+    """, theme)
+
+
+# --- 13. Calendar moment -------------------------------------------------
+# The holiday hook. Timely, and the content calendar already knows the dates.
+def t_calendar_moment(theme: str = "dark") -> str:
+    t = R.THEMES[theme]
+    return _frame(f"""
+      {R._brandrow(None)}
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:center;">
+        {_photo("fireworks.jpg", 440)}
+        <div class="serif" style="font-size:62px;line-height:1.06;margin-top:32px;">
+          Beer, sun, and the<br>two risk factors<br>nobody mentions
+        </div>
+        <div style="font-size:28px;line-height:1.5;color:{t['text_soft']};margin-top:20px;max-width:840px;">
+          Alcohol and UV on the lips both raise oral cancer risk. The Fourth is
+          not the problem. Twenty summers of it is.
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:14px;">
+        <div class="footline"></div><span class="footurl">oralcheck.org</span>
+      </div>
+    """, theme)
+
+
+# --- 14. POV card --------------------------------------------------------
+# Full-bleed photo, one line over it. The most native-feeling format here.
+def t_pov(theme: str = "dark") -> str:
+    t = R.THEMES[theme]
+    p = Path(__file__).parent.parent / "public" / "self-exam" / "cheeks-1.jpg"
+    return R._doc(f"""
+      <div style="width:{R.POST_W}px;height:{R.POST_H}px;position:relative;overflow:hidden;">
+        <img src='{R._img_data_uri(str(p))}'
+             style='position:absolute;inset:0;width:100%;height:100%;object-fit:cover;'>
+        <div style="position:absolute;inset:0;background:linear-gradient(180deg,
+             rgba(13,26,27,.55) 0%, rgba(13,26,27,.25) 40%, rgba(13,26,27,.93) 100%);"></div>
+        <div style="position:absolute;inset:0;padding:92px 96px;display:flex;
+             flex-direction:column;justify-content:space-between;">
+          <div class="brandrow"><div class="brand"><div class="dot"></div>
+            <span class="wordmark">OralCheck</span></div></div>
+          <div>
+            <div style="font-size:23px;font-weight:700;letter-spacing:.16em;
+                 text-transform:uppercase;color:{t['coral']};margin-bottom:18px;">POV</div>
+            <div class="serif" style="font-size:74px;line-height:1.05;color:#f2efe9;">
+              you have been telling<br>yourself it is just a<br>bitten cheek for<br>three weeks
+            </div>
+          </div>
+        </div>
+      </div>""", theme)
+
+
+# --- 15. In the news -----------------------------------------------------
+# Reaction format. Works when a public figure is diagnosed or a study lands.
+def t_in_the_news(theme: str = "light") -> str:
+    t = R.THEMES[theme]
+    return _frame(f"""
+      {R._brandrow("01 / 05")}
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:center;">
+        <div style="border-left:none;background:{t['teal']}0f;border-radius:20px;padding:34px 36px;
+             margin-bottom:34px;">
+          <div style="font-size:22px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+               color:{t['teal']};margin-bottom:14px;">You probably saw this</div>
+          <div class="serif" style="font-size:46px;line-height:1.16;color:{t['text']};">
+            "Cases in men under 50 have climbed for two decades"
+          </div>
+        </div>
+        <div class="serif" style="font-size:58px;line-height:1.08;margin-bottom:18px;">
+          Here is the part<br>the headline skipped
+        </div>
+        <div style="font-size:30px;line-height:1.5;color:{t['text_soft']};max-width:860px;">
+          The rise is real. So is the fact that most of these are found late,
+          which is the part you can actually do something about.
+        </div>
+      </div>
+      <div style="font-size:25px;color:{t['muted']};">Swipe &rarr;</div>
+    """, theme)
+
+
+# --- 16. Two photos, one question ----------------------------------------
+# Real images side by side. The strongest teaching shape the account has.
+def t_photo_compare(theme: str = "light") -> str:
+    t = R.THEMES[theme]
+    base = Path(__file__).parent.parent / "public"
+    a = R._img_data_uri(str(base / "signs" / "sore.jpg"))
+    b = R._img_data_uri(str(base / "signs" / "white.jpg"))
+    def cell(src, label, col):
+        return f"""<div style="flex:1;">
+          <div style="height:420px;border-radius:20px;overflow:hidden;">
+            <img src='{src}' style='width:100%;height:100%;object-fit:cover;display:block;'>
+          </div>
+          <div style="font-size:24px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+               color:{col};margin-top:18px;">{label}</div>
+        </div>"""
+    return _frame(f"""
+      {R._brandrow("04 / 08")}
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:center;">
+        <div class="serif" style="font-size:62px;line-height:1.06;margin-bottom:30px;">
+          One of these needs<br>a dentist this week
+        </div>
+        <div style="display:flex;gap:22px;">
+          {cell(a, "Ulcer, painful", t['muted'])}
+          {cell(b, "Patch, painless", t['coral'])}
+        </div>
+        <div style="font-size:28px;color:{t['text_soft']};margin-top:26px;">
+          Painless is the one people ignore. It is also the one that matters.
+        </div>
+      </div>
+    """, theme)
+
+
+TEMPLATES += [
+    ("11-product-verdict", "Product verdict",  t_product_verdict, "light"),
+    ("12-tier-list",       "Tier list",        t_tier_list,       "dark"),
+    ("13-calendar-moment", "Calendar moment",  t_calendar_moment, "dark"),
+    ("14-pov",             "POV card",         t_pov,             "dark"),
+    ("15-in-the-news",     "In the news",      t_in_the_news,     "light"),
+    ("16-photo-compare",   "Two photos",       t_photo_compare,   "light"),
+]
+
 if __name__ == "__main__":
     main()

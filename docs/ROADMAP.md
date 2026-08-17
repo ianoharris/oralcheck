@@ -34,10 +34,15 @@ Last updated: 2026-08-10
       not. Two concrete fixes: add a **link sticker on the reel itself**, and hold
       the final scene long enough to actually read the URL. Currently the outro is
       brief.
-- [ ] **More post templates.** Five built and rendered in `oralcheck-agent/template_demo.py`.
-      Wanted: many more, for genuine visual variety. Includes the
-      **competitor-comparison** pattern ("Why I chose X over Y"), reframed as
-      *"Why I used OralCheck instead of asking ChatGPT about my symptoms"*.
+- [ ] **More post templates.** Sixteen built in `oralcheck-agent/template_demo.py`,
+      all approved. Keep going: the goal is enough that the feed never looks
+      repetitive.
+- [ ] **Topical hooks need a source of topics.** Templates 11-16 carry a
+      pop-culture or calendar hook, but something has to *find* the hook: a
+      product launch, a film, a holiday, a study in the news. The content
+      calendar covers fixed dates; product launches and news do not have a feed
+      yet. Idea generation already has web search, so this is mostly a prompt
+      and a freshness check.
 - [ ] **Promote approved templates** from `template_demo.py` into `render_html.py`
       as real slide layouts the generator can select.
 - [ ] Two of six signs on `/learn/signs` still have **no clinical photo**: red patch
