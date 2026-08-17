@@ -335,6 +335,26 @@
       "suggested_at": "2026-08-04T18:24:31.172194+00:00",
       "used_at": null,
       "manifest_id": null
+    },
+    {
+      "id": "idea_27cb62b0",
+      "slug": "what-the-five-year-survival-gap-actually-looks-like-by-stage",
+      "title": "What the Five-Year Survival Gap Actually Looks Like by Stage",
+      "media_type": "carousel",
+      "pillar": "stats",
+      "brief": "Recovered from run 32056316958 logs after the ledger push was rejected.",
+      "status": "queued",
+      "suggested_at": "2026-08-17T19:06:21.346993+00:00"
+    },
+    {
+      "id": "idea_6b096f88",
+      "slug": "head-and-neck-cancer-month-most-people-still-miss-this-part",
+      "title": "Head and Neck Cancer Month. Most People Still Miss This Part.",
+      "media_type": "image",
+      "pillar": "stats",
+      "brief": "Recovered from run 32056316958 logs after the ledger push was rejected.",
+      "status": "queued",
+      "suggested_at": "2026-08-17T19:06:21.346993+00:00"
     }
   ],
   "last_batch": [

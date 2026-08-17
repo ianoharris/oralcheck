@@ -145,4 +145,26 @@ jobs:
           git config user.email "bot@oralcheck.org"
           git add oralcheck-agent/ideas.json oralcheck-agent/used_photos.json \
             oralcheck-agent/hooks.json oralcheck-agent/schedule.json
-          git diff --staged --quiet || (git commit -m "chore: idea ledger [skip ci]" && git push)
+          git diff --staged --quiet && exit 0
+          git commit -m "chore: idea ledger [skip ci]"
+          # A run holds master from checkout until the review finishes, which is
+          # hours. Anything landing on master in that window (a push, or the SEO
+          # pipeline committing an article) makes this push a non-fast-forward
+          # and the ledger is lost with the runner: which ideas were used, which
+          # photos, which hooks, and which days are already booked. Rebase and
+          # retry. These are append-mostly JSON files owned by this workflow, so
+          # replaying the commit on top of the newer master is the right merge.
+          for attempt in 1 2 3 4 5; do
+            if git push; then
+              echo "Ledger pushed on attempt $attempt."
+              exit 0
+            fi
+            echo "Push rejected, rebasing onto the newer master (attempt $attempt)..."
+            git pull --rebase --autostash origin master || {
+              echo "Rebase conflicted; leaving master untouched." >&2
+              exit 1
+            }
+            sleep $((attempt * 3))
+          done
+          echo "Could not push the ledger after 5 attempts." >&2
+          exit 1
