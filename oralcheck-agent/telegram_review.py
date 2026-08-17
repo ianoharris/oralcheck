@@ -301,27 +301,98 @@ def _publora_platforms() -> list[str]:
     return ids
 
 
-def _weekly_slots(n: int, start: datetime | None = None) -> list[datetime]:
+# Days this pipeline has already booked. Without this a top-up run has no idea
+# what the previous run scheduled: it always spreads from "tomorrow", so adding
+# two posts to a week that already has a Tuesday books Tuesday again.
+SCHEDULE_FILE = Path(__file__).parent / "schedule.json"
+POST_HOUR = 22  # ~5pm CT
+
+
+def _booked() -> list[datetime]:
+    """Future slots this pipeline has already scheduled. Past ones are dropped."""
+    if not SCHEDULE_FILE.exists():
+        return []
+    try:
+        raw = json.loads(SCHEDULE_FILE.read_text()).get("slots", [])
+    except Exception:
+        return []
+    now = datetime.now(timezone.utc)
+    out = []
+    for s in raw:
+        try:
+            d = datetime.fromisoformat(s)
+        except Exception:
+            continue
+        if d.tzinfo is None:
+            d = d.replace(tzinfo=timezone.utc)
+        if d > now:
+            out.append(d)
+    return sorted(out)
+
+
+def record_slot(when: datetime | None) -> None:
+    """Remember a slot so later runs this week don't land on the same day."""
+    if when is None:
+        return
+    slots = _booked()
+    slots.append(when)
+    try:
+        SCHEDULE_FILE.write_text(json.dumps(
+            {"slots": [d.isoformat() for d in sorted(set(slots))]}, indent=2))
+    except Exception as exc:  # noqa: BLE001
+        log.warning("Could not record schedule slot: %s", exc)
+
+
+def _weekly_slots(n: int, start: datetime | None = None,
+                  avoid_booked: bool = True) -> list[datetime]:
     """n posting times spread across the coming week (evening slot, ~5pm CT).
 
-    Spacing is computed over n-1 gaps, not n. Dividing by n left the last slot
-    short of the end of the week and, combined with rounding, put two posts on
-    the same day at the identical minute: n=7 produced days 1,2,3,4,4,5,6 and
-    n=4 produced 1,3,4,5. Days are now assigned by even division and then
-    de-duplicated, so no two posts ever collide.
+    Days already booked by an earlier run are skipped, so a top-up spreads into
+    the gaps rather than restarting from tomorrow and stacking onto a day that
+    already has a post.
+
+    Spacing is computed over the available days, not a fixed 1..7 range, and
+    then de-duplicated. Dividing by n rather than n-1 used to leave the last
+    slot short of the end of the week and put two posts at an identical
+    timestamp (n=7 gave days 1,2,3,4,4,5,6).
     """
     base = start or datetime.now(timezone.utc)
-    span = 6  # day 1 (tomorrow) through day 7
-    POST_HOUR = 22  # ~5pm CT
+
+    def at(day: int) -> datetime:
+        return (base + timedelta(days=day)).replace(
+            hour=POST_HOUR, minute=0, second=0, microsecond=0)
+
+    taken_dates = {d.date() for d in _booked()} if avoid_booked else set()
+    booked_days = [d for d in range(1, 8) if at(d).date() in taken_dates]
+    free = [d for d in range(1, 8) if d not in booked_days]
+    if not free:
+        free = list(range(1, 8))   # week is full; fall back to hour-shifting
+
+    # Greedy furthest-point selection: each new post goes on the free day with
+    # the largest gap to the nearest day already spoken for, counting posts an
+    # earlier run booked. Even division across only the free days is not enough,
+    # because it ignores where the existing posts sit: with Tuesday already
+    # taken it picks Wednesday, putting two posts back to back and leaving the
+    # rest of the week empty.
+    chosen: list[int] = []
+    anchors = list(booked_days)
+    for _ in range(n):
+        pool = [d for d in free if d not in chosen]
+        if not pool:
+            break
+        if anchors:
+            pick = max(pool, key=lambda d: (min(abs(d - a) for a in anchors), -d))
+        else:
+            pick = pool[0]         # nothing booked yet: start at day 1, as before
+        chosen.append(pick)
+        anchors.append(pick)
 
     used: set[datetime] = set()
     slots = []
     for i in range(n):
-        day = 1 + (round(i * span / (n - 1)) if n > 1 else 0)
-        when = (base + timedelta(days=day)).replace(
-            hour=POST_HOUR, minute=0, second=0, microsecond=0)
-        # More posts than days is legitimate (a heavy week). Shift the hour
+        # More posts than free days is legitimate (a heavy week). Shift the hour
         # rather than stacking two posts on the same timestamp.
+        when = at(chosen[i]) if i < len(chosen) else at(free[i % len(free)])
         while when in used:
             when += timedelta(hours=1)
         used.add(when)
@@ -996,6 +1067,7 @@ def handle_decision(manifest: dict, item_dir: Path, decision: str,
                 pg = post_via_publora(manifest, media_files, when=when)
                 when_txt = (f"scheduled for {when.strftime('%a %b %d, %-I%p UTC')}"
                             if when else "posting in ~2 minutes")
+                record_slot(when)
                 tg_status_done(status, f"Approved. {label}\n{when_txt.capitalize()} via Publora.\n(post {pg})")
                 print(f"Publora scheduled: {pg} ({when})")
                 if LINKEDIN_HANDOFF:

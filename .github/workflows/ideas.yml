@@ -100,7 +100,7 @@ jobs:
 
       - name: Verify render + content logic
         if: steps.guard.outputs.skip != 'true'
-        run: python test_render.py && python test_content.py
+        run: python test_render.py && python test_content.py && python test_review.py
 
       - name: Suggest ideas (sends to Telegram)
         if: steps.guard.outputs.skip != 'true'
@@ -146,5 +146,5 @@ jobs:
           git config user.name "OralCheck Bot"
           git config user.email "bot@oralcheck.org"
           git add oralcheck-agent/ideas.json oralcheck-agent/used_photos.json \
-            oralcheck-agent/hooks.json
+            oralcheck-agent/hooks.json oralcheck-agent/schedule.json
           git diff --staged --quiet || (git commit -m "chore: idea ledger [skip ci]" && git push)
