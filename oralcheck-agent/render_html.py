@@ -1,13 +1,14 @@
 """
 HTML → Playwright screenshot renderers for OralCheck social posts.
 
-Produces crisp 1080×1080 images with CSS-quality typography. The centrepiece is
-a carousel *design system*: a small library of distinct slide layouts (cover,
-stat, fact, list, quote, photo, CTA) assembled into a cohesive deck. Single-image
-post types (infographic, image overlay) reuse the same tokens.
+Produces crisp 4:5 (1080×1350) images with CSS-quality typography. The centrepiece
+is a carousel *design system*: the generic slide shapes here (cover, stat, fact,
+list, quote, photo, CTA) plus the sixteen designed layouts in `layouts.py`,
+assembled into a cohesive deck. Single-image post types (infographic, image
+overlay) reuse the same tokens.
 
-Brand is deliberately single-theme (dark). These are Instagram/Facebook posts, not
-theme-aware web pages, so there is no light mode by design.
+Two visual worlds, dark and light, rotate per post. Both are on-brand; the
+variety is what stops a profile grid reading as one long identical block.
 """
 
 import base64
@@ -340,6 +341,15 @@ def render_deck(deck: dict, theme: str = "dark") -> list[str]:
     for idx, s in enumerate(slides_spec, start=2):
         t = s.get("type", "fact")
         c = ctr(idx)
+        # Templated layouts first: they are the designed shapes, and the five
+        # generic types below are the fallback, not the other way round.
+        # Imported here, not at module scope: layouts.py imports this module for
+        # its tokens, so a top-level import either way round is a cycle.
+        import layouts
+        templated = layouts.render(s, theme, c)
+        if templated:
+            htmls.append(templated)
+            continue
         if t == "stat":
             color = stat_palette[stat_i % len(stat_palette)]; stat_i += 1
             htmls.append(slide_stat(s.get("value", ""), s.get("label", ""),

@@ -108,11 +108,94 @@ EDGE_CASES = [
 ]
 
 
+# --- Every designed layout, in both themes ---------------------------------
+# Copy is deliberately at the long end of what the model produces. These layouts
+# were designed around fixed strings in template_demo.py, so the failure mode
+# that matters is a real headline overflowing a box tuned for a shorter one.
+LAYOUT_CASES = [
+    {"type": "compare", "headline": "Is this normal, or is it actually worth a look?",
+     "a_label": "USUALLY FINE", "a_text": "A sore that hurts and then fades within about two weeks",
+     "b_label": "GET IT CHECKED", "b_text": "A painless patch that is still sitting there after two weeks",
+     "footnote": "Swipe for the other five"},
+    {"type": "steps", "kicker": "20-second self-check", "headline": "Do this before you keep scrolling",
+     "steps": ["Tongue out, look carefully along both sides", "Lift it and check underneath",
+               "Pull each cheek out with a finger", "Run a thumb along the gumline"],
+     "footnote": "Found something? Save this post."},
+    {"type": "myth", "myth": "Only smokers get oral cancer",
+     "truth": "HPV is now the leading cause in adults under fifty",
+     "footnote": "Send this to someone who thinks they are not at risk"},
+    {"type": "checklist", "headline": "Five things worth two weeks of attention",
+     "sub": "If any of these lasts longer than that, book a check.",
+     "items": ["A sore that will not heal", "A red or white patch", "A lump you can feel",
+               "Numbness or trouble swallowing", "A rough spot on the lip", "A tooth that loosens"],
+     "footnote": "Save this. It takes two weeks to matter."},
+    {"type": "qualifier", "kicker": "Read this if", "emphasis": "mouth sore",
+     "headline": "you have had a mouth sore for more than two weeks",
+     "body": "Most are harmless. The ones that are not look exactly the same at this stage, "
+             "which is the entire problem.", "footnote": "Two-minute check at oralcheck.org"},
+    {"type": "versus", "headline": "What people actually do about a mouth sore",
+     "options": [{"name": "Asking a chatbot", "note": "Confident answers, no idea what your mouth looks like", "good": False},
+                 {"name": "Googling symptoms", "note": "Worst case first, every time", "good": False},
+                 {"name": "Waiting to see", "note": "The two weeks that matter, gone", "good": False},
+                 {"name": "OralCheck", "note": "Ten questions, then a real dentist if you need one", "good": True}],
+     "footnote": "Swipe"},
+    {"type": "bignumber", "value": "2in3", "label": "oral cancers are found late, when treatment is hardest"},
+    {"type": "bignumber", "value": "1 in 10", "label": "adults have never had an oral cancer exam"},
+    {"type": "timeline", "headline": "How long is too long?",
+     "steps": [{"label": "DAY 1", "note": "You notice it"},
+               {"label": "DAY 7", "note": "Still there. Probably nothing."},
+               {"label": "DAY 14", "note": "This is the line", "mark": True},
+               {"label": "DAY 30", "note": "Still waiting is the risk"}]},
+    {"type": "question", "question": "When did you last look inside your own mouth?",
+     "emphasis": "own mouth", "footnote": "Two minutes. oralcheck.org"},
+    {"type": "receipt", "kicker": "What the screener weighs", "headline": "Nothing hidden",
+     "rows": [{"label": "Tobacco, any form", "value": "raises risk"},
+              {"label": "Heavy alcohol", "value": "raises risk"},
+              {"label": "Both together", "value": "multiplies it"},
+              {"label": "HPV exposure", "value": "raises risk"},
+              {"label": "Sun on the lips", "value": "raises risk"},
+              {"label": "Regular dental visits", "value": "lowers it"}],
+     "footnote": "Full methodology at oralcheck.org/methods"},
+    {"type": "tier", "headline": "Oral health habits, ranked by what actually matters",
+     "tiers": [{"rank": "S", "label": "Not smoking"}, {"rank": "A", "label": "Regular dental visits"},
+               {"rank": "B", "label": "HPV vaccination"}, {"rank": "C", "label": "Whitening strips"}],
+     "footnote": "Disagree? That is the comments section right there."},
+    {"type": "news", "quote_kicker": "You probably saw this",
+     "quote": "Cases in men under 50 have climbed for two decades",
+     "headline": "Here is the part the headline skipped",
+     "body": "The rise is real. So is the fact that most of these are found late, which is the "
+             "part you can actually do something about.", "footnote": "Swipe"},
+    {"type": "verdict", "kicker": "New this month", "photo": PHOTO,
+     "headline": "A $300 toothbrush and your cancer risk", "verdict": "SHORT ANSWER: NO",
+     "verdict_note": "but it is not useless either",
+     "footnote": "Swipe for what actually moves the needle"},
+    {"type": "moment", "photo": PHOTO, "headline": "Beer, sun, and the two risk factors nobody mentions",
+     "body": "Alcohol and UV on the lips both raise oral cancer risk. The Fourth is not the "
+             "problem. Twenty summers of it is."},
+    {"type": "pov", "kicker": "POV", "photo": PHOTO,
+     "line": "you have been telling yourself it is just a bitten cheek for three weeks"},
+    {"type": "photocompare", "headline": "One of these needs a dentist this week",
+     "a_photo": PHOTO, "a_label": "Ulcer, painful", "b_photo": PHOTO, "b_label": "Patch, painless",
+     "note": "Painless is the one people ignore. It is also the one that matters."},
+]
+
+
 def _cases():
     dark_htmls = R.render_deck(SAMPLE_DECK, "dark")
     cases = [(f"deck_dark_{i+1:02d}", h) for i, h in enumerate(dark_htmls)]
     light_htmls = R.render_deck(SAMPLE_DECK, "light")
     cases += [(f"deck_light_{i+1:02d}", h) for i, h in enumerate(light_htmls)]
+
+    # Designed layouts. A layout that returns None here is a hard failure: it
+    # means the pipeline would silently fall back to a generic slide, which is
+    # exactly the "why does it all look the same" problem these were built for.
+    import layouts
+    for theme in ("dark", "light"):
+        for case in LAYOUT_CASES:
+            html = layouts.render(case, theme, "03 / 07")
+            if html is None:
+                raise SystemExit(f"layouts.render returned None for {case['type']}/{theme}")
+            cases.append((f"layout_{case['type']}_{theme}_{len(case.get('value', ''))}", html))
     cases.append(("light_infographic", R.render_infographic({
         "headline": "Two numbers that reframe oral cancer risk",
         "bars": [{"value_str": "84%", "label": "survival when caught early"},

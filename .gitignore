@@ -45,3 +45,10 @@ next-env.d.ts
 # python virtualenvs
 venv/
 .venv*/
+
+# Queued posts are per-run scratch. Committing them meant an interrupted run
+# left "pending" drafts in the repo that the NEXT run checked out and sent for
+# review, months later and rendered by old code.
+oralcheck-agent/queue/
+__pycache__/
+*.pyc

@@ -119,6 +119,63 @@ def tg_err(message: str) -> None:
 
 
 # ---------------------------------------------------------------------------
+# Progress
+# ---------------------------------------------------------------------------
+# Approving a post kicks off an upload, a media-processing poll and a schedule
+# call, which together take the better part of a minute. Until now that minute
+# was completely silent: the button stayed on screen, nothing acknowledged the
+# tap, and there was no way to tell "working" from "crashed". These three make
+# every slow step announce itself.
+
+def tg_ack(cb: dict, text: str) -> None:
+    """Answer a button tap so Telegram stops showing the spinner, with a toast.
+
+    Telegram caps this at 200 characters and only shows it briefly, so it says
+    what is starting, not what happened.
+    """
+    try:
+        tg("answerCallbackQuery", callback_query_id=cb["id"], text=text[:200])
+    except Exception:
+        pass
+
+
+def tg_status(text: str) -> int | None:
+    """Post a 'working on it' message and return its id so it can be updated."""
+    try:
+        return tg("sendMessage", chat_id=TELEGRAM_CHAT_ID,
+                  text=text)["result"]["message_id"]
+    except Exception:
+        return None
+
+
+def tg_status_done(message_id: int | None, text: str) -> None:
+    """Replace a status message with its outcome, rather than adding a new line.
+
+    Editing in place keeps the thread readable: one message per step that goes
+    from "Scheduling..." to "Scheduled for Thursday", instead of a running
+    commentary the real content has to be scrolled past.
+    """
+    if message_id is None:
+        tg("sendMessage", chat_id=TELEGRAM_CHAT_ID, text=text)
+        return
+    try:
+        tg("editMessageText", chat_id=TELEGRAM_CHAT_ID,
+           message_id=message_id, text=text)
+    except Exception:
+        tg("sendMessage", chat_id=TELEGRAM_CHAT_ID, text=text)
+
+
+def _post_label(manifest: dict) -> str:
+    """A short human name for a post, for messages that must say WHICH one."""
+    kind = (manifest.get("media_type") or "post").replace("_", " ")
+    hook = (manifest.get("hook") or manifest.get("caption") or "").strip()
+    hook = " ".join(hook.split())
+    if len(hook) > 70:
+        hook = hook[:67].rstrip() + "..."
+    return f"{kind}: “{hook}”" if hook else kind
+
+
+# ---------------------------------------------------------------------------
 # Queue
 # ---------------------------------------------------------------------------
 
@@ -648,60 +705,63 @@ def post_to_instagram(manifest: dict, item_dir: Path) -> str:
 _UPDATE_OFFSET: int | None = None
 
 
-def wait_for_callback(manifest_id: str) -> str:
-    """Long-poll Telegram for approve/reject on THIS post. Returns approve/reject/timeout.
-
-    Matches by manifest_id, so callbacks for other/older posts are consumed and
-    ignored rather than blocking. Never uses offset=-1 (which can skip a real tap).
-    """
-    global _UPDATE_OFFSET
-    deadline = time.time() + APPROVAL_TIMEOUT
-    print(f"Waiting up to {APPROVAL_TIMEOUT // 3600}h for approval of {manifest_id}...", flush=True)
-
-    while time.time() < deadline:
-        params: dict = {"timeout": 30, "allowed_updates": '["message","callback_query"]'}
-        if _UPDATE_OFFSET is not None:
-            params["offset"] = _UPDATE_OFFSET
-        try:
-            resp = httpx.get(
-                f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/getUpdates",
-                params=params,
-                timeout=35,
-            )
-            resp.raise_for_status()
-        except Exception as exc:
-            print(f"Poll error: {exc}", flush=True)
-            time.sleep(5)
-            continue
-
-        for update in resp.json().get("result", []):
-            _UPDATE_OFFSET = update["update_id"] + 1  # confirm/advance past it
-            cb   = update.get("callback_query", {})
-            data = cb.get("data", "")
-            if data in (f"approve_{manifest_id}", f"reject_{manifest_id}"):
-                try:
-                    tg("answerCallbackQuery", callback_query_id=cb["id"])
-                except Exception:
-                    pass
-                return "approve" if data.startswith("approve") else "reject"
-
-    return "timeout"
+# The per-post wait lives in `_await_one`, next to the serial review loop that
+# is now its only caller. A second, near-identical polling function used to sit
+# here and consume updates for "other" posts, which only made sense when the
+# whole batch was on screen at once.
 
 
 # ---------------------------------------------------------------------------
 # Review one item
 # ---------------------------------------------------------------------------
 
-def get_all_pending() -> list[tuple[dict, Path]]:
+# Posts are reviewed one format at a time, in this order. Carousels first
+# because they are the highest-value format and the one worth full attention;
+# the cheap single images come last, when the eye is tired.
+FORMAT_ORDER = ("carousel", "reel", "animated", "infographic", "image")
+
+# A queued post is only reviewable for so long. The queue directory is committed
+# to git, so anything left behind by an interrupted run gets checked out by the
+# next CI run and sent for review months later. That is exactly what happened:
+# two June drafts were still marked pending and led every batch, rendered before
+# the 4:5 change and before the reel fixes, so the first posts Ian saw each week
+# were the oldest and worst ones in the repo.
+STALE_AFTER_DAYS = 3
+
+
+def _queued_at(item_dir: Path) -> datetime | None:
+    """Parse the queue directory's timestamp prefix (YYYYMMDD_HHMMSS_hex)."""
+    try:
+        stamp = "_".join(item_dir.name.split("_")[:2])
+        return datetime.strptime(stamp, "%Y%m%d_%H%M%S").replace(tzinfo=timezone.utc)
+    except Exception:
+        return None
+
+
+def get_all_pending(prune_stale: bool = True) -> list[tuple[dict, Path]]:
     if not QUEUE_DIR.exists():
         return []
     out = []
+    cutoff = datetime.now(timezone.utc) - timedelta(days=STALE_AFTER_DAYS)
     for d in sorted(QUEUE_DIR.iterdir(), key=lambda d: d.name):
-        if d.is_dir() and (d / "manifest.json").exists():
-            manifest = json.loads((d / "manifest.json").read_text())
-            if manifest.get("status") == "pending":
-                out.append((manifest, d))
-    return out
+        if not (d.is_dir() and (d / "manifest.json").exists()):
+            continue
+        manifest = json.loads((d / "manifest.json").read_text())
+        if manifest.get("status") != "pending":
+            continue
+        queued = _queued_at(d)
+        if prune_stale and queued and queued < cutoff:
+            print(f"Dropping stale queued post {d.name} "
+                  f"(queued {queued:%Y-%m-%d}, older than {STALE_AFTER_DAYS}d).", flush=True)
+            shutil.rmtree(d, ignore_errors=True)
+            continue
+        out.append((manifest, d))
+    # Group by format so review runs carousel-first rather than in queue order.
+    def rank(pair: tuple[dict, Path]) -> tuple[int, str]:
+        mt = pair[0].get("media_type", "")
+        idx = FORMAT_ORDER.index(mt) if mt in FORMAT_ORDER else len(FORMAT_ORDER)
+        return (idx, pair[1].name)
+    return sorted(out, key=rank)
 
 
 def send_deck(manifest: dict, item_dir: Path, index: int, total: int) -> bool:
@@ -791,6 +851,26 @@ def _linkedin_caption(manifest: dict) -> str:
         return ig
 
 
+def _slides_to_pdf(media_files: list[Path], manifest: dict) -> Path | None:
+    """Bundle carousel slides into a PDF for a native LinkedIn document post.
+
+    Returns None for single-image posts and for videos, where a PDF is either
+    pointless or impossible.
+    """
+    images = [p for p in media_files if p.suffix.lower() in (".jpg", ".jpeg", ".png")]
+    if len(images) < 2:
+        return None
+    try:
+        from PIL import Image
+        pages = [Image.open(p).convert("RGB") for p in images]
+        out = Path(tempfile.gettempdir()) / f"{manifest['id']}_linkedin.pdf"
+        pages[0].save(out, save_all=True, append_images=pages[1:], resolution=144.0)
+        return out
+    except Exception as exc:  # noqa: BLE001
+        log.warning("LinkedIn PDF build failed: %s", exc)
+        return None
+
+
 def _send_linkedin_handoff(manifest: dict, media_files: list[Path],
                            when: datetime | None) -> None:
     """Deliver a ready-to-post LinkedIn package to Telegram.
@@ -812,17 +892,25 @@ def _send_linkedin_handoff(manifest: dict, media_files: list[Path],
                  "Caption is the next message so you can copy it cleanly."))
         tg("sendMessage", chat_id=TELEGRAM_CHAT_ID, text=caption)
 
-        # As a document, not a photo: Telegram re-compresses photos, and the
-        # single image is what LinkedIn will actually display.
-        if media_files:
-            tg_upload("sendDocument", "document", str(media_files[0]),
+        # Every slide, as documents. Telegram re-compresses anything sent as a
+        # photo, and LinkedIn does accept multi-image posts, so handing over
+        # only the first slide (which is what this used to do) threw away the
+        # entire carousel and left a cover slide with no payoff.
+        for i, path in enumerate(media_files[:20], 1):
+            tg_upload("sendDocument", "document", str(path),
                       chat_id=TELEGRAM_CHAT_ID,
-                      caption="Image for the LinkedIn post (uncompressed).")
-        if len(media_files) > 1:
-            tg("sendMessage", chat_id=TELEGRAM_CHAT_ID,
-               text=(f"This post has {len(media_files)} images. LinkedIn's native "
-                     "scheduler does not accept multi-image posts, so either post "
-                     "the first image alone or schedule it as a document carousel."))
+                      caption=(f"Slide {i} of {len(media_files)} (uncompressed)."
+                               if len(media_files) > 1 else "Image for the post (uncompressed)."))
+
+        # For a multi-slide post the native LinkedIn format is a document post:
+        # a PDF that renders as a swipeable carousel and gets materially better
+        # reach than a plain image. Build it so it's one upload, not ten.
+        pdf = _slides_to_pdf(media_files, manifest)
+        if pdf:
+            tg_upload("sendDocument", "document", str(pdf),
+                      chat_id=TELEGRAM_CHAT_ID,
+                      caption=("Same slides as a PDF. Upload this one instead if you want a "
+                               "native LinkedIn carousel (Add document, not Add photo)."))
     except Exception as exc:  # noqa: BLE001
         # Never let the handoff break an otherwise successful Instagram schedule.
         log.warning("LinkedIn handoff failed: %s", exc)
@@ -892,60 +980,77 @@ def handle_decision(manifest: dict, item_dir: Path, decision: str,
                     when: datetime | None = None) -> bool:
     """Publish (approve) or discard (reject) a post. Returns True if it was
     approved and scheduled. `when` schedules it for a specific time."""
+    label = _post_label(manifest)
     if decision == "approve":
         print(f"Approved {manifest['id']}. Scheduling...", flush=True)
         media_files = [
             item_dir / f for f in manifest["files"]
             if f != "preview.jpg" and not f.endswith("_preview.jpg")
         ]
+        # Uploading and scheduling takes ~30-60s. Say so before starting, and
+        # replace this message with the outcome, so a slow step never looks
+        # like a dead one.
+        status = tg_status(f"Uploading and scheduling {label}\nThis takes about a minute...")
         try:
             if PUBLORA_API_KEY:
                 pg = post_via_publora(manifest, media_files, when=when)
                 when_txt = (f"scheduled for {when.strftime('%a %b %d, %-I%p UTC')}"
                             if when else "posting in ~2 minutes")
-                tg("sendMessage", chat_id=TELEGRAM_CHAT_ID,
-                   text=f"Approved and {when_txt} via Publora.\n(post {pg})")
+                tg_status_done(status, f"Approved. {label}\n{when_txt.capitalize()} via Publora.\n(post {pg})")
                 print(f"Publora scheduled: {pg} ({when})")
                 if LINKEDIN_HANDOFF:
                     _send_linkedin_handoff(manifest, media_files, when)
             else:
                 post_id = post_to_instagram(manifest, item_dir)
                 if post_id in ("manual-video", "manual-no-ig"):
+                    tg_status_done(status, f"{label}\nNeeds a manual upload ({post_id}).")
                     print(f"Manual upload required ({post_id}).")
                 else:
-                    tg("sendMessage", chat_id=TELEGRAM_CHAT_ID, text=f"Posted to Instagram.\nPost ID: {post_id}")
+                    tg_status_done(status, f"Posted to Instagram. {label}\nPost ID: {post_id}")
         except Exception as exc:
+            tg_status_done(status, f"Failed to publish {label}.\n{exc}")
             tg_err(f"Publish failed after approval: {exc}")
             shutil.rmtree(item_dir, ignore_errors=True)
             return False
         shutil.rmtree(item_dir, ignore_errors=True)
         return True
-    # reject
-    tg("sendMessage", chat_id=TELEGRAM_CHAT_ID, text="Rejected. I'll bring a replacement.")
+    # reject. Naming the post matters most here: several are in flight at once
+    # and a bare "Rejected." gives no way to tell which one went.
+    tg("sendMessage", chat_id=TELEGRAM_CHAT_ID,
+       text=f"Rejected {label}\nI'll bring a replacement.")
     print(f"Rejected {manifest['id']}.")
     shutil.rmtree(item_dir, ignore_errors=True)
     return False
 
 
-def _generate_replacement(ledger: dict):
+def _generate_replacement(ledger: dict, media_type: str | None = None):
     """Generate a fresh post from the next un-picked idea in the batch, so a
     rejection still leaves the target number of posts scheduled.
 
     Tries spare ideas in order: if one fails to generate, it's marked failed and
     the next is tried, rather than mistaking a generation error for "out of
     ideas". Returns (manifest, item_dir), or None only when the spare pool is
-    genuinely exhausted."""
+    genuinely exhausted.
+
+    `media_type` keeps the replacement in the same format as the post it
+    replaces, so rejecting a carousel during the carousel round does not drop a
+    reel into the middle of it."""
     import oralcheck_agent as agent   # lazy: heavy import, needs content-gen env
 
     while True:
         spares = ideas.spare_ideas(ledger)
+        if media_type:
+            same = [i for i in spares if i.get("media_type") == media_type]
+            # Falling back to any format beats returning nothing: one post of
+            # the wrong type still ships, an empty slot does not.
+            spares = same or spares
         if not spares:
             return None                      # genuinely out of spare ideas
         idea = spares[0]
         idea["status"] = "selected"          # claim it so it isn't picked twice
         ideas.save_ledger(ledger)
-        tg("sendMessage", chat_id=TELEGRAM_CHAT_ID,
-           text=f"Building a replacement: \"{idea['title']}\" ({idea['media_type']})...")
+        status = tg_status(f"Building a replacement: \"{idea['title']}\" ({idea['media_type']}).\n"
+                           "Rendering takes a couple of minutes...")
         try:
             manifest = agent._queue_idea(idea)
         except Exception as exc:
@@ -954,51 +1059,33 @@ def _generate_replacement(ledger: dict):
         if manifest:
             ideas.mark_queued(ledger, idea["id"], manifest["id"])
             ideas.save_ledger(ledger)
+            tg_status_done(status, f"Replacement ready: \"{idea['title']}\" ({idea['media_type']}).")
             return manifest, QUEUE_DIR / manifest["id"]
         # generation failed -> don't burn the whole idea pool on one bad apple;
         # mark it failed (so spare_ideas skips it) and try the next spare.
         ideas.mark_failed(ledger, idea["id"])
         ideas.save_ledger(ledger)
-        tg("sendMessage", chat_id=TELEGRAM_CHAT_ID,
-           text="That one wouldn't build, trying the next idea...")
+        tg_status_done(status, f"\"{idea['title']}\" wouldn't build. Trying the next idea...")
 
 
-def review_batch() -> None:
-    """Weekly review: send the picked posts, take approve/reject on each, and
-    schedule approvals spread across the coming week. When a post is rejected,
-    generate a replacement from the leftover ideas so the target number of posts
-    still gets scheduled."""
+def _await_one(manifest: dict, item_dir: Path, deadline: float) -> str:
+    """Block on the approve/reject buttons for exactly this post.
+
+    Returns approve / reject / timeout. Other posts' callbacks cannot arrive
+    here any more (only one post is ever on screen), but /help still answers,
+    because the wait can be hours and that is when the commands get forgotten.
+    """
     global _UPDATE_OFFSET
-    pending = get_all_pending()
-    if not pending:
-        print("No pending posts in queue.")
-        return
-
-    ledger = ideas.load_ledger()
-    target = len(pending)                 # however many were picked -> how many to schedule
-    slots = _weekly_slots(target)
-    approved = 0
-
-    posts: dict[str, tuple[dict, Path]] = {}
-    for i, (manifest, item_dir) in enumerate(pending, 1):
-        if send_deck(manifest, item_dir, i, len(pending)):
-            posts[manifest["id"]] = (manifest, item_dir)
-    if not posts:
-        return
-    tg("sendMessage", chat_id=TELEGRAM_CHAT_ID,
-       text=(f"{len(posts)} post(s) above. Approve the ones you want and I'll spread them across "
-             f"the week. Reject any and I'll generate a replacement so {target} go out."))
-    print(f"Sent {len(posts)} post(s) for review. Waiting for decisions...", flush=True)
-
-    deadline = time.time() + APPROVAL_TIMEOUT
-    while posts and approved < target and time.time() < deadline:
+    pid = manifest["id"]
+    while time.time() < deadline:
         # Must request callback_query explicitly: Telegram persists the last
         # allowed_updates, and an earlier message-only poll would otherwise drop taps.
         params: dict = {"timeout": 30, "allowed_updates": '["message","callback_query"]'}
         if _UPDATE_OFFSET is not None:
             params["offset"] = _UPDATE_OFFSET
         try:
-            resp = httpx.get(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/getUpdates", params=params, timeout=35)
+            resp = httpx.get(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/getUpdates",
+                             params=params, timeout=35)
             resp.raise_for_status()
         except Exception as exc:
             print(f"Poll error: {exc}", flush=True)
@@ -1012,50 +1099,99 @@ def review_batch() -> None:
                 continue
             cb = update.get("callback_query", {})
             data = cb.get("data", "")
-            for pid in list(posts):
-                if data == f"approve_{pid}" or data == f"reject_{pid}":
-                    try:
-                        tg("answerCallbackQuery", callback_query_id=cb["id"])
-                    except Exception:
-                        pass
-                    manifest, item_dir = posts.pop(pid)
-                    if data.startswith("approve"):
-                        when = slots[approved] if approved < len(slots) else None
-                        if handle_decision(manifest, item_dir, "approve", when=when):
-                            approved += 1
-                    else:
-                        handle_decision(manifest, item_dir, "reject")
-                        idea = ideas.idea_for_manifest(ledger, pid)
-                        # Ask why. A rejection with no reason teaches nothing, and
-                        # the same kind of post comes back next week.
-                        reason = _collect_reject_reason(manifest)
-                        if reason:
-                            ideas.record_feedback(
-                                ledger,
-                                reason,
-                                title=manifest.get("hook") or manifest.get("caption", "")[:80],
-                                media_type=manifest.get("media_type", ""),
-                            )
-                        if idea:
-                            ideas.mark_rejected(ledger, idea["id"])
-                        ideas.save_ledger(ledger)
-                        # bring a replacement so `target` still get scheduled
-                        repl = _generate_replacement(ledger)
-                        if repl:
-                            rm, rdir = repl
-                            if send_deck(rm, rdir, len(posts) + approved + 1, target):
-                                posts[rm["id"]] = (rm, rdir)
-                        else:
-                            tg("sendMessage", chat_id=TELEGRAM_CHAT_ID,
-                               text=(f"I've used every idea in this week's batch, so I can't add "
-                                     f"another replacement. {approved} of {target} are scheduled. "
-                                     f"Run the idea flow again for a fresh set."))
-                    break
+            if data == f"approve_{pid}":
+                tg_ack(cb, "Approved. Uploading and scheduling now...")
+                return "approve"
+            if data == f"reject_{pid}":
+                tg_ack(cb, "Rejected. I'll ask what was wrong.")
+                return "reject"
+    return "timeout"
 
-    if approved >= target:
+
+def review_batch() -> None:
+    """Weekly review: one post at a time, in format order, each fully resolved
+    before the next is sent.
+
+    Previously every post was sent up front and approvals were taken in any
+    order. That made a five-post batch a wall of media with five identical
+    button pairs, no way to tell which "Rejected." belonged to which post, and
+    no signal that a slow upload was running. Reviewing serially costs nothing
+    (the same posts, the same clicks) and makes each decision unambiguous.
+    """
+    pending = get_all_pending()
+    if not pending:
+        print("No pending posts in queue.")
+        return
+
+    ledger = ideas.load_ledger()
+    target = len(pending)                 # however many were picked -> how many to schedule
+    slots = _weekly_slots(target)
+    approved = 0
+    deadline = time.time() + APPROVAL_TIMEOUT
+
+    order = ", ".join(dict.fromkeys(m.get("media_type", "post") for m, _ in pending))
+    tg("sendMessage", chat_id=TELEGRAM_CHAT_ID,
+       text=(f"{target} post(s) to review, one at a time, in this order: {order}.\n"
+             "Each one gets approved and scheduled before the next arrives. "
+             "Reject any and I'll build a replacement in the same format."))
+    print(f"Reviewing {target} post(s) serially. Order: {order}", flush=True)
+
+    queue = list(pending)
+    seen = 0
+    while queue and approved < target and time.time() < deadline:
+        manifest, item_dir = queue.pop(0)
+        seen += 1
+        if not send_deck(manifest, item_dir, seen, target):
+            shutil.rmtree(item_dir, ignore_errors=True)
+            continue
+
+        decision = _await_one(manifest, item_dir, deadline)
+        if decision == "timeout":
+            print(f"Timed out waiting on {manifest['id']}.", flush=True)
+            shutil.rmtree(item_dir, ignore_errors=True)
+            break
+
+        if decision == "approve":
+            when = slots[approved] if approved < len(slots) else None
+            if handle_decision(manifest, item_dir, "approve", when=when):
+                approved += 1
+            continue
+
+        # reject
+        media_type = manifest.get("media_type", "")
+        handle_decision(manifest, item_dir, "reject")
+        idea = ideas.idea_for_manifest(ledger, manifest["id"])
+        # Ask why. A rejection with no reason teaches nothing, and the same
+        # kind of post comes back next week.
+        reason = _collect_reject_reason(manifest)
+        if reason:
+            ideas.record_feedback(
+                ledger,
+                reason,
+                title=manifest.get("hook") or manifest.get("caption", "")[:80],
+                media_type=media_type,
+            )
+        if idea:
+            ideas.mark_rejected(ledger, idea["id"])
+        ideas.save_ledger(ledger)
+        # Replacement goes to the FRONT of the queue: it is the same format as
+        # the post just rejected, so it belongs in this round, not after the
+        # formats that come later.
+        repl = _generate_replacement(ledger, media_type)
+        if repl:
+            queue.insert(0, repl)
+            seen -= 1                     # the replacement reuses this slot's number
+        else:
+            tg("sendMessage", chat_id=TELEGRAM_CHAT_ID,
+               text=(f"I've used every idea in this week's batch, so I can't add "
+                     f"another replacement. {approved} of {target} are scheduled. "
+                     f"Run the idea flow again for a fresh set."))
+            target -= 1                   # one fewer is now achievable
+
+    if approved:
         tg("sendMessage", chat_id=TELEGRAM_CHAT_ID,
            text=f"Done. {approved} post(s) scheduled across the week.")
-    for pid, (manifest, item_dir) in posts.items():
+    for manifest, item_dir in queue:
         shutil.rmtree(item_dir, ignore_errors=True)
 
 

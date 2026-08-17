@@ -263,6 +263,165 @@ def _strip_dashes(text: str) -> str:
 
 _VALID_SLIDE_TYPES = {"stat", "fact", "list", "quote"}
 
+# The designed layouts in layouts.py, as a validation schema.
+#
+#   text:     plain string fields, em-dash stripped
+#   items:    list-of-string fields, as (field, max_items)
+#   objects:  list-of-dict fields, as (field, [keys], max_items)
+#   required: must be present and non-empty, or the slide is dropped
+#
+# Kept declarative so adding a layout is one row here and one function there,
+# rather than another branch in a growing if-chain.
+_LAYOUT_SCHEMA: dict[str, dict] = {
+    "compare":  {"text": ["headline", "a_label", "a_text", "b_label", "b_text", "footnote"],
+                 "required": ["headline", "a_text", "b_text"]},
+    "steps":    {"text": ["headline", "kicker", "footnote"],
+                 "items": [("steps", 4)], "required": ["headline", "steps"]},
+    "myth":     {"text": ["myth", "truth", "footnote"], "required": ["myth", "truth"]},
+    "checklist": {"text": ["headline", "sub", "footnote"],
+                  "items": [("items", 6)], "required": ["headline", "items"]},
+    "qualifier": {"text": ["kicker", "headline", "emphasis", "body", "footnote"],
+                  "required": ["headline"]},
+    "versus":   {"text": ["headline", "footnote"],
+                 "objects": [("options", ["name", "note", "good"], 4)],
+                 "required": ["headline", "options"]},
+    "bignumber": {"text": ["value", "label", "footnote"], "required": ["value", "label"]},
+    "timeline": {"text": ["headline", "footnote"],
+                 "objects": [("steps", ["label", "note", "mark"], 4)],
+                 "required": ["headline", "steps"]},
+    "question": {"text": ["question", "emphasis", "footnote"], "required": ["question"]},
+    "receipt":  {"text": ["kicker", "headline", "footnote"],
+                 "objects": [("rows", ["label", "value"], 7)],
+                 "required": ["headline", "rows"]},
+    "verdict":  {"text": ["kicker", "headline", "verdict", "verdict_note", "footnote"],
+                 "required": ["headline"], "photo": ["photo"]},
+    "tier":     {"text": ["headline", "footnote"],
+                 "objects": [("tiers", ["rank", "label"], 5)],
+                 "required": ["headline", "tiers"]},
+    "moment":   {"text": ["headline", "body", "footnote"],
+                 "required": ["headline"], "photo": ["photo"]},
+    "pov":      {"text": ["kicker", "line"], "required": ["line"], "photo": ["photo"]},
+    "news":     {"text": ["quote", "quote_kicker", "headline", "body", "footnote"],
+                 "required": ["headline"]},
+    "photocompare": {"text": ["headline", "a_label", "b_label", "note", "a_sign", "b_sign"],
+                     "required": ["headline", "a_sign", "b_sign"]},
+}
+
+# The clinical photo library already on the site. `photocompare` picks two of
+# these by name rather than depending on the stock-photo fetch, which returns at
+# most one image and never a matched pair.
+SIGN_PHOTOS = {
+    "sore": "signs/sore.jpg",
+    "white_patch": "signs/white.jpg",
+    "lip": "signs/lip.jpg",
+    "mixed_patch": "signs/mixed.jpg",
+}
+PUBLIC_DIR = Path(__file__).resolve().parent.parent / "public"
+
+
+def _sign_photo(name: str) -> str | None:
+    rel = SIGN_PHOTOS.get(str(name or "").strip().lower())
+    if not rel:
+        return None
+    path = PUBLIC_DIR / rel
+    return str(path) if path.exists() else None
+
+# Layouts the model may request. Photo-backed ones are filled in by the pipeline
+# after an image is fetched, so the model never names a file path itself.
+PHOTO_LAYOUTS = {name for name, spec in _LAYOUT_SCHEMA.items() if spec.get("photo")}
+
+
+# What the model is told it can ask for. Every entry here must exist in
+# _LAYOUT_SCHEMA and in layouts.LAYOUTS, or it silently degrades to a plain slide.
+SLIDE_SPEC = """
+  DESIGNED LAYOUTS (prefer these, they are what the account looks like):
+    - {"type":"compare", "headline":"Is this normal, or worth a look?", "a_label":"USUALLY FINE",
+       "a_text":"10-14 words", "b_label":"GET IT CHECKED", "b_text":"10-14 words", "footnote":"optional"}
+       Two panels, benign vs worth-a-check. The most-saved shape in health content.
+    - {"type":"steps", "kicker":"20-second self-check", "headline":"Do this before you keep scrolling",
+       "steps":["3 or 4 physical actions, 5-9 words each"], "footnote":"optional"}
+       Something the reader can finish while holding the phone.
+    - {"type":"myth", "myth":"the false belief, 5-9 words", "truth":"the correction, 8-14 words",
+       "footnote":"optional"}  The myth renders struck through. Use for corrections.
+    - {"type":"checklist", "headline":"Five things worth two weeks of attention",
+       "sub":"one line of framing", "items":["4 to 6 items, 4-8 words each"], "footnote":"optional"}
+       A reference card built to be saved.
+    - {"type":"qualifier", "kicker":"Read this if", "headline":"you have had a mouth sore for more than two weeks",
+       "emphasis":"an EXACT substring of headline to colour", "body":"25-35 words"}
+       Names the reader precisely so the right person stops scrolling.
+    - {"type":"versus", "headline":"What people actually do about a mouth sore",
+       "options":[{"name":"Googling symptoms","note":"5-9 words","good":false},
+                  {"name":"OralCheck","note":"5-9 words","good":true}]}
+       The competitor comparison. OralCheck's real rivals are googling at 1am,
+       asking a chatbot, and waiting. Exactly one option has good:true.
+    - {"type":"bignumber", "value":"2in3", "label":"12-18 words on what the number means"}
+       One figure at maximum scale. Keep 'value' under 8 characters.
+    - {"type":"timeline", "headline":"How long is too long?",
+       "steps":[{"label":"DAY 1","note":"4-7 words","mark":false},
+                {"label":"DAY 14","note":"This is the line","mark":true}]}
+       Gives an abstract rule a shape. Set mark:true on the decision point.
+    - {"type":"question", "question":"When did you last look inside your own mouth?",
+       "emphasis":"an EXACT substring to colour", "footnote":"Two minutes. oralcheck.org"}
+       Almost empty. Stands out because everything else in the feed is loud.
+    - {"type":"receipt", "kicker":"What the screener weighs", "headline":"Nothing hidden",
+       "rows":[{"label":"Heavy alcohol","value":"raises risk"}], "footnote":"optional"}
+       Deliberately document-like. Reads as information, not marketing.
+    - {"type":"tier", "headline":"Oral health habits, ranked by what actually matters",
+       "tiers":[{"rank":"S","label":"Not smoking"},{"rank":"C","label":"Whitening strips"}]}
+       A native internet format. People argue with tier lists, and arguing is reach.
+    - {"type":"news", "quote_kicker":"You probably saw this", "quote":"the headline, 8-14 words",
+       "headline":"Here is the part the headline skipped", "body":"25-35 words"}
+       Reaction format. Only when a real study or story is in play.
+    - {"type":"pov", "kicker":"POV", "line":"you have been telling yourself it is just a bitten cheek"}
+       Full-bleed photo with one line over it. Only when image_source is "photo".
+    - {"type":"moment", "headline":"6-10 words", "body":"25-35 words"}
+       The calendar or holiday hook. Only when image_source is "photo".
+    - {"type":"verdict", "kicker":"New this month", "headline":"6-10 words",
+       "verdict":"SHORT ANSWER: NO", "verdict_note":"but it is not useless either"}
+       A product launch, answered honestly. Only when image_source is "photo".
+    - {"type":"photocompare", "headline":"One of these needs a dentist this week",
+       "a_sign":"sore", "a_label":"Ulcer, painful", "b_sign":"white_patch",
+       "b_label":"Patch, painless", "note":"20-30 words on which one matters and why"}
+       Two real clinical photos side by side, the strongest teaching shape here.
+       a_sign and b_sign must be two DIFFERENT values from: sore, white_patch,
+       lip, mixed_patch. Needs no fetched image, so it works with any image_source.
+
+  BASIC TYPES (use at most one or two, as connective tissue):
+    - {"type":"stat", "value":"70%", "label":"6-10 word plain-language meaning", "detail":"12-18 words"}
+    - {"type":"fact", "headline":"6-8 word serif headline", "body":"20-30 word supporting paragraph"}
+    - {"type":"list", "headline":"4-6 word headline", "items":["3 to 5 short items"]}
+    - {"type":"quote", "text":"a short, human, 8-14 word line", "attribution":"optional"}
+
+"""
+
+
+def _sanitize_layout_slide(t: str, s: dict) -> dict | None:
+    """Validate one designed-layout slide against its schema, or None if unusable."""
+    spec = _LAYOUT_SCHEMA[t]
+    out: dict = {"type": t}
+    for field in spec.get("text", []):
+        out[field] = _strip_dashes(str(s.get(field, "")).strip())
+    for field, cap in spec.get("items", []):
+        out[field] = [_strip_dashes(str(i).strip())
+                      for i in s.get(field, []) if str(i).strip()][:cap]
+    for field, keys, cap in spec.get("objects", []):
+        rows = []
+        for raw in s.get(field, []):
+            if not isinstance(raw, dict):
+                continue
+            row = {}
+            for k in keys:
+                v = raw.get(k)
+                # 'good' and 'mark' are flags; everything else is display text.
+                row[k] = bool(v) if k in ("good", "mark") else _strip_dashes(str(v or "").strip())
+            if any(row[k] for k in keys if k not in ("good", "mark")):
+                rows.append(row)
+        out[field] = rows[:cap]
+    for field in spec.get("required", []):
+        if not out.get(field):
+            return None
+    return out
+
 
 def _sanitize_carousel_slides(slides: list) -> list[dict]:
     """Validate and clean typed carousel slides, dropping malformed ones.
@@ -275,6 +434,14 @@ def _sanitize_carousel_slides(slides: list) -> list[dict]:
         if not isinstance(s, dict):
             continue
         t = str(s.get("type", "fact")).lower().strip()
+        if t in _LAYOUT_SCHEMA:
+            slide = _sanitize_layout_slide(t, s)
+            # A designed layout that failed validation is dropped rather than
+            # downgraded: half its fields rendered in a generic shape is worse
+            # than one fewer slide.
+            if slide:
+                clean.append(slide)
+            continue
         if t not in _VALID_SLIDE_TYPES:
             t = "fact"
         if t == "stat":
@@ -315,7 +482,23 @@ def build_deck_from_content(content: dict, photo_path: str | None) -> dict:
     slides = list(content.get("slides", []))
     photo_caption = _strip_dashes(content.get("photo_caption", "")).strip()
 
-    if photo_path:
+    # Photo-backed layouts ask for an image without naming a path; the path is
+    # only known here, after the fetch. Fill them first, and only fall back to a
+    # standalone photo slide if no layout claimed the image.
+    claimed = False
+    for slide in slides:
+        t = slide.get("type")
+        if t == "photocompare":
+            # Resolved from the local clinical library, not the stock fetch:
+            # this layout needs a matched pair and the fetch returns one image.
+            slide["a_photo"] = _sign_photo(slide.get("a_sign", ""))
+            slide["b_photo"] = _sign_photo(slide.get("b_sign", ""))
+            continue
+        if t in PHOTO_LAYOUTS and photo_path:
+            slide["photo"] = photo_path
+            claimed = True
+
+    if photo_path and not claimed:
         insert_at = 1 if len(slides) >= 2 else len(slides)
         slides.insert(insert_at, {"type": "photo", "photo": photo_path, "caption": photo_caption})
 
@@ -394,19 +577,20 @@ def generate_content(brief: str, media_type: str) -> dict:
             "  search_query: required when image_source is \"photo\". A 3-6 word web photo query.\n"
             "    Leave an EMPTY STRING \"\" otherwise.\n"
             "  photo_caption: one line, 14 words max, paired with the image (only if not \"none\")\n"
-            "  slides: array of 3 to 4 typed content slides. Each object has a 'type' plus fields:\n"
-            "    - {\"type\":\"stat\", \"value\":\"70%\", \"label\":\"6-10 word plain-language meaning\", \"detail\":\"one 12-18 word supporting sentence\"}\n"
-            "    - {\"type\":\"fact\", \"headline\":\"6-8 word serif headline\", \"body\":\"20-30 word supporting paragraph\"}\n"
-            "    - {\"type\":\"list\", \"headline\":\"4-6 word headline\", \"items\":[\"3 to 5 short items, 4-8 words each\"]}\n"
-            "    - {\"type\":\"quote\", \"text\":\"a short, human, 8-14 word line\", \"attribution\":\"who said it, optional\"}\n"
+            "  slides: array of 3 to 4 typed content slides. Each object has a 'type' plus fields.\n"
+            + SLIDE_SPEC +
             "  caption: full Instagram caption ending with an oralcheck.org CTA\n"
             "  hashtags: exactly 5 lowercase tags\n\n"
             "Rules for the slides array:\n"
-            "  - Include at least one 'stat' slide and at least one 'fact' slide.\n"
-            "  - Use a 'list' slide when the pillar is about signs, symptoms, or steps.\n"
-            "  - Vary the types, do not output three of the same type.\n"
+            "  - At least TWO slides must use a designed layout from the first group.\n"
+            "    The four basic types are filler. A deck built only from them looks\n"
+            "    like every other deck, which is the single most common failure here.\n"
+            "  - Never repeat a layout within one deck.\n"
+            "  - Pick layouts that suit the idea. A myth deck wants 'myth'. A signs deck\n"
+            "    wants 'checklist' or 'compare'. A 'when do I worry' deck wants 'timeline'.\n"
+            "    A habits deck wants 'tier' or 'versus'. Do not pick one at random.\n"
             "  - Slides must tell a cohesive story: surprising hook -> why it matters -> what to do -> (auto CTA).\n"
-            "  - Every stat 'value' must be a real, defensible number for oral cancer. No invented statistics."
+            "  - Every number must be real and defensible for oral cancer. No invented statistics."
         )
     else:
         media_note = (
@@ -1865,12 +2049,28 @@ def generate_carousel_slides(content: dict) -> list[str]:
 def _flatten_slide(slide: dict) -> tuple[str, str]:
     """Reduce a typed carousel slide to (headline, body) for the PIL fallback."""
     t = slide.get("type", "fact")
-    if t == "stat":
+    if t in ("stat", "bignumber"):
         return slide.get("value", ""), slide.get("label", "")
-    if t == "list":
+    if t in ("list", "checklist"):
         return slide.get("headline", ""), "  •  ".join(slide.get("items", []))
+    if t == "steps":
+        return slide.get("headline", ""), "  •  ".join(slide.get("steps", []))
     if t == "quote":
         return slide.get("text", ""), slide.get("attribution", "")
+    if t == "myth":
+        return slide.get("truth", ""), f"Not: {slide.get('myth', '')}"
+    if t == "question":
+        return slide.get("question", ""), slide.get("footnote", "")
+    if t == "pov":
+        return slide.get("line", ""), ""
+    if t == "compare":
+        return slide.get("headline", ""), f"{slide.get('a_text', '')}  •  {slide.get('b_text', '')}"
+    if t in ("versus", "tier", "timeline", "receipt"):
+        # All four are headline + rows of objects; the fallback is a flat renderer
+        # with no row support, so the headline alone is the honest reduction.
+        return slide.get("headline", ""), ""
+    if t == "news":
+        return slide.get("headline", ""), slide.get("body", "")
     return slide.get("headline", ""), slide.get("body", "")
 
 
@@ -2366,13 +2566,23 @@ WHEN I SEND A POST FOR APPROVAL
   after a Reject I ask why. Anything you type becomes a standing
   rule for future posts. "skip" if you'd rather not say.
 
+  Posts come one at a time, carousel first, then reel, then image.
+  Each one is scheduled before the next arrives, so there is only
+  ever one pair of buttons live. Reject and I build a replacement
+  in the same format before moving on.
+
+  Anything slow says so and updates itself when it finishes, so a
+  message that still reads "Uploading..." is still working.
+
 ANY TIME I'M WAITING ON YOU
   /help            this message
 
 HOW POSTS GO OUT
   Instagram is scheduled automatically, spread across the week.
   LinkedIn arrives here as a ready-to-paste package, because the
-  Publora plan only allows 3 scheduled posts at once.
+  Publora plan only allows 3 scheduled posts at once. You get the
+  caption, every slide as an uncompressed file, and the same
+  slides as a PDF for a native LinkedIn carousel.
 
 Writing style does not matter. I read plain text, so commas,
 capitals and typos make no difference.

@@ -10,7 +10,7 @@ The running list. Two rules:
    named. This is the list's whole purpose: the things that come up once, sound
    good, and are never mentioned again.
 
-Last updated: 2026-08-16
+Last updated: 2026-08-17
 
 ---
 
@@ -34,11 +34,12 @@ Last updated: 2026-08-16
       not. Two concrete fixes: add a **link sticker on the reel itself**, and hold
       the final scene long enough to actually read the URL. Currently the outro is
       brief.
-- [ ] **More post templates.** Sixteen built in `oralcheck-agent/template_demo.py`,
-      all approved. Keep going: the goal is enough that the feed never looks
+- [ ] **More post templates.** Twenty-one shapes now reachable (16 designed +
+      5 basic). Keep going: the goal is enough that the feed never looks
       repetitive.
-- [ ] **Promote approved templates** from `template_demo.py` into `render_html.py`
-      as real slide layouts the generator can select.
+- [ ] **Reels have had none of this work.** The sixteen designed layouts are
+      carousel/static only. Reels are still the old kinetic-text scenes with
+      five backdrop variants, which is the next real design job.
 - [ ] Two of six signs on `/learn/signs` still have **no clinical photo**: red patch
       (erythroplakia) and lump/thickening. No openly-licensed image found yet.
 
@@ -87,6 +88,23 @@ Last updated: 2026-08-16
 ## Shipped
 
 Newest first.
+
+### 2026-08-17
+- The sixteen designed templates promoted into `layouts.py` and wired into
+  `render_deck`, so the generator can actually select them. They existed only as
+  fixed-copy mockups in `template_demo.py`, which nothing imported: every post
+  shipped from the five generic shapes, which is why the output looked nothing
+  like the approved designs
+- `photocompare` resolves two clinical photos from the site's own `/public/signs`
+  library, so it no longer depends on the single-image stock fetch
+- Review is serial and format-ordered (carousel, then reel, then image), each post
+  scheduled before the next is sent
+- Rejections name the post they belong to
+- Slow steps announce themselves and edit in place when they finish
+- Queue directory untracked; stale pending posts pruned after 3 days. Two June
+  drafts were committed to git and led every batch for two months
+- LinkedIn handoff sends every slide plus a PDF for a native document carousel,
+  instead of only the first image
 
 ### 2026-08-16
 - Topical hook finder (`hooks.py`), feeding dated cultural hooks into idea generation
