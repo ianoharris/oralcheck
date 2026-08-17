@@ -70,9 +70,15 @@ def _validate_env() -> None:
         log.error("Missing required environment variables: %s", ", ".join(missing))
         log.error("Copy .env.example to .env and fill in the values.")
         sys.exit(1)
-    missing_stock = [k for k in _STOCK_ENV if not os.environ.get(k)]
-    if missing_stock:
-        log.warning("Stock photo API keys not set (%s) -- set at least one in .env", ", ".join(missing_stock))
+    # Only when there is no stock source at all. This warned whenever *either*
+    # key was absent, while the requirement is "at least one", and it fired on
+    # every command including the ones that never fetch a photo. On a CI step
+    # with no photo keys by design it reads like a failure, which is how a
+    # perfectly healthy idea-suggestion run came to look stuck.
+    if not any(os.environ.get(k) for k in _STOCK_ENV):
+        log.warning("No stock photo source configured (%s). Posts that ask for a "
+                    "photo will fall back to typography; idea generation is "
+                    "unaffected.", " or ".join(_STOCK_ENV))
 
 
 _validate_env()
