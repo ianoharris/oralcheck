@@ -830,6 +830,19 @@ def _send_linkedin_handoff(manifest: dict, media_files: list[Path],
 
 REJECT_REASON_TIMEOUT = 180  # seconds to type a reason before moving on
 
+# Kept in the agent so there is one source of truth; imported lazily because
+# this module is also run standalone.
+def _help_text() -> str:
+    try:
+        from oralcheck_agent import HELP_TEXT
+        return HELP_TEXT
+    except Exception:
+        return "Approve or Reject with the buttons. After a Reject, tell me why."
+
+
+def _is_help(text: str) -> bool:
+    return text.strip().lower().lstrip("/") in ("help", "?", "commands", "h")
+
 
 def _collect_reject_reason(manifest: dict) -> str:
     """Ask why a post was rejected and wait briefly for a typed reply.
@@ -863,6 +876,9 @@ def _collect_reject_reason(manifest: dict) -> str:
             _UPDATE_OFFSET = update["update_id"] + 1
             text = (update.get("message") or {}).get("text", "").strip()
             if not text:
+                continue
+            if _is_help(text):
+                tg("sendMessage", chat_id=TELEGRAM_CHAT_ID, text=_help_text())
                 continue
             if text.lower() in ("skip", "no", "nothing", "-"):
                 return ""
@@ -990,6 +1006,10 @@ def review_batch() -> None:
             continue
         for update in resp.json().get("result", []):
             _UPDATE_OFFSET = update["update_id"] + 1
+            msg_text = (update.get("message") or {}).get("text", "")
+            if msg_text and _is_help(msg_text):
+                tg("sendMessage", chat_id=TELEGRAM_CHAT_ID, text=_help_text())
+                continue
             cb = update.get("callback_query", {})
             data = cb.get("data", "")
             for pid in list(posts):

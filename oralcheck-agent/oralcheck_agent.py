@@ -2352,8 +2352,44 @@ def _ideas_telegram_text(batch: list[dict]) -> str:
     return "\n".join(lines)
 
 
+HELP_TEXT = """OralCheck bot: what you can say
+
+WHEN I SEND IDEAS
+  1, 4, 8          pick these ideas (one of each format is the goal)
+  more reels       swap just the reel options, keep the rest
+  more carousels   same for carousels
+  more images      same for static images
+
+WHEN I SEND A POST FOR APPROVAL
+  Approve / Reject  the buttons under each post
+  after a Reject I ask why. Anything you type becomes a standing
+  rule for future posts. "skip" if you'd rather not say.
+
+ANY TIME I'M WAITING ON YOU
+  /help            this message
+
+HOW POSTS GO OUT
+  Instagram is scheduled automatically, spread across the week.
+  LinkedIn arrives here as a ready-to-paste package, because the
+  Publora plan only allows 3 scheduled posts at once.
+
+Writing style does not matter. I read plain text, so commas,
+capitals and typos make no difference.
+
+Note: I can only answer while a workflow is running and waiting
+on you. If nothing happens, no run is active right now."""
+
+
+def _is_help(text: str) -> bool:
+    return text.strip().lower().lstrip("/") in ("help", "?", "commands", "h")
+
+
 def tg_wait_for_reply(timeout: int = 21600) -> str | None:
-    """Long-poll Telegram for the next text message from the review chat."""
+    """Long-poll Telegram for the next text message from the review chat.
+
+    /help is answered inline and does not count as the reply, so asking what
+    the options are never costs you the turn.
+    """
     tok = os.environ.get("TELEGRAM_BOT_TOKEN")
     cid = os.environ.get("TELEGRAM_CHAT_ID")
     if not (tok and cid):
@@ -2382,6 +2418,9 @@ def tg_wait_for_reply(timeout: int = 21600) -> str | None:
             last = update["update_id"]
             msg = update.get("message", {})
             if str(msg.get("chat", {}).get("id")) == str(cid) and msg.get("text"):
+                if _is_help(msg["text"]):
+                    _tg_send_message(HELP_TEXT)
+                    continue
                 return msg["text"]
     return None
 
