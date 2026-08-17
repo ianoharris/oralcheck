@@ -1107,8 +1107,6 @@ def _generate_replacement(ledger: dict, media_type: str | None = None):
     `media_type` keeps the replacement in the same format as the post it
     replaces, so rejecting a carousel during the carousel round does not drop a
     reel into the middle of it."""
-    import oralcheck_agent as agent   # lazy: heavy import, needs content-gen env
-
     while True:
         spares = ideas.spare_ideas(ledger)
         if media_type:
@@ -1118,6 +1116,11 @@ def _generate_replacement(ledger: dict, media_type: str | None = None):
             spares = same or spares
         if not spares:
             return None                      # genuinely out of spare ideas
+        # Imported only once there is something to build. oralcheck_agent is a
+        # heavy import that also exits if the content-generation keys are
+        # missing, so paying for it before the "no spares" check turned an
+        # ordinary end-of-batch into a hard failure.
+        import oralcheck_agent as agent
         idea = spares[0]
         idea["status"] = "selected"          # claim it so it isn't picked twice
         ideas.save_ledger(ledger)

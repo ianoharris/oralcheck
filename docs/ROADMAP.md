@@ -105,6 +105,11 @@ Newest first.
   drafts were committed to git and led every batch for two months
 - LinkedIn handoff sends every slide plus a PDF for a native document carousel,
   instead of only the first image
+- Booked slots persist in `schedule.json`, so a top-up run spaces posts against
+  what an earlier run scheduled instead of restarting from tomorrow and stacking
+  two posts onto the same evening
+- `test_review.py`: review flow covered offline (ordering, serial review, progress
+  messages, rejection labelling, stale pruning, slot spacing), running in CI
 
 ### 2026-08-16
 - Topical hook finder (`hooks.py`), feeding dated cultural hooks into idea generation

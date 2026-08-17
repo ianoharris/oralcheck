@@ -16,13 +16,22 @@ Exit code 0 = all good, 1 = one or more failures.
 """
 
 import json
+import os
 import shutil
 import sys
 import tempfile
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
-import telegram_review as T
+# telegram_review reads these at import time and raises KeyError without them.
+# The CI verify step deliberately has no secrets, and locally a .env supplies
+# them, so this file passed on a laptop and took the whole workflow down on the
+# runner. setdefault, not assignment: a real token in the environment is left
+# alone, and every network call is stubbed below regardless.
+os.environ.setdefault("TELEGRAM_BOT_TOKEN", "test-token")
+os.environ.setdefault("TELEGRAM_CHAT_ID", "test-chat")
+
+import telegram_review as T  # noqa: E402
 
 QUEUE = Path(tempfile.mkdtemp(prefix="oralcheck_review_"))
 SENT: list[tuple[str, str]] = []
