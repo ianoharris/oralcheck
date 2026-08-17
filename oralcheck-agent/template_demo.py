@@ -176,12 +176,153 @@ def t_qualifier(theme: str = "dark") -> str:
     """, theme)
 
 
+# --- 6. Versus the alternative -------------------------------------------
+# The competitor-comparison shape, which performs because it resolves a
+# decision the reader is already making. OralCheck's real competitor is not
+# another site: it is googling symptoms at 1am, or asking a chatbot.
+def t_versus(theme: str = "light") -> str:
+    t = R.THEMES[theme]
+    rows = [
+        ("Asking a chatbot", "Confident answers, no idea what your mouth looks like", False),
+        ("Googling symptoms", "Worst case first, every time", False),
+        ("Waiting to see", "The two weeks that matter, gone", False),
+        ("OralCheck", "Ten questions, then a real dentist if you need one", True),
+    ]
+    out = ""
+    for name, note, good in rows:
+        col = t["teal"] if good else t["muted"]
+        bg = f"background:{t['teal']}0f;" if good else ""
+        mark = "&#10003;" if good else "&#215;"
+        out += f"""<div style="display:flex;gap:22px;align-items:flex-start;
+             padding:26px 28px;border-radius:18px;margin-bottom:12px;{bg}">
+          <span style="font-size:34px;color:{col};line-height:1;">{mark}</span>
+          <div>
+            <div style="font-size:32px;font-weight:600;color:{t['text']};">{name}</div>
+            <div style="font-size:25px;color:{t['text_soft']};margin-top:4px;">{note}</div>
+          </div>
+        </div>"""
+    return _frame(f"""
+      {R._brandrow("01 / 07")}
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:center;">
+        <div class="serif" style="font-size:66px;line-height:1.06;margin-bottom:34px;">
+          What people actually do<br>about a mouth sore
+        </div>
+        {out}
+      </div>
+      <div style="font-size:25px;color:{t['muted']};">Swipe &rarr;</div>
+    """, theme)
+
+
+# --- 7. The number, alone ------------------------------------------------
+# One figure at maximum scale. Works as a static because there is nothing to
+# read: the number does the stopping.
+def t_big_number(theme: str = "dark") -> str:
+    t = R.THEMES[theme]
+    return _frame(f"""
+      {R._brandrow(None)}
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:center;">
+        <div class="serif tnum" style="font-size:280px;line-height:0.86;color:{t['coral']};
+             letter-spacing:-0.03em;">2in3</div>
+        <div style="font-size:38px;line-height:1.35;color:{t['text']};margin-top:30px;max-width:780px;">
+          oral cancers are found late, when treatment is hardest
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:14px;">
+        <div class="footline"></div><span class="footurl">oralcheck.org</span>
+      </div>
+    """, theme)
+
+
+# --- 8. Timeline ---------------------------------------------------------
+# Turns "two weeks" from an abstract rule into something with shape.
+def t_timeline(theme: str = "light") -> str:
+    t = R.THEMES[theme]
+    steps = [("Day 1", "You notice it", t["muted"]),
+             ("Day 7", "Still there. Probably nothing.", t["muted"]),
+             ("Day 14", "This is the line", t["coral"]),
+             ("Day 30", "Still waiting is the risk", t["text"])]
+    out = ""
+    for i, (day, note, col) in enumerate(steps):
+        last = i == len(steps) - 1
+        out += f"""<div style="display:flex;gap:26px;">
+          <div style="display:flex;flex-direction:column;align-items:center;">
+            <span style="width:18px;height:18px;border-radius:50%;background:{col};"></span>
+            {'' if last else f'<span style="width:3px;flex:1;background:{t["hair"]};"></span>'}
+          </div>
+          <div style="padding-bottom:{0 if last else 34}px;">
+            <div style="font-size:22px;font-weight:700;letter-spacing:.1em;
+                 text-transform:uppercase;color:{col};">{day}</div>
+            <div style="font-size:32px;color:{t['text']};margin-top:6px;">{note}</div>
+          </div>
+        </div>"""
+    return _frame(f"""
+      {R._brandrow("03 / 06")}
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:center;">
+        <div class="serif" style="font-size:64px;line-height:1.06;margin-bottom:40px;">
+          How long is<br>too long?
+        </div>
+        {out}
+      </div>
+    """, theme)
+
+
+# --- 9. Quiet question ---------------------------------------------------
+# Almost empty. Stands out in a feed precisely because everything else is loud.
+def t_quiet_question(theme: str = "dark") -> str:
+    t = R.THEMES[theme]
+    return _frame(f"""
+      {R._brandrow(None)}
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:center;">
+        <div class="serif" style="font-size:96px;line-height:1.02;letter-spacing:-0.025em;
+             color:{t['text']};">
+          When did you<br>last look<br>inside your<br><span style="color:{t['coral']};">own mouth</span>?
+        </div>
+      </div>
+      <div style="font-size:27px;color:{t['text_soft']};">Two minutes. oralcheck.org</div>
+    """, theme)
+
+
+# --- 10. Receipt ---------------------------------------------------------
+# A deliberately plain, document-like layout. Reads as information rather
+# than marketing, which is the point.
+def t_receipt(theme: str = "light") -> str:
+    t = R.THEMES[theme]
+    lines = [("Tobacco, any form", "raises risk"), ("Heavy alcohol", "raises risk"),
+             ("Both together", "multiplies it"), ("HPV exposure", "raises risk"),
+             ("Sun on the lips", "raises risk"), ("Regular dental visits", "lowers it")]
+    out = "".join(
+        f"""<div style="display:flex;justify-content:space-between;align-items:baseline;
+             padding:20px 0;border-bottom:1px dashed {t['hair']};">
+          <span style="font-size:31px;color:{t['text']};">{a}</span>
+          <span style="font-size:25px;color:{t['text_soft']};font-family:monospace;">{b}</span>
+        </div>""" for a, b in lines)
+    return _frame(f"""
+      {R._brandrow("02 / 08")}
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:center;">
+        <div style="font-size:23px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+             color:{t['muted']};margin-bottom:8px;">What the screener weighs</div>
+        <div class="serif" style="font-size:58px;line-height:1.08;margin-bottom:30px;">
+          Nothing hidden
+        </div>
+        {out}
+      </div>
+      <div style="font-size:25px;color:{t['teal']};font-weight:600;">
+        Full methodology at oralcheck.org/methods
+      </div>
+    """, theme)
+
+
 TEMPLATES = [
     ("1-is-this-normal", "Is this normal?", t_is_this_normal, "light"),
     ("2-do-this-now",    "Do this now",     t_do_this_now,    "dark"),
     ("3-myth-strike",    "Myth, struck",    t_myth_strike,    "dark"),
     ("4-save-card",      "Built to be saved", t_save_card,    "light"),
     ("5-qualifier",      "The qualifier",   t_qualifier,      "dark"),
+    ("6-versus",         "Versus the alternative", t_versus,  "light"),
+    ("7-big-number",     "The number, alone", t_big_number,   "dark"),
+    ("8-timeline",       "Timeline",        t_timeline,       "light"),
+    ("9-quiet-question", "Quiet question",  t_quiet_question, "dark"),
+    ("10-receipt",       "Receipt",         t_receipt,        "light"),
 ]
 
 
