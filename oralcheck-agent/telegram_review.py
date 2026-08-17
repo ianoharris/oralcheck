@@ -9,7 +9,9 @@ import base64
 import json
 import os
 import shutil
+import subprocess
 import sys
+import tempfile
 import time
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
@@ -318,6 +320,12 @@ def post_via_publora(manifest: dict, media_files: list[Path],
 
     _publora_wait_for_media(post_group_id, len(media_files))
 
+    # Cover goes on while the post is still a draft: attaching it needs an
+    # update-post, and that re-runs the scheduled-post quota check once the post
+    # is scheduled.
+    if is_video and media_files:
+        _set_reel_cover(post_group_id, media_files[0])
+
     when_dt = when or (datetime.now(timezone.utc) + timedelta(minutes=5))
     now = datetime.now(timezone.utc)
     if when_dt <= now + timedelta(minutes=2):
@@ -354,6 +362,123 @@ def post_via_publora(manifest: dict, media_files: list[Path],
         f"Could not schedule after 4 attempts. A draft with the media is in "
         f"Publora as {post_group_id} and can be scheduled manually. Last error: {last}"
     )
+
+
+# Candidate cover times, in seconds. The opening scene now renders its headline
+# from frame 0, but a fixed timestamp is brittle: it only takes a timing change
+# to start shipping a blank cover, which is what older reels did (black at 0.0s,
+# still empty at 0.45s, text only from ~1.0s). The best of these wins on merit.
+COVER_CANDIDATES = (0.4, 0.8, 1.4, 2.2)
+
+
+def _frame_content_score(path: Path) -> float:
+    """How much is actually drawn on this frame.
+
+    Standard deviation across the greyscale frame. A blank background is nearly
+    uniform and scores near zero; a frame with a headline on it scores far
+    higher. Good enough to never pick an empty cover, without needing to know
+    anything about the animation's timing.
+    """
+    try:
+        from PIL import Image, ImageStat
+        with Image.open(path) as im:
+            return ImageStat.Stat(im.convert("L")).stddev[0]
+    except Exception:  # noqa: BLE001
+        return 0.0
+
+
+def _extract_cover_frame(video: Path) -> Path | None:
+    """Pick the strongest early frame of the reel to use as its cover.
+
+    Taken from the video itself rather than rendered separately, so the cover is
+    a frame the viewer actually sees and cannot drift out of sync with it.
+    """
+    tmp = Path(tempfile.gettempdir())
+    stamp = int(time.time())
+    best: tuple[float, Path] | None = None
+    made: list[Path] = []
+
+    for i, t in enumerate(COVER_CANDIDATES):
+        out = tmp / f"cover_{stamp}_{i}.jpg"
+        try:
+            subprocess.run(
+                ["ffmpeg", "-y", "-ss", str(t), "-i", str(video),
+                 "-frames:v", "1", "-q:v", "2", str(out)],
+                check=True, capture_output=True, timeout=60,
+            )
+        except FileNotFoundError:
+            log.warning("ffmpeg not on PATH; skipping reel cover.")
+            return None
+        except Exception as exc:  # noqa: BLE001
+            log.warning("Cover frame at %ss failed (%s).", t, exc)
+            continue
+        if not (out.exists() and out.stat().st_size > 0):
+            continue
+        made.append(out)
+        score = _frame_content_score(out)
+        log.info("Cover candidate %ss scored %.1f", t, score)
+        if best is None or score > best[0]:
+            best = (score, out)
+
+    if best is None:
+        return None
+    for p in made:
+        if p != best[1]:
+            try:
+                p.unlink()
+            except OSError:
+                pass
+    log.info("Cover frame chosen (score %.1f).", best[0])
+    return best[1]
+
+
+def _set_reel_cover(post_group_id: str, video: Path) -> None:
+    """Upload a cover for a Reel and attach it.
+
+    Two steps: the upload returns a URL, and the URL only takes effect once it
+    is written to platformSettings.instagram.coverUrl.
+
+    Must run while the post is still a draft. Any update-post on an already
+    scheduled post re-runs the plan's scheduled-post check, which fails once
+    the quota is full, so doing this after scheduling would break publishing.
+    """
+    frame = _extract_cover_frame(video)
+    if not frame:
+        return
+    try:
+        with open(frame, "rb") as f:
+            r = httpx.post(
+                f"{PUBLORA_BASE}/upload-instagram-cover",
+                headers={"x-publora-key": PUBLORA_API_KEY, "User-Agent": PUBLORA_UA},
+                data={"postGroupId": post_group_id},
+                files={"cover": (frame.name, f, "image/jpeg")},
+                timeout=120,
+            )
+        _publora_check(r, "upload-instagram-cover")
+        cover_url = r.json().get("url") or r.json().get("coverUrl")
+        if not cover_url:
+            log.warning("Cover uploaded but no URL returned; leaving default cover.")
+            return
+
+        _publora_check(
+            httpx.put(
+                f"{PUBLORA_BASE}/update-post/{post_group_id}",
+                headers={"x-publora-key": PUBLORA_API_KEY, "Content-Type": "application/json",
+                         "User-Agent": PUBLORA_UA},
+                json={"platformSettings": {"instagram": {"coverUrl": cover_url}}},
+                timeout=30,
+            ),
+            "update-post (coverUrl)",
+        )
+        log.info("Reel cover set from frame at %ss.", COVER_AT_SECONDS)
+    except Exception as exc:  # noqa: BLE001
+        # A missing cover is cosmetic. Never let it stop the post going out.
+        log.warning("Could not set reel cover: %s", exc)
+    finally:
+        try:
+            frame.unlink()
+        except OSError:
+            pass
 
 
 def _publora_wait_for_media(post_group_id: str, expected: int, timeout_s: int = 90) -> None:
