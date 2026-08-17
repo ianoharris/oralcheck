@@ -8,6 +8,12 @@ name: OralCheck Idea Flow
 on:
   schedule:
     - cron: '0 14 * * 1'   # every Monday 14:00 UTC (~8am Central) — start of the week
+    # Backup run. GitHub delays or silently drops scheduled workflows during
+    # incidents and periods of high load, and a dropped cron produces no run and
+    # no notification, so a missed week looks identical to a quiet week. This
+    # fires later the same day and the "Skip if already run today" step below
+    # exits immediately when the 14:00 run already succeeded.
+    - cron: '0 19 * * 1'   # Monday 19:00 UTC, five hours later
   workflow_dispatch:
     inputs:
       count:
@@ -30,24 +36,74 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # The backup cron must not double-post. A manual dispatch always runs, so
+      # a run can still be forced after a successful one if needed.
+      # The backup cron must not double-post. A manual dispatch always runs, so
+      # a run can still be forced after a successful one if needed.
+      - name: Skip if already run today
+        if: github.event_name == 'schedule'
+        id: guard
+        working-directory: .
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          today=$(date -u +%Y-%m-%d)
+          done_today=$(gh run list \
+            --workflow "${{ github.workflow }}" --limit 30 \
+            --json conclusion,createdAt,databaseId \
+            --jq "[.[] | select(.createdAt | startswith(\"$today\"))
+                      | select(.databaseId != ${{ github.run_id }})
+                      | select(.conclusion == \"success\" or .conclusion == \"cancelled\")]
+                  | length")
+          echo "completed runs already today: ${done_today:-0}"
+          if [ "${done_today:-0}" -gt 0 ]; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - uses: actions/setup-python@v5
+        if: steps.guard.outputs.skip != 'true'
         with:
           python-version: '3.11'
 
+      # apt, PyPI and the Playwright CDN are the steps that actually fail when
+      # GitHub or its network is degraded. Each retries rather than failing the
+      # whole day's run on one bad fetch.
       - name: Install system deps
+        if: steps.guard.outputs.skip != 'true'
         working-directory: .
-        run: sudo apt-get install -y ffmpeg
+        run: |
+          for i in 1 2 3; do
+            sudo apt-get update -qq && sudo apt-get install -y ffmpeg && exit 0
+            echo "apt attempt $i failed; retrying in $((i * 20))s"; sleep $((i * 20))
+          done
+          exit 1
 
       - name: Install Python deps
-        run: pip install anthropic httpx pillow python-dotenv playwright
+        if: steps.guard.outputs.skip != 'true'
+        run: |
+          for i in 1 2 3; do
+            pip install anthropic httpx pillow python-dotenv playwright && exit 0
+            echo "pip attempt $i failed; retrying in $((i * 20))s"; sleep $((i * 20))
+          done
+          exit 1
 
       - name: Install Playwright browsers
-        run: python -m playwright install chromium --with-deps
+        if: steps.guard.outputs.skip != 'true'
+        run: |
+          for i in 1 2 3; do
+            python -m playwright install chromium --with-deps && exit 0
+            echo "playwright attempt $i failed; retrying in $((i * 20))s"; sleep $((i * 20))
+          done
+          exit 1
 
       - name: Verify render + content logic
+        if: steps.guard.outputs.skip != 'true'
         run: python test_render.py && python test_content.py
 
       - name: Suggest ideas (sends to Telegram)
+        if: steps.guard.outputs.skip != 'true'
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
@@ -55,6 +111,7 @@ jobs:
         run: python oralcheck_agent.py --ideas ${{ inputs.count || '3' }}
 
       - name: Await your pick, then generate the posts
+        if: steps.guard.outputs.skip != 'true'
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           FAL_KEY: ${{ secrets.FAL_KEY }}
@@ -65,6 +122,7 @@ jobs:
         run: python oralcheck_agent.py --await-picks
 
       - name: Review, schedule across the week, and replace rejects
+        if: steps.guard.outputs.skip != 'true'
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
@@ -82,9 +140,11 @@ jobs:
         run: python telegram_review.py
 
       - name: Save idea ledger state
+        if: steps.guard.outputs.skip != 'true'
         working-directory: .
         run: |
           git config user.name "OralCheck Bot"
           git config user.email "bot@oralcheck.org"
-          git add oralcheck-agent/ideas.json oralcheck-agent/used_photos.json
+          git add oralcheck-agent/ideas.json oralcheck-agent/used_photos.json \
+            oralcheck-agent/hooks.json
           git diff --staged --quiet || (git commit -m "chore: idea ledger [skip ci]" && git push)

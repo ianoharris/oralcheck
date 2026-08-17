@@ -3,7 +3,7 @@
 Render test harness for the OralCheck design system.
 
 Renders every slide layout (with realistic *and* deliberately long content to
-catch overflow), then verifies each output is exactly 1080×1080 at 2x scale and
+catch overflow), then verifies each output matches render_html's post size and
 that no content overflowed the frame. Writes all images to a review folder and a
 stitched contact sheet.
 
@@ -140,7 +140,11 @@ def main() -> int:
     with sync_playwright() as p:
         browser = p.chromium.launch(args=["--no-sandbox", "--disable-dev-shm-usage",
                                            "--force-color-profile=srgb"])
-        page = browser.new_page(viewport={"width": 1080, "height": 1080},
+        # Sized from render_html rather than hardcoded. These were fixed at
+        # 1080x1080; when posts moved to 4:5 every case reported OVERFLOW
+        # (1080x1350) because the document was taller than the viewport being
+        # measured, not because anything actually overflowed.
+        page = browser.new_page(viewport={"width": R.POST_W, "height": R.POST_H},
                                 device_scale_factor=3)
         for name, html in cases:
             fh = tempfile.NamedTemporaryFile(suffix=".html", mode="w",
@@ -150,18 +154,18 @@ def main() -> int:
             page.evaluate("async () => { await document.fonts.ready; }")
 
             dims = page.evaluate(OVERFLOW_JS)
-            overflow = dims["w"] > 1081 or dims["h"] > 1081
+            overflow = dims["w"] > R.POST_W + 1 or dims["h"] > R.POST_H + 1
 
             # Match production: supersample at 3x, downscale to OUTPUT_PX (render_html does this).
             out = OUT_DIR / f"{name}.jpg"
             png = page.screenshot(type="png", full_page=False)
             with Image.open(BytesIO(png)) as im:
-                im.convert("RGB").resize((R.OUTPUT_PX, R.OUTPUT_PX), Image.LANCZOS).save(str(out), "JPEG", quality=R.JPEG_QUALITY)
+                im.convert("RGB").resize((R.OUTPUT_W, R.OUTPUT_H), Image.LANCZOS).save(str(out), "JPEG", quality=R.JPEG_QUALITY)
             Path(fh.name).unlink(missing_ok=True)
 
             with Image.open(out) as im:
                 # Delivered at OUTPUT_PX (1440, Instagram's max), supersampled from 3x.
-                size_ok = im.size == (R.OUTPUT_PX, R.OUTPUT_PX)
+                size_ok = im.size == (R.OUTPUT_W, R.OUTPUT_H)
 
             status = "ok"
             if overflow:
