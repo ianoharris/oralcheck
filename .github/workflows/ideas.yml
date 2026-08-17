@@ -38,8 +38,6 @@ jobs:
 
       # The backup cron must not double-post. A manual dispatch always runs, so
       # a run can still be forced after a successful one if needed.
-      # The backup cron must not double-post. A manual dispatch always runs, so
-      # a run can still be forced after a successful one if needed.
       - name: Skip if already run today
         if: github.event_name == 'schedule'
         id: guard
