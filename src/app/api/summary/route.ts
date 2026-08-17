@@ -57,9 +57,9 @@ Risk tier: ${tierLabel} (${tier})
 Contributing factors:
 ${factorLines}${urgentNote}${interactionNote}
 
-Write a clinically precise, personalized 2–3 sentence summary. Reference specific risk implications for their top factors. If elevated or high tier, mention that oral cancer detected at Stage I has an 84% five-year survival rate versus 38% at Stage IV — that gap is why early action matters. If the tobacco+alcohol interaction is present, note the multiplicative risk. End with one specific, actionable next step. Do not diagnose. No markdown. Plain sentences only.${
+Write a clinically precise, personalized 2–3 sentence summary. Reference specific risk implications for their top factors. Ground it in a statistic that fits THIS person's factors rather than reaching for the same survival figure every time: stage-at-detection survival, the multiplicative tobacco and alcohol effect, HPV attribution in oropharyngeal cases, or the share of cases found late are all defensible. If the tobacco+alcohol interaction is present, note the multiplicative risk. End with one specific, actionable next step. Do not diagnose. No markdown. Plain sentences only. Never use em dashes; use commas or periods instead.${
       isSpanish
-        ? " Write your entire response in Spanish (neutral, suitable for the US Hispanic community). Do not use em dashes; use commas or periods instead."
+        ? " Write your entire response in Spanish (neutral, suitable for the US Hispanic community)."
         : ""
     }`;
 
@@ -69,7 +69,7 @@ Write a clinically precise, personalized 2–3 sentence summary. Reference speci
       model: "claude-haiku-4-5",
       max_tokens: 220,
       system:
-        "You are a health educator providing evidence-based oral cancer risk summaries. Be specific and clinically direct — do not soften or vague-ify the science. Reference actual statistics when available (survival rates, odds ratios). Never diagnose or replace professional evaluation. No markdown, no bullet points. Plain sentences only. 2–3 sentences maximum.",
+        "You are a health educator providing evidence-based oral cancer risk summaries. Be specific and clinically direct. Do not soften or vague-ify the science. Reference actual statistics when available (survival rates, odds ratios). Never diagnose or replace professional evaluation. No markdown, no bullet points. Plain sentences only, and never em dashes. 2 to 3 sentences maximum.",
       messages: [{ role: "user", content: userMessage }],
     });
 

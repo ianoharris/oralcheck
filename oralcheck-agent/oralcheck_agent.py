@@ -1223,11 +1223,18 @@ def _add_music_bed(video_path: str, variant_key: str = "") -> str:
     return out.name
 
 
-def build_faceless_reel(content: dict, theme: str = "dark") -> str:
+def build_faceless_reel(content: dict, theme: str | None = None) -> str:
     """Assemble a faceless reel from a structured script: per segment -> fal TTS
     narration + a kinetic-typography scene animating that line, then a branded
     outro, with a chill music bed under the voice. Returns the 1080x1920 mp4."""
-    return _render_reel_segments(content, theme)
+    if theme is None and _USE_HTML_RENDER:
+        # Reels were pinned to dark while carousels already rotated, so every
+        # reel opened on the same near-black frame. Keyed off the hook so a
+        # given script always renders the same way, but consecutive reels
+        # alternate.
+        theme = "light" if abs(hash(str(content.get("hook", "")))) % 2 else "dark"
+        log.info("Reel theme: %s", theme)
+    return _render_reel_segments(content, theme or "dark")
 
 
 def _assign_reel_visuals(segments: list[dict], content: dict) -> None:

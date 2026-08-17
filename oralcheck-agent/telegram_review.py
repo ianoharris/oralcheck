@@ -703,6 +703,50 @@ def _send_linkedin_handoff(manifest: dict, media_files: list[Path],
         log.warning("LinkedIn handoff failed: %s", exc)
 
 
+REJECT_REASON_TIMEOUT = 180  # seconds to type a reason before moving on
+
+
+def _collect_reject_reason(manifest: dict) -> str:
+    """Ask why a post was rejected and wait briefly for a typed reply.
+
+    Skipping is fine: silence after the timeout just means no reason, and the
+    review carries on. Anything typed is kept and fed into the next round of
+    idea generation, so a complaint only has to be made once.
+    """
+    global _UPDATE_OFFSET
+    try:
+        tg("sendMessage", chat_id=TELEGRAM_CHAT_ID,
+           text=("Rejected. What was wrong with it? Reply in the next few minutes "
+                 "and I'll apply it to future posts. Send \"skip\" or ignore this "
+                 "to move on."))
+    except Exception:
+        return ""
+
+    deadline = time.time() + REJECT_REASON_TIMEOUT
+    while time.time() < deadline:
+        params: dict = {"timeout": 20, "allowed_updates": '["message","callback_query"]'}
+        if _UPDATE_OFFSET is not None:
+            params["offset"] = _UPDATE_OFFSET
+        try:
+            r = httpx.get(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/getUpdates",
+                          params=params, timeout=25)
+            r.raise_for_status()
+        except Exception:
+            time.sleep(3)
+            continue
+        for update in r.json().get("result", []):
+            _UPDATE_OFFSET = update["update_id"] + 1
+            text = (update.get("message") or {}).get("text", "").strip()
+            if not text:
+                continue
+            if text.lower() in ("skip", "no", "nothing", "-"):
+                return ""
+            tg("sendMessage", chat_id=TELEGRAM_CHAT_ID,
+               text="Noted. I'll apply that from the next batch on.")
+            return text[:400]
+    return ""
+
+
 def handle_decision(manifest: dict, item_dir: Path, decision: str,
                     when: datetime | None = None) -> bool:
     """Publish (approve) or discard (reject) a post. Returns True if it was
@@ -837,9 +881,19 @@ def review_batch() -> None:
                     else:
                         handle_decision(manifest, item_dir, "reject")
                         idea = ideas.idea_for_manifest(ledger, pid)
+                        # Ask why. A rejection with no reason teaches nothing, and
+                        # the same kind of post comes back next week.
+                        reason = _collect_reject_reason(manifest)
+                        if reason:
+                            ideas.record_feedback(
+                                ledger,
+                                reason,
+                                title=manifest.get("hook") or manifest.get("caption", "")[:80],
+                                media_type=manifest.get("media_type", ""),
+                            )
                         if idea:
                             ideas.mark_rejected(ledger, idea["id"])
-                            ideas.save_ledger(ledger)
+                        ideas.save_ledger(ledger)
                         # bring a replacement so `target` still get scheduled
                         repl = _generate_replacement(ledger)
                         if repl:

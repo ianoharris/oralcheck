@@ -59,8 +59,9 @@ def load_ledger() -> dict:
             data = json.load(f)
             data.setdefault("ideas", [])
             data.setdefault("last_batch", [])
+            data.setdefault("feedback", [])
             return data
-    return {"ideas": [], "last_batch": []}
+    return {"ideas": [], "last_batch": [], "feedback": []}
 
 
 def save_ledger(ledger: dict) -> None:
@@ -112,6 +113,44 @@ STAT_PATTERNS = [
 ]
 
 STAT_RECENCY = 6  # how many recent ideas to consider "fresh in the feed"
+
+
+FEEDBACK_KEEP = 12  # how many past notes to carry into the prompt
+
+
+def record_feedback(ledger: dict, note: str, *, title: str = "",
+                    media_type: str = "") -> dict:
+    """Store a rejection reason so the next batch can avoid repeating it."""
+    note = (note or "").strip()
+    if not note:
+        return ledger
+    ledger.setdefault("feedback", []).append({
+        "note": note,
+        "title": title,
+        "media_type": media_type,
+        "at": datetime.now(timezone.utc).isoformat(),
+    })
+    ledger["feedback"] = ledger["feedback"][-FEEDBACK_KEEP * 2:]
+    return ledger
+
+
+def _feedback_block(ledger: dict) -> str:
+    """The standing notes, newest first, as prompt input.
+
+    These are corrections the user has already made once. Repeating a mistake
+    they have explicitly called out is worse than any individual weak idea, so
+    they lead the requirements rather than trailing them.
+    """
+    notes = ledger.get("feedback", [])[-FEEDBACK_KEEP:]
+    if not notes:
+        return ""
+    lines = []
+    for f in reversed(notes):
+        ctx = f" (on a {f['media_type']})" if f.get("media_type") else ""
+        lines.append(f"  - {f['note']}{ctx}")
+    return ("\nDirect feedback from the account owner on earlier posts. These are "
+            "standing rules, not suggestions. Do not repeat anything called out here:\n"
+            + "\n".join(lines))
 
 
 def _recent_stats_block(ledger: dict) -> str:
@@ -185,6 +224,7 @@ def generate_ideas(count, *, api_key, model, system_prompt, pillar_briefs,
                    + "\n".join(f"  - {t}" for t in avoid)) if avoid else ""
 
     stat_block = _recent_stats_block(ledger)
+    fb_block = _feedback_block(ledger)
 
     cal_block = ""
     if calendar_events:
@@ -201,7 +241,7 @@ def generate_ideas(count, *, api_key, model, system_prompt, pillar_briefs,
         "Use 2 to 4 searches, then stop researching and write the ideas.\n\n"
         f"Then propose {count} distinct Instagram content ideas for OralCheck.\n\n"
         f"Content pillars to draw from (use the pillar key exactly):\n{pillar_lines}\n"
-        f"{cal_block}\n{avoid_block}\n{stat_block}\n\n"
+        f"{fb_block}\n{cal_block}\n{avoid_block}\n{stat_block}\n\n"
         "Requirements:\n"
         f"  - Return a JSON array of exactly {count} objects as your final message, no markdown fences.\n"
         "  - Each object: title (<=12 words, the specific angle), pillar (one key from above), "
