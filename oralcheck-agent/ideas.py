@@ -208,8 +208,40 @@ def _extract_json_array(resp) -> list:
     return json.loads(raw[start:end + 1])
 
 
+def generate_by_type(per_type, *, api_key, model, system_prompt, pillar_briefs,
+                     calendar_events, ledger, only: str | None = None) -> list[dict]:
+    """Generate `per_type` ideas for each format, kept in format order.
+
+    A single mixed batch made the weekly format quota a matter of luck, and
+    rejecting everything of one format left nothing of that format to fall back
+    on. Generating per format means each can be topped up on its own without
+    touching the others.
+
+    `only` restricts generation to one format, which is what a top-up uses.
+    """
+    wanted = [only] if only else ["carousel", "reel", "image"]
+    out: list[dict] = []
+    for media in wanted:
+        if media not in VALID_MEDIA:
+            continue
+        got = generate_ideas(
+            per_type, api_key=api_key, model=model, system_prompt=system_prompt,
+            pillar_briefs=pillar_briefs, calendar_events=calendar_events,
+            ledger=ledger, force_media=media,
+            # A batch already in hand must not be re-suggested by the next
+            # format's call, which happens within one run before anything is
+            # written to the ledger.
+            extra_avoid=[i["title"] for i in out],
+        )
+        for idea in got[:per_type]:
+            idea["media_type"] = media  # the model still drifts; the caller asked for this one
+            out.append(idea)
+    return out
+
+
 def generate_ideas(count, *, api_key, model, system_prompt, pillar_briefs,
-                   calendar_events, ledger) -> list[dict]:
+                   calendar_events, ledger, force_media: str | None = None,
+                   extra_avoid: list[str] | None = None) -> list[dict]:
     """Ask the model for `count` fresh ideas, filtered against the ledger.
 
     Returns coerced idea dicts (not yet written to the ledger).
@@ -218,7 +250,7 @@ def generate_ideas(count, *, api_key, model, system_prompt, pillar_briefs,
     valid_pillars = set(all_pillars.keys())
 
     pillar_lines = "\n".join(f"  - {p}: {desc}" for p, desc in all_pillars.items())
-    avoid = _avoid_titles(ledger) + load_seed_topics()
+    avoid = _avoid_titles(ledger) + load_seed_topics() + list(extra_avoid or [])
     avoid_block = ("\nDo NOT propose anything similar in topic or angle to these already-used ideas "
                    "(the brand has already posted these). Every idea must be a genuinely new angle:\n"
                    + "\n".join(f"  - {t}" for t in avoid)) if avoid else ""
@@ -248,9 +280,11 @@ def generate_ideas(count, *, api_key, model, system_prompt, pillar_briefs,
         "media_type (carousel, image, or reel), brief (2 to 3 sentences that a content "
         "generator can act on), angle (one of: surprising-true, myth, how-to, timely, human, trend-comparison), "
         "calendar_ref (a ref slug or null).\n"
-        "  - Mix the formats: mostly carousels (about half), plus a couple of reels "
-        "(short animated voiceover videos, great for a myth, a single stat, or a timely hook) "
-        "and a couple of single images. Aim for at least 2 reels in a batch of 8.\n"
+        + (f"  - EVERY idea must have media_type \"{force_media}\". Do not propose any other "
+           "format in this batch.\n" if force_media else
+           "  - Mix the formats: mostly carousels (about half), plus a couple of reels "
+           "(short animated voiceover videos, great for a myth, a single stat, or a timely hook) "
+           "and a couple of single images. Aim for at least 2 reels in a batch of 8.\n") +
         "  - Every idea must be genuinely distinct from the others and from the avoid list.\n"
         "  - Only real, defensible oral cancer facts. No invented statistics.\n"
         "  - Include at least one light_lane idea, at least one trend_comparison idea that ties an oral "
@@ -288,7 +322,7 @@ def generate_ideas(count, *, api_key, model, system_prompt, pillar_briefs,
         seen.add(slug)
         idea["slug"] = slug
         out.append(idea)
-    return _balance_formats(out)
+    return out if force_media else _balance_formats(out)
 
 
 def _balance_formats(ideas: list[dict]) -> list[dict]:

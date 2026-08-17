@@ -2401,14 +2401,57 @@ def _print_ideas(batch: list[dict]) -> None:
     print(f"  (regenerate with --ideas to get a fresh batch)\n")
 
 
-def run_ideas(count: int) -> None:
-    """Generate a numbered batch of fresh ideas and record them as suggested."""
+TYPE_LABELS = {"carousel": "Carousel", "reel": "Reel", "image": "Static image"}
+
+
+def _requested_topup(reply: str) -> str | None:
+    """Read a 'more reels' style reply. Tolerant of plurals and phrasing."""
+    r = reply.lower()
+    if not any(w in r for w in ("more", "different", "other", "new", "another", "again")):
+        return None
+    for media, words in (
+        ("reel", ("reel", "video")),
+        ("carousel", ("carousel", "deck", "swipe")),
+        ("image", ("image", "static", "photo", "single")),
+    ):
+        if any(w in r for w in words):
+            return media
+    return None
+
+
+def _grouped_ideas_text(batch: list[dict]) -> str:
+    """Ideas grouped by format, numbered continuously so picks stay unambiguous."""
+    lines = ["This week's ideas. Pick one of each format by number, e.g. `2, 4, 8`.", ""]
+    n = 0
+    for media in ("carousel", "reel", "image"):
+        group = [(i + 1, x) for i, x in enumerate(batch) if x["media_type"] == media]
+        if not group:
+            continue
+        lines.append(f"{TYPE_LABELS[media].upper()}")
+        for num, idea in group:
+            lines.append(f"  {num}. {idea['title']}")
+            lines.append(f"     {idea['brief'][:110]}")
+        lines.append("")
+        n += len(group)
+    lines.append("Want different options for one format? Reply `more reels`, "
+                 "`more carousels` or `more images` and I'll swap just that set.")
+    return "\n".join(lines)
+
+
+def run_ideas(count: int = 3, per_type: int = 3) -> None:
+    """Generate fresh ideas, `per_type` of each format, and record them.
+
+    Generated per format rather than as one mixed batch. A mixed batch made the
+    one-of-each-per-week goal a matter of luck, and rejecting every idea of one
+    format left nothing of that format to fall back on. Each format can now be
+    regenerated on its own, so no single rejection empties the well.
+    """
     ledger = ideas.load_ledger()
     upcoming = content_calendar.upcoming(within_days=30)
-    log.info("Generating %d ideas (avoiding %d used/recent)...",
-             count, len(ideas._avoid_titles(ledger)))
-    fresh = ideas.generate_ideas(
-        count, api_key=ANTHROPIC_API_KEY, model=CONTENT_MODEL,
+    log.info("Generating %d ideas per format (avoiding %d used/recent)...",
+             per_type, len(ideas._avoid_titles(ledger)))
+    fresh = ideas.generate_by_type(
+        per_type, api_key=ANTHROPIC_API_KEY, model=CONTENT_MODEL,
         system_prompt=SYSTEM_PROMPT, pillar_briefs=PILLAR_BRIEFS,
         calendar_events=upcoming, ledger=ledger,
     )
@@ -2419,8 +2462,28 @@ def run_ideas(count: int) -> None:
     ideas.save_ledger(ledger)
     batch = ideas.get_last_batch(ledger)
     _print_ideas(batch)
-    if _tg_send_message(_ideas_telegram_text(batch)):
+    if _tg_send_message(_grouped_ideas_text(batch)):
         log.info("Idea list sent to Telegram for review.")
+
+
+def run_more_ideas(media: str, per_type: int = 3) -> list[dict]:
+    """Replace just one format's options, leaving the other formats' picks alone."""
+    ledger = ideas.load_ledger()
+    upcoming = content_calendar.upcoming(within_days=30)
+    log.info("Topping up %s ideas...", media)
+    fresh = ideas.generate_by_type(
+        per_type, api_key=ANTHROPIC_API_KEY, model=CONTENT_MODEL,
+        system_prompt=SYSTEM_PROMPT, pillar_briefs=PILLAR_BRIEFS,
+        calendar_events=upcoming, ledger=ledger, only=media,
+    )
+    if not fresh:
+        return []
+    # Keep the formats the user has not asked to change, so their numbers and
+    # any pick they already had in mind stay meaningful.
+    kept = [i for i in ideas.get_last_batch(ledger) if i["media_type"] != media]
+    ledger = ideas.record_suggested(ledger, kept + fresh)
+    ideas.save_ledger(ledger)
+    return ideas.get_last_batch(ledger)
 
 
 def _queue_idea(idea: dict) -> dict | None:
@@ -2466,7 +2529,27 @@ def run_await_picks(timeout: int = 21600) -> None:
         print("No idea batch to pick from. Run --ideas first.")
         return
     log.info("Waiting for your pick reply on Telegram (up to %dh)...", timeout // 3600)
-    reply = tg_wait_for_reply(timeout)
+
+    # "more reels" swaps that format's options and asks again, rather than
+    # forcing a pick from a set that has already been turned down.
+    deadline = time.time() + timeout
+    reply = ""
+    while time.time() < deadline:
+        reply = tg_wait_for_reply(int(deadline - time.time())) or ""
+        if not reply:
+            break
+        want = _requested_topup(reply)
+        if not want:
+            break
+        refreshed = run_more_ideas(want)
+        if refreshed:
+            _tg_send_message(f"Fresh {TYPE_LABELS[want].lower()} options:\n\n"
+                             + _grouped_ideas_text(refreshed))
+        else:
+            _tg_send_message(f"I couldn't find new {want} angles that don't overlap "
+                             "with what's already been posted. Pick from the current "
+                             "set, or try again tomorrow.")
+
     if not reply:
         _tg_send_message("No pick received in time. Send the ideas again when you're ready.")
         return
@@ -2586,8 +2669,8 @@ def main():
     mode.add_argument("--auto", action="store_true", help="Auto-pick next content pillar")
     mode.add_argument("--directed", metavar="BRIEF", help="Provide a specific content brief")
     mode.add_argument("--map", action="store_true", help="Generate world map post from Google Analytics data")
-    mode.add_argument("--ideas", type=int, metavar="N", nargs="?", const=8,
-                      help="Suggest N numbered content ideas (default 8) to pick from")
+    mode.add_argument("--ideas", type=int, metavar="N", nargs="?", const=3,
+                      help="Suggest N ideas PER FORMAT (carousel, reel, image); default 3 each")
     mode.add_argument("--pick", metavar="NUMS",
                       help="Generate posts from picked idea numbers, e.g. \"1,3,5\"")
     mode.add_argument("--await-picks", action="store_true",
@@ -2618,7 +2701,7 @@ def main():
     if args.faceless_reel is not None:
         run_faceless_reel(args.faceless_reel, args.out)
     elif args.ideas is not None:
-        run_ideas(args.ideas)
+        run_ideas(args.ideas, per_type=args.ideas)
     elif args.pick:
         try:
             nums = [int(x) for x in re.split(r"[,\s]+", args.pick.strip()) if x]
