@@ -24,31 +24,116 @@ export default function ReviewPage({
   const [article, setArticle]     = useState<Article | null>(null);
   const [status, setStatus]       = useState<"idle" | "publishing" | "done" | "error">("idle");
   const [errorMsg, setErrorMsg]   = useState<string>("");
+  // The draft and publish endpoints now require the admin secret. It is typed
+  // once per browser and kept in localStorage; it is never bundled, so the
+  // deployed JavaScript does not carry it.
+  const [secret, setSecret]       = useState<string>("");
+  const [loadState, setLoadState] = useState<"loading" | "ready" | "locked" | "missing">("loading");
 
   useEffect(() => {
+    let stored = "";
+    try {
+      stored = localStorage.getItem("oralcheck:adminSecret") ?? "";
+    } catch {}
+    setSecret(stored);
     params.then(({ slug: s }) => {
       setSlug(s);
-      fetch(`/api/draft?slug=${encodeURIComponent(s)}`)
-        .then((r) => r.json())
-        .then((data) => setArticle(data.article ?? null));
+      if (!stored) {
+        setLoadState("locked");
+        return;
+      }
+      loadDraft(s, stored);
     });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params]);
+
+  async function loadDraft(s: string, token: string) {
+    setLoadState("loading");
+    const res = await fetch(`/api/draft?slug=${encodeURIComponent(s)}`, {
+      headers: { "x-oralcheck-admin": token },
+    });
+    if (res.status === 401) {
+      setLoadState("locked");
+      setErrorMsg("That key was not accepted.");
+      return;
+    }
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok || !data.article) {
+      setLoadState("missing");
+      setErrorMsg(data.error ?? "Draft not found");
+      return;
+    }
+    setArticle(data.article);
+    setLoadState("ready");
+  }
+
+  function unlock(value: string) {
+    const token = value.trim();
+    if (!token) return;
+    try {
+      localStorage.setItem("oralcheck:adminSecret", token);
+    } catch {}
+    setSecret(token);
+    setErrorMsg("");
+    if (slug) loadDraft(slug, token);
+  }
 
   async function publish() {
     if (!slug) return;
     setStatus("publishing");
     const res  = await fetch("/api/publish", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", "x-oralcheck-admin": secret },
       body: JSON.stringify({ slug }),
     });
-    const data = await res.json();
+    const data = await res.json().catch(() => ({}));
     if (!res.ok) {
       setStatus("error");
       setErrorMsg(data.error ?? "Unknown error");
     } else {
       setStatus("done");
     }
+  }
+
+  if (loadState === "locked") {
+    return (
+      <div className="max-w-md mx-auto px-5 py-20">
+        <h1 className="font-serif text-2xl text-ink mb-2">Draft preview</h1>
+        <p className="text-sm text-ink-soft mb-6">
+          Enter the admin key to read and publish drafts.
+        </p>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            unlock((new FormData(e.currentTarget).get("key") as string) ?? "");
+          }}
+          className="flex gap-2"
+        >
+          <input
+            name="key"
+            type="password"
+            autoComplete="current-password"
+            className="flex-1 rounded-full border border-ink/15 px-4 py-2 text-sm"
+            placeholder="Admin key"
+          />
+          <button
+            type="submit"
+            className="rounded-full bg-brand px-5 py-2 text-sm font-semibold text-white hover:bg-brand-dark transition-colors"
+          >
+            Unlock
+          </button>
+        </form>
+        {errorMsg && <p className="mt-3 text-sm text-accent">{errorMsg}</p>}
+      </div>
+    );
+  }
+
+  if (loadState === "missing") {
+    return (
+      <div className="max-w-3xl mx-auto px-5 py-20 text-center">
+        <p className="text-ink-soft">{errorMsg}</p>
+      </div>
+    );
   }
 
   if (!article) {

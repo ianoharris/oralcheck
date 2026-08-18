@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
+import { requireAdmin } from "@/lib/adminAuth";
+import { checkRateLimit, getIp } from "@/lib/rateLimit";
 
 const GH_TOKEN = process.env.GITHUB_ACCESS_TOKEN ?? "";
 const REPO     = "ianoharris/oralcheck";
@@ -39,12 +41,40 @@ async function ghDelete(apiPath: string, sha: string, message: string) {
 }
 
 export async function POST(req: NextRequest) {
+  // Auth first, before anything observable. Answering "slug required" to an
+  // unauthenticated caller confirmed both that the route exists and that it was
+  // ungated, which is how this was found.
+  const auth = requireAdmin(req);
+  if (!auth.ok) {
+    return NextResponse.json({ error: auth.error }, { status: auth.status });
+  }
+  // Publishing writes to a git repo. Even authenticated, it should not be
+  // possible to run it in a loop.
+  const { allowed } = checkRateLimit(`publish:${getIp(req)}`, 10, 60 * 60 * 1000);
+  if (!allowed) {
+    return NextResponse.json({ error: "Too many publish attempts" }, { status: 429 });
+  }
+
+  // Validate the input before looking at server config, so a malformed request
+  // is rejected the same way whether or not the deploy is fully set up.
+  let slug: string;
+  try {
+    ({ slug } = await req.json() as { slug: string });
+  } catch {
+    return NextResponse.json({ error: "invalid JSON body" }, { status: 400 });
+  }
+  if (!slug) return NextResponse.json({ error: "slug required" }, { status: 400 });
+  // The draft is matched against a real directory listing below, so a slug
+  // cannot traverse out of content/drafts. Reject the obvious shapes anyway:
+  // the check is cheap and the matching logic is not the only thing that could
+  // ever consume this value.
+  if (!/^[a-z0-9][a-z0-9-]{0,80}$/.test(slug)) {
+    return NextResponse.json({ error: "invalid slug" }, { status: 400 });
+  }
+
   if (!GH_TOKEN) {
     return NextResponse.json({ error: "GITHUB_ACCESS_TOKEN not configured" }, { status: 500 });
   }
-
-  const { slug } = await req.json() as { slug: string };
-  if (!slug) return NextResponse.json({ error: "slug required" }, { status: 400 });
 
   // Find the draft file by listing content/drafts
   const listRes = await fetch(`https://api.github.com/repos/${REPO}/contents/content/drafts`, {

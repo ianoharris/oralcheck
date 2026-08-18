@@ -172,3 +172,33 @@ Everything else is vanity. Pull with `oralcheck-agent/ga_stats.py`.
 
 Current (30-day, 2026-08-10): 35 starts, 91.4% completion. Numbers 3, 4 and 5 are
 not instrumented yet.
+
+## Security review, 2026-08-18
+
+Triggered by a traffic spike. Findings and what was done.
+
+| Finding | Severity | State |
+|---|---|---|
+| `/api/publish` had no authentication. It commits to and deletes from the GitHub repo with `GITHUB_ACCESS_TOKEN`, so anyone could push an unreviewed article live and delete the draft behind it | Critical | Fixed: shared-secret gate, fails closed if `ADMIN_SECRET` is unset |
+| `/api/draft` served unreviewed medical content to anyone who guessed a slug | Moderate | Fixed: same gate |
+| `getIp` read the first `x-forwarded-for` entry, which is client-supplied, so anyone could rotate their rate-limit bucket per request | Moderate | Fixed: prefers `x-vercel-forwarded-for` / `x-real-ip`, which the platform sets and clients cannot forge |
+| `/api/geocode` was an unmetered proxy to Nominatim under our application name | Moderate | Fixed: 20/min limit, 200-char cap on the forwarded query |
+| No Content-Security-Policy | Moderate | Fixed: policy added, verified against the running app |
+| `uuid` bounds check, via resend/svix | Moderate | Fixed: `npm audit fix` |
+
+Open, with reasoning:
+
+- **`sharp` libvips CVEs (high).** Fix requires Next 16.2.4 to 16.3.1. Not taken yet:
+  the CVEs need attacker-controlled image bytes, and `next/image` has no
+  `remotePatterns` configured, so `/_next/image` rejects remote URLs (verified:
+  400). sharp only ever sees files from `public/`. **This becomes live the moment
+  `remotePatterns` is added** — upgrade Next first if that day comes.
+- **Rate limiting is in-memory and per-instance.** The real ceiling is
+  `limit x concurrent instances`, and it resets when an instance recycles. It
+  stops one client hammering one warm instance; it is not a spend cap. The
+  durable protections are the provider-side quotas. Swap for Redis
+  (`@upstash/ratelimit`) to make the numbers mean what they say.
+- **CSP carries `'unsafe-inline'` and `'unsafe-eval'` in `script-src`**, because
+  Next hydration and the GA snippet inject inline script without a nonce. It
+  still blocks script from unlisted origins, off-site form posts, base-tag
+  injection, and framing. Nonce-based CSP is the upgrade.
