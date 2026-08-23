@@ -79,7 +79,11 @@ ${JSON.stringify(payload, null, 2)}`;
   // since a slow generation could outrun the request timeout.
   const msg = await client.messages
     .stream({
-      model: "claude-opus-4-8",
+      // Translation is not a frontier-model task, and this runs on every copy
+      // change. Opus 4.8 costs 5x Sonnet's input and output for a job Sonnet
+      // does indistinguishably well on UI strings. Override with I18N_MODEL if
+      // a particular batch ever reads badly in Spanish.
+      model: process.env.I18N_MODEL || "claude-sonnet-4-6",
       max_tokens: 32000,
       messages: [{ role: "user", content: prompt }],
     })
@@ -123,9 +127,23 @@ async function main() {
 
   // Needs translation if: missing from es entirely, OR the English text
   // changed since the last time we translated it (snapshot mismatch).
+  //
+  // The staleness check compares by VALUE, not by reference. `flatten` keeps
+  // arrays as leaves, and two arrays parsed from two different files are never
+  // `!==`-equal even when their contents are identical. The previous strict
+  // comparison therefore marked every array-valued key stale on every run, for
+  // ever: 45 of them here, and they hold the largest blocks of copy on the site
+  // (the Terms and Privacy sections, the learn-page lists, the checklists).
+  // Every sync retranslated all of it and paid for it again, whether or not a
+  // single word had changed.
+  const changed = (a, b) =>
+    typeof a === "object" || typeof b === "object"
+      ? JSON.stringify(a) !== JSON.stringify(b)
+      : a !== b;
+
   const toTranslate = Object.entries(enFlat).filter(([key, val]) => {
     const missing = !(key in esFlat) || esFlat[key] === "" || esFlat[key] == null;
-    const stale = snapFlat[key] !== undefined && snapFlat[key] !== val;
+    const stale = snapFlat[key] !== undefined && changed(snapFlat[key], val);
     return missing || stale;
   });
 

@@ -466,8 +466,19 @@ export default function ResultsPage() {
 
       {/* CTAs */}
       <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {/* The single most important number the tool does not currently
+            measure: of the people who get a result, how many go looking for
+            care? Everything else is upstream of this. Tagged with the tier so
+            it can be read as a rate per tier, not just a total. */}
         <Link
           href="/find-care"
+          onClick={() =>
+            sendGAEvent("event", "find_care_click", {
+              risk_tier: result.tier,
+              risk_score: result.score,
+              source: "results_primary_cta",
+            })
+          }
           className="bg-brand hover:bg-brand-dark text-white font-semibold px-6 py-4 rounded-2xl transition-colors text-center"
         >
           {primaryCTA[result.tier]}

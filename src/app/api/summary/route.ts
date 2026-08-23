@@ -1,6 +1,7 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { type NextRequest } from "next/server";
 import { checkRateLimit, getIp } from "@/lib/rateLimit";
+import { claimAiCall, dailyAiLimit } from "@/lib/aiBudget";
 
 export const runtime = "nodejs";
 
@@ -28,6 +29,20 @@ export async function POST(req: NextRequest) {
 
   if (!process.env.ANTHROPIC_API_KEY) {
     return new Response(JSON.stringify({ error: "not_configured" }), {
+      status: 503,
+      headers: { "Content-Type": "application/json" },
+    });
+  }
+
+  // This is the only endpoint on the site where an anonymous visitor can spend
+  // money. Per-IP limits do not bound the daily total, because a thousand
+  // visitors making one call each defeat them by construction. The results page
+  // falls back to its deterministic summary when this returns non-OK, so
+  // exceeding the budget costs personalisation and nothing else.
+  const budget = claimAiCall(dailyAiLimit());
+  if (!budget.allowed) {
+    console.warn(`[/api/summary] daily budget reached (${budget.used}/${budget.limit})`);
+    return new Response(JSON.stringify({ error: "budget_reached" }), {
       status: 503,
       headers: { "Content-Type": "application/json" },
     });

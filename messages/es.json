@@ -48,7 +48,7 @@
       "minutos"
     ],
     "headlineLine2a": [
-      "pueden"
+      "podrían"
     ],
     "headlineLine2b": [
       "salvar"
@@ -76,9 +76,12 @@
     "feature3Title": "Encuentra atención accesible",
     "feature3Desc": "Centros de salud comunitarios, escuelas de odontología y clínicas gratuitas cerca de ti, incluyendo proveedores financiados por HRSA.",
     "feature3Cta": "Encontrar atención",
-    "quote": "El cáncer oral es uno de los pocos tipos de cáncer en los que una visita de rutina de 2 minutos puede cambiar el resultado por décadas.",
+    "quote": "Solo cerca de 1 de cada 4 cánceres de boca y faringe se detecta antes de que se extienda. Cuando se encuentra en esa etapa, la supervivencia a cinco años es del 88.7%. Una vez que llega a sitios distantes, es del 36%.",
     "followAlong": "Síguenos",
-    "followInstagram": "Seguir en Instagram →"
+    "followInstagram": "Seguir en Instagram →",
+    "quoteSourcePrefix": "Fuente:",
+    "quoteSourceName": "Programa de Vigilancia, Epidemiología y Resultados Finales del NCI",
+    "quoteSourceDetail": "Datos estadísticos sobre cáncer: cáncer de cavidad oral y faringe"
   },
   "FactsMeta": {
     "title": "Datos y estadísticas del cáncer oral",
@@ -92,18 +95,18 @@
     "stats": [
       {
         "value": "54,000+",
-        "label": "casos nuevos al año en EE. UU.",
+        "label": "nuevos casos por año en EE. UU.",
         "detail": "Cánceres orales y orofaríngeos combinados."
       },
       {
         "value": "11,580",
-        "label": "muertes al año en EE. UU.",
-        "detail": "Alrededor de una muerte cada 50 minutos."
+        "label": "muertes por año en EE. UU.",
+        "detail": "Aproximadamente una muerte cada 50 minutos."
       },
       {
         "value": "84%",
-        "label": "supervivencia a 5 años si se detecta a tiempo",
-        "detail": "Baja a cerca del 40% si se encuentra en una etapa avanzada."
+        "label": "de supervivencia a 5 años si se detecta temprano",
+        "detail": "Baja a un ~40% si se encuentra en etapa avanzada."
       },
       {
         "value": "2×",
@@ -114,24 +117,24 @@
     "factLabel": "DATO",
     "facts": [
       {
-        "title": "El VPH es ahora la causa principal del cáncer orofaríngeo.",
-        "detail": "Los casos relacionados con el VPH han aumentado marcadamente en las últimas dos décadas, superando al tabaco como el principal factor. La vacuna contra el VPH reduce el riesgo de manera notable y está aprobada hasta los 45 años."
+        "title": "El VPH es ahora la principal causa de cáncer orofaríngeo.",
+        "detail": "Los casos relacionados con el VPH han aumentado considerablemente en las últimas dos décadas, superando al tabaco como el factor principal. La vacuna contra el VPH reduce el riesgo de manera significativa y está aprobada hasta los 45 años."
       },
       {
         "title": "El tabaco y el alcohol juntos multiplican el riesgo, no solo lo suman.",
-        "detail": "Las personas que consumen ambos tienen un riesgo mucho mayor que la suma de cada uno por separado. Dejar cualquiera de los dos reduce el riesgo con el tiempo."
+        "detail": "Las personas que consumen ambos tienen un riesgo considerablemente mayor que la suma de cada uno por separado. Dejar cualquiera de los dos reduce el riesgo con el tiempo."
       },
       {
-        "title": "El cáncer oral en etapa temprana es muy tratable.",
-        "detail": "Cuando se detecta en la Etapa I, la tasa de supervivencia a 5 años es superior al 80%. En la Etapa IV, baja por debajo del 40%. La etapa en el momento del diagnóstico es el factor más importante en el resultado."
+        "title": "El cáncer oral en etapa temprana tiene un tratamiento muy efectivo.",
+        "detail": "Cuando se detecta en Etapa I, la tasa de supervivencia a 5 años supera el 80%. En Etapa IV, cae por debajo del 40%. La etapa al momento del diagnóstico es el factor más importante en el resultado."
       },
       {
         "title": "Los dentistas detectan la mayoría de los casos tempranos.",
-        "detail": "Una visita dental de rutina incluye una revisión de cáncer oral de 2 minutos. En las personas que no van al dentista, los cánceres se detectan con más frecuencia en etapas avanzadas."
+        "detail": "Una visita dental de rutina incluye una revisión de 2 minutos para detectar cáncer oral. En personas que no van al dentista con regularidad, los cánceres se detectan con mayor frecuencia en etapas avanzadas."
       },
       {
-        "title": "Ya no afecta solo a fumadores mayores.",
-        "detail": "El cáncer orofaríngeo relacionado con el VPH aparece con frecuencia en adultos de mediana edad sin antecedentes de consumo de tabaco. Si tienes síntomas persistentes, tu edad o tu estilo de vida no deberían descartar una revisión."
+        "title": "Ya no afecta solo a personas mayores que fuman.",
+        "detail": "El cáncer orofaríngeo relacionado con el VPH aparece con frecuencia en adultos de mediana edad sin historial de consumo de tabaco. Si tiene síntomas persistentes, la edad o el estilo de vida no deberían descartar una evaluación."
       }
     ],
     "sourcesLabel": "Fuentes:",
@@ -151,36 +154,36 @@
     "introLink": "Consulta la guía de señales de advertencia.",
     "steps": [
       {
-        "area": "Cara y cuello",
-        "instruction": "Mírate la cara en el espejo. Verifica que ambos lados se vean simétricos. Palpa los lados del cuello en busca de bultos o inflamación."
+        "area": "Rostro y cuello",
+        "instruction": "Mírese al espejo. Verifique que ambos lados del rostro se vean simétricos. Palpe los lados del cuello para detectar bultos o inflamación."
       },
       {
         "area": "Labios",
-        "instruction": "Levanta el labio superior y baja el inferior. Observa y palpa en busca de llagas, cambios de color o bultos por dentro y por fuera."
+        "instruction": "Jale el labio superior hacia arriba y el labio inferior hacia abajo. Observe y palpe en busca de llagas, cambios de color o bultos por dentro y por fuera."
       },
       {
         "area": "Mejillas",
-        "instruction": "Con los dedos, jala suavemente cada mejilla hacia afuera. Busca manchas rojas, blancas u oscuras. Presiona con cuidado para palpar bultos."
+        "instruction": "Use los dedos para jalar suavemente cada mejilla hacia afuera. Busque manchas rojas, blancas o de color oscuro. Presione con suavidad para detectar bultos."
       },
       {
         "area": "Encías",
-        "instruction": "Examina tus encías, arriba y abajo, por delante y por detrás. Busca cambios de color, inflamación o llagas."
+        "instruction": "Examine sus encías, arriba y abajo, por delante y por detrás. Busque cambios de color, inflamación o llagas."
       },
       {
         "area": "Lengua (parte superior y lados)",
-        "instruction": "Saca la lengua y mira la parte superior. Luego levántala para revisar debajo y a los lados. Los lados de la lengua son el sitio más común del cáncer oral."
+        "instruction": "Saque la lengua y observe la parte de arriba. Luego levántela para revisar la parte de abajo y los lados. Los lados de la lengua son el sitio más común de cáncer oral."
       },
       {
         "area": "Piso de la boca",
-        "instruction": "Levanta la lengua hacia el paladar. Mira el piso debajo y pálpalo suavemente con un dedo limpio."
+        "instruction": "Levante la lengua hacia el paladar. Observe el piso de la boca y pálpelo con suavidad con un dedo limpio."
       },
       {
         "area": "Paladar",
-        "instruction": "Inclina la cabeza hacia atrás y abre bien la boca. Observa el paladar duro y blando en busca de cambios de color, protuberancias o llagas."
+        "instruction": "Incline la cabeza hacia atrás y abra bien la boca. Observe el paladar duro y el paladar blando para detectar cambios de color, protuberancias o llagas."
       },
       {
         "area": "Garganta",
-        "instruction": "Di \"ahh\" y revisa la parte posterior de la garganta. Busca asimetría, manchas o llagas."
+        "instruction": "Diga \"aaah\" y revise la parte posterior de la garganta. Busque asimetría, manchas o llagas."
       }
     ],
     "photoAlt": "{area}, vista de referencia {n}",
@@ -209,44 +212,44 @@
     "steps": [
       {
         "number": "01",
-        "heading": "Deja el tabaco, en cualquier forma",
-        "body": "El consumo de tabaco es el factor de riesgo modificable más importante del cáncer oral. Esto incluye cigarrillos, puros, pipas, tabaco de mascar y rapé. La buena noticia: el riesgo baja de manera notable a los pocos años de dejarlo, y los exconsumidores de largo plazo se acercan al nivel de riesgo de quienes nunca usaron tabaco.",
+        "heading": "Deje el tabaco, en cualquier forma",
+        "body": "El consumo de tabaco es el factor de riesgo modificable más importante para el cáncer oral. Eso incluye cigarrillos, puros, pipas, tabaco de mascar y rapé. La buena noticia: el riesgo disminuye de forma medible dentro de algunos años después de dejarlo, y los ex fumadores a largo plazo se acercan al nivel de riesgo de quienes nunca usaron tabaco.",
         "ctaLabel": null,
         "ctaHref": null
       },
       {
         "number": "02",
-        "heading": "Limita el alcohol, sobre todo junto con el tabaco",
-        "body": "El consumo excesivo de alcohol es un factor de riesgo independiente, pero la combinación de tabaco y alcohol no solo suma los riesgos, los multiplica. Si bebes, mantenerte en niveles moderados (hasta 1 trago al día para mujeres, 2 para hombres) reduce tu riesgo de forma significativa en comparación con el consumo excesivo.",
+        "heading": "Limite el alcohol, especialmente junto con el tabaco",
+        "body": "El consumo excesivo de alcohol es un factor de riesgo independiente, pero la combinación de tabaco y alcohol no solo suma los riesgos, los multiplica. Si bebe, mantenerse en niveles moderados (hasta 1 bebida al día para mujeres, 2 para hombres) reduce su riesgo de manera significativa en comparación con el consumo excesivo.",
         "ctaLabel": null,
         "ctaHref": null
       },
       {
         "number": "03",
-        "heading": "Vacúnate contra el VPH",
-        "body": "Gardasil 9 protege contra el VPH-16 y el VPH-18, las cepas responsables de la mayoría de los cánceres de garganta relacionados con el VPH. Está aprobada por la FDA para edades de 9 a 45 años y es más eficaz antes de la exposición al VPH. Los adultos que no se vacunaron en la adolescencia todavía pueden beneficiarse. Pregúntale a tu médico si eres candidato.",
-        "ctaLabel": "Conoce más sobre el VPH y el cáncer oral →",
+        "heading": "Vacúnese contra el VPH",
+        "body": "Gardasil 9 protege contra el VPH-16 y el VPH-18, los tipos responsables de la mayoría de los cánceres de garganta relacionados con el VPH. Está aprobado por la FDA para personas de 9 a 45 años y es más efectivo antes de la exposición al VPH. Los adultos que no se vacunaron de jóvenes todavía pueden beneficiarse. Consulte con su médico si es un candidato.",
+        "ctaLabel": "Más información sobre el VPH y el cáncer oral →",
         "ctaHref": "/learn/hpv"
       },
       {
         "number": "04",
-        "heading": "Hazte chequeos dentales regulares",
-        "body": "Una visita dental de rutina incluye una revisión de cáncer oral de 2 minutos, tu dentista revisa labios, encías, lengua, mejillas, paladar y garganta. La mayoría de los cánceres orales en etapa temprana se detectan de esta manera. En las personas que no van al dentista, los cánceres se detectan con más frecuencia en etapas avanzadas, cuando los resultados son peores.",
-        "ctaLabel": "Encuentra atención dental cerca de ti →",
+        "heading": "Hágase chequeos dentales con regularidad",
+        "body": "Una visita dental de rutina incluye una revisión de 2 minutos para detectar cáncer oral: el dentista revisa los labios, las encías, la lengua, las mejillas, el paladar y la garganta. La mayoría de los cánceres orales en etapa temprana se detectan de esta manera. En personas que no van al dentista con regularidad, los cánceres se detectan con mayor frecuencia en etapas avanzadas, cuando los resultados son peores.",
+        "ctaLabel": "Encuentre atención dental cerca de usted →",
         "ctaHref": "/find-care"
       },
       {
         "number": "05",
-        "heading": "Protege tus labios del sol",
-        "body": "La exposición crónica al sol es una causa principal del cáncer del labio inferior, un riesgo que es fácil pasar por alto. Usar bálsamo labial con SPF (SPF 30 o más) y un sombrero de ala ancha al estar al aire libre hace una diferencia real, sobre todo para quienes trabajan afuera. El cáncer de labio es muy tratable cuando se detecta a tiempo.",
+        "heading": "Proteja sus labios del sol",
+        "body": "La exposición crónica al sol es una de las principales causas de cáncer del labio inferior, un riesgo que es fácil pasar por alto. Usar protector labial con FPS (SPF 30+) y un sombrero de ala ancha al aire libre marca una diferencia real, especialmente para quienes trabajan a la intemperie. El cáncer de labio tiene un tratamiento muy efectivo cuando se detecta a tiempo.",
         "ctaLabel": null,
         "ctaHref": null
       },
       {
         "number": "06",
-        "heading": "Hazte un autoexamen mensual",
-        "body": "La prevención no se trata solo de evitar riesgos, también de detectar cambios a tiempo. Un autoexamen mensual de 2 minutos de tu boca y garganta significa que notarás cualquier cosa inusual antes de que se vuelva grave. La mayoría de las personas nunca se han hecho uno.",
-        "ctaLabel": "Aprende a hacer un autoexamen →",
+        "heading": "Hágase un autoexamen mensual",
+        "body": "La prevención no se trata solo de evitar los factores de riesgo, también implica detectar cambios temprano. Un autoexamen mensual de 2 minutos de la boca y la garganta permite notar cualquier cosa inusual antes de que se vuelva grave. La mayoría de las personas nunca se ha hecho uno.",
+        "ctaLabel": "Aprenda cómo hacer un autoexamen →",
         "ctaHref": "/learn/self-exam"
       }
     ],
@@ -256,23 +259,23 @@
     "faqs": [
       {
         "q": "¿Se puede prevenir el cáncer oral?",
-        "a": "Muchos casos se pueden prevenir. Los principales factores de riesgo modificables son el consumo de tabaco, el consumo excesivo de alcohol y la infección por VPH, todos los cuales se pueden abordar. Evitar el tabaco es el paso más impactante. Los chequeos dentales regulares también detectan cambios tempranos antes de que se conviertan en cáncer."
+        "a": "Muchos casos son prevenibles. Los factores de riesgo modificables más importantes son el consumo de tabaco, el consumo excesivo de alcohol y la infección por VPH, todos los cuales pueden abordarse. Evitar el tabaco es el paso con mayor impacto. Los chequeos dentales regulares también detectan cambios tempranos antes de que se conviertan en cáncer."
       },
       {
         "q": "¿Dejar el tabaco reduce el riesgo de cáncer oral?",
-        "a": "Sí, de manera significativa. El consumo de tabaco es la causa principal de los cánceres orales tradicionales. El riesgo empieza a bajar a los pocos años de dejarlo, y los exfumadores de largo plazo se acercan al nivel de riesgo de quienes nunca fumaron."
+        "a": "Sí, de manera significativa. El consumo de tabaco es la principal causa de los cánceres orales tradicionales. El riesgo comienza a disminuir dentro de algunos años después de dejarlo, y los ex fumadores a largo plazo se acercan al nivel de riesgo de quienes nunca fumaron."
       },
       {
         "q": "¿Cómo ayuda la vacuna contra el VPH a prevenir el cáncer oral?",
-        "a": "La vacuna contra el VPH (Gardasil 9) protege contra el VPH-16 y el VPH-18, las cepas responsables de la mayoría de los cánceres de garganta relacionados con el VPH. Está aprobada por la FDA para edades de 9 a 45 años. Los datos poblacionales ya muestran una reducción en las tasas de cáncer relacionado con el VPH en los grupos vacunados."
+        "a": "La vacuna contra el VPH (Gardasil 9) protege contra el VPH-16 y el VPH-18, los tipos responsables de la mayoría de los cánceres de garganta relacionados con el VPH. Está aprobada por la FDA para personas de 9 a 45 años. Los datos poblacionales ya muestran tasas reducidas de cáncer relacionado con el VPH en grupos vacunados."
       },
       {
-        "q": "¿Con qué frecuencia debo hacerme una revisión de cáncer oral?",
-        "a": "Para la mayoría de las personas, una o dos veces al año en una visita dental de rutina es suficiente, la revisión se incluye sin costo adicional. Las personas con factores de riesgo elevados (tabaco, consumo excesivo de alcohol, antecedentes de VPH) pueden beneficiarse de chequeos más frecuentes."
+        "q": "¿Con qué frecuencia debo hacerme una revisión para detectar cáncer oral?",
+        "a": "Para la mayoría de las personas, una o dos veces al año durante una visita dental de rutina es suficiente: la revisión está incluida sin costo adicional. Las personas con factores de riesgo elevados (tabaco, consumo excesivo de alcohol, historial de VPH) pueden beneficiarse de chequeos más frecuentes."
       },
       {
         "q": "¿La exposición al sol causa cáncer oral?",
-        "a": "Sí, específicamente el cáncer de labio. La exposición crónica al sol es una causa principal del cáncer del labio inferior. El bálsamo labial con SPF y un sombrero de ala ancha al estar al aire libre reducen significativamente este riesgo, sobre todo para quienes trabajan al aire libre."
+        "a": "Sí, específicamente para el cáncer de labio. La exposición crónica al sol es una de las principales causas de cáncer del labio inferior. El protector labial con FPS y un sombrero de ala ancha al aire libre reducen este riesgo de manera significativa, especialmente para quienes trabajan a la intemperie."
       }
     ],
     "sourcesLabel": "Fuentes:",
@@ -308,27 +311,27 @@
     "symptoms": [
       {
         "symptom": "Dolor de garganta persistente",
-        "note": "No causado por una infección, no se resuelve en 2 semanas"
+        "note": "No causado por una infección, no desaparece en 2 semanas"
       },
       {
-        "symptom": "Bulto sin dolor en el cuello",
-        "note": "A menudo el primer signo, causado por afectación de los ganglios linfáticos"
+        "symptom": "Bulto indoloro en el cuello",
+        "note": "A menudo es la primera señal, causada por la afectación de los ganglios linfáticos"
       },
       {
         "symptom": "Dificultad para tragar",
         "note": "Sensación de que la comida se atora o no baja bien"
       },
       {
-        "symptom": "Dolor de oído en un solo lado",
-        "note": "Puede irradiarse desde la garganta incluso sin infección de oído"
+        "symptom": "Dolor de oído de un solo lado",
+        "note": "Puede irradiarse desde la garganta sin que haya infección de oído"
       },
       {
         "symptom": "Ronquera o cambios en la voz",
-        "note": "Que duran más de dos semanas sin causa evidente"
+        "note": "Que duran más de dos semanas sin una causa evidente"
       },
       {
-        "symptom": "Pérdida de peso inexplicable",
-        "note": "Sobre todo cuando se combina con cualquiera de los anteriores"
+        "symptom": "Pérdida de peso sin explicación",
+        "note": "Especialmente cuando se combina con alguno de los síntomas anteriores"
       }
     ],
     "whoHeading": "¿Quién está en riesgo?",
@@ -347,23 +350,23 @@
     "faqs": [
       {
         "q": "¿El VPH puede causar cáncer oral?",
-        "a": "Sí. El VPH, específicamente la cepa VPH-16, es ahora la causa principal de los cánceres orofaríngeos, que son cánceres de las amígdalas, la base de la lengua y la parte posterior de la garganta. Los casos relacionados con el VPH han aumentado marcadamente en las últimas dos décadas y ahora superan en número a los casos relacionados con el tabaco en esta parte de la boca."
+        "a": "Sí. El VPH, específicamente el tipo VPH-16, es ahora la principal causa de cánceres orofaríngeos, es decir, cánceres de las amígdalas, la base de la lengua y la parte posterior de la garganta. Los casos relacionados con el VPH han aumentado considerablemente en las últimas dos décadas y ahora superan en número a los casos relacionados con el tabaco en esta parte de la boca."
       },
       {
         "q": "¿Cuáles son los síntomas del cáncer oral relacionado con el VPH?",
-        "a": "Los síntomas comunes incluyen dolor de garganta persistente, dificultad para tragar, un bulto sin dolor en el cuello, dolor de oído y ronquera que dura más de dos semanas. Como estos cánceres suelen comenzar en la base de la lengua o las amígdalas, zonas que no son fáciles de ver, con frecuencia se detectan en una etapa avanzada."
+        "a": "Los síntomas más comunes incluyen dolor de garganta persistente, dificultad para tragar, un bulto indoloro en el cuello, dolor de oído y ronquera que dura más de dos semanas. Dado que estos cánceres suelen comenzar en la base de la lengua o las amígdalas, áreas que no se ven fácilmente, con frecuencia se detectan en una etapa avanzada."
       },
       {
         "q": "¿La vacuna contra el VPH previene el cáncer oral?",
-        "a": "La vacuna contra el VPH (Gardasil 9) protege contra el VPH-16 y el VPH-18, las cepas responsables de la mayoría de los cánceres relacionados con el VPH. Está aprobada por la FDA para personas de 9 a 45 años y es más eficaz antes de la exposición al VPH. No puede tratar una infección existente, pero la vacunación reduce significativamente el riesgo de cáncer orofaríngeo relacionado con el VPH."
+        "a": "La vacuna contra el VPH (Gardasil 9) protege contra el VPH-16 y el VPH-18, los tipos responsables de la mayoría de los cánceres relacionados con el VPH. Está aprobada por la FDA para personas de 9 a 45 años y es más efectiva antes de la exposición al VPH. No puede tratar una infección existente, pero la vacunación reduce significativamente el riesgo de cáncer orofaríngeo relacionado con el VPH."
       },
       {
-        "q": "¿Quién corre mayor riesgo?",
-        "a": "El cáncer orofaríngeo relacionado con el VPH afecta de forma desproporcionada a adultos de mediana edad, en particular a hombres de entre 40 y 60 años, sin antecedentes de consumo de tabaco. Un mayor número de parejas sexuales orales a lo largo de la vida se asocia con un mayor riesgo. A diferencia del cáncer oral tradicional, a menudo aparece en personas sin factores de riesgo evidentes."
+        "q": "¿Quiénes tienen mayor riesgo?",
+        "a": "El cáncer orofaríngeo relacionado con el VPH afecta de manera desproporcionada a los adultos de mediana edad, especialmente a hombres de entre 40 y 60 años, sin historial de consumo de tabaco. Un mayor número de parejas sexuales orales a lo largo de la vida está asociado con un mayor riesgo. A diferencia del cáncer oral tradicional, suele aparecer en personas sin factores de riesgo evidentes."
       },
       {
         "q": "¿El cáncer oral relacionado con el VPH tiene cura?",
-        "a": "Los cánceres orofaríngeos positivos para el VPH tienden a tener mejores resultados que los negativos. Cuando se detectan a tiempo, las tasas de supervivencia son altas. Pero muchos casos se detectan tarde porque los síntomas son fáciles de pasar por alto. Cualquier síntoma en la boca o la garganta que dure más de dos semanas merece una evaluación por parte de un dentista o médico."
+        "a": "Los cánceres orofaríngeos positivos para VPH tienden a tener mejores resultados que los negativos para VPH. Cuando se detectan temprano, las tasas de supervivencia son altas. Sin embargo, muchos casos se encuentran en etapas avanzadas porque los síntomas son fáciles de pasar por alto. Cualquier síntoma en la boca o la garganta que dure más de dos semanas merece una evaluación por parte de un dentista o médico."
       }
     ],
     "sourcesLabel": "Fuentes:",
@@ -389,23 +392,23 @@
     "cankerHeading": "¿Qué es una afta?",
     "cankerP1": "Una afta (úlcera aftosa) es una llaga pequeña y superficial que se forma dentro de la boca, en el interior de las mejillas, la lengua o las encías. Son extremadamente comunes y afectan aproximadamente a 1 de cada 5 personas.",
     "cankerTraits": [
-      "Redonda u ovalada, con un centro blanco o amarillo y un borde rojo",
-      "Suele ser bastante dolorosa, sobre todo al comer o hablar",
-      "Aparece solo dentro de la boca, nunca en el labio por fuera",
-      "Sana por sí sola en 7 a 14 días sin tratamiento",
+      "Redonda u ovalada, con centro blanco o amarillo y borde rojo",
+      "Generalmente bastante dolorosa, especialmente al comer o hablar",
+      "Aparece solo dentro de la boca, nunca en la parte externa del labio",
+      "Sana sola en 7 a 14 días sin tratamiento",
       "No es contagiosa, no es causada por un virus, no es cancerosa"
     ],
     "cankerP2": "Los desencadenantes comunes incluyen lesiones menores en la boca (morderse la mejilla), estrés, ciertos alimentos (cítricos, tomates) y cambios hormonales.",
     "cancerLookHeading": "¿Cómo se ve una lesión de cáncer oral?",
     "cancerLookP1": "El cáncer oral puede verse engañosamente similar a una afta, especialmente en las primeras etapas, por eso mismo la gente lo pasa por alto. Diferencias clave:",
     "cancerTraits": [
-      "Una mancha roja (eritroplasia), una mancha blanca (leucoplasia) o una mezcla moteada",
+      "Una mancha roja (eritroplasia), una mancha blanca (leucoplasia) o una mezcla de ambas",
       "Una llaga o úlcera que no sana después de 2 semanas",
-      "A menudo sin dolor o solo con una leve molestia al principio",
-      "Puede aparecer en cualquier lugar: los lados de la lengua, el piso de la boca, las encías, la garganta, los labios",
-      "Puede sangrar con facilidad al tocarla",
-      "Puede sentirse dura o endurecida (firme) por debajo",
-      "Puede acompañarse de un bulto sin dolor en el cuello"
+      "A menudo es indolora o solo ligeramente molesta al principio",
+      "Puede aparecer en cualquier lugar: lados de la lengua, piso de la boca, encías, garganta, labios",
+      "Puede sangrar fácilmente al tacto",
+      "Puede sentirse dura o indurada (firme) por debajo",
+      "Puede estar acompañada de un bulto indoloro en el cuello"
     ],
     "cancerLookP2": "Los lugares más comunes para el cáncer oral son los lados y la parte inferior de la lengua, el piso de la boca y el fondo de la garganta, lugares que muchas personas nunca revisan.",
     "sideBySideHeading": "Comparación lado a lado",
@@ -415,32 +418,32 @@
     "comparison": [
       {
         "feature": "Apariencia",
-        "canker": "Redonda u ovalada; centro blanco o amarillo con un borde rojo",
+        "canker": "Redonda u ovalada; centro blanco o amarillo con borde rojo",
         "cancer": "Mancha roja, blanca o mixta; bordes irregulares; puede sangrar"
       },
       {
         "feature": "Dolor",
-        "canker": "Suele ser dolorosa o sensible",
-        "cancer": "A menudo sin dolor al principio, algo especialmente preocupante"
+        "canker": "Generalmente dolorosa o sensible",
+        "cancer": "A menudo indolora al principio, lo cual es especialmente preocupante"
       },
       {
         "feature": "Ubicación",
-        "canker": "Solo dentro de las mejillas, la lengua o las encías, nunca en los labios",
+        "canker": "Solo en el interior de las mejillas, la lengua o las encías, nunca en los labios",
         "cancer": "En cualquier lugar: lengua, encías, piso de la boca, labio, garganta"
       },
       {
         "feature": "Duración",
-        "canker": "Sana por sí sola en 7 a 14 días",
+        "canker": "Sana sola en 7 a 14 días",
         "cancer": "No sana, persiste y puede crecer"
       },
       {
         "feature": "Bordes",
-        "canker": "Lisos, bien definidos",
-        "cancer": "Irregulares, elevados o endurecidos (duros)"
+        "canker": "Suaves, definidos",
+        "cancer": "Irregulares, elevados o indurados (duros)"
       },
       {
         "feature": "Causa",
-        "canker": "Estrés, lesiones, ciertos alimentos, no es contagiosa",
+        "canker": "Estrés, lesión, ciertos alimentos; no es contagiosa",
         "cancer": "Tabaco, alcohol, VPH, sol o causa desconocida"
       }
     ],
@@ -451,51 +454,51 @@
     "whenToSeeHeading": "Cuándo consultar a un médico, no esperes si:",
     "whenToSee": [
       {
-        "title": "Ha estado ahí más de 2 semanas",
+        "title": "Lleva más de 2 semanas presente",
         "desc": "La señal más importante de todas."
       },
       {
-        "title": "No duele",
-        "desc": "El cáncer oral temprano a menudo no duele. Eso no es tranquilizador, es una razón para revisarlo."
+        "title": "Es indolora",
+        "desc": "El cáncer oral temprano a menudo es indoloro. Eso no es tranquilizador, es una razón para hacerse revisar."
       },
       {
-        "title": "Sangra con facilidad al tocarla",
+        "title": "Sangra fácilmente al tacto",
         "desc": "El sangrado inusual de una llaga o mancha es una señal de advertencia."
       },
       {
         "title": "Está creciendo o cambiando",
-        "desc": "Una llaga que se agranda o cambia de color necesita evaluación."
+        "desc": "Una llaga que se está agrandando o cambiando de color necesita evaluación."
       },
       {
         "title": "Se siente dura por debajo",
-        "desc": "La firmeza o el endurecimiento debajo de una lesión es preocupante."
+        "desc": "La firmeza o induración debajo de una lesión es preocupante."
       },
       {
-        "title": "También tienes un bulto en el cuello",
-        "desc": "Los ganglios linfáticos inflamados junto con una llaga en la boca justifican una evaluación pronta."
+        "title": "También tiene un bulto en el cuello",
+        "desc": "Los ganglios linfáticos inflamados junto con una llaga en la boca requieren una evaluación pronta."
       }
     ],
     "faqHeading": "Preguntas frecuentes",
     "faqs": [
       {
         "q": "¿Cómo sé si una llaga en la boca es cáncer?",
-        "a": "El indicador más confiable es el tiempo. Las aftas sanan en 7 a 14 días. Si una llaga, mancha o bulto no se ha resuelto después de 2 semanas, consulta a un dentista o médico. Otras señales de alerta: sangra con facilidad, no duele, tiene bordes irregulares, está creciendo o se acompaña de un bulto en el cuello."
+        "a": "El indicador más confiable es el tiempo. Las aftas sanan en 7 a 14 días. Si una llaga, mancha o bulto no ha desaparecido después de 2 semanas, consulte a un dentista o médico. Otras señales de alerta: sangra fácilmente, es indolora, tiene bordes irregulares, está creciendo o está acompañada de un bulto en el cuello."
       },
       {
-        "q": "¿Un afta puede convertirse en cáncer oral?",
-        "a": "No. Las aftas son benignas y no se vuelven cancerosas. Pero el cáncer oral a veces puede parecerse a un afta al principio, y por eso existe precisamente la regla de las 2 semanas. Si parece un afta pero no ha sanado en 2 semanas, hazla revisar."
+        "q": "¿Una afta puede convertirse en cáncer oral?",
+        "a": "No. Las aftas son benignas y no se vuelven cancerosas. Sin embargo, el cáncer oral a veces puede parecerse a un afta al principio, que es exactamente por eso existe la regla de las 2 semanas. Si parece un afta pero no ha sanado en 2 semanas, hágala revisar."
       },
       {
         "q": "¿Cómo se ve realmente una lesión de cáncer oral?",
-        "a": "Puede aparecer como una mancha roja, una mancha blanca o una mezcla moteada de ambas. Puede verse como una llaga que no sana, un bulto o un área áspera con costra. Las lesiones tempranas a menudo no duelen. Pueden desarrollarse en la lengua, el piso de la boca, las encías, las mejillas, los labios o la garganta."
+        "a": "Puede aparecer como una mancha roja, una mancha blanca o una mezcla de ambas. Puede parecerse a una llaga que no sana, un bulto o un área áspera con costra. Las lesiones tempranas suelen ser indoloras. Pueden desarrollarse en la lengua, el piso de la boca, las encías, las mejillas, los labios o la garganta."
       },
       {
-        "q": "¿Una llaga sin dolor es más preocupante que una dolorosa?",
-        "a": "Aunque parezca contradictorio, sí. Las aftas suelen ser bastante dolorosas. El cáncer oral temprano a menudo no duele, y por eso la gente lo ignora. Una llaga o mancha sin dolor que dura más de 2 semanas es más preocupante que una dolorosa que está sanando."
+        "q": "¿Una llaga indolora es más preocupante que una dolorosa?",
+        "a": "De manera contraria a lo que se podría pensar, sí. Las aftas suelen ser bastante dolorosas. El cáncer oral temprano a menudo es indoloro, que es por qué la gente lo ignora. Una llaga o mancha indolora que dura más de 2 semanas es más preocupante que una dolorosa que está sanando."
       },
       {
         "q": "Tengo una mancha blanca en la boca. ¿Es cáncer?",
-        "a": "No necesariamente, pero una mancha blanca (leucoplasia) que ha estado ahí más de 2 semanas, que no se puede raspar o que va acompañada de un área roja debería ser evaluada por un dentista. La mayoría resultan ser benignas. Un dentista puede determinar si se necesita una biopsia."
+        "a": "No necesariamente, pero una mancha blanca (leucoplasia) que lleva más de 2 semanas presente, que no se puede raspar o que está acompañada de un área roja debe ser evaluada por un dentista. La mayoría resultan ser benignas. Un dentista puede determinar si se necesita una biopsia."
       }
     ],
     "sourcesLabel": "Fuentes:",
@@ -525,8 +528,8 @@
         "name": "Consumo de tabaco",
         "weight": "Muy alto",
         "weightColor": "text-accent",
-        "summary": "Responsable de aproximadamente el 75% de los cánceres tradicionales de la cavidad oral.",
-        "detail": "Todas las formas de tabaco aumentan de manera significativa el riesgo de cáncer oral: cigarrillos, puros, pipas, tabaco de mascar, rapé y productos de vapeo. El riesgo aumenta según cuánto y por cuánto tiempo se consuma. Los fumadores empedernidos tienen entre 6 y 27 veces más probabilidades de desarrollar cáncer oral que los no fumadores. Dejarlo reduce el riesgo con el tiempo, pero el riesgo no regresa al nivel inicial hasta años después de dejarlo.",
+        "summary": "Responsable de aproximadamente el 75% de los cánceres orales tradicionales.",
+        "detail": "Todas las formas de tabaco aumentan significativamente el riesgo de cáncer oral: cigarrillos, puros, pipas, tabaco de mascar, rapé y productos de vapeo. El riesgo aumenta según la cantidad y el tiempo de uso. Los fumadores empedernidos tienen de 6 a 27 veces más probabilidades de desarrollar cáncer oral que los no fumadores. Dejar de fumar reduce el riesgo con el tiempo, aunque el riesgo no vuelve al nivel base hasta varios años después de haberlo dejado.",
         "link": null
       },
       {
@@ -534,8 +537,8 @@
         "name": "Consumo de alcohol",
         "weight": "Alto",
         "weightColor": "text-accent",
-        "summary": "Los bebedores empedernidos tienen entre 5 y 6 veces más probabilidades de desarrollar cáncer oral.",
-        "detail": "El alcohol es un carcinógeno directo en la cavidad oral. El riesgo aumenta con la cantidad consumida, y el consumo excesivo (más de 3 o 4 tragos al día) conlleva el mayor riesgo. Combinado con el tabaco, los efectos son sinérgicos, el riesgo combinado supera con mucho la suma de los dos riesgos individuales. Alguien que fuma mucho y bebe mucho puede tener un riesgo 30 veces mayor que quien no hace ninguna de las dos cosas.",
+        "summary": "Las personas que beben en exceso tienen 5 a 6 veces más probabilidades de desarrollar cáncer oral.",
+        "detail": "El alcohol es un carcinógeno directo en la cavidad oral. El riesgo aumenta con la cantidad consumida, y el consumo excesivo (más de 3 a 4 bebidas por día) conlleva el mayor riesgo. Cuando se combina con el tabaco, los efectos son sinérgicos: el riesgo combinado supera con creces la suma de los dos riesgos individuales. Alguien que fuma mucho y bebe mucho puede tener un riesgo 30 veces mayor en comparación con alguien que no hace ninguna de las dos cosas.",
         "link": null
       },
       {
@@ -543,8 +546,8 @@
         "name": "Infección por VPH-16",
         "weight": "Alto, en aumento",
         "weightColor": "text-accent",
-        "summary": "Ahora la causa principal del cáncer orofaríngeo, superando al tabaco.",
-        "detail": "El virus del papiloma humano tipo 16 (VPH-16) es una infección de transmisión sexual que se ha convertido en el principal factor de los cánceres orofaríngeos, cánceres de la base de la lengua, las amígdalas y la garganta. A diferencia de los cánceres orales relacionados con el tabaco, los cánceres relacionados con el VPH tienden a ocurrir en adultos más jóvenes sin antecedentes de tabaquismo, y responden mejor al tratamiento. La vacuna contra el VPH (Gardasil 9) es muy eficaz para prevenir la infección por VPH-16 cuando se aplica antes de la exposición.",
+        "summary": "Ahora es la principal causa de cáncer orofaríngeo, superando al tabaco.",
+        "detail": "El virus del papiloma humano tipo 16 (VPH-16) es una infección de transmisión sexual que se ha convertido en el principal factor de los cánceres orofaríngeos: cánceres de la base de la lengua, las amígdalas y la garganta. A diferencia de los cánceres orales relacionados con el tabaco, los cánceres relacionados con el VPH tienden a aparecer en adultos más jóvenes sin historial de tabaquismo y responden mejor al tratamiento. La vacuna contra el VPH (Gardasil 9) es muy eficaz para prevenir la infección por VPH-16 cuando se administra antes de la exposición.",
         "link": "/learn/hpv"
       },
       {
@@ -552,8 +555,8 @@
         "name": "Edad",
         "weight": "Moderado",
         "weightColor": "text-caution",
-        "summary": "El riesgo aumenta marcadamente después de los 55. Mayor incidencia entre los 60 y los 70 años.",
-        "detail": "El cáncer oral es más común a medida que las personas envejecen, en parte por una mayor exposición acumulada a los factores de riesgo, y en parte por cambios en la función inmunitaria relacionados con la edad. La edad promedio al momento del diagnóstico es de 62 años. Sin embargo, los cánceres orofaríngeos relacionados con el VPH se diagnostican cada vez más en adultos de entre 40 y 50 años, por lo que los adultos más jóvenes no están libres de riesgo.",
+        "summary": "El riesgo aumenta considerablemente después de los 55 años. La incidencia máxima ocurre entre los 60 y los 70 años.",
+        "detail": "El cáncer oral es más común a medida que las personas envejecen, en parte debido a una mayor exposición acumulada a los factores de riesgo y en parte por cambios relacionados con la edad en la función inmunológica. La edad promedio al momento del diagnóstico es 62 años. Sin embargo, los cánceres orofaríngeos relacionados con el VPH se diagnostican cada vez más en adultos de 40 y 50 años, por lo que los adultos jóvenes no están exentos de riesgo.",
         "link": null
       },
       {
@@ -561,8 +564,8 @@
         "name": "Exposición al sol",
         "weight": "Moderado, cáncer de labio",
         "weightColor": "text-caution",
-        "summary": "La radiación UV es el principal factor de riesgo específicamente del cáncer de labio.",
-        "detail": "La exposición crónica al sol sin protección aumenta el riesgo de cáncer de labio, en particular en el labio inferior. Las personas que trabajan al aire libre durante largos periodos, agricultores, trabajadores de la construcción, pescadores, han tenido históricamente tasas más altas de cáncer de labio. Usar bálsamo labial con SPF y un sombrero son medidas de protección eficaces.",
+        "summary": "La radiación ultravioleta es el principal factor de riesgo específico para el cáncer de labio.",
+        "detail": "La exposición crónica al sol sin protección aumenta el riesgo de cáncer de labio, en particular en el labio inferior. Las personas que trabajan al aire libre durante períodos prolongados, como agricultores, trabajadores de la construcción y pescadores, han tenido históricamente tasas más altas de cáncer de labio. Usar protector labial con FPS y un sombrero son medidas de protección eficaces.",
         "link": null
       },
       {
@@ -570,7 +573,7 @@
         "name": "Alimentación",
         "weight": "Moderado",
         "weightColor": "text-caution",
-        "summary": "Las dietas bajas en frutas y verduras se relacionan de manera constante con un mayor riesgo.",
+        "summary": "Las dietas bajas en frutas y verduras se asocian consistentemente con un mayor riesgo.",
         "detail": "Una dieta baja en frutas y verduras, y por lo tanto baja en antioxidantes, vitaminas A, C y E, y otros micronutrientes, se asocia con un mayor riesgo de cáncer oral en estudios epidemiológicos. El efecto protector de los productos frescos está bien documentado, aunque la alimentación se considera un factor secundario en comparación con el tabaco, el alcohol y el VPH.",
         "link": null
       },
@@ -579,17 +582,17 @@
         "name": "Consumo de nuez de betel",
         "weight": "Muy alto, en poblaciones específicas",
         "weightColor": "text-accent",
-        "summary": "Una causa importante de cáncer oral en el sur y el sureste de Asia.",
-        "detail": "La nuez de betel (nuez de areca), a menudo masticada con hoja de betel y cal apagada, o como paan, gutka o pan masala, es uno de los carcinógenos orales más potentes que se conocen. Es la cuarta sustancia psicoactiva más consumida en el mundo y es responsable de altas tasas de fibrosis submucosa oral y carcinoma de células escamosas en el sur de Asia, el sureste de Asia y las poblaciones de la diáspora en todo el mundo.",
+        "summary": "Una causa importante de cáncer oral en el sur y sudeste de Asia.",
+        "detail": "La nuez de betel (nuez de areca), que a menudo se masca con hoja de betel y cal apagada, o como paan, gutka o pan masala, es uno de los carcinógenos orales más potentes que se conocen. Es la cuarta sustancia psicoactiva más consumida en el mundo y es responsable de altas tasas de fibrosis submucosa oral y carcinoma de células escamosas en el sur de Asia, el sudeste de Asia y las comunidades de la diáspora a nivel mundial.",
         "link": null
       },
       {
         "rank": 8,
-        "name": "Antecedentes familiares",
-        "weight": "Modesto",
+        "name": "Historial familiar",
+        "weight": "Moderado bajo",
         "weightColor": "text-low",
-        "summary": "Un familiar de primer grado con cáncer oral o de cabeza y cuello aumenta ligeramente el riesgo.",
-        "detail": "Tener un padre, una madre o un hermano que haya desarrollado cáncer oral o de cabeza y cuello aumenta tu riesgo en cierta medida, probablemente por una combinación de susceptibilidad genética compartida y exposiciones ambientales compartidas. Los antecedentes familiares por sí solos no se consideran un factor de alto riesgo, pero refuerzan la importancia de las revisiones dentales regulares.",
+        "summary": "Tener un familiar de primer grado con cáncer oral o de cabeza y cuello aumenta el riesgo de manera moderada.",
+        "detail": "Tener un padre, madre o hermano que desarrolló cáncer oral o de cabeza y cuello aumenta algo su riesgo, probablemente por una combinación de susceptibilidad genética compartida y exposiciones ambientales compartidas. El historial familiar por sí solo no se considera un factor de alto riesgo, pero refuerza la importancia de hacerse revisiones dentales regulares.",
         "link": null
       },
       {
@@ -597,8 +600,8 @@
         "name": "Visitas dentales poco frecuentes",
         "weight": "Indirecto",
         "weightColor": "text-low",
-        "summary": "Los dentistas son los principales encargados de la detección temprana del cáncer oral.",
-        "detail": "Los dentistas realizan de manera rutinaria revisiones visuales y físicas en busca de signos de cáncer oral durante los chequeos. Las personas que rara vez ven a un dentista se pierden estas revisiones de rutina, lo que significa que las lesiones tempranas pueden pasar desapercibidas por más tiempo. Esta no es una causa biológica directa, pero aumenta significativamente la probabilidad de que un cáncer se detecte en una etapa más avanzada y más difícil de tratar.",
+        "summary": "Los dentistas son los principales responsables de la detección temprana del cáncer oral.",
+        "detail": "Los dentistas realizan de forma rutinaria revisiones visuales y físicas para detectar señales de cáncer oral durante los chequeos. Las personas que rara vez visitan a un dentista se pierden estas revisiones de rutina, lo que significa que las lesiones tempranas pueden pasar más tiempo sin detectarse. Esto no es una causa biológica directa, pero aumenta considerablemente la probabilidad de que un cáncer se detecte en una etapa más avanzada y más difícil de tratar.",
         "link": "/find-care"
       }
     ],
@@ -609,51 +612,51 @@
     "whatToDoHeading": "Qué puedes hacer al respecto",
     "whatToDo": [
       {
-        "title": "Deja el tabaco",
-        "desc": "El cambio de mayor impacto. El riesgo baja de manera notable a los pocos años de dejarlo."
+        "title": "Deje el tabaco",
+        "desc": "El cambio con mayor impacto. El riesgo disminuye de forma medible dentro de algunos años después de dejarlo."
       },
       {
-        "title": "Limita el alcohol",
-        "desc": "El riesgo aumenta con el consumo. Reducir el consumo excesivo reduce el riesgo."
+        "title": "Limite el alcohol",
+        "desc": "El riesgo aumenta con el consumo. Reducir el uso excesivo disminuye el riesgo."
       },
       {
-        "title": "Vacúnate contra el VPH",
-        "desc": "Gardasil 9 está aprobada hasta los 45 años y es muy eficaz contra el VPH-16 cuando se aplica antes de la exposición."
+        "title": "Vacúnese contra el VPH",
+        "desc": "Gardasil 9 está aprobado hasta los 45 años y es muy eficaz contra el VPH-16 cuando se administra antes de la exposición."
       },
       {
-        "title": "Protege tus labios",
-        "desc": "Usa bálsamo labial con SPF 30 o más al aire libre. Usa un sombrero de ala ancha."
+        "title": "Proteja sus labios",
+        "desc": "Use protector labial con FPS 30+ al aire libre. Use un sombrero de ala ancha."
       },
       {
-        "title": "Ve al dentista con regularidad",
-        "desc": "Los exámenes dentales incluyen una revisión visual de cáncer oral. Cada visita es una oportunidad de detección temprana."
+        "title": "Visite al dentista con regularidad",
+        "desc": "Los exámenes dentales incluyen una revisión visual para detectar cáncer oral. Cada visita es una oportunidad para la detección temprana."
       },
       {
-        "title": "Conoce las señales de advertencia",
-        "desc": "Cualquier llaga, mancha o bulto que no se haya resuelto en 2 semanas debería ser evaluado."
+        "title": "Conozca las señales de advertencia",
+        "desc": "Cualquier llaga, mancha o bulto que no haya desaparecido en 2 semanas debe ser evaluado."
       }
     ],
     "faqHeading": "Preguntas frecuentes",
     "faqs": [
       {
-        "q": "¿Cuál es el mayor factor de riesgo del cáncer oral?",
-        "a": "Para los cánceres de la cavidad oral, el tabaco es el mayor factor de riesgo modificable, responsable de cerca del 75% de los casos. Para los cánceres orofaríngeos (base de la lengua, amígdalas, garganta), el VPH-16 ha superado ahora al tabaco como la causa principal en EE. UU."
+        "q": "¿Cuál es el mayor factor de riesgo para el cáncer oral?",
+        "a": "Para los cánceres de la cavidad oral, el tabaco es el factor de riesgo modificable más importante, responsable de aproximadamente el 75% de los casos. Para los cánceres orofaríngeos (base de la lengua, amígdalas, garganta), el VPH-16 ha superado al tabaco como la principal causa en EE. UU."
       },
       {
         "q": "¿El alcohol aumenta el riesgo de cáncer oral?",
-        "a": "Sí. El consumo excesivo de alcohol es un factor de riesgo independiente. La combinación de tabaco y alcohol es especialmente peligrosa, sus efectos son sinérgicos, y el riesgo combinado puede ser 30 veces mayor que para alguien que no consume ninguno de los dos."
+        "a": "Sí. El consumo excesivo de alcohol es un factor de riesgo independiente. La combinación de tabaco y alcohol es especialmente peligrosa: sus efectos son sinérgicos y el riesgo combinado puede ser 30 veces mayor que para alguien que no usa ninguno de los dos."
       },
       {
         "q": "¿Se puede tener cáncer oral sin fumar ni beber?",
-        "a": "Sí. Los cánceres orofaríngeos relacionados con el VPH han aumentado en personas que nunca han fumado ni usado tabaco. El VPH-16 es ahora responsable de la mayoría de los cánceres de garganta y de las amígdalas en EE. UU."
+        "a": "Sí. Los cánceres orofaríngeos relacionados con el VPH han aumentado en personas que nunca han fumado ni usado tabaco. El VPH-16 es ahora responsable de la mayoría de los cánceres de garganta y amígdalas en EE. UU."
       },
       {
         "q": "¿El cáncer oral es hereditario?",
-        "a": "Los antecedentes familiares son un factor de riesgo independiente reconocido pero modesto. La mayoría de los cánceres orales se deben a factores de riesgo modificables como el tabaco, el alcohol y el VPH, más que a causas hereditarias."
+        "a": "El historial familiar es un factor de riesgo independiente reconocido, aunque moderado. La mayoría de los cánceres orales son causados por factores de riesgo modificables como el tabaco, el alcohol y el VPH, más que por causas hereditarias."
       },
       {
         "q": "¿A qué edad aumenta el riesgo de cáncer oral?",
-        "a": "El riesgo aumenta marcadamente después de los 55 años, con la mayor incidencia entre los 60 y los 70 años. Sin embargo, los cánceres orofaríngeos relacionados con el VPH se diagnostican cada vez más en adultos de entre 40 y 50 años."
+        "a": "El riesgo aumenta considerablemente después de los 55 años, con una incidencia máxima entre los 60 y los 70 años. Sin embargo, los cánceres orofaríngeos relacionados con el VPH se diagnostican cada vez más en adultos de 40 y 50 años."
       }
     ],
     "sourcesLabel": "Fuentes:",
@@ -686,35 +689,35 @@
       {
         "name": "Carcinoma de células escamosas (CCE)",
         "pct": "~90% de los casos",
-        "description": "Con mucho, el tipo más común. El CCE comienza en las células escamosas, las células delgadas y planas que recubren la boca, los labios, la lengua y la garganta. La mayoría de los cánceres orales diagnosticados son CCE. El tabaco y el alcohol son factores importantes; el VPH está cada vez más implicado en los CCE orofaríngeos."
+        "description": "El tipo más común con diferencia. El CCE comienza en las células escamosas, las células delgadas y planas que recubren la boca, los labios, la lengua y la garganta. La mayoría de los cánceres orales diagnosticados son CCE. El tabaco y el alcohol son factores importantes; el VPH está cada vez más implicado en los CCE orofaríngeos."
       },
       {
         "name": "Cáncer orofaríngeo",
         "pct": "Amígdalas, base de la lengua, garganta",
-        "description": "Técnicamente un subtipo de CCE, los cánceres orofaríngeos se desarrollan en la parte posterior de la boca y la garganta. Ahora se relacionan con más frecuencia con la infección por VPH-16 que con el tabaco, y tienden a detectarse en una etapa más avanzada porque la zona es más difícil de ver y los síntomas son fáciles de pasar por alto."
+        "description": "Técnicamente un subtipo de CCE, los cánceres orofaríngeos se desarrollan en la parte posterior de la boca y la garganta. Hoy en día están vinculados principalmente a la infección por VPH-16 más que al tabaco, y tienden a detectarse en una etapa más avanzada porque la zona es difícil de ver y los síntomas son fáciles de pasar por alto."
       },
       {
-        "name": "Cáncer de las glándulas salivales",
-        "pct": "Poco frecuente, <10% de los casos",
-        "description": "Cáncer que surge en las glándulas parótida, sublingual o submandibular. Existen varios subtipos (carcinoma mucoepidermoide, carcinoma adenoide quístico, entre otros), cada uno con comportamientos y pronósticos distintos. El tratamiento y el pronóstico varían mucho según el subtipo."
+        "name": "Cáncer de glándulas salivales",
+        "pct": "Poco frecuente, menos del 10% de los casos",
+        "description": "Cáncer que se origina en las glándulas parótidas, sublinguales o submandibulares. Existen varios subtipos (carcinoma mucoepidermoide, carcinoma adenoide quístico, entre otros), cada uno con diferentes comportamientos y pronósticos. El tratamiento y el pronóstico varían considerablemente según el subtipo."
       },
       {
         "name": "Linfoma oral",
-        "pct": "Poco común",
-        "description": "Cáncer del tejido linfático de la boca o la garganta. Es más probable que se presente en personas inmunocomprometidas (por ejemplo, personas con VIH). Por lo general se manifiesta como una inflamación blanda, a menudo sin dolor, en las amígdalas o la parte posterior de la boca."
+        "pct": "Poco frecuente",
+        "description": "Cáncer del tejido linfático en la boca o la garganta. Es más probable que se presente en personas con el sistema inmunitario debilitado (por ejemplo, personas que viven con el VIH). Generalmente se manifiesta como una inflamación blanda, a menudo indolora, en las amígdalas o la parte posterior de la boca."
       }
     ],
     "byNumbersHeading": "En cifras",
     "stats": [
       {
         "value": "54,000+",
-        "label": "diagnósticos nuevos al año",
-        "sub": "EE. UU., orales y orofaríngeos combinados"
+        "label": "nuevos diagnósticos por año",
+        "sub": "EE. UU., oral y orofaríngeo combinados"
       },
       {
         "value": "84%",
-        "label": "tasa de supervivencia si se detecta a tiempo",
-        "sub": "baja a cerca del 40% en etapa avanzada"
+        "label": "tasa de supervivencia si se detecta temprano",
+        "sub": "baja a ~40% en etapa avanzada"
       },
       {
         "value": "2×",
@@ -732,24 +735,24 @@
     "causes": [
       {
         "factor": "Consumo de tabaco",
-        "detail": "Los cigarrillos, puros, pipas, tabaco de mascar y rapé son el mayor factor de riesgo modificable de los cánceres orales tradicionales (labios, lengua, piso de la boca). El riesgo depende de la dosis, un mayor consumo significa mayor riesgo, y disminuye significativamente después de dejarlo."
+        "detail": "Los cigarrillos, puros, pipas, tabaco de mascar y rapé son el factor de riesgo modificable más importante para los cánceres orales tradicionales (labios, lengua, piso de la boca). El riesgo depende de la dosis: mayor consumo significa mayor riesgo, y disminuye de manera significativa al dejarlo."
       },
       {
         "factor": "Alcohol",
-        "detail": "El consumo excesivo es un factor de riesgo independiente, y la combinación con el tabaco multiplica el riesgo en lugar de solo sumarlo. Las personas que fuman mucho y beben mucho enfrentan un riesgo hasta 15 veces mayor que quienes no consumen ninguno de los dos."
+        "detail": "El consumo excesivo de alcohol es un factor de riesgo independiente, y la combinación con el tabaco multiplica el riesgo en lugar de simplemente sumarlo. Las personas que fuman mucho y beben mucho enfrentan un riesgo hasta 15 veces mayor que quienes no usan ninguno de los dos."
       },
       {
         "factor": "Infección por VPH",
-        "detail": "El virus del papiloma humano, específicamente el VPH-16, ha superado al tabaco como la causa principal de los cánceres orofaríngeos. Los cánceres relacionados con el VPH a menudo aparecen en no fumadores de entre 40 y 50 años. La vacuna contra el VPH reduce el riesgo de manera notable.",
+        "detail": "El virus del papiloma humano, específicamente el VPH-16, ha superado al tabaco como la principal causa de cánceres orofaríngeos. Los cánceres relacionados con el VPH suelen aparecer en personas que no fuman, de entre 40 y 50 años. La vacuna contra el VPH reduce el riesgo de manera significativa.",
         "link": "/learn/hpv"
       },
       {
         "factor": "Exposición al sol",
-        "detail": "La exposición crónica a los rayos UV es un factor de riesgo importante específicamente del cáncer del labio inferior, no de los cánceres dentro de la boca. Las personas que trabajan al aire libre corren un riesgo mayor. El bálsamo labial con SPF y un sombrero de ala ancha ofrecen una protección significativa."
+        "detail": "La exposición crónica a los rayos ultravioleta es un factor de riesgo importante específicamente para el cáncer del labio inferior, no para los cánceres dentro de la boca. Las personas que trabajan al aire libre tienen un riesgo elevado. El protector labial con FPS y un sombrero de ala ancha ofrecen una protección significativa."
       },
       {
         "factor": "Edad",
-        "detail": "El riesgo aumenta con la edad. La mayoría de los diagnósticos ocurren después de los 55 años, aunque los cánceres orofaríngeos relacionados con el VPH son cada vez más comunes en adultos de mediana edad. Las revisiones dentales regulares se vuelven más importantes a medida que envejeces."
+        "detail": "El riesgo aumenta con la edad. La mayoría de los diagnósticos ocurren después de los 55 años, aunque los cánceres orofaríngeos relacionados con el VPH son cada vez más comunes en adultos de mediana edad. Las revisiones dentales regulares se vuelven más importantes a medida que se envejece."
       }
     ],
     "lookLikeHeading": "¿Cómo se ve?",
@@ -758,10 +761,10 @@
       "Una mancha roja o blanca dentro de la boca que no desaparece",
       "Una llaga o úlcera que no ha sanado en 2 semanas",
       "Un bulto o engrosamiento en la mejilla, la lengua o la encía",
-      "Entumecimiento o dolor inexplicable en la boca o la cara",
+      "Entumecimiento o dolor inexplicable en la boca o el rostro",
       "Dificultad para masticar, tragar o mover la mandíbula",
       "Ronquera o dolor de garganta que dura más de 2 semanas",
-      "Un bulto sin dolor en el cuello"
+      "Un bulto indoloro en el cuello"
     ],
     "seeFullStart": "Consulta la",
     "seeFullLink": "guía completa de señales de advertencia",
@@ -774,23 +777,23 @@
     "faqs": [
       {
         "q": "¿Qué es el cáncer oral?",
-        "a": "El cáncer oral es un cáncer que se desarrolla en cualquier parte de la boca (cavidad oral) o en la parte posterior de la garganta (orofaringe). Esto incluye los labios, la lengua, las encías, el piso de la boca, el paladar duro y blando, las mejillas y la garganta. La mayoría de los cánceres orales son carcinomas de células escamosas, cánceres que comienzan en las células planas que recubren estas superficies."
+        "a": "El cáncer oral es el cáncer que se desarrolla en cualquier parte de la boca (cavidad oral) o en la parte posterior de la garganta (orofaringe). Esto incluye los labios, la lengua, las encías, el piso de la boca, el paladar duro y blando, las mejillas y la garganta. La mayoría de los cánceres orales son carcinomas de células escamosas, cánceres que comienzan en las células planas que recubren estas superficies."
       },
       {
         "q": "¿Cuáles son los tipos de cáncer oral?",
-        "a": "Los tipos principales son: carcinoma de células escamosas (cerca del 90% de los casos), cáncer orofaríngeo (amígdalas, base de la lengua, garganta, a menudo relacionado con el VPH), cáncer de las glándulas salivales (poco frecuente, con varios subtipos) y linfoma oral (poco común, más probable en personas inmunocomprometidas)."
+        "a": "Los tipos principales son: carcinoma de células escamosas (aproximadamente el 90% de los casos), cáncer orofaríngeo (amígdalas, base de la lengua, garganta, a menudo relacionado con el VPH), cáncer de glándulas salivales (poco frecuente, con varios subtipos) y linfoma oral (poco frecuente, más probable en personas con el sistema inmunitario debilitado)."
       },
       {
         "q": "¿El cáncer oral es lo mismo que el cáncer de garganta?",
-        "a": "Se superponen. El cáncer oral por lo general se refiere a los cánceres de los labios, la lengua, las encías, las mejillas y el piso y el paladar de la boca. El cáncer orofaríngeo (de garganta) afecta las amígdalas, la base de la lengua y la parte posterior de la garganta. Como estas regiones se conectan, a menudo se agrupan como 'cáncer oral y orofaríngeo'."
+        "a": "Se superponen. El cáncer oral generalmente se refiere a los cánceres de los labios, la lengua, las encías, las mejillas y el piso y el techo de la boca. El cáncer orofaríngeo (de garganta) afecta las amígdalas, la base de la lengua y la parte posterior de la garganta. Dado que estas regiones están conectadas, a menudo se agrupan como \"cáncer oral y orofaríngeo\"."
       },
       {
         "q": "¿Qué tan común es el cáncer oral?",
-        "a": "Más de 54,000 estadounidenses son diagnosticados con cáncer oral y orofaríngeo cada año. Es cerca de dos veces más común en hombres que en mujeres, y la edad promedio al momento del diagnóstico es de 62 años. Está entre los diez cánceres más comunes en todo el mundo."
+        "a": "Más de 54,000 personas en EE. UU. son diagnosticadas con cáncer oral y orofaríngeo cada año. Es aproximadamente dos veces más común en hombres que en mujeres, y la edad promedio al momento del diagnóstico es 62 años. Se encuentra entre los diez cánceres más comunes en el mundo."
       },
       {
-        "q": "¿El cáncer oral se puede curar si se detecta a tiempo?",
-        "a": "Sí. La tasa de supervivencia a 5 años del cáncer oral en etapa temprana es de alrededor del 84%. En una etapa avanzada, baja a aproximadamente el 40%. La detección temprana mediante chequeos dentales de rutina y autoexámenes mensuales es el factor más importante para mejorar los resultados."
+        "q": "¿El cáncer oral tiene cura si se detecta temprano?",
+        "a": "Sí. La tasa de supervivencia a 5 años para el cáncer oral en etapa temprana es de aproximadamente el 84%. En una etapa avanzada, esa cifra cae a alrededor del 40%. La detección temprana a través de chequeos dentales de rutina y autoexámenes mensuales es el factor más importante para mejorar los resultados."
       }
     ],
     "sourcesLabel": "Fuentes:",
@@ -820,42 +823,42 @@
     "signs": [
       {
         "title": "Manchas rojas o blancas",
-        "detail": "Uno de los signos tempranos más importantes. Una mancha roja persistente (eritroplasia) es la lesión de mayor riesgo, los estudios estiman que el 50% o más de las manchas rojas ya son cancerosas o precancerosas en la biopsia. Las manchas blancas (leucoplasia) son más comunes y por lo general benignas, pero aproximadamente entre el 5 y el 17% se volverán malignas si no se tratan. Una mancha mixta roja y blanca moteada (eritroleucoplasia) conlleva el mayor riesgo de todas. La característica distintiva: estas manchas no se raspan ni se quitan al frotar.",
+        "detail": "Una de las señales tempranas más importantes. Una mancha roja persistente (eritroplasia) es la lesión de mayor riesgo: los estudios estiman que el 50% o más de las manchas rojas ya son cancerosas o precancerosas al momento de la biopsia. Las manchas blancas (leucoplasia) son más comunes y generalmente benignas, pero aproximadamente del 5 al 17% se volverán malignas si no se tratan. Una mancha moteada mixta roja y blanca (eritroleucoplasia) conlleva el mayor riesgo de todas. El rasgo definitorio: estas manchas no se pueden raspar ni frotar.",
         "urgent": true
       },
       {
         "title": "Llagas o úlceras que no sanan",
-        "detail": "Una llaga o úlcera en la boca que no se ha resuelto después de 2 semanas es la señal de alerta clásica. Las aftas (úlceras aftosas) sanan en 7 a 10 días sin tratamiento. Las lesiones de cáncer oral no lo hacen. Pueden tener bordes irregulares, elevados o endurecidos, distintos del borde limpio y redondo de un afta. Pueden sangrar con facilidad al tocarlas. La ausencia de dolor no significa la ausencia de peligro.",
+        "detail": "Una llaga o úlcera en la boca que no ha desaparecido después de 2 semanas es la señal de alerta clásica. Las aftas (úlceras aftosas) sanan en 7 a 10 días sin tratamiento. Las lesiones de cáncer oral no. Pueden tener bordes irregulares, elevados o endurecidos, diferentes al borde redondo y definido de un afta. Pueden sangrar fácilmente al tacto. La ausencia de dolor no significa la ausencia de peligro.",
         "urgent": true
       },
       {
-        "title": "Un bulto, engrosamiento o mancha áspera",
-        "detail": "Un bulto nuevo o un área de engrosamiento en la mejilla, la lengua, la encía o el piso de la boca, sobre todo si tiene una consistencia firme y dura, justifica una evaluación. Los tumores tempranos a menudo se sienten gomosos o firmes, como un chícharo debajo de la piel. Un ganglio linfático inflamado en el cuello que persiste por más de 2 semanas, incluso sin una infección evidente, también puede indicar cáncer oral u orofaríngeo.",
+        "title": "Un bulto, engrosamiento o zona áspera",
+        "detail": "Un nuevo bulto o área de engrosamiento en la mejilla, la lengua, la encía o el piso de la boca, especialmente si tiene una consistencia firme o dura, debe ser evaluado. Los tumores tempranos a menudo se sienten gomosos o firmes, como un guisante debajo de la piel. Un ganglio linfático inflamado en el cuello que persiste por más de 2 semanas, incluso sin una infección evidente, también puede ser señal de cáncer oral u orofaríngeo.",
         "urgent": false
       },
       {
         "title": "Entumecimiento o dolor inexplicable",
-        "detail": "El entumecimiento, el hormigueo o la pérdida de sensibilidad inexplicables en la boca, la lengua, los labios o la cara, en particular si es de un solo lado, pueden ser un signo de afectación nerviosa. El dolor intermitente o persistente en la boca o la mandíbula que no tiene una causa dental evidente (sin caries, sin problemas dentales) también vale la pena investigar. El dolor suele aparecer en casos más avanzados, pero algunos cánceres tempranos sí causan molestias.",
+        "detail": "El entumecimiento, el hormigueo o la pérdida de sensación inexplicables en la boca, la lengua, los labios o el rostro, especialmente si es de un solo lado, pueden ser señal de afectación nerviosa. El dolor intermitente o persistente en la boca o la mandíbula sin una causa dental evidente (sin caries, sin problema dental) también merece investigarse. El dolor generalmente aparece en casos más avanzados, pero algunos cánceres tempranos sí causan molestias.",
         "urgent": false
       },
       {
         "title": "Dificultad para masticar, tragar o mover la mandíbula",
-        "detail": "Sentir que la comida se atora en la garganta, dificultad para abrir bien la boca (trismo), o dolor y restricción al mover la mandíbula o la lengua pueden indicar una masa que afecta las estructuras cercanas. Este síntoma es más común con tumores en la base de la lengua o la orofaringe, donde tienden a originarse los cánceres relacionados con el VPH, y a menudo aparece antes de una lesión visible.",
+        "detail": "Sentir que la comida se atora en la garganta, dificultad para abrir la boca completamente (trismo) o dolor y limitación al mover la mandíbula o la lengua pueden indicar una masa que afecta las estructuras circundantes. Este síntoma es más común en tumores en la base de la lengua o la orofaringe, donde los cánceres relacionados con el VPH tienden a originarse, y a menudo aparece antes de que haya una lesión visible.",
         "urgent": false
       },
       {
         "title": "Dientes flojos sin explicación dental",
-        "detail": "Si los dientes se aflojan sin una causa evidente, sin diagnóstico de enfermedad de las encías, sin lesión, sin problema dental, puede indicar que un tumor está afectando el hueso o el tejido blando que sostiene los dientes. Esto es especialmente relevante para las lesiones en la encía (carcinoma gingival), que pueden imitar una enfermedad periodontal y pasar desapercibidas durante meses.",
+        "detail": "Si los dientes se aflojan sin una causa obvia, sin diagnóstico de enfermedad de las encías, sin lesión, sin problema dental, puede ser señal de que un tumor está afectando el hueso o el tejido blando que sostiene los dientes. Esto es especialmente relevante para las lesiones en la encía (carcinoma gingival), que puede imitar la enfermedad periodontal y pasar desapercibido durante meses.",
         "urgent": false
       },
       {
         "title": "Ronquera persistente o cambios en la voz",
-        "detail": "Un cambio en la calidad de la voz o una ronquera persistente que dura más de 2 semanas, sobre todo sin un resfriado o enfermedad respiratoria previa, puede indicar afectación de la laringe o un tumor cerca de la parte posterior de la garganta. Este síntoma se asocia más con los cánceres orofaríngeos y de laringe que con los cánceres de la cavidad oral.",
+        "detail": "Un cambio en la calidad de la voz o ronquera persistente que dura más de 2 semanas, especialmente sin un resfriado o enfermedad respiratoria previa, puede ser señal de afectación laríngea o de un tumor cerca de la parte posterior de la garganta. Este síntoma está más asociado con los cánceres orofaríngeos y laríngeos que con los cánceres de la cavidad oral.",
         "urgent": false
       },
       {
-        "title": "Dolor de oído sin un problema en el oído",
-        "detail": "Llamado otalgia referida, el dolor de oído que ocurre sin ninguna infección o problema en el oído puede deberse a señales de dolor que se originan en la garganta o la parte posterior de la lengua y se desvían por la vía nerviosa del oído. Si te duelen los oídos y tu médico no encuentra ninguna patología en ellos, se deben examinar la base de la lengua y las amígdalas.",
+        "title": "Dolor de oído sin problema de oído",
+        "detail": "Llamado otalgia referida, el dolor de oído que ocurre sin ninguna infección o problema de oído puede deberse a señales de dolor que se originan en la garganta o en la parte posterior de la lengua y se desvían por la vía nerviosa del oído. Si le duelen los oídos y su médico no encuentra ningún problema en el oído, se deben examinar la base de la lengua y las amígdalas.",
         "urgent": false
       }
     ],
@@ -864,22 +867,22 @@
     "locations": [
       {
         "site": "Lengua",
-        "note": "Los lados y la parte inferior, el sitio más común en general. Es fácil pasarlo por alto sin un autoexamen.",
-        "risk": "El más alto"
+        "note": "Los lados y la parte inferior son el sitio más común en general. Es fácil pasarlo por alto sin un autoexamen.",
+        "risk": "Más alto"
       },
       {
         "site": "Piso de la boca",
-        "note": "El tejido en forma de U debajo de la lengua. A menudo difícil de ver sin levantar la lengua.",
+        "note": "El tejido en forma de U debajo de la lengua. A menudo es difícil de ver sin levantar la lengua.",
         "risk": "Muy alto"
       },
       {
         "site": "Labios",
-        "note": "El labio inferior es el más común, relacionado con la exposición al sol. Por lo general visible.",
+        "note": "El labio inferior es el más común, relacionado con la exposición al sol. Generalmente es visible.",
         "risk": "Alto"
       },
       {
-        "site": "Encías (gingiva)",
-        "note": "Puede imitar una enfermedad de las encías. Los dientes flojos sin causa dental son una pista clave.",
+        "site": "Encías (gingivales)",
+        "note": "Puede imitar la enfermedad de las encías. Los dientes flojos sin causa dental son una clave importante.",
         "risk": "Alto"
       },
       {
@@ -888,13 +891,13 @@
         "risk": "Moderado"
       },
       {
-        "site": "Base de la lengua / amígdalas",
-        "note": "Donde tienden a comenzar los cánceres orofaríngeos relacionados con el VPH. A menudo sin lesión visible.",
+        "site": "Base de la lengua y amígdalas",
+        "note": "Donde tienden a comenzar los cánceres orofaríngeos relacionados con el VPH. A menudo no hay lesión visible.",
         "risk": "Alto, relacionado con el VPH"
       },
       {
         "site": "Paladar",
-        "note": "Paladar duro (techo de la boca) y paladar blando. Revisa ambos lados.",
+        "note": "Paladar duro (techo de la boca) y paladar blando. Revise ambos lados.",
         "risk": "Moderado"
       }
     ],
@@ -916,74 +919,74 @@
       },
       {
         "label": "Nivel de dolor",
-        "a": "Suele ser dolorosa",
-        "b": "A menudo sin dolor"
+        "a": "Generalmente dolorosa",
+        "b": "A menudo indolora"
       },
       {
-        "label": "Borde",
-        "a": "Redondo, limpio",
-        "b": "Irregular, elevado"
+        "label": "Bordes",
+        "a": "Redondos, definidos",
+        "b": "Irregulares, elevados"
       },
       {
         "label": "Color",
-        "a": "Centro blanco/amarillo, borde rojo",
-        "b": "Rojo, blanco o mixto"
+        "a": "Centro blanco o amarillo, borde rojo",
+        "b": "Roja, blanca o mixta"
       },
       {
         "label": "Ubicación",
-        "a": "Tejido blando, por dentro de los labios",
-        "b": "Cualquier sitio, a menudo lengua/piso de la boca"
+        "a": "Tejido blando, interior de los labios",
+        "b": "Cualquier sitio, a menudo lengua o piso de la boca"
       },
       {
         "label": "Qué hacer",
-        "a": "Vigilar, debería resolverse",
+        "a": "Observar, debe desaparecer sola",
         "b": "Consultar a un dentista si dura 2 semanas o más"
       }
     ],
     "whatToDoHeading": "Qué hacer si notas una señal",
     "whatToDo": [
       {
-        "title": "No esperes a que duela",
-        "desc": "El dolor no es un indicador confiable de la gravedad. Actúa según lo que ves, no según lo que sientes."
+        "title": "No espere a que duela",
+        "desc": "El dolor no es un indicador confiable de gravedad. Actúe según lo que ve, no según lo que siente."
       },
       {
-        "title": "Dale 2 semanas",
-        "desc": "Los traumatismos menores (una mordida, comida áspera) causan llagas en la boca. Dale a cualquier lesión nueva 2 semanas para que se resuelva por sí sola."
+        "title": "Espere 2 semanas",
+        "desc": "Un traumatismo menor (una mordida, alimento áspero) puede causar llagas en la boca. Dele 2 semanas a cualquier lesión nueva para que desaparezca por sí sola."
       },
       {
-        "title": "Consulta a un dentista",
-        "desc": "Si sigue ahí después de 2 semanas, agenda una cita dental. Los dentistas son los principales encargados de detectar el cáncer oral. Muchos ofrecen revisiones de cáncer oral gratuitas."
+        "title": "Consulte a un dentista",
+        "desc": "Si todavía está presente después de 2 semanas, haga una cita dental. Los dentistas son los principales evaluadores del cáncer oral. Muchos ofrecen revisiones de cáncer oral sin costo."
       },
       {
-        "title": "No te autodiagnostiques",
-        "desc": "La mayoría de las anomalías resultan ser benignas. Un examen profesional, no una búsqueda en Google, es lo que da una respuesta."
+        "title": "No se autodiagnostique",
+        "desc": "La mayoría de las anomalías resultan ser benignas. Un examen profesional, no una búsqueda en internet, es lo que proporciona una respuesta."
       },
       {
-        "title": "Conoce tus factores de riesgo",
-        "desc": "El consumo de tabaco, el consumo excesivo de alcohol, el VPH y la edad aumentan tu riesgo de base. Mientras más factores de riesgo tengas, más importantes son las revisiones regulares."
+        "title": "Conozca sus factores de riesgo",
+        "desc": "El consumo de tabaco, el consumo excesivo de alcohol, el VPH y la edad aumentan su riesgo de base. Cuantos más factores de riesgo tenga, más importantes son las revisiones regulares."
       }
     ],
     "faqHeading": "Preguntas frecuentes",
     "faqs": [
       {
         "q": "¿Cómo se ve el cáncer oral?",
-        "a": "El cáncer oral aparece con más frecuencia como una mancha roja, una mancha blanca o una mancha mixta roja y blanca que no se quita al raspar. También puede verse como una llaga con bordes irregulares que sangra con facilidad pero no sana, un bulto elevado o un área dura de engrosamiento. Puede desarrollarse en la lengua, las encías, los labios, el piso de la boca, las mejillas o la garganta."
+        "a": "El cáncer oral aparece con mayor frecuencia como una mancha roja, una mancha blanca o una mancha mixta de rojo y blanco que no se puede raspar. También puede parecerse a una llaga con bordes irregulares que sangra fácilmente pero no sana, un bulto elevado o un área de engrosamiento endurecido. Puede desarrollarse en la lengua, las encías, los labios, el piso de la boca, las mejillas o la garganta."
       },
       {
-        "q": "¿El cáncer oral puede no doler?",
-        "a": "Sí, el cáncer oral temprano a menudo no duele en absoluto. Por eso importan las revisiones dentales de rutina y los autoexámenes mensuales. El dolor tiende a aparecer con la enfermedad más avanzada, no con las lesiones en etapa temprana."
+        "q": "¿El cáncer oral puede ser indoloro?",
+        "a": "Sí, el cáncer oral temprano a menudo es completamente indoloro. Por eso importan las revisiones dentales de rutina y los autoexámenes mensuales. El dolor tiende a aparecer con la enfermedad más avanzada, no en las lesiones de etapa temprana."
       },
       {
         "q": "¿Qué es la regla de las 2 semanas?",
-        "a": "Cualquier llaga, mancha, bulto o cambio en tu boca que no se haya resuelto después de 2 semanas debería ser evaluado por un profesional. Las aftas sanan en 7 a 10 días. Cualquier cosa que dure más merece la evaluación de un dentista."
+        "a": "Cualquier llaga, mancha, bulto o cambio en la boca que no haya desaparecido después de 2 semanas debe ser evaluado por un profesional. Las aftas sanan en 7 a 10 días. Cualquier cosa que dure más merece la evaluación de un dentista."
       },
       {
-        "q": "¿Dónde se desarrolla con más frecuencia el cáncer oral?",
-        "a": "Los lados y la parte inferior de la lengua y el piso de la boca son los sitios más comunes de los cánceres de la cavidad oral. Los cánceres orofaríngeos relacionados con el VPH tienden a comenzar en la base de la lengua y las amígdalas, donde puede que no haya ninguna lesión visible."
+        "q": "¿Dónde se desarrolla más comúnmente el cáncer oral?",
+        "a": "Los lados y la parte inferior de la lengua y el piso de la boca son los sitios más comunes para los cánceres de la cavidad oral. Los cánceres orofaríngeos relacionados con el VPH tienden a comenzar en la base de la lengua y las amígdalas, donde puede no haber ninguna lesión visible."
       },
       {
-        "q": "¿Cómo se detecta el cáncer oral a tiempo?",
-        "a": "Los exámenes dentales regulares, que incluyen una revisión visual y física de cáncer oral, son la forma más confiable de detectarlo a tiempo. Los autoexámenes mensuales en casa también pueden detectar cambios entre las visitas dentales. Si tienes factores de riesgo de cáncer oral, habla con tu dentista sobre hacerte una revisión formal."
+        "q": "¿Cómo se detecta el cáncer oral temprano?",
+        "a": "Los exámenes dentales regulares, que incluyen una revisión visual y física para detectar cáncer oral, son la manera más confiable de detectarlo temprano. Los autoexámenes mensuales en casa también pueden detectar cambios entre las visitas dentales. Si tiene factores de riesgo para el cáncer oral, hable con su dentista sobre hacerse una revisión formal."
       }
     ],
     "sourcesLabel": "Fuentes:",
@@ -1007,42 +1010,42 @@
       {
         "name": "Mancha blanca",
         "also": "Leucoplasia",
-        "where": "A menudo en la lengua, las encías o la parte interna de la mejilla",
-        "desc": "Una mancha blanca o grisácea que no se puede limpiar ni raspar. Por lo general sin dolor.",
-        "watch": "La mayoría son inofensivas, pero cualquiera que dure más de 2 semanas debería revisarse."
+        "where": "A menudo en la lengua, las encías o el interior de la mejilla",
+        "desc": "Una mancha blanca o grisácea que no se puede limpiar ni raspar. Generalmente indolora.",
+        "watch": "La mayoría son inofensivas, pero cualquiera que dure más de 2 semanas debe revisarse."
       },
       {
         "name": "Mancha roja",
         "also": "Eritroplasia",
         "where": "Piso de la boca o debajo de la lengua",
-        "desc": "Una mancha de color rojo intenso y aterciopelada. Menos común que las manchas blancas, pero conlleva el mayor riesgo de los signos visibles.",
-        "watch": "Haz revisar de inmediato cualquier mancha roja persistente."
+        "desc": "Una mancha roja brillante y aterciopelada. Menos común que las manchas blancas, pero con el mayor riesgo entre las señales visibles.",
+        "watch": "Haga revisar de inmediato cualquier mancha roja persistente."
       },
       {
         "name": "Mancha roja y blanca",
         "also": "Eritroleucoplasia",
-        "where": "En cualquier lugar de la boca",
+        "where": "En cualquier parte de la boca",
         "desc": "Una mancha que combina áreas rojas y blancas.",
         "watch": "Las manchas mixtas conllevan un riesgo elevado. Vale la pena una revisión profesional pronta."
       },
       {
         "name": "Llaga que no sana",
         "also": "Úlcera que no cicatriza",
-        "where": "Labios, lengua o dentro de la boca",
-        "desc": "Una úlcera o llaga, a menudo sin dolor, que simplemente no desaparece.",
-        "watch": "Un afta sana en unas 2 semanas. Una que no lo hace es la señal de advertencia clásica."
+        "where": "Labios, lengua o interior de la boca",
+        "desc": "Una úlcera o llaga, a menudo indolora, que simplemente no desaparece.",
+        "watch": "Un afta sana en aproximadamente 2 semanas. Una que no lo hace es la señal de advertencia clásica."
       },
       {
         "name": "Bulto o engrosamiento",
         "where": "Mejilla, encía, labio o piso de la boca",
-        "desc": "Una protuberancia elevada o un área engrosada que puedes sentir con la lengua o el dedo.",
-        "watch": "Los bultos nuevos o que crecen merecen una revisión, pálpalos durante un autoexamen."
+        "desc": "Una protuberancia elevada o un área engrosada que se puede sentir con la lengua o el dedo.",
+        "watch": "Los bultos nuevos o que crecen merecen revisión; búsquelos durante un autoexamen."
       },
       {
         "name": "Zona áspera en el labio",
-        "where": "Por lo general el labio inferior",
-        "desc": "Una mancha escamosa, con costra o persistentemente agrietada que no se cura.",
-        "watch": "Común con la exposición al sol. Las zonas ásperas persistentes deberían revisarse."
+        "where": "Generalmente en el labio inferior",
+        "desc": "Una mancha escamosa, con costra o con resequedad persistente que no desaparece.",
+        "watch": "Común con la exposición al sol. Las zonas ásperas persistentes deben revisarse."
       }
     ],
     "showPhoto": "Ver una foto real",
@@ -1128,7 +1131,7 @@
     "whyPoints": [
       {
         "icon": "private",
-        "title": "Cero PHI recopilada",
+        "title": "Cero información de salud personal recopilada",
         "desc": "Las respuestas nunca salen del dispositivo del paciente. Sin preocupaciones de HIPAA, sin responsabilidad por datos."
       },
       {
@@ -1139,27 +1142,27 @@
       {
         "icon": "noCost",
         "title": "Sin configuración, sin inicio de sesión",
-        "desc": "Envía un enlace o cuelga un código QR. Nada que instalar, nada que administrar."
+        "desc": "Envíe un enlace o coloque un código QR. No hay nada que instalar ni que administrar."
       },
       {
         "icon": "care",
-        "title": "Gratis, de forma permanente",
-        "desc": "No hay un nivel de pago. No hay una relación con proveedores que administrar."
+        "title": "Gratuito, de manera permanente",
+        "desc": "No hay nivel de pago. No hay ninguna relación con proveedores que administrar."
       }
     ],
     "howToUseHeading": "Cómo usarlo",
     "howToUse": [
       {
-        "title": "Imprime el folleto",
-        "desc": "Personalízalo con el nombre de tu consultorio abajo, luego imprímelo. Colócalo en tu sala de espera, salas de examen o recepción."
+        "title": "Imprima el volante",
+        "desc": "Personalícelo con el nombre de su consultorio a continuación y luego imprímalo. Colóquelo en su sala de espera, consultorios o recepción."
       },
       {
-        "title": "Comparte el enlace",
-        "desc": "Envía oralcheck.org por mensaje de texto o correo electrónico a los pacientes antes de las citas. Toma 2 minutos y funciona en cualquier teléfono."
+        "title": "Comparta el enlace",
+        "desc": "Envíe oralcheck.org por mensaje de texto o correo electrónico a los pacientes antes de sus citas. Toma 2 minutos y funciona en cualquier teléfono."
       },
       {
-        "title": "Úsalo para iniciar una conversación",
-        "desc": "Cuando un paciente indica un riesgo elevado, abre la puerta a un examen oral clínico y a su documentación."
+        "title": "Úselo como punto de partida para la conversación",
+        "desc": "Cuando un paciente indica un riesgo elevado, abre la puerta para un examen oral clínico y su documentación."
       }
     ],
     "importantLabel": "Importante:",
@@ -1197,36 +1200,36 @@
     "warningSigns": [
       "Llagas que no sanan",
       "Manchas rojas o blancas",
-      "Bultos o engrosamiento",
+      "Bultos o engrosamientos",
       "Dificultad para tragar",
       "Dolor de oído inexplicable"
     ],
     "features": [
       {
         "title": "10 preguntas rápidas",
-        "desc": "Basadas en factores de riesgo clínicos reales, toma alrededor de 2 minutos en tu teléfono."
+        "desc": "Basadas en factores de riesgo clínicos reales, toma aproximadamente 2 minutos en su teléfono."
       },
       {
         "title": "Completamente privado",
-        "desc": "Nada se guarda ni se envía a ningún lado. Tus respuestas se quedan en tu dispositivo."
+        "desc": "No se guarda ni se envía nada. Sus respuestas permanecen en su dispositivo."
       },
       {
-        "title": "Conoce tu nivel de riesgo",
-        "desc": "Obtén un resumen personalizado y orientación sobre qué hacer a continuación."
+        "title": "Conozca su nivel de riesgo",
+        "desc": "Obtenga un resumen personalizado y orientación sobre qué hacer a continuación."
       },
       {
-        "title": "Encuentra atención accesible cerca de ti",
-        "desc": "Te conecta con clínicas gratuitas y de bajo costo, escuelas de odontología y centros de salud comunitarios."
+        "title": "Encuentre atención asequible cerca de usted",
+        "desc": "Lo conecta con clínicas gratuitas y de bajo costo, escuelas de odontología y centros de salud comunitarios."
       }
     ],
     "stats": [
       {
         "value": "54k+",
-        "label": "diagnósticos nuevos de cáncer oral al año en EE. UU."
+        "label": "nuevos diagnósticos de cáncer oral por año en EE. UU."
       },
       {
         "value": "84%",
-        "label": "tasa de supervivencia cuando se detecta a tiempo"
+        "label": "tasa de supervivencia cuando se detecta temprano"
       },
       {
         "value": "2 min",
@@ -1246,32 +1249,32 @@
     "intro": "OralCheck es privado por diseño. Aquí está exactamente lo que se recopila y lo que no cuando usas este sitio.",
     "shortVersionLabel": "La versión corta",
     "shortVersion": [
-      "No se recopila nombre, correo electrónico ni información que te identifique",
-      "Las respuestas de la evaluación nunca se guardan, desaparecen cuando cierras la página",
-      "Google Analytics solo registra el uso anónimo (páginas visitadas, país, dispositivo)",
-      "Ningún dato se vende ni se comparte con terceros"
+      "No se recopila nombre, correo electrónico ni información de identificación",
+      "Las respuestas de la evaluación nunca se almacenan: desaparecen cuando cierra la página",
+      "Google Analytics registra solo el uso anónimo (páginas visitadas, país, dispositivo)",
+      "No se venden ni comparten datos con terceros"
     ],
     "sections": [
       {
         "heading": "No se recopila información personal",
-        "body": "OralCheck no recopila tu nombre, dirección de correo electrónico ni ninguna información que te identifique. No se requiere una cuenta para usar la evaluación."
+        "body": "OralCheck no recopila su nombre, dirección de correo electrónico ni ninguna información que lo identifique. No se requiere una cuenta para usar la evaluación."
       },
       {
-        "heading": "Las respuestas de la evaluación se quedan en tu dispositivo",
-        "body": "Tus respuestas se usan para calcular tu resultado y no se guardan en nuestros servidores. Nada de lo que ingresas se guarda después de que termina tu sesión."
+        "heading": "Sus respuestas de la evaluación permanecen en su dispositivo",
+        "body": "Sus respuestas se usan para calcular su resultado y no se almacenan en los servidores del sitio. Nada de lo que ingrese se guarda una vez que finaliza su sesión."
       },
       {
         "heading": "Google Analytics",
-        "body": "Este sitio usa Google Analytics para entender cómo las personas encuentran y usan OralCheck, qué páginas se visitan, cuánto duran las sesiones y de qué país son los visitantes. Google Analytics recopila datos de uso anónimos, incluida tu ubicación aproximada, el tipo de navegador y el dispositivo. No recibe las respuestas de tu evaluación.",
-        "linkLabel": "Excluirte de Google Analytics →"
+        "body": "Este sitio utiliza Google Analytics para comprender cómo las personas encuentran y usan OralCheck: qué páginas se visitan, cuánto duran las sesiones y de qué país son los visitantes. Google Analytics recopila datos de uso anónimos, incluyendo su ubicación aproximada, el tipo de navegador y el dispositivo. No recibe sus respuestas de la evaluación.",
+        "linkLabel": "Optar por no participar en Google Analytics →"
       },
       {
         "heading": "Cookies",
-        "body": "Google Analytics coloca cookies para distinguir las visitas. No se usan otras cookies."
+        "body": "Google Analytics establece cookies para distinguir las visitas. No se utilizan otras cookies."
       },
       {
         "heading": "Terceros",
-        "body": "OralCheck no vende, comparte ni transfiere tus datos a ningún tercero con fines de marketing o publicidad."
+        "body": "OralCheck no vende, comparte ni transfiere sus datos a ningún tercero con fines de mercadeo o publicidad."
       }
     ],
     "contactHeading": "Contacto",
@@ -1313,12 +1316,12 @@
     "tierP2Rest": "Sin importar el puntaje, cualquier síntoma que dure 2 semanas o más (una llaga persistente, una mancha roja o blanca, un bulto inexplicable o dificultad para tragar) anula el nivel a {bold} y activa una indicación de evaluación inmediata.",
     "limitationsHeading": "Limitaciones conocidas",
     "limitations": [
-      "OralCheck no ha sido validado frente a un conjunto de datos de resultados clínicos. Las ponderaciones se basan en la literatura publicada, pero no se han calibrado frente a una cohorte prospectiva.",
-      "La evaluación combina el riesgo de cáncer de la cavidad oral y de cáncer orofaríngeo en una sola puntuación. Estas son entidades epidemiológicamente distintas: el VPH-16 es principalmente un factor del cáncer orofaríngeo, mientras que el tabaco y el alcohol predominan en el cáncer de la cavidad oral.",
-      "No se registra el sexo biológico. Los hombres tienen aproximadamente 2× la incidencia de cáncer de la cavidad oral de las mujeres, y esa es una brecha en el modelo actual.",
-      "La inmunosupresión (VIH, receptores de trasplantes de órganos, uso prolongado de corticosteroides) está relacionada con un riesgo de cáncer oral significativamente elevado y actualmente no se pregunta al respecto.",
-      "La evaluación se basa en datos autoinformados. El consumo de tabaco y alcohol suele reportarse por debajo de lo real.",
-      "La frecuencia de las visitas dentales se incluye como un indicador de retraso en la detección, no como un factor de riesgo causal con un OR bien caracterizado. Su ponderación se basa en el fundamento clínico más que en una derivación epidemiológica directa."
+      "OralCheck no ha sido validado frente a un conjunto de datos de resultados clínicos. Los pesos se basan en la literatura publicada, pero no han sido calibrados frente a una cohorte prospectiva.",
+      "La evaluación combina el riesgo de cáncer de la cavidad oral y el cáncer orofaríngeo en una sola puntuación. Estas son entidades epidemiológicamente distintas: el VPH-16 es principalmente un factor del cáncer orofaríngeo, mientras que el tabaco y el alcohol predominan en el cáncer de la cavidad oral.",
+      "No se registra el sexo biológico. Los hombres tienen aproximadamente el doble de incidencia de cáncer de la cavidad oral que las mujeres, y eso es una brecha en el modelo actual.",
+      "La inmunosupresión (VIH, receptores de trasplante de órganos, uso prolongado de corticosteroides) está vinculada a un riesgo de cáncer oral significativamente elevado y actualmente no se pregunta al respecto.",
+      "La evaluación depende de datos autoinformados. El consumo de tabaco y alcohol se subreporta con frecuencia.",
+      "La frecuencia de las visitas dentales se incluye como un indicador indirecto del retraso en la detección, no como un factor de riesgo causal con una razón de posibilidades bien caracterizada. Su peso se basa en un razonamiento clínico más que en una derivación epidemiológica directa."
     ],
     "referencesHeading": "Referencias",
     "viewOn": "Ver en PubMed / editorial →",
@@ -1494,66 +1497,66 @@
     "nextSteps": {
       "low": [
         {
-          "title": "Mantén tu visita dental anual",
-          "desc": "La revisión de cáncer oral ya es parte de una limpieza de rutina, toma 2 minutos y se incluye sin costo adicional."
+          "title": "Mantenga su visita dental anual",
+          "desc": "La revisión para detectar cáncer oral ya es parte de una limpieza de rutina: toma 2 minutos y está incluida sin costo adicional."
         },
         {
-          "title": "Hazte un autoexamen mensual",
-          "desc": "Dos minutos frente al espejo, una vez al mes. Buscas cualquier cosa que no haya desaparecido después de 2 semanas.",
-          "linkLabel": "Ve cómo →"
+          "title": "Hágase un autoexamen mensual",
+          "desc": "Dos minutos frente al espejo, una vez al mes. Busque cualquier cosa que no haya desaparecido después de 2 semanas.",
+          "linkLabel": "Ver cómo →"
         },
         {
-          "title": "Conoce las señales de advertencia",
-          "desc": "La mayoría de los cánceres orales detectados a tiempo los encuentran personas que ya sabían qué buscar.",
-          "linkLabel": "Ve las señales de advertencia →"
+          "title": "Conozca las señales de advertencia",
+          "desc": "La mayoría de los cánceres orales detectados temprano los encuentran personas que ya sabían qué buscar.",
+          "linkLabel": "Ver señales de advertencia →"
         }
       ],
       "moderate": [
         {
           "title": "Mencione sus factores de riesgo en su próxima visita dental",
-          "desc": "Su dentista puede prestar más atención durante la revisión si conoce su historial. Solo toma una frase."
+          "desc": "Su dentista puede prestar mayor atención durante la revisión si conoce su historial. Solo toma una oración."
         },
         {
-          "title": "Conozca las señales de advertencia y actúe ante ellas",
-          "desc": "Cualquier cosa en la boca o la garganta que dure más de 2 semanas merece atención. No espere a ver si se pasa.",
+          "title": "Conozca las señales de advertencia y actúe al verlas",
+          "desc": "Cualquier cosa en la boca o la garganta que dure más de 2 semanas merece atención. No lo deje pasar.",
           "linkLabel": "Ver señales de advertencia →"
         },
         {
           "title": "Aprenda cómo reducir su riesgo",
-          "desc": "Varios de los factores que aumentaron su puntaje se pueden modificar. Incluso los cambios pequeños reducen el riesgo con el tiempo.",
+          "desc": "Varios de los factores que elevaron su puntuación son modificables. Incluso cambios pequeños reducen el riesgo con el tiempo.",
           "linkLabel": "Guía de prevención →"
         }
       ],
       "elevated": [
         {
-          "title": "Agende una visita dental este mes",
-          "desc": "Pida específicamente una revisión de cáncer oral al agendar. Está incluida en una limpieza de rutina y toma unos 2 minutos.",
-          "linkLabel": "Encuentre atención cerca de usted →"
+          "title": "Agenda una visita al dentista este mes",
+          "desc": "Al hacer la cita, pida específicamente una revisión de cáncer oral. Está incluida en una limpieza de rutina y toma alrededor de 2 minutos.",
+          "linkLabel": "Encuentra atención cerca de ti →"
         },
         {
-          "title": "Conozca las señales de advertencia y actúe ante ellas",
-          "desc": "Una llaga, mancha, bulto o entumecimiento que dure 2 semanas o más debe ser revisado por un dentista o médico. No espere a ver si se pasa.",
-          "linkLabel": "Ver señales de advertencia →"
+          "title": "Conozca las señales de alerta y actúe ante ellas",
+          "desc": "Una llaga, mancha, bulto o entumecimiento que dure 2 semanas o más debe ser evaluado por un dentista o médico. No espere a ver si desaparece.",
+          "linkLabel": "Ver señales de alerta →"
         },
         {
-          "title": "Trabaje en sus factores de riesgo modificables",
-          "desc": "Su puntaje incluye factores que puede cambiar. Incluso reducciones modestas de tabaco, alcohol o exposición al sol suman.",
+          "title": "Trabaje en los factores de riesgo que puede cambiar",
+          "desc": "Su puntaje incluye factores que están en sus manos modificar. Incluso reducciones moderadas en el consumo de tabaco, alcohol o la exposición al sol hacen la diferencia.",
           "linkLabel": "Guía de prevención →"
         }
       ],
       "high": [
         {
-          "title": "Agende una visita dental o médica esta semana",
-          "desc": "No este mes, esta semana. Si tiene una llaga, mancha o bulto que ha estado ahí 2 semanas o más, menciónelo específicamente cuando llame.",
-          "linkLabel": "Encuentre atención cerca de usted →"
+          "title": "Haga una cita con su dentista o médico esta semana",
+          "desc": "No este mes, esta semana. Si tiene una llaga, mancha o bulto que lleva 2 semanas o más, menciónelo específicamente cuando llame.",
+          "linkLabel": "Encuentra atención cerca de ti →"
         },
         {
           "title": "No espere a ver si desaparece",
-          "desc": "La razón más común por la que los cánceres orales se detectan tarde es que las personas esperan. La mayoría de los hallazgos resultan ser benignos, pero conviene saberlo de cualquier manera."
+          "desc": "La razón más común por la que el cáncer oral se detecta tarde es que las personas esperan. La mayoría de los hallazgos resultan ser benignos, pero conviene saberlo de cualquier forma."
         },
         {
           "title": "Sepa en qué consiste el examen",
-          "desc": "Una revisión de cáncer oral es indolora, toma 2 minutos y la puede hacer su dentista o médico.",
+          "desc": "Una revisión de cáncer oral no causa dolor, toma 2 minutos y la puede realizar su dentista o médico.",
           "linkLabel": "Qué esperar →"
         }
       ]
@@ -1793,7 +1796,7 @@
     "facts": [
       {
         "label": "Qué es",
-        "value": "Una herramienta gratuita para evaluar el riesgo de cáncer oral, disponible en la web sin necesidad de instalar una aplicación."
+        "value": "Una herramienta gratuita para evaluar el riesgo de cáncer oral, disponible en la web sin necesidad de instalar ninguna aplicación."
       },
       {
         "label": "Duración",
@@ -1801,11 +1804,11 @@
       },
       {
         "label": "Costo",
-        "value": "Gratis. Sin cuenta, sin muro de pago, sin anuncios."
+        "value": "Gratuita. Sin cuenta, sin pago y sin anuncios."
       },
       {
         "label": "Privacidad",
-        "value": "Las respuestas se calculan en el navegador y no se almacenan."
+        "value": "Las respuestas se procesan en el navegador y no se almacenan."
       },
       {
         "label": "Idiomas",
@@ -1813,11 +1816,11 @@
       },
       {
         "label": "Metodología",
-        "value": "El puntaje se basa en factores de riesgo publicados y está documentado públicamente, con fuentes, en la página de metodología."
+        "value": "La puntuación se basa en factores de riesgo publicados y está documentada públicamente, con sus fuentes, en la página de metodología."
       },
       {
-        "label": "Fundada",
-        "value": "2026, por un estudiante de preodontología en la Universidad de Wisconsin-Madison."
+        "label": "Fundación",
+        "value": "2026, por un estudiante de predental en la Universidad de Wisconsin-Madison."
       },
       {
         "label": "Buscador de clínicas",
@@ -1867,47 +1870,47 @@
     "shortVersionLabel": "La versión corta",
     "shortVersion": [
       "De uso gratuito, sin cuenta y sin pago.",
-      "Solo educativa. No es consejo médico ni un diagnóstico.",
-      "Sus respuestas permanecen en su dispositivo. No se almacenan.",
-      "No la use para decidir si buscar atención. Consulte siempre a un profesional sobre un síntoma.",
-      "Puede compartirla e imprimirla, incluso en una clínica, sin costo."
+      "Solo con fines educativos. No constituye consejo médico ni un diagnóstico.",
+      "Sus respuestas permanecen en su dispositivo y no se almacenan.",
+      "No dependa de esta herramienta para decidir si buscar atención médica. Ante cualquier síntoma, consulte siempre a un profesional de la salud.",
+      "Puede compartirla e imprimirla, incluso en una clínica, sin ningún costo."
     ],
     "sections": [
       {
         "heading": "Qué hace OralCheck",
-        "body": "OralCheck hace diez preguntas sobre factores de riesgo que las investigaciones publicadas asocian con el cáncer oral, y luego devuelve un nivel de riesgo y una explicación de cuáles de sus respuestas contribuyeron a él. El puntaje se basa en razones de probabilidad publicadas y está documentado por completo en la página de metodología, incluyendo cada fuente. Es un cuestionario de evaluación de riesgo. La prueba de detección en sí es el examen clínico que realiza un dentista, y el propósito de esta herramienta es ayudarlo a decidir ir a hacerse uno."
+        "body": "OralCheck hace diez preguntas sobre factores de riesgo que la investigación publicada asocia con el cáncer oral y luego muestra un nivel de riesgo junto con una explicación de cuáles respuestas contribuyeron a ese resultado. La puntuación se basa en razones de probabilidad publicadas y está documentada en su totalidad en la página de metodología, con todas las fuentes. Es un cuestionario de evaluación de riesgo. La prueba de detección en sí es el examen clínico que realiza el dentista, y el propósito de esta herramienta es ayudarle a tomar la decisión de acudir y realizarse ese examen."
       },
       {
         "heading": "Sin relación profesional",
-        "body": "Usar OralCheck no crea una relación médico-paciente, dentista-paciente ni ninguna otra relación profesional entre usted y OralCheck o cualquier persona asociada con la herramienta. Nadie revisa sus respuestas, porque sus respuestas nunca se envían a ningún lugar. La información de este sitio es general y no está adaptada a su historial médico."
+        "body": "El uso de OralCheck no crea una relación médico-paciente, dentista-paciente ni ningún otro tipo de relación profesional entre usted y OralCheck o cualquier persona asociada a ella. Nadie revisa sus respuestas, porque sus respuestas nunca se envían a ningún lugar. La información de este sitio es de carácter general y no está adaptada a su historial médico."
       },
       {
         "heading": "Exactitud y limitaciones",
-        "body": "La herramienta se basa en investigaciones a nivel poblacional, y las asociaciones a nivel poblacional no predicen lo que le sucederá a una persona en particular. Los factores de riesgo son autorreportados y no verificados. La investigación cambia, y aunque la metodología se mantiene y se fecha, puede haber periodos en los que no refleje la evidencia más reciente. Los listados de clínicas en Encuentre atención provienen de fuentes de terceros, incluyendo Google Places y OpenStreetMap, y no se puede garantizar que un listado sea exacto, actual, esté aceptando pacientes u ofrezca revisiones de cáncer oral. Verifique con el consultorio antes de trasladarse."
+        "body": "La herramienta está construida a partir de investigaciones a nivel poblacional, y las asociaciones a nivel poblacional no predicen lo que le ocurrirá a una persona en particular. Los factores de riesgo son declarados por el propio usuario y no están verificados. La investigación evoluciona y, aunque la metodología se mantiene actualizada con su fecha, pueden existir períodos en los que no refleje la evidencia más reciente. Los listados de clínicas en Encuentra atención provienen de fuentes de terceros, incluidos Google Places y OpenStreetMap, y no es posible garantizar que algún listado sea exacto, esté vigente, acepte pacientes o ofrezca detección de cáncer oral. Verifique con el consultorio antes de desplazarse."
       },
       {
         "heading": "Sus responsabilidades",
-        "body": "Use la herramienta para usted mismo o para ayudar a alguien que se lo haya pedido. No la use para tomar decisiones por otra persona sin su conocimiento, y no presente sus resultados como una opinión profesional. No intente interrumpir el sitio, interferir con el uso de otras personas, ni usar medios automatizados para generar una carga inusual sobre él."
+        "body": "Use la herramienta para usted mismo o para ayudar a alguien que se lo haya pedido. No la use para tomar decisiones por otra persona sin su conocimiento, y no presente sus resultados como una opinión profesional. No intente interrumpir el funcionamiento del sitio, interferir con el uso que otras personas hacen de él ni utilizar medios automatizados para generarle una carga inusual."
       },
       {
-        "heading": "Sin garantía",
-        "body": "OralCheck se ofrece tal cual y según disponibilidad, sin garantías de ningún tipo, expresas o implícitas, incluida cualquier garantía implícita de comerciabilidad, idoneidad para un propósito particular o exactitud. El sitio puede no estar disponible, puede contener errores y puede cambiar o retirarse en cualquier momento."
+        "heading": "Sin garantías",
+        "body": "OralCheck se ofrece tal como está y según disponibilidad, sin garantías de ningún tipo, expresas o implícitas, incluidas las garantías implícitas de comerciabilidad, idoneidad para un propósito particular o exactitud. El sitio puede no estar disponible, puede contener errores y puede cambiar o ser retirado en cualquier momento."
       },
       {
         "heading": "Limitación de responsabilidad",
-        "body": "En la máxima medida permitida por la ley, OralCheck y quienes están asociados con la herramienta no son responsables de ningún daño indirecto, incidental, especial o consecuente, ni de ninguna decisión que usted tome sobre su salud con base en esta herramienta. Nada en estos términos limita la responsabilidad que no puede limitarse por ley. Esto no afecta sus derechos legales."
+        "body": "En la máxima medida permitida por la ley, OralCheck y las personas asociadas a ella no son responsables de ningún daño indirecto, incidental, especial o derivado, ni de ninguna decisión que usted tome sobre su salud basándose en esta herramienta. Nada en estos términos limita una responsabilidad que no pueda ser limitada por ley. Esto no afecta sus derechos legales."
       },
       {
         "heading": "Contenido y reutilización",
-        "body": "El contenido educativo, el folleto imprimible y los materiales con código QR pueden usarse, imprimirse y distribuirse libremente con fines educativos no comerciales, incluso en consultorios dentales y médicos, con atribución a oralcheck.org. El nombre y la marca no pueden usarse de manera que implique respaldo a un producto o consultorio. La metodología de puntaje es pública y puede examinarse, citarse y criticarse."
+        "body": "El contenido educativo, el folleto imprimible y los materiales con código QR pueden utilizarse, imprimirse y distribuirse libremente con fines educativos no comerciales, incluso en consultorios dentales y médicos, con atribución a oralcheck.org. El nombre y la imagen de marca no pueden usarse de manera que impliquen el respaldo de un producto o práctica. La metodología de puntuación es pública y puede consultarse, citarse y analizarse."
       },
       {
-        "heading": "Cambios a estos términos",
-        "body": "Estos términos pueden actualizarse a medida que la herramienta cambia. La fecha a continuación refleja la revisión más reciente, y el uso continuo del sitio después de un cambio significa que los términos revisados aplican."
+        "heading": "Cambios en estos términos",
+        "body": "Estos términos pueden actualizarse a medida que la herramienta cambie. La fecha que aparece a continuación refleja la revisión más reciente, y el uso continuado del sitio tras un cambio implica la aceptación de los términos revisados."
       },
       {
         "heading": "Ley aplicable",
-        "body": "Estos términos se rigen por las leyes del Estado de Wisconsin, Estados Unidos, sin tener en cuenta los principios de conflicto de leyes."
+        "body": "Estos términos se rigen por las leyes del Estado de Wisconsin, Estados Unidos, sin considerar sus principios sobre conflicto de leyes."
       }
     ],
     "contactHeading": "Preguntas",

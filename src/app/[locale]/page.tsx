@@ -79,12 +79,32 @@ export default async function Home({ params }: Props) {
         </div>
       </section>
 
-      {/* Blockquote */}
+      {/* Cited statistic.
+          This was an unattributed line in the brand's own voice, which on a
+          health page is the weakest thing it could be: a claim from nobody.
+          It is now verbatim public data from the NCI SEER program, with the
+          source named and linked so a clinician can check it in one click.
+          Deliberately a citation rather than an endorsement, since nobody has
+          endorsed this tool yet. */}
       <FadeUp>
         <section className="max-w-3xl mx-auto px-5 pb-16 text-center">
-          <blockquote className="font-serif text-2xl sm:text-3xl text-ink leading-snug">
-            &ldquo;{t("quote")}&rdquo;
-          </blockquote>
+          <p className="font-serif text-2xl sm:text-3xl text-ink leading-snug">
+            {t("quote")}
+          </p>
+          <p className="mt-5 text-sm text-ink-soft">
+            {t("quoteSourcePrefix")}{" "}
+            <a
+              href="https://seer.cancer.gov/statfacts/html/oralcav.html"
+              target="_blank"
+              rel="noopener noreferrer"
+              // No underline by request. The colour plus the weight carries the
+              // affordance, and the hover shift confirms it is interactive.
+              className="font-semibold text-brand no-underline hover:text-brand-dark transition-colors"
+            >
+              {t("quoteSourceName")}
+            </a>
+            , {t("quoteSourceDetail")}
+          </p>
         </section>
       </FadeUp>
 

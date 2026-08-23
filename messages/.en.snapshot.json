@@ -76,9 +76,12 @@
     "feature3Title": "Find affordable care",
     "feature3Desc": "Community health centers, dental schools, and free clinics near you, including HRSA-funded providers.",
     "feature3Cta": "Find care",
-    "quote": "Oral cancer is one of the few cancers where a routine visit that takes 2 minutes can change the outcome by decades.",
+    "quote": "Only about 1 in 4 oral and pharyngeal cancers is found before it spreads. Caught at that stage, five-year survival is 88.7%. Once it reaches distant sites, 36%.",
     "followAlong": "Follow along",
-    "followInstagram": "Follow on Instagram →"
+    "followInstagram": "Follow on Instagram →",
+    "quoteSourcePrefix": "Source:",
+    "quoteSourceName": "NCI Surveillance, Epidemiology, and End Results Program",
+    "quoteSourceDetail": "Cancer Stat Facts: Oral Cavity and Pharynx Cancer"
   },
   "FactsMeta": {
     "title": "Oral Cancer Facts & Statistics",
