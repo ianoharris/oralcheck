@@ -39,7 +39,8 @@
     "methods": "Methods",
     "privacy": "Privacy",
     "notAffiliated": "Not affiliated with any medical institution.",
-    "press": "Press kit"
+    "press": "Press kit",
+    "terms": "Terms"
   },
   "HeroSectionPhoto": {
     "headlineLine1": [
@@ -1852,5 +1853,67 @@
     "sentTitle": "Thank you",
     "sentBody": "Your review came through. It genuinely helps.",
     "genericError": "Could not send that. Please try again in a moment."
+  },
+  "TermsMeta": {
+    "title": "Terms of Use",
+    "description": "The terms for using OralCheck, a free educational oral cancer risk tool. Not a medical diagnosis."
+  },
+  "TermsPage": {
+    "back": "← Back to home",
+    "heading": "Terms of Use",
+    "intro": "These terms cover your use of oralcheck.org. They are written to be read rather than skimmed, because the most important part is what this tool is not.",
+    "medicalLabel": "OralCheck is not a medical diagnosis",
+    "medicalBody": "OralCheck is an educational tool that estimates risk from factors you report. It cannot examine you, it cannot see inside your mouth, and it cannot detect, diagnose, rule out, or exclude cancer or any other condition. A low result does not mean you are healthy, and a high result does not mean you have cancer. Only a qualified dental or medical professional can examine you and reach a diagnosis. If you have a symptom that concerns you, see a professional regardless of what this tool says. If a symptom is severe or worsening quickly, seek urgent care.",
+    "shortVersionLabel": "The short version",
+    "shortVersion": [
+      "Free to use, with no account and no payment.",
+      "Educational only. It is not medical advice and not a diagnosis.",
+      "Your answers stay on your device. We do not store them.",
+      "Do not rely on it to decide whether to seek care. Always see a professional about a symptom.",
+      "You may share and print it, including in a clinic, at no cost."
+    ],
+    "sections": [
+      {
+        "heading": "What OralCheck does",
+        "body": "OralCheck asks ten questions about risk factors that published research associates with oral cancer, then returns a risk tier and an explanation of which of your answers contributed to it. The scoring is derived from published odds ratios and is documented in full on the methodology page, including every source. It is a risk-assessment questionnaire. The screening test itself is the clinical examination a dentist performs, and the purpose of this tool is to help you decide to go and have one."
+      },
+      {
+        "heading": "No professional relationship",
+        "body": "Using OralCheck does not create a doctor-patient, dentist-patient, or any other professional relationship between you and OralCheck or anyone associated with it. Nobody reviews your answers, because your answers are never sent anywhere. The information on this site is general and is not tailored to your medical history."
+      },
+      {
+        "heading": "Accuracy and limitations",
+        "body": "The tool is built from population-level research, and population-level associations do not predict what will happen to an individual. Risk factors are self-reported and unverified. Research changes, and while the methodology is maintained and dated, there may be periods when it does not reflect the most recent evidence. Clinic listings on Find Care come from third-party sources including Google Places and OpenStreetMap, and we cannot guarantee that any listing is accurate, current, accepting patients, or offers oral cancer screening. Verify with the practice before travelling."
+      },
+      {
+        "heading": "Your responsibilities",
+        "body": "Use the tool for yourself or to help someone who has asked you to. Do not use it to make decisions for anyone without their knowledge, and do not present its output as a professional opinion. Do not attempt to disrupt the site, interfere with other people's use of it, or use automated means to place unusual load on it."
+      },
+      {
+        "heading": "No warranty",
+        "body": "OralCheck is provided as is and as available, without warranties of any kind, express or implied, including any implied warranty of merchantability, fitness for a particular purpose, or accuracy. The site may be unavailable, may contain errors, and may change or be withdrawn at any time."
+      },
+      {
+        "heading": "Limitation of liability",
+        "body": "To the fullest extent permitted by law, OralCheck and those associated with it are not liable for any indirect, incidental, special, or consequential damages, or for any decision you make about your health based on this tool. Nothing in these terms limits liability that cannot be limited by law. This does not affect your statutory rights."
+      },
+      {
+        "heading": "Content and reuse",
+        "body": "The educational content, printable flyer, and QR materials may be freely used, printed, and distributed for non-commercial educational purposes, including in dental and medical practices, with attribution to oralcheck.org. The name and branding may not be used in a way that implies endorsement of a product or practice. The scoring methodology is public and may be examined, cited, and criticised."
+      },
+      {
+        "heading": "Changes to these terms",
+        "body": "These terms may be updated as the tool changes. The date below reflects the most recent revision, and continued use of the site after a change means the revised terms apply."
+      },
+      {
+        "heading": "Governing law",
+        "body": "These terms are governed by the laws of the State of Wisconsin, United States, without regard to conflict of law principles."
+      }
+    ],
+    "contactHeading": "Questions",
+    "contactBody": "OralCheck is built and maintained by Ian Harris. If something here is unclear, or if you believe the tool is wrong about something, please say so through the feedback form on the About page. Corrections from clinicians are especially welcome.",
+    "privacyPointer": "For what happens to your data, which is very little, see the",
+    "privacyLink": "privacy policy",
+    "lastUpdated": "Last updated: 18 August 2026"
   }
 }

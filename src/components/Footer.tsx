@@ -49,6 +49,7 @@ export default async function Footer() {
           <div className="flex gap-4 items-center">
             <Link href="/methods" className="hover:text-brand transition-colors">{t("methods")}</Link>
             <Link href="/privacy" className="hover:text-brand transition-colors">{t("privacy")}</Link>
+            <Link href="/terms" className="hover:text-brand transition-colors">{t("terms")}</Link>
             <a
               href="https://www.linkedin.com/company/oralcheckdotorg/"
               target="_blank"
