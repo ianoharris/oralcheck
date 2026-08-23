@@ -1,4 +1,0 @@
-{
-  "$schema": "https://openapi.vercel.sh/vercel.json",
-  "comment": "Security headers moved to next.config.ts so they also apply to next dev and can be tested before deploy. Duplicating them here would send each header twice."
-}
