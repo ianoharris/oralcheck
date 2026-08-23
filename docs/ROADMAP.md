@@ -23,7 +23,7 @@ Last updated: 2026-08-18
 | A real quote on the homepage | The same replies | Currently carries a cited NCI SEER statistic instead, which is honest but is a citation rather than an endorsement. Do not fabricate one. |
 | Judge whether the reel skip-rate fix worked | A new reel going out | 83.7% skip. Frame-0 fix and cover image both shipped, but only affect reels rendered *after* they landed. The three currently scheduled were rendered before. |
 | Trustworthy completion rate over 90d | ~2 weeks of clean events | The double-count fix shipped 2026-08-10. Until then only short windows are reliable. 30-day read at fix time: **91.4%**. |
-| Outreach replies | Ian sending them | 7 contacts sit in `outreach-contacts.csv` at status Pending: Penn/CIGOH, Tufts (x2), Columbia (x2), Head and Neck Cancer Alliance, AAOM. Drafts folder is empty apart from a README. |
+| Outreach replies | Ian sending them | 10 contacts: the original 7 in `outreach-contacts.csv` (Penn/CIGOH, Tufts x2, Columbia x2, HNCA, AAOM) plus 3 at Marquette. **Drafts are written** in `outreach-drafts/` as of 2026-08-18, so the only remaining step is pasting them into Outlook and sending. Update Status to `Followed Up` after each, or the Sunday tracker will generate duplicates. |
 | LinkedIn auto-publishing | Publora plan | Starter caps 3 active scheduled posts, counted **per platform target**, so 3 Instagram posts fill it. Code already supports LinkedIn: set `PUBLORA_PLATFORMS=instagram,linkedin` and `LINKEDIN_HANDOFF=0` if the plan changes. |
 
 ---
