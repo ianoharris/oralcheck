@@ -10,7 +10,7 @@ The running list. Two rules:
    named. This is the list's whole purpose: the things that come up once, sound
    good, and are never mentioned again.
 
-Last updated: 2026-08-17
+Last updated: 2026-08-18
 
 ---
 
@@ -18,6 +18,9 @@ Last updated: 2026-08-17
 
 | Item | Blocked on | Notes |
 |---|---|---|
+| Publishing articles from `/review/<slug>` | Ian setting `ADMIN_SECRET` in Vercel | `/api/publish` and `/api/draft` fail closed with 503 until it exists. Generate with `openssl rand -base64 32`, add it in Vercel, redeploy, then paste it once on any `/review/` page. The public site is unaffected. |
+| A named clinical reviewer on `/methods` | Replies to the Rawal / Khaled / academic emails | Drafts are written and sitting in `outreach-drafts/`. This is the unlock for the homepage quote, for the ADA briefing landing, and for every practice conversation. |
+| A real quote on the homepage | The same replies | Currently carries a cited NCI SEER statistic instead, which is honest but is a citation rather than an endorsement. Do not fabricate one. |
 | Judge whether the reel skip-rate fix worked | A new reel going out | 83.7% skip. Frame-0 fix and cover image both shipped, but only affect reels rendered *after* they landed. The three currently scheduled were rendered before. |
 | Trustworthy completion rate over 90d | ~2 weeks of clean events | The double-count fix shipped 2026-08-10. Until then only short windows are reliable. 30-day read at fix time: **91.4%**. |
 | Outreach replies | Ian sending them | 7 contacts sit in `outreach-contacts.csv` at status Pending: Penn/CIGOH, Tufts (x2), Columbia (x2), Head and Neck Cancer Alliance, AAOM. Drafts folder is empty apart from a README. |
@@ -88,6 +91,21 @@ Last updated: 2026-08-17
 ## Shipped
 
 Newest first.
+
+### 2026-08-18
+- Security review: unauthenticated `/api/publish` closed, spoofable rate-limit IP
+  fixed, `/api/geocode` metered, CSP added (see the section at the foot of this file)
+- Terms of Use at `/terms`, English and Spanish
+- **The translation cache bug**: `i18n-sync` compared array-valued keys by
+  reference, so all 45 of them (the Terms and Privacy sections, learn-page lists,
+  checklists) were retranslated on every single run, forever, on Opus 4.8. A
+  no-change run went from 5+ minutes to 0.13 seconds and zero API calls. This was
+  the source of the unexplained API spend
+- Translation moved to Sonnet 4.6; `/api/summary` given a daily ceiling
+- `find_care_click` and QR `?src=` tagging: all five key metrics now instrumented
+- Homepage line replaced with cited NCI SEER data, source linked
+- Outreach drafts written for Marquette (Bhagavatula, Rawal, Khaled) and the
+  seven contacts that had never been emailed
 
 ### 2026-08-17
 - The sixteen designed templates promoted into `layouts.py` and wired into
@@ -170,8 +188,21 @@ Everything else is vanity. Pull with `oralcheck-agent/ga_stats.py`.
 4. Share clicking through to Find Care
 5. Dental practices actively distributing OralCheck
 
-Current (30-day, 2026-08-10): 35 starts, 91.4% completion. Numbers 3, 4 and 5 are
-not instrumented yet.
+Current (30-day, ending 2026-08-16, excluding the bot spike): **65 users, 33
+starts, 30 completions (91%)**. All-time: 728 users.
+
+All five are now instrumented as of 2026-08-18, but three need one manual step
+each before they report:
+
+| # | Mechanism | Manual step still required |
+|---|---|---|
+| 3 | `risk_tier` / `risk_score` sent on `screener_completed` | Register `risk_tier` as a **custom dimension** in GA4 (Admin, Custom definitions). Event params do not appear in reports until registered, and registration is **not retroactive**. |
+| 4 | `find_care_click` on the results CTA, tagged with tier | Register `risk_tier` as above; the event itself needs nothing. |
+| 5 | `/qr` tags the encoded URL with `?src=<practice>` | Type a name on `/qr` before printing. An untagged code still works, it just cannot be attributed. |
+
+Number 4 is the one that matters most: it is the closest thing the tool has to
+"did this send someone toward care", and it is the first thing every partnership
+email will be asked to justify.
 
 ## Security review, 2026-08-18
 
