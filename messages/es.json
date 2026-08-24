@@ -1607,7 +1607,9 @@
       }
     },
     "alsoContributing": "También contribuyen:",
-    "hideOthers": "Ocultar estos"
+    "hideOthers": "Ocultar estos",
+    "noFactorCaveatLabel": "Una puntuación baja no descarta nada",
+    "noFactorCaveatBody": "Alrededor de 1 de cada 4 cánceres de boca ocurren en personas que no tienen ninguno de los factores de riesgo sobre los que pregunta esta herramienta. Esta puntuación refleja sus factores de riesgo, no el estado de su boca. Si nota una llaga, mancha, bulto, crecimiento en las encías, un diente que se ha aflojado, o dificultad para tragar que dure más de dos semanas, consulte a un profesional sin importar lo que diga este resultado."
   },
   "ScreenerMeta": {
     "title": "Evaluación gratuita de riesgo de cáncer oral",
@@ -1682,7 +1684,7 @@
     },
     "symptom": {
       "title": "En el último mes, ¿has tenido alguno de estos por 2 semanas o más?",
-      "subtitle": "Las manchas rojas persistentes (eritroplasia: tasa de transformación maligna del 14–50%), las manchas blancas (leucoplasia: tasa de transformación del 5–17%), las úlceras que no sanan, los bultos inexplicables o la dificultad para tragar son señales clínicas de advertencia reconocidas que requieren evaluación profesional.",
+      "subtitle": "Las manchas rojas persistentes (eritroplasia: tasa de transformación maligna del 14 al 50%), las manchas blancas (leucoplasia: tasa de transformación del 5 al 17%), las úlceras que no cicatrizan, los bultos sin causa aparente, un crecimiento en las encías, un diente que se ha aflojado recientemente, o la dificultad para tragar son señales de alerta clínicas reconocidas que requieren evaluación por un profesional de salud.",
       "options": {
         "yes": "Sí, una o más",
         "unsure": "No estoy seguro(a) / tal vez",

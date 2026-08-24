@@ -293,6 +293,33 @@ export default function ResultsPage() {
               {result.headline}
             </h1>
 
+            {/* Shown on the reassuring tiers only, and only when no urgent
+                symptom was reported.
+
+                Dr. Yeshwant Rawal (Professor of Surgical Sciences and Director
+                of Diagnostic Sciences at Marquette, President of the American
+                Board of Oral & Maxillofacial Pathology) reviewed the
+                methodology on 2026-08-24 and made the point this exists to
+                answer: roughly a quarter of oral cancers occur in people with
+                none of the conventional contributing factors. Consistent with
+                the literature on never-smoker, never-drinker OSCC, which puts
+                it at 25-30%.
+
+                A score built only from risk factors therefore cannot reassure,
+                and "Your current risk profile looks low" on its own invites
+                exactly the wrong conclusion from someone who has a symptom. */}
+            {(result.tier === "low" || result.tier === "moderate") &&
+              !result.hasUrgentSymptom && (
+                <div className="rounded-2xl border border-accent/30 bg-accent/5 px-5 py-4">
+                  <p className="text-sm font-semibold text-accent mb-1">
+                    {t("noFactorCaveatLabel")}
+                  </p>
+                  <p className="text-sm text-ink leading-relaxed">
+                    {t("noFactorCaveatBody")}
+                  </p>
+                </div>
+              )}
+
             {/* Summary with skeleton loading state */}
             {summaryLoading && !claudeSummary ? (
               <div className="space-y-2 pt-1">

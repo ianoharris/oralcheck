@@ -10,7 +10,7 @@ The running list. Two rules:
    named. This is the list's whole purpose: the things that come up once, sound
    good, and are never mentioned again.
 
-Last updated: 2026-08-18
+Last updated: 2026-08-24
 
 ---
 
@@ -19,8 +19,8 @@ Last updated: 2026-08-18
 | Item | Blocked on | Notes |
 |---|---|---|
 | Publishing articles from `/review/<slug>` | Ian setting `ADMIN_SECRET` in Vercel | `/api/publish` and `/api/draft` fail closed with 503 until it exists. Generate with `openssl rand -base64 32`, add it in Vercel, redeploy, then paste it once on any `/review/` page. The public site is unaffected. |
-| A named clinical reviewer on `/methods` | Replies to the Rawal / Khaled / academic emails | Drafts are written and sitting in `outreach-drafts/`. This is the unlock for the homepage quote, for the ADA briefing landing, and for every practice conversation. |
-| A real quote on the homepage | The same replies | Currently carries a cited NCI SEER statistic instead, which is honest but is a citation rather than an endorsement. Do not fabricate one. |
+| A named clinical reviewer on `/methods` | Rawal's permission, asked for 2026-08-24 | **Dr. Yeshwant Rawal reviewed the methodology on 2026-08-24** and called it "done thoughtfully and based on evidence through relevant literature". He is President of the American Board of Oral & Maxillofacial Pathology, so this is a serious credential. He has NOT granted permission to be named. Do not put his name on the site until he replies to the ask in `outreach-drafts/2026-08-24-Yeshwant-Rawal-REPLY.md`. |
+| A real quote on the homepage | The same permission | Currently carries a cited NCI SEER statistic, which is honest but is a citation rather than an endorsement. Rawal's review is the first plausible source for a real one. Do not fabricate one, and do not quote him until he says yes. |
 | Judge whether the reel skip-rate fix worked | A new reel going out | 83.7% skip. Frame-0 fix and cover image both shipped, but only affect reels rendered *after* they landed. The three currently scheduled were rendered before. |
 | Trustworthy completion rate over 90d | ~2 weeks of clean events | The double-count fix shipped 2026-08-10. Until then only short windows are reliable. 30-day read at fix time: **91.4%**. |
 | Outreach replies | Ian sending them | 10 contacts: the original 7 in `outreach-contacts.csv` (Penn/CIGOH, Tufts x2, Columbia x2, HNCA, AAOM) plus 3 at Marquette. **Drafts are written** in `outreach-drafts/` as of 2026-08-18, so the only remaining step is pasting them into Outlook and sending. Update Status to `Followed Up` after each, or the Sunday tracker will generate duplicates. |
@@ -47,6 +47,14 @@ Last updated: 2026-08-18
       (erythroplakia) and lump/thickening. No openly-licensed image found yet.
 
 ### Product and credibility
+
+- [ ] **Systemic risk factors are not modelled at all.** Raised by Dr. Rawal:
+      Fanconi anemia, immunosuppression after bone marrow or organ transplant,
+      and prior head and neck radiation are all stronger signals than most
+      factors currently weighted, and none are asked about. Proposed in the
+      reply to him: one combined question rather than three, weighted high,
+      to avoid costing every user time for a rare catch. Waiting on his view on
+      whether combining them is clinically defensible.
 
 - [ ] **Tighten the terminology.** *Verified:* USPSTF gives oral cancer screening an
       "insufficient evidence" rating, but that statement is scoped to **primary care
@@ -91,6 +99,19 @@ Last updated: 2026-08-18
 ## Shipped
 
 Newest first.
+
+### 2026-08-24
+- **Dr. Yeshwant Rawal's review acted on the same day.** Symptom question now
+  includes growth of the gums and recent tooth mobility, both named by him
+- Lower risk tiers now carry an explicit caveat that a low score rules nothing
+  out, because roughly 1 in 4 oral cancers occur in people with none of the
+  conventional contributing factors (25-30% in the never-smoker/never-drinker
+  literature). "Your risk profile looks low" was reassuring precisely the people
+  it should not. Suppressed when an urgent symptom is reported, so it never
+  competes with the urgent banner
+- One malformed idea response no longer kills the weekly run: `_extract_json_array`
+  salvages per-object, and each format is isolated in `generate_by_type`
+- Printable QR section and the disclaimer with Terms/Privacy links on the home page
 
 ### 2026-08-18
 - Security review: unauthenticated `/api/publish` closed, spoofable rate-limit IP

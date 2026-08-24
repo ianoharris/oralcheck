@@ -1607,7 +1607,9 @@
       }
     },
     "alsoContributing": "Also contributing:",
-    "hideOthers": "Hide these"
+    "hideOthers": "Hide these",
+    "noFactorCaveatLabel": "A low score does not rule anything out",
+    "noFactorCaveatBody": "Around 1 in 4 oral cancers occur in people who have none of the risk factors this tool asks about. This score reflects your risk factors, not your mouth. If you notice a sore, patch, lump, gum growth, loose tooth, or difficulty swallowing that lasts more than two weeks, have it examined regardless of what this result says."
   },
   "ScreenerMeta": {
     "title": "Free Oral Cancer Risk Screener",
@@ -1682,7 +1684,7 @@
     },
     "symptom": {
       "title": "In the last month, have you had any of these for 2+ weeks?",
-      "subtitle": "Persistent red patches (erythroplakia: 14–50% malignant transformation rate), white patches (leukoplakia: 5–17% transformation rate), non-healing ulcers, unexplained lumps, or difficulty swallowing are established clinical warning signs requiring professional evaluation.",
+      "subtitle": "Persistent red patches (erythroplakia: 14–50% malignant transformation rate), white patches (leukoplakia: 5–17% transformation rate), non-healing ulcers, unexplained lumps, a growth on the gums, a tooth that has recently become loose, or difficulty swallowing are established clinical warning signs requiring professional evaluation.",
       "options": {
         "yes": "Yes, one or more",
         "unsure": "Not sure / maybe",
