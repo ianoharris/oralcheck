@@ -16,6 +16,13 @@ note: |
   Does NOT: assume permission to name him. He never granted it. His signature
   block is a serious credential and putting it on the site uninvited would be
   the fastest way to lose him. The ask is explicit and easy to decline.
+
+  Added a low-pressure question about a public-health or university use, naming
+  Marquette. This is deliberately not a pilot pitch, that's already sitting with
+  Bhagavatula in a separate email. Asking Rawal to pitch it internally would be
+  presumptuous and duplicates that outreach. This just asks whether he sees a
+  use, phrased so "no" costs him nothing and doesn't derail the methodology
+  conversation this email is actually about.
 ---
 
 Hi Dr. Rawal,
@@ -35,6 +42,8 @@ Two asks, and please say no to either.
 First, would you be willing to be named as a reviewer on the methodology page? Something plain, along the lines of "Reviewed August 2026 by Yeshwant B. Rawal, BDS, MDS, MS, Marquette University School of Dentistry", with whatever wording and titles you'd want. To be clear about what I'd be claiming: that you read the methodology and gave feedback, which I've acted on. Not that you endorse the tool or vouch for its output.
 
 Second, if you'd rather not attach your name to it, would you object to me quoting your line about it being done thoughtfully and based on evidence, unattributed or attributed only as an oral pathologist? Also completely fine if the answer is no to both.
+
+One more question, no obligation attached. Given where you sit, do you see any use for something like this in a public health or university setting, potentially at Marquette itself? I'm thinking of community outreach events or a waiting-room screening aid, but you'd know far better than I would what would actually be useful versus what would just add friction for your students or faculty. If nothing comes to mind, that's a completely fine answer too.
 
 Thanks again for the time. It made the tool better in a day.
 
