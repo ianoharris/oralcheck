@@ -81,7 +81,14 @@
     "followInstagram": "Seguir en Instagram →",
     "quoteSourcePrefix": "Fuente:",
     "quoteSourceName": "Programa de Vigilancia, Epidemiología y Resultados Finales del NCI",
-    "quoteSourceDetail": "Datos estadísticos sobre cáncer: cáncer de cavidad oral y faringe"
+    "quoteSourceDetail": "Datos estadísticos sobre cáncer: cáncer de cavidad oral y faringe",
+    "shareEyebrow": "Compártelo",
+    "shareHeading": "Imprímelo. Publícalo. Pásalo.",
+    "shareBody": "La mayoría de las personas que necesitan esto nunca lo van a buscar. Un código QR en la pared de una sala de espera, un tablón comunitario o la sala de descanso llega a personas que un sitio web no puede alcanzar. Es gratis para imprimir, y puedes marcar cada copia para ver qué lugares realmente atraen visitantes.",
+    "shareCta": "Obtén un código QR para imprimir",
+    "disclaimerLine": "OralCheck es una herramienta educativa, no un diagnóstico médico. No puede detectar ni descartar cáncer. Siempre consulte a un profesional dental o médico sobre cualquier síntoma que le preocupe.",
+    "disclaimerTermsLink": "Términos de uso",
+    "disclaimerPrivacyLink": "Privacidad"
   },
   "FactsMeta": {
     "title": "Datos y estadísticas del cáncer oral",

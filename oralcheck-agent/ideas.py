@@ -10,12 +10,15 @@ shared brand constants. This module never imports the agent.
 """
 
 import json
+import logging
 import re
 import uuid
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
 import anthropic
+
+log = logging.getLogger("oralcheck")
 
 LEDGER_FILE = Path(__file__).parent / "ideas.json"
 # Topics already posted outside this system (hand-maintained). Never re-suggested.
@@ -192,20 +195,76 @@ def _coerce(idea: dict, valid_pillars: set[str]) -> dict | None:
     }
 
 
+def _salvage_objects(blob: str) -> list:
+    """Parse the top-level {...} objects out of an array body one at a time.
+
+    Used when the array as a whole will not parse. Walking balanced braces and
+    decoding each object independently means one malformed idea costs one idea,
+    and a response truncated mid-object costs only the object it stopped in,
+    instead of the entire batch.
+    """
+    out: list = []
+    depth = 0
+    start = -1
+    in_str = False
+    escape = False
+    for i, ch in enumerate(blob):
+        if in_str:
+            if escape:
+                escape = False
+            elif ch == "\\":
+                escape = True
+            elif ch == '"':
+                in_str = False
+            continue
+        if ch == '"':
+            in_str = True
+        elif ch == "{":
+            if depth == 0:
+                start = i
+            depth += 1
+        elif ch == "}":
+            depth -= 1
+            if depth == 0 and start != -1:
+                try:
+                    out.append(json.loads(blob[start:i + 1]))
+                except Exception:
+                    pass          # one bad idea, not a lost batch
+                start = -1
+    return out
+
+
 def _extract_json_array(resp) -> list:
     """Pull the JSON idea array out of a response that may include web-search blocks.
 
     Concatenates all text blocks (the final one holds the JSON), strips any code
     fences, and slices from the first '[' to the last ']'.
+
+    Never raises. This used to propagate a JSONDecodeError, and because
+    generate_by_type calls it once per format in sequence, one unparseable
+    response destroyed the whole weekly run: on 2026-08-24 carousel and reel had
+    already generated successfully and were thrown away when the image batch
+    came back malformed. A bad response should cost at most the ideas in it.
     """
     texts = [b.text for b in resp.content if getattr(b, "type", None) == "text"]
     raw = "\n".join(texts).strip()
     if "```" in raw:
         raw = re.sub(r"```[a-zA-Z]*", "", raw).replace("```", "")
     start, end = raw.find("["), raw.rfind("]")
-    if start == -1 or end == -1 or end < start:
-        raise ValueError("no JSON array found in idea-generation response")
-    return json.loads(raw[start:end + 1])
+    if start == -1:
+        log.warning("No JSON array in idea response (%d chars); skipping this batch.", len(raw))
+        return []
+    # A missing closing bracket means truncation, so salvage from the opening one.
+    body = raw[start:end + 1] if end > start else raw[start:]
+    try:
+        parsed = json.loads(body)
+        if isinstance(parsed, list):
+            return parsed
+    except Exception as exc:
+        log.warning("Idea response was not valid JSON (%s); salvaging objects.", exc)
+    salvaged = _salvage_objects(body)
+    log.warning("Salvaged %d idea object(s) from the malformed response.", len(salvaged))
+    return salvaged
 
 
 def generate_by_type(per_type, *, api_key, model, system_prompt, pillar_briefs,
@@ -225,15 +284,26 @@ def generate_by_type(per_type, *, api_key, model, system_prompt, pillar_briefs,
     for media in wanted:
         if media not in VALID_MEDIA:
             continue
-        got = generate_ideas(
-            per_type, api_key=api_key, model=model, system_prompt=system_prompt,
-            pillar_briefs=pillar_briefs, calendar_events=calendar_events,
-            ledger=ledger, force_media=media, hook_block=hook_block,
-            # A batch already in hand must not be re-suggested by the next
-            # format's call, which happens within one run before anything is
-            # written to the ledger.
-            extra_avoid=[i["title"] for i in out],
-        )
+        # Each format is isolated. Whatever goes wrong generating one of them,
+        # the formats that already succeeded still reach Telegram; a partial
+        # batch is worth far more than a failed run, because the run only
+        # happens once a week and a failure costs the whole week.
+        try:
+            got = generate_ideas(
+                per_type, api_key=api_key, model=model, system_prompt=system_prompt,
+                pillar_briefs=pillar_briefs, calendar_events=calendar_events,
+                ledger=ledger, force_media=media, hook_block=hook_block,
+                # A batch already in hand must not be re-suggested by the next
+                # format's call, which happens within one run before anything is
+                # written to the ledger.
+                extra_avoid=[i["title"] for i in out],
+            )
+        except Exception as exc:  # noqa: BLE001
+            log.error("Idea generation failed for %s (%s); continuing with the other formats.",
+                      media, exc)
+            continue
+        if not got:
+            log.warning("No usable %s ideas came back this run.", media)
         for idea in got[:per_type]:
             idea["media_type"] = media  # the model still drifts; the caller asked for this one
             out.append(idea)

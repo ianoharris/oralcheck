@@ -108,6 +108,33 @@ export default async function Home({ params }: Props) {
         </section>
       </FadeUp>
 
+      {/* Share / print.
+          Given here rather than buried in the footer because printed QR codes
+          are the distribution channel that reaches the people this tool is
+          actually for: the ones not seeing a dentist, who will never search
+          for an oral cancer screener. */}
+      <FadeUp>
+        <section className="max-w-6xl mx-auto px-5 pb-20">
+          <div className="rounded-3xl bg-brand-soft border border-brand/20 px-6 py-10 sm:px-12 sm:py-12 flex flex-col sm:flex-row sm:items-center gap-8">
+            <div className="flex-1">
+              <p className="text-xs font-semibold tracking-widest text-brand uppercase mb-2">
+                {t("shareEyebrow")}
+              </p>
+              <h2 className="font-serif text-3xl sm:text-4xl text-ink mb-3 text-balance">
+                {t("shareHeading")}
+              </h2>
+              <p className="text-ink-soft leading-relaxed max-w-xl">{t("shareBody")}</p>
+            </div>
+            <Link
+              href="/qr"
+              className="shrink-0 self-start sm:self-auto bg-brand hover:bg-brand-dark text-white font-semibold px-6 py-3.5 rounded-full transition-colors text-center"
+            >
+              {t("shareCta")}
+            </Link>
+          </div>
+        </section>
+      </FadeUp>
+
       {/* Logo marquee */}
       <LogoMarquee />
 
@@ -137,6 +164,29 @@ export default async function Home({ params }: Props) {
           <InstagramFeed widgetId={process.env.NEXT_PUBLIC_BEHOLD_WIDGET_ID} />
         </section>
       )}
+
+      {/* Disclaimer and legal.
+          On the page itself, not only in the footer. Someone who lands here,
+          takes the screener and leaves may never scroll to a footer, and the
+          limits of the tool are the one thing they should not miss. */}
+      <section className="max-w-3xl mx-auto px-5 pb-16">
+        <p className="text-xs text-ink-soft leading-relaxed text-center">
+          {t("disclaimerLine")}{" "}
+          <Link
+            href="/terms"
+            className="font-semibold text-brand no-underline hover:text-brand-dark transition-colors"
+          >
+            {t("disclaimerTermsLink")}
+          </Link>
+          {" · "}
+          <Link
+            href="/privacy"
+            className="font-semibold text-brand no-underline hover:text-brand-dark transition-colors"
+          >
+            {t("disclaimerPrivacyLink")}
+          </Link>
+        </p>
+      </section>
     </div>
   );
 }

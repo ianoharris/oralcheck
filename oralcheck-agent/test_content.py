@@ -87,11 +87,59 @@ def test_coerce():
     check("coerce drops empty title", I._coerce({"title": ""}, {"stats"}) is None)
 
 
+class _Block:
+    """Stand-in for an SDK text block."""
+    def __init__(self, text):
+        self.type = "text"
+        self.text = text
+
+
+class _Resp:
+    def __init__(self, *texts):
+        self.content = [_Block(t) for t in texts]
+
+
+def test_json_extraction():
+    """A malformed idea response must cost ideas, never the run.
+
+    On 2026-08-24 this raised a JSONDecodeError from inside a per-format loop,
+    so the carousel and reel batches that had already generated were discarded
+    and the weekly run died.
+    """
+    good = _Resp('[{"title": "A", "media_type": "reel"}, {"title": "B"}]')
+    check("parses a clean array", len(I._extract_json_array(good)) == 2)
+
+    fenced = _Resp('```json\n[{"title": "A"}]\n```')
+    check("strips code fences", len(I._extract_json_array(fenced)) == 1)
+
+    prose = _Resp('Here are the ideas:\n[{"title": "A"}]\nHope that helps.')
+    check("ignores surrounding prose", len(I._extract_json_array(prose)) == 1)
+
+    # One element malformed: keep the rest rather than losing everything.
+    partial = _Resp('[{"title": "A"}, {"title": "B", oops}, {"title": "C"}]')
+    got = I._extract_json_array(partial)
+    check("salvages around a bad element", [i["title"] for i in got] == ["A", "C"])
+
+    # Truncated mid-object, which is what a max_tokens cutoff looks like.
+    cut = _Resp('[{"title": "A"}, {"title": "B"}, {"title": "C", "brief": "unfinis')
+    got = I._extract_json_array(cut)
+    check("salvages a truncated response", [i["title"] for i in got] == ["A", "B"])
+
+    # Braces inside strings must not confuse the brace walker.
+    braces = _Resp('[{"title": "A {not a brace} B"}]')
+    got = I._extract_json_array(braces)
+    check("ignores braces inside strings", got and got[0]["title"] == "A {not a brace} B")
+
+    check("no array returns empty", I._extract_json_array(_Resp("no json here")) == [])
+    check("never raises on junk", I._extract_json_array(_Resp("[[[")) == [])
+
+
 def main():
     print("Calendar:");      test_calendar()
     print("Slugify:");       test_slugify()
     print("Ledger flow:");   test_ledger_flow()
     print("Coerce:");        test_coerce()
+    print("JSON extraction:"); test_json_extraction()
     if _fails:
         print(f"\n  {len(_fails)} FAILURE(S): {', '.join(_fails)}")
         return 1

@@ -81,7 +81,14 @@
     "followInstagram": "Follow on Instagram →",
     "quoteSourcePrefix": "Source:",
     "quoteSourceName": "NCI Surveillance, Epidemiology, and End Results Program",
-    "quoteSourceDetail": "Cancer Stat Facts: Oral Cavity and Pharynx Cancer"
+    "quoteSourceDetail": "Cancer Stat Facts: Oral Cavity and Pharynx Cancer",
+    "shareEyebrow": "Spread it",
+    "shareHeading": "Print it. Post it. Pass it on.",
+    "shareBody": "Most people who need this will never search for it. A QR code on a waiting-room wall, a community board, or a break room reaches the people a website cannot. Free to print, and you can tag each copy to see which locations actually bring people in.",
+    "shareCta": "Get a printable QR code",
+    "disclaimerLine": "OralCheck is an educational tool, not a medical diagnosis. It cannot detect or rule out cancer. Always speak to a dental or medical professional about any symptom that concerns you.",
+    "disclaimerTermsLink": "Terms of Use",
+    "disclaimerPrivacyLink": "Privacy"
   },
   "FactsMeta": {
     "title": "Oral Cancer Facts & Statistics",
