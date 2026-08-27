@@ -10,7 +10,11 @@ The running list. Two rules:
    named. This is the list's whole purpose: the things that come up once, sound
    good, and are never mentioned again.
 
-Last updated: 2026-08-24
+Last updated: 2026-08-25
+
+**Mirrored to an artifact Ian reads:**
+https://claude.ai/code/artifact/cc490e4b-1ee3-4062-bc56-eada066f1003
+Update both together. See `AGENTS.md`.
 
 ---
 
@@ -19,8 +23,11 @@ Last updated: 2026-08-24
 | Item | Blocked on | Notes |
 |---|---|---|
 | Publishing articles from `/review/<slug>` | Ian setting `ADMIN_SECRET` in Vercel | `/api/publish` and `/api/draft` fail closed with 503 until it exists. Generate with `openssl rand -base64 32`, add it in Vercel, redeploy, then paste it once on any `/review/` page. The public site is unaffected. |
-| A named clinical reviewer on `/methods` | Rawal's permission, asked for 2026-08-24 | **Dr. Yeshwant Rawal reviewed the methodology on 2026-08-24** and called it "done thoughtfully and based on evidence through relevant literature". He is President of the American Board of Oral & Maxillofacial Pathology, so this is a serious credential. He has NOT granted permission to be named. Do not put his name on the site until he replies to the ask in `outreach-drafts/2026-08-24-Yeshwant-Rawal-REPLY.md`. |
+| A named clinical reviewer on `/methods` | Marquette Chair + Associate Dean for Research | **Dr. Yeshwant Rawal reviewed the methodology on 2026-08-24** and called it "done thoughtfully and based on evidence through relevant literature". He is President of the American Board of Oral & Maxillofacial Pathology, so this is a serious credential. **He has agreed in principle** (2026-08-25): "I would be very happy to associate myself with this excellent project." Conditional on his Chair and Associate Dean for Research, both copied. He asked whether there is a UW-Madison mentor or institutional protocol; there is neither, and the reply says so plainly. **His name still does not go on the site until his institution clears it.** |
 | A real quote on the homepage | The same permission | Currently carries a cited NCI SEER statistic, which is honest but is a citation rather than an endorsement. Rawal's review is the first plausible source for a real one. Do not fabricate one, and do not quote him until he says yes. |
+| A UW-Madison faculty mentor | Ian sending the emails | There is none, and Marquette's research office has now asked. Drafts for Hartig, Davies and Glazer (Otolaryngology-Head & Neck Surgery, addresses verified from the department directory) are in `outreach-drafts/2026-08-25-UW-Mentor-Ask.md`. Rawal's interest is the reason this ask now lands. |
+| A written UW IRB determination | Ian submitting it | The tool stores nothing, so it is almost certainly *not human subjects research* under UW's HRPP, but the assertion is worth having on paper for Marquette's Associate Dean. Free, and Ian can submit it himself. |
+| Co-branded Marquette flyer | The approval above | Rawal proposed a design "to reflect our two institutions". Corrected in the reply: OralCheck is not a UW project and cannot carry UW branding. Marquette + OralCheck only. |
 | Judge whether the reel skip-rate fix worked | A new reel going out | 83.7% skip. Frame-0 fix and cover image both shipped, but only affect reels rendered *after* they landed. The three currently scheduled were rendered before. |
 | Trustworthy completion rate over 90d | ~2 weeks of clean events | The double-count fix shipped 2026-08-10. Until then only short windows are reliable. 30-day read at fix time: **91.4%**. |
 | Outreach replies | Ian sending them | 10 contacts: the original 7 in `outreach-contacts.csv` (Penn/CIGOH, Tufts x2, Columbia x2, HNCA, AAOM) plus 3 at Marquette. **Drafts are written** in `outreach-drafts/` as of 2026-08-18, so the only remaining step is pasting them into Outlook and sending. Update Status to `Followed Up` after each, or the Sunday tracker will generate duplicates. |
@@ -48,13 +55,16 @@ Last updated: 2026-08-24
 
 ### Product and credibility
 
-- [ ] **Systemic risk factors are not modelled at all.** Raised by Dr. Rawal:
-      Fanconi anemia, immunosuppression after bone marrow or organ transplant,
-      and prior head and neck radiation are all stronger signals than most
-      factors currently weighted, and none are asked about. Proposed in the
-      reply to him: one combined question rather than three, weighted high,
-      to avoid costing every user time for a rare catch. Waiting on his view on
-      whether combining them is clinically defensible.
+- [ ] **Systemic risk factor question. Wording approved, ready to build.**
+      Dr. Rawal confirmed on 2026-08-25 that a single combined question is
+      "comprehensive enough when weighted appropriately": *have you had an organ
+      or bone marrow transplant, radiation to the head and neck, or a condition
+      that suppresses your immune system?* Weight it high. Send him the exact
+      wording and weight **before** it goes live, as promised in the reply.
+- [ ] **Portuguese, and a language dropdown.** A Brazilian audience arrived. Adding
+      `pt` to `routing.ts` and running `i18n-sync` covers the site copy; the
+      two-item slider in `LanguageSwitcher.tsx` has to become a dropdown at three
+      locales. Also needs the agent's Spanish-only paths generalised.
 
 - [ ] **Tighten the terminology.** *Verified:* USPSTF gives oral cancer screening an
       "insufficient evidence" rating, but that statement is scoped to **primary care

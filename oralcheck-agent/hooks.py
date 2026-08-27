@@ -23,6 +23,7 @@ Two rules matter more than the rest:
 from __future__ import annotations
 
 import json
+import os
 import re
 import uuid
 from datetime import datetime, timezone, date, timedelta
@@ -147,7 +148,12 @@ Returning fewer than {count} is correct and expected. Returning an empty array
 is correct if nothing this fortnight genuinely fits. Do not pad the list."""
 
     client = anthropic.Anthropic(api_key=api_key)
-    tools = [{"type": "web_search_20260209", "name": "web_search", "max_uses": 6}]
+    # Each search costs a per-search fee AND injects its results into the
+    # request as input tokens, which is usually the larger of the two. Three
+    # is enough to find a live hook; six was buying diminishing returns at
+    # double the price.
+    tools = [{"type": "web_search_20260209", "name": "web_search",
+              "max_uses": int(os.environ.get("HOOK_SEARCHES", "3"))}]
     try:
         resp = client.messages.create(
             model=model, max_tokens=3000, system=system,

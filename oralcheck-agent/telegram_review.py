@@ -900,7 +900,10 @@ def _linkedin_caption(manifest: dict) -> str:
     try:
         import anthropic
         msg = anthropic.Anthropic(api_key=key).messages.create(
-            model=os.environ.get("CONTENT_MODEL", "claude-opus-4-8"),
+            # Sonnet, not Opus. This rewrites one caption for LinkedIn and
+            # runs on every approved post; Opus was 5x the price for a task
+            # that is a tone shift on text that already exists.
+            model=os.environ.get("CONTENT_MODEL", "claude-sonnet-4-6"),
             max_tokens=900,
             system=LINKEDIN_SYSTEM,
             messages=[{"role": "user", "content": (

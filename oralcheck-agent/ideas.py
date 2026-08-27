@@ -10,6 +10,7 @@ shared brand constants. This module never imports the agent.
 """
 
 import json
+import os
 import logging
 import re
 import uuid
@@ -366,7 +367,9 @@ def generate_ideas(count, *, api_key, model, system_prompt, pillar_briefs,
     )
 
     client = anthropic.Anthropic(api_key=api_key)
-    web_tool = [{"type": "web_search_20260209", "name": "web_search", "max_uses": 4}]
+    # Called once per format, so this multiplies by three on every run.
+    web_tool = [{"type": "web_search_20260209", "name": "web_search",
+                 "max_uses": int(os.environ.get("IDEA_SEARCHES", "2"))}]
     try:
         resp = client.messages.create(
             model=model, max_tokens=4000, system=system_prompt,
