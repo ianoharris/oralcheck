@@ -22,8 +22,6 @@ Update both together. See `AGENTS.md`.
 
 | Item | Blocked on | Notes |
 |---|---|---|
-| **Portuguese, and the announcement post** | Anthropic API access | The account is at its usage limit and does not regain access until **2026-09-01 00:00 UTC**. Everything except the translation is done: `pt` needs one line in `routing.ts` and `node scripts/i18n-sync.mjs --locale=pt`. The announcement carousel is already rendered and queued (`oralcheck-agent/queue/`), and is deliberately NOT sent, because it says the site is live in Portuguese and that is not true yet. **Check the WORKSPACE spend limit, not just the organisation one**: the key is scoped to `wrkspc_018YGSjx8LfD5opFxkBB1fRQ` and a workspace cap binds independently. |
-| Personalised AI summary on results | The same API limit | `/api/summary` is returning 500 in production right now. The results page falls back to its deterministic summary, so visitors still get a complete and accurate result, just not the personalised paragraph. No action needed beyond restoring API access. |
 | Publishing articles from `/review/<slug>` | Ian setting `ADMIN_SECRET` in Vercel | `/api/publish` and `/api/draft` fail closed with 503 until it exists. Generate with `openssl rand -base64 32`, add it in Vercel, redeploy, then paste it once on any `/review/` page. The public site is unaffected. |
 | A named clinical reviewer on `/methods` | Marquette Chair + Associate Dean for Research | **Dr. Yeshwant Rawal reviewed the methodology on 2026-08-24** and called it "done thoughtfully and based on evidence through relevant literature". He is President of the American Board of Oral & Maxillofacial Pathology, so this is a serious credential. **He has agreed in principle** (2026-08-25): "I would be very happy to associate myself with this excellent project." Conditional on his Chair and Associate Dean for Research, both copied. He asked whether there is a UW-Madison mentor or institutional protocol; there is neither, and the reply says so plainly. **His name still does not go on the site until his institution clears it.** |
 | A real quote on the homepage | The same permission | Currently carries a cited NCI SEER statistic, which is honest but is a citation rather than an endorsement. Rawal's review is the first plausible source for a real one. Do not fabricate one, and do not quote him until he says yes. |
@@ -124,6 +122,9 @@ Update both together. See `AGENTS.md`.
 Newest first.
 
 ### 2026-08-27 (later)
+- **API access restored** (Ian raised the workspace spend limit), which unblocked
+  Portuguese, the announcement post, and `/api/summary`. The announcement carousel
+  is scheduled on Instagram for **2026-08-28 22:00 UTC**
 - **Two questions added, closing the two gaps `/methods` had been listing as its
   own known limitations.** Sex at birth (weight 3) and the combined immune and
   radiation history question (weight 5, Rawal's wording unchanged). Twelve
@@ -137,10 +138,13 @@ Newest first.
   two weakest links stated as weak (the HPV proxy, and dental visits which are a
   detection proxy and not a risk factor at all), a "What this tool cannot tell
   you" section, and a last-reviewed dateline
-- **The results page had been serving English to every Portuguese visitor.**
-  `riskEngine` picked its message catalogue with `locale === "es" ? es : en`, so
-  `/pt/results` showed translated chrome around English factor labels, guidance
-  and summary. Now keyed off a map that falls back rather than a hardcoded pair
+- **The results page had been serving English to every Portuguese visitor, in
+  two separate places.** `riskEngine` picked its message catalogue with
+  `locale === "es" ? es : en`, and `/api/summary` built its prompt the same way,
+  so `/pt/results` wrapped translated chrome around English factor labels,
+  guidance, and a freshly generated English paragraph that never looked like a
+  missing translation. The summary's language table is now typed as a complete
+  record over `AppLocale`, so the next language fails the typecheck instead
 - Median age at diagnosis corrected 62 → 65 (SEER 2019–2023)
 
 ### 2026-08-27
