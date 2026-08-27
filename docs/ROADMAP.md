@@ -10,7 +10,7 @@ The running list. Two rules:
    named. This is the list's whole purpose: the things that come up once, sound
    good, and are never mentioned again.
 
-Last updated: 2026-08-25
+Last updated: 2026-08-27
 
 **Mirrored to an artifact Ian reads:**
 https://claude.ai/code/artifact/cc490e4b-1ee3-4062-bc56-eada066f1003
@@ -22,6 +22,8 @@ Update both together. See `AGENTS.md`.
 
 | Item | Blocked on | Notes |
 |---|---|---|
+| **Portuguese, and the announcement post** | Anthropic API access | The account is at its usage limit and does not regain access until **2026-09-01 00:00 UTC**. Everything except the translation is done: `pt` needs one line in `routing.ts` and `node scripts/i18n-sync.mjs --locale=pt`. The announcement carousel is already rendered and queued (`oralcheck-agent/queue/`), and is deliberately NOT sent, because it says the site is live in Portuguese and that is not true yet. **Check the WORKSPACE spend limit, not just the organisation one**: the key is scoped to `wrkspc_018YGSjx8LfD5opFxkBB1fRQ` and a workspace cap binds independently. |
+| Personalised AI summary on results | The same API limit | `/api/summary` is returning 500 in production right now. The results page falls back to its deterministic summary, so visitors still get a complete and accurate result, just not the personalised paragraph. No action needed beyond restoring API access. |
 | Publishing articles from `/review/<slug>` | Ian setting `ADMIN_SECRET` in Vercel | `/api/publish` and `/api/draft` fail closed with 503 until it exists. Generate with `openssl rand -base64 32`, add it in Vercel, redeploy, then paste it once on any `/review/` page. The public site is unaffected. |
 | A named clinical reviewer on `/methods` | Marquette Chair + Associate Dean for Research | **Dr. Yeshwant Rawal reviewed the methodology on 2026-08-24** and called it "done thoughtfully and based on evidence through relevant literature". He is President of the American Board of Oral & Maxillofacial Pathology, so this is a serious credential. **He has agreed in principle** (2026-08-25): "I would be very happy to associate myself with this excellent project." Conditional on his Chair and Associate Dean for Research, both copied. He asked whether there is a UW-Madison mentor or institutional protocol; there is neither, and the reply says so plainly. **His name still does not go on the site until his institution clears it.** |
 | A real quote on the homepage | The same permission | Currently carries a cited NCI SEER statistic, which is honest but is a citation rather than an endorsement. Rawal's review is the first plausible source for a real one. Do not fabricate one, and do not quote him until he says yes. |
@@ -61,10 +63,9 @@ Update both together. See `AGENTS.md`.
       or bone marrow transplant, radiation to the head and neck, or a condition
       that suppresses your immune system?* Weight it high. Send him the exact
       wording and weight **before** it goes live, as promised in the reply.
-- [ ] **Portuguese, and a language dropdown.** A Brazilian audience arrived. Adding
-      `pt` to `routing.ts` and running `i18n-sync` covers the site copy; the
-      two-item slider in `LanguageSwitcher.tsx` has to become a dropdown at three
-      locales. Also needs the agent's Spanish-only paths generalised.
+- [x] ~~Language dropdown~~ — shipped 2026-08-27. Renders any number of locales,
+      names each language in its own language, closes on Escape and outside click.
+- [ ] **Portuguese translation.** Blocked on API access only; see the table above.
 
 - [ ] **Tighten the terminology.** *Verified:* USPSTF gives oral cancer screening an
       "insufficient evidence" rating, but that statement is scoped to **primary care
@@ -109,6 +110,17 @@ Update both together. See `AGENTS.md`.
 ## Shipped
 
 Newest first.
+
+### 2026-08-27
+- i18n generalised from bilingual to multilingual: target locales read from
+  `routing.ts`, **per-locale snapshots** (one shared snapshot would have made the
+  second language skip every changed string), and an explicit translator brief
+  per locale so "pt" cannot silently become European Portuguese
+- Language switcher is a dropdown; a segmented slider fails at three locales
+- `manual_post.py`: queue a hand-written post with no model call in the path, so
+  an announcement can say something exact, and the pipeline survives a week with
+  no API access
+- Announcement carousel built and queued, held until Portuguese is actually live
 
 ### 2026-08-24
 - **Dr. Yeshwant Rawal's review acted on the same day.** Symptom question now
