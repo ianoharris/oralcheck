@@ -14,6 +14,7 @@ import {
   Lock, Check, WifiSlash, Star, Timer, Moon, SunDim, Printer, Bandaids,
   FirstAidKit, CalendarCheck, Prohibit, HandHeart, X, EnvelopeSimple,
   LinkedinLogo, InstagramLogo, DownloadSimple, Newspaper, ChatCircleText,
+  CaretDown,
 } from "@phosphor-icons/react/dist/ssr";
 import type { Icon as PhosphorIcon } from "@phosphor-icons/react";
 
@@ -62,6 +63,7 @@ export const ICONS = {
   review: ChatCircleText,
   download: DownloadSimple,
   press: Newspaper,
+  caretDown: CaretDown,
 } as const;
 
 export type IconName = keyof typeof ICONS;
