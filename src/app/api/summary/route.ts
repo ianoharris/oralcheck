@@ -2,8 +2,32 @@ import Anthropic from "@anthropic-ai/sdk";
 import { type NextRequest } from "next/server";
 import { checkRateLimit, getIp } from "@/lib/rateLimit";
 import { claimAiCall, dailyAiLimit } from "@/lib/aiBudget";
+import type { AppLocale } from "@/i18n/routing";
 
 export const runtime = "nodejs";
+
+/**
+ * What to append to the prompt so the model answers in the visitor's language.
+ *
+ * Typed as a complete record over AppLocale on purpose: the previous version
+ * branched on `locale === "es"`, so when Portuguese launched, a fully
+ * translated results page served one paragraph of English clinical prose and
+ * nothing failed. Adding a locale to routing.locales without adding a line
+ * here is now a type error rather than a silent regression.
+ *
+ * The instructions name a regional variant where one matters, since "Spanish"
+ * and "Portuguese" alone leave the model to pick, and it does not reliably
+ * pick the one the rest of the translation uses.
+ */
+const LANGUAGE_INSTRUCTION: Record<AppLocale, string> = {
+  en: "",
+  es: " Write your entire response in Spanish (neutral, suitable for the US Hispanic community).",
+  pt: " Write your entire response in Brazilian Portuguese as spoken in Brazil, not European Portuguese.",
+};
+
+function languageInstruction(locale: string | undefined): string {
+  return LANGUAGE_INSTRUCTION[locale as AppLocale] ?? "";
+}
 
 type SummaryRequest = {
   tier: string;
@@ -51,7 +75,6 @@ export async function POST(req: NextRequest) {
   try {
     const body: SummaryRequest = await req.json();
     const { tier, tierLabel, factors, hasUrgentSymptom, locale } = body;
-    const isSpanish = locale === "es";
 
     const factorLines =
       factors.length > 0
@@ -72,11 +95,7 @@ Risk tier: ${tierLabel} (${tier})
 Contributing factors:
 ${factorLines}${urgentNote}${interactionNote}
 
-Write a clinically precise, personalized 2–3 sentence summary. Reference specific risk implications for their top factors. Ground it in a statistic that fits THIS person's factors rather than reaching for the same survival figure every time: stage-at-detection survival, the multiplicative tobacco and alcohol effect, HPV attribution in oropharyngeal cases, or the share of cases found late are all defensible. If the tobacco+alcohol interaction is present, note the multiplicative risk. End with one specific, actionable next step. Do not diagnose. No markdown. Plain sentences only. Never use em dashes; use commas or periods instead.${
-      isSpanish
-        ? " Write your entire response in Spanish (neutral, suitable for the US Hispanic community)."
-        : ""
-    }`;
+Write a clinically precise, personalized 2–3 sentence summary. Reference specific risk implications for their top factors. Ground it in a statistic that fits THIS person's factors rather than reaching for the same survival figure every time: stage-at-detection survival, the multiplicative tobacco and alcohol effect, HPV attribution in oropharyngeal cases, or the share of cases found late are all defensible. If the tobacco+alcohol interaction is present, note the multiplicative risk. End with one specific, actionable next step. Do not diagnose. No markdown. Plain sentences only. Never use em dashes; use commas or periods instead.${languageInstruction(locale)}`;
 
     const client = new Anthropic();
 
