@@ -1,19 +1,16 @@
 import { defineRouting } from "next-intl/routing";
 
 export const routing = defineRouting({
-  // "pt" goes here the moment messages/pt.json is populated. See below.
-  locales: ["en", "es"],
+  locales: ["en", "es", "pt"],
   defaultLocale: "en",
   // English keeps its existing un-prefixed URLs (no SEO disruption to
   // already-indexed pages); every other language is prefixed: /es/*, /pt/*.
   //
-  // ENABLING PORTUGUESE is two steps and nothing else:
-  //   1. add "pt" to the array above
-  //   2. node scripts/i18n-sync.mjs --locale=pt
-  // The translator brief for pt (Brazilian, not European) already exists in
-  // LOCALE_BRIEF in scripts/i18n-sync.mjs, the switcher already renders any
-  // number of locales, and sitemap/metadata already iterate routing.locales.
-  // The only thing missing is API access to run the translation.
+  // Adding a language is one line here plus `node scripts/i18n-sync.mjs`. The
+  // switcher renders any number of locales and sitemap/metadata iterate this
+  // array, so nothing else needs touching. Give the new locale a brief in
+  // LOCALE_BRIEF in scripts/i18n-sync.mjs first, or the sync refuses to guess
+  // at its register and regional variant.
   localePrefix: "as-needed",
 });
 

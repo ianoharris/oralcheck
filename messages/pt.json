@@ -1,0 +1,1931 @@
+{
+  "Meta": {
+    "siteTitle": "OralCheck | Rastreador Gratuito de Risco de Câncer Bucal",
+    "siteDescription": "Rastreador gratuito e privado de risco de câncer bucal. Entenda seu risco, conheça os sinais e encontre atendimento perto de você.",
+    "ogDescription": "Responda 10 perguntas para entender seu risco de câncer bucal. Gratuito, privado, leva 2 minutos."
+  },
+  "Nav": {
+    "screener": "Rastreador",
+    "findCare": "Encontrar Atendimento",
+    "learn": "Saiba Mais",
+    "forClinicians": "Para Profissionais de Saúde",
+    "about": "Sobre",
+    "openMenu": "Abrir menu",
+    "closeMenu": "Fechar menu",
+    "language": "Idioma"
+  },
+  "Footer": {
+    "tagline": "Uma ferramenta educativa gratuita para ajudar você a entender o risco de câncer bucal e encontrar o atendimento que precisa.",
+    "exploreHeading": "Explorar",
+    "riskScreener": "Rastreador de Risco",
+    "findCare": "Encontrar Atendimento",
+    "forClinicians": "Para Profissionais de Saúde",
+    "about": "Sobre",
+    "scoringMethodology": "Metodologia de Pontuação",
+    "sendFeedback": "Enviar Comentários",
+    "printShare": "Imprimir e Compartilhar",
+    "learnHeading": "Saiba Mais",
+    "whatIsOralCancer": "O Que É Câncer Bucal?",
+    "warningSigns": "Sinais de Alerta",
+    "selfExamGuide": "Guia de Autoexame",
+    "hpvOralCancer": "HPV e Câncer Bucal",
+    "prevention": "Prevenção",
+    "factsStats": "Dados e Estatísticas",
+    "cankerSoreVsCancer": "Afta ou Câncer?",
+    "disclaimerHeading": "Aviso Legal",
+    "disclaimerBody": "O OralCheck não é um diagnóstico médico. É uma ferramenta educativa. Consulte um profissional de saúde qualificado sobre qualquer sintoma ou dúvida.",
+    "disclaimerScoring": "A lógica de rastreamento é baseada nas diretrizes clínicas da ACS, do NCI e da Oral Cancer Foundation.",
+    "copyright": "© {year} OralCheck",
+    "methods": "Métodos",
+    "privacy": "Privacidade",
+    "notAffiliated": "Não é afiliado a nenhuma instituição médica.",
+    "press": "Kit de imprensa",
+    "terms": "Termos"
+  },
+  "HeroSectionPhoto": {
+    "headlineLine1": [
+      "2",
+      "minutos"
+    ],
+    "headlineLine2a": [
+      "podem"
+    ],
+    "headlineLine2b": [
+      "salvar"
+    ],
+    "headlineLine3": [
+      "sua",
+      "vida."
+    ],
+    "overline": "Gratuito · Privado · Baseado em evidências",
+    "body": "O câncer bucal é um dos cânceres mais subdiagnosticados, em grande parte porque os sintomas iniciais parecem comuns. O OralCheck ajuda você a entender seu risco em minutos e indica o caminho para o atendimento adequado.",
+    "startScreening": "Iniciar triagem →",
+    "learnSigns": "Conheça os sinais",
+    "disclaimer": "Não é um diagnóstico médico. Uma ferramenta educativa de conscientização.",
+    "featured": "Destaque em <b>The Drill</b> · Wisconsin Dental Association"
+  },
+  "HomePage": {
+    "srHeading": "Triagem de Risco de Câncer Bucal Gratuita",
+    "sectionHeading": "Três coisas que esta ferramenta faz",
+    "feature1Title": "Triagem de risco privada",
+    "feature1Desc": "10 perguntas rápidas baseadas em fatores de risco clínicos publicados. Nenhuma informação é salva ou enviada.",
+    "feature1Cta": "Iniciar triagem",
+    "feature2Title": "Conheça os sinais de alerta",
+    "feature2Desc": "Manchas vermelhas e brancas, feridas que não cicatrizam, caroços. Saiba o que observar e como fazer um autoexame.",
+    "feature2Cta": "Conheça os sinais",
+    "feature3Title": "Encontre atendimento acessível",
+    "feature3Desc": "Unidades básicas de saúde, faculdades de odontologia e clínicas gratuitas perto de você, incluindo prestadores financiados pelo HRSA.",
+    "feature3Cta": "Encontrar atendimento",
+    "quote": "Apenas cerca de 1 em cada 4 cânceres bucais e de faringe é detectado antes de se espalhar. Quando encontrado nessa fase, a sobrevida em cinco anos é de 88,7%. Quando atinge sítios distantes, cai para 36%.",
+    "followAlong": "Acompanhe",
+    "followInstagram": "Seguir no Instagram →",
+    "quoteSourcePrefix": "Fonte:",
+    "quoteSourceName": "Programa de Vigilância, Epidemiologia e Resultados Finais do NCI",
+    "quoteSourceDetail": "Dados Estatísticos sobre Câncer: Câncer de Cavidade Oral e Faringe",
+    "shareEyebrow": "Compartilhe",
+    "shareHeading": "Imprima. Publique. Repasse.",
+    "shareBody": "A maioria das pessoas que precisa disso nunca vai pesquisar sobre o assunto. Um QR code na parede de uma sala de espera, num mural comunitário ou na área de descanso de um trabalho alcança quem um site não consegue alcançar. Gratuito para imprimir, e é possível identificar cada cópia para saber quais locais realmente trazem pessoas.",
+    "shareCta": "Obter um QR code para impressão",
+    "disclaimerLine": "O OralCheck é uma ferramenta educativa, não um diagnóstico médico. Não é capaz de detectar ou descartar câncer. Sempre consulte um dentista ou profissional de saúde sobre qualquer sintoma que cause preocupação.",
+    "disclaimerTermsLink": "Termos de Uso",
+    "disclaimerPrivacyLink": "Privacidade"
+  },
+  "FactsMeta": {
+    "title": "Fatos e Estatísticas sobre Câncer Bucal",
+    "description": "Principais estatísticas sobre câncer bucal: mais de 54.000 casos por ano nos EUA, 84% de sobrevida quando detectado cedo, e por que o HPV superou o tabaco como principal causa. Baseado em evidências, com referências."
+  },
+  "FactsPage": {
+    "tag": "Fatos",
+    "heading": "Fatos e Estatísticas sobre Câncer Bucal",
+    "introRest": "Os números que mostram por que a detecção precoce é tão importante. Está conhecendo o assunto agora?",
+    "introLink": "Comece entendendo o que é câncer bucal.",
+    "stats": [
+      {
+        "value": "54.000+",
+        "label": "novos casos por ano nos EUA",
+        "detail": "Cânceres bucais e orofaríngeos somados."
+      },
+      {
+        "value": "11.580",
+        "label": "mortes por ano nos EUA",
+        "detail": "Cerca de uma morte a cada 50 minutos."
+      },
+      {
+        "value": "84%",
+        "label": "sobrevida em 5 anos se detectado cedo",
+        "detail": "Cai para aproximadamente 40% quando encontrado em estágio avançado."
+      },
+      {
+        "value": "2×",
+        "label": "mais comum em homens",
+        "detail": "Embora as taxas entre mulheres estejam aumentando."
+      }
+    ],
+    "factLabel": "FATO",
+    "facts": [
+      {
+        "title": "O HPV é atualmente a principal causa de câncer orofaríngeo.",
+        "detail": "Os casos relacionados ao HPV cresceram bastante nas últimas duas décadas, superando o tabaco como principal fator. A vacinação contra o HPV reduz significativamente o risco e é aprovada até os 45 anos."
+      },
+      {
+        "title": "Tabaco e álcool juntos multiplicam o risco, não apenas somam.",
+        "detail": "Pessoas que usam os dois têm um risco muito maior do que a soma de cada um separadamente. Parar qualquer um deles reduz o risco ao longo do tempo."
+      },
+      {
+        "title": "O câncer bucal detectado cedo tem tratamento com boas chances de sucesso.",
+        "detail": "Quando encontrado no Estágio I, a sobrevida em 5 anos é superior a 80%. No Estágio IV, cai para menos de 40%. O estágio no momento do diagnóstico é o principal fator que influencia o resultado."
+      },
+      {
+        "title": "Os dentistas encontram a maioria dos casos precoces.",
+        "detail": "Uma consulta odontológica de rotina inclui uma triagem de câncer bucal de 2 minutos. Para quem não vai ao dentista com regularidade, os cânceres costumam ser detectados em estágios mais avançados."
+      },
+      {
+        "title": "Não afeta apenas fumantes mais velhos.",
+        "detail": "O câncer orofaríngeo relacionado ao HPV aparece com frequência em adultos de meia-idade sem histórico de uso de tabaco. Sintomas persistentes não devem ser ignorados por causa da idade ou do estilo de vida."
+      }
+    ],
+    "sourcesLabel": "Fontes:",
+    "sourcesBody": "American Cancer Society (2024), Oral Cancer Foundation, dados SEER do National Cancer Institute, CDC. Os números são aproximados e arredondados para facilitar a leitura.",
+    "takeScreener": "Fazer o rastreamento gratuito →",
+    "whatIsOralCancer": "O que é câncer bucal?",
+    "learnSelfExam": "Aprenda o autoexame"
+  },
+  "SelfExamMeta": {
+    "title": "Como Fazer um Autoexame de Câncer Bucal",
+    "description": "Um guia passo a passo para examinar a própria boca em busca de sinais de câncer bucal. Leva 2 minutos. Faça uma vez por mês."
+  },
+  "SelfExamPage": {
+    "tag": "Como fazer",
+    "heading": "Como Fazer um Autoexame de 2 Minutos",
+    "introRest": "Faça isso uma vez por mês. Basta um espelho, boa iluminação e mãos limpas. Se notar algo que dure 2 semanas ou mais, consulte um dentista. Não sabe bem o que procurar?",
+    "introLink": "Veja o guia de sinais de alerta.",
+    "steps": [
+      {
+        "area": "Rosto e pescoço",
+        "instruction": "Olhe no espelho para o seu rosto. Verifique se os dois lados estão simétricos. Apalpe as laterais do pescoço em busca de nódulos ou inchaço."
+      },
+      {
+        "area": "Lábios",
+        "instruction": "Puxe o lábio superior para cima e o lábio inferior para baixo. Observe e apalpe a parte interna e externa em busca de feridas, mudanças de cor ou nódulos."
+      },
+      {
+        "area": "Bochechas",
+        "instruction": "Use os dedos para puxar suavemente cada bochecha para fora. Procure manchas vermelhas, brancas ou escuras. Pressione com cuidado para sentir se há nódulos."
+      },
+      {
+        "area": "Gengivas",
+        "instruction": "Examine as gengivas, superior e inferior, frente e fundo. Procure mudanças de cor, inchaço ou feridas."
+      },
+      {
+        "area": "Língua (parte superior e laterais)",
+        "instruction": "Coloque a língua para fora e observe a parte de cima. Depois levante-a para verificar a parte de baixo e as laterais. As laterais da língua são o local mais comum de câncer bucal."
+      },
+      {
+        "area": "Assoalho da boca",
+        "instruction": "Levante a língua em direção ao céu da boca. Observe o assoalho abaixo e apalpe-o com cuidado usando um dedo limpo."
+      },
+      {
+        "area": "Céu da boca",
+        "instruction": "Incline a cabeça para trás e abra bem a boca. Observe o palato duro e o palato mole em busca de mudanças de cor, saliências ou feridas."
+      },
+      {
+        "area": "Garganta",
+        "instruction": "Diga \"aaa\" e observe o fundo da garganta. Procure assimetrias, manchas ou feridas."
+      }
+    ],
+    "photoAlt": "{area}, imagem de referência {n}",
+    "photoCredit": "Fotos de referência de \"Detecting Oral Cancer: A Guide for Health Care Professionals\" (National Institutes of Health). Domínio público.",
+    "normalHeading": "O que é normal e o que não é",
+    "normalP1Rest": "A maioria das bocas tem assimetrias, pequenas saliências e",
+    "normalP1Link": "aftas ocasionais",
+    "normalP1End": "que cicatrizam em 1 a 2 semanas e não são motivo de preocupação.",
+    "normalP2": "O que deve motivar uma consulta: qualquer coisa nova, persistente (2 semanas ou mais), indolor mas estranha, ou que sangra com facilidade.",
+    "takeScreener": "Fazer o rastreamento gratuito →",
+    "warningSignsGuide": "Guia de sinais de alerta",
+    "whatIsOralCancer": "O que é câncer bucal?",
+    "findDentist": "Encontrar um dentista",
+    "byline": "Escrito por Ian Harris, estudante de pré-odontologia na Universidade de Wisconsin-Madison.",
+    "aboutLink": "Sobre o OralCheck"
+  },
+  "PreventionMeta": {
+    "title": "Como Prevenir o Câncer Bucal",
+    "description": "Seis formas baseadas em evidências para reduzir o risco de câncer bucal: parar de usar tabaco, limitar o consumo de álcool, tomar a vacina contra o HPV, proteger os lábios e fazer consultas odontológicas regulares."
+  },
+  "PreventionPage": {
+    "tag": "Prevenção",
+    "heading": "Como Prevenir o Câncer Bucal",
+    "introLink": "O câncer bucal",
+    "introRest": "não é totalmente evitável, alguns fatores de risco, como idade e genética, estão fora do controle de cada pessoa. Mas os maiores fatores são controláveis. Veja o que as evidências realmente apoiam.",
+    "steps": [
+      {
+        "number": "01",
+        "heading": "Pare de usar tabaco, em qualquer forma",
+        "body": "O uso de tabaco é o maior fator de risco modificável para o câncer bucal. Isso inclui cigarros, charutos, cachimbos, fumo de mascar e rapé. A boa notícia: o risco cai de forma mensurável alguns anos após a parada, e ex-usuários de longa data se aproximam do nível de risco de quem nunca usou tabaco.",
+        "ctaLabel": null,
+        "ctaHref": null
+      },
+      {
+        "number": "02",
+        "heading": "Limite o consumo de álcool, especialmente junto com tabaco",
+        "body": "O consumo excessivo de álcool é um fator de risco independente, mas a combinação de tabaco e álcool não apenas soma os riscos, ela os multiplica. Se você bebe, manter um consumo moderado (até 1 dose por dia para mulheres, 2 para homens) reduz significativamente o risco em comparação ao uso excessivo.",
+        "ctaLabel": null,
+        "ctaHref": null
+      },
+      {
+        "number": "03",
+        "heading": "Vacine-se contra o HPV",
+        "body": "A Gardasil 9 protege contra o HPV-16 e o HPV-18, os subtipos responsáveis pela maioria dos cânceres de garganta relacionados ao HPV. É aprovada para pessoas entre 9 e 45 anos e é mais eficaz antes da exposição ao vírus. Adultos que não foram vacinados na adolescência ainda podem se beneficiar. Converse com seu médico para saber se você é um candidato.",
+        "ctaLabel": "Saiba mais sobre HPV e câncer bucal →",
+        "ctaHref": "/learn/hpv"
+      },
+      {
+        "number": "04",
+        "heading": "Faça consultas odontológicas regulares",
+        "body": "Uma consulta odontológica de rotina inclui um rastreamento de câncer bucal de 2 minutos: o dentista examina lábios, gengivas, língua, bochechas, palato e garganta. A maioria dos cânceres bucais em estágio inicial é descoberta dessa forma. Entre pessoas que evitam o dentista, os cânceres costumam ser diagnosticados em estágios mais avançados, quando os resultados são piores.",
+        "ctaLabel": "Encontrar atendimento odontológico perto de você →",
+        "ctaHref": "/find-care"
+      },
+      {
+        "number": "05",
+        "heading": "Proteja os lábios do sol",
+        "body": "A exposição crônica ao sol é uma das principais causas do câncer no lábio inferior, um risco fácil de ignorar. Usar protetor labial com FPS (FPS 30 ou mais) e um chapéu de aba larga ao ar livre faz uma diferença real, especialmente para quem trabalha em ambientes externos. O câncer de lábio tem alto índice de cura quando detectado cedo.",
+        "ctaLabel": null,
+        "ctaHref": null
+      },
+      {
+        "number": "06",
+        "heading": "Faça um autoexame mensal",
+        "body": "Prevenção não é apenas evitar fatores de risco, é também detectar mudanças cedo. Um autoexame mensal de 2 minutos da boca e da garganta permite notar qualquer alteração antes que ela se torne algo sério. A maioria das pessoas nunca fez esse exame.",
+        "ctaLabel": "Aprenda como fazer um autoexame →",
+        "ctaHref": "/learn/self-exam"
+      }
+    ],
+    "cantControlHeading": "O que não está totalmente no seu controle",
+    "cantControlBody": "Idade, sexo de nascimento, histórico familiar e imunidade afetam o risco de câncer bucal e não são modificáveis. Se você tem vários fatores de risco não modificáveis, isso é uma razão a mais para ser mais cuidadoso com os que você pode controlar, e para conversar com seu dentista sobre a frequência ideal de rastreamento.",
+    "faqHeading": "Perguntas frequentes",
+    "faqs": [
+      {
+        "q": "O câncer bucal pode ser prevenido?",
+        "a": "Muitos casos são evitáveis. Os maiores fatores de risco modificáveis são o uso de tabaco, o consumo excessivo de álcool e a infecção pelo HPV, todos passíveis de intervenção. Evitar o tabaco é a medida de maior impacto. Consultas odontológicas regulares também ajudam a identificar alterações precoces antes que se tornem câncer."
+      },
+      {
+        "q": "Parar de fumar reduz o risco de câncer bucal?",
+        "a": "Sim, de forma significativa. O uso de tabaco é a principal causa dos cânceres bucais tradicionais. O risco começa a cair alguns anos após a parada, e ex-fumantes de longa data se aproximam do nível de risco de quem nunca fumou."
+      },
+      {
+        "q": "Como a vacina contra o HPV ajuda a prevenir o câncer bucal?",
+        "a": "A vacina contra o HPV (Gardasil 9) protege contra o HPV-16 e o HPV-18, os subtipos responsáveis pela maioria dos cânceres de garganta relacionados ao HPV. É aprovada para pessoas entre 9 e 45 anos. Dados populacionais já mostram redução nas taxas de cânceres relacionados ao HPV em grupos vacinados."
+      },
+      {
+        "q": "Com que frequência devo fazer um rastreamento de câncer bucal?",
+        "a": "Para a maioria das pessoas, uma ou duas vezes por ano em uma consulta odontológica de rotina é suficiente, o rastreamento está incluído sem custo adicional. Pessoas com fatores de risco elevados (tabaco, consumo excessivo de álcool, histórico de HPV) podem se beneficiar de consultas mais frequentes."
+      },
+      {
+        "q": "A exposição ao sol causa câncer bucal?",
+        "a": "Sim, especificamente no caso do câncer de lábio. A exposição crônica ao sol é uma das principais causas do câncer no lábio inferior. Protetor labial com FPS e chapéu de aba larga ao ar livre reduzem significativamente esse risco, especialmente para quem trabalha em ambientes externos."
+      }
+    ],
+    "sourcesLabel": "Fontes:",
+    "sourcesBody": "American Cancer Society, National Cancer Institute, CDC, Oral Cancer Foundation, Organização Mundial da Saúde. Esta página tem fins educativos e não substitui orientação médica.",
+    "takeScreener": "Fazer o rastreamento gratuito →",
+    "warningSigns": "Sinais de alerta para observar",
+    "learnSelfExam": "Aprenda o autoexame"
+  },
+  "HpvMeta": {
+    "title": "HPV e Câncer Bucal: O Que Você Precisa Saber",
+    "description": "O HPV-16 é atualmente a principal causa de câncer de orofaringe nos EUA, superando o tabaco. Saiba quem está em risco, quais são os sintomas e como a vacina contra HPV ajuda."
+  },
+  "HpvPage": {
+    "tag": "Fator de Risco",
+    "heading": "HPV e Câncer Bucal",
+    "introStart": "O HPV-16 é atualmente a principal causa de câncer de garganta nos EUA, superando o tabaco. Veja o que isso significa para o risco de",
+    "introLink": "câncer bucal",
+    "introEnd": "quem está em risco e o que é possível fazer.",
+    "statHeading": "O HPV é agora a causa número 1",
+    "statBody": "O Papilomavírus Humano (HPV) superou o tabaco como principal causa de cânceres de orofaringe, cânceres das amígdalas, base da língua e parede posterior da garganta. Os casos aumentaram mais de 300% desde a década de 1980.",
+    "whatIsHeading": "O que é o câncer bucal relacionado ao HPV?",
+    "whatIsP1Start": "O HPV é um vírus sexualmente transmissível muito comum. A maioria das infecções desaparece sozinha, sem causar sintomas. Em algumas pessoas, porém, certas cepas, especialmente o",
+    "whatIsP1Bold": "HPV-16",
+    "whatIsP1End": "provocam alterações no DNA das células que podem levar ao câncer com o tempo.",
+    "whatIsP2Start": "Os cânceres bucais relacionados ao HPV costumam se desenvolver na",
+    "whatIsP2Bold": "orofaringe",
+    "whatIsP2End": ": as amígdalas, a base da língua e a parede posterior da garganta. Isso é diferente dos cânceres bucais tradicionais, que tendem a se formar nos lábios, gengivas, ponta da língua e assoalho da boca.",
+    "whatIsP3": "Como a orofaringe é difícil de visualizar e esses cânceres muitas vezes não causam dor nas fases iniciais, eles costumam ser diagnosticados mais tarde do que outros cânceres bucais. Por isso, conhecer os sintomas é importante.",
+    "symptomsHeading": "Sintomas que merecem atenção",
+    "symptomsIntroStart": "Os cânceres de garganta relacionados ao HPV podem se parecer muito com um resfriado persistente ou uma dor de garganta. O sinal-chave é a",
+    "symptomsIntroBold": "duração",
+    "symptomsIntroEnd": "sintomas que não desaparecem após duas semanas merecem avaliação.",
+    "symptoms": [
+      {
+        "symptom": "Dor de garganta persistente",
+        "note": "Não causada por infecção, não melhora em 2 semanas"
+      },
+      {
+        "symptom": "Caroço indolor no pescoço",
+        "note": "Geralmente o primeiro sinal, causado pelo envolvimento dos gânglios linfáticos"
+      },
+      {
+        "symptom": "Dificuldade para engolir",
+        "note": "Sensação de que o alimento está preso ou não desce corretamente"
+      },
+      {
+        "symptom": "Dor de ouvido em um lado",
+        "note": "Pode se irradiar da garganta mesmo sem infecção no ouvido"
+      },
+      {
+        "symptom": "Rouquidão ou alterações na voz",
+        "note": "Com duração superior a duas semanas sem causa aparente"
+      },
+      {
+        "symptom": "Perda de peso sem explicação",
+        "note": "Especialmente quando combinada com qualquer um dos sintomas acima"
+      }
+    ],
+    "whoHeading": "Quem está em risco?",
+    "whoP1Start": "O câncer de orofaringe relacionado ao HPV afeta com mais frequência",
+    "whoP1Bold": "homens entre 40 e 60 anos",
+    "whoP1End": "sem histórico de uso de tabaco. Esse é um dos fatores que facilita ignorar o problema, pois muitas pessoas acreditam que o câncer bucal é uma doença de fumantes.",
+    "whoP2": "Um número maior de parceiros sexuais orais ao longo da vida está associado a um risco mais elevado, já que o HPV é transmitido principalmente por contato sexual. No entanto, o HPV é extremamente comum. A maioria dos adultos sexualmente ativos já foi exposta ao vírus em algum momento, e a grande maioria das infecções nunca evolui para câncer.",
+    "whoP3": "O uso de tabaco e álcool junto com a infecção pelo HPV aumenta ainda mais o risco. Condições que comprometem o sistema imunológico, como o HIV, também reduzem a capacidade do organismo de eliminar o HPV naturalmente.",
+    "vaccineHeading": "A vacina contra HPV",
+    "vaccineP1Bold": "Gardasil 9",
+    "vaccineP1Rest": "protege contra o HPV-16 e o HPV-18, as duas cepas responsáveis pela maioria dos cânceres relacionados ao HPV. É aprovada pela FDA para pessoas entre",
+    "vaccineP1Ages": "9 e 45 anos",
+    "vaccineP2": "A vacina é mais eficaz quando aplicada antes da exposição ao HPV, por isso é recomendada de rotina para pré-adolescentes. Porém, adultos que não foram vacinados anteriormente ainda podem se beneficiar. Converse com seu médico.",
+    "vaccineP3": "A vacina não trata uma infecção pelo HPV já existente, mas pesquisas mostram que ela já começou a reduzir as taxas de câncer relacionado ao HPV em populações vacinadas.",
+    "faqHeading": "Perguntas frequentes",
+    "faqs": [
+      {
+        "q": "O HPV pode causar câncer bucal?",
+        "a": "Sim. O HPV, especificamente a cepa HPV-16, é atualmente a principal causa de cânceres de orofaringe, ou seja, cânceres das amígdalas, da base da língua e da parede posterior da garganta. Os casos relacionados ao HPV aumentaram muito nas últimas duas décadas e hoje superam os casos relacionados ao tabaco nessa região da boca."
+      },
+      {
+        "q": "Quais são os sintomas do câncer bucal relacionado ao HPV?",
+        "a": "Os sintomas mais comuns incluem dor de garganta persistente, dificuldade para engolir, caroço indolor no pescoço, dor de ouvido e rouquidão com duração superior a duas semanas. Como esses cânceres costumam surgir na base da língua ou nas amígdalas, áreas de difícil visualização, frequentemente são diagnosticados em estágio mais avançado."
+      },
+      {
+        "q": "A vacina contra HPV previne o câncer bucal?",
+        "a": "A vacina contra HPV (Gardasil 9) protege contra o HPV-16 e o HPV-18, as cepas responsáveis pela maioria dos cânceres relacionados ao HPV. É aprovada pela FDA para pessoas entre 9 e 45 anos e é mais eficaz antes da exposição ao vírus. Ela não trata uma infecção já existente, mas a vacinação reduz significativamente o risco de câncer de orofaringe relacionado ao HPV."
+      },
+      {
+        "q": "Quem tem mais risco?",
+        "a": "O câncer de orofaringe relacionado ao HPV afeta de forma desproporcional adultos de meia-idade, especialmente homens entre 40 e 60 anos, sem histórico de uso de tabaco. Um número maior de parceiros sexuais orais ao longo da vida está associado a maior risco. Ao contrário do câncer bucal tradicional, ele frequentemente aparece em pessoas sem fatores de risco evidentes."
+      },
+      {
+        "q": "O câncer bucal relacionado ao HPV tem cura?",
+        "a": "Os cânceres de orofaringe HPV-positivos tendem a ter resultados melhores do que os HPV-negativos. Quando detectados cedo, as taxas de sobrevida são altas. Porém, muitos casos são descobertos tarde porque os sintomas são fáceis de ignorar. Qualquer sintoma na boca ou na garganta com duração superior a duas semanas merece avaliação por um dentista ou médico."
+      }
+    ],
+    "sourcesLabel": "Fontes:",
+    "sourcesBody": "American Cancer Society, National Cancer Institute, CDC (HPV e Câncer), Oral Cancer Foundation, Journal of Clinical Oncology (dados de incidência de câncer de orofaringe relacionado ao HPV). Este conteúdo tem finalidade educativa e não substitui orientação médica.",
+    "checkRisk": "Verifique seu risco →",
+    "seeAllSigns": "Ver todos os sinais de alerta",
+    "preventionGuide": "Guia de prevenção"
+  },
+  "CankerMeta": {
+    "title": "Afta ou Câncer Bucal: Como Diferenciar",
+    "description": "Aftas curam em 7 a 10 dias. O câncer bucal não. Conheça as principais diferenças, como cada um se apresenta e quando consultar um médico ou dentista."
+  },
+  "CankerPage": {
+    "tag": "Guia",
+    "heading": "Afta ou Câncer Bucal",
+    "intro": "A principal diferença é o tempo. Aftas curam em 7 a 14 dias, o câncer bucal não. Veja como diferenciá-los e quando parar de esperar e consultar um dentista.",
+    "quickAnswerHeading": "A resposta rápida",
+    "quickAnswerP1Start": "Se a ferida está há",
+    "quickAnswerP1Bold1": "menos de 2 semanas",
+    "quickAnswerP1Mid": "e é dolorosa, quase certamente é uma afta. Aguarde. Se está há",
+    "quickAnswerP1Bold2": "mais de 2 semanas",
+    "quickAnswerP1End": "é indolor, sangra, está crescendo ou tem bordas irregulares, consulte um dentista. Não deixe para depois.",
+    "cankerHeading": "O que é uma afta?",
+    "cankerP1": "Uma afta (úlcera aftosa) é uma pequena ferida superficial que se forma dentro da boca, na parte interna das bochechas, na língua ou nas gengivas. São muito comuns e afetam cerca de 1 em cada 5 pessoas.",
+    "cankerTraits": [
+      "Formato redondo ou oval, com centro branco ou amarelo e bordas avermelhadas",
+      "Geralmente bastante dolorosa, principalmente ao comer ou falar",
+      "Aparece somente dentro da boca, nunca no lado externo do lábio",
+      "Cura sozinha em 7 a 14 dias, sem necessidade de tratamento",
+      "Não é contagiosa, não é causada por vírus e não é cancerígena"
+    ],
+    "cankerP2": "Os gatilhos mais comuns incluem pequenos machucados na boca (morder a bochecha), estresse, certos alimentos (cítricos, tomates) e alterações hormonais.",
+    "cancerLookHeading": "Como é uma lesão de câncer bucal?",
+    "cancerLookP1": "O câncer bucal pode se parecer muito com uma afta, principalmente nos estágios iniciais, e é exatamente por isso que passa despercebido. Principais diferenças:",
+    "cancerTraits": [
+      "Uma mancha vermelha (eritroplasia), mancha branca (leucoplasia) ou uma mistura das duas",
+      "Uma ferida ou úlcera que não cicatriza após 2 semanas",
+      "Frequentemente indolor ou levemente desconfortável no início",
+      "Pode aparecer em qualquer lugar: lateral da língua, assoalho da boca, gengivas, garganta, lábios",
+      "Pode sangrar com facilidade ao toque",
+      "Pode parecer dura ou endurecida por baixo",
+      "Pode vir acompanhada de um caroço indolor no pescoço"
+    ],
+    "cancerLookP2": "Os locais mais comuns do câncer bucal são as laterais e a parte inferior da língua, o assoalho da boca e a parte de trás da garganta, lugares que muitas pessoas nunca examinam.",
+    "sideBySideHeading": "Comparação lado a lado",
+    "colFeature": "Característica",
+    "colCanker": "Afta",
+    "colCancer": "Câncer Bucal",
+    "comparison": [
+      {
+        "feature": "Aparência",
+        "canker": "Redonda ou oval, com centro branco ou amarelo e bordas avermelhadas",
+        "cancer": "Mancha vermelha, branca ou mista, bordas irregulares, pode sangrar"
+      },
+      {
+        "feature": "Dor",
+        "canker": "Geralmente dolorosa ou sensível",
+        "cancer": "Frequentemente indolor no início, o que é especialmente preocupante"
+      },
+      {
+        "feature": "Localização",
+        "canker": "Parte interna das bochechas, língua ou gengivas, nunca nos lábios",
+        "cancer": "Em qualquer lugar: língua, gengivas, assoalho da boca, lábio, garganta"
+      },
+      {
+        "feature": "Duração",
+        "canker": "Cura sozinha em 7 a 14 dias",
+        "cancer": "Não cicatriza, persiste e pode crescer"
+      },
+      {
+        "feature": "Bordas",
+        "canker": "Lisas e bem definidas",
+        "cancer": "Irregulares, elevadas ou endurecidas"
+      },
+      {
+        "feature": "Causa",
+        "canker": "Estresse, machucado, certos alimentos, não é contagiosa",
+        "cancer": "Tabaco, álcool, HPV, exposição solar ou causa desconhecida"
+      }
+    ],
+    "twoWeekHeading": "A regra das 2 semanas",
+    "twoWeekP1Start": "Qualquer ferida, mancha, caroço ou alteração na boca que não tenha desaparecido após",
+    "twoWeekBold": "2 semanas",
+    "twoWeekP1End": "deve ser avaliado por um dentista ou médico. Na maioria das vezes, não é nada grave, mas essa confirmação vale uma consulta de 10 minutos. O câncer bucal diagnosticado no Estágio I tem uma taxa de sobrevida de 84% em cinco anos.",
+    "whenToSeeHeading": "Quando consultar um médico ou dentista, não espere se:",
+    "whenToSee": [
+      {
+        "title": "A ferida está há mais de 2 semanas",
+        "desc": "O sinal mais importante de todos."
+      },
+      {
+        "title": "É indolor",
+        "desc": "O câncer bucal inicial costuma ser indolor. Isso não é tranquilizador, é um motivo para se consultar."
+      },
+      {
+        "title": "Sangra com facilidade ao toque",
+        "desc": "Sangramento incomum em uma ferida ou mancha é um sinal de alerta."
+      },
+      {
+        "title": "Está crescendo ou mudando",
+        "desc": "Uma ferida que está aumentando ou mudando de cor precisa ser avaliada."
+      },
+      {
+        "title": "Parece dura por baixo",
+        "desc": "Endurecimento sob uma lesão é preocupante."
+      },
+      {
+        "title": "Há também um caroço no pescoço",
+        "desc": "Gânglios linfáticos inchados junto com uma ferida na boca requerem avaliação rápida."
+      }
+    ],
+    "faqHeading": "Perguntas frequentes",
+    "faqs": [
+      {
+        "q": "Como saber se uma ferida na boca é câncer?",
+        "a": "O indicador mais confiável é o tempo. Aftas cicatrizam em 7 a 14 dias. Se uma ferida, mancha ou caroço não desapareceu após 2 semanas, consulte um dentista ou médico. Outros sinais de alerta: sangra com facilidade, é indolor, tem bordas irregulares, está crescendo ou vem acompanhado de um caroço no pescoço."
+      },
+      {
+        "q": "Uma afta pode se transformar em câncer bucal?",
+        "a": "Não. Aftas são benignas e não se tornam cancerígenas. Porém, o câncer bucal pode parecer uma afta nos estágios iniciais, e é exatamente por isso que existe a regra das 2 semanas. Se parece uma afta, mas não cicatrizou em 2 semanas, procure um dentista."
+      },
+      {
+        "q": "Como é uma lesão de câncer bucal na prática?",
+        "a": "Pode aparecer como uma mancha vermelha, uma mancha branca ou uma mistura das duas. Pode parecer uma ferida que não cicatriza, um caroço ou uma área áspera com crostas. As lesões iniciais costumam ser indolores. Podem surgir na língua, no assoalho da boca, nas gengivas, nas bochechas, nos lábios ou na garganta."
+      },
+      {
+        "q": "Uma ferida indolor é mais preocupante do que uma dolorosa?",
+        "a": "Contraintuitivamente, sim. Aftas costumam ser bastante dolorosas. O câncer bucal inicial frequentemente é indolor, e é por isso que as pessoas ignoram. Uma ferida ou mancha indolor que persiste por mais de 2 semanas é mais preocupante do que uma dolorosa que está cicatrizando."
+      },
+      {
+        "q": "Tenho uma mancha branca na boca. Pode ser câncer?",
+        "a": "Não necessariamente, mas uma mancha branca (leucoplasia) presente há mais de 2 semanas, que não sai ao ser raspada ou que está acompanhada de uma área vermelha, deve ser avaliada por um dentista. A maioria se revela benigna. O dentista pode indicar se há necessidade de biópsia."
+      }
+    ],
+    "sourcesLabel": "Fontes:",
+    "sourcesBody": "American Cancer Society, Oral Cancer Foundation, National Institute of Dental and Craniofacial Research (NIDCR), Mayo Clinic. Este conteúdo é educativo e não substitui orientação médica.",
+    "checkRisk": "Verifique seu risco →",
+    "seeAllSigns": "Ver todos os sinais de alerta",
+    "findDentist": "Encontre um dentista →"
+  },
+  "RiskFactorsMeta": {
+    "title": "Fatores de Risco do Câncer Bucal: O Que Aumenta o Seu Risco",
+    "description": "Os principais fatores de risco para o câncer bucal incluem tabaco, álcool, HPV-16, idade e exposição ao sol. Saiba como cada fator age e como eles se combinam."
+  },
+  "RiskFactorsPage": {
+    "tag": "Fatores de risco",
+    "heading": "Fatores de Risco para o Câncer Bucal",
+    "intro": "O câncer bucal tem causas claras e bem compreendidas. A maioria delas pode ser modificada. Entender seus fatores de risco específicos é o primeiro passo para agir em relação a eles.",
+    "twoFactorHeading": "A regra dos dois fatores",
+    "twoFactorP1": "O tabaco e o álcool, cada um por si só, aumentam o risco de câncer bucal. Usados juntos, seus efeitos são",
+    "twoFactorBold1": "sinérgicos, não aditivos",
+    "twoFactorP2": "um fumante pesado que também bebe muito pode enfrentar um",
+    "twoFactorBold2": "aumento de 30 vezes",
+    "twoFactorP3": "no risco em comparação com alguém que não faz nenhum dos dois. Se você usa ambos, reduzir ou eliminar qualquer um deles diminui significativamente o seu risco.",
+    "learnMore": "Saiba mais →",
+    "riskFactors": [
+      {
+        "rank": 1,
+        "name": "Uso de tabaco",
+        "weight": "Muito alto",
+        "weightColor": "text-accent",
+        "summary": "Responsável por cerca de 75% dos casos tradicionais de câncer bucal.",
+        "detail": "Todas as formas de tabaco aumentam significativamente o risco de câncer bucal: cigarros, charutos, cachimbos, tabaco de mascar, rapé e produtos de vaping. O risco aumenta conforme a quantidade usada e o tempo de uso. Fumantes pesados têm de 6 a 27 vezes mais chance de desenvolver câncer bucal do que não fumantes. Parar de fumar reduz o risco ao longo do tempo, mas o risco não volta ao nível inicial por vários anos após a interrupção.",
+        "link": null
+      },
+      {
+        "rank": 2,
+        "name": "Consumo de álcool",
+        "weight": "Alto",
+        "weightColor": "text-accent",
+        "summary": "Bebedores pesados têm 5 a 6 vezes mais chance de desenvolver câncer bucal.",
+        "detail": "O álcool é um agente cancerígeno direto na cavidade bucal. O risco aumenta com a quantidade consumida, e o consumo pesado (mais de 3 a 4 doses por dia) apresenta o risco mais elevado. Combinado ao tabaco, os efeitos são sinérgicos: o risco combinado supera em muito a soma dos dois riscos individuais. Alguém que fuma muito e bebe muito pode ter um risco 30 vezes maior do que alguém que não faz nenhum dos dois.",
+        "link": null
+      },
+      {
+        "rank": 3,
+        "name": "Infecção pelo HPV-16",
+        "weight": "Alto e crescente",
+        "weightColor": "text-accent",
+        "summary": "Atualmente a principal causa de câncer de orofaringe, superando o tabaco.",
+        "detail": "O papilomavírus humano tipo 16 (HPV-16) é uma infecção sexualmente transmissível que se tornou o principal fator por trás dos cânceres de orofaringe: cânceres na base da língua, nas amígdalas e na garganta. Ao contrário dos cânceres bucais relacionados ao tabaco, os cânceres relacionados ao HPV tendem a ocorrer em adultos mais jovens sem histórico de tabagismo e respondem melhor ao tratamento. A vacina contra o HPV (Gardasil 9) é altamente eficaz na prevenção da infecção pelo HPV-16 quando aplicada antes da exposição.",
+        "link": "/learn/hpv"
+      },
+      {
+        "rank": 4,
+        "name": "Idade",
+        "weight": "Moderado",
+        "weightColor": "text-caution",
+        "summary": "O risco aumenta bastante após os 55 anos. O pico de incidência ocorre entre os 60 e 70 anos.",
+        "detail": "O câncer bucal é mais comum com o avanço da idade, em parte pela maior exposição acumulada aos fatores de risco ao longo da vida, e em parte pelas mudanças na função imunológica relacionadas à idade. A idade média no momento do diagnóstico é de 62 anos. No entanto, os cânceres de orofaringe relacionados ao HPV estão sendo diagnosticados com frequência cada vez maior em adultos entre 40 e 50 anos, portanto adultos mais jovens também não estão livres do risco.",
+        "link": null
+      },
+      {
+        "rank": 5,
+        "name": "Exposição ao sol",
+        "weight": "Moderado, câncer de lábio",
+        "weightColor": "text-caution",
+        "summary": "A radiação UV é o principal fator de risco especificamente para o câncer de lábio.",
+        "detail": "A exposição crônica ao sol sem proteção aumenta o risco de câncer de lábio, especialmente no lábio inferior. Pessoas que trabalham ao ar livre por longos períodos, como agricultores, trabalhadores da construção civil e pescadores, historicamente apresentam taxas mais altas de câncer de lábio. Usar protetor labial com FPS e chapéu são medidas eficazes de proteção.",
+        "link": null
+      },
+      {
+        "rank": 6,
+        "name": "Alimentação",
+        "weight": "Moderado",
+        "weightColor": "text-caution",
+        "summary": "Dietas pobres em frutas e verduras estão consistentemente associadas a um risco maior.",
+        "detail": "Uma alimentação pobre em frutas e verduras, e portanto pobre em antioxidantes, vitaminas A, C e E e outros micronutrientes, está associada a um risco elevado de câncer bucal em estudos epidemiológicos. O efeito protetor do consumo de frutas e verduras é bem documentado, embora a alimentação seja considerada um fator secundário em comparação ao tabaco, ao álcool e ao HPV.",
+        "link": null
+      },
+      {
+        "rank": 7,
+        "name": "Uso de noz de areca (betel)",
+        "weight": "Muito alto, populações específicas",
+        "weightColor": "text-accent",
+        "summary": "Uma das principais causas de câncer bucal no sul e sudeste asiático.",
+        "detail": "A noz de areca (betel), frequentemente mastigada com folha de bétel e cal, ou na forma de paan, gutka ou pan masala, é um dos agentes cancerígenos bucais mais potentes conhecidos. É a quarta substância psicoativa mais consumida no mundo e é responsável por altas taxas de fibrose submucosa bucal e carcinoma de células escamosas no sul da Ásia, no sudeste asiático e em populações da diáspora ao redor do mundo.",
+        "link": null
+      },
+      {
+        "rank": 8,
+        "name": "Histórico familiar",
+        "weight": "Modesto",
+        "weightColor": "text-low",
+        "summary": "Ter um parente de primeiro grau com câncer bucal ou de cabeça e pescoço aumenta moderadamente o risco.",
+        "detail": "Ter pai, mãe ou irmão que desenvolveu câncer bucal ou de cabeça e pescoço aumenta um pouco o seu risco, provavelmente por uma combinação de predisposição genética compartilhada e exposições ambientais em comum. O histórico familiar por si só não é considerado um fator de alto risco, mas reforça a importância de fazer exames odontológicos regulares.",
+        "link": null
+      },
+      {
+        "rank": 9,
+        "name": "Consultas odontológicas pouco frequentes",
+        "weight": "Indireto",
+        "weightColor": "text-low",
+        "summary": "Os dentistas são os principais responsáveis pela triagem inicial do câncer bucal.",
+        "detail": "Os dentistas realizam rotineiramente exames visuais e físicos em busca de sinais de câncer bucal durante as consultas de rotina. Pessoas que raramente vão ao dentista perdem essas triagens regulares, o que significa que lesões iniciais podem passar mais tempo sem ser detectadas. Isso não é uma causa biológica direta, mas aumenta significativamente a chance de que um câncer seja detectado em um estágio mais avançado e de tratamento mais difícil.",
+        "link": "/find-care"
+      }
+    ],
+    "interactHeading": "Como os fatores de risco interagem",
+    "interactP1": "Os fatores de risco nem sempre atuam de forma independente. O tabaco e o álcool juntos são significativamente mais perigosos do que cada um separado: ambas as substâncias danificam os mesmos tecidos, e o álcool pode potencializar a capacidade dos agentes cancerígenos do tabaco de penetrar nas células que revestem a boca e a garganta.",
+    "interactP2": "Os cânceres de orofaringe relacionados ao HPV seguem um caminho completamente diferente: são impulsionados pela integração do vírus ao DNA das células, e não por agentes químicos cancerígenos. Por isso, os cânceres relacionados ao HPV tendem a ocorrer em adultos mais jovens e não fumantes. A vacina contra o HPV é atualmente a única ferramenta preventiva voltada especificamente para esse mecanismo.",
+    "interactP3": "Ter múltiplos fatores de risco não garante o desenvolvimento de câncer, mas reforça a importância de fazer exames odontológicos regulares e autoexames.",
+    "whatToDoHeading": "O que você pode fazer",
+    "whatToDo": [
+      {
+        "title": "Pare de usar tabaco",
+        "desc": "A mudança de maior impacto. O risco diminui de forma mensurável nos anos seguintes à interrupção."
+      },
+      {
+        "title": "Reduza o consumo de álcool",
+        "desc": "O risco aumenta conforme o consumo. Reduzir o uso excessivo diminui o risco."
+      },
+      {
+        "title": "Tome a vacina contra o HPV",
+        "desc": "A Gardasil 9 é aprovada até os 45 anos e é altamente eficaz contra o HPV-16 quando aplicada antes da exposição."
+      },
+      {
+        "title": "Proteja os lábios",
+        "desc": "Use protetor labial com FPS 30 ou mais ao ar livre. Use chapéu de abas largas."
+      },
+      {
+        "title": "Consulte o dentista regularmente",
+        "desc": "As consultas odontológicas incluem uma avaliação visual para câncer bucal. Cada visita é uma oportunidade de detecção precoce."
+      },
+      {
+        "title": "Conheça os sinais de alerta",
+        "desc": "Qualquer ferida, mancha ou caroço que não desapareça em 2 semanas deve ser avaliado."
+      }
+    ],
+    "faqHeading": "Perguntas frequentes",
+    "faqs": [
+      {
+        "q": "Qual é o maior fator de risco para o câncer bucal?",
+        "a": "Para os cânceres da cavidade bucal, o tabaco é o principal fator de risco modificável, responsável por cerca de 75% dos casos. Para os cânceres de orofaringe (base da língua, amígdalas e garganta), o HPV-16 já superou o tabaco como principal causa nos Estados Unidos."
+      },
+      {
+        "q": "O álcool aumenta o risco de câncer bucal?",
+        "a": "Sim. O consumo pesado de álcool é um fator de risco independente. A combinação de tabaco e álcool é especialmente perigosa: os efeitos são sinérgicos, e o risco combinado pode ser 30 vezes maior do que para alguém que não usa nenhum dos dois."
+      },
+      {
+        "q": "É possível ter câncer bucal sem fumar ou beber?",
+        "a": "Sim. Os cânceres de orofaringe relacionados ao HPV têm aumentado entre pessoas que nunca fumaram nem usaram tabaco. O HPV-16 é atualmente responsável pela maioria dos cânceres de garganta e amígdalas nos Estados Unidos."
+      },
+      {
+        "q": "O câncer bucal é hereditário?",
+        "a": "O histórico familiar é reconhecido como um fator de risco independente, mas modesto. A maioria dos cânceres bucais é causada por fatores de risco modificáveis, como tabaco, álcool e HPV, e não por causas hereditárias."
+      },
+      {
+        "q": "A partir de que idade o risco de câncer bucal aumenta?",
+        "a": "O risco aumenta bastante após os 55 anos, com pico de incidência entre os 60 e 70 anos. No entanto, os cânceres de orofaringe relacionados ao HPV estão sendo diagnosticados com frequência crescente em adultos entre 40 e 50 anos."
+      }
+    ],
+    "sourcesLabel": "Fontes:",
+    "sourcesBody": "American Cancer Society, National Cancer Institute (NCI SEER), Oral Cancer Foundation, CDC HPV and Cancer, International Agency for Research on Cancer (IARC). Esta página tem fins educativos e não constitui aconselhamento médico.",
+    "checkRisk": "Avalie seu risco →",
+    "warningSigns": "Sinais de alerta",
+    "preventionGuide": "Como prevenir o câncer bucal",
+    "hpvGuide": "HPV e câncer bucal"
+  },
+  "OralCancerMeta": {
+    "title": "O Que É Câncer Bucal? Definição, Tipos e Principais Informações",
+    "description": "O câncer bucal é o câncer que se forma na boca ou na garganta. Saiba a definição, os tipos, as principais estatísticas, as causas e os sinais de alerta, e quando consultar um médico."
+  },
+  "OralCancerPage": {
+    "tag": "Conceitos básicos",
+    "heading": "O Que É Câncer Bucal?",
+    "intro": "O câncer bucal é o câncer que se desenvolve na boca ou na garganta. É mais comum do que a maioria das pessoas imagina, mas quando detectado cedo tem grande chance de cura. Veja o que é importante saber.",
+    "definitionHeading": "Definição",
+    "definitionP1Start": "é um termo amplo para os cânceres que se formam na",
+    "definitionBold1": "Câncer bucal",
+    "definitionBold2": "cavidade bucal",
+    "definitionMid": "(lábios, língua, gengivas, bochechas, assoalho e céu da boca) ou na",
+    "definitionBold3": "orofaringe",
+    "definitionEnd": "(amígdalas, base da língua e parte posterior da garganta).",
+    "definitionP2Start": "Cerca de 90% dos cânceres bucais são",
+    "definitionBold4": "carcinomas de células escamosas",
+    "definitionP2End": "cânceres que começam nas células finas e planas que revestem essas superfícies. A maioria começa como uma pequena alteração indolor que passa despercebida até crescer.",
+    "typesHeading": "Tipos de câncer bucal",
+    "types": [
+      {
+        "name": "Carcinoma de células escamosas (CCE)",
+        "pct": "~90% dos casos",
+        "description": "O tipo mais comum. O CCE começa nas células escamosas, células finas e planas que revestem a boca, os lábios, a língua e a garganta. A maioria dos cânceres bucais diagnosticados são CCEs. Tabaco e álcool são os principais fatores; o HPV está cada vez mais associado aos CCEs da orofaringe."
+      },
+      {
+        "name": "Câncer de orofaringe",
+        "pct": "Amígdalas, base da língua, garganta",
+        "description": "Tecnicamente um subtipo de CCE, os cânceres de orofaringe se desenvolvem na parte posterior da boca e da garganta. Atualmente, estão mais comumente associados à infecção pelo HPV-16 do que ao tabaco, e tendem a ser detectados em estágios mais avançados porque a região é difícil de visualizar e os sintomas são fáceis de ignorar."
+      },
+      {
+        "name": "Câncer de glândula salivar",
+        "pct": "Raro, menos de 10% dos casos",
+        "description": "Câncer que surge nas glândulas parótida, sublingual ou submandibular. Existem vários subtipos (carcinoma mucoepidermoide, carcinoma adenoide cístico, entre outros), cada um com comportamentos e prognósticos diferentes. O tratamento e as perspectivas variam muito conforme o subtipo."
+      },
+      {
+        "name": "Linfoma bucal",
+        "pct": "Incomum",
+        "description": "Câncer do tecido linfático na boca ou na garganta. É mais comum em pessoas com imunidade comprometida (por exemplo, pessoas HIV-positivas). Geralmente se manifesta como um inchaço amolecido, muitas vezes indolor, nas amígdalas ou na parte posterior da boca."
+      }
+    ],
+    "byNumbersHeading": "Em números",
+    "stats": [
+      {
+        "value": "54.000+",
+        "label": "novos diagnósticos por ano",
+        "sub": "EUA, bucal e orofaríngeo combinados"
+      },
+      {
+        "value": "84%",
+        "label": "taxa de sobrevida quando detectado cedo",
+        "sub": "cai para ~40% em estágio avançado"
+      },
+      {
+        "value": "2×",
+        "label": "mais comum em homens",
+        "sub": "embora as taxas entre mulheres estejam aumentando"
+      },
+      {
+        "value": "62",
+        "label": "idade mediana ao diagnóstico",
+        "sub": "mas pode ocorrer em qualquer idade"
+      }
+    ],
+    "causesHeading": "O que causa o câncer bucal?",
+    "causesIntro": "O câncer bucal se desenvolve quando células da boca ou da garganta acumulam mutações no DNA que provocam crescimento descontrolado. Diversos fatores de risco bem estabelecidos aumentam a probabilidade de essas mutações ocorrerem.",
+    "causes": [
+      {
+        "factor": "Uso de tabaco",
+        "detail": "Cigarros, charutos, cachimbos, tabaco de mascar e rapé são, de longe, o maior fator de risco modificável para os cânceres bucais tradicionais (lábios, língua, assoalho da boca). O risco é proporcional à quantidade usada, quanto maior o consumo, maior o risco, e diminui significativamente após parar de fumar."
+      },
+      {
+        "factor": "Álcool",
+        "detail": "O consumo pesado de álcool é um fator de risco independente, e a combinação com o tabaco multiplica o risco em vez de simplesmente somá-lo. Pessoas que fumam muito e bebem muito podem ter um risco até 15 vezes maior do que quem não usa nenhum dos dois."
+      },
+      {
+        "factor": "Infecção pelo HPV",
+        "detail": "O Papilomavírus Humano, especificamente o HPV-16, superou o tabaco como principal causa dos cânceres de orofaringe. Os cânceres relacionados ao HPV frequentemente aparecem em não fumantes entre os 40 e 50 anos. A vacina contra o HPV reduz significativamente o risco.",
+        "link": "/learn/hpv"
+      },
+      {
+        "factor": "Exposição ao sol",
+        "detail": "A exposição crônica à radiação UV é um fator de risco importante especificamente para o câncer do lábio inferior, não para os cânceres dentro da boca. Pessoas que trabalham ao ar livre têm risco elevado. Protetor labial com fator de proteção solar e chapéu de abas largas oferecem proteção importante."
+      },
+      {
+        "factor": "Idade",
+        "detail": "O risco aumenta com a idade. A maioria dos diagnósticos ocorre após os 55 anos, embora os cânceres de orofaringe relacionados ao HPV sejam cada vez mais comuns em adultos de meia-idade. As consultas regulares ao dentista se tornam mais importantes conforme a idade avança."
+      }
+    ],
+    "lookLikeHeading": "Como o câncer bucal aparece?",
+    "lookLikeIntro": "O câncer bucal em estágio inicial costuma ser indolor e fácil de ignorar. Os sinais mais comuns incluem:",
+    "signs": [
+      "Uma mancha vermelha ou branca dentro da boca que não desaparece",
+      "Uma ferida ou úlcera que não cicatrizou em 2 semanas",
+      "Um caroço ou espessamento na bochecha, na língua ou na gengiva",
+      "Dormência ou dor sem causa aparente na boca ou no rosto",
+      "Dificuldade para mastigar, engolir ou movimentar a mandíbula",
+      "Rouquidão ou dor de garganta com duração superior a 2 semanas",
+      "Um caroço indolor no pescoço"
+    ],
+    "seeFullStart": "Veja o",
+    "seeFullLink": "guia completo de sinais de alerta",
+    "seeFullEnd": "para descrições detalhadas e fotos.",
+    "twoWeekHeading": "A regra das 2 semanas",
+    "twoWeekP1Start": "Qualquer ferida, mancha, caroço ou alteração na boca que não tenha cicatrizado ou desaparecido após",
+    "twoWeekBold": "2 semanas",
+    "twoWeekP1End": "deve ser avaliada por um dentista ou médico. Na maioria das vezes não é nada grave, mas detectar o câncer bucal cedo faz toda a diferença.",
+    "faqHeading": "Perguntas frequentes",
+    "faqs": [
+      {
+        "q": "O que é câncer bucal?",
+        "a": "Câncer bucal é o câncer que se desenvolve em qualquer parte da boca (cavidade oral) ou na parte posterior da garganta (orofaringe). Isso inclui lábios, língua, gengivas, assoalho da boca, palato duro e mole, bochechas e garganta. A maioria dos cânceres bucais são carcinomas de células escamosas, cânceres que começam nas células planas que revestem essas superfícies."
+      },
+      {
+        "q": "Quais são os tipos de câncer bucal?",
+        "a": "Os principais tipos são: carcinoma de células escamosas (cerca de 90% dos casos), câncer de orofaringe (amígdalas, base da língua, garganta, frequentemente relacionado ao HPV), câncer de glândula salivar (raro, com vários subtipos) e linfoma bucal (incomum, mais provável em pessoas com imunidade comprometida)."
+      },
+      {
+        "q": "Câncer bucal é o mesmo que câncer de garganta?",
+        "a": "Eles se sobrepõem. O câncer bucal geralmente se refere aos cânceres dos lábios, língua, gengivas, bochechas, assoalho e teto da boca. O câncer de orofaringe afeta as amígdalas, a base da língua e a parte posterior da garganta. Como essas regiões se conectam, elas frequentemente são agrupadas como \"câncer bucal e orofaríngeo\"."
+      },
+      {
+        "q": "O câncer bucal é comum?",
+        "a": "Mais de 54.000 americanos são diagnosticados com câncer bucal e orofaríngeo a cada ano. É cerca de duas vezes mais comum em homens do que em mulheres, e a idade mediana ao diagnóstico é 62 anos. Está entre os dez cânceres mais comuns no mundo."
+      },
+      {
+        "q": "O câncer bucal tem cura se for detectado cedo?",
+        "a": "Sim. A taxa de sobrevida em 5 anos para o câncer bucal em estágio inicial é de cerca de 84%. Em estágio avançado, esse número cai para aproximadamente 40%. A detecção precoce por meio de consultas regulares ao dentista e autoexames mensais é o principal fator para melhorar os resultados."
+      }
+    ],
+    "sourcesLabel": "Fontes:",
+    "sourcesBody": "American Cancer Society, banco de dados SEER do National Cancer Institute, Oral Cancer Foundation, CDC, Organização Mundial da Saúde. Esta página tem caráter educativo e não constitui aconselhamento médico.",
+    "byline": "Escrito por Ian Harris, estudante de pré-odontologia na Universidade de Wisconsin-Madison.",
+    "aboutLink": "Sobre o OralCheck",
+    "takeScreener": "Fazer o rastreamento gratuito →",
+    "learnSigns": "Conheça os sinais de alerta",
+    "howToSelfExam": "Como fazer o autoexame"
+  },
+  "SignsMeta": {
+    "title": "Sinais e Sintomas do Câncer Bucal: O Que Observar",
+    "description": "Conheça os sinais iniciais do câncer bucal: manchas vermelhas ou brancas, feridas que não cicatrizam, caroços sem causa aparente e dormência. Saiba quando agir."
+  },
+  "SignsPage": {
+    "tag": "Sintomas",
+    "heading": "Sinais e Sintomas do Câncer Bucal",
+    "introStart": "A maioria dos",
+    "introLink": "cânceres bucais",
+    "introEnd": "em estágio inicial é completamente indolor. Por isso, tantos casos são detectados tarde. Estas são as alterações que vale conhecer, especialmente se alguma delas durar mais de 2 semanas.",
+    "twoWeekHeading": "A regra das 2 semanas",
+    "twoWeekP1Start": "Qualquer ferida, mancha, caroço ou alteração incomum na boca que",
+    "twoWeekBold": "não tenha desaparecido após 2 semanas",
+    "twoWeekP1End": "deve ser avaliada por um dentista ou médico. As aftas cicatrizam em 7 a 10 dias. O câncer bucal não. Não é necessário esperar para ver se piora, 2 semanas é o limite.",
+    "signsHeading": "Sinais de alerta",
+    "highPriority": "Alta prioridade",
+    "signs": [
+      {
+        "title": "Manchas vermelhas ou brancas",
+        "detail": "Um dos sinais precoces mais importantes. Uma mancha vermelha persistente (eritroplasia) é a lesão de maior risco: estudos estimam que 50% ou mais das manchas vermelhas já são cancerosas ou pré-cancerosas no momento da biópsia. Manchas brancas (leucoplasia) são mais comuns e geralmente benignas, mas cerca de 5 a 17% podem se tornar malignas se não tratadas. Uma mancha mesclada de vermelho e branco (eritroleucoplasia) apresenta o maior risco de todos. A característica que as define: essas manchas não saem com raspagem ou esfregamento.",
+        "urgent": true
+      },
+      {
+        "title": "Feridas ou úlceras que não cicatrizam",
+        "detail": "Uma ferida ou úlcera na boca que não desaparece após 2 semanas é o sinal de alerta clássico. As aftas (úlceras aftosas) cicatrizam em 7 a 10 dias sem tratamento. As lesões de câncer bucal não cicatrizam. Podem ter bordas irregulares, elevadas ou endurecidas, diferentes da borda redonda e bem definida de uma afta. Podem sangrar facilmente ao toque. A ausência de dor não significa ausência de risco.",
+        "urgent": true
+      },
+      {
+        "title": "Caroço, espessamento ou área áspera",
+        "detail": "Um novo caroço ou área de espessamento na bochecha, língua, gengiva ou assoalho da boca, especialmente se tiver consistência firme e dura, merece avaliação. Tumores iniciais frequentemente têm consistência elástica ou firme, como uma bolinha sob a pele. Um linfonodo inchado no pescoço que persiste por mais de 2 semanas, mesmo sem infecção aparente, também pode ser sinal de câncer bucal ou orofaríngeo.",
+        "urgent": false
+      },
+      {
+        "title": "Dormência ou dor sem explicação",
+        "detail": "Dormência, formigamento ou perda de sensibilidade sem causa aparente na boca, língua, lábios ou rosto, especialmente se for de um só lado, pode ser sinal de comprometimento nervoso. Dor intermitente ou persistente na boca ou na mandíbula sem causa odontológica identificável (sem cárie, sem problema nos dentes) também merece investigação. A dor costuma aparecer em casos mais avançados, mas alguns cânceres iniciais causam desconforto.",
+        "urgent": false
+      },
+      {
+        "title": "Dificuldade para mastigar, engolir ou movimentar a mandíbula",
+        "detail": "A sensação de comida prendendo na garganta, dificuldade para abrir a boca completamente (trismo) ou dor e limitação ao movimentar a mandíbula ou a língua podem indicar uma massa afetando as estruturas ao redor. Esse sintoma é mais comum em tumores na base da língua ou na orofaringe, onde os cânceres relacionados ao HPV costumam se originar, e frequentemente aparece antes de qualquer lesão visível.",
+        "urgent": false
+      },
+      {
+        "title": "Dentes amolecendo sem causa odontológica",
+        "detail": "Se os dentes ficam moles sem uma causa aparente, sem diagnóstico de doença gengival, sem trauma, sem problema odontológico, isso pode indicar que um tumor está afetando o osso ou o tecido mole que sustenta os dentes. Isso é especialmente relevante para lesões na gengiva (carcinoma gengival), que podem imitar a doença periodontal e passar despercebidas por meses.",
+        "urgent": false
+      },
+      {
+        "title": "Rouquidão persistente ou mudança na voz",
+        "detail": "Uma alteração na qualidade da voz ou rouquidão persistente que dura mais de 2 semanas, especialmente sem resfriado ou doença respiratória prévia, pode ser sinal de comprometimento da laringe ou de um tumor próximo à parte de trás da garganta. Esse sintoma está mais associado aos cânceres orofaríngeo e laríngeo do que aos cânceres da cavidade bucal.",
+        "urgent": false
+      },
+      {
+        "title": "Dor de ouvido sem problema no ouvido",
+        "detail": "Chamada de otalgia referida, a dor no ouvido que ocorre sem infecção ou problema auricular pode resultar de sinais de dor originados na garganta ou na base da língua que são redirecionados pelas vias nervosas do ouvido. Se os ouvidos doem e o médico não encontra nenhum problema auricular, a base da língua e as amígdalas devem ser examinadas.",
+        "urgent": false
+      }
+    ],
+    "whereHeading": "Onde o câncer bucal se desenvolve com mais frequência",
+    "whereIntro": "O câncer bucal pode aparecer em qualquer parte da boca ou garganta, mas certos locais apresentam maior risco. Saber onde procurar torna o autoexame e as triagens odontológicas mais eficazes.",
+    "locations": [
+      {
+        "site": "Língua",
+        "note": "Laterais e parte inferior, local mais comum no geral. Fácil de ignorar sem um autoexame.",
+        "risk": "Altíssimo"
+      },
+      {
+        "site": "Assoalho da boca",
+        "note": "O tecido em forma de U embaixo da língua. Geralmente difícil de ver sem levantar a língua.",
+        "risk": "Muito alto"
+      },
+      {
+        "site": "Lábios",
+        "note": "Lábio inferior é o mais afetado, associado à exposição solar. Geralmente visível.",
+        "risk": "Alto"
+      },
+      {
+        "site": "Gengivas",
+        "note": "Pode imitar doença gengival. Dentes amolecendo sem causa odontológica é um sinal importante.",
+        "risk": "Alto"
+      },
+      {
+        "site": "Bochechas (interior)",
+        "note": "O tecido mole que reveste o interior das bochechas.",
+        "risk": "Moderado"
+      },
+      {
+        "site": "Base da língua e amígdalas",
+        "note": "Onde os cânceres orofaríngeos relacionados ao HPV costumam começar. Frequentemente sem lesão visível.",
+        "risk": "Alto, relacionado ao HPV"
+      },
+      {
+        "site": "Palato",
+        "note": "Palato duro (céu da boca) e palato mole. Verifique os dois lados.",
+        "risk": "Moderado"
+      }
+    ],
+    "painlessHeading": "Por que o câncer bucal inicial frequentemente não causa dor",
+    "painlessP1": "A dor é o sistema de alarme do organismo, mas o câncer bucal em estágio inicial frequentemente não a ativa. Um pequeno tumor no assoalho da boca ou na lateral da língua pode crescer por meses sem causar nenhum desconforto. Manchas vermelhas e brancas são muitas vezes completamente assintomáticas.",
+    "painlessP2": "Quando a dor aparece, geralmente por comprometimento nervoso ou ulceração, o câncer costuma estar em estágio mais avançado. Essa dinâmica é o principal motivo pelo qual o câncer bucal tem uma baixa taxa de detecção precoce e uma taxa de sobrevida em 5 anos de apenas cerca de 40% para a doença em estágio avançado, em comparação a mais de 84% quando detectado cedo.",
+    "painlessP3": "A ausência de dor não é motivo de tranquilidade. É exatamente por isso que a regra das 2 semanas é importante, e por isso as consultas odontológicas de rotina que incluem triagem para câncer bucal valem a pena.",
+    "comparisonHeading": "Câncer bucal versus afta: comparação rápida",
+    "comparisonIntroStart": "Aftas e câncer bucal inicial podem ter aparência semelhante.",
+    "comparisonIntroLink": "Veja a página de comparação completa",
+    "comparisonIntroEnd": "para mais detalhes. O resumo:",
+    "colCankerSore": "Afta",
+    "colOralCancer": "Câncer bucal",
+    "comparison": [
+      {
+        "label": "Cicatriza em",
+        "a": "7 a 10 dias",
+        "b": "Não cicatriza"
+      },
+      {
+        "label": "Nível de dor",
+        "a": "Geralmente dolorosa",
+        "b": "Frequentemente indolor"
+      },
+      {
+        "label": "Borda",
+        "a": "Arredondada e bem definida",
+        "b": "Irregular e elevada"
+      },
+      {
+        "label": "Cor",
+        "a": "Centro branco ou amarelo com borda vermelha",
+        "b": "Vermelha, branca ou mesclada"
+      },
+      {
+        "label": "Localização",
+        "a": "Tecido mole, interior dos lábios",
+        "b": "Qualquer local, frequentemente língua ou assoalho"
+      },
+      {
+        "label": "O que fazer",
+        "a": "Acompanhar, tende a desaparecer",
+        "b": "Consultar um dentista se persistir 2 semanas ou mais"
+      }
+    ],
+    "whatToDoHeading": "O que fazer ao notar um sinal",
+    "whatToDo": [
+      {
+        "title": "Não espere sentir dor",
+        "desc": "A dor não é um indicador confiável de gravidade. Aja com base no que você vê, não no que sente."
+      },
+      {
+        "title": "Aguarde 2 semanas",
+        "desc": "Traumas leves (uma mordida, um alimento duro) causam feridas na boca. Dê a qualquer lesão nova 2 semanas para desaparecer por conta própria."
+      },
+      {
+        "title": "Consulte um dentista",
+        "desc": "Se a lesão ainda estiver presente após 2 semanas, marque uma consulta odontológica. Os dentistas são os principais responsáveis pela triagem do câncer bucal. Muitos oferecem triagem gratuita."
+      },
+      {
+        "title": "Não se autodiagnostique",
+        "desc": "A maioria das alterações acaba sendo benigna. Um exame profissional, e não uma busca no Google, é o que oferece uma resposta."
+      },
+      {
+        "title": "Conheça seus fatores de risco",
+        "desc": "O uso de tabaco, o consumo excessivo de álcool, o HPV e a idade elevam o risco basal. Quanto mais fatores de risco uma pessoa tiver, mais importantes são as triagens regulares."
+      }
+    ],
+    "faqHeading": "Perguntas frequentes",
+    "faqs": [
+      {
+        "q": "Como é o câncer bucal?",
+        "a": "O câncer bucal aparece mais comumente como uma mancha vermelha, uma mancha branca ou uma mancha mesclada de vermelho e branco que não sai com raspagem. Também pode ter a aparência de uma ferida com bordas irregulares que sangra facilmente e não cicatriza, um caroço elevado ou uma área endurecida e espessada. Pode se desenvolver na língua, nas gengivas, nos lábios, no assoalho da boca, nas bochechas ou na garganta."
+      },
+      {
+        "q": "O câncer bucal pode ser indolor?",
+        "a": "Sim, o câncer bucal inicial é frequentemente completamente indolor. É por isso que as triagens odontológicas de rotina e o autoexame mensal são importantes. A dor tende a aparecer em doenças mais avançadas, não em lesões em estágio inicial."
+      },
+      {
+        "q": "O que é a regra das 2 semanas?",
+        "a": "Qualquer ferida, mancha, caroço ou alteração na boca que não tenha desaparecido após 2 semanas deve ser avaliada por um profissional de saúde. As aftas cicatrizam em 7 a 10 dias. Qualquer coisa que dure mais tempo merece uma avaliação do dentista."
+      },
+      {
+        "q": "Onde o câncer bucal se desenvolve com mais frequência?",
+        "a": "As laterais e a parte inferior da língua e o assoalho da boca são os locais mais comuns para os cânceres da cavidade bucal. Os cânceres orofaríngeos relacionados ao HPV tendem a começar na base da língua e nas amígdalas, onde pode não haver nenhuma lesão visível."
+      },
+      {
+        "q": "Como o câncer bucal é detectado precocemente?",
+        "a": "As consultas odontológicas regulares, que incluem um exame visual e físico para triagem do câncer bucal, são a forma mais confiável de detectá-lo cedo. O autoexame mensal em casa também pode identificar alterações entre as consultas odontológicas. Se houver fatores de risco para câncer bucal, converse com o dentista sobre realizar uma triagem formal."
+      }
+    ],
+    "sourcesLabel": "Fontes:",
+    "sourcesBody": "American Cancer Society, National Cancer Institute, Oral Cancer Foundation, National Institute of Dental and Craniofacial Research (NIDCR). Esta página tem caráter educativo e não substitui orientação médica.",
+    "takeScreener": "Fazer a triagem gratuita →",
+    "howToSelfExam": "Como fazer o autoexame",
+    "cankerVsCancer": "Afta versus câncer bucal",
+    "riskFactors": "Fatores de risco",
+    "byline": "Escrito por Ian Harris, estudante de pré-odontologia na Universidade de Wisconsin-Madison.",
+    "aboutLink": "Sobre o OralCheck"
+  },
+  "SignsVisualGuide": {
+    "eyebrow": "Guia interativo",
+    "heading": "O que observar",
+    "subheading": "Navegue pelos sinais que vale a pena conhecer. Cada um começa como um diagrama simples; quando existe uma foto clínica com licença aberta disponível, é possível escolher visualizá-la. O que todos têm em comum: se não tiver desaparecido em cerca de 2 semanas, procure um profissional para avaliação.",
+    "watchAction": "Quando agir.",
+    "higherAction": "Merece atenção em breve.",
+    "twoWeekBold": "A regra das 2 semanas:",
+    "twoWeekRest": "qualquer coisa na boca ou nos lábios que não tenha cicatrizado em duas semanas merece uma avaliação profissional. O câncer bucal inicial raramente dói, então não espere sentir dor.",
+    "signs": [
+      {
+        "name": "Mancha branca",
+        "also": "Leucoplasia",
+        "where": "Frequentemente na língua, nas gengivas ou no interior da bochecha",
+        "desc": "Uma mancha branca ou acinzentada que não sai com esfregamento ou raspagem. Geralmente indolor.",
+        "watch": "A maioria é inofensiva, mas qualquer uma que persista por mais de 2 semanas deve ser avaliada."
+      },
+      {
+        "name": "Mancha vermelha",
+        "also": "Eritroplasia",
+        "where": "Assoalho da boca ou parte inferior da língua",
+        "desc": "Uma mancha vermelha brilhante e aveludada. Menos comum que as manchas brancas, mas apresenta o maior risco entre os sinais visíveis.",
+        "watch": "Qualquer mancha vermelha persistente deve ser avaliada com brevidade."
+      },
+      {
+        "name": "Mancha vermelha e branca",
+        "also": "Eritroleucoplasia",
+        "where": "Qualquer local da boca",
+        "desc": "Uma mancha que mistura áreas vermelhas e brancas.",
+        "watch": "Manchas mescladas apresentam risco elevado. Merecem avaliação profissional em breve."
+      },
+      {
+        "name": "Ferida que não cicatriza",
+        "also": "Úlcera que não cicatriza",
+        "where": "Lábios, língua ou interior da boca",
+        "desc": "Uma úlcera ou ferida, frequentemente indolor, que simplesmente não desaparece.",
+        "watch": "Uma afta cicatriza em cerca de 2 semanas. Uma que não cicatriza é o sinal de alerta clássico."
+      },
+      {
+        "name": "Caroço ou espessamento",
+        "where": "Bochecha, gengiva, lábio ou assoalho da boca",
+        "desc": "Um nódulo elevado ou uma área espessada que pode ser percebida com a língua ou o dedo.",
+        "watch": "Caroços novos ou que crescem merecem avaliação. Procure por eles durante o autoexame."
+      },
+      {
+        "name": "Área áspera no lábio",
+        "where": "Geralmente no lábio inferior",
+        "desc": "Uma área descamativa, com crostas ou persistentemente ressecada que não melhora.",
+        "watch": "Comum com exposição solar. Áreas ásperas persistentes devem ser avaliadas."
+      }
+    ],
+    "showPhoto": "Ver uma foto real",
+    "hidePhoto": "Ver o diagrama",
+    "photoSource": "fonte",
+    "noPhoto": "Ainda não há foto clínica com licença aberta disponível para este sinal."
+  },
+  "LearnSubpage": {
+    "backToLearn": "← Voltar para Aprender"
+  },
+  "LearnCards": {
+    "read": "Ler →",
+    "readNext": "Ler próximo",
+    "riskFactors": {
+      "tag": "Fatores de Risco",
+      "title": "Fatores de Risco do Câncer Bucal",
+      "description": "Tabaco, álcool, HPV-16, idade, exposição ao sol e outros fatores que aumentam o risco e como cada um deles age."
+    },
+    "oralCancer": {
+      "tag": "Visão Geral",
+      "title": "O Que É Câncer Bucal?",
+      "description": "Definição, tipos, principais estatísticas, causas e sinais de alerta, uma visão geral em linguagem acessível."
+    },
+    "signs": {
+      "tag": "Sintomas",
+      "title": "Sinais e Sintomas de Alerta",
+      "description": "Manchas vermelhas e brancas, feridas que não cicatrizam, caroços e dormência, o que observar e quando agir."
+    },
+    "selfExam": {
+      "tag": "Passo a Passo",
+      "title": "Como Fazer um Autoexame em 2 Minutos",
+      "description": "Passo a passo: lábios, gengivas, língua, assoalho da boca, palato, garganta. Você só precisa de um espelho."
+    },
+    "facts": {
+      "tag": "Dados",
+      "title": "Dados e Estatísticas sobre Câncer Bucal",
+      "description": "Incidência, taxas de sobrevida por estágio, quem é mais afetado e o papel crescente do HPV."
+    },
+    "hpv": {
+      "tag": "Fator de Risco",
+      "title": "HPV e Câncer Bucal",
+      "description": "O HPV-16 é hoje a principal causa de câncer de garganta nos Estados Unidos. O que isso significa, quem está em risco e como a vacina ajuda."
+    },
+    "prevention": {
+      "tag": "Prevenção",
+      "title": "Como Prevenir o Câncer Bucal",
+      "description": "Seis medidas baseadas em evidências: parar de fumar, limitar o álcool, se vacinar, proteger os lábios e fazer exames regulares."
+    },
+    "cankerVsCancer": {
+      "tag": "Comparação",
+      "title": "Afta ou Câncer Bucal?",
+      "description": "Eles podem ser parecidos. Veja como diferenciá-los e quando uma ferida na boca precisa de avaliação profissional."
+    }
+  },
+  "LearnMeta": {
+    "title": "Saiba Mais sobre Câncer Bucal",
+    "description": "Guias baseados em evidências sobre sinais de câncer bucal, autoexame, HPV e estatísticas. Escritos para o público geral, não para profissionais de saúde."
+  },
+  "LearnPage": {
+    "heading": "Saiba Mais",
+    "subheading": "Guias curtos e baseados em evidências sobre detecção e prevenção do câncer bucal. Escritos para o público geral, não para profissionais de saúde.",
+    "moreArticles": "Mais artigos"
+  },
+  "ArticlePage": {
+    "backToLearn": "← Voltar para Saiba Mais",
+    "defaultTag": "Saúde Bucal",
+    "takeScreener": "Faça o rastreamento gratuito →",
+    "byline": "Escrito por Ian Harris, estudante de pré-odontologia na Universidade de Wisconsin-Madison.",
+    "aboutLink": "Sobre o OralCheck",
+    "disclaimerLabel": "Aviso médico:",
+    "disclaimerBody": "Este artigo tem finalidade exclusivamente informativa e não substitui aconselhamento, diagnóstico ou tratamento médico. Consulte sempre um profissional de saúde qualificado em caso de sintomas ou dúvidas sobre sua saúde."
+  },
+  "ForCliniciansMeta": {
+    "title": "Para Profissionais de Odontologia",
+    "description": "Ajude seus pacientes a dedicar 2 minutos que podem salvar uma vida. Folheto gratuito para sala de espera, código QR e materiais de educação ao paciente, sem necessidade de cadastro."
+  },
+  "ForCliniciansPage": {
+    "heading": "Para Profissionais de Odontologia",
+    "subheading": "Uma ferramenta gratuita para colocar na sua sala de espera hoje mesmo. Os pacientes fazem uma triagem de risco privada de 2 minutos no celular, sem login, sem coleta de dados, sem custo.",
+    "flyerHeading": "Folheto para sala de espera",
+    "flyerSub": "Personalize com o nome do seu consultório e imprima, tamanho carta, orientação retrato.",
+    "whyHeading": "Por que o OralCheck",
+    "whyPoints": [
+      {
+        "icon": "private",
+        "title": "Nenhum dado de saúde coletado",
+        "desc": "As respostas nunca saem do dispositivo do paciente. Sem preocupações com privacidade, sem responsabilidade sobre dados."
+      },
+      {
+        "icon": "check",
+        "title": "Fatores de risco baseados em evidências",
+        "desc": "A lógica de pontuação é baseada nas diretrizes clínicas da ACS, do NCI e da Oral Cancer Foundation."
+      },
+      {
+        "icon": "noCost",
+        "title": "Sem configuração, sem login",
+        "desc": "Envie um link ou afixe um QR code. Nada para instalar, nada para gerenciar."
+      },
+      {
+        "icon": "care",
+        "title": "Gratuito de forma permanente",
+        "desc": "Não há plano pago. Sem relacionamento com fornecedor para administrar."
+      }
+    ],
+    "howToUseHeading": "Como usar",
+    "howToUse": [
+      {
+        "title": "Imprima o folheto",
+        "desc": "Personalize com o nome do seu consultório abaixo e imprima. Afixe na sala de espera, nos consultórios ou na recepção."
+      },
+      {
+        "title": "Compartilhe o link",
+        "desc": "Envie oralcheck.org por mensagem ou e-mail aos pacientes antes das consultas. Leva 2 minutos e funciona em qualquer celular."
+      },
+      {
+        "title": "Use como ponto de partida para a conversa",
+        "desc": "Quando um paciente apresenta risco elevado, isso abre espaço para um exame clínico bucal e para a documentação."
+      }
+    ],
+    "importantLabel": "Importante:",
+    "importantBody": "O OralCheck é uma ferramenta educativa de conscientização, não um instrumento de diagnóstico. Ele não substitui o exame clínico de câncer bucal. Oriente qualquer paciente com sintomas preocupantes ou resultado elevado na triagem a agendar uma avaliação clínica completa.",
+    "previewScreener": "Visualizar a triagem →",
+    "contactUs": "Entre em contato"
+  },
+  "EmbedBlock": {
+    "heading": "Incorpore ao site do seu consultório",
+    "body": "Cole este código em qualquer página do seu site, uma página de educação ao paciente, uma página de preparo para consultas ou sua página inicial. Ele funciona inteiramente no navegador, nenhum dado chega ao seu servidor.",
+    "copy": "Copiar código de incorporação",
+    "copied": "Copiado"
+  },
+  "PrintableFlyer": {
+    "customizeHeading": "Personalize seu folheto",
+    "customizeSub": "O nome do seu consultório aparece como um banner no folheto. Adicione um número de telefone e ele também será exibido.",
+    "practiceNameLabel": "Nome do consultório",
+    "practiceNamePlaceholder": "ex.: Clínica Odontológica Família Saudável",
+    "phoneLabel": "Número de telefone",
+    "phoneOptional": "(opcional)",
+    "printFlyer": "Imprimir folheto",
+    "copyLink": "Copiar link para compartilhar",
+    "linkCopied": "Link copiado",
+    "shareLinkNote": "Compartilhe o link acima, qualquer pessoa que o abrir verá o mesmo folheto personalizado.",
+    "presentedBy": "Apresentado por",
+    "tagline": "GRATUITO · PRIVADO · BASEADO EM EVIDÊNCIAS",
+    "eyebrow": "CONSCIENTIZAÇÃO SOBRE CÂNCER BUCAL",
+    "headlineLine1": "2 minutos",
+    "headlineCould": "podem",
+    "headlineSave": "salvar",
+    "headlineLine3": "sua vida.",
+    "flyerBody": "O câncer bucal é um dos cânceres mais subdiagnosticados, em grande parte porque os sintomas iniciais parecem comuns. Faça uma triagem de risco gratuita e privada enquanto aguarda.",
+    "scanToStart": "↑ ESCANEIE PARA COMEÇAR",
+    "warningSignsLabel": "SINAIS DE ALERTA",
+    "warningSigns": [
+      "Feridas que não cicatrizam",
+      "Manchas vermelhas ou brancas",
+      "Caroços ou endurecimento",
+      "Dificuldade para engolir",
+      "Dor de ouvido sem causa aparente"
+    ],
+    "features": [
+      {
+        "title": "10 perguntas rápidas",
+        "desc": "Baseadas em fatores de risco clínicos reais, leva cerca de 2 minutos no celular."
+      },
+      {
+        "title": "Completamente privado",
+        "desc": "Nada é salvo ou enviado para lugar nenhum. Suas respostas ficam no seu dispositivo."
+      },
+      {
+        "title": "Conheça seu nível de risco",
+        "desc": "Receba um resumo personalizado e orientações sobre o que fazer a seguir."
+      },
+      {
+        "title": "Encontre atendimento acessível perto de você",
+        "desc": "Conecta você a clínicas gratuitas e de baixo custo, faculdades de odontologia e centros de saúde comunitários."
+      }
+    ],
+    "stats": [
+      {
+        "value": "54k+",
+        "label": "novos diagnósticos de câncer bucal por ano nos EUA"
+      },
+      {
+        "value": "84%",
+        "label": "taxa de sobrevivência quando detectado cedo"
+      },
+      {
+        "value": "2 min",
+        "label": "é tudo que uma triagem odontológica leva"
+      }
+    ],
+    "footerBold": "Não é um diagnóstico médico.",
+    "footerRest": "O OralCheck é uma ferramenta educativa gratuita de conscientização. Consulte um profissional de saúde qualificado sobre qualquer sintoma ou dúvida. Gratuito · Privado · Sem necessidade de cadastro."
+  },
+  "PrivacyMeta": {
+    "title": "Privacidade | OralCheck",
+    "description": "O OralCheck não coleta seu nome, e-mail ou qualquer informação de identificação. Suas respostas no rastreador não são armazenadas."
+  },
+  "PrivacyPage": {
+    "back": "← OralCheck",
+    "heading": "Privacidade",
+    "intro": "O OralCheck é privado por design. Veja exatamente o que é e o que não é coletado quando você usa este site.",
+    "shortVersionLabel": "O resumo",
+    "shortVersion": [
+      "Nenhum nome, e-mail ou informação de identificação é coletado",
+      "As respostas do rastreador nunca são armazenadas e desaparecem quando você fecha a página",
+      "O Google Analytics registra apenas o uso anônimo (páginas visitadas, país, dispositivo)",
+      "Nenhum dado é vendido ou compartilhado com terceiros"
+    ],
+    "sections": [
+      {
+        "heading": "Nenhuma informação pessoal é coletada",
+        "body": "O OralCheck não coleta seu nome, endereço de e-mail ou qualquer informação que permita identificá-lo. Não é necessário criar uma conta para usar o rastreador."
+      },
+      {
+        "heading": "Suas respostas ficam no seu dispositivo",
+        "body": "Suas respostas são usadas para calcular o resultado e não são armazenadas nos servidores. Nada do que você digita é salvo após o encerramento da sessão."
+      },
+      {
+        "heading": "Google Analytics",
+        "body": "Este site usa o Google Analytics para entender como as pessoas encontram e utilizam o OralCheck, quais páginas são visitadas, quanto tempo duram as sessões e de qual país os visitantes são. O Google Analytics coleta dados de uso anônimos, incluindo sua localização aproximada, tipo de navegador e dispositivo. Ele não recebe suas respostas do rastreador.",
+        "linkLabel": "Desativar o Google Analytics →"
+      },
+      {
+        "heading": "Cookies",
+        "body": "O Google Analytics utiliza cookies para distinguir as visitas. Nenhum outro cookie é usado."
+      },
+      {
+        "heading": "Terceiros",
+        "body": "O OralCheck não vende, compartilha nem transfere seus dados a terceiros para fins de marketing ou publicidade."
+      }
+    ],
+    "contactHeading": "Contato",
+    "contactBody": "Dúvidas sobre esta política? Envie um e-mail para",
+    "disclaimerLabel": "Aviso importante.",
+    "disclaimerBody": "O OralCheck não é um diagnóstico médico. É uma ferramenta educativa. Consulte um profissional de saúde qualificado sobre qualquer sintoma ou dúvida.",
+    "scoringNote": "A lógica de rastreamento é baseada nas diretrizes clínicas da ACS, do NCI e da Oral Cancer Foundation.",
+    "lastUpdated": "Última atualização: junho de 2026."
+  },
+  "MethodsMeta": {
+    "title": "Metodologia de Pontuação de Risco de Câncer Bucal",
+    "description": "Como o OralCheck calcula as pontuações de risco de câncer bucal, fontes, derivação dos pesos, termos de interação e limitações."
+  },
+  "MethodsPage": {
+    "back": "← OralCheck",
+    "heading": "Metodologia de Pontuação",
+    "intro": "O OralCheck atribui um peso de risco a cada resposta com base em razões de chances publicadas. Esta página documenta como essa pontuação funciona, em quais fontes ela se baseia e onde o modelo possui limitações conhecidas.",
+    "weightDerivationHeading": "Derivação dos Pesos",
+    "weightP1": "Cada fator de risco recebe um peso proporcional ao logaritmo natural de sua razão de chances (OR) publicada, escalonado por uma constante <i>k</i>:",
+    "weightFormula": "peso = arredondar( ln(OR) × k )",
+    "weightP2": "A constante de escalonamento <i>k = 4,47</i> foi escolhida para que o uso diário de tabaco (o fator modificável com maior peso, OR 6,0× segundo Gandini et al. 2008) corresponda a um peso de 8. Isso ancora todos os demais pesos em uma escala ordinal consistente, baseada no mesmo conjunto de evidências.",
+    "weightP3": "Quando os estudos relatam uma faixa de OR, é usado o ponto médio ou uma estimativa conservadora. Sintomas como eritroplasia, leucoplasia e úlceras que não cicatrizam são tratados de duas formas ao mesmo tempo: somam à pontuação e também elevam automaticamente o nível para Consulte um Dentista em Breve, independentemente do total. Esses sintomas são mais bem compreendidos como possível patologia in situ do que como exposições de risco na população em geral, portanto um sintoma relatado sempre gera a mesma recomendação, mesmo quando todos os outros fatores são baixos.",
+    "factorTableHeading": "Pesos dos Fatores de Risco",
+    "colFactor": "Fator",
+    "colOR": "OR Publicada",
+    "colWeight": "Peso",
+    "colSource": "Fonte",
+    "interactionHeading": "Termo de Interação Tabaco + Álcool",
+    "interactionP1Rest": "Quando o uso de tabaco e álcool está presente em níveis significativos (diário ou semanal), o modelo adiciona um bônus de interação de <b>+3 pontos</b>.",
+    "interactionP2": "O motivo é que tabaco e álcool juntos produzem um aumento multiplicativo, e não aditivo, no risco de câncer bucal. O uso regular combinado eleva o risco aproximadamente 15 vezes acima da linha de base, enquanto a simples soma dos pesos individuais chega apenas a cerca de 9 vezes. O bônus de +3 captura essa diferença.",
+    "interactionSourcesLabel": "Fontes:",
+    "tierThresholdsHeading": "Limites dos Níveis de Risco",
+    "tierLow": "Baixo",
+    "tierModerate": "Moderado",
+    "tierElevated": "Elevado",
+    "tierHigh": "Alto",
+    "tierP1": "A pontuação máxima possível é de aproximadamente 53 (todas as respostas de maior risco mais o bônus de interação). Alguns pontos de referência: um fumante diário sozinho pontua 8 (moderado); tabaco + álcool + interação resulta em 16 (elevado); noz de areca + tabaco + álcool + interação chega a 25 (alto).",
+    "tierP2Bold": "Alto",
+    "tierP2Rest": "Independentemente da pontuação, qualquer sintoma com duração de 2 semanas ou mais (uma ferida persistente, mancha vermelha ou branca, caroço sem explicação, ou dificuldade para engolir) eleva o nível para {bold} e indica a necessidade de avaliação imediata.",
+    "limitationsHeading": "Limitações Conhecidas",
+    "limitations": [
+      "O OralCheck não foi validado com base em um conjunto de dados de resultados clínicos. Os pesos são fundamentados na literatura publicada, mas não foram calibrados com base em uma coorte prospectiva.",
+      "O rastreador combina o risco de câncer bucal e de câncer da orofaringe em uma única pontuação. Essas são entidades epidemiologicamente distintas: o HPV-16 é principalmente um fator para o câncer de orofaringe, enquanto o tabaco e o álcool predominam no câncer bucal.",
+      "O sexo biológico não é considerado. Homens têm aproximadamente o dobro da incidência de câncer bucal em comparação às mulheres, e isso representa uma lacuna no modelo atual.",
+      "A imunossupressão (HIV, receptores de transplante de órgãos, uso prolongado de corticosteroides) está associada a um risco significativamente elevado de câncer bucal e não é abordada atualmente.",
+      "O rastreador depende de dados autodeclarados. O uso de tabaco e álcool é frequentemente subrelatado.",
+      "A frequência de consultas odontológicas é incluída como um indicador de atraso no diagnóstico, e não como um fator de risco causal com um OR bem caracterizado. Seu peso é baseado em justificativa clínica, e não em derivação epidemiológica direta."
+    ],
+    "referencesHeading": "Referências",
+    "viewOn": "Ver no PubMed / editora →",
+    "takeScreener": "Fazer o rastreamento →",
+    "forClinicians": "Para profissionais de saúde →",
+    "factorNames": {
+      "tobaccoDaily": "Tabaco (diário)",
+      "betelCurrent": "Bétel / paan / gutka (uso atual)",
+      "tobaccoOccasional": "Tabaco (ocasional)",
+      "alcoholDaily": "Álcool (diário)",
+      "hpvHistory": "Histórico relacionado ao HPV",
+      "age65": "65 anos ou mais",
+      "age55": "55 a 64 anos",
+      "betelPast": "Bétel (uso anterior)",
+      "alcoholWeekly": "Álcool (semanal)",
+      "familyHistory": "Histórico familiar (parente de primeiro grau)",
+      "dietLow": "Alimentação com baixo consumo de frutas e vegetais",
+      "age35": "35 a 54 anos",
+      "tobaccoFormer": "Tabaco (ex-usuário)",
+      "hpvUnvaccinated": "HPV (não vacinado, sem histórico conhecido)",
+      "sunExposure": "Exposição ao sol (lábios, sem proteção)",
+      "symptomPresent": "Sintoma atual com duração de 2 semanas ou mais",
+      "symptomUnsure": "Possível sintoma (não tem certeza)",
+      "dentalNever": "Nunca foi ao dentista",
+      "dentalLongAgo": "Última consulta odontológica há 3 anos ou mais",
+      "dentalFewYears": "Última consulta odontológica entre 1 e 3 anos atrás",
+      "alcoholRarely": "Álcool (raramente)",
+      "sunRegular": "Exposição ao sol (regular, às vezes com proteção)",
+      "familyDistant": "Histórico familiar (parente distante)",
+      "dietWeekly": "Frutas e vegetais algumas vezes por semana",
+      "hpvUnknown": "Situação em relação ao HPV desconhecida"
+    },
+    "factorNotes": {
+      "tobaccoDaily": "Referência para a constante de escala k = 4,47",
+      "betelCurrent": "Carcinógeno do Grupo 1 da IARC, independente do tabaco",
+      "alcoholDaily": "Carcinógeno do Grupo 1 da IARC",
+      "hpvHistory": "Estimativa conservadora; OR de aproximadamente 15 vezes especificamente para orofaringe",
+      "age65": "A idade mediana ao diagnóstico é 62 anos",
+      "tobaccoFormer": "O risco diminui aproximadamente 50% dentro de 5 anos após a cessação",
+      "hpvUnvaccinated": "O status de não vacinado é um indicador comportamental do risco de exposição ao HPV-16, e não uma medida de soroestatus. O OR reflete uma probabilidade de exposição de base elevada em adultos não vacinados, e não uma infecção confirmada.",
+      "sunExposure": "Carcinoma espinocelular de lábio inferior; trabalhadores ao ar livre versus referência em ambientes fechados"
+    }
+  },
+  "ContactForm": {
+    "sentTitle": "Mensagem recebida, obrigado pelo contato.",
+    "sentDesc": "Se você deixou um e-mail, a resposta chegará em breve.",
+    "sendAnother": "Enviar outra mensagem",
+    "messageLabel": "Mensagem",
+    "messagePlaceholder": "Um erro que encontrou, algo que poderia ser mais claro, uma dúvida, qualquer coisa.",
+    "emailLabel": "E-mail",
+    "emailOptional": "(opcional, deixe em branco para permanecer anônimo)",
+    "emailPlaceholder": "voce@exemplo.com",
+    "error": "Algo deu errado, tente novamente.",
+    "sending": "Enviando…",
+    "send": "Enviar mensagem"
+  },
+  "AboutMeta": {
+    "title": "Sobre o OralCheck | Rastreador Gratuito de Risco de Câncer Bucal",
+    "description": "O OralCheck é um rastreador gratuito e privado de risco de câncer bucal desenvolvido por um estudante de pré-odontologia da UW-Madison. Saiba mais sobre a missão, o funcionamento e as fontes utilizadas na ferramenta."
+  },
+  "AboutPage": {
+    "heading": "Sobre o OralCheck",
+    "subheading": "Uma ferramenta gratuita e privada para ajudar qualquer pessoa a entender seu risco de câncer bucal e dar o próximo passo em direção ao cuidado.",
+    "whoBuiltHeading": "Quem desenvolveu",
+    "founderName": "Ian Harris",
+    "founderTitle": "Fundador · Estudante de pré-odontologia, UW–Madison",
+    "bio1": "O OralCheck foi desenvolvido por Ian Harris, estudante de pré-odontologia na Universidade de Wisconsin-Madison. Saúde comunitária e encontrar formas de fazer diferença com o conhecimento adquirido na faculdade são temas que importam muito.",
+    "bio2": "Há alguns anos, foi diagnosticada uma condição crônica de saúde que afetou significativamente o dia a dia. Passar por isso mostrou o quanto a saúde pode pegar a gente de surpresa quando não estamos prestando atenção. Mostrou também como é importante ter acesso a boas informações e não ignorar os sinais. Essa experiência é um dos grandes motivos para seguir a odontologia e para criar esta ferramenta.",
+    "bio3": "Acredita-se que deixar a comunidade mais saudável e bem informada, mesmo uma pessoa por vez, vale a pena. O câncer bucal é algo em que muita gente nunca sequer pensou, e ele é muito mais tratável quando detectado cedo. A ideia foi criar algo que pudesse ajudar com isso.",
+    "howItWorksHeading": "Como funciona",
+    "point1Bold": "Suas respostas ficam no seu dispositivo.",
+    "point1Rest": "Nada é salvo em servidor. Sem cadastro. Sem rastreamento de respostas.",
+    "point2Bold": "A pontuação é educativa, não clínica.",
+    "point2Rest": "Cada resposta contribui com um peso derivado de dados de risco publicados. O total corresponde a um nível de risco: Baixo, Moderado, Elevado ou Consulte um Dentista em Breve.",
+    "point3Bold": "Não é um diagnóstico.",
+    "point3Rest": "O OralCheck pode indicar que você deve conversar com um profissional de saúde. Ele não pode dizer se você tem câncer.",
+    "disclaimerHeading": "Aviso médico",
+    "disclaimerBody": "O OralCheck fornece apenas informações gerais de saúde. Não constitui aconselhamento médico, diagnóstico ou tratamento. Sempre consulte um profissional de saúde qualificado para tirar dúvidas sobre qualquer condição médica. Não adie a busca por atendimento por causa de informações contidas neste site.",
+    "startScreener": "Iniciar o rastreador →",
+    "findCare": "Encontrar atendimento",
+    "getInTouchHeading": "Entre em contato",
+    "getInTouchBody": "Encontrou um erro, tem uma sugestão ou quer dizer algo? Tudo é lido. O e-mail é opcional, deixe em branco se preferir permanecer anônimo.",
+    "linkedin": "Conectar no LinkedIn",
+    "reviewHeading": "Deixe uma avaliação",
+    "reviewBody": "Se o rastreador foi útil, uma avaliação rápida ajuda outras pessoas a confiar o suficiente para verificar o próprio risco."
+  },
+  "AnimatedStats": {
+    "cases": "novos casos de câncer bucal e de orofaringe por ano nos EUA",
+    "survival": "sobrevida em cinco anos quando detectado precocemente",
+    "screeningTime": "é o tempo necessário para uma triagem odontológica"
+  },
+  "RiskGauge": {
+    "ariaLabel": "Medidor de risco mostrando {tier}",
+    "score": "Pontuação: {score} / {maxScore}"
+  },
+  "ClinicType": {
+    "community-health": "Saúde comunitária",
+    "dental-school": "Faculdade de odontologia",
+    "free": "Clínica gratuita",
+    "dental": "Consultório odontológico",
+    "other": "Clínica"
+  },
+  "FindCarePage": {
+    "heading": "Encontre atendimento acessível",
+    "subheading": "Centros de saúde comunitária, faculdades de odontologia e clínicas gratuitas perto de você. A maioria oferece triagem de câncer bucal como parte de uma consulta de rotina.",
+    "searchPlaceholder": "Digite o CEP ou a cidade",
+    "searching": "Buscando…",
+    "search": "Buscar",
+    "useMyLocation": "Usar minha localização",
+    "filterAll": "Todos",
+    "filterCommunityHealth": "Saúde comunitária",
+    "filterDentalSchools": "Faculdades de odontologia",
+    "filterFreeClinics": "Clínicas gratuitas",
+    "noClinics": "Nenhuma clínica corresponde a este filtro na sua região.",
+    "errorLoad": "Não foi possível carregar as clínicas. Tente novamente.",
+    "errorNoGeo": "O seu navegador não oferece suporte à localização.",
+    "errorLocationDenied": "Permissão de localização negada. Tente buscar pelo CEP.",
+    "errorNoAddress": "Não foi possível encontrar esse endereço. Tente novamente.",
+    "openNow": "Aberto agora",
+    "closed": "Fechado",
+    "website": "Site",
+    "reviews": "({count} avaliações)",
+    "hrsaFunded": "Financiado pela HRSA",
+    "cantFindHeading": "Não encontrou atendimento acessível?",
+    "hrsaLabel": "HRSA Find a Health Center:",
+    "hrsaBody": "O governo dos EUA mantém um diretório de centros de saúde comunitária com serviços odontológicos com taxas proporcionais à renda em",
+    "dentalSchoolsLabel": "Faculdades de odontologia:",
+    "dentalSchoolsBody": "A maioria das faculdades de odontologia dos EUA opera clínicas de ensino com honorários consideravelmente reduzidos.",
+    "lifelineLabel": "Dental Lifeline Network:",
+    "lifelineBody": "Conecta pessoas com deficiência, idosos e pacientes em situação de fragilidade médica a dentistas voluntários.",
+    "searchingNearby": "Buscando atendimento próximo",
+    "searchingNote": "Consultando clínicas no OpenStreetMap. Isso pode levar alguns segundos.",
+    "loadingMore": "Ainda verificando centros de saúde comunitária, clínicas gratuitas e faculdades de odontologia…",
+    "retry": "Tentar novamente"
+  },
+  "ResultsPage": {
+    "loading": "Carregando seus resultados…",
+    "noResultsTitle": "Nenhum resultado ainda",
+    "noResultsDesc": "Complete o rastreamento de 2 minutos para ver seu resumo de risco personalizado.",
+    "startScreener": "Iniciar rastreamento →",
+    "urgentBannerBold": "Você mencionou um sintoma que dura 2 semanas ou mais.",
+    "urgentBannerRest": "Isso não deve ser ignorado. Agende uma consulta odontológica ou médica esta semana.",
+    "personalizing": "Personalizando seu resumo…",
+    "howScored": "Como essa pontuação é calculada",
+    "drivingHeading": "O que está influenciando seu risco",
+    "nextStepsHeading": "Próximos passos",
+    "relatedReadingHeading": "Leituras relacionadas",
+    "read": "Ler →",
+    "linkCopied": "Link copiado",
+    "shareCta": "Compartilhe com alguém importante para você",
+    "shareText": "Acabei de usar o OralCheck para entender meu risco de câncer bucal. 2 minutos podem salvar sua vida. {url}",
+    "emailSentTitle": "Enviado. Verifique sua caixa de entrada.",
+    "emailSentDesc": "Seu resultado e próximos passos estão a caminho. Suas respostas não foram armazenadas.",
+    "emailKeepCopy": "Guarde uma cópia do seu resultado",
+    "emailBody": "Seu resumo de risco e próximos passos serão enviados por e-mail para que você os tenha na hora de agendar. Não é necessário criar conta, e suas respostas não são armazenadas nem usadas para envio de listas.",
+    "emailDismiss": "Não, obrigado",
+    "emailPlaceholder": "voce@email.com",
+    "emailLabel": "Seu e-mail",
+    "emailSending": "Enviando…",
+    "emailMe": "Enviar meu resultado por e-mail",
+    "emailGenericError": "Não foi possível enviar. Tente novamente.",
+    "retake": "↻ Refazer o rastreamento",
+    "evidenceBasisLabel": "Base de evidências:",
+    "evidenceBasisBody": "Os pesos dos fatores de risco são baseados em evidências epidemiológicas publicadas, incluindo as classificações de carcinógenos do Grupo 1 da IARC para tabaco (Gandini et al., <i>Oral Oncology</i>, 2008), álcool (Bagnardi et al., <i>Annals of Oncology</i>, 2015) e noz de areca com bétel (IARC Monograph 85), além de razões de chances para HPV-16 no câncer de orofaringe (Gillison et al., <i>JAMA</i>, 2008) e dados de incidência por idade do SEER. O termo de interação tabaco-álcool reflete um risco carcinogênico multiplicativo documentado, não apenas aditivo. As taxas de transformação de leucoplasia e eritroplasia são provenientes de Napier & Speight, <i>Journal of Oral Pathology & Medicine</i>, 2008.",
+    "disclaimerLabel": "Aviso:",
+    "disclaimerBody": "O OralCheck é uma ferramenta educativa de estratificação de risco, não um instrumento clínico diagnóstico validado. Não foi testado com base em um conjunto de dados de desfechos clínicos. Não constitui aconselhamento médico, diagnóstico ou tratamento. Consulte sempre um dentista ou médico qualificado em caso de qualquer dúvida relacionada à saúde bucal.",
+    "primaryCTA": {
+      "low": "Encontre um dentista para seu próximo rastreamento →",
+      "moderate": "Encontre atendimento perto de você →",
+      "elevated": "Agende uma consulta odontológica →",
+      "high": "Encontre atendimento e agende esta semana →"
+    },
+    "nextSteps": {
+      "low": [
+        {
+          "title": "Mantenha sua consulta odontológica anual",
+          "desc": "O rastreamento de câncer bucal já faz parte de uma limpeza de rotina, leva 2 minutos e está incluído sem custo adicional."
+        },
+        {
+          "title": "Faça um autoexame mensal",
+          "desc": "Dois minutos em frente ao espelho, uma vez por mês. Procure qualquer alteração que não desapareça após 2 semanas.",
+          "linkLabel": "Veja como fazer →"
+        },
+        {
+          "title": "Conheça os sinais de alerta",
+          "desc": "A maioria dos cânceres bucais detectados cedo é encontrada por pessoas que já sabiam o que observar.",
+          "linkLabel": "Ver sinais de alerta →"
+        }
+      ],
+      "moderate": [
+        {
+          "title": "Mencione seus fatores de risco na próxima consulta odontológica",
+          "desc": "O dentista pode prestar mais atenção durante o rastreamento se souber seu histórico. Basta uma frase."
+        },
+        {
+          "title": "Conheça os sinais de alerta e aja diante deles",
+          "desc": "Qualquer alteração na boca ou garganta que dure mais de 2 semanas merece atenção. Não espere passar.",
+          "linkLabel": "Ver sinais de alerta →"
+        },
+        {
+          "title": "Aprenda a reduzir seu risco",
+          "desc": "Vários dos fatores que elevaram sua pontuação podem ser modificados. Mesmo pequenas mudanças reduzem o risco ao longo do tempo.",
+          "linkLabel": "Guia de prevenção →"
+        }
+      ],
+      "elevated": [
+        {
+          "title": "Agende uma consulta odontológica este mês",
+          "desc": "Peça especificamente um rastreamento de câncer bucal ao agendar. Está incluído na limpeza de rotina e leva cerca de 2 minutos.",
+          "linkLabel": "Encontre atendimento perto de você →"
+        },
+        {
+          "title": "Conheça os sinais de alerta e aja diante deles",
+          "desc": "Uma ferida, mancha, caroço ou dormência que dure 2 semanas ou mais deve ser avaliada por um dentista ou médico. Não espere passar.",
+          "linkLabel": "Ver sinais de alerta →"
+        },
+        {
+          "title": "Trabalhe nos fatores de risco que podem ser modificados",
+          "desc": "Sua pontuação inclui fatores que podem ser alterados. Mesmo reduções modestas no uso de tabaco, álcool ou na exposição ao sol fazem diferença.",
+          "linkLabel": "Guia de prevenção →"
+        }
+      ],
+      "high": [
+        {
+          "title": "Agende uma consulta odontológica ou médica esta semana",
+          "desc": "Não este mês, esta semana. Se houver uma ferida, mancha ou caroço presente há 2 semanas ou mais, mencione isso especificamente ao ligar.",
+          "linkLabel": "Encontre atendimento perto de você →"
+        },
+        {
+          "title": "Não espere para ver se passa",
+          "desc": "O motivo mais comum para o diagnóstico tardio do câncer bucal é a espera. A maioria dos achados acaba sendo benigna, mas é importante saber de qualquer forma."
+        },
+        {
+          "title": "Saiba como é o exame",
+          "desc": "O rastreamento de câncer bucal é indolor, leva 2 minutos e pode ser realizado pelo seu dentista ou médico.",
+          "linkLabel": "O que esperar →"
+        }
+      ]
+    },
+    "categoryLearn": {
+      "tobacco": {
+        "tag": "Prevenção",
+        "title": "Como reduzir o risco do tabaco"
+      },
+      "alcohol": {
+        "tag": "Prevenção",
+        "title": "Álcool, tabaco e risco combinado"
+      },
+      "hpv": {
+        "tag": "Fator de risco",
+        "title": "HPV e câncer bucal"
+      },
+      "sun": {
+        "tag": "Prevenção",
+        "title": "Como proteger os lábios do sol"
+      },
+      "symptoms": {
+        "tag": "Sintomas",
+        "title": "Sinais de alerta do câncer bucal"
+      },
+      "family": {
+        "tag": "Informações",
+        "title": "Dados e estatísticas sobre câncer bucal"
+      },
+      "diet": {
+        "tag": "Prevenção",
+        "title": "Alimentação e risco de câncer bucal"
+      },
+      "dental": {
+        "tag": "Passo a passo",
+        "title": "Como fazer um autoexame em 2 minutos"
+      },
+      "other": {
+        "tag": "Prevenção",
+        "title": "Como reduzir o risco do uso de bétel e paan"
+      }
+    },
+    "alsoContributing": "Outros fatores que contribuem:",
+    "hideOthers": "Ocultar estes",
+    "noFactorCaveatLabel": "Uma pontuação baixa não descarta nada",
+    "noFactorCaveatBody": "Cerca de 1 em cada 4 casos de câncer bucal ocorrem em pessoas que não têm nenhum dos fatores de risco avaliados por esta ferramenta. Esta pontuação reflete seus fatores de risco, não o estado da sua boca. Se você notar uma ferida, mancha, caroço, crescimento na gengiva, dente amolecido ou dificuldade para engolir que dure mais de duas semanas, procure um dentista para avaliação, independentemente do resultado apresentado aqui."
+  },
+  "ScreenerMeta": {
+    "title": "Avaliação Gratuita de Risco de Câncer Bucal",
+    "description": "Faça a avaliação gratuita de risco de câncer bucal do OralCheck. Responda 10 perguntas baseadas em fatores de risco publicados pela ACS, pelo NCI e pela Oral Cancer Foundation. Privado, sem necessidade de cadastro."
+  },
+  "FindCareMeta": {
+    "title": "Encontre Atendimento para Câncer Bucal Perto de Você",
+    "description": "Encontre dentistas, centros de saúde comunitários e clínicas gratuitas perto de você que oferecem exames de rastreamento de câncer bucal. Filtre por tipo e distância. Sem necessidade de cadastro."
+  },
+  "ResultsMeta": {
+    "title": "Seus Resultados de Risco",
+    "description": "Seus resultados personalizados de avaliação de risco de câncer bucal."
+  },
+  "ScreenerPage": {
+    "srHeading": "Avaliação Gratuita de Risco de Câncer Bucal",
+    "back": "← Voltar",
+    "exit": "Sair",
+    "next": "Próxima →",
+    "seeResults": "Ver meus resultados →",
+    "privacyNote": "Suas respostas ficam armazenadas apenas no seu dispositivo. Nenhum dado é enviado a um servidor.",
+    "questionOf": "Pergunta {current} de {total}"
+  },
+  "Questions": {
+    "age": {
+      "title": "Qual é a sua faixa etária?",
+      "subtitle": "A incidência de câncer na cavidade bucal aumenta bastante após os 40 anos. A idade mediana no momento do diagnóstico é de 62 anos (dados do SEER). O risco aproximadamente dobra a cada década acima dos 40 anos.",
+      "options": {
+        "under35": "Menos de 35 anos",
+        "35to54": "35 – 54 anos",
+        "55to64": "55 – 64 anos",
+        "65plus": "65 anos ou mais"
+      }
+    },
+    "tobacco": {
+      "title": "Você usa tabaco?",
+      "subtitle": "O tabaco é o principal fator de risco isolado para o câncer da cavidade bucal e é classificado como carcinógeno do Grupo 1 pela IARC. Fumantes diários têm risco de 2 a 6 vezes maior, e usuários de tabaco sem fumaça têm risco de 4 a 5 vezes maior (Gandini et al., Oral Oncology, 2008).",
+      "options": {
+        "daily": "Sim, diariamente",
+        "occasional": "Sim, ocasionalmente",
+        "former": "Ex-usuário (parei de usar)",
+        "never": "Nunca"
+      }
+    },
+    "alcohol": {
+      "title": "Com que frequência você consome bebidas alcoólicas?",
+      "subtitle": "O álcool é um carcinógeno do Grupo 1 da IARC para o câncer bucal. Pessoas que bebem muito têm risco 2 a 3 vezes maior. Combinado ao tabaco, o efeito é multiplicativo, podendo chegar a 15 vezes o risco basal (Bagnardi et al., Annals of Oncology, 2015).",
+      "options": {
+        "daily": "Diariamente ou quase todos os dias",
+        "weekly": "Algumas vezes por semana",
+        "rarely": "Raramente",
+        "never": "Nunca"
+      }
+    },
+    "hpv": {
+      "title": "Situação em relação ao HPV",
+      "subtitle": "O HPV-16 é o principal responsável pelo câncer de orofaringe (amígdalas e base da língua), com uma razão de chances cerca de 15 vezes maior em pessoas infectadas (Gillison et al., JAMA, 2008). Sua associação com o câncer bucal é menor, mas ainda representa um fator de risco relevante. A vacinação reduz significativamente esse risco.",
+      "options": {
+        "vaccinated": "Vacinado contra o HPV",
+        "neither": "Não vacinado e sem histórico conhecido",
+        "history": "Já tive alguma condição relacionada ao HPV",
+        "unknown": "Não tenho certeza"
+      }
+    },
+    "sun": {
+      "title": "Exposição solar nos lábios",
+      "subtitle": "A exposição crônica à radiação ultravioleta é uma causa direta do carcinoma de células escamosas no lábio inferior. Trabalhadores que ficam ao ar livre sem proteção nos lábios têm risco significativamente elevado. Protetores labiais com FPS e chapéus de aba larga são medidas eficazes de proteção.",
+      "options": {
+        "daily": "Diária, com pouca proteção",
+        "regular": "Frequente, às vezes com proteção",
+        "minimal": "Mínima ou sempre bem protegido"
+      }
+    },
+    "symptom": {
+      "title": "No último mês, você teve algum destes sintomas por 2 semanas ou mais?",
+      "subtitle": "Manchas vermelhas persistentes (eritroplasia: taxa de transformação maligna de 14 a 50%), manchas brancas (leucoplasia: taxa de transformação de 5 a 17%), feridas que não cicatrizam, caroços sem explicação, crescimento na gengiva, dente que ficou solto recentemente ou dificuldade para engolir são sinais de alerta clínicos reconhecidos que exigem avaliação profissional.",
+      "options": {
+        "yes": "Sim, um ou mais",
+        "unsure": "Não tenho certeza, talvez",
+        "no": "Não"
+      }
+    },
+    "family": {
+      "title": "Há histórico familiar de câncer de cabeça, pescoço ou boca?",
+      "subtitle": "Ter um familiar de primeiro grau com câncer bucal ou de cabeça e pescoço está associado a um risco elevado, provavelmente por conta de predisposição genética compartilhada e exposições ambientais em comum.",
+      "options": {
+        "yes": "Sim, um parente próximo",
+        "distant": "Parente distante",
+        "no": "Não",
+        "unsure": "Não sei"
+      }
+    },
+    "diet": {
+      "title": "Com que frequência você come frutas e verduras?",
+      "subtitle": "O baixo consumo de frutas e verduras é um fator de risco independente para o câncer bucal e de orofaringe. Dietas ricas em antioxidantes e nas vitaminas A, C e E estão associadas à menor ocorrência de displasia epitelial bucal.",
+      "options": {
+        "daily": "Diariamente",
+        "weekly": "Algumas vezes por semana",
+        "rarely": "Raramente"
+      }
+    },
+    "dental": {
+      "title": "Quando foi sua última consulta ao dentista?",
+      "subtitle": "Mais de 60% dos cânceres bucais só são diagnosticados nos estágios III ou IV, uma lacuna causada em grande parte pela demora na busca por atendimento. Consultas regulares ao dentista permitem a detecção mais precoce, pois os dentistas são treinados para identificar alterações na mucosa que o paciente não consegue ver.",
+      "options": {
+        "recent": "No último ano",
+        "fewyears": "1 – 3 anos atrás",
+        "longago": "Há mais de 3 anos",
+        "never": "Nunca"
+      }
+    },
+    "betel": {
+      "title": "Você já mascou noz de areca, paan ou gutka?",
+      "subtitle": "O paan com ou sem tabaco é um carcinógeno do Grupo 1 da IARC para câncer bucal, com razões de chance de 7 a 10 vezes independentemente do uso de tabaco. Isso inclui a noz de areca, o paan e o gutka (Monografia IARC 85).",
+      "options": {
+        "current": "Sim, atualmente",
+        "past": "No passado",
+        "never": "Nunca"
+      }
+    }
+  },
+  "RiskEngine": {
+    "and": "e",
+    "categoryGuidance": {
+      "demographics": "A idade é o fator de risco não modificável mais importante. A partir dos 40 anos, o rastreamento em cada consulta odontológica é especialmente importante, pois o câncer bucal detectado no Estágio I tem uma taxa de sobrevivência em cinco anos de 84%, em comparação com 38% no Estágio IV.",
+      "tobacco": "Parar de fumar reduz o risco em aproximadamente 50% nos primeiros 5 anos após a cessação. A terapia de reposição de nicotina dobra as taxas de sucesso a longo prazo. Consulte seu dentista ou médico sobre programas gratuitos de cessação tabágica, o CVV e o INCA oferecem apoio para quem quer parar de fumar.",
+      "alcohol": "O risco diminui com a redução do consumo. Para pessoas que usam tabaco e álcool ao mesmo tempo, parar de fumar tem o maior impacto individual. Mesmo reduzir o consumo de álcool de diário para ocasional diminui significativamente a exposição da mucosa a substâncias cancerígenas.",
+      "hpv": "A vacina contra o HPV (Gardasil 9) é aprovada para uso até os 45 anos e é altamente eficaz contra o HPV-16, o subtipo mais fortemente associado ao câncer de orofaringe. Consulte seu médico ou dentista para saber se a vacinação é indicada para você.",
+      "sun": "O carcinoma espinocelular do lábio inferior é altamente prevenível com o uso consistente de protetor labial com FPS e chapéu de abas largas. Ao contrário do câncer de pele, o câncer de lábio muitas vezes passa despercebido, verifique seus lábios durante o autoexame bucal mensal.",
+      "symptoms": "Manchas vermelhas persistentes (eritroplasia), manchas brancas (leucoplasia), feridas que não cicatrizam, caroços sem explicação aparente ou dificuldade para engolir com duração de 2 semanas ou mais são sinais de alerta clínicos bem estabelecidos. Esses sinais não devem ser aguardados, eles exigem avaliação profissional ainda esta semana, não em uma consulta futura.",
+      "family": "Informe seu dentista sobre o histórico familiar. Ele pode recomendar rastreamentos mais frequentes para câncer bucal ou encaminhamento a um especialista em medicina oral. O aconselhamento genético está disponível na maioria dos centros médicos universitários.",
+      "diet": "Procure consumir 5 ou mais porções diárias de frutas e verduras coloridas. As evidências indicam que dietas ricas em vitaminas A, C e E reduzem a displasia epitelial oral. O consumo de carnes processadas também foi associado a maior risco de câncer de cabeça e pescoço em alguns estudos de coorte.",
+      "dental": "Marque uma consulta odontológica o quanto antes. O rastreamento visual para câncer bucal leva cerca de 2 minutos e é realizado como parte do exame de rotina. Mais de 60% dos casos de câncer bucal são diagnosticados no Estágio III ou IV, o acompanhamento odontológico regular muda essa realidade.",
+      "other": "Parar de usar noz de areca, paan ou gutka reduz o risco, embora algumas alterações na mucosa oral decorrentes do uso anterior possam persistir. Peça ao seu dentista que examine quaisquer áreas com descoloração, espessamento ou feridas. Muitas comunidades dispõem de recursos de cessação adaptados culturalmente."
+    },
+    "factorLabels": {
+      "age": "Idade",
+      "tobacco": "Uso de tabaco",
+      "alcohol": "Consumo de álcool",
+      "hpv": "Exposição ao HPV",
+      "sun": "Exposição ao sol",
+      "symptom": "Sintomas atuais",
+      "family": "Histórico familiar",
+      "diet": "Alimentação",
+      "dental": "Cuidados odontológicos",
+      "betel": "Noz de areca / paan / gutka"
+    },
+    "interaction": {
+      "label": "Interação tabaco + álcool",
+      "answerLabel": "Ambos presentes",
+      "guidance": "Quando tabaco e álcool são usados juntos, o risco de câncer bucal aumenta de forma multiplicativa, não apenas aditiva. O uso regular combinado pode elevar o risco em até 15 vezes acima da linha de base, muito além da soma de cada fator isoladamente. Abordar os dois ao mesmo tempo é a estratégia mais eficaz de redução de risco (Bagnardi et al., Annals of Oncology, 2015)."
+    },
+    "tier": {
+      "urgentHeadline": "Um sintoma que você mencionou merece uma avaliação mais detalhada.",
+      "seeADentist": "Consulte um dentista em breve",
+      "low": {
+        "label": "Risco baixo",
+        "headline": "Seu perfil de risco atual parece baixo."
+      },
+      "moderate": {
+        "label": "Risco moderado",
+        "headline": "Alguns fatores merecem atenção."
+      },
+      "elevated": {
+        "label": "Risco elevado",
+        "headline": "Vários fatores de risco estão se acumulando."
+      },
+      "high": {
+        "label": "Consulte um dentista em breve",
+        "headline": "Seu perfil de risco é alto o suficiente para que o rastreamento seja importante."
+      }
+    },
+    "summary": {
+      "urgent": "Um sintoma que você relatou, combinado com {topPhrase}, requer avaliação profissional com urgência. O câncer bucal detectado no Estágio I tem uma taxa de sobrevivência de 84% em cinco anos, contra 38% no Estágio IV. Essa diferença é o motivo pelo qual o momento certo faz tanta diferença. Agende uma consulta odontológica ou médica esta semana e mencione o sintoma especificamente ao ligar.",
+      "low": "Nenhum fator de risco importante se destaca no seu perfil no momento. Mantenha consultas odontológicas anuais, pois o rastreamento visual do câncer bucal leva cerca de 2 minutos e está incluído em um exame de rotina. Familiarize-se com os sinais de alerta para agir rapidamente caso algo mude.",
+      "moderate": "Seu {topPhrase} eleva seu risco de forma modesta acima da linha de base. Esses são fatores sobre os quais é possível agir. Mencione seu histórico de risco ao dentista na próxima consulta e peça um rastreamento de câncer bucal. A detecção precoce no Estágio I tem uma taxa de sobrevivência de 84% em cinco anos.",
+      "elevated": "Vários fatores, especialmente {topPhrase}, estão somando seu risco. Considere agendar uma consulta odontológica este mês e pedir especificamente um rastreamento de câncer bucal. A taxa de sobrevivência em 5 anos é de 84% quando o câncer bucal é detectado precocemente, contra 38% quando detectado tardiamente. Não espere um sintoma aparecer.",
+      "high": "Sua combinação de fatores de risco, incluindo {topPhrase}, coloca você em um grupo de risco elevado em que o rastreamento proativo é fortemente recomendado. Agende uma consulta odontológica ou médica em breve. A diferença entre a sobrevivência no Estágio I e no Estágio IV do câncer bucal é expressiva: 84% contra 38%. O exame leva 2 minutos e pode ser a consulta mais importante do ano.",
+      "fallback": "suas respostas"
+    }
+  },
+  "PressMeta": {
+    "title": "Kit de Imprensa e Mídia",
+    "description": "Texto institucional, dados rápidos, biografia do fundador, arquivos de logotipo e cores da marca para quem escreve sobre o OralCheck."
+  },
+  "PressPage": {
+    "tag": "Kit de imprensa",
+    "heading": "Kit de Imprensa e Mídia",
+    "subheading": "Tudo o que é necessário para escrever sobre o OralCheck com precisão, em um só lugar. Os arquivos estão disponíveis gratuitamente para uso em coberturas sobre o projeto.",
+    "boilerplateHeading": "Texto institucional",
+    "boilerplateShort": "O OralCheck é um rastreador gratuito e privado de risco de câncer bucal. Faz dez perguntas, leva cerca de dois minutos, não exige cadastro e não armazena respostas.",
+    "boilerplateLong": "O câncer bucal costuma ser diagnosticado tardiamente, o que é o principal motivo pelo qual continua sendo uma doença grave. A sobrevivência é muito maior quando detectado cedo, e o HPV tornou-se uma das principais causas em adultos com menos de 50 anos. O OralCheck transforma fatores de risco publicados em uma autoavaliação rápida, explica quais respostas influenciaram a pontuação e por quê, e indica serviços de saúde próximos que podem realizar o rastreamento. É desenvolvido e mantido por Ian Harris, estudante de pré-odontologia na Universidade de Wisconsin-Madison, e está disponível em inglês e espanhol.",
+    "factsHeading": "Dados rápidos",
+    "facts": [
+      {
+        "label": "O que é",
+        "value": "Um rastreador gratuito de risco de câncer bucal, disponível na web sem necessidade de instalar aplicativo."
+      },
+      {
+        "label": "Duração",
+        "value": "10 perguntas, aproximadamente 2 minutos."
+      },
+      {
+        "label": "Custo",
+        "value": "Gratuito. Sem cadastro, sem paywall, sem anúncios."
+      },
+      {
+        "label": "Privacidade",
+        "value": "As respostas são calculadas no navegador e não são armazenadas."
+      },
+      {
+        "label": "Idiomas",
+        "value": "Inglês e espanhol."
+      },
+      {
+        "label": "Metodologia",
+        "value": "A pontuação é baseada em fatores de risco publicados e está documentada publicamente, com fontes, na página de metodologia."
+      },
+      {
+        "label": "Fundação",
+        "value": "2026, por um estudante de pré-odontologia na Universidade de Wisconsin-Madison."
+      },
+      {
+        "label": "Localizador de clínicas",
+        "value": "Indica aos usuários consultórios odontológicos próximos, centros de saúde comunitários, faculdades de odontologia e clínicas gratuitas."
+      }
+    ],
+    "founderHeading": "Fundador",
+    "founderName": "Ian Harris",
+    "founderTitle": "Fundador, OralCheck. Estudante de pré-odontologia, Universidade de Wisconsin-Madison.",
+    "founderBio": "Ian Harris desenvolveu o OralCheck durante a graduação, motivado pela frequência com que o câncer bucal é diagnosticado em um estágio em que o tratamento é mais difícil e os resultados são piores. Ele elaborou o modelo de risco a partir da literatura publicada, escreveu os textos explicativos clínicos e construiu o site e seu localizador de clínicas.",
+    "assetsHeading": "Logotipos e arquivos da marca",
+    "assetsBody": "Use o logotipo como fornecido, sem alterar as cores, esticar ou adicionar efeitos.",
+    "assetLogoSvg": "Logotipo",
+    "assetLogoPng": "Logotipo",
+    "assetIcon": "Ícone do aplicativo",
+    "paletteHeading": "Cores da marca",
+    "contactHeading": "Contato para imprensa",
+    "contactBody": "Para entrevistas, dúvidas sobre a metodologia ou qualquer assunto não abordado aqui, entre em contato e espere uma resposta em alguns dias.",
+    "contactCta": "Contato",
+    "contactInstagram": "Instagram"
+  },
+  "ReviewForm": {
+    "ratingLabel": "Quão útil foi?",
+    "starLabel": "{n} de 5",
+    "textPlaceholder": "O que você achou útil e o que mudaria?",
+    "textLabel": "Sua avaliação",
+    "namePlaceholder": "Seu nome (opcional)",
+    "nameLabel": "Seu nome",
+    "consent": "Esta avaliação pode ser citada no site. Deixe desmarcado para mantê-la privada.",
+    "submit": "Enviar avaliação",
+    "sending": "Enviando...",
+    "needRating": "Escolha uma avaliação para enviar sua opinião.",
+    "sentTitle": "Obrigado",
+    "sentBody": "Sua avaliação foi recebida. Ela ajuda de verdade.",
+    "genericError": "Não foi possível enviar. Tente novamente em instantes."
+  },
+  "TermsMeta": {
+    "title": "Termos de Uso",
+    "description": "Os termos de uso do OralCheck, uma ferramenta educativa e gratuita de risco de câncer bucal. Não é um diagnóstico médico."
+  },
+  "TermsPage": {
+    "back": "← Voltar para o início",
+    "heading": "Termos de Uso",
+    "intro": "Estes termos regulam o uso do oralcheck.org. Foram escritos para serem lidos com atenção, não apenas percorridos rapidamente, porque a parte mais importante é o que esta ferramenta não é.",
+    "medicalLabel": "O OralCheck não é um diagnóstico médico",
+    "medicalBody": "O OralCheck é uma ferramenta educativa que estima o risco com base nos fatores que você informa. Ele não pode examiná-lo, não consegue ver o interior da sua boca e não é capaz de detectar, diagnosticar, descartar ou excluir câncer nem qualquer outra condição. Um resultado baixo não significa que você está saudável, e um resultado alto não significa que você tem câncer. Somente um profissional de saúde bucal ou médico qualificado pode examiná-lo e chegar a um diagnóstico. Se você tiver algum sintoma que o preocupe, consulte um profissional independentemente do que esta ferramenta indicar. Se um sintoma for grave ou piorar rapidamente, procure atendimento de urgência.",
+    "shortVersionLabel": "O resumo",
+    "shortVersion": [
+      "Gratuito, sem necessidade de cadastro nem pagamento.",
+      "Apenas educativo. Não é conselho médico nem diagnóstico.",
+      "Suas respostas ficam no seu dispositivo. Elas não são armazenadas.",
+      "Não tome decisões sobre buscar atendimento com base nesta ferramenta. Sempre consulte um profissional sobre um sintoma.",
+      "Pode ser compartilhado e impresso, inclusive em clínicas, sem nenhum custo."
+    ],
+    "sections": [
+      {
+        "heading": "O que o OralCheck faz",
+        "body": "O OralCheck faz dez perguntas sobre fatores de risco que pesquisas publicadas associam ao câncer bucal e, em seguida, apresenta um nível de risco e uma explicação de quais respostas contribuíram para ele. A pontuação é derivada de razões de chances publicadas e está documentada integralmente na página de metodologia, incluindo todas as fontes. Trata-se de um questionário de avaliação de risco. O exame de rastreamento em si é a avaliação clínica realizada pelo dentista, e o objetivo desta ferramenta é ajudá-lo a decidir ir realizar essa avaliação."
+      },
+      {
+        "heading": "Nenhuma relação profissional",
+        "body": "O uso do OralCheck não cria qualquer relação médico-paciente, dentista-paciente ou qualquer outra relação profissional entre você e o OralCheck ou qualquer pessoa a ele associada. Ninguém analisa suas respostas, pois elas nunca são enviadas a lugar nenhum. As informações neste site são de caráter geral e não são adaptadas ao seu histórico de saúde."
+      },
+      {
+        "heading": "Precisão e limitações",
+        "body": "A ferramenta é construída a partir de pesquisas em nível populacional, e associações nesse nível não permitem prever o que acontecerá com um indivíduo. Os fatores de risco são autodeclarados e não verificados. As pesquisas evoluem e, embora a metodologia seja atualizada e datada, pode haver períodos em que ela não reflita as evidências mais recentes. As listagens de clínicas na seção Encontre Atendimento provêm de fontes de terceiros, incluindo Google Places e OpenStreetMap, e não é possível garantir que alguma listagem seja precisa, atual, esteja aceitando pacientes ou ofereça rastreamento de câncer bucal. Verifique com o estabelecimento antes de se deslocar."
+      },
+      {
+        "heading": "Suas responsabilidades",
+        "body": "Use a ferramenta para você mesmo ou para ajudar alguém que tenha pedido sua ajuda. Não a utilize para tomar decisões por outras pessoas sem o conhecimento delas, e não apresente os resultados como uma opinião profissional. Não tente prejudicar o funcionamento do site, interferir no uso de outras pessoas ou utilizar meios automatizados para sobrecarregá-lo de forma incomum."
+      },
+      {
+        "heading": "Sem garantias",
+        "body": "O OralCheck é disponibilizado no estado em que se encontra e conforme disponível, sem garantias de qualquer tipo, expressas ou implícitas, incluindo qualquer garantia implícita de comercialização, adequação a uma finalidade específica ou precisão. O site pode ficar indisponível, pode conter erros e pode ser alterado ou descontinuado a qualquer momento."
+      },
+      {
+        "heading": "Limitação de responsabilidade",
+        "body": "Na máxima extensão permitida por lei, o OralCheck e as pessoas a ele associadas não são responsáveis por quaisquer danos indiretos, incidentais, especiais ou consequentes, nem por qualquer decisão que você tome sobre sua saúde com base nesta ferramenta. Nada nestes termos limita responsabilidades que não possam ser limitadas por lei. Isso não afeta seus direitos legais."
+      },
+      {
+        "heading": "Conteúdo e reutilização",
+        "body": "O conteúdo educativo, o folheto imprimível e os materiais com QR code podem ser usados livremente, impressos e distribuídos para fins educativos não comerciais, inclusive em consultórios odontológicos e clínicas médicas, com atribuição ao oralcheck.org. O nome e a identidade visual não podem ser utilizados de forma que implique endosso de um produto ou serviço. A metodologia de pontuação é pública e pode ser examinada, citada e criticada."
+      },
+      {
+        "heading": "Alterações nestes termos",
+        "body": "Estes termos podem ser atualizados conforme a ferramenta evolui. A data abaixo reflete a revisão mais recente, e o uso continuado do site após uma alteração implica a aceitação dos termos revisados."
+      },
+      {
+        "heading": "Lei aplicável",
+        "body": "Estes termos são regidos pelas leis do Estado de Wisconsin, Estados Unidos, sem consideração às normas de conflito de leis."
+      }
+    ],
+    "contactHeading": "Dúvidas",
+    "contactBody": "O OralCheck é desenvolvido e mantido por Ian Harris. Se algo aqui não estiver claro, ou se você acreditar que a ferramenta está incorreta em algum ponto, informe pelo formulário de feedback na página Sobre. Correções de profissionais de saúde são especialmente bem-vindas.",
+    "privacyPointer": "Para saber o que acontece com seus dados, que são muito poucos, consulte a",
+    "privacyLink": "política de privacidade",
+    "lastUpdated": "Última atualização: 18 de agosto de 2026"
+  }
+}

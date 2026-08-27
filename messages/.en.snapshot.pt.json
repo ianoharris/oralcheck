@@ -1,0 +1,1931 @@
+{
+  "Meta": {
+    "siteTitle": "OralCheck | Free Oral Cancer Risk Screener",
+    "siteDescription": "Free, private oral cancer risk screener. Understand your risk, learn the signs, and find care near you.",
+    "ogDescription": "Answer 10 questions to understand your oral cancer risk. Free, private, takes 2 minutes."
+  },
+  "Nav": {
+    "screener": "Screener",
+    "findCare": "Find Care",
+    "learn": "Learn",
+    "forClinicians": "For Clinicians",
+    "about": "About",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "language": "Language"
+  },
+  "Footer": {
+    "tagline": "A free educational tool to help you understand oral cancer risk and find the care you need.",
+    "exploreHeading": "Explore",
+    "riskScreener": "Risk Screener",
+    "findCare": "Find Care",
+    "forClinicians": "For Clinicians",
+    "about": "About",
+    "scoringMethodology": "Scoring Methodology",
+    "sendFeedback": "Send Feedback",
+    "printShare": "Print & Share",
+    "learnHeading": "Learn",
+    "whatIsOralCancer": "What Is Oral Cancer?",
+    "warningSigns": "Warning Signs",
+    "selfExamGuide": "Self-Exam Guide",
+    "hpvOralCancer": "HPV & Oral Cancer",
+    "prevention": "Prevention",
+    "factsStats": "Facts & Stats",
+    "cankerSoreVsCancer": "Canker Sore vs Cancer",
+    "disclaimerHeading": "Disclaimer",
+    "disclaimerBody": "OralCheck is not a medical diagnosis. It is an educational tool. Consult a qualified clinician about any symptom or concern.",
+    "disclaimerScoring": "Screening logic informed by ACS, NCI, and Oral Cancer Foundation clinical guidelines.",
+    "copyright": "© {year} OralCheck",
+    "methods": "Methods",
+    "privacy": "Privacy",
+    "notAffiliated": "Not affiliated with any medical institution.",
+    "press": "Press kit",
+    "terms": "Terms"
+  },
+  "HeroSectionPhoto": {
+    "headlineLine1": [
+      "2",
+      "minutes"
+    ],
+    "headlineLine2a": [
+      "could"
+    ],
+    "headlineLine2b": [
+      "save"
+    ],
+    "headlineLine3": [
+      "your",
+      "life."
+    ],
+    "overline": "Free · Private · Evidence-based",
+    "body": "Oral cancer is one of the most underdiagnosed cancers, largely because early symptoms look ordinary. OralCheck helps you understand your risk in minutes and points you toward care.",
+    "startScreening": "Start Screening →",
+    "learnSigns": "Learn the signs",
+    "disclaimer": "Not a medical diagnosis. An educational awareness tool.",
+    "featured": "Featured in <b>The Drill</b> · Wisconsin Dental Association"
+  },
+  "HomePage": {
+    "srHeading": "Free Oral Cancer Risk Screener",
+    "sectionHeading": "Three things this tool does",
+    "feature1Title": "Private risk screener",
+    "feature1Desc": "10 quick questions based on published clinical risk factors. Nothing is saved or sent anywhere.",
+    "feature1Cta": "Start screener",
+    "feature2Title": "Know the warning signs",
+    "feature2Desc": "Red and white patches, non-healing sores, lumps. Learn what to look for and how to do a self-exam.",
+    "feature2Cta": "Learn the signs",
+    "feature3Title": "Find affordable care",
+    "feature3Desc": "Community health centers, dental schools, and free clinics near you, including HRSA-funded providers.",
+    "feature3Cta": "Find care",
+    "quote": "Only about 1 in 4 oral and pharyngeal cancers is found before it spreads. Caught at that stage, five-year survival is 88.7%. Once it reaches distant sites, 36%.",
+    "followAlong": "Follow along",
+    "followInstagram": "Follow on Instagram →",
+    "quoteSourcePrefix": "Source:",
+    "quoteSourceName": "NCI Surveillance, Epidemiology, and End Results Program",
+    "quoteSourceDetail": "Cancer Stat Facts: Oral Cavity and Pharynx Cancer",
+    "shareEyebrow": "Spread it",
+    "shareHeading": "Print it. Post it. Pass it on.",
+    "shareBody": "Most people who need this will never search for it. A QR code on a waiting-room wall, a community board, or a break room reaches the people a website cannot. Free to print, and you can tag each copy to see which locations actually bring people in.",
+    "shareCta": "Get a printable QR code",
+    "disclaimerLine": "OralCheck is an educational tool, not a medical diagnosis. It cannot detect or rule out cancer. Always speak to a dental or medical professional about any symptom that concerns you.",
+    "disclaimerTermsLink": "Terms of Use",
+    "disclaimerPrivacyLink": "Privacy"
+  },
+  "FactsMeta": {
+    "title": "Oral Cancer Facts & Statistics",
+    "description": "Key oral cancer statistics: 54,000+ US cases per year, 84% survival when caught early, and why HPV has overtaken tobacco as the top cause. Evidence-based, cited."
+  },
+  "FactsPage": {
+    "tag": "Facts",
+    "heading": "Oral Cancer Facts & Stats",
+    "introRest": "The numbers that shape why early detection matters so much. New to the topic?",
+    "introLink": "Start with what oral cancer is.",
+    "stats": [
+      {
+        "value": "54,000+",
+        "label": "new US cases per year",
+        "detail": "Oral and oropharyngeal cancers combined."
+      },
+      {
+        "value": "11,580",
+        "label": "US deaths per year",
+        "detail": "About one death every 50 minutes."
+      },
+      {
+        "value": "84%",
+        "label": "5-year survival if caught early",
+        "detail": "Drops to ~40% if found at a late stage."
+      },
+      {
+        "value": "2×",
+        "label": "more common in men",
+        "detail": "Though rates in women are rising."
+      }
+    ],
+    "factLabel": "FACT",
+    "facts": [
+      {
+        "title": "HPV is now the leading cause of oropharyngeal cancer.",
+        "detail": "HPV-related cases have risen sharply over the past two decades, surpassing tobacco as the top driver. HPV vaccination dramatically reduces risk and is approved through age 45."
+      },
+      {
+        "title": "Tobacco and alcohol together multiply risk, not just add.",
+        "detail": "People who use both are at substantially higher risk than the sum of each alone. Quitting either reduces risk over time."
+      },
+      {
+        "title": "Early-stage oral cancer is highly treatable.",
+        "detail": "When found at Stage I, the 5-year survival rate is over 80%. At Stage IV, it drops below 40%. Stage at diagnosis is the single biggest factor in outcome."
+      },
+      {
+        "title": "Dentists find most early cases.",
+        "detail": "A routine dental visit includes a 2-minute oral cancer screening. For people who skip dental care, cancers are more often caught at later stages."
+      },
+      {
+        "title": "It doesn't only affect older smokers anymore.",
+        "detail": "HPV-related oropharyngeal cancer frequently appears in middle-aged adults with no history of tobacco use. If you have persistent symptoms, your age or lifestyle shouldn't rule out screening."
+      }
+    ],
+    "sourcesLabel": "Sources:",
+    "sourcesBody": "American Cancer Society (2024), Oral Cancer Foundation, National Cancer Institute SEER data, CDC. Figures are approximate and rounded for readability.",
+    "takeScreener": "Take the free screener →",
+    "whatIsOralCancer": "What is oral cancer?",
+    "learnSelfExam": "Learn the self-exam"
+  },
+  "SelfExamMeta": {
+    "title": "How to Do an Oral Cancer Self-Exam",
+    "description": "A step-by-step guide to checking your own mouth for signs of oral cancer. Takes 2 minutes. Do it once a month."
+  },
+  "SelfExamPage": {
+    "tag": "How-to",
+    "heading": "How to Do a 2-Minute Self-Exam",
+    "introRest": "Do this once a month. All you need is a mirror, good lighting, and clean hands. If you notice something that lasts 2+ weeks, see a dentist. Not sure what you're looking for?",
+    "introLink": "See the warning signs guide.",
+    "steps": [
+      {
+        "area": "Face & neck",
+        "instruction": "Look in the mirror at your face. Check that both sides look symmetrical. Feel the sides of your neck for lumps or swelling."
+      },
+      {
+        "area": "Lips",
+        "instruction": "Pull your upper lip up and lower lip down. Look and feel for sores, color changes, or lumps on the inside and outside."
+      },
+      {
+        "area": "Cheeks",
+        "instruction": "Use your fingers to gently pull each cheek outward. Look for red, white, or dark patches. Press gently to feel for lumps."
+      },
+      {
+        "area": "Gums",
+        "instruction": "Examine your gums, top and bottom, front and back. Look for color changes, swelling, or sores."
+      },
+      {
+        "area": "Tongue (top & sides)",
+        "instruction": "Stick out your tongue and look at the top. Then lift it to check underneath and the sides. The sides of the tongue are the most common site for oral cancer."
+      },
+      {
+        "area": "Floor of mouth",
+        "instruction": "Lift your tongue to the roof of your mouth. Look at the floor underneath and feel it gently with a clean finger."
+      },
+      {
+        "area": "Roof of mouth",
+        "instruction": "Tilt your head back and open wide. Look at the hard and soft palate for any color changes, bumps, or sores."
+      },
+      {
+        "area": "Throat",
+        "instruction": "Say \"ahh\" and check the back of your throat. Look for asymmetry, patches, or sores."
+      }
+    ],
+    "photoAlt": "{area}, reference view {n}",
+    "photoCredit": "Reference photos from \"Detecting Oral Cancer: A Guide for Health Care Professionals\" (National Institutes of Health). Public domain.",
+    "normalHeading": "What's normal vs. what's not",
+    "normalP1Rest": "Most mouths have asymmetries, small bumps, and occasional",
+    "normalP1Link": "canker sores",
+    "normalP1End": "these heal in 1–2 weeks and aren't a concern.",
+    "normalP2": "What should prompt a visit: anything new, persistent (2+ weeks), painless but unusual, or that bleeds easily.",
+    "takeScreener": "Take the free screener →",
+    "warningSignsGuide": "Warning signs guide",
+    "whatIsOralCancer": "What is oral cancer?",
+    "findDentist": "Find a dentist",
+    "byline": "Written by Ian Harris, predental student at the University of Wisconsin-Madison.",
+    "aboutLink": "About OralCheck"
+  },
+  "PreventionMeta": {
+    "title": "How to Prevent Oral Cancer",
+    "description": "Six evidence-based ways to lower your oral cancer risk: quit tobacco, limit alcohol, get the HPV vaccine, protect your lips, and get regular dental screenings."
+  },
+  "PreventionPage": {
+    "tag": "Prevention",
+    "heading": "How to Prevent Oral Cancer",
+    "introLink": "Oral cancer",
+    "introRest": "isn't entirely preventable, some risk factors, like age and genetics, aren't in your control. But the biggest ones are. Here's what the evidence actually supports.",
+    "steps": [
+      {
+        "number": "01",
+        "heading": "Quit tobacco, any form",
+        "body": "Tobacco use is the single biggest modifiable risk factor for oral cancer. That includes cigarettes, cigars, pipes, chewing tobacco, and snuff. The good news: risk drops measurably within a few years of quitting, and long-term ex-users approach the risk level of those who never used tobacco.",
+        "ctaLabel": null,
+        "ctaHref": null
+      },
+      {
+        "number": "02",
+        "heading": "Limit alcohol, especially with tobacco",
+        "body": "Heavy alcohol use is an independent risk factor, but the combination of tobacco and alcohol doesn't just add the risks, it multiplies them. If you drink, keeping to moderate levels (up to 1 drink/day for women, 2 for men) meaningfully lowers your risk compared to heavy use.",
+        "ctaLabel": null,
+        "ctaHref": null
+      },
+      {
+        "number": "03",
+        "heading": "Get vaccinated against HPV",
+        "body": "Gardasil 9 protects against HPV-16 and HPV-18, the strains behind most HPV-related throat cancers. It's FDA-approved for ages 9-45 and most effective before HPV exposure. Adults who weren't vaccinated as teens can still benefit. Ask your doctor if you're a candidate.",
+        "ctaLabel": "Learn more about HPV and oral cancer →",
+        "ctaHref": "/learn/hpv"
+      },
+      {
+        "number": "04",
+        "heading": "Get regular dental checkups",
+        "body": "A routine dental visit includes a 2-minute oral cancer screening, your dentist checks your lips, gums, tongue, cheeks, palate, and throat. Most early-stage oral cancers are found this way. For people who skip dental care, cancers are more often caught at later stages when outcomes are worse.",
+        "ctaLabel": "Find dental care near you →",
+        "ctaHref": "/find-care"
+      },
+      {
+        "number": "05",
+        "heading": "Protect your lips from the sun",
+        "body": "Chronic sun exposure is a leading cause of cancer of the lower lip, a risk that's easy to overlook. Wearing SPF lip balm (SPF 30+) and a wide-brimmed hat when outdoors makes a real difference, especially for people who work outside. Lip cancer is highly treatable when caught early.",
+        "ctaLabel": null,
+        "ctaHref": null
+      },
+      {
+        "number": "06",
+        "heading": "Do a monthly self-exam",
+        "body": "Prevention isn't just about avoiding risk, it's also about catching changes early. A monthly 2-minute self-exam of your mouth and throat means you notice anything unusual before it becomes serious. Most people have never done one.",
+        "ctaLabel": "Learn how to do a self-exam →",
+        "ctaHref": "/learn/self-exam"
+      }
+    ],
+    "cantControlHeading": "What you can't fully control",
+    "cantControlBody": "Age, sex assigned at birth, family history, and immune status all affect oral cancer risk and aren't modifiable. If you have multiple non-modifiable risk factors, that's a reason to be more diligent about the ones you can control, and to talk to your dentist about your screening schedule.",
+    "faqHeading": "Common questions",
+    "faqs": [
+      {
+        "q": "Can oral cancer be prevented?",
+        "a": "Many cases are preventable. The biggest modifiable risk factors are tobacco use, heavy alcohol consumption, and HPV infection, all of which can be addressed. Avoiding tobacco is the single most impactful step. Regular dental checkups also catch early changes before they become cancer."
+      },
+      {
+        "q": "Does quitting tobacco lower oral cancer risk?",
+        "a": "Yes, significantly. Tobacco use is the leading cause of traditional oral cancers. Risk begins to drop within a few years of quitting, and long-term ex-smokers approach the risk level of people who never smoked."
+      },
+      {
+        "q": "How does the HPV vaccine help prevent oral cancer?",
+        "a": "The HPV vaccine (Gardasil 9) protects against HPV-16 and HPV-18, the strains behind most HPV-related throat cancers. It's FDA-approved for ages 9-45. Population data already shows reduced HPV-related cancer rates in vaccinated groups."
+      },
+      {
+        "q": "How often should I get an oral cancer screening?",
+        "a": "For most people, once or twice a year at a routine dental visit is enough, the screening is included at no extra cost. People with elevated risk factors (tobacco, heavy drinking, HPV history) may benefit from more frequent checkups."
+      },
+      {
+        "q": "Does sun exposure cause oral cancer?",
+        "a": "Yes, specifically for lip cancer. Chronic sun exposure is a leading cause of lower lip cancer. SPF lip balm and a wide-brimmed hat when outdoors significantly reduce this risk, especially for people who work outdoors."
+      }
+    ],
+    "sourcesLabel": "Sources:",
+    "sourcesBody": "American Cancer Society, National Cancer Institute, CDC, Oral Cancer Foundation, World Health Organization. This page is educational and does not constitute medical advice.",
+    "takeScreener": "Take the free screener →",
+    "warningSigns": "Warning signs to watch for",
+    "learnSelfExam": "Learn the self-exam"
+  },
+  "HpvMeta": {
+    "title": "HPV and Oral Cancer: What You Need to Know",
+    "description": "HPV-16 is now the leading cause of oropharyngeal cancer in the US, overtaking tobacco. Learn who is at risk, what the symptoms are, and how the HPV vaccine helps."
+  },
+  "HpvPage": {
+    "tag": "Risk Factor",
+    "heading": "HPV and Oral Cancer",
+    "introStart": "HPV-16 is now the leading cause of throat cancer in the US, overtaking tobacco. Here's what that means for",
+    "introLink": "oral cancer",
+    "introEnd": "risk, who's at risk, and what you can do.",
+    "statHeading": "HPV is now #1",
+    "statBody": "Human Papillomavirus (HPV) has overtaken tobacco as the leading cause of oropharyngeal cancers, cancers of the tonsils, base of tongue, and back of the throat. Cases have risen by more than 300% since the 1980s.",
+    "whatIsHeading": "What is HPV-related oral cancer?",
+    "whatIsP1Start": "HPV is a common sexually transmitted virus. Most infections clear on their own without symptoms. In some people, however, certain strains, especially",
+    "whatIsP1Bold": "HPV-16",
+    "whatIsP1End": "cause changes in cell DNA that can eventually lead to cancer.",
+    "whatIsP2Start": "HPV-related oral cancers typically develop in the",
+    "whatIsP2Bold": "oropharynx",
+    "whatIsP2End": ": the tonsils, the base of the tongue, and the back wall of the throat. This is different from traditional oral cancers, which tend to form on the lips, gums, tongue tip, and floor of the mouth.",
+    "whatIsP3": "Because the oropharynx is hard to see and these cancers often don't cause pain early on, they're frequently caught later than other oral cancers, which is why knowing the symptoms matters.",
+    "symptomsHeading": "Symptoms to watch for",
+    "symptomsIntroStart": "HPV-related throat cancers can look a lot like a persistent cold or sore throat. The key signal is",
+    "symptomsIntroBold": "duration",
+    "symptomsIntroEnd": "symptoms that don't go away after two weeks deserve attention.",
+    "symptoms": [
+      {
+        "symptom": "Persistent sore throat",
+        "note": "Not caused by infection, doesn't resolve in 2 weeks"
+      },
+      {
+        "symptom": "Painless lump in the neck",
+        "note": "Often the first sign, caused by lymph node involvement"
+      },
+      {
+        "symptom": "Difficulty swallowing",
+        "note": "A feeling that food is catching or not going down right"
+      },
+      {
+        "symptom": "Ear pain on one side",
+        "note": "Can radiate from the throat even without ear infection"
+      },
+      {
+        "symptom": "Hoarseness or voice changes",
+        "note": "Lasting more than two weeks with no obvious cause"
+      },
+      {
+        "symptom": "Unexplained weight loss",
+        "note": "Especially when combined with any of the above"
+      }
+    ],
+    "whoHeading": "Who is at risk?",
+    "whoP1Start": "HPV-related oropharyngeal cancer most commonly affects",
+    "whoP1Bold": "men between the ages of 40 and 60",
+    "whoP1End": "with no history of tobacco use. This is one of the things that makes it easy to dismiss, people assume oral cancer is a smoker's disease.",
+    "whoP2": "A higher number of lifetime oral sexual partners is associated with increased risk, as HPV is primarily transmitted through sexual contact. However, HPV is extremely common, most sexually active adults have been exposed at some point, and the vast majority of infections never lead to cancer.",
+    "whoP3": "Tobacco and alcohol use alongside HPV infection further raises risk. Immune-compromising conditions (like HIV) also reduce the body's ability to clear HPV naturally.",
+    "vaccineHeading": "The HPV vaccine",
+    "vaccineP1Bold": "Gardasil 9",
+    "vaccineP1Rest": "protects against HPV-16 and HPV-18, the two strains responsible for most HPV-related cancers. It is FDA-approved for people ages",
+    "vaccineP1Ages": "9 through 45",
+    "vaccineP2": "The vaccine is most effective when given before exposure to HPV, which is why it is routinely recommended for preteens. But adults who weren't vaccinated earlier may still benefit, talk to your doctor.",
+    "vaccineP3": "The vaccine cannot treat an existing HPV infection, but research shows it has already begun to reduce HPV-related cancer rates in vaccinated populations.",
+    "faqHeading": "Common questions",
+    "faqs": [
+      {
+        "q": "Can HPV cause oral cancer?",
+        "a": "Yes. HPV, specifically the HPV-16 strain, is now the leading cause of oropharyngeal cancers, which are cancers of the tonsils, base of tongue, and back of the throat. HPV-related cases have risen sharply over the past two decades and now outnumber tobacco-related cases in this part of the mouth."
+      },
+      {
+        "q": "What are the symptoms of HPV-related oral cancer?",
+        "a": "Common symptoms include a persistent sore throat, difficulty swallowing, a painless lump in the neck, ear pain, and hoarseness that lasts longer than two weeks. Because these cancers often start at the base of the tongue or tonsils, areas not easily visible, they are frequently caught at a later stage."
+      },
+      {
+        "q": "Does the HPV vaccine prevent oral cancer?",
+        "a": "The HPV vaccine (Gardasil 9) protects against HPV-16 and HPV-18, the strains responsible for most HPV-related cancers. It is FDA-approved for people ages 9 through 45 and is most effective before exposure to HPV. It cannot treat an existing infection, but vaccination significantly lowers the risk of HPV-related oropharyngeal cancer."
+      },
+      {
+        "q": "Who is most at risk?",
+        "a": "HPV-related oropharyngeal cancer disproportionately affects middle-aged adults, particularly men between 40 and 60, with no history of tobacco use. A higher number of lifetime oral sexual partners is associated with increased risk. Unlike traditional oral cancer, it often appears in people with no obvious risk factors."
+      },
+      {
+        "q": "Is HPV-related oral cancer curable?",
+        "a": "HPV-positive oropharyngeal cancers tend to have better outcomes than HPV-negative ones. When caught early, survival rates are high. But many cases are found late because symptoms are easy to miss. Any symptom in the mouth or throat lasting more than two weeks deserves evaluation by a dentist or doctor."
+      }
+    ],
+    "sourcesLabel": "Sources:",
+    "sourcesBody": "American Cancer Society, National Cancer Institute, CDC (HPV and Cancer), Oral Cancer Foundation, Journal of Clinical Oncology (HPV-OPC incidence data). This page is educational and does not constitute medical advice.",
+    "checkRisk": "Check your risk →",
+    "seeAllSigns": "See all warning signs",
+    "preventionGuide": "Prevention guide"
+  },
+  "CankerMeta": {
+    "title": "Canker Sore vs Oral Cancer: How to Tell the Difference",
+    "description": "Canker sores heal in 7-10 days. Oral cancer doesn't. Learn the key differences, what each looks like, and exactly when to see a doctor."
+  },
+  "CankerPage": {
+    "tag": "Guide",
+    "heading": "Canker Sore vs Oral Cancer",
+    "intro": "The main difference is time. Canker sores heal in 7-14 days, oral cancer doesn't. Here's how to tell them apart, and exactly when to stop waiting and see a doctor.",
+    "quickAnswerHeading": "The quick answer",
+    "quickAnswerP1Start": "If it's been there",
+    "quickAnswerP1Bold1": "less than 2 weeks",
+    "quickAnswerP1Mid": "and is painful, it's almost certainly a canker sore. Give it time. If it's been there",
+    "quickAnswerP1Bold2": "more than 2 weeks",
+    "quickAnswerP1End": "is painless, bleeding, growing, or has irregular edges, see a dentist. Don't wait it out.",
+    "cankerHeading": "What is a canker sore?",
+    "cankerP1": "A canker sore (aphthous ulcer) is a small, shallow sore that forms inside the mouth, on the inner cheeks, tongue, or gums. They're extremely common, affecting about 1 in 5 people.",
+    "cankerTraits": [
+      "Round or oval with a white or yellow center and a red rim",
+      "Usually quite painful, especially when eating or talking",
+      "Appears inside the mouth only, never on the outer lip",
+      "Heals on its own in 7 to 14 days without treatment",
+      "Not contagious, not caused by a virus, not cancerous"
+    ],
+    "cankerP2": "Common triggers include minor mouth injuries (biting your cheek), stress, certain foods (citrus, tomatoes), and hormonal changes.",
+    "cancerLookHeading": "What does an oral cancer lesion look like?",
+    "cancerLookP1": "Oral cancer can look deceptively similar to a canker sore, especially in the early stages, which is exactly why people miss it. Key differences:",
+    "cancerTraits": [
+      "A red patch (erythroplakia), white patch (leukoplakia), or speckled mix",
+      "A sore or ulcer that doesn't heal after 2 weeks",
+      "Often painless or only mildly uncomfortable early on",
+      "Can appear anywhere: tongue sides, floor of mouth, gums, throat, lips",
+      "May bleed easily when touched",
+      "May feel hard or indurated (firm) underneath",
+      "Can be accompanied by a painless lump in the neck"
+    ],
+    "cancerLookP2": "The most common locations for oral cancer are the sides and bottom of the tongue, the floor of the mouth, and the back of the throat, places many people never look.",
+    "sideBySideHeading": "Side by side",
+    "colFeature": "Feature",
+    "colCanker": "Canker Sore",
+    "colCancer": "Oral Cancer",
+    "comparison": [
+      {
+        "feature": "Appearance",
+        "canker": "Round or oval; white or yellow center with a red border",
+        "cancer": "Red, white, or mixed patch; irregular edges; may bleed"
+      },
+      {
+        "feature": "Pain",
+        "canker": "Usually painful or tender",
+        "cancer": "Often painless early, especially concerning"
+      },
+      {
+        "feature": "Location",
+        "canker": "Inside cheeks, tongue, or gums only, never on lips",
+        "cancer": "Anywhere: tongue, gums, floor of mouth, lip, throat"
+      },
+      {
+        "feature": "Duration",
+        "canker": "Heals on its own in 7-14 days",
+        "cancer": "Doesn't heal, persists and may grow"
+      },
+      {
+        "feature": "Edges",
+        "canker": "Smooth, defined",
+        "cancer": "Irregular, raised, or indurated (hard)"
+      },
+      {
+        "feature": "Cause",
+        "canker": "Stress, injury, certain foods, not contagious",
+        "cancer": "Tobacco, alcohol, HPV, sun, or unknown"
+      }
+    ],
+    "twoWeekHeading": "The 2-week rule",
+    "twoWeekP1Start": "Any sore, patch, lump, or change in your mouth that hasn't resolved after",
+    "twoWeekBold": "2 weeks",
+    "twoWeekP1End": "should be seen by a dentist or doctor. Most of the time it turns out to be nothing, but that reassurance is worth a 10-minute appointment. Oral cancer caught at Stage I has an 84% five-year survival rate.",
+    "whenToSeeHeading": "When to see a doctor, don't wait if:",
+    "whenToSee": [
+      {
+        "title": "It's been there more than 2 weeks",
+        "desc": "The single most important signal."
+      },
+      {
+        "title": "It's painless",
+        "desc": "Early oral cancer is often painless. That's not reassuring, it's a reason to get checked."
+      },
+      {
+        "title": "It bleeds easily when touched",
+        "desc": "Unusual bleeding from a sore or patch is a warning sign."
+      },
+      {
+        "title": "It's growing or changing",
+        "desc": "A sore that's getting larger or changing color needs evaluation."
+      },
+      {
+        "title": "It feels hard underneath",
+        "desc": "Firmness or induration under a lesion is concerning."
+      },
+      {
+        "title": "You also have a lump in your neck",
+        "desc": "Swollen lymph nodes alongside a mouth sore warrant prompt evaluation."
+      }
+    ],
+    "faqHeading": "Common questions",
+    "faqs": [
+      {
+        "q": "How do I know if a mouth sore is cancer?",
+        "a": "The most reliable indicator is time. Canker sores heal within 7-14 days. If a sore, patch, or lump hasn't resolved after 2 weeks, see a dentist or doctor. Other red flags: bleeds easily, is painless, has irregular edges, is growing, or is accompanied by a neck lump."
+      },
+      {
+        "q": "Can a canker sore turn into oral cancer?",
+        "a": "No. Canker sores are benign and do not become cancerous. But oral cancer can sometimes look like a canker sore early on, which is exactly why the 2-week rule exists. If it looks like a canker sore but hasn't healed in 2 weeks, get it checked."
+      },
+      {
+        "q": "What does an oral cancer lesion actually look like?",
+        "a": "It can appear as a red patch, a white patch, or a speckled mix of both. It may look like a sore that won't heal, a lump, or a rough crusted area. Early lesions are often painless. They can develop on the tongue, floor of the mouth, gums, cheeks, lips, or throat."
+      },
+      {
+        "q": "Is a painless sore more worrying than a painful one?",
+        "a": "Counterintuitively, yes. Canker sores are typically quite painful. Early oral cancer is often painless, which is why people ignore it. A painless sore or patch that lasts beyond 2 weeks is more concerning than a painful one that's healing."
+      },
+      {
+        "q": "I have a white patch in my mouth. Is it cancer?",
+        "a": "Not necessarily, but a white patch (leukoplakia) that's been there more than 2 weeks, can't be scraped off, or is paired with a red area should be evaluated by a dentist. Most turn out to be benign. A dentist can determine whether a biopsy is needed."
+      }
+    ],
+    "sourcesLabel": "Sources:",
+    "sourcesBody": "American Cancer Society, Oral Cancer Foundation, National Institute of Dental and Craniofacial Research (NIDCR), Mayo Clinic. This page is educational and does not constitute medical advice.",
+    "checkRisk": "Check your risk →",
+    "seeAllSigns": "See all warning signs",
+    "findDentist": "Find a dentist →"
+  },
+  "RiskFactorsMeta": {
+    "title": "Oral Cancer Risk Factors: What Raises Your Risk",
+    "description": "The major risk factors for oral cancer include tobacco use, alcohol, HPV-16, age, and sun exposure. Learn how each factor works and how they combine."
+  },
+  "RiskFactorsPage": {
+    "tag": "Risk factors",
+    "heading": "Oral Cancer Risk Factors",
+    "intro": "Oral cancer has clear, well-understood causes. Most are modifiable. Understanding your specific risk factors is the first step toward doing something about them.",
+    "twoFactorHeading": "The two-factor rule",
+    "twoFactorP1": "Tobacco and alcohol each independently raise oral cancer risk. Used together, their effects are",
+    "twoFactorBold1": "synergistic, not additive",
+    "twoFactorP2": "a heavy smoker who also drinks heavily can face a",
+    "twoFactorBold2": "30-fold increase",
+    "twoFactorP3": "in risk compared to someone who does neither. If you use both, reducing or eliminating either one significantly lowers your risk.",
+    "learnMore": "Learn more →",
+    "riskFactors": [
+      {
+        "rank": 1,
+        "name": "Tobacco use",
+        "weight": "Very high",
+        "weightColor": "text-accent",
+        "summary": "Responsible for roughly 75% of traditional oral cavity cancers.",
+        "detail": "All forms of tobacco significantly raise oral cancer risk, cigarettes, cigars, pipes, chewing tobacco, snuff, and vaping products. The risk scales with how much you use and for how long. Heavy smokers are 6 to 27 times more likely to develop oral cancer than non-smokers. Quitting reduces risk over time, but risk does not return to baseline for years after cessation.",
+        "link": null
+      },
+      {
+        "rank": 2,
+        "name": "Alcohol use",
+        "weight": "High",
+        "weightColor": "text-accent",
+        "summary": "Heavy drinkers are 5-6x more likely to develop oral cancer.",
+        "detail": "Alcohol is a direct carcinogen in the oral cavity. The risk increases with the amount consumed, and heavy drinking (more than 3-4 drinks per day) carries the highest risk. When combined with tobacco, the effects are synergistic, the combined risk far exceeds the sum of the two individual risks. Someone who both smokes heavily and drinks heavily can have a 30-fold increased risk compared to someone who does neither.",
+        "link": null
+      },
+      {
+        "rank": 3,
+        "name": "HPV-16 infection",
+        "weight": "High, rising",
+        "weightColor": "text-accent",
+        "summary": "Now the leading cause of oropharyngeal cancer, overtaking tobacco.",
+        "detail": "Human papillomavirus type 16 (HPV-16) is a sexually transmitted infection that has become the dominant driver of oropharyngeal cancers, cancers of the base of the tongue, tonsils, and throat. Unlike tobacco-related oral cancers, HPV-related cancers tend to occur in younger adults with no history of smoking, and are more responsive to treatment. The HPV vaccine (Gardasil 9) is highly effective at preventing HPV-16 infection when given before exposure.",
+        "link": "/learn/hpv"
+      },
+      {
+        "rank": 4,
+        "name": "Age",
+        "weight": "Moderate",
+        "weightColor": "text-caution",
+        "summary": "Risk rises sharply after 55. Peak incidence in the 60s and 70s.",
+        "detail": "Oral cancer is more common as people age, partly because of longer cumulative exposure to risk factors, and partly because of age-related changes in immune function. The average age at diagnosis is 62. However, HPV-related oropharyngeal cancers are increasingly diagnosed in adults in their 40s and 50s, so younger adults are not without risk.",
+        "link": null
+      },
+      {
+        "rank": 5,
+        "name": "Sun exposure",
+        "weight": "Moderate, lip cancer",
+        "weightColor": "text-caution",
+        "summary": "UV radiation is the main risk factor for lip cancer specifically.",
+        "detail": "Chronic, unprotected sun exposure increases the risk of lip cancer, particularly on the lower lip. People who work outdoors for long periods, farmers, construction workers, fishermen, have historically higher rates of lip cancer. Using lip balm with SPF and wearing a hat are effective protective measures.",
+        "link": null
+      },
+      {
+        "rank": 6,
+        "name": "Diet",
+        "weight": "Moderate",
+        "weightColor": "text-caution",
+        "summary": "Diets low in fruits and vegetables are consistently linked to higher risk.",
+        "detail": "A diet low in fruits and vegetables, and therefore low in antioxidants, vitamins A, C, and E, and other micronutrients, is associated with elevated oral cancer risk in epidemiological studies. The protective effect of produce is well-documented, though diet is considered a secondary factor compared to tobacco, alcohol, and HPV.",
+        "link": null
+      },
+      {
+        "rank": 7,
+        "name": "Betel nut use",
+        "weight": "Very high, specific populations",
+        "weightColor": "text-accent",
+        "summary": "A major cause of oral cancer in South and Southeast Asia.",
+        "detail": "Betel nut (areca nut), often chewed with betel leaf and slaked lime, or as paan, gutka, or pan masala, is one of the most potent oral carcinogens known. It is the fourth most commonly used psychoactive substance in the world and is responsible for high rates of oral submucous fibrosis and squamous cell carcinoma in South Asia, Southeast Asia, and diaspora populations globally.",
+        "link": null
+      },
+      {
+        "rank": 8,
+        "name": "Family history",
+        "weight": "Modest",
+        "weightColor": "text-low",
+        "summary": "A first-degree relative with oral or head-and-neck cancer modestly raises risk.",
+        "detail": "Having a parent or sibling who developed oral or head-and-neck cancer increases your risk somewhat, likely through a combination of shared genetic susceptibility and shared environmental exposures. Family history alone is not considered a high-risk factor, but it strengthens the case for regular dental screenings.",
+        "link": null
+      },
+      {
+        "rank": 9,
+        "name": "Infrequent dental visits",
+        "weight": "Indirect",
+        "weightColor": "text-low",
+        "summary": "Dentists are the primary first-line screeners for oral cancer.",
+        "detail": "Dentists routinely perform visual and physical checks for oral cancer signs during checkups. People who rarely see a dentist miss these routine screenings, which means early lesions can go undetected longer. This is not a direct biological cause, but it significantly increases the chance that a cancer is caught at a later, harder-to-treat stage.",
+        "link": "/find-care"
+      }
+    ],
+    "interactHeading": "How risk factors interact",
+    "interactP1": "Risk factors do not always operate independently. Tobacco and alcohol together are significantly more dangerous than either alone, both substances damage the same tissues, and alcohol may enhance the ability of tobacco carcinogens to penetrate the cells lining the mouth and throat.",
+    "interactP2": "HPV-related oropharyngeal cancers follow a different pathway entirely, they are driven by viral integration into cell DNA rather than by chemical carcinogens. This is why HPV-related cancers tend to occur in younger, non-smoking adults. The HPV vaccine is currently the only preventive tool specifically targeting this pathway.",
+    "interactP3": "Having multiple risk factors does not guarantee cancer, but it does strengthen the case for regular dental screenings and self-exams.",
+    "whatToDoHeading": "What you can do about it",
+    "whatToDo": [
+      {
+        "title": "Quit tobacco",
+        "desc": "The single highest-impact change. Risk drops measurably within years of quitting."
+      },
+      {
+        "title": "Limit alcohol",
+        "desc": "Risk scales with consumption. Reducing heavy use reduces risk."
+      },
+      {
+        "title": "Get the HPV vaccine",
+        "desc": "Gardasil 9 is approved through age 45 and is highly effective against HPV-16 when given before exposure."
+      },
+      {
+        "title": "Protect your lips",
+        "desc": "Use lip balm with SPF 30+ outdoors. Wear a wide-brimmed hat."
+      },
+      {
+        "title": "See a dentist regularly",
+        "desc": "Dental exams include a visual oral cancer screening. Every visit is an opportunity for early detection."
+      },
+      {
+        "title": "Know the warning signs",
+        "desc": "Any sore, patch, or lump that hasn't resolved in 2 weeks should be evaluated."
+      }
+    ],
+    "faqHeading": "Common questions",
+    "faqs": [
+      {
+        "q": "What is the biggest risk factor for oral cancer?",
+        "a": "For oral cavity cancers, tobacco is the single biggest modifiable risk factor, responsible for about 75% of cases. For oropharyngeal cancers (base of tongue, tonsils, throat), HPV-16 has now surpassed tobacco as the leading cause in the US."
+      },
+      {
+        "q": "Does alcohol increase the risk of oral cancer?",
+        "a": "Yes. Heavy alcohol use is an independent risk factor. The combination of tobacco and alcohol is especially dangerous, their effects are synergistic, and the combined risk can be 30 times higher than for someone who uses neither."
+      },
+      {
+        "q": "Can you get oral cancer without smoking or drinking?",
+        "a": "Yes. HPV-related oropharyngeal cancers have been increasing in people who have never smoked or used tobacco. HPV-16 is now responsible for the majority of throat and tonsillar cancers in the US."
+      },
+      {
+        "q": "Is oral cancer hereditary?",
+        "a": "Family history is a recognized but modest independent risk factor. Most oral cancers are driven by modifiable risk factors like tobacco, alcohol, and HPV rather than hereditary causes."
+      },
+      {
+        "q": "At what age does oral cancer risk increase?",
+        "a": "Risk rises sharply after 55, with peak incidence in the 60s and 70s. However, HPV-related oropharyngeal cancers are increasingly diagnosed in adults in their 40s and 50s."
+      }
+    ],
+    "sourcesLabel": "Sources:",
+    "sourcesBody": "American Cancer Society, National Cancer Institute (NCI SEER), Oral Cancer Foundation, CDC HPV and Cancer, International Agency for Research on Cancer (IARC). This page is educational and does not constitute medical advice.",
+    "checkRisk": "Check your risk →",
+    "warningSigns": "Warning signs",
+    "preventionGuide": "How to prevent oral cancer",
+    "hpvGuide": "HPV and oral cancer"
+  },
+  "OralCancerMeta": {
+    "title": "What Is Oral Cancer? Definition, Types & Key Facts",
+    "description": "Oral cancer is cancer that forms in the mouth or throat. Learn the definition, types, key statistics, causes, and warning signs, and when to see a doctor."
+  },
+  "OralCancerPage": {
+    "tag": "Basics",
+    "heading": "What Is Oral Cancer?",
+    "intro": "Oral cancer is cancer that develops in the mouth or throat. It is more common than most people realize, but when caught early it is highly treatable. Here is what you need to know.",
+    "definitionHeading": "Definition",
+    "definitionP1Start": "is an umbrella term for cancers that form in the",
+    "definitionBold1": "Oral cancer",
+    "definitionBold2": "oral cavity",
+    "definitionMid": "(lips, tongue, gums, cheeks, floor and roof of the mouth) or the",
+    "definitionBold3": "oropharynx",
+    "definitionEnd": "(tonsils, base of the tongue, and back of the throat).",
+    "definitionP2Start": "Roughly 90% of oral cancers are",
+    "definitionBold4": "squamous cell carcinomas",
+    "definitionP2End": "cancers that begin in the thin, flat cells lining these surfaces. Most start as a small, painless change that goes unnoticed until it has grown.",
+    "typesHeading": "Types of oral cancer",
+    "types": [
+      {
+        "name": "Squamous cell carcinoma (SCC)",
+        "pct": "~90% of cases",
+        "description": "The most common type by far. SCC begins in the squamous cells, the thin, flat cells that line the mouth, lips, tongue, and throat. Most oral cancers diagnosed are SCCs. Tobacco and alcohol are major drivers; HPV is increasingly implicated in oropharyngeal SCCs."
+      },
+      {
+        "name": "Oropharyngeal cancer",
+        "pct": "Tonsils, base of tongue, throat",
+        "description": "Technically a subtype of SCC, oropharyngeal cancers develop at the back of the mouth and throat. They are now most commonly linked to HPV-16 infection rather than tobacco, and they tend to be caught at a later stage because the area is harder to see and symptoms are easy to miss."
+      },
+      {
+        "name": "Salivary gland cancer",
+        "pct": "Rare, <10% of cases",
+        "description": "Cancer arising in the parotid, sublingual, or submandibular glands. There are several subtypes (mucoepidermoid carcinoma, adenoid cystic carcinoma, others), each with different behaviors and prognoses. Treatment and outlook vary widely by subtype."
+      },
+      {
+        "name": "Oral lymphoma",
+        "pct": "Uncommon",
+        "description": "Cancer of the lymphatic tissue in the mouth or throat. It is more likely to be seen in people who are immunocompromised (e.g., HIV-positive individuals). It typically presents as a soft swelling, often painless, in the tonsils or back of the mouth."
+      }
+    ],
+    "byNumbersHeading": "By the numbers",
+    "stats": [
+      {
+        "value": "54,000+",
+        "label": "new diagnoses per year",
+        "sub": "US, oral & oropharyngeal combined"
+      },
+      {
+        "value": "84%",
+        "label": "survival rate if caught early",
+        "sub": "drops to ~40% at late stage"
+      },
+      {
+        "value": "2×",
+        "label": "more common in men",
+        "sub": "though rates in women are rising"
+      },
+      {
+        "value": "62",
+        "label": "median age at diagnosis",
+        "sub": "but it can occur at any age"
+      }
+    ],
+    "causesHeading": "What causes it?",
+    "causesIntro": "Oral cancer develops when cells in the mouth or throat accumulate DNA mutations that cause uncontrolled growth. Several well-established risk factors increase the likelihood of those mutations occurring.",
+    "causes": [
+      {
+        "factor": "Tobacco use",
+        "detail": "Cigarettes, cigars, pipes, chewing tobacco, and snuff are the single biggest modifiable risk factor for traditional oral cancers (lips, tongue, floor of mouth). Risk is dose-dependent, heavier use means higher risk, and it falls significantly after quitting."
+      },
+      {
+        "factor": "Alcohol",
+        "detail": "Heavy drinking is an independent risk factor, and the combination with tobacco multiplies risk rather than just adding it. People who both smoke heavily and drink heavily face a risk up to 15 times higher than non-users of either."
+      },
+      {
+        "factor": "HPV infection",
+        "detail": "Human Papillomavirus, specifically HPV-16, has overtaken tobacco as the leading cause of oropharyngeal cancers. HPV-related cancers often appear in non-smokers in their 40s and 50s. The HPV vaccine dramatically reduces risk.",
+        "link": "/learn/hpv"
+      },
+      {
+        "factor": "Sun exposure",
+        "detail": "Chronic UV exposure is a leading risk factor specifically for cancer of the lower lip, not for cancers inside the mouth. People who work outdoors are at elevated risk. SPF lip balm and a wide-brimmed hat offer meaningful protection."
+      },
+      {
+        "factor": "Age",
+        "detail": "Risk increases with age. Most diagnoses occur after age 55, though HPV-related oropharyngeal cancers are increasingly common in middle-aged adults. Regular dental screenings become more important as you get older."
+      }
+    ],
+    "lookLikeHeading": "What does it look like?",
+    "lookLikeIntro": "Early oral cancer is often painless and easy to overlook. The most common signs include:",
+    "signs": [
+      "A red or white patch inside the mouth that doesn't go away",
+      "A sore or ulcer that hasn't healed in 2 weeks",
+      "A lump or thickening on the cheek, tongue, or gum",
+      "Unexplained numbness or pain in the mouth or face",
+      "Difficulty chewing, swallowing, or moving the jaw",
+      "Hoarseness or a sore throat lasting more than 2 weeks",
+      "A painless lump in the neck"
+    ],
+    "seeFullStart": "See the full",
+    "seeFullLink": "warning signs guide",
+    "seeFullEnd": "for detailed descriptions and photos.",
+    "twoWeekHeading": "The 2-week rule",
+    "twoWeekP1Start": "Any sore, patch, lump, or change in your mouth that has not healed or resolved after",
+    "twoWeekBold": "2 weeks",
+    "twoWeekP1End": "should be evaluated by a dentist or doctor. Most of the time it turns out to be nothing serious, but catching oral cancer early changes everything.",
+    "faqHeading": "Common questions",
+    "faqs": [
+      {
+        "q": "What is oral cancer?",
+        "a": "Oral cancer is cancer that develops in any part of the mouth (oral cavity) or the back of the throat (oropharynx). This includes the lips, tongue, gums, floor of the mouth, hard and soft palate, cheeks, and throat. Most oral cancers are squamous cell carcinomas, cancers that begin in the flat cells lining these surfaces."
+      },
+      {
+        "q": "What are the types of oral cancer?",
+        "a": "The main types are: squamous cell carcinoma (about 90% of cases), oropharyngeal cancer (tonsils, base of tongue, throat, often HPV-related), salivary gland cancer (rare, with several subtypes), and oral lymphoma (uncommon, more likely in immunocompromised individuals)."
+      },
+      {
+        "q": "Is oral cancer the same as throat cancer?",
+        "a": "They overlap. Oral cancer typically refers to cancers of the lips, tongue, gums, cheeks, and floor and roof of the mouth. Oropharyngeal (throat) cancer affects the tonsils, base of the tongue, and back of the throat. Because these regions connect, they are often grouped together as 'oral and oropharyngeal cancer.'"
+      },
+      {
+        "q": "How common is oral cancer?",
+        "a": "More than 54,000 Americans are diagnosed with oral and oropharyngeal cancer each year. It is about twice as common in men as in women, and the median age at diagnosis is 62. It ranks among the ten most common cancers worldwide."
+      },
+      {
+        "q": "Can oral cancer be cured if caught early?",
+        "a": "Yes. The 5-year survival rate for early-stage oral cancer is around 84%. At a late stage, that drops to roughly 40%. Early detection through routine dental checkups and monthly self-exams is the single biggest factor in improving outcomes."
+      }
+    ],
+    "sourcesLabel": "Sources:",
+    "sourcesBody": "American Cancer Society, National Cancer Institute SEER database, Oral Cancer Foundation, CDC, World Health Organization. This page is educational and does not constitute medical advice.",
+    "byline": "Written by Ian Harris, predental student at the University of Wisconsin-Madison.",
+    "aboutLink": "About OralCheck",
+    "takeScreener": "Take the free screener →",
+    "learnSigns": "Learn warning signs",
+    "howToSelfExam": "How to do a self-exam"
+  },
+  "SignsMeta": {
+    "title": "Signs & Symptoms of Oral Cancer: What to Look For",
+    "description": "Learn the early warning signs of oral cancer: red or white patches, sores that won't heal, unexplained lumps, and numbness. Know when to act."
+  },
+  "SignsPage": {
+    "tag": "Symptoms",
+    "heading": "Signs & Symptoms of Oral Cancer",
+    "introStart": "Most early",
+    "introLink": "oral cancers",
+    "introEnd": "are completely painless. That is why so many cases are caught late. These are the changes worth knowing about, especially if anything lasts longer than 2 weeks.",
+    "twoWeekHeading": "The 2-week rule",
+    "twoWeekP1Start": "Any sore, patch, lump, or unusual change in your mouth that has",
+    "twoWeekBold": "not resolved after 2 weeks",
+    "twoWeekP1End": "should be evaluated by a dentist or doctor. Canker sores heal in 7 to 10 days. Oral cancer does not. You do not need to wait to see if it gets worse, 2 weeks is the threshold.",
+    "signsHeading": "Warning signs",
+    "highPriority": "High priority",
+    "signs": [
+      {
+        "title": "Red or white patches",
+        "detail": "One of the most important early signs. A persistent red patch (erythroplakia) is the highest-risk lesion, studies estimate that 50% or more of red patches are either already cancerous or precancerous at biopsy. White patches (leukoplakia) are more common and usually benign, but roughly 5 to 17% will become malignant if left untreated. A mixed red-and-white speckled patch (erythroleukoplakia) carries the highest risk of all. The defining feature: these patches don't scrape or rub off.",
+        "urgent": true
+      },
+      {
+        "title": "Sores or ulcers that don't heal",
+        "detail": "A sore or ulcer in the mouth that hasn't resolved after 2 weeks is the classic red flag. Canker sores (aphthous ulcers) heal in 7 to 10 days without treatment. Oral cancer lesions do not. They may have irregular, raised, or hardened edges, different from the clean round border of a canker sore. They may bleed easily when touched. The absence of pain does not mean the absence of danger.",
+        "urgent": true
+      },
+      {
+        "title": "A lump, thickening, or rough patch",
+        "detail": "A new lump or area of thickening in the cheek, tongue, gum, or floor of the mouth, especially if it has a firm, hard consistency, warrants evaluation. Early tumors often feel rubbery or firm, like a pea under the skin. A swollen lymph node in the neck that persists for more than 2 weeks, even without an obvious infection, can also signal oral or oropharyngeal cancer.",
+        "urgent": false
+      },
+      {
+        "title": "Numbness or unexplained pain",
+        "detail": "Unexplained numbness, tingling, or loss of sensation in the mouth, tongue, lips, or face, particularly if it's one-sided, can be a sign of nerve involvement. Intermittent or persistent pain in the mouth or jaw that has no obvious dental cause (no cavity, no tooth problem) is also worth investigating. Pain typically appears in more advanced cases, but some early cancers do cause discomfort.",
+        "urgent": false
+      },
+      {
+        "title": "Difficulty chewing, swallowing, or moving the jaw",
+        "detail": "Feeling like food is sticking in your throat, difficulty opening your mouth fully (trismus), or pain and restriction when moving the jaw or tongue can indicate a mass affecting the surrounding structures. This symptom is more common with tumors at the base of the tongue or oropharynx, where HPV-related cancers tend to originate, and often appears before a visible lesion.",
+        "urgent": false
+      },
+      {
+        "title": "Loose teeth with no dental explanation",
+        "detail": "If teeth become loose without an obvious cause, no gum disease diagnosis, no injury, no dental problem, it can signal that a tumor is affecting the bone or soft tissue supporting the teeth. This is particularly relevant for lesions on the gum (gingival carcinoma), which can mimic periodontal disease and go undetected for months.",
+        "urgent": false
+      },
+      {
+        "title": "Persistent hoarseness or voice changes",
+        "detail": "A change in voice quality or persistent hoarseness that lasts more than 2 weeks, especially without a preceding cold or respiratory illness, can signal laryngeal involvement or a tumor near the back of the throat. This symptom is more associated with oropharyngeal and laryngeal cancers than with oral cavity cancers.",
+        "urgent": false
+      },
+      {
+        "title": "Ear pain without an ear problem",
+        "detail": "Called referred otalgia, ear pain that occurs without any ear infection or problem can result from pain signals that originate in the throat or back of the tongue being misrouted through the ear's nerve pathway. If your ears hurt and your doctor finds no ear pathology, the base of tongue and tonsils should be examined.",
+        "urgent": false
+      }
+    ],
+    "whereHeading": "Where oral cancer most commonly develops",
+    "whereIntro": "Oral cancer can appear anywhere in the mouth or throat, but certain sites carry higher risk. Knowing where to look makes self-exams and dental screenings more effective.",
+    "locations": [
+      {
+        "site": "Tongue",
+        "note": "Sides and underside, most common site overall. Easy to overlook without a self-exam.",
+        "risk": "Highest"
+      },
+      {
+        "site": "Floor of the mouth",
+        "note": "The U-shaped tissue under the tongue. Often hard to see without lifting the tongue.",
+        "risk": "Very high"
+      },
+      {
+        "site": "Lips",
+        "note": "Lower lip most common, linked to sun exposure. Usually visible.",
+        "risk": "High"
+      },
+      {
+        "site": "Gums (gingiva)",
+        "note": "Can mimic gum disease. Loose teeth without a dental cause is a key clue.",
+        "risk": "High"
+      },
+      {
+        "site": "Inner cheeks",
+        "note": "The soft tissue lining the inside of the cheeks.",
+        "risk": "Moderate"
+      },
+      {
+        "site": "Base of tongue / tonsils",
+        "note": "Where HPV-related oropharyngeal cancers tend to start. Often no visible lesion.",
+        "risk": "High, HPV-related"
+      },
+      {
+        "site": "Palate",
+        "note": "Hard palate (roof of mouth) and soft palate. Check both sides.",
+        "risk": "Moderate"
+      }
+    ],
+    "painlessHeading": "Why early oral cancer often has no pain",
+    "painlessP1": "Pain is the body's alarm system, but early-stage oral cancer frequently bypasses it. A small tumor on the floor of the mouth or the side of the tongue may grow for months before causing any discomfort. Red and white patches are often completely asymptomatic.",
+    "painlessP2": "By the time pain appears, typically from nerve involvement or ulceration, the cancer is often at a more advanced stage. This dynamic is the core reason oral cancer has a low early-detection rate and a 5-year survival rate of only about 40% for late-stage disease, compared to over 84% when caught early.",
+    "painlessP3": "The absence of pain is not reassurance. It is precisely why the 2-week rule matters, and why routine dental exams that include an oral cancer check are worth keeping.",
+    "comparisonHeading": "Oral cancer vs. canker sore: quick comparison",
+    "comparisonIntroStart": "Canker sores and early oral cancer can look similar.",
+    "comparisonIntroLink": "See the full comparison page",
+    "comparisonIntroEnd": "for more detail. The short version:",
+    "colCankerSore": "Canker sore",
+    "colOralCancer": "Oral cancer",
+    "comparison": [
+      {
+        "label": "Heals within",
+        "a": "7-10 days",
+        "b": "Does not heal"
+      },
+      {
+        "label": "Pain level",
+        "a": "Usually painful",
+        "b": "Often painless"
+      },
+      {
+        "label": "Border",
+        "a": "Round, clean",
+        "b": "Irregular, raised"
+      },
+      {
+        "label": "Color",
+        "a": "White/yellow center, red rim",
+        "b": "Red, white, or mixed"
+      },
+      {
+        "label": "Location",
+        "a": "Soft tissue, inside lips",
+        "b": "Any site, often tongue/floor"
+      },
+      {
+        "label": "What to do",
+        "a": "Monitor, should resolve",
+        "b": "See a dentist if 2+ weeks"
+      }
+    ],
+    "whatToDoHeading": "What to do if you notice a sign",
+    "whatToDo": [
+      {
+        "title": "Don't wait for it to hurt",
+        "desc": "Pain is not a reliable indicator of severity. Act on what you see, not what you feel."
+      },
+      {
+        "title": "Give it 2 weeks",
+        "desc": "Minor trauma (a bite, rough food) causes mouth sores. Give any new lesion 2 weeks to resolve on its own."
+      },
+      {
+        "title": "See a dentist",
+        "desc": "If it's still there after 2 weeks, book a dental appointment. Dentists are the primary screeners for oral cancer. Many offer free oral cancer screenings."
+      },
+      {
+        "title": "Do not self-diagnose",
+        "desc": "Most abnormalities turn out to be benign. A professional exam, not a Google search, is what provides an answer."
+      },
+      {
+        "title": "Know your risk factors",
+        "desc": "Tobacco use, heavy alcohol use, HPV, and age all raise your baseline risk. The more risk factors you carry, the more important regular screenings are."
+      }
+    ],
+    "faqHeading": "Common questions",
+    "faqs": [
+      {
+        "q": "What does oral cancer look like?",
+        "a": "Oral cancer most commonly appears as a red patch, a white patch, or a mixed red-and-white patch that doesn't scrape off. It can also look like a sore with irregular edges that bleeds easily but won't heal, a raised lump, or a hard area of thickening. It can develop on the tongue, gums, lips, floor of the mouth, cheeks, or throat."
+      },
+      {
+        "q": "Can oral cancer be painless?",
+        "a": "Yes, early oral cancer is often completely painless. This is why routine dental screenings and monthly self-exams matter. Pain tends to appear with more advanced disease, not early-stage lesions."
+      },
+      {
+        "q": "What is the 2-week rule?",
+        "a": "Any sore, patch, lump, or change in your mouth that has not resolved after 2 weeks should be professionally evaluated. Canker sores heal in 7 to 10 days. Anything lasting longer deserves a dentist's assessment."
+      },
+      {
+        "q": "Where does oral cancer most commonly develop?",
+        "a": "The sides and underside of the tongue and the floor of the mouth are the most common sites for oral cavity cancers. HPV-related oropharyngeal cancers tend to start at the base of the tongue and the tonsils, where there may be no visible lesion at all."
+      },
+      {
+        "q": "How is oral cancer detected early?",
+        "a": "Regular dental exams, which include a visual and physical oral cancer check, are the most reliable way to catch it early. Monthly at-home self-exams can also catch changes between dental visits. If you have risk factors for oral cancer, talk to your dentist about getting a formal screening."
+      }
+    ],
+    "sourcesLabel": "Sources:",
+    "sourcesBody": "American Cancer Society, National Cancer Institute, Oral Cancer Foundation, National Institute of Dental and Craniofacial Research (NIDCR). This page is educational and does not constitute medical advice.",
+    "takeScreener": "Take the free screener →",
+    "howToSelfExam": "How to do a self-exam",
+    "cankerVsCancer": "Canker sore vs oral cancer",
+    "riskFactors": "Risk factors",
+    "byline": "Written by Ian Harris, predental student at the University of Wisconsin-Madison.",
+    "aboutLink": "About OralCheck"
+  },
+  "SignsVisualGuide": {
+    "eyebrow": "Interactive guide",
+    "heading": "What to look for",
+    "subheading": "Tap through the signs worth knowing. Each one starts as a simple diagram; where an openly licensed clinical photo exists, you can choose to see it. The thing they share: if it hasn't cleared up in about 2 weeks, have it checked.",
+    "watchAction": "When to act.",
+    "higherAction": "Worth prompt attention.",
+    "twoWeekBold": "The 2-week rule:",
+    "twoWeekRest": "anything in your mouth or on your lips that hasn't healed within two weeks deserves a professional look. Early oral cancer rarely hurts, so don't wait for pain.",
+    "signs": [
+      {
+        "name": "White patch",
+        "also": "Leukoplakia",
+        "where": "Often on the tongue, gums, or inner cheek",
+        "desc": "A white or grayish patch that can't be wiped or scraped off. Usually painless.",
+        "watch": "Most are harmless, but any that lasts more than 2 weeks should be checked."
+      },
+      {
+        "name": "Red patch",
+        "also": "Erythroplakia",
+        "where": "Floor of the mouth or under the tongue",
+        "desc": "A bright red, velvety patch. Less common than white patches, but carries the highest risk of the visible signs.",
+        "watch": "Get any persistent red patch looked at promptly."
+      },
+      {
+        "name": "Red-and-white patch",
+        "also": "Erythroleukoplakia",
+        "where": "Anywhere in the mouth",
+        "desc": "A patch that mixes red and white areas together.",
+        "watch": "Mixed patches carry elevated risk. Worth a prompt professional look."
+      },
+      {
+        "name": "Sore that won't heal",
+        "also": "Non-healing ulcer",
+        "where": "Lips, tongue, or inside the mouth",
+        "desc": "An ulcer or sore, often painless, that simply stays put.",
+        "watch": "A canker sore heals in about 2 weeks. One that doesn't is the classic warning sign."
+      },
+      {
+        "name": "Lump or thickening",
+        "where": "Cheek, gum, lip, or floor of the mouth",
+        "desc": "A raised bump or a thickened area you can feel with your tongue or finger.",
+        "watch": "New or growing lumps deserve a look, feel for them during a self-exam."
+      },
+      {
+        "name": "Rough spot on the lip",
+        "where": "Usually the lower lip",
+        "desc": "A scaly, crusted, or persistently chapped patch that doesn't clear up.",
+        "watch": "Common with sun exposure. Persistent rough spots should be checked."
+      }
+    ],
+    "showPhoto": "Show a real photo",
+    "hidePhoto": "Show the diagram",
+    "photoSource": "source",
+    "noPhoto": "No openly licensed clinical photo available for this sign yet."
+  },
+  "LearnSubpage": {
+    "backToLearn": "← Back to Learn"
+  },
+  "LearnCards": {
+    "read": "Read →",
+    "readNext": "Read next",
+    "riskFactors": {
+      "tag": "Risk Factors",
+      "title": "Oral Cancer Risk Factors",
+      "description": "Tobacco, alcohol, HPV-16, age, sun exposure, and more, what raises your risk and how each factor works."
+    },
+    "oralCancer": {
+      "tag": "Overview",
+      "title": "What Is Oral Cancer?",
+      "description": "Definition, types, key statistics, causes, and what the warning signs look like, a plain-English overview."
+    },
+    "signs": {
+      "tag": "Symptoms",
+      "title": "Signs & Warning Symptoms",
+      "description": "Red and white patches, sores that don't heal, lumps, and numbness, what to look for and when to act."
+    },
+    "selfExam": {
+      "tag": "How-to",
+      "title": "How to Do a 2-Minute Self-Exam",
+      "description": "Step-by-step: lips, gums, tongue, floor of mouth, palate, throat. All you need is a mirror."
+    },
+    "facts": {
+      "tag": "Facts",
+      "title": "Oral Cancer Facts & Stats",
+      "description": "Incidence, survival rates by stage, who's most affected, and the growing role of HPV."
+    },
+    "hpv": {
+      "tag": "Risk Factor",
+      "title": "HPV and Oral Cancer",
+      "description": "HPV-16 is now the leading cause of throat cancer in the US. What that means, who's at risk, and how the vaccine helps."
+    },
+    "prevention": {
+      "tag": "Prevention",
+      "title": "How to Prevent Oral Cancer",
+      "description": "Six evidence-based steps: quit tobacco, limit alcohol, get vaccinated, protect your lips, and get screened regularly."
+    },
+    "cankerVsCancer": {
+      "tag": "Comparison",
+      "title": "Canker Sore vs. Oral Cancer",
+      "description": "They can look similar. Here's how to tell them apart, and when a sore in your mouth needs a clinical eye."
+    }
+  },
+  "LearnMeta": {
+    "title": "Learn About Oral Cancer",
+    "description": "Evidence-based guides on oral cancer signs, self-exams, HPV, and statistics. Written for regular people, not clinicians."
+  },
+  "LearnPage": {
+    "heading": "Learn",
+    "subheading": "Short, evidence-based guides on oral cancer detection and prevention. Written for regular people, not clinicians.",
+    "moreArticles": "More articles"
+  },
+  "ArticlePage": {
+    "backToLearn": "← Back to Learn",
+    "defaultTag": "Oral Health",
+    "takeScreener": "Take the free screener →",
+    "byline": "Written by Ian Harris, predental student at the University of Wisconsin-Madison.",
+    "aboutLink": "About OralCheck",
+    "disclaimerLabel": "Medical disclaimer:",
+    "disclaimerBody": "This article is for general informational purposes only and does not constitute medical advice, diagnosis, or treatment. Always consult a qualified healthcare professional regarding any symptoms or health concerns."
+  },
+  "ForCliniciansMeta": {
+    "title": "For Dental Professionals",
+    "description": "Help your patients take 2 minutes that could save their life. Free printable waiting room flyer, QR code, and patient education materials, no login required."
+  },
+  "ForCliniciansPage": {
+    "heading": "For Dental Professionals",
+    "subheading": "A free tool you can put in your waiting room today. Patients take a 2-minute private risk check on their phone, no login, no data collected, no cost.",
+    "flyerHeading": "Waiting room flyer",
+    "flyerSub": "Customize with your practice name and print, letter size, portrait.",
+    "whyHeading": "Why OralCheck",
+    "whyPoints": [
+      {
+        "icon": "private",
+        "title": "Zero PHI collected",
+        "desc": "Answers never leave the patient's device. No HIPAA concerns, no data liability."
+      },
+      {
+        "icon": "check",
+        "title": "Evidence-based risk factors",
+        "desc": "Scoring logic draws from ACS, NCI, and Oral Cancer Foundation clinical guidelines."
+      },
+      {
+        "icon": "noCost",
+        "title": "No setup, no login",
+        "desc": "Send a link or hang a QR code. Nothing to install, nothing to manage."
+      },
+      {
+        "icon": "care",
+        "title": "Free, permanently",
+        "desc": "There is no paid tier. No vendor relationship to manage."
+      }
+    ],
+    "howToUseHeading": "How to use it",
+    "howToUse": [
+      {
+        "title": "Print the flyer",
+        "desc": "Customize it with your practice name below, then print it. Post it in your waiting room, exam rooms, or front desk."
+      },
+      {
+        "title": "Share the link",
+        "desc": "Text or email oralcheck.org to patients before appointments. It takes 2 minutes and works on any phone."
+      },
+      {
+        "title": "Use it as a conversation starter",
+        "desc": "When a patient flags elevated risk, it opens the door for a clinical oral exam and documentation."
+      }
+    ],
+    "importantLabel": "Important:",
+    "importantBody": "OralCheck is an educational awareness tool, not a diagnostic instrument. It does not replace a clinical oral cancer exam. Encourage any patient with concerning symptoms or an elevated screen result to schedule a full clinical evaluation.",
+    "previewScreener": "Preview the screener →",
+    "contactUs": "Contact us"
+  },
+  "EmbedBlock": {
+    "heading": "Embed on your practice website",
+    "body": "Paste this anywhere on your website, a patient education page, an appointment prep page, or your homepage. It runs entirely in the browser; no data ever reaches your server.",
+    "copy": "Copy embed code",
+    "copied": "Copied"
+  },
+  "PrintableFlyer": {
+    "customizeHeading": "Customize your flyer",
+    "customizeSub": "Your practice name appears as a banner on the flyer. Add a phone number and it shows up too.",
+    "practiceNameLabel": "Practice name",
+    "practiceNamePlaceholder": "e.g. Lakeside Family Dentistry",
+    "phoneLabel": "Phone number",
+    "phoneOptional": "(optional)",
+    "printFlyer": "Print flyer",
+    "copyLink": "Copy shareable link",
+    "linkCopied": "Link copied",
+    "shareLinkNote": "Share the link above, anyone who opens it sees the same customized flyer.",
+    "presentedBy": "Presented by",
+    "tagline": "FREE · PRIVATE · EVIDENCE-BASED",
+    "eyebrow": "ORAL CANCER AWARENESS",
+    "headlineLine1": "2 minutes",
+    "headlineCould": "could",
+    "headlineSave": "save",
+    "headlineLine3": "your life.",
+    "flyerBody": "Oral cancer is one of the most underdiagnosed cancers, largely because early symptoms look ordinary. Take a free, private risk check while you wait.",
+    "scanToStart": "↑ SCAN TO START",
+    "warningSignsLabel": "WARNING SIGNS",
+    "warningSigns": [
+      "Sores that won't heal",
+      "Red or white patches",
+      "Lumps or thickening",
+      "Difficulty swallowing",
+      "Unexplained ear pain"
+    ],
+    "features": [
+      {
+        "title": "10 quick questions",
+        "desc": "Based on real clinical risk factors, takes about 2 minutes on your phone."
+      },
+      {
+        "title": "Completely private",
+        "desc": "Nothing is saved or sent anywhere. Your answers stay on your device."
+      },
+      {
+        "title": "Know your risk level",
+        "desc": "Get a personalized summary and guidance on what to do next."
+      },
+      {
+        "title": "Find affordable care nearby",
+        "desc": "Connects you to free and low-cost clinics, dental schools, and community health centers."
+      }
+    ],
+    "stats": [
+      {
+        "value": "54k+",
+        "label": "new US oral cancer diagnoses each year"
+      },
+      {
+        "value": "84%",
+        "label": "survival rate when caught early"
+      },
+      {
+        "value": "2 min",
+        "label": "is all a dental screening takes"
+      }
+    ],
+    "footerBold": "Not a medical diagnosis.",
+    "footerRest": "OralCheck is a free educational awareness tool. Consult a qualified clinician about any symptom or concern. Free · Private · No account required."
+  },
+  "PrivacyMeta": {
+    "title": "Privacy | OralCheck",
+    "description": "OralCheck does not collect your name, email, or any identifying information. Your screener answers are not stored."
+  },
+  "PrivacyPage": {
+    "back": "← OralCheck",
+    "heading": "Privacy",
+    "intro": "OralCheck is private by design. Here is exactly what is and is not collected when you use this site.",
+    "shortVersionLabel": "The short version",
+    "shortVersion": [
+      "No name, email, or identifying information collected",
+      "Screener answers are never stored, they disappear when you close the page",
+      "Google Analytics tracks anonymous usage only (pages visited, country, device)",
+      "No data is sold or shared with third parties"
+    ],
+    "sections": [
+      {
+        "heading": "No personal information collected",
+        "body": "OralCheck does not collect your name, email address, or any information that identifies you. No account is required to use the screener."
+      },
+      {
+        "heading": "Screener answers stay on your device",
+        "body": "Your answers are used to calculate your result and are not stored on our servers. Nothing you enter is saved after your session ends."
+      },
+      {
+        "heading": "Google Analytics",
+        "body": "This site uses Google Analytics to understand how people find and use OralCheck, which pages are visited, how long sessions last, and what country visitors are from. Google Analytics collects anonymous usage data including your approximate location, browser type, and device. It does not receive your screener answers.",
+        "linkLabel": "Opt out of Google Analytics →"
+      },
+      {
+        "heading": "Cookies",
+        "body": "Google Analytics sets cookies to distinguish visits. No other cookies are used."
+      },
+      {
+        "heading": "Third parties",
+        "body": "OralCheck does not sell, share, or transfer your data to any third party for marketing or advertising purposes."
+      }
+    ],
+    "contactHeading": "Contact",
+    "contactBody": "Questions about this policy? Email",
+    "disclaimerLabel": "Disclaimer.",
+    "disclaimerBody": "OralCheck is not a medical diagnosis. It is an educational tool. Consult a qualified clinician about any symptom or concern.",
+    "scoringNote": "Screening logic informed by ACS, NCI, and Oral Cancer Foundation clinical guidelines.",
+    "lastUpdated": "Last updated June 2026."
+  },
+  "MethodsMeta": {
+    "title": "Oral Cancer Risk Scoring Methodology",
+    "description": "How OralCheck calculates oral cancer risk scores, sources, weight derivation, interaction terms, and limitations."
+  },
+  "MethodsPage": {
+    "back": "← OralCheck",
+    "heading": "Scoring Methodology",
+    "intro": "OralCheck assigns a risk weight to each answer based on published odds ratios. This page documents how that scoring works, which sources it's built on, and where the model has known limitations.",
+    "weightDerivationHeading": "Weight Derivation",
+    "weightP1": "Each risk factor is assigned a weight proportional to the natural log of its published odds ratio (OR), scaled by a constant <i>k</i>:",
+    "weightFormula": "weight = round( ln(OR) × k )",
+    "weightP2": "The scaling constant <i>k = 4.47</i> was chosen so that daily tobacco use (the highest-weighted modifiable factor, OR 6.0× per Gandini et al. 2008) maps to a weight of 8. That anchors all other weights to a consistent ordinal scale from the same evidence base.",
+    "weightP3": "Where studies report a range of ORs, we use the midpoint or a conservative estimate. Symptoms like erythroplakia, leukoplakia, and non-healing ulcers are treated two ways at once: they add to the score, and they also override the tier to See-a-Dentist-Soon regardless of the total. They're better understood as possible in-situ pathology than as population-level risk exposures, so a reported symptom always surfaces the same recommendation even when every other factor is low.",
+    "factorTableHeading": "Risk Factor Weights",
+    "colFactor": "Factor",
+    "colOR": "Published OR",
+    "colWeight": "Weight",
+    "colSource": "Source",
+    "interactionHeading": "Tobacco + Alcohol Interaction Term",
+    "interactionP1Rest": "When both tobacco and alcohol use are present at meaningful levels (daily or weekly), the model adds an interaction bonus of <b>+3 points</b>.",
+    "interactionP2": "The reason is that tobacco and alcohol together produce a multiplicative rather than additive increase in oral cancer risk. Combined regular use raises risk roughly 15× above baseline, while simply summing the individual weights only gets you to about 9×. The +3 captures that gap.",
+    "interactionSourcesLabel": "Sources:",
+    "tierThresholdsHeading": "Risk Tier Thresholds",
+    "tierLow": "Low",
+    "tierModerate": "Moderate",
+    "tierElevated": "Elevated",
+    "tierHigh": "High",
+    "tierP1": "The maximum possible score is approximately 53 (all highest-risk answers plus the interaction bonus). A few reference points: a daily smoker alone scores 8 (moderate); tobacco + alcohol + interaction lands at 16 (elevated); betel + tobacco + alcohol + interaction reaches 25 (high).",
+    "tierP2Bold": "High",
+    "tierP2Rest": "Regardless of score, any symptom lasting 2+ weeks (a persistent sore, red or white patch, unexplained lump, or difficulty swallowing) overrides the tier to {bold} and triggers a prompt for immediate evaluation.",
+    "limitationsHeading": "Known Limitations",
+    "limitations": [
+      "OralCheck hasn't been validated against a clinical outcome dataset. The weights are grounded in published literature, but they haven't been calibrated against a prospective cohort.",
+      "The screener combines oral cavity and oropharyngeal cancer risk into a single score. These are epidemiologically distinct entities: HPV-16 is primarily a driver of oropharyngeal cancer, while tobacco and alcohol dominate in oral cavity cancer.",
+      "Biological sex isn't captured. Men have roughly 2× the oral cavity cancer incidence of women, and that's a gap in the current model.",
+      "Immunosuppression (HIV, organ transplant recipients, long-term corticosteroid use) is linked to significantly elevated oral cancer risk and isn't currently asked about.",
+      "The screener relies on self-reported data. Tobacco and alcohol use are commonly under-reported.",
+      "Dental visit frequency is included as a detection-delay proxy, not as a causal risk factor with a well-characterized OR. Its weight is based on clinical rationale rather than direct epidemiological derivation."
+    ],
+    "referencesHeading": "References",
+    "viewOn": "View on PubMed / publisher →",
+    "takeScreener": "Take the screener →",
+    "forClinicians": "For clinicians →",
+    "factorNames": {
+      "tobaccoDaily": "Tobacco (daily)",
+      "betelCurrent": "Betel quid / paan / gutka (current)",
+      "tobaccoOccasional": "Tobacco (occasional)",
+      "alcoholDaily": "Alcohol (daily)",
+      "hpvHistory": "HPV-related history",
+      "age65": "Age 65+",
+      "age55": "Age 55 – 64",
+      "betelPast": "Betel quid (past use)",
+      "alcoholWeekly": "Alcohol (weekly)",
+      "familyHistory": "Family history (first-degree)",
+      "dietLow": "Diet low in fruit/vegetables",
+      "age35": "Age 35 – 54",
+      "tobaccoFormer": "Tobacco (former)",
+      "hpvUnvaccinated": "HPV (not vaccinated, no known history)",
+      "sunExposure": "Sun exposure (lips, unprotected)",
+      "symptomPresent": "Current symptom lasting 2+ weeks",
+      "symptomUnsure": "Possible symptom (unsure)",
+      "dentalNever": "Never seen a dentist",
+      "dentalLongAgo": "Last dental visit 3+ years ago",
+      "dentalFewYears": "Last dental visit 1–3 years ago",
+      "alcoholRarely": "Alcohol (rarely)",
+      "sunRegular": "Sun exposure (regular, sometimes protected)",
+      "familyDistant": "Family history (distant relative)",
+      "dietWeekly": "Fruit/vegetables a few times a week",
+      "hpvUnknown": "HPV status unknown"
+    },
+    "factorNotes": {
+      "tobaccoDaily": "Anchor for the scaling constant k = 4.47",
+      "betelCurrent": "IARC Group 1 carcinogen independent of tobacco",
+      "alcoholDaily": "IARC Group 1 carcinogen",
+      "hpvHistory": "Conservative estimate; OR ~15× for oropharyngeal specifically",
+      "age65": "Median age at diagnosis is 62",
+      "tobaccoFormer": "Risk declines ~50% within 5 years of cessation",
+      "hpvUnvaccinated": "Unvaccinated status is a behavioral proxy for HPV-16 exposure risk, not a serostatus measure. OR reflects elevated background exposure probability in unvaccinated adults, not confirmed infection.",
+      "sunExposure": "Lower lip squamous cell carcinoma; outdoor workers vs indoor reference"
+    }
+  },
+  "ContactForm": {
+    "sentTitle": "Got it, thanks for reaching out.",
+    "sentDesc": "If you left an email, I'll get back to you soon.",
+    "sendAnother": "Send another message",
+    "messageLabel": "Message",
+    "messagePlaceholder": "A bug you found, something that could be clearer, a question, anything.",
+    "emailLabel": "Email",
+    "emailOptional": "(optional, leave blank to stay anonymous)",
+    "emailPlaceholder": "you@example.com",
+    "error": "Something went wrong, please try again.",
+    "sending": "Sending…",
+    "send": "Send message"
+  },
+  "AboutMeta": {
+    "title": "About OralCheck | Free Oral Cancer Risk Screener",
+    "description": "OralCheck is a free, private oral cancer risk screener built by a UW-Madison predental student. Learn about the mission, how it works, and the sources behind the tool."
+  },
+  "AboutPage": {
+    "heading": "About OralCheck",
+    "subheading": "A free, private tool to help anyone understand their oral cancer risk, and take the next step toward care.",
+    "whoBuiltHeading": "Who built this",
+    "founderName": "Ian Harris",
+    "founderTitle": "Founder · Predental student, UW–Madison",
+    "bio1": "OralCheck was built by Ian Harris, a predental student at the University of Wisconsin-Madison. I care a lot about community health and finding ways to actually make a difference with the knowledge I'm gaining in school.",
+    "bio2": "A few years ago I was diagnosed with a chronic health condition that has significantly affected my day to day life. Going through that taught me how much your health can sneak up on you if you're not paying attention. It also showed me how important it is to have access to good information and to not brush things off. That experience is a big reason I want to go into dentistry and why I built this.",
+    "bio3": "I really believe that keeping your community healthier and more informed, even just one person at a time, is worth something. Oral cancer is one of those things that a lot of people have never even thought about, and it's so much more treatable when it's caught early. I wanted to build something that could help with that.",
+    "howItWorksHeading": "How it works",
+    "point1Bold": "Your answers stay on your device.",
+    "point1Rest": "Nothing is saved to a server. No accounts. No tracking of responses.",
+    "point2Bold": "Scoring is educational, not clinical.",
+    "point2Rest": "Each answer contributes a weight derived from published risk data. The total maps to a risk tier, Low, Moderate, Elevated, or See-a-Dentist-Soon.",
+    "point3Bold": "It is not a diagnosis.",
+    "point3Rest": "OralCheck can suggest you should talk to a clinician. It cannot tell you whether you have cancer.",
+    "disclaimerHeading": "Medical disclaimer",
+    "disclaimerBody": "OralCheck provides general health information only. It does not constitute medical advice, diagnosis, or treatment. Always seek the advice of a qualified health provider with any questions about a medical condition. Do not delay seeking care because of information on this site.",
+    "startScreener": "Start the screener →",
+    "findCare": "Find care",
+    "getInTouchHeading": "Get in touch",
+    "getInTouchBody": "Found a bug, have a suggestion, or just want to say something? I read everything. Email is optional, leave it blank if you'd rather stay anonymous.",
+    "linkedin": "Connect on LinkedIn",
+    "reviewHeading": "Leave a review",
+    "reviewBody": "If the screener was useful, a short review helps other people trust it enough to check their own risk."
+  },
+  "AnimatedStats": {
+    "cases": "new US oral & oropharyngeal cancer cases each year",
+    "survival": "five-year survival when caught early",
+    "screeningTime": "is all a dental screening takes"
+  },
+  "RiskGauge": {
+    "ariaLabel": "Risk gauge showing {tier}",
+    "score": "Score: {score} / {maxScore}"
+  },
+  "ClinicType": {
+    "community-health": "Community health",
+    "dental-school": "Dental school",
+    "free": "Free clinic",
+    "dental": "Dental practice",
+    "other": "Clinic"
+  },
+  "FindCarePage": {
+    "heading": "Find affordable care",
+    "subheading": "Community health centers, dental schools, and free clinics near you. Most offer oral cancer screenings as part of a routine visit.",
+    "searchPlaceholder": "Enter zip code or city",
+    "searching": "Searching…",
+    "search": "Search",
+    "useMyLocation": "Use my location",
+    "filterAll": "All",
+    "filterCommunityHealth": "Community health",
+    "filterDentalSchools": "Dental schools",
+    "filterFreeClinics": "Free clinics",
+    "noClinics": "No clinics match this filter in your area.",
+    "errorLoad": "We couldn't load clinics. Please try again.",
+    "errorNoGeo": "Your browser doesn't support location.",
+    "errorLocationDenied": "Location permission denied. Try searching by ZIP code.",
+    "errorNoAddress": "We couldn't find that address. Try again.",
+    "openNow": "Open now",
+    "closed": "Closed",
+    "website": "Website",
+    "reviews": "({count} reviews)",
+    "hrsaFunded": "HRSA-funded",
+    "cantFindHeading": "Can't find affordable care?",
+    "hrsaLabel": "HRSA Find a Health Center:",
+    "hrsaBody": "The US government maintains a directory of community health centers with sliding-scale dental services at",
+    "dentalSchoolsLabel": "Dental schools:",
+    "dentalSchoolsBody": "Most US dental schools operate teaching clinics with significantly reduced fees.",
+    "lifelineLabel": "Dental Lifeline Network:",
+    "lifelineBody": "Connects people with disabilities, elderly, and medically fragile patients to volunteer dentists.",
+    "searchingNearby": "Searching nearby care",
+    "searchingNote": "Looking up clinics from OpenStreetMap. This can take a few seconds.",
+    "loadingMore": "Still checking for community health centres, free clinics and dental schools…",
+    "retry": "Try again"
+  },
+  "ResultsPage": {
+    "loading": "Loading your results…",
+    "noResultsTitle": "No results yet",
+    "noResultsDesc": "Complete the 2-minute screener to see your personalized risk summary.",
+    "startScreener": "Start screener →",
+    "urgentBannerBold": "You mentioned a symptom lasting 2+ weeks.",
+    "urgentBannerRest": "This isn't something to wait on. Please book a dental or medical visit this week.",
+    "personalizing": "Personalizing your summary…",
+    "howScored": "How this score is calculated",
+    "drivingHeading": "What's driving your risk",
+    "nextStepsHeading": "Your next steps",
+    "relatedReadingHeading": "Related reading",
+    "read": "Read →",
+    "linkCopied": "Link copied",
+    "shareCta": "Share with someone you care about",
+    "shareText": "I just used OralCheck to understand my oral cancer risk. 2 minutes could save your life. {url}",
+    "emailSentTitle": "Sent. Check your inbox.",
+    "emailSentDesc": "Your result and next steps are on the way. We didn't store your answers.",
+    "emailKeepCopy": "Keep a copy of your result",
+    "emailBody": "We'll email your risk summary and next steps so you have them when you book. No account, and we don't store your answers or add you to a list.",
+    "emailDismiss": "No thanks",
+    "emailPlaceholder": "you@email.com",
+    "emailLabel": "Your email",
+    "emailSending": "Sending…",
+    "emailMe": "Email me my result",
+    "emailGenericError": "Couldn't send. Try again.",
+    "retake": "↻ Retake the screener",
+    "evidenceBasisLabel": "Evidence basis:",
+    "evidenceBasisBody": "Risk factor weights are informed by published epidemiological evidence, including IARC Group 1 carcinogen classifications for tobacco (Gandini et al., <i>Oral Oncology</i>, 2008), alcohol (Bagnardi et al., <i>Annals of Oncology</i>, 2015), and betel quid (IARC Monograph 85), as well as HPV-16 odds ratios for oropharyngeal cancer (Gillison et al., <i>JAMA</i>, 2008) and SEER age-incidence data. The tobacco-alcohol interaction term reflects documented multiplicative, not merely additive, carcinogenic risk. Leukoplakia and erythroplakia transformation rates are drawn from Napier & Speight, <i>Journal of Oral Pathology & Medicine</i>, 2008.",
+    "disclaimerLabel": "Disclaimer:",
+    "disclaimerBody": "OralCheck is an educational risk stratification tool, not a validated clinical diagnostic instrument. It has not been tested against a clinical outcome dataset. It does not constitute medical advice, diagnosis, or treatment. Always consult a qualified dental or medical provider regarding any oral health concerns.",
+    "primaryCTA": {
+      "low": "Find a dentist for your next screening →",
+      "moderate": "Find care near you →",
+      "elevated": "Book a dental visit →",
+      "high": "Find care, book this week →"
+    },
+    "nextSteps": {
+      "low": [
+        {
+          "title": "Keep up your annual dental visit",
+          "desc": "Oral cancer screening is already part of a routine cleaning, it takes 2 minutes and is included at no extra cost."
+        },
+        {
+          "title": "Do a monthly self-exam",
+          "desc": "Two minutes with a mirror, once a month. You're looking for anything that hasn't gone away after 2 weeks.",
+          "linkLabel": "See how →"
+        },
+        {
+          "title": "Know the warning signs",
+          "desc": "Most oral cancers caught early are found by people who already knew what to look for.",
+          "linkLabel": "See warning signs →"
+        }
+      ],
+      "moderate": [
+        {
+          "title": "Mention your risk factors at your next dental visit",
+          "desc": "Your dentist can pay closer attention during your screening if they know your history. It only takes a sentence."
+        },
+        {
+          "title": "Know the warning signs, and act on them",
+          "desc": "Anything in your mouth or throat lasting more than 2 weeks deserves attention. Don't wait it out.",
+          "linkLabel": "See warning signs →"
+        },
+        {
+          "title": "Learn how to reduce your risk",
+          "desc": "Several of the factors that raised your score are modifiable. Even small changes lower risk over time.",
+          "linkLabel": "Prevention guide →"
+        }
+      ],
+      "elevated": [
+        {
+          "title": "Book a dental visit this month",
+          "desc": "Ask specifically for an oral cancer screening when you book. It's included in a routine cleaning and takes about 2 minutes.",
+          "linkLabel": "Find care near you →"
+        },
+        {
+          "title": "Know the warning signs, and act on them",
+          "desc": "A sore, patch, lump, or numbness lasting 2+ weeks should be seen by a dentist or doctor. Don't wait it out.",
+          "linkLabel": "See warning signs →"
+        },
+        {
+          "title": "Work on your modifiable risk factors",
+          "desc": "Your score includes factors you can change. Even modest reductions in tobacco, alcohol, or sun exposure add up.",
+          "linkLabel": "Prevention guide →"
+        }
+      ],
+      "high": [
+        {
+          "title": "Book a dental or medical visit this week",
+          "desc": "Not this month, this week. If you have a sore, patch, or lump that's been there 2+ weeks, mention it specifically when you call.",
+          "linkLabel": "Find care near you →"
+        },
+        {
+          "title": "Don't wait to see if it goes away",
+          "desc": "The most common reason oral cancers are caught late is that people wait. Most findings turn out to be benign, but you want to know either way."
+        },
+        {
+          "title": "Know what the exam involves",
+          "desc": "An oral cancer screening is painless, takes 2 minutes, and can be done by your dentist or doctor.",
+          "linkLabel": "What to expect →"
+        }
+      ]
+    },
+    "categoryLearn": {
+      "tobacco": {
+        "tag": "Prevention",
+        "title": "How to reduce tobacco risk"
+      },
+      "alcohol": {
+        "tag": "Prevention",
+        "title": "Alcohol, tobacco, and combined risk"
+      },
+      "hpv": {
+        "tag": "Risk Factor",
+        "title": "HPV and oral cancer"
+      },
+      "sun": {
+        "tag": "Prevention",
+        "title": "Protecting your lips from the sun"
+      },
+      "symptoms": {
+        "tag": "Symptoms",
+        "title": "Warning signs of oral cancer"
+      },
+      "family": {
+        "tag": "Facts",
+        "title": "Oral cancer facts & statistics"
+      },
+      "diet": {
+        "tag": "Prevention",
+        "title": "Diet and oral cancer risk"
+      },
+      "dental": {
+        "tag": "How-to",
+        "title": "How to do a 2-minute self-exam"
+      },
+      "other": {
+        "tag": "Prevention",
+        "title": "Reducing betel / paan risk"
+      }
+    },
+    "alsoContributing": "Also contributing:",
+    "hideOthers": "Hide these",
+    "noFactorCaveatLabel": "A low score does not rule anything out",
+    "noFactorCaveatBody": "Around 1 in 4 oral cancers occur in people who have none of the risk factors this tool asks about. This score reflects your risk factors, not your mouth. If you notice a sore, patch, lump, gum growth, loose tooth, or difficulty swallowing that lasts more than two weeks, have it examined regardless of what this result says."
+  },
+  "ScreenerMeta": {
+    "title": "Free Oral Cancer Risk Screener",
+    "description": "Take OralCheck's free oral cancer risk screener. Answer 10 questions based on published risk factors from the ACS, NCI, and Oral Cancer Foundation. Private, no account required."
+  },
+  "FindCareMeta": {
+    "title": "Find Oral Cancer Care Near You",
+    "description": "Find dentists, community health centers, and free clinics near you that offer oral cancer screenings. Filter by type and distance. No account needed."
+  },
+  "ResultsMeta": {
+    "title": "Your Risk Results",
+    "description": "Your personalized oral cancer risk assessment results."
+  },
+  "ScreenerPage": {
+    "srHeading": "Free Oral Cancer Risk Screener",
+    "back": "← Back",
+    "exit": "Exit",
+    "next": "Next →",
+    "seeResults": "See my results →",
+    "privacyNote": "Your answers stay on your device. Nothing is saved to a server.",
+    "questionOf": "Question {current} of {total}"
+  },
+  "Questions": {
+    "age": {
+      "title": "What's your age range?",
+      "subtitle": "Oral cavity cancer incidence rises sharply after 40. Median age at diagnosis is 62 (SEER data). Risk roughly doubles per decade above 40.",
+      "options": {
+        "under35": "Under 35",
+        "35to54": "35 – 54",
+        "55to64": "55 – 64",
+        "65plus": "65 or older"
+      }
+    },
+    "tobacco": {
+      "title": "Do you use tobacco?",
+      "subtitle": "Tobacco is the single strongest risk factor for oral cavity cancer, an IARC Group 1 carcinogen. Daily smokers face 2–6× higher risk; smokeless tobacco users face 4–5× higher risk (Gandini et al., Oral Oncology, 2008).",
+      "options": {
+        "daily": "Yes, daily",
+        "occasional": "Yes, occasionally",
+        "former": "Former user (quit)",
+        "never": "Never"
+      }
+    },
+    "alcohol": {
+      "title": "How often do you drink alcohol?",
+      "subtitle": "Alcohol is an IARC Group 1 carcinogen for oral cavity cancer. Heavy drinkers face 2–3× elevated risk. Combined with tobacco, the effect is multiplicative, up to 15× baseline risk (Bagnardi et al., Annals of Oncology, 2015).",
+      "options": {
+        "daily": "Daily or near-daily",
+        "weekly": "A few times a week",
+        "rarely": "Rarely",
+        "never": "Never"
+      }
+    },
+    "hpv": {
+      "title": "HPV status",
+      "subtitle": "HPV-16 is the primary driver of oropharyngeal cancer (tonsils, tongue base), with an odds ratio ~15× in infected individuals (Gillison et al., JAMA, 2008). It is less strongly linked to oral cavity cancer but remains a significant risk factor. Vaccination substantially lowers risk.",
+      "options": {
+        "vaccinated": "Vaccinated against HPV",
+        "neither": "Not vaccinated, no known history",
+        "history": "Have had an HPV-related condition",
+        "unknown": "I'm not sure"
+      }
+    },
+    "sun": {
+      "title": "Sun exposure on your lips",
+      "subtitle": "Chronic UV radiation is a direct cause of lower lip squamous cell carcinoma. Outdoor workers with unprotected lip exposure face significantly elevated risk. SPF lip balm and wide-brim hats are effective protective measures.",
+      "options": {
+        "daily": "Daily, little protection",
+        "regular": "Regular, sometimes protected",
+        "minimal": "Minimal or well-protected"
+      }
+    },
+    "symptom": {
+      "title": "In the last month, have you had any of these for 2+ weeks?",
+      "subtitle": "Persistent red patches (erythroplakia: 14–50% malignant transformation rate), white patches (leukoplakia: 5–17% transformation rate), non-healing ulcers, unexplained lumps, a growth on the gums, a tooth that has recently become loose, or difficulty swallowing are established clinical warning signs requiring professional evaluation.",
+      "options": {
+        "yes": "Yes, one or more",
+        "unsure": "Not sure / maybe",
+        "no": "No"
+      }
+    },
+    "family": {
+      "title": "Family history of head, neck, or oral cancer?",
+      "subtitle": "A first-degree family history of oral or head and neck cancer is associated with elevated risk, likely reflecting shared genetic susceptibility and environmental exposures.",
+      "options": {
+        "yes": "Yes, a close relative",
+        "distant": "Distant relative",
+        "no": "No",
+        "unsure": "Unsure"
+      }
+    },
+    "diet": {
+      "title": "How often do you eat fruits and vegetables?",
+      "subtitle": "Low fruit and vegetable intake is an independent risk factor for oral and oropharyngeal cancer. Diets rich in antioxidants, vitamins A, C, and E, are associated with reduced oral epithelial dysplasia.",
+      "options": {
+        "daily": "Daily",
+        "weekly": "A few times a week",
+        "rarely": "Rarely"
+      }
+    },
+    "dental": {
+      "title": "When was your last dental visit?",
+      "subtitle": "Over 60% of oral cancers are not diagnosed until Stage III or IV, a gap driven largely by delayed presentation. Regular dental visits enable earlier detection; dentists are trained to identify mucosal changes patients cannot see.",
+      "options": {
+        "recent": "Within the last year",
+        "fewyears": "1 – 3 years ago",
+        "longago": "More than 3 years ago",
+        "never": "Never"
+      }
+    },
+    "betel": {
+      "title": "Have you ever chewed betel nut, paan, or gutka?",
+      "subtitle": "Betel quid with or without tobacco is an IARC Group 1 carcinogen for oral cavity cancer, with odds ratios of 7–10× independent of tobacco use. This includes areca nut, paan, and gutka (IARC Monograph 85).",
+      "options": {
+        "current": "Yes, currently",
+        "past": "In the past",
+        "never": "Never"
+      }
+    }
+  },
+  "RiskEngine": {
+    "and": "and",
+    "categoryGuidance": {
+      "demographics": "Age is the strongest non-modifiable risk factor. After 40, screening at every dental visit is especially important, oral cancer caught at Stage I has an 84% five-year survival rate versus 38% at Stage IV.",
+      "tobacco": "Cessation reduces risk by approximately 50% within 5 years of quitting. Nicotine replacement therapy doubles long-term quit success rates. Ask your dentist or physician about free cessation programs, the Wisconsin Tobacco Quit Line is available at 1-800-QUIT-NOW.",
+      "alcohol": "Risk decreases with reduced consumption. For people using both tobacco and alcohol, tobacco cessation has the greatest individual impact. Even reducing drinking from daily to occasional lowers mucosal carcinogen exposure significantly.",
+      "hpv": "The HPV vaccine (Gardasil 9) is FDA-approved through age 45 and is highly effective against HPV-16, the strain most strongly linked to oropharyngeal cancer. Ask your clinician whether vaccination is appropriate for you.",
+      "sun": "Lower lip squamous cell carcinoma is highly preventable with consistent SPF lip balm use and wide-brim hat wearing. Unlike skin cancer, lip cancer often goes unnoticed, check your lips during any monthly oral self-exam.",
+      "symptoms": "Persistent red patches (erythroplakia), white patches (leukoplakia), non-healing ulcers, unexplained lumps, or difficulty swallowing lasting 2+ weeks are established clinical warning signs. These should not be observed for longer, they require professional evaluation this week, not at a future appointment.",
+      "family": "Tell your dentist about your family history. They may recommend more frequent oral cancer screenings or a referral to an oral medicine specialist. Genetic counseling is available through most academic medical centers.",
+      "diet": "Aim for 5+ servings of colorful fruits and vegetables daily. Evidence supports that diets high in vitamins A, C, and E reduce oral epithelial dysplasia. Processed meat intake has also been linked to elevated head and neck cancer risk in some cohort studies.",
+      "dental": "Book a dental visit as soon as possible. A visual oral cancer screening takes about 2 minutes and is performed as part of a routine examination. Over 60% of oral cancers are diagnosed at Stage III or IV, regular dental care changes this.",
+      "other": "Stopping betel/paan/gutka use lowers risk, though some changes to oral mucosa from prior use may persist. Ask your dentist to examine any areas of discoloration, thickening, or ulceration. Many communities have culturally specific cessation resources."
+    },
+    "factorLabels": {
+      "age": "Age",
+      "tobacco": "Tobacco use",
+      "alcohol": "Alcohol use",
+      "hpv": "HPV exposure",
+      "sun": "Sun exposure",
+      "symptom": "Current symptoms",
+      "family": "Family history",
+      "diet": "Diet",
+      "dental": "Dental care",
+      "betel": "Betel / paan / gutka"
+    },
+    "interaction": {
+      "label": "Tobacco + alcohol interaction",
+      "answerLabel": "Both present",
+      "guidance": "When tobacco and alcohol are used together, they produce a multiplicative, not merely additive, increase in oral cancer risk. Combined regular use raises risk up to 15× above baseline, far exceeding the sum of either factor alone. Addressing both together is the most effective risk-reduction strategy (Bagnardi et al., Annals of Oncology, 2015)."
+    },
+    "tier": {
+      "urgentHeadline": "A symptom you mentioned deserves a close look.",
+      "seeADentist": "See a dentist soon",
+      "low": {
+        "label": "Low risk",
+        "headline": "Your current risk profile looks low."
+      },
+      "moderate": {
+        "label": "Moderate risk",
+        "headline": "A few factors are worth paying attention to."
+      },
+      "elevated": {
+        "label": "Elevated risk",
+        "headline": "Several risk factors are stacking up."
+      },
+      "high": {
+        "label": "See a dentist soon",
+        "headline": "Your risk profile is high enough that screening matters."
+      }
+    },
+    "summary": {
+      "urgent": "A symptom you reported, combined with {topPhrase}, warrants prompt professional evaluation. Oral cancer detected at Stage I has an 84% five-year survival rate versus 38% at Stage IV. That gap is why timing matters. Please book a dental or medical visit this week and mention your symptom specifically when you call.",
+      "low": "No major risk factors stand out in your profile right now. Maintain annual dental visits, a visual oral cancer screening takes about 2 minutes and is included in a routine examination. Familiarize yourself with the warning signs so you can act early if anything changes.",
+      "moderate": "Your {topPhrase} elevate your risk modestly above baseline. These are factors you can act on. Mention your risk history to your dentist at your next visit and ask for an oral cancer screening. Early detection at Stage I carries an 84% five-year survival rate.",
+      "elevated": "Several factors, particularly {topPhrase}, are stacking your risk. Consider booking a dental visit this month and asking specifically for an oral cancer screening. The 5-year survival rate is 84% when oral cancer is caught early, versus 38% when caught late. Don't wait for a symptom to appear.",
+      "high": "Your combination of risk factors, including {topPhrase}, places you in a higher-risk group where proactive screening is strongly warranted. Please schedule a dental or medical visit soon. The difference between Stage I and Stage IV oral cancer survival is dramatic: 84% versus 38%. The exam takes 2 minutes and could be the most important appointment you make this year.",
+      "fallback": "your responses"
+    }
+  },
+  "PressMeta": {
+    "title": "Press & Media Kit",
+    "description": "Boilerplate, fast facts, founder bio, logo files, and brand colors for anyone writing about OralCheck."
+  },
+  "PressPage": {
+    "tag": "Press kit",
+    "heading": "Press & Media Kit",
+    "subheading": "Everything needed to write about OralCheck accurately, in one place. Assets are free to use in coverage of the project.",
+    "boilerplateHeading": "Boilerplate",
+    "boilerplateShort": "OralCheck is a free, private oral cancer risk screener. It asks ten questions, takes about two minutes, requires no account, and does not store answers.",
+    "boilerplateLong": "Oral cancer is often caught late, which is the main reason it remains deadly. Survival is far better when it is found early, and HPV has become a leading cause in adults under 50. OralCheck turns published risk factors into a short self-assessment, explains which answers moved the score and why, and points people toward nearby care that can actually screen them. It is built and maintained by Ian Harris, a predental student at the University of Wisconsin-Madison, and is available in English and Spanish.",
+    "factsHeading": "Fast facts",
+    "facts": [
+      {
+        "label": "What it is",
+        "value": "A free oral cancer risk screener, available on the web with no app to install."
+      },
+      {
+        "label": "Length",
+        "value": "10 questions, roughly 2 minutes."
+      },
+      {
+        "label": "Cost",
+        "value": "Free. No account, no paywall, no ads."
+      },
+      {
+        "label": "Privacy",
+        "value": "Answers are scored in the browser and are not stored."
+      },
+      {
+        "label": "Languages",
+        "value": "English and Spanish."
+      },
+      {
+        "label": "Methodology",
+        "value": "Scoring is derived from published risk factors and is documented publicly, with sources, on the methodology page."
+      },
+      {
+        "label": "Founded",
+        "value": "2026, by a predental student at the University of Wisconsin-Madison."
+      },
+      {
+        "label": "Clinic finder",
+        "value": "Directs users to nearby dental practices, community health centers, dental schools, and free clinics."
+      }
+    ],
+    "founderHeading": "Founder",
+    "founderName": "Ian Harris",
+    "founderTitle": "Founder, OralCheck. Predental student, University of Wisconsin-Madison.",
+    "founderBio": "Ian Harris built OralCheck as an undergraduate, motivated by how routinely oral cancer is caught at a stage where treatment is harder and outcomes are worse. He designed the risk model from published literature, wrote the clinical explainers, and built the site and its clinic finder.",
+    "assetsHeading": "Logos & brand assets",
+    "assetsBody": "Please use the logo as provided, without recoloring, stretching, or adding effects.",
+    "assetLogoSvg": "Logo",
+    "assetLogoPng": "Logo",
+    "assetIcon": "App icon",
+    "paletteHeading": "Brand colors",
+    "contactHeading": "Press inquiries",
+    "contactBody": "For interviews, questions about the methodology, or anything not covered here, get in touch and expect a reply within a couple of days.",
+    "contactCta": "Contact",
+    "contactInstagram": "Instagram"
+  },
+  "ReviewForm": {
+    "ratingLabel": "How useful was it?",
+    "starLabel": "{n} out of 5",
+    "textPlaceholder": "What did you find useful, and what would you change?",
+    "textLabel": "Your review",
+    "namePlaceholder": "Your name (optional)",
+    "nameLabel": "Your name",
+    "consent": "You may quote this on the site. Leave unchecked to keep it private.",
+    "submit": "Send review",
+    "sending": "Sending...",
+    "needRating": "Pick a rating to send your review.",
+    "sentTitle": "Thank you",
+    "sentBody": "Your review came through. It genuinely helps.",
+    "genericError": "Could not send that. Please try again in a moment."
+  },
+  "TermsMeta": {
+    "title": "Terms of Use",
+    "description": "The terms for using OralCheck, a free educational oral cancer risk tool. Not a medical diagnosis."
+  },
+  "TermsPage": {
+    "back": "← Back to home",
+    "heading": "Terms of Use",
+    "intro": "These terms cover your use of oralcheck.org. They are written to be read rather than skimmed, because the most important part is what this tool is not.",
+    "medicalLabel": "OralCheck is not a medical diagnosis",
+    "medicalBody": "OralCheck is an educational tool that estimates risk from factors you report. It cannot examine you, it cannot see inside your mouth, and it cannot detect, diagnose, rule out, or exclude cancer or any other condition. A low result does not mean you are healthy, and a high result does not mean you have cancer. Only a qualified dental or medical professional can examine you and reach a diagnosis. If you have a symptom that concerns you, see a professional regardless of what this tool says. If a symptom is severe or worsening quickly, seek urgent care.",
+    "shortVersionLabel": "The short version",
+    "shortVersion": [
+      "Free to use, with no account and no payment.",
+      "Educational only. It is not medical advice and not a diagnosis.",
+      "Your answers stay on your device. We do not store them.",
+      "Do not rely on it to decide whether to seek care. Always see a professional about a symptom.",
+      "You may share and print it, including in a clinic, at no cost."
+    ],
+    "sections": [
+      {
+        "heading": "What OralCheck does",
+        "body": "OralCheck asks ten questions about risk factors that published research associates with oral cancer, then returns a risk tier and an explanation of which of your answers contributed to it. The scoring is derived from published odds ratios and is documented in full on the methodology page, including every source. It is a risk-assessment questionnaire. The screening test itself is the clinical examination a dentist performs, and the purpose of this tool is to help you decide to go and have one."
+      },
+      {
+        "heading": "No professional relationship",
+        "body": "Using OralCheck does not create a doctor-patient, dentist-patient, or any other professional relationship between you and OralCheck or anyone associated with it. Nobody reviews your answers, because your answers are never sent anywhere. The information on this site is general and is not tailored to your medical history."
+      },
+      {
+        "heading": "Accuracy and limitations",
+        "body": "The tool is built from population-level research, and population-level associations do not predict what will happen to an individual. Risk factors are self-reported and unverified. Research changes, and while the methodology is maintained and dated, there may be periods when it does not reflect the most recent evidence. Clinic listings on Find Care come from third-party sources including Google Places and OpenStreetMap, and we cannot guarantee that any listing is accurate, current, accepting patients, or offers oral cancer screening. Verify with the practice before travelling."
+      },
+      {
+        "heading": "Your responsibilities",
+        "body": "Use the tool for yourself or to help someone who has asked you to. Do not use it to make decisions for anyone without their knowledge, and do not present its output as a professional opinion. Do not attempt to disrupt the site, interfere with other people's use of it, or use automated means to place unusual load on it."
+      },
+      {
+        "heading": "No warranty",
+        "body": "OralCheck is provided as is and as available, without warranties of any kind, express or implied, including any implied warranty of merchantability, fitness for a particular purpose, or accuracy. The site may be unavailable, may contain errors, and may change or be withdrawn at any time."
+      },
+      {
+        "heading": "Limitation of liability",
+        "body": "To the fullest extent permitted by law, OralCheck and those associated with it are not liable for any indirect, incidental, special, or consequential damages, or for any decision you make about your health based on this tool. Nothing in these terms limits liability that cannot be limited by law. This does not affect your statutory rights."
+      },
+      {
+        "heading": "Content and reuse",
+        "body": "The educational content, printable flyer, and QR materials may be freely used, printed, and distributed for non-commercial educational purposes, including in dental and medical practices, with attribution to oralcheck.org. The name and branding may not be used in a way that implies endorsement of a product or practice. The scoring methodology is public and may be examined, cited, and criticised."
+      },
+      {
+        "heading": "Changes to these terms",
+        "body": "These terms may be updated as the tool changes. The date below reflects the most recent revision, and continued use of the site after a change means the revised terms apply."
+      },
+      {
+        "heading": "Governing law",
+        "body": "These terms are governed by the laws of the State of Wisconsin, United States, without regard to conflict of law principles."
+      }
+    ],
+    "contactHeading": "Questions",
+    "contactBody": "OralCheck is built and maintained by Ian Harris. If something here is unclear, or if you believe the tool is wrong about something, please say so through the feedback form on the About page. Corrections from clinicians are especially welcome.",
+    "privacyPointer": "For what happens to your data, which is very little, see the",
+    "privacyLink": "privacy policy",
+    "lastUpdated": "Last updated: 18 August 2026"
+  }
+}

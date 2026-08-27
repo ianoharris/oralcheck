@@ -1,123 +1,66 @@
 import type { MetadataRoute } from "next";
+import { routing } from "@/i18n/routing";
+
+const BASE = "https://oralcheck.org";
+
+/**
+ * Every page, once, with its translations declared as alternates.
+ *
+ * Previously this listed English URLs only, so the Spanish site had never
+ * appeared in the sitemap at all and search engines had no signal that
+ * /es/<page> was the same page in another language. Listing translated URLs as
+ * separate entries would be worse than useless (they read as duplicates);
+ * `alternates.languages` is what tells a crawler they are one page in several
+ * languages, and it is generated from routing.locales so a new language needs
+ * no change here.
+ */
+type Entry = {
+  path: string;
+  changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"];
+  priority: number;
+};
+
+const PAGES: Entry[] = [
+  { path: "", changeFrequency: "monthly", priority: 1 },
+  { path: "/screener", changeFrequency: "monthly", priority: 0.9 },
+  { path: "/learn", changeFrequency: "monthly", priority: 0.9 },
+  { path: "/learn/oral-cancer", changeFrequency: "monthly", priority: 0.9 },
+  { path: "/learn/signs", changeFrequency: "monthly", priority: 0.9 },
+  { path: "/learn/risk-factors", changeFrequency: "monthly", priority: 0.9 },
+  { path: "/learn/hpv", changeFrequency: "monthly", priority: 0.8 },
+  { path: "/learn/self-exam", changeFrequency: "monthly", priority: 0.8 },
+  { path: "/learn/prevention", changeFrequency: "monthly", priority: 0.8 },
+  { path: "/learn/canker-sore-vs-oral-cancer", changeFrequency: "monthly", priority: 0.8 },
+  { path: "/learn/facts", changeFrequency: "monthly", priority: 0.7 },
+  { path: "/find-care", changeFrequency: "monthly", priority: 0.8 },
+  { path: "/for-clinicians", changeFrequency: "monthly", priority: 0.7 },
+  { path: "/methods", changeFrequency: "yearly", priority: 0.6 },
+  { path: "/about", changeFrequency: "monthly", priority: 0.6 },
+  { path: "/press", changeFrequency: "monthly", priority: 0.4 },
+  { path: "/privacy", changeFrequency: "yearly", priority: 0.3 },
+  { path: "/qr", changeFrequency: "yearly", priority: 0.3 },
+  { path: "/terms", changeFrequency: "yearly", priority: 0.3 },
+];
+
+/** "/es/screener" for a prefixed locale, "/screener" for the default one. */
+function localeUrl(locale: string, path: string) {
+  return locale === routing.defaultLocale
+    ? `${BASE}${path}`
+    : `${BASE}/${locale}${path}`;
+}
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = "https://oralcheck.org";
-  const today = new Date("2026-06-09");
+  const today = new Date("2026-08-27");
 
-  return [
-    {
-      url: base,
-      lastModified: today,
-      changeFrequency: "monthly",
-      priority: 1,
+  return PAGES.map(({ path, changeFrequency, priority }) => ({
+    url: localeUrl(routing.defaultLocale, path),
+    lastModified: today,
+    changeFrequency,
+    priority,
+    alternates: {
+      languages: Object.fromEntries(
+        routing.locales.map((l) => [l, localeUrl(l, path)]),
+      ),
     },
-    {
-      url: `${base}/screener`,
-      lastModified: today,
-      changeFrequency: "monthly",
-      priority: 0.9,
-    },
-    {
-      url: `${base}/learn`,
-      lastModified: today,
-      changeFrequency: "monthly",
-      priority: 0.9,
-    },
-    {
-      url: `${base}/learn/oral-cancer`,
-      lastModified: today,
-      changeFrequency: "monthly",
-      priority: 0.9,
-    },
-    {
-      url: `${base}/learn/signs`,
-      lastModified: today,
-      changeFrequency: "monthly",
-      priority: 0.9,
-    },
-    {
-      url: `${base}/learn/hpv`,
-      lastModified: today,
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${base}/learn/self-exam`,
-      lastModified: today,
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${base}/learn/prevention`,
-      lastModified: today,
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${base}/learn/canker-sore-vs-oral-cancer`,
-      lastModified: today,
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${base}/learn/risk-factors`,
-      lastModified: today,
-      changeFrequency: "monthly",
-      priority: 0.9,
-    },
-    {
-      url: `${base}/learn/facts`,
-      lastModified: today,
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
-    {
-      url: `${base}/find-care`,
-      lastModified: today,
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${base}/for-clinicians`,
-      lastModified: today,
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
-    {
-      url: `${base}/methods`,
-      lastModified: today,
-      changeFrequency: "yearly",
-      priority: 0.6,
-    },
-    {
-      url: `${base}/about`,
-      lastModified: today,
-      changeFrequency: "monthly",
-      priority: 0.6,
-    },
-    {
-      url: `${base}/press`,
-      lastModified: today,
-      changeFrequency: "monthly",
-      priority: 0.4,
-    },
-    {
-      url: `${base}/privacy`,
-      lastModified: today,
-      changeFrequency: "yearly",
-      priority: 0.3,
-    },
-    {
-      url: `${base}/qr`,
-      lastModified: today,
-      changeFrequency: "yearly",
-      priority: 0.3,
-    },
-    {
-      url: `${base}/terms`,
-      lastModified: today,
-      changeFrequency: "yearly",
-      priority: 0.3,
-    },
-  ];
+  }));
 }
