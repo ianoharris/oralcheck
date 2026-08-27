@@ -12,7 +12,7 @@ Hi Dr. Rawal,
 
 I'm a predental student at UW-Madison. I built a free oral cancer risk screener called OralCheck (oralcheck.org), and I'm looking for oral pathologists willing to tell me where it's wrong.
 
-The tool is ten questions and about two minutes, aimed at the general public rather than clinicians. It returns a risk tier and a plain-language explanation of which of the person's own factors drove it, then points them toward a dental exam. It doesn't diagnose anything, and the results page is explicit that the actual screening is the clinical exam a dentist performs.
+The tool takes about two minutes and is aimed at the general public rather than clinicians. It returns a risk tier and a plain-language explanation of which of the person's own factors drove it, then points them toward a dental exam. It doesn't diagnose anything, and the results page is explicit that the actual screening is the clinical exam a dentist performs.
 
 The part I'd most value your eyes on is the scoring, which is published in full at oralcheck.org/methods. Each factor's weight is derived from the natural log of its published odds ratio, scaled so that daily tobacco use (OR 6.0 per Gandini et al., 2008) maps to a weight of 8. The log-linear structure means summed weights approximate the log of the combined odds ratio, with a separate interaction term for tobacco and alcohol to capture the supra-multiplicative effect. The other anchors are Bagnardi 2015, IARC Monograph 85, Gillison 2008, and SEER for the age bands.
 

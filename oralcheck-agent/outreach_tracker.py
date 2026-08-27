@@ -24,7 +24,7 @@ Contact: {name} at {organization} ({email})
 Original outreach date: {date_emailed}
 Context/notes: {notes}
 
-OralCheck is a free, private oral cancer risk screener, 10 questions, 2 minutes. Ian is a predental biology student at UW-Madison reaching out to dental schools, cancer organizations, and health advocacy groups about potential partnerships, patient education use, or research collaboration.
+OralCheck is a free, private oral cancer risk screener that takes about 2 minutes. Ian is a predental biology student at UW-Madison reaching out to dental schools, cancer organizations, and health advocacy groups about potential partnerships, patient education use, or research collaboration.
 
 Write a short, warm follow-up email (3-4 sentences max). Opening: "Hi {first_name}," not "Dear". No em dashes. No hollow phrases like "I hope this finds you well." Be specific to the context/notes if provided. End with "Thanks," then Ian's signature block.
 

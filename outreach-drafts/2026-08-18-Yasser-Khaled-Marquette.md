@@ -12,7 +12,7 @@ Hi Dr. Khaled,
 
 I'm a predental student at UW-Madison, and I built a free oral cancer risk screener called OralCheck (oralcheck.org). I'm trying to get it in front of people who teach oral medicine and diagnosis before it gets in front of many more patients, and I saw that oral cancer is among your research interests.
 
-It's ten questions, about two minutes, written for the general public. Someone gets a risk tier, a plain explanation of which factors drove it, and a push toward a dental exam. It doesn't diagnose, and it's clear on the results page that the real screening is the exam itself.
+It takes about two minutes and is written for the general public. Someone gets a risk tier, a plain explanation of which factors drove it, and a push toward a dental exam. It doesn't diagnose, and it's clear on the results page that the real screening is the exam itself.
 
 Two specific things I'd value your opinion on, more than a general read:
 

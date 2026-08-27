@@ -2,6 +2,15 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { localizedAlternates } from "@/lib/pageMetadata";
+import { QUESTION_SKELETON } from "@/lib/questions";
+import Icon, { type IconName } from "@/components/Icon";
+
+// Reuse the screener's own icons so a reader recognizes each rationale as the
+// question they just answered. Derived from the skeleton rather than restated,
+// so a new question can't end up with a different icon in the two places.
+const QUESTION_ICONS: Record<string, IconName> = Object.fromEntries(
+  QUESTION_SKELETON.map((q) => [q.id, q.icon]),
+);
 
 type Props = { params: Promise<{ locale: string }> };
 
@@ -24,13 +33,16 @@ const factors = [
   { id: "tobaccoOccasional", or: "~3.0×", weight: 5, source: "Gandini et al., Oral Oncology, 2008" },
   { id: "alcoholDaily", or: "~3.0×", weight: 5, source: "Bagnardi et al., Annals of Oncology, 2015" },
   { id: "hpvHistory", or: "3 – 5× (blended)", weight: 5, source: "Gillison et al., JAMA, 2008" },
+  { id: "systemicYes", or: "2 – 4× (blended)", weight: 5, source: "Engels et al., JAMA, 2011; Grulich et al., Lancet, 2007" },
   { id: "age65", or: "~4.0× (adjusted)", weight: 6, source: "SEER, NCI; multivariable-adjusted" },
   { id: "age55", or: "~2.5×", weight: 4, source: "SEER, NCI" },
   { id: "betelPast", or: "~2.5×", weight: 4, source: "IARC Monograph 85, 2004" },
   { id: "alcoholWeekly", or: "~2.0×", weight: 3, source: "Bagnardi et al., Annals of Oncology, 2015" },
   { id: "familyHistory", or: "~2.0×", weight: 3, source: "Negri et al., Eur J Cancer Prev, 2009" },
   { id: "dietLow", or: "~2.0×", weight: 3, source: "Pavia et al., Oral Oncology, 2006" },
+  { id: "sexMale", or: "~2.0× (conservative)", weight: 3, source: "SEER, NCI (17.5 vs 6.6 per 100,000)" },
   { id: "age35", or: "~1.5×", weight: 2, source: "SEER, NCI" },
+  { id: "sexUnstated", or: "population average", weight: 2, source: "SEER, NCI" },
   { id: "tobaccoFormer", or: "~1.5×", weight: 2, source: "Gandini et al., Oral Oncology, 2008" },
   { id: "hpvUnvaccinated", or: "~1.5× (proxy)", weight: 2, source: "D'Souza et al., NEJM, 2007; population exposure estimate" },
   { id: "sunExposure", or: "2 – 3×", weight: 2, source: "Perea-Milla López et al., Br J Cancer, 2003" },
@@ -44,6 +56,7 @@ const factors = [
   { id: "familyDistant", or: "~1.3×", weight: 1, source: "Negri et al., Eur J Cancer Prev, 2009" },
   { id: "dietWeekly", or: "~1.3×", weight: 1, source: "Pavia et al., Oral Oncology, 2006" },
   { id: "hpvUnknown", or: "~1.2× (proxy)", weight: 1, source: "D'Souza et al., NEJM, 2007; population exposure estimate" },
+  { id: "systemicUnsure", or: "~1.2× (proxy)", weight: 1, source: "Engels et al., JAMA, 2011; population exposure estimate" },
 ] as const;
 
 // Bibliographic references: never translated (citations stay in their
@@ -109,6 +122,18 @@ const refs = [
     url: "https://pubmed.ncbi.nlm.nih.gov/12771986/",
     note: "Sun exposure OR 2–3× for lower lip squamous cell carcinoma in outdoor vs indoor workers",
   },
+  {
+    id: 12,
+    citation: "Engels EA, Pfeiffer RM, Fraumeni JF Jr, et al. Spectrum of cancer risk among US solid organ transplant recipients. JAMA. 2011;306(17):1891–1901.",
+    url: "https://pubmed.ncbi.nlm.nih.gov/22045767/",
+    note: "Transplant Cancer Match Study, 175,732 recipients; elevated incidence across many sites including the oral cavity and pharynx, and markedly elevated for lip",
+  },
+  {
+    id: 13,
+    citation: "Grulich AE, van Leeuwen MT, Falster MO, Vajdic CM. Incidence of cancers in people with HIV/AIDS compared with immunosuppressed transplant recipients: a meta-analysis. Lancet. 2007;370(9581):59–67.",
+    url: "https://pubmed.ncbi.nlm.nih.gov/17617273/",
+    note: "Establishes that the two immunosuppressed populations share a similar pattern of raised incidence, which is the basis for grouping them into one question",
+  },
 ] as const;
 
 export default async function MethodsPage({ params }: Props) {
@@ -117,6 +142,8 @@ export default async function MethodsPage({ params }: Props) {
   const factorNames = t.raw("factorNames") as Record<string, string>;
   const factorNotes = t.raw("factorNotes") as Record<string, string>;
   const limitations = t.raw("limitations") as string[];
+  const rationale = t.raw("rationale") as { id: string; title: string; body: string }[];
+  const cannot = t.raw("cannot") as string[];
 
   const tiers = [
     { label: t("tierLow"), range: "≤ 4", color: "bg-green-50 border-green-200 text-green-800" },
@@ -132,7 +159,15 @@ export default async function MethodsPage({ params }: Props) {
       </div>
 
       <h1 className="font-serif text-4xl sm:text-5xl text-ink mb-4">{t("heading")}</h1>
-      <p className="text-ink-soft text-lg leading-relaxed mb-12 max-w-2xl">{t("intro")}</p>
+      <p className="text-ink-soft text-lg leading-relaxed mb-5 max-w-2xl">{t("intro")}</p>
+
+      {/* Dateline. A methodology page with no review date asks the reader to
+          assume it's current; this states it before they scroll. */}
+      <p className="text-xs uppercase tracking-wider text-ink-soft mb-12">
+        {t("lastReviewedLabel")}
+        {": "}
+        <span className="text-ink font-semibold">{t("lastReviewedDate")}</span>
+      </p>
 
       {/* Weight derivation */}
       <section className="mb-14">
@@ -161,7 +196,9 @@ export default async function MethodsPage({ params }: Props) {
               </tr>
             </thead>
             <tbody className="divide-y divide-warm-dim">
-              {factors.map((f) => (
+              {/* Sorted here rather than by hand, so a row added in the wrong
+                  place can't leave a column headed "Weight" out of order. */}
+              {[...factors].sort((a, b) => b.weight - a.weight).map((f) => (
                 <tr key={f.id} className="bg-warm-dim hover:bg-warm/50 transition-colors">
                   <td className="px-4 py-3 text-ink font-medium">
                     {factorNames[f.id]}
@@ -180,6 +217,25 @@ export default async function MethodsPage({ params }: Props) {
               ))}
             </tbody>
           </table>
+        </div>
+      </section>
+
+      {/* Per-question rationale */}
+      <section className="mb-14">
+        <h2 className="font-serif text-2xl text-ink mb-3">{t("rationaleHeading")}</h2>
+        <p className="text-sm text-ink-soft max-w-2xl leading-relaxed mb-6">{t("rationaleIntro")}</p>
+        <div className="space-y-5">
+          {rationale.map((r) => (
+            <div key={r.id} className="flex gap-4">
+              <span className="flex-shrink-0 w-9 h-9 rounded-full bg-brand-soft text-brand flex items-center justify-center">
+                <Icon name={QUESTION_ICONS[r.id] ?? "check"} size={18} />
+              </span>
+              <div className="max-w-2xl">
+                <h3 className="text-ink font-semibold text-sm mb-1">{r.title}</h3>
+                <p className="text-sm text-ink-soft leading-relaxed">{r.body}</p>
+              </div>
+            </div>
+          ))}
         </div>
       </section>
 
@@ -210,6 +266,25 @@ export default async function MethodsPage({ params }: Props) {
         <p className="text-sm text-ink-soft max-w-2xl leading-relaxed mt-2">
           {t("tierP2Rest", { bold: t("tierP2Bold") })}
         </p>
+        <p className="text-sm text-ink-soft max-w-2xl leading-relaxed mt-2">
+          {t("thresholdAnchorNote")}
+        </p>
+      </section>
+
+      {/* What the tool cannot tell you */}
+      <section className="mb-14">
+        <h2 className="font-serif text-2xl text-ink mb-3">{t("cannotHeading")}</h2>
+        <p className="text-sm text-ink-soft max-w-2xl leading-relaxed mb-5">{t("cannotIntro")}</p>
+        <ul className="space-y-3 max-w-2xl">
+          {cannot.map((item, i) => (
+            <li key={i} className="flex gap-3 text-sm text-ink-soft leading-relaxed">
+              <span className="flex-shrink-0 w-5 h-5 rounded-full bg-accent/10 text-accent flex items-center justify-center mt-0.5">
+                <Icon name="close" size={11} weight="bold" />
+              </span>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
       </section>
 
       {/* Limitations */}
@@ -253,6 +328,19 @@ export default async function MethodsPage({ params }: Props) {
             </li>
           ))}
         </ol>
+      </section>
+
+      {/* Review provenance */}
+      <section className="mb-14">
+        <h2 className="font-serif text-2xl text-ink mb-4">{t("reviewHeading")}</h2>
+        <div className="rounded-2xl border border-warm-dim bg-warm-dim/40 p-6 max-w-2xl">
+          <div className="text-xs uppercase tracking-wider text-ink-soft mb-1">
+            {t("lastReviewedLabel")}
+          </div>
+          <div className="font-serif text-xl text-ink mb-4">{t("lastReviewedDate")}</div>
+          <p className="text-sm text-ink-soft leading-relaxed mb-3">{t("reviewBody")}</p>
+          <p className="text-sm text-ink-soft leading-relaxed">{t("reviewCadence")}</p>
+        </div>
       </section>
 
       {/* Footer CTA */}

@@ -15,7 +15,7 @@ Hi [Name],
 
 I'm a predental student at UW-Madison, and I built a free oral cancer risk screener called OralCheck (oralcheck.org). I'd like to ask whether it would be useful to your members, and if it isn't, what would make it so.
 
-It's ten questions and about two minutes, in a phone browser, with no app, no account, and no data stored. Someone gets a risk tier, a plain explanation of which of their own factors drove it, and a push toward a dental exam. It doesn't diagnose. It's available in English and Spanish.
+It takes about two minutes in a phone browser, with no app, no account, and no data stored. Someone gets a risk tier, a plain explanation of which of their own factors drove it, and a push toward a dental exam. It doesn't diagnose. It's available in English and Spanish.
 
 There's no cost and nothing to sign. It's free now and I intend to keep it that way, so this isn't a partnership pitch with a commercial turn later in it.
 

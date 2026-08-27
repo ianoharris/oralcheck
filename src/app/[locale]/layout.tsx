@@ -46,7 +46,7 @@ const jsonLd = {
       url: SITE_URL,
       name: "OralCheck — Free Oral Cancer Risk Screener",
       description:
-        "Answer 10 questions to understand your oral cancer risk factors. Free, private, and takes 2 minutes.",
+        "A short set of questions to understand your oral cancer risk factors. Free, private, and takes 2 minutes.",
       about: {
         "@type": "MedicalCondition",
         name: "Oral Cancer",

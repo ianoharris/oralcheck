@@ -20,7 +20,7 @@ Hi [Name],
 
 I'm a predental student at UW-Madison. I built a free oral cancer risk screener called OralCheck (oralcheck.org), and I'm trying to find people who'll tell me where the scoring is wrong before it reaches many more people.
 
-It's ten questions and about two minutes, written for the general public rather than clinicians. Someone gets a risk tier, a plain explanation of which of their own factors drove it, and a nudge toward a dental exam. It doesn't diagnose, and it's explicit that the actual screening is the clinical exam.
+It takes about two minutes and is written for the general public rather than clinicians. Someone gets a risk tier, a plain explanation of which of their own factors drove it, and a nudge toward a dental exam. It doesn't diagnose, and it's explicit that the actual screening is the clinical exam.
 
 [One or two sentences on this person's specific work, and the honest reason it made you write to them rather than to someone else.]
 

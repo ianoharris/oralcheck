@@ -1,6 +1,7 @@
 import { createTranslator } from "use-intl/core";
 import enMessages from "../../messages/en.json";
 import esMessages from "../../messages/es.json";
+import ptMessages from "../../messages/pt.json";
 import { QUESTION_SKELETON, type Question } from "./questions";
 import type { IconName } from "@/components/Icon";
 
@@ -31,20 +32,33 @@ export type RiskResult = {
   hasUrgentSymptom: boolean;
 };
 
-const MESSAGES = { en: enMessages, es: esMessages } as const;
+const MESSAGES: Record<string, typeof enMessages> = {
+  en: enMessages,
+  es: esMessages as unknown as typeof enMessages,
+  pt: ptMessages as unknown as typeof enMessages,
+};
+
+/**
+ * Falls back to English for any locale we don't carry messages for, rather
+ * than throwing. Keyed off the map so adding a language to routing.locales and
+ * to MESSAGES is the whole change: the previous version tested `=== "es"`,
+ * which silently served English factor labels and guidance on every Portuguese
+ * results page while the rest of the site was fully translated.
+ */
+function messagesFor(locale: string) {
+  return MESSAGES[locale] ?? MESSAGES.en;
+}
 
 // riskEngine runs both in the browser (results page) and on the server
 // (email-result API route), outside of any React tree, so it can't use the
 // useTranslations()/getTranslations() hooks — createTranslator is next-intl's
 // underlying, framework-agnostic primitive for exactly this case.
 function getTranslator(locale: string) {
-  const messages = locale === "es" ? MESSAGES.es : MESSAGES.en;
-  return createTranslator({ locale, messages, namespace: "RiskEngine" });
+  return createTranslator({ locale, messages: messagesFor(locale), namespace: "RiskEngine" });
 }
 
 function getQuestionsTranslator(locale: string) {
-  const messages = locale === "es" ? MESSAGES.es : MESSAGES.en;
-  return createTranslator({ locale, messages, namespace: "Questions" });
+  return createTranslator({ locale, messages: messagesFor(locale), namespace: "Questions" });
 }
 
 /** Points added when tobacco and alcohol are both used at meaningful levels. */
@@ -54,7 +68,10 @@ const INTERACTION_BONUS = 3;
  * Highest score a real answer set can produce. The tobacco+alcohol interaction
  * bonus is reachable (daily tobacco and daily alcohol are both max-weight
  * answers), so it has to be included here — otherwise a worst-case profile
- * scores 53 against a stated max of 50 and reports 106%.
+ * scores above the stated max and reports over 100%.
+ *
+ * Computed rather than written down, so adding a question can't desynchronize
+ * it. Currently 61 (58 option points + the 3-point interaction bonus).
  */
 export function computeMaxScore(): number {
   const optionMax = QUESTION_SKELETON.reduce((sum, q) => {
@@ -80,14 +97,28 @@ export function computeMaxScore(): number {
  *   Symptoms:  Napier & Speight, J Oral Pathol Med, 2008  (leukoplakia 5–17%,
  *              erythroplakia 14–50% malignant transformation — used as clinical
  *              override flag rather than additive score)
+ *   Sex:       SEER incidence, male 17.5 vs female 6.6 per 100,000 (rate ratio
+ *              ~2.6×). Deliberately weighted at OR 2.0 instead, because part of
+ *              the male excess is tobacco and alcohol exposure this instrument
+ *              already scores separately.
+ *   Systemic:  Transplant / head-and-neck radiation / immunosuppression,
+ *              blended ~3× (Engels et al., JAMA, 2011; Grulich et al., Lancet,
+ *              2007). The least precisely derived weight in the instrument.
  *
  * Interaction term:
  *   Tobacco + alcohol co-use produces multiplicative rather than additive risk
  *   (~15× combined vs. ~9× additive). The +3 interaction bonus reflects this
  *   excess beyond simple score addition (Bagnardi et al., 2015).
  *
- * Tier thresholds (max score ~53):
+ * Tier thresholds (max score 61):
  *   Low ≤4 | Moderate 5–13 | Elevated 14–22 | High ≥23
+ *
+ *   These are anchored to reference profiles, not rescaled whenever the maximum
+ *   changes. Adding the sex and systemic questions raised the maximum from 53 to
+ *   61, and rescaling proportionally would have moved the High bar to 26 — which
+ *   would have demoted a current betel + tobacco + alcohol user (25) from High to
+ *   Elevated. A new question should not make an unchanged profile look safer, so
+ *   the thresholds stayed where they are.
  *
  * Limitations:
  *   Weights are evidence-informed but have not been validated against a clinical
@@ -158,11 +189,12 @@ export function computeRisk(answers: Answers, locale: string = "en"): RiskResult
   let tierColor: string;
   let headline: string;
 
-  // Tier thresholds calibrated to the log-odds weight scale (max score ~53):
+  // Tier thresholds calibrated to the log-odds weight scale (max score 61):
   // Low ≤4 | Moderate 5–13 | Elevated 14–22 | High ≥23
-  // These map proportionally to the old thresholds (≤4/5–10/11–17/≥18) scaled to the new max.
+  // Anchored to reference profiles rather than to the maximum — see the block
+  // comment above for why they did not move when the maximum did.
   // Example profiles: tobacco daily (8) = moderate; tobacco+alcohol+interaction (16) = elevated;
-  // betel+tobacco+alcohol+interaction (25) = high.
+  // betel+tobacco+alcohol+interaction (25) = high; male alone (3) = low.
   if (hasUrgentSymptom) {
     tier = "high";
     tierLabel = t("tier.seeADentist");

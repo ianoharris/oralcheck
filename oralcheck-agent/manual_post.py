@@ -45,7 +45,7 @@ DECK = {
             "kicker": "New",
             "headline": "OralCheck is now in English, Spanish and Portuguese",
             "emphasis": "Spanish and Portuguese",
-            "body": "The same ten questions, the same two minutes, the same scoring. "
+            "body": "The same questions, the same two minutes, the same scoring. "
                     "Nothing is a simplified version of anything else.",
             "footnote": "oralcheck.org",
         },

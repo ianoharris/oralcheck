@@ -2,7 +2,7 @@
   "Meta": {
     "siteTitle": "OralCheck | Free Oral Cancer Risk Screener",
     "siteDescription": "Free, private oral cancer risk screener. Understand your risk, learn the signs, and find care near you.",
-    "ogDescription": "Answer 10 questions to understand your oral cancer risk. Free, private, takes 2 minutes."
+    "ogDescription": "A few short questions to understand your oral cancer risk. Free, private, takes 2 minutes."
   },
   "Nav": {
     "screener": "Screener",
@@ -68,7 +68,7 @@
     "srHeading": "Free Oral Cancer Risk Screener",
     "sectionHeading": "Three things this tool does",
     "feature1Title": "Private risk screener",
-    "feature1Desc": "10 quick questions based on published clinical risk factors. Nothing is saved or sent anywhere.",
+    "feature1Desc": "Short, specific questions based on published clinical risk factors. Nothing is saved or sent anywhere.",
     "feature1Cta": "Start screener",
     "feature2Title": "Know the warning signs",
     "feature2Desc": "Red and white patches, non-healing sores, lumps. Learn what to look for and how to do a self-exam.",
@@ -563,7 +563,7 @@
         "weight": "Moderate",
         "weightColor": "text-caution",
         "summary": "Risk rises sharply after 55. Peak incidence in the 60s and 70s.",
-        "detail": "Oral cancer is more common as people age, partly because of longer cumulative exposure to risk factors, and partly because of age-related changes in immune function. The average age at diagnosis is 62. However, HPV-related oropharyngeal cancers are increasingly diagnosed in adults in their 40s and 50s, so younger adults are not without risk.",
+        "detail": "Oral cancer is more common as people age, partly because of longer cumulative exposure to risk factors, and partly because of age-related changes in immune function. The median age at diagnosis is 65 (SEER, 2019–2023). However, HPV-related oropharyngeal cancers are increasingly diagnosed in adults in their 40s and 50s, so younger adults are not without risk.",
         "link": null
       },
       {
@@ -796,7 +796,7 @@
       },
       {
         "q": "How common is oral cancer?",
-        "a": "More than 54,000 Americans are diagnosed with oral and oropharyngeal cancer each year. It is about twice as common in men as in women, and the median age at diagnosis is 62. It ranks among the ten most common cancers worldwide."
+        "a": "More than 54,000 Americans are diagnosed with oral and oropharyngeal cancer each year. It is about twice as common in men as in women, and the median age at diagnosis is 65. It ranks among the ten most common cancers worldwide."
       },
       {
         "q": "Can oral cancer be cured if caught early?",
@@ -1213,7 +1213,7 @@
     ],
     "features": [
       {
-        "title": "10 quick questions",
+        "title": "A few quick questions",
         "desc": "Based on real clinical risk factors, takes about 2 minutes on your phone."
       },
       {
@@ -1318,17 +1318,17 @@
     "tierModerate": "Moderate",
     "tierElevated": "Elevated",
     "tierHigh": "High",
-    "tierP1": "The maximum possible score is approximately 53 (all highest-risk answers plus the interaction bonus). A few reference points: a daily smoker alone scores 8 (moderate); tobacco + alcohol + interaction lands at 16 (elevated); betel + tobacco + alcohol + interaction reaches 25 (high).",
+    "tierP1": "The maximum possible score is 61 (all highest-risk answers plus the interaction bonus). A few reference points: a daily smoker alone scores 8 (moderate); tobacco + alcohol + interaction lands at 16 (elevated); betel + tobacco + alcohol + interaction reaches 25 (high). Male sex at birth alone scores 3, which is still low.",
     "tierP2Bold": "High",
     "tierP2Rest": "Regardless of score, any symptom lasting 2+ weeks (a persistent sore, red or white patch, unexplained lump, or difficulty swallowing) overrides the tier to {bold} and triggers a prompt for immediate evaluation.",
     "limitationsHeading": "Known Limitations",
     "limitations": [
       "OralCheck hasn't been validated against a clinical outcome dataset. The weights are grounded in published literature, but they haven't been calibrated against a prospective cohort.",
       "The screener combines oral cavity and oropharyngeal cancer risk into a single score. These are epidemiologically distinct entities: HPV-16 is primarily a driver of oropharyngeal cancer, while tobacco and alcohol dominate in oral cavity cancer.",
-      "Biological sex isn't captured. Men have roughly 2× the oral cavity cancer incidence of women, and that's a gap in the current model.",
-      "Immunosuppression (HIV, organ transplant recipients, long-term corticosteroid use) is linked to significantly elevated oral cancer risk and isn't currently asked about.",
+      "The combined immune and radiation question groups three exposures with genuinely different effect sizes into one weight. Someone on long-term immunosuppressants after a transplant and someone who had head and neck radiation decades ago score identically, which is a simplification made to keep the screener short.",
       "The screener relies on self-reported data. Tobacco and alcohol use are commonly under-reported.",
-      "Dental visit frequency is included as a detection-delay proxy, not as a causal risk factor with a well-characterized OR. Its weight is based on clinical rationale rather than direct epidemiological derivation."
+      "Dental visit frequency is included as a detection-delay proxy, not as a causal risk factor with a well-characterized OR. Its weight is based on clinical rationale rather than direct epidemiological derivation.",
+      "Sex is captured as a single binary with an opt-out. The instrument has no way to represent someone whose exposure history doesn't match the population the underlying incidence data was drawn from."
     ],
     "referencesHeading": "References",
     "viewOn": "View on PubMed / publisher →",
@@ -1340,6 +1340,7 @@
       "tobaccoOccasional": "Tobacco (occasional)",
       "alcoholDaily": "Alcohol (daily)",
       "hpvHistory": "HPV-related history",
+      "systemicYes": "Immunosuppression, transplant, or prior head/neck radiation",
       "age65": "Age 65+",
       "age55": "Age 55 – 64",
       "betelPast": "Betel quid (past use)",
@@ -1347,6 +1348,7 @@
       "familyHistory": "Family history (first-degree)",
       "dietLow": "Diet low in fruit/vegetables",
       "age35": "Age 35 – 54",
+      "sexMale": "Male sex at birth",
       "tobaccoFormer": "Tobacco (former)",
       "hpvUnvaccinated": "HPV (not vaccinated, no known history)",
       "sunExposure": "Sun exposure (lips, unprotected)",
@@ -1359,18 +1361,104 @@
       "sunRegular": "Sun exposure (regular, sometimes protected)",
       "familyDistant": "Family history (distant relative)",
       "dietWeekly": "Fruit/vegetables a few times a week",
-      "hpvUnknown": "HPV status unknown"
+      "hpvUnknown": "HPV status unknown",
+      "sexUnstated": "Sex not stated",
+      "systemicUnsure": "Immune or radiation history (unsure)"
     },
     "factorNotes": {
       "tobaccoDaily": "Anchor for the scaling constant k = 4.47",
       "betelCurrent": "IARC Group 1 carcinogen independent of tobacco",
       "alcoholDaily": "IARC Group 1 carcinogen",
       "hpvHistory": "Conservative estimate; OR ~15× for oropharyngeal specifically",
-      "age65": "Median age at diagnosis is 62",
+      "age65": "Median age at diagnosis is 65",
       "tobaccoFormer": "Risk declines ~50% within 5 years of cessation",
       "hpvUnvaccinated": "Unvaccinated status is a behavioral proxy for HPV-16 exposure risk, not a serostatus measure. OR reflects elevated background exposure probability in unvaccinated adults, not confirmed infection.",
-      "sunExposure": "Lower lip squamous cell carcinoma; outdoor workers vs indoor reference"
-    }
+      "sunExposure": "Lower lip squamous cell carcinoma; outdoor workers vs indoor reference",
+      "systemicYes": "Blended across three heterogeneous exposures rather than taken from a single published figure. This is the least precisely derived weight in the instrument.",
+      "sexMale": "Derived from a deliberately conservative OR of 2.0, not the 2.6× SEER rate ratio, because part of the male excess is tobacco and alcohol exposure scored separately.",
+      "sexUnstated": "Population average: roughly half of respondents who decline are male."
+    },
+    "thresholdAnchorNote": "Thresholds are anchored to those reference profiles rather than rescaled whenever the maximum changes. Adding the sex and immune history questions in August 2026 raised the maximum from 53 to 61, and rescaling proportionally would have moved the High boundary to 26, quietly demoting an unchanged betel + tobacco + alcohol profile from High to Elevated. A new question should not make an existing profile look safer, so the boundaries stayed where they were.",
+    "rationaleHeading": "Why Each Question Is Asked",
+    "rationaleIntro": "Every question earns its place by changing the score in a way the published literature supports. This is the reasoning behind each one, including the two where the evidence is weakest.",
+    "rationale": [
+      {
+        "id": "age",
+        "title": "Age",
+        "body": "Incidence climbs steeply after 40 and the median age at diagnosis is 65. Age is the strongest non-modifiable predictor in the instrument, and it also works as a proxy for cumulative mucosal exposure to every other carcinogen on this list, which is why it carries weight even for someone who reports nothing else."
+      },
+      {
+        "id": "sex",
+        "title": "Sex at birth",
+        "body": "Men are diagnosed at roughly 2.6 times the rate of women. Some of that gap is historically higher tobacco and alcohol use, which this screener already scores separately, so applying the full 2.6× would count the same exposure twice. The weight is derived from an OR of 2.0 instead. Sex at birth is asked rather than gender because that is what the incidence data recorded."
+      },
+      {
+        "id": "tobacco",
+        "title": "Tobacco",
+        "body": "The anchor for the whole scale: the scaling constant was chosen so that daily use maps to a weight of 8. Both combustible and smokeless forms count. Former use keeps a non-zero weight because risk declines gradually after cessation rather than resetting, roughly halving over five years."
+      },
+      {
+        "id": "alcohol",
+        "title": "Alcohol",
+        "body": "A Group 1 carcinogen for the oral cavity with a clear dose-response relationship. The carcinogen is acetaldehyde, ethanol's metabolite, which is why frequency of drinking matters more to the score than what is being drunk."
+      },
+      {
+        "id": "betel",
+        "title": "Betel quid, paan, and gutka",
+        "body": "Asked separately from tobacco rather than folded into it, because betel quid is carcinogenic with or without added tobacco. It is the single highest-weighted exposure in the instrument. It is asked of everyone rather than gated behind a region question, since the screener is used well outside the countries where use is most common."
+      },
+      {
+        "id": "hpv",
+        "title": "HPV",
+        "body": "HPV-16 is now the leading cause of oropharyngeal cancer in adults under 50. A public tool cannot ask for serostatus, so vaccination status and reported history stand in as behavioral proxies. This is the weakest inferential step in the instrument, and the weight is set far below the true odds ratio for confirmed HPV-16 to reflect that."
+      },
+      {
+        "id": "sun",
+        "title": "Sun exposure",
+        "body": "This one is about the lower lip specifically, not the inside of the mouth. Lip squamous cell carcinoma behaves more like a skin cancer than an oral one, and outdoor workers carry two to three times the risk of indoor workers."
+      },
+      {
+        "id": "symptom",
+        "title": "Current symptoms",
+        "body": "Treated differently from everything else on this page. A persistent sore, patch, lump, or difficulty swallowing is better understood as possible existing pathology than as a risk exposure, so it both adds points and overrides the tier outright. Someone with a symptom and no other risk factors still gets told to see a dentist."
+      },
+      {
+        "id": "family",
+        "title": "Family history",
+        "body": "A first-degree relative with head and neck cancer roughly doubles risk. Part of that is shared environment rather than inheritance, which is why the weight is modest and a distant relative counts for much less."
+      },
+      {
+        "id": "systemic",
+        "title": "Immune and radiation history",
+        "body": "Added in August 2026 after external clinical review flagged it as the clearest gap in the instrument. Organ and bone marrow transplant, prior head and neck radiation, and conditions or medications that suppress immunity are grouped into one question because they converge on the same mechanism: reduced immune surveillance of the oral mucosa, or in the radiation case, a field already exposed to a known carcinogen. They are grouped rather than split because any one of them leads to the same recommendation."
+      },
+      {
+        "id": "diet",
+        "title": "Diet",
+        "body": "Low fruit and vegetable intake is associated with roughly double the risk. This is the weakest causal evidence among the modifiable factors, heavily confounded with smoking and socioeconomic status, and it is weighted accordingly."
+      },
+      {
+        "id": "dental",
+        "title": "Dental care",
+        "body": "Not a risk factor at all, and the page is explicit about that. It is a detection-delay proxy. Over 60% of oral cancers are found at stage III or IV, and the two-minute visual exam that finds them earlier happens at a dental visit. Its weight comes from clinical rationale, not from an odds ratio, and it is the only entry in the table for which that is true."
+      }
+    ],
+    "cannotHeading": "What This Tool Cannot Tell You",
+    "cannotIntro": "A risk score is easy to over-read. These are the specific things a result from OralCheck does not mean, stated plainly so nobody has to infer them.",
+    "cannot": [
+      "It cannot tell you whether you have oral cancer. It never sees your mouth. It reads back the exposures you reported and nothing else.",
+      "A low result is not a clean bill of health. Somewhere around a quarter of oral cancers occur in people with none of the conventional risk factors this screener asks about, so a low score paired with a symptom still means see a dentist.",
+      "It cannot distinguish oral cavity from oropharyngeal cancer. These are epidemiologically distinct diseases with different dominant causes, and the single score blends them.",
+      "It cannot account for what you did not report or did not know. Tobacco and alcohol use are consistently under-reported on self-administered questionnaires.",
+      "It has not been validated against a clinical outcome dataset. Every weight is derived from published literature, but the instrument as a whole has never been calibrated against a prospective cohort, and it should not be described as validated.",
+      "The score is not a probability. It is an ordinal stratification, so a score of 20 is not twice the risk of a score of 10 and does not correspond to a percent chance of developing anything.",
+      "It cannot replace the exam. The actual screening for oral cancer is a short visual and tactile examination performed by a dentist or physician. The entire purpose of this tool is to make that appointment more likely to happen."
+    ],
+    "reviewHeading": "Review and Maintenance",
+    "lastReviewedLabel": "Last reviewed",
+    "lastReviewedDate": "August 2026",
+    "reviewBody": "The factor list, weights, thresholds, and sources on this page were last re-checked against current literature in August 2026, and revised following external review by a practising oral and maxillofacial pathologist. That review is what added the immune and radiation history question, added gum growth and recent tooth mobility to the symptom guidance, and prompted the caveat that a substantial share of oral cancers occur with no conventional risk factors at all.",
+    "reviewCadence": "This page is reviewed at least annually, and whenever a question is added, removed, or reweighted. If you spot an error in a citation or a weight, it is worth reporting: corrections are made directly and the review date is updated."
   },
   "ContactForm": {
     "sentTitle": "Got it, thanks for reaching out.",
@@ -1613,7 +1701,7 @@
   },
   "ScreenerMeta": {
     "title": "Free Oral Cancer Risk Screener",
-    "description": "Take OralCheck's free oral cancer risk screener. Answer 10 questions based on published risk factors from the ACS, NCI, and Oral Cancer Foundation. Private, no account required."
+    "description": "Take OralCheck's free oral cancer risk screener. Answer a short set of questions based on published risk factors from the ACS, NCI, and Oral Cancer Foundation. Private, no account required."
   },
   "FindCareMeta": {
     "title": "Find Oral Cancer Care Near You",
@@ -1635,12 +1723,21 @@
   "Questions": {
     "age": {
       "title": "What's your age range?",
-      "subtitle": "Oral cavity cancer incidence rises sharply after 40. Median age at diagnosis is 62 (SEER data). Risk roughly doubles per decade above 40.",
+      "subtitle": "Oral cavity cancer incidence rises sharply after 40. Median age at diagnosis is 65 (SEER, 2019–2023). Risk roughly doubles per decade above 40.",
       "options": {
         "under35": "Under 35",
         "35to54": "35 – 54",
         "55to64": "55 – 64",
         "65plus": "65 or older"
+      }
+    },
+    "sex": {
+      "title": "What sex were you assigned at birth?",
+      "subtitle": "Men are diagnosed with oral cavity and pharynx cancer at about 2.6 times the rate of women (SEER: 17.5 vs 6.6 per 100,000). We ask about sex at birth because that is what the underlying research recorded. This is not a question about gender identity, and nothing you enter is stored.",
+      "options": {
+        "male": "Male",
+        "female": "Female",
+        "preferNotToSay": "Prefer not to say"
       }
     },
     "tobacco": {
@@ -1701,6 +1798,15 @@
         "unsure": "Unsure"
       }
     },
+    "systemic": {
+      "title": "Have you had an organ or bone marrow transplant, radiation to the head and neck, or a condition that suppresses your immune system?",
+      "subtitle": "These are grouped together because they share a mechanism: weakened immune surveillance of the lining of the mouth, or in the case of prior radiation, tissue already exposed to a known carcinogen. Long-term immunosuppressant medication after a transplant, HIV, and some autoimmune treatments all count.",
+      "options": {
+        "yes": "Yes, one or more of these",
+        "unsure": "I'm not sure",
+        "no": "No"
+      }
+    },
     "diet": {
       "title": "How often do you eat fruits and vegetables?",
       "subtitle": "Low fruit and vegetable intake is an independent risk factor for oral and oropharyngeal cancer. Diets rich in antioxidants, vitamins A, C, and E, are associated with reduced oral epithelial dysplasia.",
@@ -1734,6 +1840,7 @@
     "and": "and",
     "categoryGuidance": {
       "demographics": "Age is the strongest non-modifiable risk factor. After 40, screening at every dental visit is especially important, oral cancer caught at Stage I has an 84% five-year survival rate versus 38% at Stage IV.",
+      "sex": "Sex at birth is not something you can act on, so treat it the way you would treat age: as a reason to make sure the two-minute oral exam actually happens rather than getting skipped. Men are diagnosed with oral cavity and pharynx cancer at roughly twice the rate of women, and men are also less likely to be seeing a dentist regularly, which is the part that is within your control. Ask for an oral cancer screening by name at your next visit rather than assuming it was included.",
       "tobacco": "Cessation reduces risk by approximately 50% within 5 years of quitting. Nicotine replacement therapy doubles long-term quit success rates. Ask your dentist or physician about free cessation programs, the Wisconsin Tobacco Quit Line is available at 1-800-QUIT-NOW.",
       "alcohol": "Risk decreases with reduced consumption. For people using both tobacco and alcohol, tobacco cessation has the greatest individual impact. Even reducing drinking from daily to occasional lowers mucosal carcinogen exposure significantly.",
       "hpv": "The HPV vaccine (Gardasil 9) is FDA-approved through age 45 and is highly effective against HPV-16, the strain most strongly linked to oropharyngeal cancer. Ask your clinician whether vaccination is appropriate for you.",
@@ -1742,16 +1849,19 @@
       "family": "Tell your dentist about your family history. They may recommend more frequent oral cancer screenings or a referral to an oral medicine specialist. Genetic counseling is available through most academic medical centers.",
       "diet": "Aim for 5+ servings of colorful fruits and vegetables daily. Evidence supports that diets high in vitamins A, C, and E reduce oral epithelial dysplasia. Processed meat intake has also been linked to elevated head and neck cancer risk in some cohort studies.",
       "dental": "Book a dental visit as soon as possible. A visual oral cancer screening takes about 2 minutes and is performed as part of a routine examination. Over 60% of oral cancers are diagnosed at Stage III or IV, regular dental care changes this.",
-      "other": "Stopping betel/paan/gutka use lowers risk, though some changes to oral mucosa from prior use may persist. Ask your dentist to examine any areas of discoloration, thickening, or ulceration. Many communities have culturally specific cessation resources."
+      "other": "Stopping betel/paan/gutka use lowers risk, though some changes to oral mucosa from prior use may persist. Ask your dentist to examine any areas of discoloration, thickening, or ulceration. Many communities have culturally specific cessation resources.",
+      "medical": "Tell your dentist about your transplant, radiation history, or immunosuppressant medication before your exam. It changes how closely they look and how often they want to see you: many transplant programs and head and neck radiation follow-up protocols already call for oral cancer screening more often than once a year, and a routine dental practice may not know to apply that schedule unless you say so."
     },
     "factorLabels": {
       "age": "Age",
+      "sex": "Sex at birth",
       "tobacco": "Tobacco use",
       "alcohol": "Alcohol use",
       "hpv": "HPV exposure",
       "sun": "Sun exposure",
       "symptom": "Current symptoms",
       "family": "Family history",
+      "systemic": "Immune or radiation history",
       "diet": "Diet",
       "dental": "Dental care",
       "betel": "Betel / paan / gutka"
@@ -1799,7 +1909,7 @@
     "heading": "Press & Media Kit",
     "subheading": "Everything needed to write about OralCheck accurately, in one place. Assets are free to use in coverage of the project.",
     "boilerplateHeading": "Boilerplate",
-    "boilerplateShort": "OralCheck is a free, private oral cancer risk screener. It asks ten questions, takes about two minutes, requires no account, and does not store answers.",
+    "boilerplateShort": "OralCheck is a free, private oral cancer risk screener. It takes about two minutes, requires no account, and does not store answers.",
     "boilerplateLong": "Oral cancer is often caught late, which is the main reason it remains deadly. Survival is far better when it is found early, and HPV has become a leading cause in adults under 50. OralCheck turns published risk factors into a short self-assessment, explains which answers moved the score and why, and points people toward nearby care that can actually screen them. It is built and maintained by Ian Harris, a predental student at the University of Wisconsin-Madison, and is available in English and Spanish.",
     "factsHeading": "Fast facts",
     "facts": [
@@ -1809,7 +1919,7 @@
       },
       {
         "label": "Length",
-        "value": "10 questions, roughly 2 minutes."
+        "value": "Roughly 2 minutes."
       },
       {
         "label": "Cost",
@@ -1887,7 +1997,7 @@
     "sections": [
       {
         "heading": "What OralCheck does",
-        "body": "OralCheck asks ten questions about risk factors that published research associates with oral cancer, then returns a risk tier and an explanation of which of your answers contributed to it. The scoring is derived from published odds ratios and is documented in full on the methodology page, including every source. It is a risk-assessment questionnaire. The screening test itself is the clinical examination a dentist performs, and the purpose of this tool is to help you decide to go and have one."
+        "body": "OralCheck asks a short set of questions about risk factors that published research associates with oral cancer, then returns a risk tier and an explanation of which of your answers contributed to it. The scoring is derived from published odds ratios and is documented in full on the methodology page, including every source. It is a risk-assessment questionnaire. The screening test itself is the clinical examination a dentist performs, and the purpose of this tool is to help you decide to go and have one."
       },
       {
         "heading": "No professional relationship",

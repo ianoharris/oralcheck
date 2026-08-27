@@ -14,13 +14,15 @@ import {
   Lock, Check, WifiSlash, Star, Timer, Moon, SunDim, Printer, Bandaids,
   FirstAidKit, CalendarCheck, Prohibit, HandHeart, X, EnvelopeSimple,
   LinkedinLogo, InstagramLogo, DownloadSimple, Newspaper, ChatCircleText,
-  CaretDown,
+  CaretDown, GenderIntersex, Heartbeat,
 } from "@phosphor-icons/react/dist/ssr";
 import type { Icon as PhosphorIcon } from "@phosphor-icons/react";
 
 export const ICONS = {
   // screener questions
   age: Cake,
+  sex: GenderIntersex,
+  immune: Heartbeat,
   tobacco: Cigarette,
   alcohol: Wine,
   hpv: Dna,

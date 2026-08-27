@@ -47,7 +47,7 @@ Rotates through five pillars (never repeats back-to-back):
 - **Myth busting** — HPV as leading cause, not just smokers
 - **Self exam** — what to look for and how to check
 - **HPV connection** — fastest growing group is adults 35-55
-- **Screener CTA** — 10 questions, 2 minutes, oralcheck.org
+- **Screener CTA** — 2 minutes, free, oralcheck.org
 
 Pillar rotation state is saved in `pillars.json`.
 

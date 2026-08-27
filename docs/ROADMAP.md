@@ -57,15 +57,25 @@ Update both together. See `AGENTS.md`.
 
 ### Product and credibility
 
-- [ ] **Systemic risk factor question. Wording approved, ready to build.**
-      Dr. Rawal confirmed on 2026-08-25 that a single combined question is
-      "comprehensive enough when weighted appropriately": *have you had an organ
-      or bone marrow transplant, radiation to the head and neck, or a condition
-      that suppresses your immune system?* Weight it high. Send him the exact
-      wording and weight **before** it goes live, as promised in the reply.
+- [x] ~~Systemic risk factor question~~ — shipped 2026-08-27, weight 5.
+- [x] ~~Sex at birth question~~ — shipped 2026-08-27, weight 3.
 - [x] ~~Language dropdown~~ — shipped 2026-08-27. Renders any number of locales,
       names each language in its own language, closes on Escape and outside click.
-- [ ] **Portuguese translation.** Blocked on API access only; see the table above.
+- [x] ~~Portuguese translation~~ — shipped 2026-08-27.
+- [ ] **Send Rawal the final weights.** Draft is written
+      (`outreach-drafts/2026-08-27-Yeshwant-Rawal-WEIGHTS.md`) and the question is
+      already live, which is the wrong order relative to what the previous reply
+      promised. Send it. The one substantive question in it: the honest derivation
+      gives the systemic question a weight of **5** (blended OR 3.0), joint fourth
+      of twelve. He said "weighted high" and may have meant higher. He is the
+      person who gets to say so.
+- [ ] **Site-wide survival statistics are stale.** Copy says 84% five-year survival
+      when caught early and 38% late, sourced from an older SEER release. SEER
+      2016–2022 now reports **88.7% localized / 69.7% regional / 36.0% distant**,
+      and median age at diagnosis is **65**, not 62. The age question and `/methods`
+      were corrected on 2026-08-27; the 84/38 pair still appears throughout
+      `RiskEngine.summary`, `categoryGuidance`, and several `/learn` articles. It is
+      one find-and-replace plus a decision on which pair of numbers to quote.
 
 - [ ] **Tighten the terminology.** *Verified:* USPSTF gives oral cancer screening an
       "insufficient evidence" rating, but that statement is scoped to **primary care
@@ -75,12 +85,14 @@ Update both together. See `AGENTS.md`.
       screening test is the clinical exam a dentist performs.** OralCheck's job is to
       get someone to that exam. Worth auditing every use of the word "screening"
       against that.
-- [ ] **Make `/methods` exceptional.** It is already cited and 275 lines, and it is
-      now linked from the results page. Missing: per-question rationale, the source
-      behind each factor, what the tool *cannot* tell you, last-reviewed date, and
-      who reviewed it.
-- [ ] **Add a "last reviewed" date** to clinical pages. Mayo and NIH do this; it
-      converts "someone wrote this once" into "someone maintains this".
+- [x] ~~Make `/methods` exceptional~~ — shipped 2026-08-27. Per-question rationale
+      for all twelve, a "What this tool cannot tell you" section, a last-reviewed
+      dateline at the top, and a review-and-maintenance block at the bottom. The
+      one part deliberately left undone is naming the reviewer; see the blocked
+      table above.
+- [ ] **Add a "last reviewed" date to the rest of the clinical pages.** `/methods`
+      has one as of 2026-08-27. The `/learn` articles do not. Mayo and NIH do this;
+      it converts "someone wrote this once" into "someone maintains this".
 - [ ] **Recruit 5–10 dental professionals** to review the screener questions, risk
       categorisation, results wording, and disclaimer. Higher value right now than
       more content.
@@ -110,6 +122,26 @@ Update both together. See `AGENTS.md`.
 ## Shipped
 
 Newest first.
+
+### 2026-08-27 (later)
+- **Two questions added, closing the two gaps `/methods` had been listing as its
+  own known limitations.** Sex at birth (weight 3) and the combined immune and
+  radiation history question (weight 5, Rawal's wording unchanged). Twelve
+  questions now, and the count is no longer stated anywhere
+- **Tier thresholds deliberately did not move.** The maximum went 53 → 61, and
+  rescaling proportionally would have pushed the High boundary to 26, demoting an
+  unchanged betel + tobacco + alcohol profile (25) from High to Elevated. A new
+  question must not make an existing profile look safer, so the boundaries stayed
+  and the reasoning is written on the page
+- **`/methods` rewritten**: per-question rationale for all twelve including the
+  two weakest links stated as weak (the HPV proxy, and dental visits which are a
+  detection proxy and not a risk factor at all), a "What this tool cannot tell
+  you" section, and a last-reviewed dateline
+- **The results page had been serving English to every Portuguese visitor.**
+  `riskEngine` picked its message catalogue with `locale === "es" ? es : en`, so
+  `/pt/results` showed translated chrome around English factor labels, guidance
+  and summary. Now keyed off a map that falls back rather than a hardcoded pair
+- Median age at diagnosis corrected 62 → 65 (SEER 2019–2023)
 
 ### 2026-08-27
 - i18n generalised from bilingual to multilingual: target locales read from

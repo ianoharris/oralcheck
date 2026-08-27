@@ -121,7 +121,8 @@ PILLAR_BRIEFS = {
     ),
     "screener_cta": (
         "Drive followers to take the free risk screener at oralcheck.org. "
-        "Key message: 10 questions, 2 minutes, free. Make it feel low-effort and high-value."
+        "Key message: a couple of minutes, free, no account. Make it feel low-effort and high-value. "
+        "Never state a question count: the screener changes as the evidence does."
     ),
     "awareness": (
         "A branded post tied to a specific awareness day or holiday. Anchor the post to the date "

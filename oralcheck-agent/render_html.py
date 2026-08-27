@@ -283,7 +283,7 @@ def slide_photo(photo: str, caption: str = "", counter: str | None = None) -> st
 
 
 def slide_cta(headline: str = "Take the free screener.",
-              sub: str = "10 questions. 2 minutes. Private.",
+              sub: str = "2 minutes. Free. Private.",
               url: str = "oralcheck.org") -> str:
     """Closing slide on a teal ground for contrast against dark content slides."""
     body = f"""
@@ -367,7 +367,7 @@ def render_deck(deck: dict, theme: str = "dark") -> list[str]:
 
     cta = deck.get("cta", {})
     htmls.append(slide_cta(cta.get("headline", "Take the free screener."),
-                           cta.get("sub", "10 questions. 2 minutes. Private."),
+                           cta.get("sub", "2 minutes. Free. Private."),
                            cta.get("url", "oralcheck.org")))
     return htmls
 

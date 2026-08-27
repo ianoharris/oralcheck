@@ -98,9 +98,9 @@ Specifically:
 
 2. **Oral cavity and oropharyngeal cancer are treated as a single entity.** These are biologically distinct diseases with different dominant etiologies: tobacco and alcohol drive oral cavity cancer; HPV-16 drives oropharyngeal cancer. A unified score is a meaningful simplification.
 
-3. **Biological sex is not captured.** Men have approximately 2x the incidence of oral cancer compared to women. This affects calibration for female users.
+3. **The combined immune and radiation question flattens three different effect sizes.** Organ or bone marrow transplant, prior head and neck radiation, and immunosuppressive conditions are asked as one question and share one weight. A long-term transplant recipient and someone irradiated decades ago score identically. This was a deliberate trade to keep the instrument short, made on the advice of a consulting oral and maxillofacial pathologist, but it is a simplification.
 
-4. **Immunosuppression is not asked about.** HIV, organ transplant recipients on immunosuppressive therapy, and long-term corticosteroid users face significantly elevated oral cancer risk. This is a gap.
+4. **Sex is captured as a binary with an opt-out.** The weight is derived from a conservative OR of 2.0 rather than the 2.6x SEER incidence rate ratio, because part of the male excess is tobacco and alcohol exposure the instrument already scores separately. There is no way to represent someone whose exposure history diverges from the population the incidence data was drawn from.
 
 5. **Self-reported data.** Tobacco and alcohol use are commonly under-reported.
 

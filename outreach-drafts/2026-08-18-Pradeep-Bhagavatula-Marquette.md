@@ -12,7 +12,7 @@ Hi Dr. Bhagavatula,
 
 I'm a predental student at UW-Madison, and I built a free oral cancer risk screener called OralCheck (oralcheck.org). I think it could be useful to the Department of Community Dental Sciences at your outreach events, and I wanted to ask whether you'd be open to trying it once.
 
-The short version is that it's ten questions and about two minutes. It runs in a phone browser with no app and no account, and it's available in English and Spanish. Someone gets a risk tier, a plain explanation of which of their own factors drove it, and a nudge toward a dental visit. It is explicitly not a diagnostic and it says so on the results page.
+The short version is that it takes about two minutes. It runs in a phone browser with no app and no account, and it's available in English and Spanish. Someone gets a risk tier, a plain explanation of which of their own factors drove it, and a nudge toward a dental visit. It is explicitly not a diagnostic and it says so on the results page.
 
 I'm writing to your department specifically because the tool is built for the population you already serve, people who aren't seeing a dentist regularly and who tend to present late. About 91% of the people who start it finish it, which honestly surprised me, and I think it suggests the format holds attention in a way a pamphlet doesn't.
 

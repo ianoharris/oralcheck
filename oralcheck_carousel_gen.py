@@ -275,7 +275,7 @@ def slide_5():
     y += 28
 
     items = [
-        "10 questions about your habits and risk factors.",
+        "A few questions about your habits and risk factors.",
         "No account needed.",
         "Nothing stored.",
         "Just your result — instantly.",

@@ -2,7 +2,7 @@
   "Meta": {
     "siteTitle": "OralCheck | Rastreador Gratuito de Risco de Câncer Bucal",
     "siteDescription": "Rastreador gratuito e privado de risco de câncer bucal. Entenda seu risco, conheça os sinais e encontre atendimento perto de você.",
-    "ogDescription": "Responda 10 perguntas para entender seu risco de câncer bucal. Gratuito, privado, leva 2 minutos."
+    "ogDescription": "Algumas perguntas rápidas para entender seu risco de câncer bucal. Gratuito, privado, leva 2 minutos."
   },
   "Nav": {
     "screener": "Rastreador",
@@ -68,7 +68,7 @@
     "srHeading": "Triagem de Risco de Câncer Bucal Gratuita",
     "sectionHeading": "Três coisas que esta ferramenta faz",
     "feature1Title": "Triagem de risco privada",
-    "feature1Desc": "10 perguntas rápidas baseadas em fatores de risco clínicos publicados. Nenhuma informação é salva ou enviada.",
+    "feature1Desc": "Perguntas curtas e específicas baseadas em fatores de risco clínicos publicados. Nada é salvo ou enviado para nenhum lugar.",
     "feature1Cta": "Iniciar triagem",
     "feature2Title": "Conheça os sinais de alerta",
     "feature2Desc": "Manchas vermelhas e brancas, feridas que não cicatrizam, caroços. Saiba o que observar e como fazer um autoexame.",
@@ -535,8 +535,8 @@
         "name": "Uso de tabaco",
         "weight": "Muito alto",
         "weightColor": "text-accent",
-        "summary": "Responsável por cerca de 75% dos casos tradicionais de câncer bucal.",
-        "detail": "Todas as formas de tabaco aumentam significativamente o risco de câncer bucal: cigarros, charutos, cachimbos, tabaco de mascar, rapé e produtos de vaping. O risco aumenta conforme a quantidade usada e o tempo de uso. Fumantes pesados têm de 6 a 27 vezes mais chance de desenvolver câncer bucal do que não fumantes. Parar de fumar reduz o risco ao longo do tempo, mas o risco não volta ao nível inicial por vários anos após a interrupção.",
+        "summary": "Responsável por cerca de 75% dos cânceres bucais tradicionais.",
+        "detail": "Todas as formas de tabaco aumentam significativamente o risco de câncer bucal: cigarros, charutos, cachimbos, tabaco de mascar, rapé e produtos de vaporização. O risco cresce conforme a quantidade usada e o tempo de uso. Fumantes pesados têm de 6 a 27 vezes mais chance de desenvolver câncer bucal do que não fumantes. Parar de fumar reduz o risco ao longo do tempo, mas o risco não volta ao nível de quem nunca fumou por vários anos após a cessação.",
         "link": null
       },
       {
@@ -545,7 +545,7 @@
         "weight": "Alto",
         "weightColor": "text-accent",
         "summary": "Bebedores pesados têm 5 a 6 vezes mais chance de desenvolver câncer bucal.",
-        "detail": "O álcool é um agente cancerígeno direto na cavidade bucal. O risco aumenta com a quantidade consumida, e o consumo pesado (mais de 3 a 4 doses por dia) apresenta o risco mais elevado. Combinado ao tabaco, os efeitos são sinérgicos: o risco combinado supera em muito a soma dos dois riscos individuais. Alguém que fuma muito e bebe muito pode ter um risco 30 vezes maior do que alguém que não faz nenhum dos dois.",
+        "detail": "O álcool é um agente cancerígeno direto na cavidade bucal. O risco aumenta conforme a quantidade consumida, e o consumo pesado (mais de 3 a 4 doses por dia) representa o maior risco. Quando combinado com tabaco, os efeitos se somam de forma potencializada: o risco combinado supera em muito a soma dos dois riscos individuais. Alguém que fuma muito e bebe muito pode ter um risco até 30 vezes maior do que alguém que não faz nenhum dos dois.",
         "link": null
       },
       {
@@ -554,7 +554,7 @@
         "weight": "Alto e crescente",
         "weightColor": "text-accent",
         "summary": "Atualmente a principal causa de câncer de orofaringe, superando o tabaco.",
-        "detail": "O papilomavírus humano tipo 16 (HPV-16) é uma infecção sexualmente transmissível que se tornou o principal fator por trás dos cânceres de orofaringe: cânceres na base da língua, nas amígdalas e na garganta. Ao contrário dos cânceres bucais relacionados ao tabaco, os cânceres relacionados ao HPV tendem a ocorrer em adultos mais jovens sem histórico de tabagismo e respondem melhor ao tratamento. A vacina contra o HPV (Gardasil 9) é altamente eficaz na prevenção da infecção pelo HPV-16 quando aplicada antes da exposição.",
+        "detail": "O papilomavírus humano tipo 16 (HPV-16) é uma infecção sexualmente transmissível que se tornou o principal fator por trás dos cânceres de orofaringe: cânceres da base da língua, amígdalas e garganta. Ao contrário dos cânceres bucais relacionados ao tabaco, os cânceres relacionados ao HPV tendem a ocorrer em adultos mais jovens sem histórico de tabagismo e respondem melhor ao tratamento. A vacina contra o HPV (Gardasil 9) é altamente eficaz na prevenção da infecção pelo HPV-16 quando aplicada antes da exposição ao vírus.",
         "link": "/learn/hpv"
       },
       {
@@ -562,8 +562,8 @@
         "name": "Idade",
         "weight": "Moderado",
         "weightColor": "text-caution",
-        "summary": "O risco aumenta bastante após os 55 anos. O pico de incidência ocorre entre os 60 e 70 anos.",
-        "detail": "O câncer bucal é mais comum com o avanço da idade, em parte pela maior exposição acumulada aos fatores de risco ao longo da vida, e em parte pelas mudanças na função imunológica relacionadas à idade. A idade média no momento do diagnóstico é de 62 anos. No entanto, os cânceres de orofaringe relacionados ao HPV estão sendo diagnosticados com frequência cada vez maior em adultos entre 40 e 50 anos, portanto adultos mais jovens também não estão livres do risco.",
+        "summary": "O risco aumenta bastante após os 55 anos. O pico de casos ocorre entre os 60 e 70 anos.",
+        "detail": "O câncer bucal é mais comum com o avanço da idade, em parte pela exposição acumulada a fatores de risco ao longo da vida, e em parte por mudanças no funcionamento do sistema imunológico relacionadas à idade. A mediana de idade no diagnóstico é 65 anos (SEER, 2019 a 2023). No entanto, os cânceres de orofaringe relacionados ao HPV são diagnosticados cada vez mais em adultos entre 40 e 50 anos, portanto adultos mais jovens também não estão livres de risco.",
         "link": null
       },
       {
@@ -572,7 +572,7 @@
         "weight": "Moderado, câncer de lábio",
         "weightColor": "text-caution",
         "summary": "A radiação UV é o principal fator de risco especificamente para o câncer de lábio.",
-        "detail": "A exposição crônica ao sol sem proteção aumenta o risco de câncer de lábio, especialmente no lábio inferior. Pessoas que trabalham ao ar livre por longos períodos, como agricultores, trabalhadores da construção civil e pescadores, historicamente apresentam taxas mais altas de câncer de lábio. Usar protetor labial com FPS e chapéu são medidas eficazes de proteção.",
+        "detail": "A exposição solar crônica sem proteção aumenta o risco de câncer de lábio, especialmente no lábio inferior. Pessoas que trabalham ao ar livre por longos períodos, como agricultores, trabalhadores da construção civil e pescadores, historicamente apresentam taxas mais altas de câncer de lábio. Usar protetor labial com FPS e chapéu são medidas protetoras eficazes.",
         "link": null
       },
       {
@@ -580,35 +580,35 @@
         "name": "Alimentação",
         "weight": "Moderado",
         "weightColor": "text-caution",
-        "summary": "Dietas pobres em frutas e verduras estão consistentemente associadas a um risco maior.",
-        "detail": "Uma alimentação pobre em frutas e verduras, e portanto pobre em antioxidantes, vitaminas A, C e E e outros micronutrientes, está associada a um risco elevado de câncer bucal em estudos epidemiológicos. O efeito protetor do consumo de frutas e verduras é bem documentado, embora a alimentação seja considerada um fator secundário em comparação ao tabaco, ao álcool e ao HPV.",
+        "summary": "Dietas pobres em frutas e verduras estão consistentemente associadas a maior risco.",
+        "detail": "Uma alimentação pobre em frutas e verduras, e portanto pobre em antioxidantes, vitaminas A, C e E e outros micronutrientes, está associada a maior risco de câncer bucal em estudos epidemiológicos. O efeito protetor do consumo de frutas e vegetais é bem documentado, embora a alimentação seja considerada um fator secundário em comparação ao tabaco, ao álcool e ao HPV.",
         "link": null
       },
       {
         "rank": 7,
-        "name": "Uso de noz de areca (betel)",
+        "name": "Uso de noz de areca",
         "weight": "Muito alto, populações específicas",
         "weightColor": "text-accent",
-        "summary": "Uma das principais causas de câncer bucal no sul e sudeste asiático.",
-        "detail": "A noz de areca (betel), frequentemente mastigada com folha de bétel e cal, ou na forma de paan, gutka ou pan masala, é um dos agentes cancerígenos bucais mais potentes conhecidos. É a quarta substância psicoativa mais consumida no mundo e é responsável por altas taxas de fibrose submucosa bucal e carcinoma de células escamosas no sul da Ásia, no sudeste asiático e em populações da diáspora ao redor do mundo.",
+        "summary": "Uma das principais causas de câncer bucal no sul e no sudeste da Ásia.",
+        "detail": "A noz de areca, frequentemente mastigada com folha de bétel e cal extinta, ou na forma de paan, gutka ou pan masala, é um dos agentes cancerígenos bucais mais potentes conhecidos. É a quarta substância psicoativa mais usada no mundo e é responsável pelas altas taxas de fibrose submucosa oral e carcinoma de células escamosas no sul da Ásia, no sudeste asiático e em populações da diáspora em todo o mundo.",
         "link": null
       },
       {
         "rank": 8,
         "name": "Histórico familiar",
-        "weight": "Modesto",
+        "weight": "Moderado baixo",
         "weightColor": "text-low",
-        "summary": "Ter um parente de primeiro grau com câncer bucal ou de cabeça e pescoço aumenta moderadamente o risco.",
-        "detail": "Ter pai, mãe ou irmão que desenvolveu câncer bucal ou de cabeça e pescoço aumenta um pouco o seu risco, provavelmente por uma combinação de predisposição genética compartilhada e exposições ambientais em comum. O histórico familiar por si só não é considerado um fator de alto risco, mas reforça a importância de fazer exames odontológicos regulares.",
+        "summary": "Ter um familiar de primeiro grau com câncer bucal ou de cabeça e pescoço aumenta modestamente o risco.",
+        "detail": "Ter pai, mãe ou irmão que desenvolveu câncer bucal ou de cabeça e pescoço aumenta um pouco o risco, provavelmente por uma combinação de predisposição genética compartilhada e exposições ambientais em comum. O histórico familiar por si só não é considerado um fator de alto risco, mas reforça a importância de fazer consultas odontológicas regularmente.",
         "link": null
       },
       {
         "rank": 9,
-        "name": "Consultas odontológicas pouco frequentes",
+        "name": "Consultas odontológicas infrequentes",
         "weight": "Indireto",
         "weightColor": "text-low",
-        "summary": "Os dentistas são os principais responsáveis pela triagem inicial do câncer bucal.",
-        "detail": "Os dentistas realizam rotineiramente exames visuais e físicos em busca de sinais de câncer bucal durante as consultas de rotina. Pessoas que raramente vão ao dentista perdem essas triagens regulares, o que significa que lesões iniciais podem passar mais tempo sem ser detectadas. Isso não é uma causa biológica direta, mas aumenta significativamente a chance de que um câncer seja detectado em um estágio mais avançado e de tratamento mais difícil.",
+        "summary": "Os dentistas são os principais responsáveis pelo rastreamento do câncer bucal na linha de frente.",
+        "detail": "Os dentistas realizam rotineiramente exames visuais e físicos para identificar sinais de câncer bucal durante as consultas de rotina. Pessoas que raramente visitam o dentista perdem essas avaliações regulares, o que significa que lesões iniciais podem passar mais tempo sem ser detectadas. Isso não é uma causa biológica direta, mas aumenta significativamente a chance de um câncer ser descoberto em um estágio mais avançado e mais difícil de tratar.",
         "link": "/find-care"
       }
     ],
@@ -784,23 +784,23 @@
     "faqs": [
       {
         "q": "O que é câncer bucal?",
-        "a": "Câncer bucal é o câncer que se desenvolve em qualquer parte da boca (cavidade oral) ou na parte posterior da garganta (orofaringe). Isso inclui lábios, língua, gengivas, assoalho da boca, palato duro e mole, bochechas e garganta. A maioria dos cânceres bucais são carcinomas de células escamosas, cânceres que começam nas células planas que revestem essas superfícies."
+        "a": "Câncer bucal é o câncer que se desenvolve em qualquer parte da boca (cavidade oral) ou na parte posterior da garganta (orofaringe). Isso inclui os lábios, a língua, as gengivas, o assoalho da boca, o palato duro e mole, as bochechas e a garganta. A maioria dos cânceres bucais são carcinomas de células escamosas, cânceres que se originam nas células planas que revestem essas superfícies."
       },
       {
         "q": "Quais são os tipos de câncer bucal?",
-        "a": "Os principais tipos são: carcinoma de células escamosas (cerca de 90% dos casos), câncer de orofaringe (amígdalas, base da língua, garganta, frequentemente relacionado ao HPV), câncer de glândula salivar (raro, com vários subtipos) e linfoma bucal (incomum, mais provável em pessoas com imunidade comprometida)."
+        "a": "Os principais tipos são: carcinoma de células escamosas (cerca de 90% dos casos), câncer de orofaringe (amígdalas, base da língua, garganta, frequentemente relacionado ao HPV), câncer de glândula salivar (raro, com vários subtipos) e linfoma oral (incomum, mais provável em pessoas com imunidade comprometida)."
       },
       {
-        "q": "Câncer bucal é o mesmo que câncer de garganta?",
-        "a": "Eles se sobrepõem. O câncer bucal geralmente se refere aos cânceres dos lábios, língua, gengivas, bochechas, assoalho e teto da boca. O câncer de orofaringe afeta as amígdalas, a base da língua e a parte posterior da garganta. Como essas regiões se conectam, elas frequentemente são agrupadas como \"câncer bucal e orofaríngeo\"."
+        "q": "Câncer bucal e câncer de garganta são a mesma coisa?",
+        "a": "Eles se sobrepõem. O câncer bucal geralmente se refere aos cânceres dos lábios, língua, gengivas, bochechas e assoalho e teto da boca. O câncer de orofaringe afeta as amígdalas, a base da língua e a parte posterior da garganta. Como essas regiões se conectam, elas costumam ser agrupadas como câncer bucal e de orofaringe."
       },
       {
         "q": "O câncer bucal é comum?",
-        "a": "Mais de 54.000 americanos são diagnosticados com câncer bucal e orofaríngeo a cada ano. É cerca de duas vezes mais comum em homens do que em mulheres, e a idade mediana ao diagnóstico é 62 anos. Está entre os dez cânceres mais comuns no mundo."
+        "a": "Mais de 54.000 americanos são diagnosticados com câncer bucal e de orofaringe por ano. É aproximadamente duas vezes mais comum em homens do que em mulheres, e a mediana de idade no diagnóstico é 65 anos. Está entre os dez cânceres mais comuns no mundo."
       },
       {
-        "q": "O câncer bucal tem cura se for detectado cedo?",
-        "a": "Sim. A taxa de sobrevida em 5 anos para o câncer bucal em estágio inicial é de cerca de 84%. Em estágio avançado, esse número cai para aproximadamente 40%. A detecção precoce por meio de consultas regulares ao dentista e autoexames mensais é o principal fator para melhorar os resultados."
+        "q": "O câncer bucal tem cura se for descoberto cedo?",
+        "a": "Sim. A taxa de sobrevida em 5 anos para o câncer bucal em estágio inicial é de cerca de 84%. Em estágio avançado, esse número cai para aproximadamente 40%. A detecção precoce por meio de consultas odontológicas regulares e autoexames mensais é o principal fator para melhorar os resultados."
       }
     ],
     "sourcesLabel": "Fontes:",
@@ -1213,12 +1213,12 @@
     ],
     "features": [
       {
-        "title": "10 perguntas rápidas",
-        "desc": "Baseadas em fatores de risco clínicos reais, leva cerca de 2 minutos no celular."
+        "title": "Algumas perguntas rápidas",
+        "desc": "Baseadas em fatores de risco clínicos reais, leva cerca de 2 minutos no seu celular."
       },
       {
         "title": "Completamente privado",
-        "desc": "Nada é salvo ou enviado para lugar nenhum. Suas respostas ficam no seu dispositivo."
+        "desc": "Nada é salvo ou enviado para nenhum lugar. Suas respostas ficam no seu dispositivo."
       },
       {
         "title": "Conheça seu nível de risco",
@@ -1318,17 +1318,17 @@
     "tierModerate": "Moderado",
     "tierElevated": "Elevado",
     "tierHigh": "Alto",
-    "tierP1": "A pontuação máxima possível é de aproximadamente 53 (todas as respostas de maior risco mais o bônus de interação). Alguns pontos de referência: um fumante diário sozinho pontua 8 (moderado); tabaco + álcool + interação resulta em 16 (elevado); noz de areca + tabaco + álcool + interação chega a 25 (alto).",
+    "tierP1": "A pontuação máxima possível é 61 (todas as respostas de maior risco mais o bônus de interação). Alguns pontos de referência: um fumante diário sozinho pontua 8 (moderado); tabaco + álcool + interação chegam a 16 (elevado); bétel + tabaco + álcool + interação alcançam 25 (alto). Sexo masculino ao nascer sozinho pontua 3, o que ainda é baixo.",
     "tierP2Bold": "Alto",
     "tierP2Rest": "Independentemente da pontuação, qualquer sintoma com duração de 2 semanas ou mais (uma ferida persistente, mancha vermelha ou branca, caroço sem explicação, ou dificuldade para engolir) eleva o nível para {bold} e indica a necessidade de avaliação imediata.",
     "limitationsHeading": "Limitações Conhecidas",
     "limitations": [
-      "O OralCheck não foi validado com base em um conjunto de dados de resultados clínicos. Os pesos são fundamentados na literatura publicada, mas não foram calibrados com base em uma coorte prospectiva.",
-      "O rastreador combina o risco de câncer bucal e de câncer da orofaringe em uma única pontuação. Essas são entidades epidemiologicamente distintas: o HPV-16 é principalmente um fator para o câncer de orofaringe, enquanto o tabaco e o álcool predominam no câncer bucal.",
-      "O sexo biológico não é considerado. Homens têm aproximadamente o dobro da incidência de câncer bucal em comparação às mulheres, e isso representa uma lacuna no modelo atual.",
-      "A imunossupressão (HIV, receptores de transplante de órgãos, uso prolongado de corticosteroides) está associada a um risco significativamente elevado de câncer bucal e não é abordada atualmente.",
-      "O rastreador depende de dados autodeclarados. O uso de tabaco e álcool é frequentemente subrelatado.",
-      "A frequência de consultas odontológicas é incluída como um indicador de atraso no diagnóstico, e não como um fator de risco causal com um OR bem caracterizado. Seu peso é baseado em justificativa clínica, e não em derivação epidemiológica direta."
+      "O OralCheck não foi validado com base em um conjunto de dados de desfechos clínicos. Os pesos são fundamentados na literatura publicada, mas não foram calibrados com base em uma coorte prospectiva.",
+      "O rastreador combina o risco de câncer da cavidade bucal e do orofaringe em uma única pontuação. Essas são entidades epidemiologicamente distintas: o HPV-16 é principalmente um fator causador do câncer de orofaringe, enquanto o tabaco e o álcool predominam no câncer da cavidade bucal.",
+      "A pergunta combinada sobre imunidade e radiação agrupa três exposições com tamanhos de efeito genuinamente diferentes em um único peso. Uma pessoa em uso prolongado de imunossupressores após um transplante e outra que fez radioterapia na cabeça e no pescoço décadas atrás recebem a mesma pontuação, o que é uma simplificação feita para manter o rastreador curto.",
+      "O rastreador depende de dados autodeclarados. O uso de tabaco e álcool costuma ser subestimado nas respostas.",
+      "A frequência de visitas ao dentista é incluída como um indicador indireto de atraso no diagnóstico, e não como um fator de risco causal com uma razão de chances bem caracterizada. Seu peso é baseado em raciocínio clínico, e não em derivação epidemiológica direta.",
+      "O sexo é registrado de forma binária com opção de não informar. O instrumento não tem como representar alguém cujo histórico de exposição não corresponde à população da qual os dados de incidência subjacentes foram obtidos."
     ],
     "referencesHeading": "Referências",
     "viewOn": "Ver no PubMed / editora →",
@@ -1340,6 +1340,7 @@
       "tobaccoOccasional": "Tabaco (ocasional)",
       "alcoholDaily": "Álcool (diário)",
       "hpvHistory": "Histórico relacionado ao HPV",
+      "systemicYes": "Imunossupressão, transplante ou radioterapia prévia na cabeça e no pescoço",
       "age65": "65 anos ou mais",
       "age55": "55 a 64 anos",
       "betelPast": "Bétel (uso anterior)",
@@ -1347,6 +1348,7 @@
       "familyHistory": "Histórico familiar (parente de primeiro grau)",
       "dietLow": "Alimentação com baixo consumo de frutas e vegetais",
       "age35": "35 a 54 anos",
+      "sexMale": "Sexo masculino ao nascer",
       "tobaccoFormer": "Tabaco (ex-usuário)",
       "hpvUnvaccinated": "HPV (não vacinado, sem histórico conhecido)",
       "sunExposure": "Exposição ao sol (lábios, sem proteção)",
@@ -1359,18 +1361,104 @@
       "sunRegular": "Exposição ao sol (regular, às vezes com proteção)",
       "familyDistant": "Histórico familiar (parente distante)",
       "dietWeekly": "Frutas e vegetais algumas vezes por semana",
-      "hpvUnknown": "Situação em relação ao HPV desconhecida"
+      "hpvUnknown": "Situação em relação ao HPV desconhecida",
+      "sexUnstated": "Sexo não informado",
+      "systemicUnsure": "Histórico imunológico ou de radioterapia (não tem certeza)"
     },
     "factorNotes": {
       "tobaccoDaily": "Referência para a constante de escala k = 4,47",
       "betelCurrent": "Carcinógeno do Grupo 1 da IARC, independente do tabaco",
       "alcoholDaily": "Carcinógeno do Grupo 1 da IARC",
       "hpvHistory": "Estimativa conservadora; OR de aproximadamente 15 vezes especificamente para orofaringe",
-      "age65": "A idade mediana ao diagnóstico é 62 anos",
+      "age65": "A mediana de idade no diagnóstico é 65 anos",
       "tobaccoFormer": "O risco diminui aproximadamente 50% dentro de 5 anos após a cessação",
       "hpvUnvaccinated": "O status de não vacinado é um indicador comportamental do risco de exposição ao HPV-16, e não uma medida de soroestatus. O OR reflete uma probabilidade de exposição de base elevada em adultos não vacinados, e não uma infecção confirmada.",
-      "sunExposure": "Carcinoma espinocelular de lábio inferior; trabalhadores ao ar livre versus referência em ambientes fechados"
-    }
+      "sunExposure": "Carcinoma espinocelular de lábio inferior; trabalhadores ao ar livre versus referência em ambientes fechados",
+      "systemicYes": "Calculado a partir de três exposições heterogêneas, e não de um único valor publicado. Este é o peso menos precisamente derivado do instrumento.",
+      "sexMale": "Derivado de uma razão de chances deliberadamente conservadora de 2,0, e não da razão de taxas de 2,6× do SEER, porque parte do excesso masculino é explicado pelo uso de tabaco e álcool, que já são pontuados separadamente.",
+      "sexUnstated": "Média populacional: aproximadamente metade dos respondentes que não informam o sexo são do sexo masculino."
+    },
+    "thresholdAnchorNote": "Os limites são ancorados nesses perfis de referência, e não reescalonados sempre que a pontuação máxima muda. A inclusão das perguntas sobre sexo e histórico imunológico em agosto de 2026 elevou a pontuação máxima de 53 para 61, e um reescalonamento proporcional teria deslocado o limite da categoria Alto para 26, rebaixando silenciosamente um perfil inalterado de bétel + tabaco + álcool de Alto para Elevado. Uma nova pergunta não deve fazer um perfil existente parecer mais seguro, por isso os limites foram mantidos onde estavam.",
+    "rationaleHeading": "Por que cada pergunta é feita",
+    "rationaleIntro": "Cada pergunta justifica sua presença ao alterar a pontuação de uma forma respaldada pela literatura publicada. Este é o raciocínio por trás de cada uma delas, incluindo as duas em que as evidências são mais fracas.",
+    "rationale": [
+      {
+        "id": "age",
+        "title": "Idade",
+        "body": "A incidência aumenta acentuadamente após os 40 anos e a idade mediana ao diagnóstico é de 65 anos. A idade é o preditor não modificável mais forte do instrumento e também funciona como um indicador da exposição mucosal acumulada a todos os outros carcinógenos desta lista, razão pela qual ela tem peso mesmo para alguém que não relata nenhum outro fator."
+      },
+      {
+        "id": "sex",
+        "title": "Sexo ao nascer",
+        "body": "Os homens são diagnosticados em uma taxa aproximadamente 2,6 vezes maior do que as mulheres. Parte dessa diferença se deve ao uso historicamente maior de tabaco e álcool, que este rastreador já pontua separadamente, de modo que aplicar o fator completo de 2,6× contaria a mesma exposição duas vezes. O peso é derivado de uma razão de chances de 2,0. O sexo ao nascer é perguntado, e não a identidade de gênero, porque é isso que os dados de incidência registraram."
+      },
+      {
+        "id": "tobacco",
+        "title": "Tabaco",
+        "body": "A âncora de toda a escala: a constante de escalonamento foi escolhida para que o uso diário corresponda a um peso de 8. Tanto as formas combustíveis quanto as sem fumaça contam. O uso anterior mantém um peso diferente de zero porque o risco diminui gradualmente após a cessação, em vez de ser zerado, reduzindo-se pela metade em aproximadamente cinco anos."
+      },
+      {
+        "id": "alcohol",
+        "title": "Álcool",
+        "body": "Um carcinógeno do Grupo 1 para a cavidade bucal, com uma relação dose-resposta clara. O carcinógeno é o acetaldeído, metabólito do etanol, razão pela qual a frequência de consumo importa mais para a pontuação do que o tipo de bebida."
+      },
+      {
+        "id": "betel",
+        "title": "Bétel, paan e gutka",
+        "body": "Perguntado separadamente do tabaco, e não incluído nele, porque o bétel é carcinogênico com ou sem tabaco adicionado. É a exposição com maior peso no instrumento. A pergunta é feita a todos, e não apenas a pessoas de regiões específicas, já que o rastreador é usado bem além dos países onde o uso é mais comum."
+      },
+      {
+        "id": "hpv",
+        "title": "HPV",
+        "body": "O HPV-16 é atualmente a principal causa de câncer de orofaringe em adultos com menos de 50 anos. Uma ferramenta pública não pode solicitar o status sorológico, então o histórico de vacinação e o histórico relatado funcionam como indicadores comportamentais indiretos. Esta é a inferência mais fraca do instrumento, e o peso é definido bem abaixo da verdadeira razão de chances para o HPV-16 confirmado, para refletir isso."
+      },
+      {
+        "id": "sun",
+        "title": "Exposição ao sol",
+        "body": "Esta pergunta é sobre o lábio inferior especificamente, e não sobre o interior da boca. O carcinoma de células escamosas do lábio se comporta mais como um câncer de pele do que como um câncer bucal, e trabalhadores ao ar livre apresentam duas a três vezes mais risco do que trabalhadores em ambientes fechados."
+      },
+      {
+        "id": "symptom",
+        "title": "Sintomas atuais",
+        "body": "Tratado de forma diferente de tudo mais nesta página. Uma ferida persistente, mancha, nódulo ou dificuldade para engolir é melhor entendido como uma possível condição já existente do que como uma exposição de risco, por isso ele acrescenta pontos e também substitui a classificação de forma direta. Uma pessoa com um sintoma e sem outros fatores de risco ainda recebe a recomendação de consultar um dentista."
+      },
+      {
+        "id": "family",
+        "title": "Histórico familiar",
+        "body": "Um familiar de primeiro grau com câncer de cabeça e pescoço aproximadamente dobra o risco. Parte disso se deve ao ambiente compartilhado, e não à hereditariedade, razão pela qual o peso é modesto e um familiar distante conta muito menos."
+      },
+      {
+        "id": "systemic",
+        "title": "Histórico imunológico e de radioterapia",
+        "body": "Adicionado em agosto de 2026 após uma revisão clínica externa identificá-lo como a lacuna mais evidente do instrumento. Transplante de órgão ou de medula óssea, radioterapia prévia na cabeça e no pescoço, e condições ou medicamentos que suprimem a imunidade são agrupados em uma única pergunta porque convergem para o mesmo mecanismo: redução da vigilância imunológica da mucosa bucal ou, no caso da radioterapia, um campo já exposto a um carcinógeno conhecido. Eles são agrupados em vez de separados porque qualquer um deles leva à mesma recomendação."
+      },
+      {
+        "id": "diet",
+        "title": "Alimentação",
+        "body": "O baixo consumo de frutas e verduras está associado a aproximadamente o dobro do risco. Esta é a evidência causal mais fraca entre os fatores modificáveis, fortemente confundida com o tabagismo e o nível socioeconômico, e é ponderada de acordo com isso."
+      },
+      {
+        "id": "dental",
+        "title": "Cuidados odontológicos",
+        "body": "Não é um fator de risco, e a página é explícita sobre isso. É um indicador indireto de atraso no diagnóstico. Mais de 60% dos cânceres bucais são descobertos no estágio III ou IV, e o exame visual de dois minutos que os detecta mais cedo acontece em uma consulta odontológica. Seu peso vem de raciocínio clínico, e não de uma razão de chances, sendo a única entrada na tabela para a qual isso é verdade."
+      }
+    ],
+    "cannotHeading": "O que esta ferramenta não pode dizer",
+    "cannotIntro": "Uma pontuação de risco é fácil de ser mal interpretada. Estas são as coisas específicas que um resultado do OralCheck não significa, apresentadas de forma clara para que ninguém precise deduzi-las.",
+    "cannot": [
+      "Ela não pode dizer se você tem câncer bucal. Ela nunca vê sua boca. Ela apenas retorna as exposições que você relatou, e nada mais.",
+      "Um resultado baixo não é um atestado de saúde. Aproximadamente um quarto dos cânceres bucais ocorre em pessoas sem nenhum dos fatores de risco convencionais que este rastreador avalia, então uma pontuação baixa associada a um sintoma ainda significa que você deve consultar um dentista.",
+      "Ela não pode distinguir câncer da cavidade bucal de câncer de orofaringe. São doenças epidemiologicamente distintas, com causas predominantes diferentes, e a pontuação única as mistura.",
+      "Ela não pode levar em conta o que você não relatou ou não sabia. O uso de tabaco e álcool é consistentemente subestimado em questionários autoaplicados.",
+      "Ela não foi validada com base em um conjunto de dados de desfechos clínicos. Cada peso é derivado da literatura publicada, mas o instrumento como um todo nunca foi calibrado com base em uma coorte prospectiva, e não deve ser descrito como validado.",
+      "A pontuação não é uma probabilidade. É uma estratificação ordinal, portanto uma pontuação de 20 não representa o dobro do risco de uma pontuação de 10 e não corresponde a uma porcentagem de chance de desenvolver qualquer doença.",
+      "Ela não pode substituir o exame. O rastreamento real do câncer bucal é um exame visual e tátil rápido realizado por um dentista ou médico. O único propósito desta ferramenta é tornar mais provável que essa consulta aconteça."
+    ],
+    "reviewHeading": "Revisão e manutenção",
+    "lastReviewedLabel": "Última revisão",
+    "lastReviewedDate": "Agosto de 2026",
+    "reviewBody": "A lista de fatores, os pesos, os limites e as fontes desta página foram verificados pela última vez com base na literatura atual em agosto de 2026 e revisados após avaliação externa por um patologista bucal e maxilofacial em exercício. Essa revisão foi o que adicionou a pergunta sobre histórico imunológico e de radioterapia, incluiu crescimento gengival e mobilidade dentária recente nas orientações sobre sintomas, e motivou a observação de que uma parcela significativa dos cânceres bucais ocorre sem nenhum fator de risco convencional.",
+    "reviewCadence": "Esta página é revisada pelo menos uma vez por ano e sempre que uma pergunta é adicionada, removida ou reajustada em peso. Se você identificar um erro em uma citação ou em um peso, vale a pena reportar: as correções são feitas diretamente e a data de revisão é atualizada."
   },
   "ContactForm": {
     "sentTitle": "Mensagem recebida, obrigado pelo contato.",
@@ -1613,7 +1701,7 @@
   },
   "ScreenerMeta": {
     "title": "Avaliação Gratuita de Risco de Câncer Bucal",
-    "description": "Faça a avaliação gratuita de risco de câncer bucal do OralCheck. Responda 10 perguntas baseadas em fatores de risco publicados pela ACS, pelo NCI e pela Oral Cancer Foundation. Privado, sem necessidade de cadastro."
+    "description": "Faça o rastreador gratuito de risco de câncer bucal do OralCheck. Responda a um conjunto curto de perguntas baseadas em fatores de risco publicados pela ACS, pelo NCI e pela Oral Cancer Foundation. Privado, sem necessidade de cadastro."
   },
   "FindCareMeta": {
     "title": "Encontre Atendimento para Câncer Bucal Perto de Você",
@@ -1635,12 +1723,21 @@
   "Questions": {
     "age": {
       "title": "Qual é a sua faixa etária?",
-      "subtitle": "A incidência de câncer na cavidade bucal aumenta bastante após os 40 anos. A idade mediana no momento do diagnóstico é de 62 anos (dados do SEER). O risco aproximadamente dobra a cada década acima dos 40 anos.",
+      "subtitle": "A incidência de câncer da cavidade bucal aumenta acentuadamente após os 40 anos. A idade mediana ao diagnóstico é de 65 anos (SEER, 2019-2023). O risco aproximadamente dobra a cada década acima dos 40 anos.",
       "options": {
         "under35": "Menos de 35 anos",
         "35to54": "35 – 54 anos",
         "55to64": "55 – 64 anos",
         "65plus": "65 anos ou mais"
+      }
+    },
+    "sex": {
+      "title": "Qual sexo foi registrado para você ao nascer?",
+      "subtitle": "Os homens são diagnosticados com câncer da cavidade bucal e da faringe em uma taxa cerca de 2,6 vezes maior do que as mulheres (SEER: 17,5 vs 6,6 por 100.000). A pergunta é sobre o sexo ao nascer porque é isso que as pesquisas de base registraram. Esta não é uma pergunta sobre identidade de gênero, e nenhuma informação inserida é armazenada.",
+      "options": {
+        "male": "Masculino",
+        "female": "Feminino",
+        "preferNotToSay": "Prefiro não informar"
       }
     },
     "tobacco": {
@@ -1701,6 +1798,15 @@
         "unsure": "Não sei"
       }
     },
+    "systemic": {
+      "title": "Você já fez transplante de órgão ou de medula óssea, radioterapia na cabeça e no pescoço, ou tem alguma condição que suprime o sistema imunológico?",
+      "subtitle": "Esses fatores são agrupados porque compartilham um mecanismo: enfraquecimento da vigilância imunológica do revestimento da boca ou, no caso de radioterapia prévia, tecido já exposto a um carcinógeno conhecido. O uso prolongado de imunossupressores após transplante, o HIV e alguns tratamentos para doenças autoimunes também estão incluídos.",
+      "options": {
+        "yes": "Sim, um ou mais desses",
+        "unsure": "Não tenho certeza",
+        "no": "Não"
+      }
+    },
     "diet": {
       "title": "Com que frequência você come frutas e verduras?",
       "subtitle": "O baixo consumo de frutas e verduras é um fator de risco independente para o câncer bucal e de orofaringe. Dietas ricas em antioxidantes e nas vitaminas A, C e E estão associadas à menor ocorrência de displasia epitelial bucal.",
@@ -1734,6 +1840,7 @@
     "and": "e",
     "categoryGuidance": {
       "demographics": "A idade é o fator de risco não modificável mais importante. A partir dos 40 anos, o rastreamento em cada consulta odontológica é especialmente importante, pois o câncer bucal detectado no Estágio I tem uma taxa de sobrevivência em cinco anos de 84%, em comparação com 38% no Estágio IV.",
+      "sex": "O sexo ao nascer não é algo que se pode mudar, portanto deve ser tratado da mesma forma que a idade: como um motivo para garantir que o exame bucal de dois minutos realmente aconteça em vez de ser ignorado. Homens são diagnosticados com câncer de cavidade oral e faringe em uma taxa aproximadamente duas vezes maior do que mulheres, e também têm menos probabilidade de consultar um dentista regularmente, que é a parte que está ao alcance de cada um. Peça uma avaliação para rastreamento de câncer bucal pelo nome na próxima consulta, em vez de presumir que ela já foi realizada.",
       "tobacco": "Parar de fumar reduz o risco em aproximadamente 50% nos primeiros 5 anos após a cessação. A terapia de reposição de nicotina dobra as taxas de sucesso a longo prazo. Consulte seu dentista ou médico sobre programas gratuitos de cessação tabágica, o CVV e o INCA oferecem apoio para quem quer parar de fumar.",
       "alcohol": "O risco diminui com a redução do consumo. Para pessoas que usam tabaco e álcool ao mesmo tempo, parar de fumar tem o maior impacto individual. Mesmo reduzir o consumo de álcool de diário para ocasional diminui significativamente a exposição da mucosa a substâncias cancerígenas.",
       "hpv": "A vacina contra o HPV (Gardasil 9) é aprovada para uso até os 45 anos e é altamente eficaz contra o HPV-16, o subtipo mais fortemente associado ao câncer de orofaringe. Consulte seu médico ou dentista para saber se a vacinação é indicada para você.",
@@ -1742,16 +1849,19 @@
       "family": "Informe seu dentista sobre o histórico familiar. Ele pode recomendar rastreamentos mais frequentes para câncer bucal ou encaminhamento a um especialista em medicina oral. O aconselhamento genético está disponível na maioria dos centros médicos universitários.",
       "diet": "Procure consumir 5 ou mais porções diárias de frutas e verduras coloridas. As evidências indicam que dietas ricas em vitaminas A, C e E reduzem a displasia epitelial oral. O consumo de carnes processadas também foi associado a maior risco de câncer de cabeça e pescoço em alguns estudos de coorte.",
       "dental": "Marque uma consulta odontológica o quanto antes. O rastreamento visual para câncer bucal leva cerca de 2 minutos e é realizado como parte do exame de rotina. Mais de 60% dos casos de câncer bucal são diagnosticados no Estágio III ou IV, o acompanhamento odontológico regular muda essa realidade.",
-      "other": "Parar de usar noz de areca, paan ou gutka reduz o risco, embora algumas alterações na mucosa oral decorrentes do uso anterior possam persistir. Peça ao seu dentista que examine quaisquer áreas com descoloração, espessamento ou feridas. Muitas comunidades dispõem de recursos de cessação adaptados culturalmente."
+      "other": "Parar de usar noz de areca, paan ou gutka reduz o risco, embora algumas alterações na mucosa oral decorrentes do uso anterior possam persistir. Peça ao seu dentista que examine quaisquer áreas com descoloração, espessamento ou feridas. Muitas comunidades dispõem de recursos de cessação adaptados culturalmente.",
+      "medical": "Informe ao seu dentista sobre o transplante, o histórico de radioterapia ou o uso de imunossupressores antes do exame. Isso muda o nível de atenção e a frequência com que ele vai querer acompanhar você: muitos programas de transplante e protocolos de acompanhamento após radioterapia na cabeça e no pescoço já preveem rastreamento de câncer bucal com mais frequência do que uma vez por ano, e um consultório odontológico comum pode não saber aplicar esse calendário a menos que você informe."
     },
     "factorLabels": {
       "age": "Idade",
+      "sex": "Sexo ao nascer",
       "tobacco": "Uso de tabaco",
       "alcohol": "Consumo de álcool",
       "hpv": "Exposição ao HPV",
       "sun": "Exposição ao sol",
       "symptom": "Sintomas atuais",
       "family": "Histórico familiar",
+      "systemic": "Histórico imunológico ou de radioterapia",
       "diet": "Alimentação",
       "dental": "Cuidados odontológicos",
       "betel": "Noz de areca / paan / gutka"
@@ -1799,17 +1909,17 @@
     "heading": "Kit de Imprensa e Mídia",
     "subheading": "Tudo o que é necessário para escrever sobre o OralCheck com precisão, em um só lugar. Os arquivos estão disponíveis gratuitamente para uso em coberturas sobre o projeto.",
     "boilerplateHeading": "Texto institucional",
-    "boilerplateShort": "O OralCheck é um rastreador gratuito e privado de risco de câncer bucal. Faz dez perguntas, leva cerca de dois minutos, não exige cadastro e não armazena respostas.",
+    "boilerplateShort": "O OralCheck é um rastreador gratuito e privado de risco de câncer bucal. Leva cerca de dois minutos, não requer cadastro e não armazena respostas.",
     "boilerplateLong": "O câncer bucal costuma ser diagnosticado tardiamente, o que é o principal motivo pelo qual continua sendo uma doença grave. A sobrevivência é muito maior quando detectado cedo, e o HPV tornou-se uma das principais causas em adultos com menos de 50 anos. O OralCheck transforma fatores de risco publicados em uma autoavaliação rápida, explica quais respostas influenciaram a pontuação e por quê, e indica serviços de saúde próximos que podem realizar o rastreamento. É desenvolvido e mantido por Ian Harris, estudante de pré-odontologia na Universidade de Wisconsin-Madison, e está disponível em inglês e espanhol.",
     "factsHeading": "Dados rápidos",
     "facts": [
       {
         "label": "O que é",
-        "value": "Um rastreador gratuito de risco de câncer bucal, disponível na web sem necessidade de instalar aplicativo."
+        "value": "Um rastreador gratuito de risco de câncer bucal, disponível na web sem necessidade de instalar nenhum aplicativo."
       },
       {
         "label": "Duração",
-        "value": "10 perguntas, aproximadamente 2 minutos."
+        "value": "Cerca de 2 minutos."
       },
       {
         "label": "Custo",
@@ -1817,7 +1927,7 @@
       },
       {
         "label": "Privacidade",
-        "value": "As respostas são calculadas no navegador e não são armazenadas."
+        "value": "As respostas são calculadas no próprio navegador e não são armazenadas."
       },
       {
         "label": "Idiomas",
@@ -1825,15 +1935,15 @@
       },
       {
         "label": "Metodologia",
-        "value": "A pontuação é baseada em fatores de risco publicados e está documentada publicamente, com fontes, na página de metodologia."
+        "value": "A pontuação é derivada de fatores de risco publicados na literatura científica e está documentada publicamente, com as fontes, na página de metodologia."
       },
       {
         "label": "Fundação",
-        "value": "2026, por um estudante de pré-odontologia na Universidade de Wisconsin-Madison."
+        "value": "2026, por um estudante de pré-odontologia da Universidade de Wisconsin-Madison."
       },
       {
-        "label": "Localizador de clínicas",
-        "value": "Indica aos usuários consultórios odontológicos próximos, centros de saúde comunitários, faculdades de odontologia e clínicas gratuitas."
+        "label": "Busca de clínicas",
+        "value": "Direciona os usuários a consultórios odontológicos próximos, centros de saúde comunitários, faculdades de odontologia e clínicas gratuitas."
       }
     ],
     "founderHeading": "Fundador",
@@ -1887,31 +1997,31 @@
     "sections": [
       {
         "heading": "O que o OralCheck faz",
-        "body": "O OralCheck faz dez perguntas sobre fatores de risco que pesquisas publicadas associam ao câncer bucal e, em seguida, apresenta um nível de risco e uma explicação de quais respostas contribuíram para ele. A pontuação é derivada de razões de chances publicadas e está documentada integralmente na página de metodologia, incluindo todas as fontes. Trata-se de um questionário de avaliação de risco. O exame de rastreamento em si é a avaliação clínica realizada pelo dentista, e o objetivo desta ferramenta é ajudá-lo a decidir ir realizar essa avaliação."
+        "body": "O OralCheck apresenta um conjunto breve de perguntas sobre fatores de risco que pesquisas publicadas associam ao câncer bucal e, em seguida, retorna um nível de risco com uma explicação sobre quais respostas contribuíram para ele. A pontuação é derivada de odds ratios publicados e está documentada integralmente na página de metodologia, incluindo todas as fontes. Trata-se de um questionário de avaliação de risco. O exame de rastreamento em si é o exame clínico realizado pelo dentista, e o objetivo desta ferramenta é ajudar o usuário a decidir procurar um profissional para realizá-lo."
       },
       {
         "heading": "Nenhuma relação profissional",
-        "body": "O uso do OralCheck não cria qualquer relação médico-paciente, dentista-paciente ou qualquer outra relação profissional entre você e o OralCheck ou qualquer pessoa a ele associada. Ninguém analisa suas respostas, pois elas nunca são enviadas a lugar nenhum. As informações neste site são de caráter geral e não são adaptadas ao seu histórico de saúde."
+        "body": "O uso do OralCheck não cria uma relação médico-paciente, dentista-paciente ou qualquer outra relação profissional entre o usuário e o OralCheck ou qualquer pessoa a ele associada. Ninguém revisa as respostas, pois elas nunca são enviadas a nenhum servidor. As informações disponíveis neste site são de caráter geral e não são adaptadas ao histórico médico de nenhum usuário específico."
       },
       {
         "heading": "Precisão e limitações",
-        "body": "A ferramenta é construída a partir de pesquisas em nível populacional, e associações nesse nível não permitem prever o que acontecerá com um indivíduo. Os fatores de risco são autodeclarados e não verificados. As pesquisas evoluem e, embora a metodologia seja atualizada e datada, pode haver períodos em que ela não reflita as evidências mais recentes. As listagens de clínicas na seção Encontre Atendimento provêm de fontes de terceiros, incluindo Google Places e OpenStreetMap, e não é possível garantir que alguma listagem seja precisa, atual, esteja aceitando pacientes ou ofereça rastreamento de câncer bucal. Verifique com o estabelecimento antes de se deslocar."
+        "body": "A ferramenta é construída com base em pesquisas de nível populacional, e associações de nível populacional não permitem prever o que ocorrerá com um indivíduo específico. Os fatores de risco são autodeclarados e não verificados. A pesquisa científica evolui e, embora a metodologia seja mantida e datada, pode haver períodos em que ela não reflita as evidências mais recentes. As listagens de clínicas na seção Encontre Atendimento provêm de fontes de terceiros, incluindo Google Places e OpenStreetMap, e não é possível garantir que qualquer listagem seja precisa, atualizada, esteja aceitando pacientes ou ofereça rastreamento de câncer bucal. Verifique com o estabelecimento antes de se deslocar."
       },
       {
         "heading": "Suas responsabilidades",
-        "body": "Use a ferramenta para você mesmo ou para ajudar alguém que tenha pedido sua ajuda. Não a utilize para tomar decisões por outras pessoas sem o conhecimento delas, e não apresente os resultados como uma opinião profissional. Não tente prejudicar o funcionamento do site, interferir no uso de outras pessoas ou utilizar meios automatizados para sobrecarregá-lo de forma incomum."
+        "body": "Use a ferramenta para si mesmo ou para ajudar alguém que tenha pedido sua assistência. Não a utilize para tomar decisões por outra pessoa sem o conhecimento dela e não apresente os resultados como uma opinião profissional. Não tente prejudicar o funcionamento do site, interferir no uso de outras pessoas ou utilizar meios automatizados para sobrecarregá-lo."
       },
       {
-        "heading": "Sem garantias",
-        "body": "O OralCheck é disponibilizado no estado em que se encontra e conforme disponível, sem garantias de qualquer tipo, expressas ou implícitas, incluindo qualquer garantia implícita de comercialização, adequação a uma finalidade específica ou precisão. O site pode ficar indisponível, pode conter erros e pode ser alterado ou descontinuado a qualquer momento."
+        "heading": "Ausência de garantias",
+        "body": "O OralCheck é fornecido no estado em que se encontra e conforme disponível, sem garantias de qualquer tipo, expressas ou implícitas, incluindo quaisquer garantias implícitas de comercialização, adequação a uma finalidade específica ou precisão. O site pode ficar indisponível, pode conter erros e pode ser alterado ou encerrado a qualquer momento."
       },
       {
         "heading": "Limitação de responsabilidade",
-        "body": "Na máxima extensão permitida por lei, o OralCheck e as pessoas a ele associadas não são responsáveis por quaisquer danos indiretos, incidentais, especiais ou consequentes, nem por qualquer decisão que você tome sobre sua saúde com base nesta ferramenta. Nada nestes termos limita responsabilidades que não possam ser limitadas por lei. Isso não afeta seus direitos legais."
+        "body": "Na máxima extensão permitida pela lei, o OralCheck e as pessoas a ele associadas não são responsáveis por quaisquer danos indiretos, incidentais, especiais ou consequentes, nem por qualquer decisão tomada sobre a própria saúde com base nesta ferramenta. Nada nestes termos limita responsabilidades que não possam ser limitadas por lei. Isso não afeta os direitos legais do usuário."
       },
       {
         "heading": "Conteúdo e reutilização",
-        "body": "O conteúdo educativo, o folheto imprimível e os materiais com QR code podem ser usados livremente, impressos e distribuídos para fins educativos não comerciais, inclusive em consultórios odontológicos e clínicas médicas, com atribuição ao oralcheck.org. O nome e a identidade visual não podem ser utilizados de forma que implique endosso de um produto ou serviço. A metodologia de pontuação é pública e pode ser examinada, citada e criticada."
+        "body": "O conteúdo educativo, o folheto imprimível e os materiais com QR code podem ser usados, impressos e distribuídos livremente para fins educativos não comerciais, inclusive em consultórios odontológicos e médicos, com atribuição a oralcheck.org. O nome e a identidade visual não podem ser utilizados de forma que implique endosso de um produto ou serviço. A metodologia de pontuação é pública e pode ser examinada, citada e criticada."
       },
       {
         "heading": "Alterações nestes termos",
@@ -1919,7 +2029,7 @@
       },
       {
         "heading": "Lei aplicável",
-        "body": "Estes termos são regidos pelas leis do Estado de Wisconsin, Estados Unidos, sem consideração às normas de conflito de leis."
+        "body": "Estes termos são regidos pelas leis do Estado de Wisconsin, Estados Unidos, sem consideração aos princípios de conflito de leis."
       }
     ],
     "contactHeading": "Dúvidas",

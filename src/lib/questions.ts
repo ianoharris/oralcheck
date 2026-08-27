@@ -10,8 +10,13 @@ export type AnswerOption = {
 
 export type Question = {
   id: string;
+  // One category per question, not per theme. Results-page guidance is keyed
+  // off the category, so two questions sharing one would show identical advice
+  // under both — which is how "Sex at birth: Male" first shipped carrying the
+  // age paragraph verbatim.
   category:
     | "demographics"
+    | "sex"
     | "tobacco"
     | "alcohol"
     | "hpv"
@@ -20,6 +25,7 @@ export type Question = {
     | "family"
     | "diet"
     | "dental"
+    | "medical"
     | "other";
   icon: IconName;
   title: string;
@@ -46,6 +52,22 @@ export const QUESTION_SKELETON: QuestionSkeleton[] = [
       { id: "35to54", weight: 2 },
       { id: "55to64", weight: 4 },
       { id: "65plus", weight: 6 },
+    ],
+  },
+  {
+    // Sex is asked as a separate demographic rather than folded into age
+    // because the male excess is only partly explained by tobacco and alcohol,
+    // both of which this instrument already scores. See /methods for why the
+    // weight is derived from OR 2.0 rather than the raw 2.6x SEER rate ratio.
+    id: "sex",
+    category: "sex",
+    icon: "sex",
+    options: [
+      { id: "male", weight: 3 },
+      { id: "female", weight: 0 },
+      // Population average: roughly half of respondents who decline are male,
+      // so the expected excess is half of 3, rounded up to stay conservative.
+      { id: "preferNotToSay", weight: 2 },
     ],
   },
   {
@@ -110,6 +132,20 @@ export const QUESTION_SKELETON: QuestionSkeleton[] = [
       { id: "distant", weight: 1 },
       { id: "no", weight: 0 },
       { id: "unsure", weight: 0 },
+    ],
+  },
+  {
+    // One combined question covering three distinct exposures that share a
+    // mechanism (impaired immune surveillance of the oral mucosa). Kept
+    // combined rather than split so the screener stays short, on the reasoning
+    // that someone with any of the three warrants the same recommendation.
+    id: "systemic",
+    category: "medical",
+    icon: "immune",
+    options: [
+      { id: "yes", weight: 5 },
+      { id: "unsure", weight: 1 },
+      { id: "no", weight: 0 },
     ],
   },
   {

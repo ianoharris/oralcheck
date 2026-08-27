@@ -61,13 +61,13 @@ export default function OgImage() {
               Know your oral<br />cancer risk.
             </div>
             <div style={{ fontSize: 24, color: "#6b6b6b", fontFamily: "system-ui, sans-serif", lineHeight: 1.5 }}>
-              10 questions. 2 minutes.<br />No account. Nothing saved.
+              2 minutes. No account.<br />Nothing saved.
             </div>
           </div>
 
           {/* Steps */}
           <div style={{ display: "flex", flexDirection: "column", gap: "14px", flexShrink: 0 }}>
-            {["Answer 10 questions", "Get your risk tier", "See your next steps"].map((s, i) => (
+            {["Answer a few questions", "Get your risk tier", "See your next steps"].map((s, i) => (
               <div
                 key={s}
                 style={{ display: "flex", alignItems: "center", gap: "12px", fontFamily: "system-ui, sans-serif", fontSize: 16, color: "#2d2d2d" }}
