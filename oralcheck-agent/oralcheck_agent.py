@@ -103,7 +103,7 @@ PILLARS = ["stats", "myth_busting", "self_exam", "hpv_connection", "screener_cta
 PILLAR_BRIEFS = {
     "stats": (
         "Create a post anchored in a compelling oral cancer statistic. "
-        "Examples: '54,000 Americans are diagnosed yearly', '84% survival when caught early'. "
+        "Examples: '60,480 Americans are diagnosed yearly', '89% survival when found early'. "
         "Lead with the number, follow with what the audience can do about it."
     ),
     "myth_busting": (
@@ -532,7 +532,7 @@ def generate_content(brief: str, media_type: str) -> dict:
             "  bars: array of 2-3 objects, each with:\n"
             "    label: short bar label (3-5 words, e.g. 'Caught early')\n"
             "    value: integer 0-100 (percentage for bar width)\n"
-            "    value_str: display text (e.g. '84%' or '1 in 3')\n"
+            "    value_str: display text (e.g. '89%' or '1 in 3')\n"
             "  fact: one source/context sentence under 20 words (e.g. 'Source: Oral Cancer Foundation')\n"
             "  caption: full Instagram caption with oralcheck.org CTA\n"
             "  hashtags: exactly 5 lowercase tags\n"
@@ -545,7 +545,7 @@ def generate_content(brief: str, media_type: str) -> dict:
             "a key oral health stat with brand animation. "
             "Output JSON with exactly these fields: "
             "hook (punchy one-liner, 10 words max, no question mark needed -- e.g. 'Most people miss the early signs'), "
-            "stat (short compelling number or phrase, e.g. '84%' or '54,000 Americans'), "
+            "stat (short compelling number or phrase, e.g. '89%' or '60,480 Americans'), "
             "stat_context (5 words max label for the stat, e.g. 'early-stage survival rate'), "
             "fact (one clear supporting sentence, 25 words max, no em dashes), "
             "caption (full Instagram caption with oralcheck.org CTA), "
@@ -1517,7 +1517,7 @@ def generate_reel_script(brief: str) -> dict:
         "    - emphasis: ONE or TWO words taken verbatim from `caption` to highlight in coral\n"
         "    - kicker (optional): a 2-3 word uppercase eyebrow (only worth it on segment 1)\n"
         "    - stat (optional): ONLY when the line's whole point is a number. Then set\n"
-        "        stat = {\"value\": \"84%\", \"label\": \"survival when caught early\"} and you may\n"
+        "        stat = {\"value\": \"89%\", \"label\": \"survival when found early\"} and you may\n"
         "        omit caption/emphasis. The number animates by counting up.\n"
         "  caption: the Instagram caption (calm, evidence-based, ends by pointing to oralcheck.org)\n"
         "  hashtags: exactly 5 tags without the # symbol\n"

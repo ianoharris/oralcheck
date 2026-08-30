@@ -65,7 +65,7 @@ SAMPLE_DECK = {
                    "A lump or thickening in the cheek",
                    "Persistent trouble swallowing",
                    "A rough or crusted spot on the lip"]},
-        {"type": "stat", "value": "84%", "label": "five-year survival when it's caught early",
+        {"type": "stat", "value": "89%", "label": "five-year survival when it's found early",
          "detail": "That falls sharply once it spreads, so timing is everything."},
         {"type": "quote", "text": "The screening took less time than brushing my teeth.",
          "attribution": "OralCheck user"},
@@ -97,7 +97,7 @@ EDGE_CASES = [
         "05 / 08", "Checklist")),
     ("edge_infographic_3", R.render_infographic({
         "headline": "Three numbers that reframe how people think about oral cancer risk today",
-        "bars": [{"value_str": "54,000", "label": "Americans diagnosed each year"},
+        "bars": [{"value_str": "60,480", "label": "Americans diagnosed each year"},
                  {"value_str": "70%", "label": "of throat cancers are HPV-related"},
                  {"value_str": "2 min", "label": "to complete the free screener"}],
         "fact": "Early detection roughly quadruples the odds of a good outcome.",
@@ -198,7 +198,7 @@ def _cases():
             cases.append((f"layout_{case['type']}_{theme}_{len(case.get('value', ''))}", html))
     cases.append(("light_infographic", R.render_infographic({
         "headline": "Two numbers that reframe oral cancer risk",
-        "bars": [{"value_str": "84%", "label": "survival when caught early"},
+        "bars": [{"value_str": "89%", "label": "survival when found early"},
                  {"value_str": "39%", "label": "survival when caught late"}],
         "fact": "Early detection more than doubles the odds of a good outcome.",
     }, "light")))

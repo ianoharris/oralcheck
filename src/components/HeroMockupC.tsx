@@ -8,6 +8,7 @@ import {
   useReducedMotion,
 } from "framer-motion";
 import { useRef, useCallback } from "react";
+import { SEER_DISPLAY, minutesBetweenDeaths } from "@/lib/seerStats";
 
 /*
   DIRECTION C: "Signal" — warm cream field, character-blur headline,
@@ -284,7 +285,7 @@ function ScanRing({
           animate={{ opacity: 0.9 }}
           transition={{ delay: 1.7, duration: 0.6 }}
         >
-          84%
+          {SEER_DISPLAY.survivalLocalized}
         </motion.text>
         <motion.text
           x="200"
@@ -471,8 +472,8 @@ export default function HeroMockupC() {
             transition={{ duration: 0.4, delay: 1.55 }}
           >
             {[
-              { value: "54,000", label: "new US cases yearly" },
-              { value: "1 death", label: "every 50 minutes" },
+              { value: SEER_DISPLAY.newCases, label: "new US cases yearly" },
+              { value: "1 death", label: `every ${minutesBetweenDeaths} minutes` },
               { value: "2 min", label: "to complete the screener" },
             ].map(({ value, label }, i) => (
               <motion.div

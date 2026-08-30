@@ -67,13 +67,14 @@ Update both together. See `AGENTS.md`.
       gives the systemic question a weight of **5** (blended OR 3.0), joint fourth
       of twelve. He said "weighted high" and may have meant higher. He is the
       person who gets to say so.
-- [ ] **Site-wide survival statistics are stale.** Copy says 84% five-year survival
-      when caught early and 38% late, sourced from an older SEER release. SEER
-      2016–2022 now reports **88.7% localized / 69.7% regional / 36.0% distant**,
-      and median age at diagnosis is **65**, not 62. The age question and `/methods`
-      were corrected on 2026-08-27; the 84/38 pair still appears throughout
-      `RiskEngine.summary`, `categoryGuidance`, and several `/learn` articles. It is
-      one find-and-replace plus a decision on which pair of numbers to quote.
+- [x] ~~Site-wide survival statistics are stale~~ — fixed 2026-08-30. The audit
+      turned up that it was not only the 84/38 pair: case count, death count,
+      the death interval, and the sex ratio were all from superseded releases,
+      and the site contradicted itself on late-stage survival (38% on results,
+      40% on two learn pages, "around 67 percent" for regional in a published
+      article). All now read from `src/lib/seerStats.ts`, which carries the
+      source URL and a `lastVerified` date. **Re-check it annually**; the case
+      and death figures are year-stamped projections and go stale on schedule.
 
 - [ ] **Tighten the terminology.** *Verified:* USPSTF gives oral cancer screening an
       "insufficient evidence" rating, but that statement is scoped to **primary care
@@ -120,6 +121,20 @@ Update both together. See `AGENTS.md`.
 ## Shipped
 
 Newest first.
+
+### 2026-08-30
+- **Every SEER figure on the site corrected and consolidated.** Survival 84/38
+  became 88.7 localized / 69.7 regional / 36.0 distant; cases 54,000 became
+  60,480; deaths 11,580 became 13,150; "one death every 50 minutes" became 40,
+  which is now derived from the death count rather than written down beside it;
+  men 2x became 2.6x
+- **Stage framing corrected.** The site presented SEER *summary* stage figures
+  as AJCC "Stage I" and "Stage IV" survival, which attributes one staging
+  system's numbers to another. Copy now says localized and distant, and
+  `/methods` carries a stage table that says so explicitly
+- `src/lib/seerStats.ts` is the single source for the TSX side. The message
+  catalogues still hold their own copies, because they are JSON and translated,
+  and the file says so
 
 ### 2026-08-27 (later)
 - **API access restored** (Ian raised the workspace spend limit), which unblocked

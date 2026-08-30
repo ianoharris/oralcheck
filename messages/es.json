@@ -92,7 +92,7 @@
   },
   "FactsMeta": {
     "title": "Datos y estadísticas del cáncer oral",
-    "description": "Estadísticas clave del cáncer oral: más de 54,000 casos en EE. UU. al año, 84% de supervivencia cuando se detecta a tiempo, y por qué el VPH ha superado al tabaco como la causa principal. Basado en evidencia, con citas."
+    "description": "Estadísticas clave sobre el cáncer oral: 60,480 casos en EE. UU. por año, 89% de supervivencia cuando se detecta a tiempo, y por qué el VPH ha superado al tabaco como principal causa. Basado en evidencia, con referencias citadas."
   },
   "FactsPage": {
     "tag": "Datos",
@@ -101,47 +101,47 @@
     "introLink": "Comienza por saber qué es el cáncer oral.",
     "stats": [
       {
-        "value": "54,000+",
-        "label": "nuevos casos por año en EE. UU.",
-        "detail": "Cánceres orales y orofaríngeos combinados."
+        "value": "60,480",
+        "label": "nuevos casos en EE. UU. por año",
+        "detail": "Cánceres orales y orofaríngeos combinados, proyección para 2026."
       },
       {
-        "value": "11,580",
-        "label": "muertes por año en EE. UU.",
-        "detail": "Aproximadamente una muerte cada 50 minutos."
+        "value": "13,150",
+        "label": "muertes en EE. UU. por año",
+        "detail": "Aproximadamente una muerte cada 40 minutos."
       },
       {
-        "value": "84%",
-        "label": "de supervivencia a 5 años si se detecta temprano",
-        "detail": "Baja a un ~40% si se encuentra en etapa avanzada."
+        "value": "89%",
+        "label": "supervivencia a 5 años si se detecta a tiempo",
+        "detail": "Mientras el cáncer sigue localizado. Baja al 36% una vez que se ha extendido a sitios distantes."
       },
       {
-        "value": "2×",
-        "label": "más común en hombres",
-        "detail": "Aunque las tasas en mujeres están aumentando."
+        "value": "2.6×",
+        "label": "más frecuente en hombres",
+        "detail": "17.5 frente a 6.6 casos por cada 100,000 personas por año."
       }
     ],
     "factLabel": "DATO",
     "facts": [
       {
         "title": "El VPH es ahora la principal causa de cáncer orofaríngeo.",
-        "detail": "Los casos relacionados con el VPH han aumentado considerablemente en las últimas dos décadas, superando al tabaco como el factor principal. La vacuna contra el VPH reduce el riesgo de manera significativa y está aprobada hasta los 45 años."
+        "detail": "Los casos relacionados con el VPH han aumentado considerablemente en las últimas dos décadas, superando al tabaco como factor principal. La vacuna contra el VPH reduce el riesgo de manera significativa y está aprobada hasta los 45 años."
       },
       {
         "title": "El tabaco y el alcohol juntos multiplican el riesgo, no solo lo suman.",
-        "detail": "Las personas que consumen ambos tienen un riesgo considerablemente mayor que la suma de cada uno por separado. Dejar cualquiera de los dos reduce el riesgo con el tiempo."
+        "detail": "Las personas que consumen ambos tienen un riesgo sustancialmente mayor que la suma de cada factor por separado. Dejar cualquiera de los dos reduce el riesgo con el tiempo."
       },
       {
         "title": "El cáncer oral en etapa temprana tiene un tratamiento muy efectivo.",
-        "detail": "Cuando se detecta en Etapa I, la tasa de supervivencia a 5 años supera el 80%. En Etapa IV, cae por debajo del 40%. La etapa al momento del diagnóstico es el factor más importante en el resultado."
+        "detail": "Detectado mientras aún está localizado, la supervivencia relativa a 5 años es del 88.7%. Una vez que ha llegado a los ganglios linfáticos cercanos, baja al 69.7%, y una vez que se ha extendido a sitios distantes, al 36.0%. La etapa al momento del diagnóstico es el factor más determinante en el resultado."
       },
       {
         "title": "Los dentistas detectan la mayoría de los casos tempranos.",
-        "detail": "Una visita dental de rutina incluye una revisión de 2 minutos para detectar cáncer oral. En personas que no van al dentista con regularidad, los cánceres se detectan con mayor frecuencia en etapas avanzadas."
+        "detail": "Una visita dental de rutina incluye una revisión de cáncer oral que toma 2 minutos. Las personas que no acuden al dentista con regularidad suelen recibir el diagnóstico en etapas más avanzadas."
       },
       {
-        "title": "Ya no afecta solo a personas mayores que fuman.",
-        "detail": "El cáncer orofaríngeo relacionado con el VPH aparece con frecuencia en adultos de mediana edad sin historial de consumo de tabaco. Si tiene síntomas persistentes, la edad o el estilo de vida no deberían descartar una evaluación."
+        "title": "Ya no afecta solamente a personas mayores que fuman.",
+        "detail": "El cáncer orofaríngeo relacionado con el VPH aparece con frecuencia en adultos de mediana edad sin antecedentes de consumo de tabaco. Si tiene síntomas persistentes, la edad o el estilo de vida no deben ser razones para descartar una evaluación."
       }
     ],
     "sourcesLabel": "Fuentes:",
@@ -457,7 +457,7 @@
     "twoWeekHeading": "La regla de las 2 semanas",
     "twoWeekP1Start": "Cualquier llaga, mancha, bulto o cambio en tu boca que no se haya resuelto después de",
     "twoWeekBold": "2 semanas",
-    "twoWeekP1End": "debe ser revisado por un dentista o médico. La mayoría de las veces resulta no ser nada, pero esa tranquilidad vale una cita de 10 minutos. El cáncer oral detectado en etapa I tiene una tasa de supervivencia a cinco años del 84%.",
+    "twoWeekP1End": "debe ser evaluado por un dentista o médico. La mayoría de las veces resulta ser algo sin importancia, pero esa tranquilidad vale la pena con una cita de 10 minutos. El cáncer oral detectado mientras aún está localizado tiene una tasa de supervivencia relativa a 5 años del 89%.",
     "whenToSeeHeading": "Cuándo consultar a un médico, no esperes si:",
     "whenToSee": [
       {
@@ -717,23 +717,23 @@
     "byNumbersHeading": "En cifras",
     "stats": [
       {
-        "value": "54,000+",
+        "value": "60,480",
         "label": "nuevos diagnósticos por año",
         "sub": "EE. UU., oral y orofaríngeo combinados"
       },
       {
-        "value": "84%",
-        "label": "tasa de supervivencia si se detecta temprano",
-        "sub": "baja a ~40% en etapa avanzada"
+        "value": "89%",
+        "label": "supervivencia si se detecta a tiempo",
+        "sub": "localizado; 36% una vez que se ha extendido"
       },
       {
-        "value": "2×",
-        "label": "más común en hombres",
+        "value": "2.6×",
+        "label": "más frecuente en hombres",
         "sub": "aunque las tasas en mujeres están aumentando"
       },
       {
-        "value": "62",
-        "label": "edad promedio al momento del diagnóstico",
+        "value": "65",
+        "label": "edad media al diagnóstico",
         "sub": "pero puede ocurrir a cualquier edad"
       }
     ],
@@ -784,23 +784,23 @@
     "faqs": [
       {
         "q": "¿Qué es el cáncer oral?",
-        "a": "El cáncer oral es el cáncer que se desarrolla en cualquier parte de la boca (cavidad oral) o en la parte posterior de la garganta (orofaringe). Esto incluye los labios, la lengua, las encías, el piso de la boca, el paladar duro y blando, las mejillas y la garganta. La mayoría de los cánceres orales son carcinomas de células escamosas: cánceres que comienzan en las células planas que recubren estas superficies."
+        "a": "El cáncer oral es el cáncer que se desarrolla en cualquier parte de la boca (cavidad oral) o en la parte posterior de la garganta (orofaringe). Esto incluye los labios, la lengua, las encías, el piso de la boca, el paladar duro y blando, las mejillas y la garganta. La mayoría de los cánceres orales son carcinomas de células escamosas, cánceres que se originan en las células planas que recubren estas superficies."
       },
       {
         "q": "¿Cuáles son los tipos de cáncer oral?",
-        "a": "Los principales tipos son: carcinoma de células escamosas (aproximadamente el 90% de los casos), cáncer orofaríngeo (amígdalas, base de la lengua, garganta, frecuentemente relacionado con el VPH), cáncer de glándulas salivales (poco frecuente, con varios subtipos) y linfoma oral (poco común, más probable en personas con el sistema inmunitario debilitado)."
+        "a": "Los tipos principales son: carcinoma de células escamosas (aproximadamente el 90% de los casos), cáncer orofaríngeo (amígdalas, base de la lengua, garganta, con frecuencia relacionado con el VPH), cáncer de glándulas salivales (poco frecuente, con varios subtipos) y linfoma oral (poco común, más probable en personas con el sistema inmunitario debilitado)."
       },
       {
         "q": "¿El cáncer oral es lo mismo que el cáncer de garganta?",
-        "a": "Existe superposición entre ambos. El cáncer oral generalmente se refiere a los cánceres de labios, lengua, encías, mejillas y piso y techo de la boca. El cáncer orofaríngeo (de garganta) afecta las amígdalas, la base de la lengua y la parte posterior de la garganta. Dado que estas regiones están conectadas, con frecuencia se agrupan bajo el término «cáncer oral y orofaríngeo»."
+        "a": "Se superponen. El cáncer oral generalmente se refiere a los cánceres de los labios, la lengua, las encías, las mejillas y el piso y el techo de la boca. El cáncer orofaríngeo (de garganta) afecta las amígdalas, la base de la lengua y la parte posterior de la garganta. Debido a que estas regiones están conectadas, con frecuencia se agrupan como \"cáncer oral y orofaríngeo\"."
       },
       {
         "q": "¿Qué tan común es el cáncer oral?",
-        "a": "Más de 54,000 personas en Estados Unidos reciben un diagnóstico de cáncer oral y orofaríngeo cada año. Es aproximadamente dos veces más frecuente en hombres que en mujeres, y la edad media al momento del diagnóstico es 65 años. Se encuentra entre los diez cánceres más comunes en todo el mundo."
+        "a": "Se proyecta que aproximadamente 60,480 personas en EE. UU. recibirán un diagnóstico de cáncer oral y orofaríngeo en 2026, y que aproximadamente 13,150 morirán a causa de él. Es aproximadamente 2.6 veces más frecuente en hombres que en mujeres (17.5 frente a 6.6 casos por cada 100,000 personas por año), y la edad media al diagnóstico es de 65 años. Se encuentra entre los diez cánceres más comunes en el mundo."
       },
       {
         "q": "¿El cáncer oral tiene cura si se detecta a tiempo?",
-        "a": "Sí. La tasa de supervivencia a 5 años para el cáncer oral en etapa temprana es de alrededor del 84%. En una etapa avanzada, esa cifra cae a aproximadamente el 40%. La detección temprana mediante chequeos dentales de rutina y autoexámenes mensuales es el factor más importante para mejorar los resultados."
+        "a": "Sí. La supervivencia relativa a 5 años es del 88.7% mientras el cáncer sigue localizado, del 69.7% una vez que ha llegado a los ganglios linfáticos cercanos, y del 36.0% una vez que se ha extendido a sitios distantes (SEER, 2016-2022). La detección temprana mediante revisiones dentales de rutina y autoexploraciones mensuales es el factor más determinante para mejorar los resultados."
       }
     ],
     "sourcesLabel": "Fuentes:",
@@ -910,7 +910,7 @@
     ],
     "painlessHeading": "Por qué el cáncer oral temprano a menudo no duele",
     "painlessP1": "El dolor es el sistema de alarma del cuerpo, pero el cáncer oral en etapa temprana frecuentemente lo evita. Un tumor pequeño en el piso de la boca o el lado de la lengua puede crecer durante meses antes de causar cualquier molestia. Las manchas rojas y blancas suelen ser completamente asintomáticas.",
-    "painlessP2": "Para cuando aparece el dolor, generalmente por afectación nerviosa o ulceración, el cáncer suele estar en una etapa más avanzada. Esta dinámica es la razón principal por la que el cáncer oral tiene una tasa baja de detección temprana y una tasa de supervivencia a 5 años de solo alrededor del 40% para la enfermedad en etapa tardía, comparada con más del 84% cuando se detecta a tiempo.",
+    "painlessP2": "Para cuando aparece el dolor, generalmente por la afectación de nervios o la formación de úlceras, el cáncer suele estar en una etapa más avanzada. Esta situación es la razón principal por la que el cáncer oral tiene una tasa baja de detección temprana y una supervivencia relativa a 5 años de aproximadamente el 36% una vez que se ha extendido a sitios distantes, en comparación con aproximadamente el 89% cuando se detecta mientras aún está localizado.",
     "painlessP3": "La ausencia de dolor no es tranquilizadora. Es precisamente por eso que la regla de las 2 semanas importa, y por qué vale la pena mantener los exámenes dentales de rutina que incluyen una revisión de cáncer oral.",
     "comparisonHeading": "Cáncer oral vs. afta: comparación rápida",
     "comparisonIntroStart": "Las aftas y el cáncer oral temprano pueden verse parecidos.",
@@ -1231,12 +1231,12 @@
     ],
     "stats": [
       {
-        "value": "54k+",
-        "label": "nuevos diagnósticos de cáncer oral por año en EE. UU."
+        "value": "60k+",
+        "label": "nuevos diagnósticos de cáncer oral en EE. UU. cada año"
       },
       {
-        "value": "84%",
-        "label": "tasa de supervivencia cuando se detecta temprano"
+        "value": "89%",
+        "label": "tasa de supervivencia cuando se detecta a tiempo"
       },
       {
         "value": "2 min",
@@ -1458,7 +1458,40 @@
     "lastReviewedLabel": "Última revisión",
     "lastReviewedDate": "Agosto de 2026",
     "reviewBody": "La lista de factores, los pesos, los umbrales y las fuentes de esta página fueron verificados nuevamente con la literatura actual en agosto de 2026 y revisados tras una evaluación externa por parte de un patólogo oral y maxilofacial en ejercicio. Esa revisión fue la que incorporó la pregunta sobre historial inmunológico y de radiación, añadió el crecimiento de encías y la movilidad dental reciente a la orientación sobre síntomas, y motivó la aclaración de que una parte considerable de los cánceres orales ocurre sin ningún factor de riesgo convencional.",
-    "reviewCadence": "Esta página se revisa al menos una vez al año y cada vez que se agrega, elimina o reponde una pregunta. Si detecta un error en una cita o en un peso, vale la pena reportarlo: las correcciones se aplican directamente y la fecha de revisión se actualiza."
+    "reviewCadence": "Esta página se revisa al menos una vez al año y cada vez que se agrega, elimina o reponde una pregunta. Si detecta un error en una cita o en un peso, vale la pena reportarlo: las correcciones se aplican directamente y la fecha de revisión se actualiza.",
+    "seerHeading": "Las cifras de supervivencia que cita este sitio",
+    "seerIntro": "Varias páginas citan la supervivencia a cinco años según la etapa, porque la diferencia entre detectar el cáncer oral a tiempo o tarde es precisamente la razón por la que existe esta herramienta. Estas son las cifras actuales y lo que significan, y lo que no significan.",
+    "seerRows": [
+      {
+        "stage": "Localizado",
+        "survival": "88.7%",
+        "share": "26% de los casos",
+        "note": "No se ha extendido más allá del sitio original."
+      },
+      {
+        "stage": "Regional",
+        "survival": "69.7%",
+        "share": "55% de los casos",
+        "note": "Ha llegado a estructuras cercanas o ganglios linfáticos."
+      },
+      {
+        "stage": "Distante",
+        "survival": "36.0%",
+        "share": "12% de los casos",
+        "note": "Se ha extendido a partes distantes del cuerpo."
+      },
+      {
+        "stage": "Todas las etapas",
+        "survival": "69.9%",
+        "share": "—",
+        "note": "Todas las personas diagnosticadas, incluido el 6% cuya etapa se desconoce."
+      }
+    ],
+    "seerNote": "Dos aclaraciones importantes. Estas son etapas resumidas del SEER, que no son lo mismo que las etapas I a IV del AJCC; anteriormente este sitio las presentaba como supervivencia en Etapa I y Etapa IV, lo que atribuía los números de un sistema de clasificación al otro, y eso ha sido corregido. Además, estas son tasas de supervivencia relativa, es decir, la supervivencia en comparación con personas de la misma edad y sexo sin cáncer, no una predicción para ninguna persona en particular.",
+    "seerSourceLine": "Fuente: NCI SEER Cancer Stat Facts, cáncer de cavidad oral y faringe. Los datos de supervivencia corresponden al período 2016-2022; las proyecciones de casos y muertes son para 2026; las tasas de incidencia corresponden al período 2019-2023.",
+    "colStage": "Etapa al diagnóstico",
+    "colSurvival": "Supervivencia relativa a 5 años",
+    "colShare": "Proporción de casos"
   },
   "ContactForm": {
     "sentTitle": "Recibido, gracias por escribir.",
@@ -1818,7 +1851,7 @@
     },
     "dental": {
       "title": "¿Cuándo fue tu última visita al dentista?",
-      "subtitle": "Más del 60% de los cánceres orales no se diagnostican hasta la etapa III o IV, una brecha causada en gran parte por la presentación tardía. Las visitas dentales regulares permiten una detección más temprana; los dentistas están capacitados para identificar cambios en la mucosa que los pacientes no pueden ver.",
+      "subtitle": "Solo aproximadamente 1 de cada 4 cánceres orales se detecta mientras aún está localizado (SEER: 26%), una brecha impulsada en gran parte por la presentación tardía. Las visitas dentales regulares permiten una detección más temprana; los dentistas están capacitados para identificar cambios en la mucosa que los pacientes no pueden ver.",
       "options": {
         "recent": "Durante el último año",
         "fewyears": "Hace 1 a 3 años",
@@ -1839,7 +1872,7 @@
   "RiskEngine": {
     "and": "y",
     "categoryGuidance": {
-      "demographics": "La edad es el factor de riesgo no modificable más fuerte. Después de los 40 años, la evaluación en cada visita dental es especialmente importante: el cáncer oral detectado en etapa I tiene una tasa de supervivencia a cinco años del 84%, frente al 38% en etapa IV.",
+      "demographics": "La edad es el factor de riesgo no modificable más importante. A partir de los 40 años, hacerse una revisión en cada visita dental es especialmente importante: el cáncer oral detectado mientras aún está localizado tiene una supervivencia a cinco años del 89%, frente al 36% una vez que se ha extendido a sitios distantes.",
       "sex": "El sexo al nacer no es algo sobre lo que se pueda actuar, por lo que conviene considerarlo de la misma manera que la edad: como una razón para asegurarse de que el examen oral de dos minutos realmente se realice y no se omita. Los hombres reciben diagnósticos de cáncer de cavidad oral y faringe a aproximadamente el doble de la tasa que las mujeres, y además tienen menos probabilidades de visitar al dentista con regularidad, que es el aspecto que sí está dentro de su control. En la próxima visita, solicite específicamente una revisión de detección de cáncer oral, en lugar de asumir que ya estaba incluida.",
       "tobacco": "Dejar de fumar reduce el riesgo en aproximadamente un 50% dentro de los 5 años posteriores. La terapia de reemplazo de nicotina duplica las tasas de éxito a largo plazo. Pregunta a tu dentista o médico sobre programas gratuitos para dejar de fumar; la línea Wisconsin Tobacco Quit Line está disponible en 1-800-QUIT-NOW.",
       "alcohol": "El riesgo disminuye al reducir el consumo. En personas que usan tabaco y alcohol, dejar el tabaco tiene el mayor impacto individual. Incluso reducir el consumo de diario a ocasional disminuye significativamente la exposición de la mucosa a carcinógenos.",
@@ -1848,7 +1881,7 @@
       "symptoms": "Las manchas rojas persistentes (eritroplasia), las manchas blancas (leucoplasia), las úlceras que no sanan, los bultos inexplicables o la dificultad para tragar que duran 2 semanas o más son señales clínicas de advertencia reconocidas. No deben observarse por más tiempo: requieren evaluación profesional esta semana, no en una cita futura.",
       "family": "Cuéntale a tu dentista sobre tus antecedentes familiares. Podría recomendarte evaluaciones de cáncer oral más frecuentes o derivarte a un especialista en medicina oral. El asesoramiento genético está disponible en la mayoría de los centros médicos académicos.",
       "diet": "Procura consumir 5 o más porciones de frutas y verduras coloridas al día. La evidencia respalda que las dietas ricas en vitaminas A, C y E reducen la displasia epitelial oral. El consumo de carnes procesadas también se ha relacionado con un mayor riesgo de cáncer de cabeza y cuello en algunos estudios de cohorte.",
-      "dental": "Programa una visita dental lo antes posible. Una evaluación visual de cáncer oral toma unos 2 minutos y se realiza como parte de un examen de rutina. Más del 60% de los cánceres orales se diagnostican en etapa III o IV; la atención dental regular puede cambiar esto.",
+      "dental": "Haga una cita dental lo antes posible. Una revisión visual de cáncer oral toma aproximadamente 2 minutos y se realiza como parte de un examen de rutina. Solo aproximadamente 1 de cada 4 cánceres orales se detecta mientras aún está localizado, y la atención dental regular es lo que cambia esa realidad.",
       "other": "Dejar de usar betel, paan o gutka reduce el riesgo, aunque algunos cambios en la mucosa oral causados por el uso previo pueden persistir. Pídele a tu dentista que examine cualquier área de decoloración, engrosamiento o ulceración. Muchas comunidades cuentan con recursos culturalmente específicos para dejar el hábito.",
       "medical": "Informe a su dentista sobre su trasplante, historial de radiación o medicamento inmunosupresor antes del examen. Eso cambia con qué detalle lo revisan y con qué frecuencia quieren verlo: muchos programas de trasplante y protocolos de seguimiento tras radiación en cabeza y cuello ya indican la detección de cáncer oral con mayor frecuencia que una vez al año, y un consultorio dental de rutina puede no saber que debe aplicar ese calendario a menos que usted lo mencione."
     },
@@ -1892,11 +1925,11 @@
       }
     },
     "summary": {
-      "urgent": "Un síntoma que reportaste, junto con {topPhrase}, amerita una evaluación profesional pronta. El cáncer oral detectado en etapa I tiene una tasa de supervivencia a cinco años del 84%, frente al 38% en etapa IV. Esa diferencia es la razón por la que el momento importa. Programa una visita dental o médica esta semana y menciona tu síntoma específicamente cuando llames.",
+      "urgent": "Un síntoma que reportó, combinado con {topPhrase}, justifica una evaluación profesional sin demora. El cáncer oral detectado mientras aún está localizado tiene una supervivencia a cinco años del 89%, frente al 36% una vez que se ha extendido a sitios distantes. Esa diferencia es la razón por la que el tiempo importa. Por favor, haga una cita dental o médica esta semana y mencione su síntoma específicamente al llamar.",
       "low": "Ningún factor de riesgo importante destaca en tu perfil por ahora. Mantén tus visitas dentales anuales; una evaluación visual de cáncer oral toma unos 2 minutos y está incluida en un examen de rutina. Familiarízate con las señales de advertencia para poder actuar pronto si algo cambia.",
-      "moderate": "Tu {topPhrase} elevan tu riesgo moderadamente por encima del valor base. Son factores sobre los que puedes actuar. Menciona tu historial de riesgo a tu dentista en tu próxima visita y pide una evaluación de cáncer oral. La detección temprana en etapa I tiene una tasa de supervivencia a cinco años del 84%.",
-      "elevated": "Varios factores, en particular {topPhrase}, están acumulando tu riesgo. Considera programar una visita dental este mes y pedir específicamente una evaluación de cáncer oral. La tasa de supervivencia a 5 años es del 84% cuando el cáncer oral se detecta a tiempo, frente al 38% cuando se detecta tarde. No esperes a que aparezca un síntoma.",
-      "high": "Tu combinación de factores de riesgo, incluyendo {topPhrase}, te coloca en un grupo de mayor riesgo donde la evaluación proactiva es muy recomendable. Programa una visita dental o médica pronto. La diferencia en supervivencia entre la etapa I y la etapa IV del cáncer oral es considerable: 84% frente a 38%. El examen toma 2 minutos y podría ser la cita más importante que hagas este año.",
+      "moderate": "Su {topPhrase} elevan su riesgo modestamente por encima del nivel base. Estos son factores sobre los que puede actuar. Mencione sus antecedentes de riesgo a su dentista en su próxima visita y pida una revisión de cáncer oral. Detectado mientras aún está localizado, el cáncer oral tiene una supervivencia a cinco años del 89%.",
+      "elevated": "Varios factores, en particular {topPhrase}, están acumulando su riesgo. Considere hacer una cita dental este mes y pedir específicamente una revisión de cáncer oral. La supervivencia a cinco años es del 89% cuando el cáncer oral se detecta mientras aún está localizado, frente al 36% una vez que se ha extendido a sitios distantes. No espere a que aparezca un síntoma.",
+      "high": "Su combinación de factores de riesgo, incluyendo {topPhrase}, lo coloca en un grupo de mayor riesgo donde una revisión preventiva está ampliamente justificada. Por favor, programe una cita dental o médica pronto. La diferencia es notable: 89% de supervivencia a cinco años mientras el cáncer aún está localizado, frente al 36% una vez que se ha extendido a sitios distantes. El examen toma 2 minutos y podría ser la cita más importante que haga este año.",
       "fallback": "tus respuestas"
     }
   },

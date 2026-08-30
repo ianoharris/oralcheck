@@ -47,7 +47,7 @@ Understanding symptoms is more useful when paired with an awareness of risk. Cer
 
 ## Why Early Detection Changes Outcomes
 
-The five-year survival rate for localized oral cancer, meaning cancer that has not spread beyond the original site, is approximately 84 percent. Once the cancer has spread to regional lymph nodes, that figure drops to around 67 percent. When distant metastasis has occurred, survival rates fall further still.
+The five-year relative survival rate for localized oral cancer, meaning cancer that has not spread beyond the original site, is 88.7 percent. Once the cancer has spread to regional lymph nodes, that figure drops to 69.7 percent, and once distant metastasis has occurred, to 36.0 percent (SEER, 2016 to 2022).
 
 These numbers reflect a straightforward reality: the earlier oral cancer is identified, the more treatment options are available and the better the likely outcome. Despite this, a significant proportion of oral cancers are still diagnosed at a late stage, often because early symptoms are painless or subtle enough to be dismissed.
 

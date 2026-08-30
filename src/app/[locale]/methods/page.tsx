@@ -144,6 +144,9 @@ export default async function MethodsPage({ params }: Props) {
   const limitations = t.raw("limitations") as string[];
   const rationale = t.raw("rationale") as { id: string; title: string; body: string }[];
   const cannot = t.raw("cannot") as string[];
+  const seerRows = t.raw("seerRows") as {
+    stage: string; survival: string; share: string; note: string;
+  }[];
 
   const tiers = [
     { label: t("tierLow"), range: "≤ 4", color: "bg-green-50 border-green-200 text-green-800" },
@@ -269,6 +272,37 @@ export default async function MethodsPage({ params }: Props) {
         <p className="text-sm text-ink-soft max-w-2xl leading-relaxed mt-2">
           {t("thresholdAnchorNote")}
         </p>
+      </section>
+
+      {/* Survival figures quoted elsewhere on the site */}
+      <section className="mb-14">
+        <h2 className="font-serif text-2xl text-ink mb-3">{t("seerHeading")}</h2>
+        <p className="text-sm text-ink-soft max-w-2xl leading-relaxed mb-5">{t("seerIntro")}</p>
+        <div className="overflow-x-auto rounded-2xl border border-warm-dim mb-4">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="bg-warm-dim/60 text-left">
+                <th className="px-4 py-3 font-semibold text-ink">{t("colStage")}</th>
+                <th className="px-4 py-3 font-semibold text-ink">{t("colSurvival")}</th>
+                <th className="px-4 py-3 font-semibold text-ink">{t("colShare")}</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-warm-dim">
+              {seerRows.map((r) => (
+                <tr key={r.stage} className="bg-warm-dim">
+                  <td className="px-4 py-3 text-ink font-medium">
+                    {r.stage}
+                    <div className="text-xs text-ink-soft font-normal mt-0.5">{r.note}</div>
+                  </td>
+                  <td className="px-4 py-3 text-ink font-semibold tabular-nums">{r.survival}</td>
+                  <td className="px-4 py-3 text-ink-soft tabular-nums">{r.share}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p className="text-sm text-ink-soft max-w-2xl leading-relaxed">{t("seerNote")}</p>
+        <p className="text-xs text-ink-soft max-w-2xl leading-relaxed mt-2">{t("seerSourceLine")}</p>
       </section>
 
       {/* What the tool cannot tell you */}

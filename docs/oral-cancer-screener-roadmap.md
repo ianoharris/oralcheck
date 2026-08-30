@@ -202,7 +202,7 @@ oralcheck/
 **Claude API integration:**
 - Send the user's anonymized answers to Claude
 - Prompt Claude to generate a warm, clear 3-sentence summary
-- Example: "Based on your responses, your tobacco use and infrequent dental visits put you at moderate risk. The good news is that oral cancer caught early has an 84% survival rate. Here's what you can do today."
+- Example: "Based on your responses, your tobacco use and infrequent dental visits put you at moderate risk. The good news is that oral cancer found early has an 89% survival rate. Here's what you can do today."
 
 ---
 

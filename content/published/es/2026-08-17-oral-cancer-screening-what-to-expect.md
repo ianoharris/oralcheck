@@ -9,7 +9,7 @@ status: "draft"
 
 La mayoría de las personas salen de una cita dental sin entender bien qué le acaban de hacer a su boca. Es posible que el dentista le haya mirado la lengua, presionado a lo largo de la mandíbula o dirigido una luz hacia el fondo de la garganta, y no haya dicho nada. Ese proceso breve y silencioso probablemente fue una detección de cáncer oral, y saber en qué consiste puede cambiar la seriedad con la que lo toma.
 
-El cáncer oral afecta a aproximadamente 54,000 estadounidenses cada año, según la Sociedad Americana del Cáncer. Las tasas de supervivencia mejoran significativamente con la detección temprana, pero muchos pacientes no saben que les están haciendo una evaluación, no hacen preguntas de seguimiento y no entienden qué significa realmente un resultado normal. Este artículo explica la experiencia completa de la detección para que pueda participar en ella de manera más activa.
+Se proyecta que el cáncer oral afecte a unos 60,480 estadounidenses en 2026, según el SEER del NCI. Las tasas de supervivencia mejoran significativamente con la detección temprana, pero muchos pacientes no saben que les están haciendo una evaluación, no hacen preguntas de seguimiento y no entienden qué significa realmente un resultado normal. Este artículo explica la experiencia completa de la detección para que pueda participar en ella de manera más activa.
 
 ---
 

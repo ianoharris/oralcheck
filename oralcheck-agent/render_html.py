@@ -783,7 +783,7 @@ def kinetic_scene_html(segment: dict, theme: str = "dark") -> str:
     """Build one animated reel scene. `segment` may carry:
       caption   -> the on-screen phrase (kinetic words)
       emphasis  -> word(s) to highlight in coral
-      stat      -> {"value": "84%", "label": "..."} for a big-number scene
+      stat      -> {"value": "89%", "label": "..."} for a big-number scene
       is_last   -> show the oralcheck.org footer
     """
     t = THEMES.get(theme, THEMES["dark"])

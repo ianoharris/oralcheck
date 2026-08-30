@@ -100,19 +100,23 @@ def _avoid_titles(ledger: dict, fresh_days: int = 45) -> list[str]:
     return out
 
 
-# Statistics the account leans on. The 84% five-year survival figure had been
+# Statistics the account leans on. The headline survival figure had been
 # appearing in post after post: good shorthand, but a follower who sees it four
 # times in a row learns nothing new the last three. Recently used figures are
 # fed back into the prompt as a do-not-reuse list so the pool actually rotates.
+# Figures track SEER Cancer Stat Facts: Oral Cavity and Pharynx Cancer, the same
+# source src/lib/seerStats.ts reads from. Keep the two in step: a post quoting a
+# number the site no longer shows is worse than a repetitive post.
 STAT_PATTERNS = [
-    (r"\b84\s?%", "84% five-year survival when caught early"),
-    (r"\b(?:66|65)\s?%", "~66% overall five-year survival"),
-    (r"\b(?:38|39)\s?%", "~38% survival at late stage"),
-    (r"\b60[,.]?\d{3}\b", "~60,000 Americans diagnosed a year"),
+    (r"\b(?:88|89)\s?%|\b88\.7\b", "89% five-year survival while still localized"),
+    (r"\b(?:69(?:\.9)?|70)\s?%(?!\s*of)", "~70% overall five-year survival"),
+    (r"\b36\s?%", "36% survival once it has spread to distant sites"),
+    (r"\b60[,.]?\d{3}\b", "60,480 Americans diagnosed a year"),
+    (r"\b26\s?%|\b1 in 4\b", "only 26% are found while still localized"),
     (r"\b1 in 10\b", "1 in 10 cases in nonsmokers"),
-    (r"\b(?:11|12),?\d{3}\b", "~11,000 deaths a year"),
-    (r"\b70\s?%", "~70% of oropharyngeal cancers are HPV-linked"),
-    (r"\b3x\b|\bthree times\b", "men diagnosed ~3x more often than women"),
+    (r"\b13,?\d{3}\b", "~13,150 deaths a year"),
+    (r"\b70\s?% of\b", "~70% of oropharyngeal cancers are HPV-linked"),
+    (r"\b2\.6x\b|\b2\.6 times\b", "men diagnosed ~2.6x more often than women"),
     (r"\btwo weeks\b|\b2 weeks\b", "the two-week rule for a non-healing sore"),
 ]
 

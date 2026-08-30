@@ -2,6 +2,7 @@
 
 import { Link } from "@/i18n/navigation";
 import Icon, { type IconName } from "@/components/Icon";
+import { SEER_DISPLAY } from "@/lib/seerStats";
 
 export default function InfographicPage() {
   return (
@@ -67,8 +68,8 @@ export default function InfographicPage() {
           {/* Stat row */}
           <div className="grid grid-cols-3 divide-x divide-warm-dim border-b border-warm-dim">
             {[
-              { stat: "54,000+", label: "Americans diagnosed yearly" },
-              { stat: "84%", label: "Survival rate when caught early" },
+              { stat: SEER_DISPLAY.newCases, label: "Americans diagnosed yearly" },
+              { stat: SEER_DISPLAY.survivalLocalized, label: "Survival when found before it spreads" },
               { stat: "2 min", label: "To check your risk at oralcheck.org" },
             ].map((s) => (
               <div key={s.stat} className="px-6 py-6 text-center">

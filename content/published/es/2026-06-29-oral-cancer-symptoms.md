@@ -47,7 +47,7 @@ Entender los síntomas es más útil cuando se combina con una conciencia del ri
 
 ## Por qué la detección temprana cambia los resultados
 
-La tasa de supervivencia a cinco años para el cáncer oral localizado, es decir, el cáncer que no se ha extendido más allá del sitio original, es de aproximadamente el 84 por ciento. Una vez que el cáncer se ha extendido a los ganglios linfáticos regionales, esa cifra baja a alrededor del 67 por ciento. Cuando ha ocurrido metástasis a distancia, las tasas de supervivencia bajan aún más.
+La tasa de supervivencia relativa a cinco años para el cáncer oral localizado, es decir, el cáncer que no se ha extendido más allá del sitio original, es del 88,7 por ciento. Una vez que el cáncer se ha extendido a los ganglios linfáticos regionales, esa cifra baja al 69,7 por ciento, y una vez que ha ocurrido metástasis a distancia, al 36,0 por ciento (SEER, 2016 a 2022).
 
 Estos números reflejan una realidad clara: cuanto antes se identifica el cáncer oral, más opciones de tratamiento hay disponibles y mejor es el resultado probable. A pesar de esto, una proporción significativa de los cánceres orales todavía se diagnostica en una etapa avanzada, muchas veces porque los síntomas tempranos no duelen o son lo suficientemente sutiles como para ser ignorados.
 

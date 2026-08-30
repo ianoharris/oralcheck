@@ -1,4 +1,5 @@
 import { ImageResponse } from "next/og";
+import { SEER_DISPLAY } from "@/lib/seerStats";
 
 export const runtime = "edge";
 export const alt = "Oral Cancer Facts & Statistics | OralCheck";
@@ -69,11 +70,11 @@ export default function OgImage() {
           {/* Right: stat cards */}
           <div style={{ display: "flex", flexDirection: "column", gap: "16px", flexShrink: 0 }}>
             <div style={{ background: "#fff", border: "1px solid #e8e4de", borderRadius: "16px", padding: "20px 28px", textAlign: "center" }}>
-              <div style={{ fontSize: 40, fontWeight: 700, color: "#0d7377", fontFamily: "system-ui, sans-serif" }}>54,000+</div>
+              <div style={{ fontSize: 40, fontWeight: 700, color: "#0d7377", fontFamily: "system-ui, sans-serif" }}>{SEER_DISPLAY.newCases}</div>
               <div style={{ fontSize: 13, color: "#6b6b6b", fontFamily: "system-ui, sans-serif", marginTop: 4 }}>US cases per year</div>
             </div>
             <div style={{ background: "#fff", border: "1px solid #e8e4de", borderRadius: "16px", padding: "20px 28px", textAlign: "center" }}>
-              <div style={{ fontSize: 40, fontWeight: 700, color: "#0d7377", fontFamily: "system-ui, sans-serif" }}>84%</div>
+              <div style={{ fontSize: 40, fontWeight: 700, color: "#0d7377", fontFamily: "system-ui, sans-serif" }}>{SEER_DISPLAY.survivalLocalized}</div>
               <div style={{ fontSize: 13, color: "#6b6b6b", fontFamily: "system-ui, sans-serif", marginTop: 4 }}>Survival if caught early</div>
             </div>
           </div>

@@ -9,7 +9,7 @@ status: "published"
 
 Most people leave a dental appointment without fully understanding what just happened to their mouth. A dentist may have glanced at your tongue, pressed along your jaw, or shone a light toward the back of your throat, and said nothing. That brief, quiet process was likely an oral cancer screening, and knowing what it involves can change how seriously you take it.
 
-Oral cancer affects roughly 54,000 Americans each year, according to the American Cancer Society. Survival rates improve significantly with early detection, yet many patients do not know they are being screened, do not ask follow-up questions, and do not understand what a normal result actually means. This article walks through the full screening experience so you can participate in it more actively.
+Oral cancer is projected to affect about 60,480 Americans in 2026, according to NCI SEER. Survival rates improve significantly with early detection, yet many patients do not know they are being screened, do not ask follow-up questions, and do not understand what a normal result actually means. This article walks through the full screening experience so you can participate in it more actively.
 
 ---
 

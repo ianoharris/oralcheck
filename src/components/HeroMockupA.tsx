@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import { Link } from "@/i18n/navigation";
+import { SEER_DISPLAY } from "@/lib/seerStats";
 
 /*
   DIRECTION A: "Cartographic" — dark teal field + geometric SVG
@@ -98,8 +99,8 @@ const f = (delay: number) => ({
 });
 
 const stats = [
-  { value: "54,000", label: "new US cases yearly" },
-  { value: "84%", label: "survive if caught early" },
+  { value: SEER_DISPLAY.newCases, label: "new US cases yearly" },
+  { value: SEER_DISPLAY.survivalLocalized, label: "survive if caught before it spreads" },
   { value: "2 min", label: "to complete the screener" },
 ];
 

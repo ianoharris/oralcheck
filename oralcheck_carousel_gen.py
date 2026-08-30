@@ -187,11 +187,11 @@ def slide_3():
     y = put(draw, PAD, y, "87%", f_pct, BRIGHT)
     put(draw, PAD, y, "survive.", f_word, TEXT)
 
-    # Bottom: "Found late: / 38% / survive."
+    # Bottom: "Found late: / 36% / survive."
     y = MID + 36
     y = put(draw, PAD, y, "Found late:", f_label, (130, 80, 70))
     y += 4
-    y = put(draw, PAD, y, "38%", f_pct, CORAL)
+    y = put(draw, PAD, y, "36%", f_pct, CORAL)
     y = put(draw, PAD, y, "survive.", f_word, TEXT)
     y += 28
 

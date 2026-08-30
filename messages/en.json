@@ -92,7 +92,7 @@
   },
   "FactsMeta": {
     "title": "Oral Cancer Facts & Statistics",
-    "description": "Key oral cancer statistics: 54,000+ US cases per year, 84% survival when caught early, and why HPV has overtaken tobacco as the top cause. Evidence-based, cited."
+    "description": "Key oral cancer statistics: 60,480 US cases per year, 89% survival when it is found early, and why HPV has overtaken tobacco as the top cause. Evidence-based, cited."
   },
   "FactsPage": {
     "tag": "Facts",
@@ -101,24 +101,24 @@
     "introLink": "Start with what oral cancer is.",
     "stats": [
       {
-        "value": "54,000+",
+        "value": "60,480",
         "label": "new US cases per year",
-        "detail": "Oral and oropharyngeal cancers combined."
+        "detail": "Oral and oropharyngeal cancers combined, projected for 2026."
       },
       {
-        "value": "11,580",
+        "value": "13,150",
         "label": "US deaths per year",
-        "detail": "About one death every 50 minutes."
+        "detail": "About one death every 40 minutes."
       },
       {
-        "value": "84%",
-        "label": "5-year survival if caught early",
-        "detail": "Drops to ~40% if found at a late stage."
+        "value": "89%",
+        "label": "5-year survival if found early",
+        "detail": "While still localized. Drops to 36% once it has spread to distant sites."
       },
       {
-        "value": "2×",
+        "value": "2.6×",
         "label": "more common in men",
-        "detail": "Though rates in women are rising."
+        "detail": "17.5 vs 6.6 cases per 100,000 per year."
       }
     ],
     "factLabel": "FACT",
@@ -133,7 +133,7 @@
       },
       {
         "title": "Early-stage oral cancer is highly treatable.",
-        "detail": "When found at Stage I, the 5-year survival rate is over 80%. At Stage IV, it drops below 40%. Stage at diagnosis is the single biggest factor in outcome."
+        "detail": "Found while still localized, 5-year relative survival is 88.7%. Once it has reached nearby lymph nodes that falls to 69.7%, and once it has spread to distant sites, to 36.0%. Stage at diagnosis is the single biggest factor in outcome."
       },
       {
         "title": "Dentists find most early cases.",
@@ -457,7 +457,7 @@
     "twoWeekHeading": "The 2-week rule",
     "twoWeekP1Start": "Any sore, patch, lump, or change in your mouth that hasn't resolved after",
     "twoWeekBold": "2 weeks",
-    "twoWeekP1End": "should be seen by a dentist or doctor. Most of the time it turns out to be nothing, but that reassurance is worth a 10-minute appointment. Oral cancer caught at Stage I has an 84% five-year survival rate.",
+    "twoWeekP1End": "should be seen by a dentist or doctor. Most of the time it turns out to be nothing, but that reassurance is worth a 10-minute appointment. Oral cancer found while it is still localized has an 89% five-year relative survival rate.",
     "whenToSeeHeading": "When to see a doctor, don't wait if:",
     "whenToSee": [
       {
@@ -717,22 +717,22 @@
     "byNumbersHeading": "By the numbers",
     "stats": [
       {
-        "value": "54,000+",
+        "value": "60,480",
         "label": "new diagnoses per year",
         "sub": "US, oral & oropharyngeal combined"
       },
       {
-        "value": "84%",
-        "label": "survival rate if caught early",
-        "sub": "drops to ~40% at late stage"
+        "value": "89%",
+        "label": "survival if found early",
+        "sub": "localized; 36% once it has spread far"
       },
       {
-        "value": "2×",
+        "value": "2.6×",
         "label": "more common in men",
         "sub": "though rates in women are rising"
       },
       {
-        "value": "62",
+        "value": "65",
         "label": "median age at diagnosis",
         "sub": "but it can occur at any age"
       }
@@ -796,11 +796,11 @@
       },
       {
         "q": "How common is oral cancer?",
-        "a": "More than 54,000 Americans are diagnosed with oral and oropharyngeal cancer each year. It is about twice as common in men as in women, and the median age at diagnosis is 65. It ranks among the ten most common cancers worldwide."
+        "a": "About 60,480 Americans are projected to be diagnosed with oral and oropharyngeal cancer in 2026, and about 13,150 will die of it. It is roughly 2.6 times as common in men as in women (17.5 vs 6.6 cases per 100,000 per year), and the median age at diagnosis is 65. It ranks among the ten most common cancers worldwide."
       },
       {
         "q": "Can oral cancer be cured if caught early?",
-        "a": "Yes. The 5-year survival rate for early-stage oral cancer is around 84%. At a late stage, that drops to roughly 40%. Early detection through routine dental checkups and monthly self-exams is the single biggest factor in improving outcomes."
+        "a": "Yes. Five-year relative survival is 88.7% while the cancer is still localized, 69.7% once it has reached nearby lymph nodes, and 36.0% once it has spread to distant sites (SEER, 2016–2022). Early detection through routine dental checkups and monthly self-exams is the single biggest factor in improving outcomes."
       }
     ],
     "sourcesLabel": "Sources:",
@@ -910,7 +910,7 @@
     ],
     "painlessHeading": "Why early oral cancer often has no pain",
     "painlessP1": "Pain is the body's alarm system, but early-stage oral cancer frequently bypasses it. A small tumor on the floor of the mouth or the side of the tongue may grow for months before causing any discomfort. Red and white patches are often completely asymptomatic.",
-    "painlessP2": "By the time pain appears, typically from nerve involvement or ulceration, the cancer is often at a more advanced stage. This dynamic is the core reason oral cancer has a low early-detection rate and a 5-year survival rate of only about 40% for late-stage disease, compared to over 84% when caught early.",
+    "painlessP2": "By the time pain appears, typically from nerve involvement or ulceration, the cancer is often at a more advanced stage. This dynamic is the core reason oral cancer has a low early-detection rate and a 5-year relative survival rate of about 36% once it has spread to distant sites, compared to about 89% when it is found while still localized.",
     "painlessP3": "The absence of pain is not reassurance. It is precisely why the 2-week rule matters, and why routine dental exams that include an oral cancer check are worth keeping.",
     "comparisonHeading": "Oral cancer vs. canker sore: quick comparison",
     "comparisonIntroStart": "Canker sores and early oral cancer can look similar.",
@@ -1231,12 +1231,12 @@
     ],
     "stats": [
       {
-        "value": "54k+",
+        "value": "60k+",
         "label": "new US oral cancer diagnoses each year"
       },
       {
-        "value": "84%",
-        "label": "survival rate when caught early"
+        "value": "89%",
+        "label": "survival rate when found early"
       },
       {
         "value": "2 min",
@@ -1458,7 +1458,40 @@
     "lastReviewedLabel": "Last reviewed",
     "lastReviewedDate": "August 2026",
     "reviewBody": "The factor list, weights, thresholds, and sources on this page were last re-checked against current literature in August 2026, and revised following external review by a practising oral and maxillofacial pathologist. That review is what added the immune and radiation history question, added gum growth and recent tooth mobility to the symptom guidance, and prompted the caveat that a substantial share of oral cancers occur with no conventional risk factors at all.",
-    "reviewCadence": "This page is reviewed at least annually, and whenever a question is added, removed, or reweighted. If you spot an error in a citation or a weight, it is worth reporting: corrections are made directly and the review date is updated."
+    "reviewCadence": "This page is reviewed at least annually, and whenever a question is added, removed, or reweighted. If you spot an error in a citation or a weight, it is worth reporting: corrections are made directly and the review date is updated.",
+    "seerHeading": "The Survival Figures This Site Quotes",
+    "seerIntro": "Several pages quote five-year survival by stage, because the gap between finding oral cancer early and finding it late is the entire reason this tool exists. These are the current figures and what they do and do not mean.",
+    "seerRows": [
+      {
+        "stage": "Localized",
+        "survival": "88.7%",
+        "share": "26% of cases",
+        "note": "Has not spread beyond the original site."
+      },
+      {
+        "stage": "Regional",
+        "survival": "69.7%",
+        "share": "55% of cases",
+        "note": "Has reached nearby structures or lymph nodes."
+      },
+      {
+        "stage": "Distant",
+        "survival": "36.0%",
+        "share": "12% of cases",
+        "note": "Has spread to distant parts of the body."
+      },
+      {
+        "stage": "All stages",
+        "survival": "69.9%",
+        "share": "—",
+        "note": "Everyone diagnosed, including the 6% whose stage is unknown."
+      }
+    ],
+    "seerNote": "Two things worth being precise about. These are SEER summary stages, which are not the same as AJCC Stage I through IV; this site used to present them as Stage I and Stage IV survival, which attributed one staging system's numbers to another, and that has been corrected. And these are relative survival rates, meaning survival compared with people of the same age and sex without the cancer, not a prediction for any individual.",
+    "seerSourceLine": "Source: NCI SEER Cancer Stat Facts, Oral Cavity and Pharynx Cancer. Survival covers 2016 to 2022; case and death projections are for 2026; incidence rates cover 2019 to 2023.",
+    "colStage": "Stage at diagnosis",
+    "colSurvival": "5-year relative survival",
+    "colShare": "Share of cases"
   },
   "ContactForm": {
     "sentTitle": "Got it, thanks for reaching out.",
@@ -1818,7 +1851,7 @@
     },
     "dental": {
       "title": "When was your last dental visit?",
-      "subtitle": "Over 60% of oral cancers are not diagnosed until Stage III or IV, a gap driven largely by delayed presentation. Regular dental visits enable earlier detection; dentists are trained to identify mucosal changes patients cannot see.",
+      "subtitle": "Only about 1 in 4 oral cancers is found while it is still localized (SEER: 26%), a gap driven largely by delayed presentation. Regular dental visits enable earlier detection; dentists are trained to identify mucosal changes patients cannot see.",
       "options": {
         "recent": "Within the last year",
         "fewyears": "1 – 3 years ago",
@@ -1839,7 +1872,7 @@
   "RiskEngine": {
     "and": "and",
     "categoryGuidance": {
-      "demographics": "Age is the strongest non-modifiable risk factor. After 40, screening at every dental visit is especially important, oral cancer caught at Stage I has an 84% five-year survival rate versus 38% at Stage IV.",
+      "demographics": "Age is the strongest non-modifiable risk factor. After 40, screening at every dental visit is especially important, oral cancer found while still localized has an 89% five-year survival rate, against 36% once it has spread to distant sites.",
       "sex": "Sex at birth is not something you can act on, so treat it the way you would treat age: as a reason to make sure the two-minute oral exam actually happens rather than getting skipped. Men are diagnosed with oral cavity and pharynx cancer at roughly twice the rate of women, and men are also less likely to be seeing a dentist regularly, which is the part that is within your control. Ask for an oral cancer screening by name at your next visit rather than assuming it was included.",
       "tobacco": "Cessation reduces risk by approximately 50% within 5 years of quitting. Nicotine replacement therapy doubles long-term quit success rates. Ask your dentist or physician about free cessation programs, the Wisconsin Tobacco Quit Line is available at 1-800-QUIT-NOW.",
       "alcohol": "Risk decreases with reduced consumption. For people using both tobacco and alcohol, tobacco cessation has the greatest individual impact. Even reducing drinking from daily to occasional lowers mucosal carcinogen exposure significantly.",
@@ -1848,7 +1881,7 @@
       "symptoms": "Persistent red patches (erythroplakia), white patches (leukoplakia), non-healing ulcers, unexplained lumps, or difficulty swallowing lasting 2+ weeks are established clinical warning signs. These should not be observed for longer, they require professional evaluation this week, not at a future appointment.",
       "family": "Tell your dentist about your family history. They may recommend more frequent oral cancer screenings or a referral to an oral medicine specialist. Genetic counseling is available through most academic medical centers.",
       "diet": "Aim for 5+ servings of colorful fruits and vegetables daily. Evidence supports that diets high in vitamins A, C, and E reduce oral epithelial dysplasia. Processed meat intake has also been linked to elevated head and neck cancer risk in some cohort studies.",
-      "dental": "Book a dental visit as soon as possible. A visual oral cancer screening takes about 2 minutes and is performed as part of a routine examination. Over 60% of oral cancers are diagnosed at Stage III or IV, regular dental care changes this.",
+      "dental": "Book a dental visit as soon as possible. A visual oral cancer screening takes about 2 minutes and is performed as part of a routine examination. Only about 1 in 4 oral cancers is caught while it is still localized, and regular dental care is what changes that.",
       "other": "Stopping betel/paan/gutka use lowers risk, though some changes to oral mucosa from prior use may persist. Ask your dentist to examine any areas of discoloration, thickening, or ulceration. Many communities have culturally specific cessation resources.",
       "medical": "Tell your dentist about your transplant, radiation history, or immunosuppressant medication before your exam. It changes how closely they look and how often they want to see you: many transplant programs and head and neck radiation follow-up protocols already call for oral cancer screening more often than once a year, and a routine dental practice may not know to apply that schedule unless you say so."
     },
@@ -1892,11 +1925,11 @@
       }
     },
     "summary": {
-      "urgent": "A symptom you reported, combined with {topPhrase}, warrants prompt professional evaluation. Oral cancer detected at Stage I has an 84% five-year survival rate versus 38% at Stage IV. That gap is why timing matters. Please book a dental or medical visit this week and mention your symptom specifically when you call.",
+      "urgent": "A symptom you reported, combined with {topPhrase}, warrants prompt professional evaluation. Oral cancer found while still localized has an 89% five-year survival rate, against 36% once it has spread to distant sites. That gap is why timing matters. Please book a dental or medical visit this week and mention your symptom specifically when you call.",
       "low": "No major risk factors stand out in your profile right now. Maintain annual dental visits, a visual oral cancer screening takes about 2 minutes and is included in a routine examination. Familiarize yourself with the warning signs so you can act early if anything changes.",
-      "moderate": "Your {topPhrase} elevate your risk modestly above baseline. These are factors you can act on. Mention your risk history to your dentist at your next visit and ask for an oral cancer screening. Early detection at Stage I carries an 84% five-year survival rate.",
-      "elevated": "Several factors, particularly {topPhrase}, are stacking your risk. Consider booking a dental visit this month and asking specifically for an oral cancer screening. The 5-year survival rate is 84% when oral cancer is caught early, versus 38% when caught late. Don't wait for a symptom to appear.",
-      "high": "Your combination of risk factors, including {topPhrase}, places you in a higher-risk group where proactive screening is strongly warranted. Please schedule a dental or medical visit soon. The difference between Stage I and Stage IV oral cancer survival is dramatic: 84% versus 38%. The exam takes 2 minutes and could be the most important appointment you make this year.",
+      "moderate": "Your {topPhrase} elevate your risk modestly above baseline. These are factors you can act on. Mention your risk history to your dentist at your next visit and ask for an oral cancer screening. Found while it is still localized, oral cancer carries an 89% five-year survival rate.",
+      "elevated": "Several factors, particularly {topPhrase}, are stacking your risk. Consider booking a dental visit this month and asking specifically for an oral cancer screening. Five-year survival is 89% when oral cancer is found while still localized, against 36% once it has spread to distant sites. Don't wait for a symptom to appear.",
+      "high": "Your combination of risk factors, including {topPhrase}, places you in a higher-risk group where proactive screening is strongly warranted. Please schedule a dental or medical visit soon. The difference is dramatic: 89% five-year survival while the cancer is still localized, against 36% once it has spread to distant sites. The exam takes 2 minutes and could be the most important appointment you make this year.",
       "fallback": "your responses"
     }
   },

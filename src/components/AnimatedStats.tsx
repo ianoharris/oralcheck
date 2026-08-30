@@ -3,10 +3,11 @@
 import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { useInView, useReducedMotion } from "framer-motion";
+import { SEER, SEER_DISPLAY } from "@/lib/seerStats";
 
 const STATS = [
-  { raw: 54000, display: "54,000+", labelKey: "cases" },
-  { raw: 84,    display: "84%",     labelKey: "survival" },
+  { raw: SEER.newCasesPerYear, display: SEER_DISPLAY.newCases, labelKey: "cases" },
+  { raw: Math.round(SEER.survival.localized), display: SEER_DISPLAY.survivalLocalized, labelKey: "survival" },
   { raw: 2,     display: "2 min",   labelKey: "screeningTime", suffix: " min" },
 ] as const;
 

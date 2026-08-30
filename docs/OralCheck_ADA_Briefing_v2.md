@@ -8,9 +8,9 @@
 
 ## 1. What OralCheck Is
 
-OralCheck (oralcheck.org) is a free, private, browser-based oral cancer risk screener. Ten questions, about two minutes, no account required. Answers never leave the device. The output is a risk tier and a plain-English summary of which factors are driving the score, with next steps calibrated to that tier.
+OralCheck (oralcheck.org) is a free, private, browser-based oral cancer risk screener. About two minutes, no account required. Answers never leave the device. The output is a risk tier and a plain-English summary of which factors are driving the score, with next steps calibrated to that tier.
 
-The premise: oral cancer has an 84% five-year survival rate when caught at Stage I, but most cases are not diagnosed until Stage III or IV, where survival drops to around 38%. That gap is not a biology problem. It is a detection timing problem. OralCheck exists to move people toward a dental visit earlier, before symptoms become obvious.
+The premise: oral cancer has an 88.7% five-year relative survival rate when found while still localized, but only about a quarter of cases are found that early, and survival falls to 36.0% once the disease has spread to distant sites (SEER, 2016 to 2022). That gap is not a biology problem. It is a detection timing problem. OralCheck exists to move people toward a dental visit earlier, before symptoms become obvious.
 
 ---
 
@@ -35,6 +35,8 @@ A log-linear model was chosen deliberately: it means that the sum of weights app
 | Tobacco, occasional | ~3.0x | 5 | Gandini et al., Oral Oncology, 2008 |
 | Alcohol, daily | ~3.0x | 5 | Bagnardi et al., Annals of Oncology, 2015 |
 | HPV-related condition (history) | 3 to 5x blended | 5 | Gillison et al., JAMA, 2008 |
+| Immunosuppression, transplant, or prior head/neck radiation | 2 to 4x blended | 5 | Engels et al., JAMA, 2011; Grulich et al., Lancet, 2007 |
+| Male sex at birth | ~2.0x conservative | 3 | NCI SEER (17.5 vs 6.6 per 100,000) |
 | Age 65+ | ~4.0x adjusted | 6 | NCI SEER, multivariable-adjusted |
 | Age 55 to 64 | ~2.5x | 4 | NCI SEER |
 | Betel quid, past use | ~2.5x | 4 | IARC Monograph 85, 2004 |
@@ -65,7 +67,7 @@ Under a purely log-linear (multiplicative) model, tobacco OR 6x and alcohol OR 3
 | Elevated | 14 to 22 | Multiple compounding risk factors; schedule a dental screening |
 | High | 23+ | Significant risk burden; dental evaluation recommended soon |
 
-A daily smoker scores 8 (Moderate). Tobacco + alcohol + interaction = 16 (Elevated). Betel + tobacco + alcohol + interaction = 26+ (High).
+A daily smoker scores 8 (Moderate). Tobacco + alcohol + interaction = 16 (Elevated). Betel + tobacco + alcohol + interaction = 25 (High). Maximum possible score is 61.
 
 ---
 
@@ -157,5 +159,5 @@ Co-promoting OralCheck during the April awareness campaign costs the ADA nothing
 - No commercial agenda. No paid tier, no data monetization, no sponsorship lock-in.
 - Built by a predental student at UW-Madison, not a company.
 - Already reaching users across 13 countries with no paid promotion.
-- The survival rate gap is the core argument: 84% at Stage I, 38% at Stage IV. The tool exists to close that gap by getting people to a dental chair earlier.
+- The survival gap is the core argument: 88.7% localized versus 36.0% distant, with only 26% of cases found while localized. The tool exists to close that gap by getting people to a dental chair earlier.
 - oralcheck.org/for-clinicians has the printable flyer. Any dentist leaving the meeting can customize and print it in under two minutes.

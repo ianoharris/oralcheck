@@ -92,7 +92,7 @@
   },
   "FactsMeta": {
     "title": "Fatos e Estatísticas sobre Câncer Bucal",
-    "description": "Principais estatísticas sobre câncer bucal: mais de 54.000 casos por ano nos EUA, 84% de sobrevida quando detectado cedo, e por que o HPV superou o tabaco como principal causa. Baseado em evidências, com referências."
+    "description": "Principais estatísticas sobre câncer bucal: 60.480 casos por ano nos EUA, 89% de sobrevivência quando detectado precocemente, e por que o HPV superou o tabaco como principal causa. Com base em evidências e referências citadas."
   },
   "FactsPage": {
     "tag": "Fatos",
@@ -101,47 +101,47 @@
     "introLink": "Comece entendendo o que é câncer bucal.",
     "stats": [
       {
-        "value": "54.000+",
+        "value": "60.480",
         "label": "novos casos por ano nos EUA",
-        "detail": "Cânceres bucais e orofaríngeos somados."
+        "detail": "Cânceres de boca e orofaringe combinados, projeção para 2026."
       },
       {
-        "value": "11.580",
+        "value": "13.150",
         "label": "mortes por ano nos EUA",
-        "detail": "Cerca de uma morte a cada 50 minutos."
+        "detail": "Aproximadamente uma morte a cada 40 minutos."
       },
       {
-        "value": "84%",
-        "label": "sobrevida em 5 anos se detectado cedo",
-        "detail": "Cai para aproximadamente 40% quando encontrado em estágio avançado."
+        "value": "89%",
+        "label": "sobrevivência em 5 anos se detectado cedo",
+        "detail": "Enquanto ainda localizado. Cai para 36% após a disseminação para locais distantes."
       },
       {
-        "value": "2×",
+        "value": "2,6×",
         "label": "mais comum em homens",
-        "detail": "Embora as taxas entre mulheres estejam aumentando."
+        "detail": "17,5 versus 6,6 casos por 100.000 habitantes por ano."
       }
     ],
     "factLabel": "FATO",
     "facts": [
       {
-        "title": "O HPV é atualmente a principal causa de câncer orofaríngeo.",
-        "detail": "Os casos relacionados ao HPV cresceram bastante nas últimas duas décadas, superando o tabaco como principal fator. A vacinação contra o HPV reduz significativamente o risco e é aprovada até os 45 anos."
+        "title": "O HPV é hoje a principal causa do câncer de orofaringe.",
+        "detail": "Os casos relacionados ao HPV aumentaram bastante nas últimas duas décadas, superando o tabaco como principal fator. A vacinação contra o HPV reduz significativamente o risco e é aprovada até os 45 anos."
       },
       {
         "title": "Tabaco e álcool juntos multiplicam o risco, não apenas somam.",
-        "detail": "Pessoas que usam os dois têm um risco muito maior do que a soma de cada um separadamente. Parar qualquer um deles reduz o risco ao longo do tempo."
+        "detail": "Pessoas que usam os dois têm um risco consideravelmente maior do que a soma de cada fator isolado. Abandonar qualquer um deles reduz o risco ao longo do tempo."
       },
       {
-        "title": "O câncer bucal detectado cedo tem tratamento com boas chances de sucesso.",
-        "detail": "Quando encontrado no Estágio I, a sobrevida em 5 anos é superior a 80%. No Estágio IV, cai para menos de 40%. O estágio no momento do diagnóstico é o principal fator que influencia o resultado."
+        "title": "O câncer bucal em estágio inicial tem alto potencial de cura.",
+        "detail": "Quando ainda localizado, a sobrevivência relativa em 5 anos é de 88,7%. Após atingir os linfonodos próximos, esse índice cai para 69,7%, e após a disseminação para locais distantes, para 36,0%. O estágio no momento do diagnóstico é o principal fator que influencia o resultado."
       },
       {
-        "title": "Os dentistas encontram a maioria dos casos precoces.",
-        "detail": "Uma consulta odontológica de rotina inclui uma triagem de câncer bucal de 2 minutos. Para quem não vai ao dentista com regularidade, os cânceres costumam ser detectados em estágios mais avançados."
+        "title": "Os dentistas identificam a maioria dos casos precoces.",
+        "detail": "Uma consulta odontológica de rotina inclui uma triagem de câncer bucal que dura cerca de 2 minutos. Para quem não vai ao dentista regularmente, os cânceres costumam ser diagnosticados em estágios mais avançados."
       },
       {
-        "title": "Não afeta apenas fumantes mais velhos.",
-        "detail": "O câncer orofaríngeo relacionado ao HPV aparece com frequência em adultos de meia-idade sem histórico de uso de tabaco. Sintomas persistentes não devem ser ignorados por causa da idade ou do estilo de vida."
+        "title": "Não afeta mais apenas fumantes mais velhos.",
+        "detail": "O câncer de orofaringe relacionado ao HPV aparece com frequência em adultos de meia-idade sem histórico de uso de tabaco. Sintomas persistentes merecem avaliação independentemente da idade ou do estilo de vida."
       }
     ],
     "sourcesLabel": "Fontes:",
@@ -457,7 +457,7 @@
     "twoWeekHeading": "A regra das 2 semanas",
     "twoWeekP1Start": "Qualquer ferida, mancha, caroço ou alteração na boca que não tenha desaparecido após",
     "twoWeekBold": "2 semanas",
-    "twoWeekP1End": "deve ser avaliado por um dentista ou médico. Na maioria das vezes, não é nada grave, mas essa confirmação vale uma consulta de 10 minutos. O câncer bucal diagnosticado no Estágio I tem uma taxa de sobrevida de 84% em cinco anos.",
+    "twoWeekP1End": "deve ser avaliado por um dentista ou médico. Na maioria das vezes não é nada grave, mas essa tranquilidade vale uma consulta de 10 minutos. O câncer bucal encontrado enquanto ainda está localizado tem uma taxa de sobrevivência relativa em 5 anos de 89%.",
     "whenToSeeHeading": "Quando consultar um médico ou dentista, não espere se:",
     "whenToSee": [
       {
@@ -717,22 +717,22 @@
     "byNumbersHeading": "Em números",
     "stats": [
       {
-        "value": "54.000+",
+        "value": "60.480",
         "label": "novos diagnósticos por ano",
-        "sub": "EUA, bucal e orofaríngeo combinados"
+        "sub": "EUA, boca e orofaringe combinados"
       },
       {
-        "value": "84%",
-        "label": "taxa de sobrevida quando detectado cedo",
-        "sub": "cai para ~40% em estágio avançado"
+        "value": "89%",
+        "label": "sobrevivência se detectado cedo",
+        "sub": "localizado; 36% após disseminação distante"
       },
       {
-        "value": "2×",
+        "value": "2,6×",
         "label": "mais comum em homens",
-        "sub": "embora as taxas entre mulheres estejam aumentando"
+        "sub": "embora as taxas em mulheres estejam aumentando"
       },
       {
-        "value": "62",
+        "value": "65",
         "label": "idade mediana ao diagnóstico",
         "sub": "mas pode ocorrer em qualquer idade"
       }
@@ -784,23 +784,23 @@
     "faqs": [
       {
         "q": "O que é câncer bucal?",
-        "a": "Câncer bucal é o câncer que se desenvolve em qualquer parte da boca (cavidade oral) ou na parte posterior da garganta (orofaringe). Isso inclui os lábios, a língua, as gengivas, o assoalho da boca, o palato duro e mole, as bochechas e a garganta. A maioria dos cânceres bucais são carcinomas de células escamosas, cânceres que se originam nas células planas que revestem essas superfícies."
+        "a": "Câncer bucal é o câncer que se desenvolve em qualquer parte da boca (cavidade oral) ou na parte de trás da garganta (orofaringe). Isso inclui lábios, língua, gengivas, assoalho da boca, palato duro e mole, bochechas e garganta. A maioria dos cânceres bucais é do tipo carcinoma espinocelular, cânceres que se originam nas células planas que revestem essas superfícies."
       },
       {
         "q": "Quais são os tipos de câncer bucal?",
-        "a": "Os principais tipos são: carcinoma de células escamosas (cerca de 90% dos casos), câncer de orofaringe (amígdalas, base da língua, garganta, frequentemente relacionado ao HPV), câncer de glândula salivar (raro, com vários subtipos) e linfoma oral (incomum, mais provável em pessoas com imunidade comprometida)."
+        "a": "Os principais tipos são: carcinoma espinocelular (cerca de 90% dos casos), câncer de orofaringe (amígdalas, base da língua, garganta, frequentemente relacionado ao HPV), câncer de glândula salivar (raro, com vários subtipos) e linfoma oral (incomum, mais provável em pessoas com imunidade comprometida)."
       },
       {
         "q": "Câncer bucal e câncer de garganta são a mesma coisa?",
-        "a": "Eles se sobrepõem. O câncer bucal geralmente se refere aos cânceres dos lábios, língua, gengivas, bochechas e assoalho e teto da boca. O câncer de orofaringe afeta as amígdalas, a base da língua e a parte posterior da garganta. Como essas regiões se conectam, elas costumam ser agrupadas como câncer bucal e de orofaringe."
+        "a": "Eles se sobrepõem. O câncer bucal geralmente se refere aos cânceres dos lábios, língua, gengivas, bochechas e assoalho e teto da boca. O câncer de orofaringe (garganta) afeta as amígdalas, a base da língua e a parte de trás da garganta. Como essas regiões se conectam, elas são frequentemente agrupadas como câncer de boca e orofaringe."
       },
       {
         "q": "O câncer bucal é comum?",
-        "a": "Mais de 54.000 americanos são diagnosticados com câncer bucal e de orofaringe por ano. É aproximadamente duas vezes mais comum em homens do que em mulheres, e a mediana de idade no diagnóstico é 65 anos. Está entre os dez cânceres mais comuns no mundo."
+        "a": "Estima-se que cerca de 60.480 americanos receberão diagnóstico de câncer de boca e orofaringe em 2026, e cerca de 13.150 morrerão em decorrência da doença. É aproximadamente 2,6 vezes mais comum em homens do que em mulheres (17,5 versus 6,6 casos por 100.000 habitantes por ano), e a idade mediana ao diagnóstico é 65 anos. Está entre os dez cânceres mais comuns no mundo."
       },
       {
-        "q": "O câncer bucal tem cura se for descoberto cedo?",
-        "a": "Sim. A taxa de sobrevida em 5 anos para o câncer bucal em estágio inicial é de cerca de 84%. Em estágio avançado, esse número cai para aproximadamente 40%. A detecção precoce por meio de consultas odontológicas regulares e autoexames mensais é o principal fator para melhorar os resultados."
+        "q": "O câncer bucal tem cura se detectado cedo?",
+        "a": "Sim. A sobrevivência relativa em 5 anos é de 88,7% enquanto o câncer ainda está localizado, 69,7% após atingir os linfonodos próximos e 36,0% após a disseminação para locais distantes (SEER, 2016 a 2022). A detecção precoce por meio de consultas odontológicas regulares e autoexames mensais é o principal fator para melhorar os resultados."
       }
     ],
     "sourcesLabel": "Fontes:",
@@ -910,7 +910,7 @@
     ],
     "painlessHeading": "Por que o câncer bucal inicial frequentemente não causa dor",
     "painlessP1": "A dor é o sistema de alarme do organismo, mas o câncer bucal em estágio inicial frequentemente não a ativa. Um pequeno tumor no assoalho da boca ou na lateral da língua pode crescer por meses sem causar nenhum desconforto. Manchas vermelhas e brancas são muitas vezes completamente assintomáticas.",
-    "painlessP2": "Quando a dor aparece, geralmente por comprometimento nervoso ou ulceração, o câncer costuma estar em estágio mais avançado. Essa dinâmica é o principal motivo pelo qual o câncer bucal tem uma baixa taxa de detecção precoce e uma taxa de sobrevida em 5 anos de apenas cerca de 40% para a doença em estágio avançado, em comparação a mais de 84% quando detectado cedo.",
+    "painlessP2": "Quando a dor aparece, geralmente por envolvimento nervoso ou ulceração, o câncer frequentemente já está em um estágio mais avançado. Essa dinâmica é a principal razão pela qual o câncer bucal tem uma taxa baixa de detecção precoce e uma sobrevivência relativa em 5 anos de cerca de 36% após a disseminação para locais distantes, em comparação com cerca de 89% quando detectado enquanto ainda está localizado.",
     "painlessP3": "A ausência de dor não é motivo de tranquilidade. É exatamente por isso que a regra das 2 semanas é importante, e por isso as consultas odontológicas de rotina que incluem triagem para câncer bucal valem a pena.",
     "comparisonHeading": "Câncer bucal versus afta: comparação rápida",
     "comparisonIntroStart": "Aftas e câncer bucal inicial podem ter aparência semelhante.",
@@ -1231,11 +1231,11 @@
     ],
     "stats": [
       {
-        "value": "54k+",
+        "value": "60 mil+",
         "label": "novos diagnósticos de câncer bucal por ano nos EUA"
       },
       {
-        "value": "84%",
+        "value": "89%",
         "label": "taxa de sobrevivência quando detectado cedo"
       },
       {
@@ -1458,7 +1458,40 @@
     "lastReviewedLabel": "Última revisão",
     "lastReviewedDate": "Agosto de 2026",
     "reviewBody": "A lista de fatores, os pesos, os limites e as fontes desta página foram verificados pela última vez com base na literatura atual em agosto de 2026 e revisados após avaliação externa por um patologista bucal e maxilofacial em exercício. Essa revisão foi o que adicionou a pergunta sobre histórico imunológico e de radioterapia, incluiu crescimento gengival e mobilidade dentária recente nas orientações sobre sintomas, e motivou a observação de que uma parcela significativa dos cânceres bucais ocorre sem nenhum fator de risco convencional.",
-    "reviewCadence": "Esta página é revisada pelo menos uma vez por ano e sempre que uma pergunta é adicionada, removida ou reajustada em peso. Se você identificar um erro em uma citação ou em um peso, vale a pena reportar: as correções são feitas diretamente e a data de revisão é atualizada."
+    "reviewCadence": "Esta página é revisada pelo menos uma vez por ano e sempre que uma pergunta é adicionada, removida ou reajustada em peso. Se você identificar um erro em uma citação ou em um peso, vale a pena reportar: as correções são feitas diretamente e a data de revisão é atualizada.",
+    "seerHeading": "Os Índices de Sobrevivência Citados Neste Site",
+    "seerIntro": "Várias páginas citam a sobrevivência em 5 anos por estágio, porque a diferença entre encontrar o câncer bucal cedo e encontrá-lo tarde é exatamente o motivo pelo qual esta ferramenta existe. Estes são os números atuais e o que eles significam, e o que não significam.",
+    "seerRows": [
+      {
+        "stage": "Localizado",
+        "survival": "88,7%",
+        "share": "26% dos casos",
+        "note": "Não se espalhou além do local de origem."
+      },
+      {
+        "stage": "Regional",
+        "survival": "69,7%",
+        "share": "55% dos casos",
+        "note": "Atingiu estruturas próximas ou linfonodos."
+      },
+      {
+        "stage": "Distante",
+        "survival": "36,0%",
+        "share": "12% dos casos",
+        "note": "Disseminou-se para outras partes do corpo."
+      },
+      {
+        "stage": "Todos os estágios",
+        "survival": "69,9%",
+        "share": "—",
+        "note": "Todos os diagnosticados, incluindo os 6% cujo estágio é desconhecido."
+      }
+    ],
+    "seerNote": "Dois pontos merecem precisão. Estes são estágios resumidos do SEER, que não são os mesmos que os estágios I a IV do AJCC; este site apresentava anteriormente esses dados como sobrevivência no Estágio I e no Estágio IV, o que atribuía os números de um sistema de estadiamento a outro, e isso foi corrigido. Além disso, são taxas de sobrevivência relativa, ou seja, sobrevivência comparada à de pessoas da mesma idade e sexo sem o câncer, e não uma previsão para nenhum indivíduo específico.",
+    "seerSourceLine": "Fonte: NCI SEER Cancer Stat Facts, Câncer de Cavidade Oral e Faringe. Os dados de sobrevivência abrangem 2016 a 2022; as projeções de casos e mortes são para 2026; as taxas de incidência abrangem 2019 a 2023.",
+    "colStage": "Estágio ao diagnóstico",
+    "colSurvival": "Sobrevivência relativa em 5 anos",
+    "colShare": "Proporção dos casos"
   },
   "ContactForm": {
     "sentTitle": "Mensagem recebida, obrigado pelo contato.",
@@ -1818,7 +1851,7 @@
     },
     "dental": {
       "title": "Quando foi sua última consulta ao dentista?",
-      "subtitle": "Mais de 60% dos cânceres bucais só são diagnosticados nos estágios III ou IV, uma lacuna causada em grande parte pela demora na busca por atendimento. Consultas regulares ao dentista permitem a detecção mais precoce, pois os dentistas são treinados para identificar alterações na mucosa que o paciente não consegue ver.",
+      "subtitle": "Apenas cerca de 1 em cada 4 cânceres bucais é encontrado enquanto ainda está localizado (SEER: 26%), uma lacuna impulsionada principalmente pela demora na procura por atendimento. Consultas odontológicas regulares permitem uma detecção mais precoce; os dentistas são treinados para identificar alterações na mucosa que os pacientes não conseguem ver.",
       "options": {
         "recent": "No último ano",
         "fewyears": "1 – 3 anos atrás",
@@ -1839,7 +1872,7 @@
   "RiskEngine": {
     "and": "e",
     "categoryGuidance": {
-      "demographics": "A idade é o fator de risco não modificável mais importante. A partir dos 40 anos, o rastreamento em cada consulta odontológica é especialmente importante, pois o câncer bucal detectado no Estágio I tem uma taxa de sobrevivência em cinco anos de 84%, em comparação com 38% no Estágio IV.",
+      "demographics": "A idade é o principal fator de risco não modificável. A partir dos 40 anos, a triagem em cada consulta odontológica é especialmente importante: o câncer bucal encontrado enquanto ainda está localizado tem uma sobrevivência em 5 anos de 89%, contra 36% após a disseminação para locais distantes.",
       "sex": "O sexo ao nascer não é algo que se pode mudar, portanto deve ser tratado da mesma forma que a idade: como um motivo para garantir que o exame bucal de dois minutos realmente aconteça em vez de ser ignorado. Homens são diagnosticados com câncer de cavidade oral e faringe em uma taxa aproximadamente duas vezes maior do que mulheres, e também têm menos probabilidade de consultar um dentista regularmente, que é a parte que está ao alcance de cada um. Peça uma avaliação para rastreamento de câncer bucal pelo nome na próxima consulta, em vez de presumir que ela já foi realizada.",
       "tobacco": "Parar de fumar reduz o risco em aproximadamente 50% nos primeiros 5 anos após a cessação. A terapia de reposição de nicotina dobra as taxas de sucesso a longo prazo. Consulte seu dentista ou médico sobre programas gratuitos de cessação tabágica, o CVV e o INCA oferecem apoio para quem quer parar de fumar.",
       "alcohol": "O risco diminui com a redução do consumo. Para pessoas que usam tabaco e álcool ao mesmo tempo, parar de fumar tem o maior impacto individual. Mesmo reduzir o consumo de álcool de diário para ocasional diminui significativamente a exposição da mucosa a substâncias cancerígenas.",
@@ -1848,7 +1881,7 @@
       "symptoms": "Manchas vermelhas persistentes (eritroplasia), manchas brancas (leucoplasia), feridas que não cicatrizam, caroços sem explicação aparente ou dificuldade para engolir com duração de 2 semanas ou mais são sinais de alerta clínicos bem estabelecidos. Esses sinais não devem ser aguardados, eles exigem avaliação profissional ainda esta semana, não em uma consulta futura.",
       "family": "Informe seu dentista sobre o histórico familiar. Ele pode recomendar rastreamentos mais frequentes para câncer bucal ou encaminhamento a um especialista em medicina oral. O aconselhamento genético está disponível na maioria dos centros médicos universitários.",
       "diet": "Procure consumir 5 ou mais porções diárias de frutas e verduras coloridas. As evidências indicam que dietas ricas em vitaminas A, C e E reduzem a displasia epitelial oral. O consumo de carnes processadas também foi associado a maior risco de câncer de cabeça e pescoço em alguns estudos de coorte.",
-      "dental": "Marque uma consulta odontológica o quanto antes. O rastreamento visual para câncer bucal leva cerca de 2 minutos e é realizado como parte do exame de rotina. Mais de 60% dos casos de câncer bucal são diagnosticados no Estágio III ou IV, o acompanhamento odontológico regular muda essa realidade.",
+      "dental": "Agende uma consulta odontológica o quanto antes. A triagem visual de câncer bucal leva cerca de 2 minutos e é realizada como parte de uma consulta de rotina. Apenas cerca de 1 em cada 4 cânceres bucais é detectado enquanto ainda está localizado, e o acompanhamento odontológico regular é o que muda esse cenário.",
       "other": "Parar de usar noz de areca, paan ou gutka reduz o risco, embora algumas alterações na mucosa oral decorrentes do uso anterior possam persistir. Peça ao seu dentista que examine quaisquer áreas com descoloração, espessamento ou feridas. Muitas comunidades dispõem de recursos de cessação adaptados culturalmente.",
       "medical": "Informe ao seu dentista sobre o transplante, o histórico de radioterapia ou o uso de imunossupressores antes do exame. Isso muda o nível de atenção e a frequência com que ele vai querer acompanhar você: muitos programas de transplante e protocolos de acompanhamento após radioterapia na cabeça e no pescoço já preveem rastreamento de câncer bucal com mais frequência do que uma vez por ano, e um consultório odontológico comum pode não saber aplicar esse calendário a menos que você informe."
     },
@@ -1892,11 +1925,11 @@
       }
     },
     "summary": {
-      "urgent": "Um sintoma que você relatou, combinado com {topPhrase}, requer avaliação profissional com urgência. O câncer bucal detectado no Estágio I tem uma taxa de sobrevivência de 84% em cinco anos, contra 38% no Estágio IV. Essa diferença é o motivo pelo qual o momento certo faz tanta diferença. Agende uma consulta odontológica ou médica esta semana e mencione o sintoma especificamente ao ligar.",
+      "urgent": "Um sintoma relatado, combinado com {topPhrase}, justifica avaliação profissional com urgência. O câncer bucal encontrado enquanto ainda está localizado tem uma sobrevivência em 5 anos de 89%, contra 36% após a disseminação para locais distantes. Essa diferença é o motivo pelo qual o momento importa. Agende uma consulta com dentista ou médico esta semana e mencione o sintoma especificamente ao entrar em contato.",
       "low": "Nenhum fator de risco importante se destaca no seu perfil no momento. Mantenha consultas odontológicas anuais, pois o rastreamento visual do câncer bucal leva cerca de 2 minutos e está incluído em um exame de rotina. Familiarize-se com os sinais de alerta para agir rapidamente caso algo mude.",
-      "moderate": "Seu {topPhrase} eleva seu risco de forma modesta acima da linha de base. Esses são fatores sobre os quais é possível agir. Mencione seu histórico de risco ao dentista na próxima consulta e peça um rastreamento de câncer bucal. A detecção precoce no Estágio I tem uma taxa de sobrevivência de 84% em cinco anos.",
-      "elevated": "Vários fatores, especialmente {topPhrase}, estão somando seu risco. Considere agendar uma consulta odontológica este mês e pedir especificamente um rastreamento de câncer bucal. A taxa de sobrevivência em 5 anos é de 84% quando o câncer bucal é detectado precocemente, contra 38% quando detectado tardiamente. Não espere um sintoma aparecer.",
-      "high": "Sua combinação de fatores de risco, incluindo {topPhrase}, coloca você em um grupo de risco elevado em que o rastreamento proativo é fortemente recomendado. Agende uma consulta odontológica ou médica em breve. A diferença entre a sobrevivência no Estágio I e no Estágio IV do câncer bucal é expressiva: 84% contra 38%. O exame leva 2 minutos e pode ser a consulta mais importante do ano.",
+      "moderate": "O {topPhrase} eleva modestamente o risco acima da linha de base. São fatores sobre os quais é possível agir. Mencione seu histórico de risco ao dentista na próxima consulta e peça uma triagem de câncer bucal. Quando ainda localizado, o câncer bucal tem uma sobrevivência em 5 anos de 89%.",
+      "elevated": "Vários fatores, especialmente {topPhrase}, estão somando risco. Considere agendar uma consulta odontológica este mês e solicitar especificamente uma triagem de câncer bucal. A sobrevivência em 5 anos é de 89% quando o câncer bucal é encontrado enquanto ainda está localizado, contra 36% após a disseminação para locais distantes. Não espere um sintoma aparecer.",
+      "high": "A combinação de fatores de risco, incluindo {topPhrase}, coloca este perfil em um grupo de risco mais elevado, para o qual a triagem proativa é fortemente recomendada. Agende uma consulta com dentista ou médico em breve. A diferença é expressiva: 89% de sobrevivência em 5 anos enquanto o câncer ainda está localizado, contra 36% após a disseminação para locais distantes. O exame leva 2 minutos e pode ser a consulta mais importante do ano.",
       "fallback": "suas respostas"
     }
   },

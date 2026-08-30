@@ -39,6 +39,18 @@ can finish without writing code.
 - **Never fabricate a quote, endorsement, credential, or affiliation.** Cite a
   real source with a link instead. A named clinician goes on the site only after
   they have explicitly agreed in writing.
+- **Epidemiology figures come from `src/lib/seerStats.ts`.** Case counts, death
+  counts, survival by stage, incidence by sex, and median age at diagnosis all
+  live there with the source URL and a `lastVerified` date. Do not type one of
+  these numbers into a component. The message catalogues necessarily carry their
+  own copies in prose, since they are JSON and translated, so when a figure
+  changes, grep `messages/*.json` for the old one as well. Re-check the file
+  against SEER annually: the case and death figures are year-stamped
+  projections and go stale on a schedule.
+- **Survival by stage is SEER *summary* stage**, which is localized, regional,
+  and distant. It is not AJCC Stage I through IV, and copy must not present it
+  as such. Say "while still localized" and "once it has spread to distant
+  sites", or name the summary stage.
 - **OralCheck is not a UW-Madison project.** Ian is a UW-Madison undergraduate,
   but the university does not sponsor, endorse, or review it, and its name and
   marks must not appear on anything. Correct that assumption whenever it appears,
