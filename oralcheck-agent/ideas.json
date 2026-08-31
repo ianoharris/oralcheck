@@ -355,16 +355,54 @@
       "brief": "Recovered from run 32056316958 logs after the ledger push was rejected.",
       "status": "queued",
       "suggested_at": "2026-08-17T19:06:21.346993+00:00"
+    },
+    {
+      "title": "Alcohol Is an Oral Cancer Risk Factor Most People Never Hear About",
+      "pillar": "awareness",
+      "media_type": "carousel",
+      "brief": "Tied to National Recovery Month (September 1), this carousel surfaces alcohol as one of the three primary modifiable risk factors for oral cancer, a fact most people in recovery conversations never encounter. A 2026 Lancet Americas study found that alcohol use may raise susceptibility to oral high-risk HPV infection, giving the post a fresh, peer-reviewed hook that goes beyond the familiar tobacco framing. Each slide moves from the risk finding to the concrete action: take the free screener at oralcheck.org.",
+      "angle": "timely",
+      "calendar_ref": "national_recovery_month_2026-09-01",
+      "slug": "alcohol-is-an-oral-cancer-risk-factor-most-people-never-hear",
+      "id": "idea_528dc39d",
+      "status": "selected",
+      "suggested_at": "2026-08-31T20:21:10.659879+00:00",
+      "used_at": null,
+      "manifest_id": null
+    },
+    {
+      "title": "58,500 Diagnoses a Year. Most People Can't Picture That Number.",
+      "pillar": "trend_comparison",
+      "media_type": "carousel",
+      "brief": "Open with the 2026 figure of roughly 58,500 Americans diagnosed with oral or pharyngeal cancer this year, then give it scale through a striking, sourced comparison, such as the capacity of a sold-out NFL stadium (roughly 65,000 seats) or the population of a recognizable mid-size U.S. city, so the number stops being abstract. Each slide pairs the visual comparison with a plain-language fact about early detection, ending on the screener CTA. The comparison must be chosen so it is clearly tasteful and not trivializing of the disease.",
+      "angle": "trend-comparison",
+      "calendar_ref": null,
+      "slug": "58-500-diagnoses-a-year-most-people-can-t-picture-that-numbe",
+      "id": "idea_83b302ba",
+      "status": "suggested",
+      "suggested_at": "2026-08-31T20:21:10.659879+00:00",
+      "used_at": null,
+      "manifest_id": null
+    },
+    {
+      "title": "Three Minutes on a Sunday Can Actually Tell You Something Real",
+      "pillar": "light_lane",
+      "media_type": "carousel",
+      "brief": "A warm, human carousel that walks through the small, unhurried Sunday-morning ritual of a quick oral self-check, framed around the kind of self-care people already do on a slow morning (checking the mirror, making coffee) rather than around fear or urgency. Each slide covers one thing to look for, in plain, friendly language, with the final slide noting that if anything looks off after three weeks, the next step is a conversation with a clinician, and that oralcheck.org is a free, no-account starting point. This idea goes to manual review before publishing.",
+      "angle": "how-to",
+      "calendar_ref": null,
+      "slug": "three-minutes-on-a-sunday-can-actually-tell-you-something-re",
+      "id": "idea_9338956d",
+      "status": "suggested",
+      "suggested_at": "2026-08-31T20:21:10.659879+00:00",
+      "used_at": null,
+      "manifest_id": null
     }
   ],
   "last_batch": [
-    "idea_d0835600",
-    "idea_e3416f9f",
-    "idea_590be6fd",
-    "idea_83c2e3ac",
-    "idea_ee4cb208",
-    "idea_1514ecd9",
-    "idea_d68c592c",
-    "idea_62880576"
-  ]
+    "idea_528dc39d",
+    "idea_83b302ba",
+    "idea_9338956d"
+  ],
+  "feedback": []
 }

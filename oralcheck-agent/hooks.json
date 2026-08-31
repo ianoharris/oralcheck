@@ -10,6 +10,50 @@
       "angle": "The same cultural moment that has millions of people paying closer attention to what they put in their mouths is a natural opening to ask whether they know their oral cancer risk factors.",
       "strength": 4,
       "found_at": "2026-08-17T04:50:47.495952+00:00"
+    },
+    {
+      "id": "hook_c044feb6",
+      "slug": "national-recovery-month-begins",
+      "title": "National Recovery Month begins",
+      "kind": "awareness",
+      "when": "2026-09-01",
+      "why_now": "September 1 opens National Recovery Month, when conversations about alcohol and substance use surge across health media and social platforms in a consistent, well-documented annual pattern.",
+      "angle": "Alcohol is one of the three primary modifiable risk factors for oral cancer, making Recovery Month a direct and honest moment to invite people to complete a free risk questionnaire.",
+      "strength": 5,
+      "found_at": "2026-08-31T20:20:12.266190+00:00"
+    },
+    {
+      "id": "hook_52f6a061",
+      "slug": "lancet-americas-study-alcohol-and-oral-hpv",
+      "title": "Lancet Americas study: alcohol and oral HPV",
+      "kind": "study",
+      "when": "2026-09-01",
+      "why_now": "A 2026 Lancet Americas paper finding that even modest alcohol use may raise susceptibility to oral high-risk HPV infection is being recirculated in health media as Recovery Month coverage begins.",
+      "angle": "The study gives OralCheck a specific, peer-reviewed finding to reference when explaining why alcohol is a question on an oral cancer risk assessment.",
+      "strength": 4,
+      "found_at": "2026-08-31T20:20:12.266234+00:00"
+    },
+    {
+      "id": "hook_48ffec06",
+      "slug": "labor-day-us-wellness-reset",
+      "title": "Labor Day US wellness reset",
+      "kind": "holiday",
+      "when": "2026-09-07",
+      "why_now": "Labor Day reliably generates a wave of new-season wellness content as people plan preventive health habits heading into fall.",
+      "angle": "The end-of-summer pause is a natural, low-friction moment to spend five minutes completing a free oral cancer risk questionnaire before the busy fall schedule takes over.",
+      "strength": 3,
+      "found_at": "2026-08-31T20:20:12.266258+00:00"
+    },
+    {
+      "id": "hook_f3163d59",
+      "slug": "hispanic-heritage-month-opens",
+      "title": "Hispanic Heritage Month opens",
+      "kind": "awareness",
+      "when": "2026-09-15",
+      "why_now": "Hispanic Heritage Month begins September 15 and prompts health organizations to highlight disparities in cancer prevention and screening access.",
+      "angle": "Oral cancer screening rates are lower in some Hispanic communities, and a free, accessible online questionnaire is a concrete step toward closing that gap.",
+      "strength": 3,
+      "found_at": "2026-08-31T20:20:12.266276+00:00"
     }
   ]
 }
