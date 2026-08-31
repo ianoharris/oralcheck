@@ -272,6 +272,15 @@ export default async function MethodsPage({ params }: Props) {
         <p className="text-sm text-ink-soft max-w-2xl leading-relaxed mt-2">
           {t("thresholdAnchorNote")}
         </p>
+        {/* Guarded because English is written first and the translations follow
+            on a separate run. Without this, a locale that hasn't been synced yet
+            renders the literal key path on the page, which looks far worse than
+            a paragraph that is briefly missing. */}
+        {t.has("thresholdProvenance") && (
+          <p className="text-sm text-ink-soft max-w-2xl leading-relaxed mt-2">
+            {t("thresholdProvenance")}
+          </p>
+        )}
       </section>
 
       {/* Survival figures quoted elsewhere on the site */}

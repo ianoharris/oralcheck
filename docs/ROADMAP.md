@@ -10,7 +10,7 @@ The running list. Two rules:
    named. This is the list's whole purpose: the things that come up once, sound
    good, and are never mentioned again.
 
-Last updated: 2026-08-27
+Last updated: 2026-08-30
 
 **Mirrored to an artifact Ian reads:**
 https://claude.ai/code/artifact/cc490e4b-1ee3-4062-bc56-eada066f1003
@@ -25,7 +25,8 @@ Update both together. See `AGENTS.md`.
 | Publishing articles from `/review/<slug>` | Ian setting `ADMIN_SECRET` in Vercel | `/api/publish` and `/api/draft` fail closed with 503 until it exists. Generate with `openssl rand -base64 32`, add it in Vercel, redeploy, then paste it once on any `/review/` page. The public site is unaffected. |
 | A named clinical reviewer on `/methods` | Marquette Chair + Associate Dean for Research | **Dr. Yeshwant Rawal reviewed the methodology on 2026-08-24** and called it "done thoughtfully and based on evidence through relevant literature". He is President of the American Board of Oral & Maxillofacial Pathology, so this is a serious credential. **He has agreed in principle** (2026-08-25): "I would be very happy to associate myself with this excellent project." Conditional on his Chair and Associate Dean for Research, both copied. He asked whether there is a UW-Madison mentor or institutional protocol; there is neither, and the reply says so plainly. **His name still does not go on the site until his institution clears it.** |
 | A real quote on the homepage | The same permission | Currently carries a cited NCI SEER statistic, which is honest but is a citation rather than an endorsement. Rawal's review is the first plausible source for a real one. Do not fabricate one, and do not quote him until he says yes. |
-| A UW-Madison faculty mentor | Ian sending the emails | There is none, and Marquette's research office has now asked. Drafts for Hartig, Davies and Glazer (Otolaryngology-Head & Neck Surgery, addresses verified from the department directory) are in `outreach-drafts/2026-08-25-UW-Mentor-Ask.md`. Rawal's interest is the reason this ask now lands. |
+| A UW-Madison faculty mentor | Ian replying to Brant | **Glazer declined on 2026-08-30** and forwarded it to the department's research faculty. **Dr. Jason Brant (Associate Professor, Oto-HNS) replied the same day and engaged substantively**, with three methodology criticisms and one institutional warning. He drew the line himself: a faculty mentor is right for clinical framing, abstracts and study design, but **a biostatistician** is who decides whether the risk stratification holds. Reply drafted at `outreach-drafts/2026-08-30-Jason-Brant-REPLY.md`; it asks him for the clinical half and for a pointer to biostatistics support. Two spots in it need Ian's own answer before sending. |
+| Whether UW considers this a university project at all | Ian's academic advisor | **Raised by Dr. Brant, 2026-08-30**, and it outranks the IRB question. Faculty must disclose anything job-related or using university resources, and Brant specifically guessed the source papers were pulled through UW library access. He also questioned whether the site's disclaimer is actually sufficient protection or only reads that way. Ian asserting "this is not a UW project" is not the same as UW determining it. Ask the academic advisor, and ask specifically about (1) what counts as a university resource for an undergraduate and (2) whether the disclaimer holds up. Monetization would raise the stakes on all of it; there is none and no plan for any. |
 | A written UW IRB determination | Ian submitting it | The tool stores nothing, so it is almost certainly *not human subjects research* under UW's HRPP, but the assertion is worth having on paper for Marquette's Associate Dean. Free, and Ian can submit it himself. |
 | Co-branded Marquette flyer | The approval above | Rawal proposed a design "to reflect our two institutions". Corrected in the reply: OralCheck is not a UW project and cannot carry UW branding. Marquette + OralCheck only. |
 | Judge whether the reel skip-rate fix worked | A new reel going out | 83.7% skip. Frame-0 fix and cover image both shipped, but only affect reels rendered *after* they landed. The three currently scheduled were rendered before. |
@@ -54,6 +55,18 @@ Update both together. See `AGENTS.md`.
       (erythroplakia) and lump/thickening. No openly-licensed image found yet.
 
 ### Product and credibility
+
+- [ ] **Find a biostatistician, not another clinician.** Brant's most useful
+      sentence: a faculty mentor cannot tell you whether the stratification is
+      valid, and conflating the two roles was a mistake. Ask whether UW's ICTR
+      route is open to an undergraduate and whether it needs a faculty sponsor.
+- [ ] **Decide what to do about oral cavity vs oropharynx.** It has been
+      limitation #2 since launch and both Rawal and Brant raised it independently,
+      which makes it the most-flagged weakness in the tool. Two honest options:
+      split the output into two scores, roughly doubling length and explanation
+      burden, or restrict scope to oral cavity and drop the HPV question, which
+      cuts out the fastest-growing part of the problem. Neither is obviously
+      right. Worth putting to a clinician rather than deciding alone.
 
 - [x] ~~Systemic risk factor question~~ — shipped 2026-08-27, weight 5.
 - [x] ~~Sex at birth question~~ — shipped 2026-08-27, weight 3.
@@ -121,6 +134,23 @@ Update both together. See `AGENTS.md`.
 ## Shipped
 
 Newest first.
+
+### 2026-08-30 (later)
+- **Two gaps closed that a reviewer found before we did.** Dr. Jason Brant's
+  reply carried three methodology criticisms. One (oral cavity vs oropharyngeal)
+  was already limitation #2. The other two were not on the page at all, and now
+  are: that the weights are pooled from studies in different source populations
+  and then applied to whoever opens the page, which is the largest single source
+  of uncertainty in the score; and that the tier cutoffs were set by judgment
+  against reference profiles rather than derived, with no sensitivity,
+  specificity, or ROC behind them
+- `/methods` now states the threshold provenance outright. It previously
+  documented how the boundaries were *anchored*, which is not the same as saying
+  where they came from, and a careful reader could have inferred more rigor than
+  exists
+- The new paragraph is wrapped in `t.has()`. English is written first and the
+  translations follow on a separate run, and without the guard an unsynced locale
+  renders the literal key path on the page
 
 ### 2026-08-30
 - **Every SEER figure on the site corrected and consolidated.** Survival 84/38

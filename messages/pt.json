@@ -1324,6 +1324,8 @@
     "limitationsHeading": "Limitações Conhecidas",
     "limitations": [
       "O OralCheck não foi validado com base em um conjunto de dados de desfechos clínicos. Os pesos são fundamentados na literatura publicada, mas não foram calibrados com base em uma coorte prospectiva.",
+      "Os pesos vêm de estudos conduzidos em populações diferentes e são então aplicados a quem quer que abra a página. O número do tabaco vem de uma metanálise de coortes de fumantes, o do betel de populações do sul e sudeste da Ásia onde o uso é comum, e o do HPV de um estudo de caso-controle nos Estados Unidos. Somar os logaritmos das razões de chances entre eles pressupõe que esses tamanhos de efeito se transferem para a pessoa que está respondendo, e essa premissa não foi testada. É a maior fonte isolada de incerteza na pontuação, maior do que qualquer peso individual estar um pouco errado.",
+      "Os limites entre as faixas foram definidos por julgamento, e não derivados de dados. Eles são ancorados em perfis de referência e conferidos contra a distribuição de respostas possíveis, mas nenhum conjunto de dados de desfecho os informou, de modo que a ferramenta não consegue informar sensibilidade ou especificidade para nenhuma faixa.",
       "O rastreador combina o risco de câncer da cavidade bucal e do orofaringe em uma única pontuação. Essas são entidades epidemiologicamente distintas: o HPV-16 é principalmente um fator causador do câncer de orofaringe, enquanto o tabaco e o álcool predominam no câncer da cavidade bucal.",
       "A pergunta combinada sobre imunidade e radiação agrupa três exposições com tamanhos de efeito genuinamente diferentes em um único peso. Uma pessoa em uso prolongado de imunossupressores após um transplante e outra que fez radioterapia na cabeça e no pescoço décadas atrás recebem a mesma pontuação, o que é uma simplificação feita para manter o rastreador curto.",
       "O rastreador depende de dados autodeclarados. O uso de tabaco e álcool costuma ser subestimado nas respostas.",
@@ -1491,7 +1493,8 @@
     "seerSourceLine": "Fonte: NCI SEER Cancer Stat Facts, Câncer de Cavidade Oral e Faringe. Os dados de sobrevivência abrangem 2016 a 2022; as projeções de casos e mortes são para 2026; as taxas de incidência abrangem 2019 a 2023.",
     "colStage": "Estágio ao diagnóstico",
     "colSurvival": "Sobrevivência relativa em 5 anos",
-    "colShare": "Proporção dos casos"
+    "colShare": "Proporção dos casos",
+    "thresholdProvenance": "Vale ser direto sobre de onde vieram esses quatro números, porque nada os derivou. Eles foram definidos por julgamento a partir dos perfis de referência acima: quem fuma diariamente não deveria aparecer como risco baixo, quem usa tabaco e álcool juntos deveria ficar claramente acima, e um perfil com várias exposições do Grupo 1 deveria alcançar o nível mais alto. Depois foram conferidos contra a distribuição de combinações de respostas plausíveis, para que as faixas não ficassem quase vazias nem quase cheias. Essa é uma forma defensável de definir um ponto de corte para uma ferramenta cujo objetivo é levar alguém ao dentista, e não é a mesma coisa que um limiar validado. Não há sensibilidade, nem especificidade, nem curva ROC por trás desses limites, porque produzi-las exige dados de desfecho aos quais esta ferramenta nunca teve acesso."
   },
   "ContactForm": {
     "sentTitle": "Mensagem recebida, obrigado pelo contato.",

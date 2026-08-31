@@ -1324,6 +1324,8 @@
     "limitationsHeading": "Limitaciones conocidas",
     "limitations": [
       "OralCheck no ha sido validado con un conjunto de datos de resultados clínicos. Los pesos están fundamentados en literatura publicada, pero no han sido calibrados con una cohorte prospectiva.",
+      "Los pesos provienen de estudios realizados en poblaciones distintas y luego se aplican a quien sea que abra la página. La cifra del tabaco viene de un metaanálisis de cohortes de fumadores, la del betel de poblaciones del sur y sudeste de Asia donde su uso es común, y la del VPH de un estudio de casos y controles en Estados Unidos. Sumar los logaritmos de las razones de probabilidad entre ellos asume que esos tamaños de efecto se trasladan a la persona que responde, y esa suposición no está comprobada. Es la mayor fuente individual de incertidumbre en la puntuación, mayor que el hecho de que algún peso concreto esté algo equivocado.",
+      "Los límites entre niveles se fijaron por criterio en lugar de derivarse de datos. Están anclados a perfiles de referencia y verificados frente a la distribución de respuestas posibles, pero ningún conjunto de datos de desenlace los informó, así que la herramienta no puede indicar una sensibilidad ni una especificidad para ningún nivel.",
       "El evaluador combina el riesgo de cáncer de cavidad oral y de orofaringe en una sola puntuación. Se trata de entidades epidemiológicamente distintas: el VPH-16 es principalmente un factor causante del cáncer de orofaringe, mientras que el tabaco y el alcohol predominan en el cáncer de cavidad oral.",
       "La pregunta combinada sobre inmunidad y radiación agrupa tres exposiciones con tamaños de efecto genuinamente diferentes en un solo peso. Una persona que toma inmunosupresores a largo plazo tras un trasplante y otra que recibió radiación en cabeza y cuello hace décadas obtienen la misma puntuación, lo cual es una simplificación hecha para mantener el evaluador breve.",
       "El evaluador se basa en datos autorreportados. El consumo de tabaco y alcohol suele ser subnotificado.",
@@ -1491,7 +1493,8 @@
     "seerSourceLine": "Fuente: NCI SEER Cancer Stat Facts, cáncer de cavidad oral y faringe. Los datos de supervivencia corresponden al período 2016-2022; las proyecciones de casos y muertes son para 2026; las tasas de incidencia corresponden al período 2019-2023.",
     "colStage": "Etapa al diagnóstico",
     "colSurvival": "Supervivencia relativa a 5 años",
-    "colShare": "Proporción de casos"
+    "colShare": "Proporción de casos",
+    "thresholdProvenance": "Vale la pena ser directo sobre de dónde salieron estos cuatro números, porque nada los derivó. Se establecieron por criterio a partir de los perfiles de referencia anteriores: alguien que fuma a diario no debería salir como riesgo bajo, alguien que combina tabaco y alcohol debería quedar claramente por encima, y un perfil con varias exposiciones del Grupo 1 debería alcanzar el nivel más alto. Luego se contrastaron con la distribución de combinaciones de respuestas plausibles para que los niveles no quedaran casi vacíos ni casi llenos. Esa es una forma defendible de fijar un punto de corte para una herramienta cuyo objetivo es motivar una visita al dentista, y no es lo mismo que un umbral validado. No hay sensibilidad, ni especificidad, ni curva ROC detrás de estos límites, porque producirlas requiere datos de desenlace a los que esta herramienta nunca ha tenido acceso."
   },
   "ContactForm": {
     "sentTitle": "Recibido, gracias por escribir.",

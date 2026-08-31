@@ -1324,6 +1324,8 @@
     "limitationsHeading": "Known Limitations",
     "limitations": [
       "OralCheck hasn't been validated against a clinical outcome dataset. The weights are grounded in published literature, but they haven't been calibrated against a prospective cohort.",
+      "The weights are pooled from studies conducted in different populations, and then applied to whoever happens to open the page. The tobacco figure comes from a meta-analysis of smoking cohorts, the betel figure from populations in South and Southeast Asia where use is common, the HPV figure from a US case-control study. Summing log-odds across them assumes those effect sizes transport to the person answering, and that assumption is untested. It is the single largest source of uncertainty in the score, larger than any individual weight being slightly wrong.",
+      "The tier boundaries were set by judgment rather than derived from data. They are anchored to reference profiles and sanity-checked against the distribution of possible answers, but no outcome dataset informed them, so the tool cannot state a sensitivity or specificity for any tier.",
       "The screener combines oral cavity and oropharyngeal cancer risk into a single score. These are epidemiologically distinct entities: HPV-16 is primarily a driver of oropharyngeal cancer, while tobacco and alcohol dominate in oral cavity cancer.",
       "The combined immune and radiation question groups three exposures with genuinely different effect sizes into one weight. Someone on long-term immunosuppressants after a transplant and someone who had head and neck radiation decades ago score identically, which is a simplification made to keep the screener short.",
       "The screener relies on self-reported data. Tobacco and alcohol use are commonly under-reported.",
@@ -1491,7 +1493,8 @@
     "seerSourceLine": "Source: NCI SEER Cancer Stat Facts, Oral Cavity and Pharynx Cancer. Survival covers 2016 to 2022; case and death projections are for 2026; incidence rates cover 2019 to 2023.",
     "colStage": "Stage at diagnosis",
     "colSurvival": "5-year relative survival",
-    "colShare": "Share of cases"
+    "colShare": "Share of cases",
+    "thresholdProvenance": "It is worth being blunt about where these four numbers came from, because nothing derived them. They were set by judgment against the reference profiles above: a daily smoker should not read as low, someone using tobacco and alcohol together should land clearly above them, and a profile carrying several Group 1 exposures should reach the top tier. They were then checked against the distribution of plausible answer combinations so that the tiers were not all but empty or all but full. That is a defensible way to set a cutoff for a tool whose job is to prompt a dental visit, and it is not the same thing as a validated threshold. There is no sensitivity, no specificity, and no ROC curve behind these boundaries, because producing those requires outcome data this tool has never had access to."
   },
   "ContactForm": {
     "sentTitle": "Got it, thanks for reaching out.",
