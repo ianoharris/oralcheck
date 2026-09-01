@@ -1498,8 +1498,13 @@ def _assign_reel_visuals(segments: list[dict], content: dict) -> None:
     if len(segments) < 3:
         return
     mid = len(segments) // 2
-    if segments[mid].get("stat", {}).get("value"):
-        mid = max(1, mid - 1)  # keep the big-number scene as clean typography
+    if segments[mid].get("stat", {}).get("value") or segments[mid].get("scene"):
+        # Keep the big-number and designed scenes as clean typography: a photo
+        # behind a split-stat or a checklist fights the thing it is supposed to
+        # be showing.
+        mid = max(1, mid - 1)
+    if segments[mid].get("scene") or segments[mid].get("stat", {}).get("value"):
+        return
 
     shot = str(content.get("site_shot", "")).strip()
     img = None
@@ -1544,6 +1549,60 @@ def _render_reel_segments(content: dict, theme: str):
     return final
 
 
+# Scene archetypes a reel segment can ask for. Kept next to the prompt that
+# describes them, because a scene is unreachable unless it is in both this text
+# and reel_scenes.SCENES.
+REEL_SCENE_SPEC = (
+    "    - scene (optional): ask for a designed scene instead of plain kinetic type.\n"
+    "        Use one when the line genuinely has that shape. Do NOT force one, and do\n"
+    "        NOT use the same scene twice in a reel. Each needs its own fields:\n"
+    "        \"splitstat\": two numbers weighed against each other. Add\n"
+    "            pair = [{\"value\":\"89%\",\"label\":\"found early\"},\n"
+    "                    {\"value\":\"36%\",\"label\":\"once it has spread\"}]\n"
+    "        \"contrast\": a myth struck through, then the correction. Add\n"
+    "            myth = \"Only smokers get it\", fact = \"HPV leads under 50\"\n"
+    "        \"checklist\": 2 to 4 short items ticking in. Add items = [\"...\", \"...\"]\n"
+    "            Each item 3 to 7 words.\n"
+    "        \"quote\": one sentence given weight. Add quote = \"...\" and optionally\n"
+    "            attrib = \"SEER, 2016 to 2022\".\n"
+    "        \"term\": a clinical word defined. Add term = \"Leukoplakia\",\n"
+    "            definition = \"A white patch that does not wipe away\", and optionally\n"
+    "            say = \"loo-koh-PLAY-kee-uh\".\n"
+    "        \"enumerate\": step N of M. Add index = 2, of = 3, and caption as the step.\n"
+    "        The narration must still work as spoken audio on its own: the scene is\n"
+    "        what the viewer SEES while that sentence is read, not a replacement for it.\n"
+)
+
+
+def _sanitize_reel_scene(seg: dict) -> None:
+    """Drop a scene the segment cannot actually fill.
+
+    A scene missing its fields renders nothing, and a segment that renders
+    nothing is a silent hole in the middle of a reel. Cheaper to fall back to
+    the ordinary headline scene here than to find out at render time.
+    """
+    import reel_scenes
+    name = str(seg.get("scene", "")).strip().lower()
+    if not name:
+        seg.pop("scene", None)
+        return
+    required = reel_scenes.SCENE_FIELDS.get(name)
+    if not required:
+        log.info("Unknown reel scene %r; using the default scene.", name)
+        seg.pop("scene", None)
+        return
+    if any(not seg.get(f) for f in required):
+        log.info("Scene %r is missing %s; using the default scene.",
+                 name, ", ".join(f for f in required if not seg.get(f)))
+        seg.pop("scene", None)
+        return
+    seg["scene"] = name
+    # A scene that renders needs something on screen; the generic caption
+    # requirement below does not apply to scenes that carry their own copy.
+    if name in ("splitstat", "contrast", "checklist", "quote", "term"):
+        seg.setdefault("caption", "")
+
+
 def generate_reel_script(brief: str) -> dict:
     """Ask Claude for a faceless-reel script: a spoken narration broken into
     4-6 short segments, each rendered as an animated kinetic-typography scene,
@@ -1563,6 +1622,7 @@ def generate_reel_script(brief: str) -> dict:
         "    - stat (optional): ONLY when the line's whole point is a number. Then set\n"
         "        stat = {\"value\": \"89%\", \"label\": \"survival when found early\"} and you may\n"
         "        omit caption/emphasis. The number animates by counting up.\n"
+        + REEL_SCENE_SPEC +
         "  caption: the Instagram caption (calm, evidence-based, ends by pointing to oralcheck.org)\n"
         "  hashtags: exactly 5 tags without the # symbol\n"
         "Make the on-screen captions read as a punchy sequence, not full sentences. Keep the "
@@ -1598,9 +1658,26 @@ def generate_reel_script(brief: str) -> dict:
                              "label": _strip_dashes(str(stat.get("label", "")).strip())}
             else:
                 s.pop("stat", None)
+            _sanitize_reel_scene(s)
             # every segment must have SOMETHING on screen
-            if not s["caption"] and not s.get("stat"):
+            if not s["caption"] and not s.get("stat") and not s.get("scene"):
                 s["caption"] = " ".join(s["narration"].split()[:6])
+
+        # The same scene twice in one reel defeats the point of having several.
+        # The first use wins and the later one drops back to kinetic type.
+        seen_scenes: set[str] = set()
+        for s in segs:
+            name = s.get("scene")
+            if not name:
+                continue
+            if name in seen_scenes:
+                log.info("Scene %r requested twice; the second falls back.", name)
+                s.pop("scene", None)
+                if not s.get("caption") and not s.get("stat"):
+                    s["caption"] = " ".join(s["narration"].split()[:6])
+            else:
+                seen_scenes.add(name)
+
         data["segments"] = segs[:5]
         data.setdefault("hook", segs[0]["narration"])
         data.setdefault("caption", "")

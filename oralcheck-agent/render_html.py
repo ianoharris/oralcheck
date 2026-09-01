@@ -715,7 +715,15 @@ body {{ overflow:hidden; background:var(--bg); color:var(--text);
   animation-name:fadeUp; animation-duration:0.75s; }}
 .footline {{ width:54px; height:5px; background:var(--teal); border-radius:3px; }}
 .footurl {{ font-size:40px; font-weight:600; letter-spacing:0.03em; color:var(--teal); }}
+{_scene_css()}
 """
+
+
+def _scene_css() -> str:
+    """CSS for the archetype scenes. Imported here rather than at module scope
+    because reel_scenes imports this module for `_e`."""
+    import reel_scenes
+    return reel_scenes.EXTRA_CSS
 
 
 def _kinetic_words_html(phrase: str, emphasis: str, lead: bool = False) -> str:
@@ -806,6 +814,21 @@ def kinetic_scene_html(segment: dict, theme: str = "dark") -> str:
         backdrop = (
             f"<div class='photobg' style=\"background-image:url('{_img_data_uri(photo)}')\"></div>"
             "<div class='photoscrim'></div>"
+        )
+
+    # Archetype scenes get first refusal, the same way layouts.py takes
+    # precedence over the generic carousel shapes. A scene that cannot render
+    # from the fields it was given returns None and falls through to the
+    # stat/headline scenes below, so a malformed script still produces a reel.
+    import reel_scenes
+    archetype = reel_scenes.render(segment, t)
+    if archetype:
+        return (
+            f"<!DOCTYPE html><html><head><meta charset='utf-8'>"
+            f"<style>{_kinetic_style(theme)}</style></head><body>"
+            f"<div class='scene' style='background:{t['bg']}'>{backdrop}{brand}"
+            f"<div class='content'>{archetype}</div>{foot}</div>"
+            f"<script>window.__update=function(t){{}};</script></body></html>"
         )
 
     if stat.get("value"):

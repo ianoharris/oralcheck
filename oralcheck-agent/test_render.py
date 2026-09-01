@@ -277,6 +277,62 @@ def main() -> int:
             sheet.paste(im, (i * thumb_w, 0))
         sheet.save(OUT_DIR / "_contact_sheet.jpg", "JPEG", quality=90)
 
+    # --- reel scene archetypes -----------------------------------------------
+    # Reels had one scene shape behind five backdrops, so a four-segment reel
+    # showed the same scene four times. Each archetype must render from its own
+    # fields and must refuse cleanly when it cannot.
+    try:
+        import reel_scenes as _RS
+        import render_html as _R
+        import oralcheck_agent as _A
+
+        good = {
+            "splitstat": {"pair": [{"value": "89%", "label": "found early"},
+                                   {"value": "36%", "label": "once it spread"}]},
+            "contrast":  {"myth": "Only smokers get it", "fact": "HPV leads under 50"},
+            "checklist": {"items": ["A sore that will not heal", "A red or white patch"]},
+            "quote":     {"quote": "One in four have no known risk factors."},
+            "term":      {"term": "Leukoplakia", "definition": "A white patch."},
+            "enumerate": {"caption": "Check your lower lip", "index": 2, "of": 3},
+        }
+        missing = set(_RS.SCENES) - set(good)
+        if missing:
+            failures.append(("scene_coverage", f"untested scenes: {sorted(missing)}"))
+
+        for name, fields in good.items():
+            seg = dict(fields, scene=name)
+            for theme in ("dark", "light"):
+                html = _R.kinetic_scene_html(seg, theme)
+                if "class='content'></div>" in html.replace(" ", ""):
+                    failures.append((f"scene_{name}_{theme}", "rendered an empty content block"))
+                    break
+            else:
+                print(f"  [PASS] scene {name} renders in both themes")
+
+        # A scene missing its fields must fall back rather than render nothing.
+        for name, fields in [("splitstat", {}), ("term", {"term": "X"}),
+                             ("checklist", {"items": ["only one"]})]:
+            if _RS.render(dict(fields, scene=name), _R.THEMES["dark"]) is not None:
+                failures.append((f"scene_{name}_degrade", "rendered from incomplete fields"))
+        print("  [PASS] incomplete scenes fall back instead of rendering empty")
+
+        # An unknown scene name must not reach the renderer.
+        seg = {"scene": "not_a_scene", "narration": "x", "caption": ""}
+        _A._sanitize_reel_scene(seg)
+        if seg.get("scene"):
+            failures.append(("scene_unknown", "unknown scene survived sanitization"))
+        else:
+            print("  [PASS] unknown scene names are dropped")
+
+        # Every scene must be described in the prompt or the model cannot ask
+        # for it, which is how the sixteen carousel layouts sat unused.
+        for name in _RS.SCENES:
+            if f'"{name}"' not in _A.REEL_SCENE_SPEC:
+                failures.append((f"scene_{name}_spec", "not described in REEL_SCENE_SPEC"))
+        print("  [PASS] every scene is described in the script prompt")
+    except Exception as exc:                        # pragma: no cover
+        failures.append(("reel_scenes", str(exc)[:160]))
+
     # --- reel end card -------------------------------------------------------
     # The whole point of the card is the address: nothing can make a Reel link
     # tappable from an API, so the only route to the site is somebody reading
