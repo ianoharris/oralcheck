@@ -449,6 +449,22 @@ export default function ResultsPage() {
                 {step.linkLabel && hrefs[i] && (
                   <Link
                     href={hrefs[i]!}
+                    onClick={() => {
+                      // The elevated and high tiers put a second route to
+                      // /find-care in this list, and only the big CTA below was
+                      // tagged. Every click that happened here was invisible,
+                      // which makes "did anyone go looking for care?" read low
+                      // for a reason that has nothing to do with the visitor.
+                      // `source` separates the two so they can be compared
+                      // rather than merged.
+                      if (hrefs[i] === "/find-care") {
+                        sendGAEvent("event", "find_care_click", {
+                          risk_tier: result.tier,
+                          risk_score: result.score,
+                          source: "results_next_step",
+                        });
+                      }
+                    }}
                     className="inline-block mt-2 text-sm font-semibold text-brand hover:underline"
                   >
                     {step.linkLabel}

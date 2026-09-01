@@ -22,11 +22,12 @@ Update both together. See `AGENTS.md`.
 
 | Item | Blocked on | Notes |
 |---|---|---|
-| Publishing articles from `/review/<slug>` | Ian setting `ADMIN_SECRET` in Vercel | `/api/publish` and `/api/draft` fail closed with 503 until it exists. Generate with `openssl rand -base64 32`, add it in Vercel, redeploy, then paste it once on any `/review/` page. The public site is unaffected. |
+| ~~Publishing articles from `/review/<slug>`~~ | **Done — it already was** | `ADMIN_SECRET` has been set in Vercel (Preview + Production) since 2026-08-24; this entry was simply never marked off. Verified 2026-09-01: `/api/publish` and `/api/draft` both return **401**, not 503, for a missing or wrong secret, which is the signature of a configured and correctly-gating secret. The header is `x-oralcheck-admin`. |
 | A named clinical reviewer on `/methods` | Marquette Chair + Associate Dean for Research | **Dr. Yeshwant Rawal reviewed the methodology on 2026-08-24** and called it "done thoughtfully and based on evidence through relevant literature". He is President of the American Board of Oral & Maxillofacial Pathology, so this is a serious credential. **He has agreed in principle** (2026-08-25): "I would be very happy to associate myself with this excellent project." Conditional on his Chair and Associate Dean for Research, both copied. He asked whether there is a UW-Madison mentor or institutional protocol; there is neither, and the reply says so plainly. **His name still does not go on the site until his institution clears it.** |
 | A real quote on the homepage | The same permission | Currently carries a cited NCI SEER statistic, which is honest but is a citation rather than an endorsement. Rawal's review is the first plausible source for a real one. Do not fabricate one, and do not quote him until he says yes. |
 | A UW-Madison faculty mentor | Ian replying to Brant | **Glazer declined on 2026-08-30** and forwarded it to the department's research faculty. **Dr. Jason Brant (Associate Professor, Oto-HNS) replied the same day and engaged substantively**, with three methodology criticisms and one institutional warning. He drew the line himself: a faculty mentor is right for clinical framing, abstracts and study design, but **a biostatistician** is who decides whether the risk stratification holds. Reply drafted at `outreach-drafts/2026-08-30-Jason-Brant-REPLY.md`; it asks him for the clinical half and for a pointer to biostatistics support. Two spots in it need Ian's own answer before sending. |
 | Whether UW considers this a university project at all | Ian's academic advisor | **Raised by Dr. Brant, 2026-08-30**, and it outranks the IRB question. Faculty must disclose anything job-related or using university resources, and Brant specifically guessed the source papers were pulled through UW library access. He also questioned whether the site's disclaimer is actually sufficient protection or only reads that way. Ian asserting "this is not a UW project" is not the same as UW determining it. Ask the academic advisor, and ask specifically about (1) what counts as a university resource for an undergraduate and (2) whether the disclaimer holds up. Monetization would raise the stakes on all of it; there is none and no plan for any. |
+| Registering GA4 custom definitions | Two one-time Google console steps | Cannot be done from here: the **Analytics Admin API is disabled** on Cloud project 130228649204 (only the Data API is on), and the service account would then also need **Editor** on the property rather than Viewer. `oralcheck-agent/register_ga_dimensions.py` is written and dry-runs cleanly; it creates all six once those are done. Doing it by hand in GA4 Admin -> Custom definitions is about a minute each and needs no API at all. **It is six parameters, not one**: dimensions `risk_tier`, `has_urgent_symptom`, `source`; metrics `risk_score`, `question_count`. Registration is never retroactive, so every day unregistered is data that cannot be recovered. |
 | A written UW IRB determination | Ian submitting it | The tool stores nothing, so it is almost certainly *not human subjects research* under UW's HRPP, but the assertion is worth having on paper for Marquette's Associate Dean. Free, and Ian can submit it himself. |
 | Co-branded Marquette flyer | The approval above | Rawal proposed a design "to reflect our two institutions". Corrected in the reply: OralCheck is not a UW project and cannot carry UW branding. Marquette + OralCheck only. |
 | Judge whether the reel skip-rate fix worked | A new reel going out | 83.7% skip. Frame-0 fix and cover image both shipped, but only affect reels rendered *after* they landed. The three currently scheduled were rendered before. |
@@ -153,6 +154,19 @@ Update both together. See `AGENTS.md`.
 ## Shipped
 
 Newest first.
+
+### 2026-09-01 (night)
+- **`find_care_click` has fired 0 times since it shipped**, across roughly 25
+  completions. Tested it end to end on production rather than assuming it was
+  broken: the handler pushes the right payload to `dataLayer` and a real
+  `/g/collect` request leaves the browser with `en=find_care_click`. The
+  instrumentation is fine. Nobody is clicking it
+- **Found why it will always undercount**: the elevated and high tiers put a
+  *second* route to `/find-care` in the next-steps list, and only the big CTA
+  below it was tagged. Now both are, separated by a `source` parameter so they
+  can be compared rather than merged
+- `ADMIN_SECRET` was already set in Vercel and had been since 2026-08-24. The
+  roadmap had it listed as blocking for a week for no reason
 
 ### 2026-09-01 (evening)
 - **Reel end card rebuilt around the address.** It was the smallest element on
