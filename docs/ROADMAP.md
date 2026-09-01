@@ -40,11 +40,23 @@ Update both together. See `AGENTS.md`.
 
 ### Content and growth
 
-- [ ] **Reels drive follows but not site visits.** Instagram captions are not
-      clickable, so the only path is profile → link in bio, and most people will
-      not. Two concrete fixes: add a **link sticker on the reel itself**, and hold
-      the final scene long enough to actually read the URL. Currently the outro is
-      brief.
+- [x] ~~Reels drive follows but not site visits~~ — partly fixed 2026-09-01, and
+      the entry contained a false premise. **A link sticker on the reel itself is
+      not possible.** Reel captions render as plain text for everyone, clickable
+      links on a Reel require a Meta Verified Plus subscription and are capped at
+      2 to 6 reels a month, and Instagram's publishing API cannot place stickers
+      at all: they exist only in the app. Resharing the reel to a Story with a
+      link sticker is the one free clickable route, it is manual, and it takes
+      about fifteen seconds. Approving a reel now sends a Telegram reminder with
+      the steps and the date it becomes actionable. The end card was rebuilt: the
+      address is now the largest element rather than the smallest, and it holds
+      **4.5s instead of 2.4s** (of which 0.4s used to be fade, leaving about two
+      seconds to read an address and decide to act).
+- [ ] **Worth testing: comment-to-DM as the real fix.** Viewers comment a keyword
+      and get the link in a DM automatically. It is free, unlimited, clickable,
+      and unlike the Story sticker it needs no manual step per reel. Needs a
+      third-party tool (ManyChat and similar) connected to the Instagram account,
+      so it is a signup decision rather than a code change.
 - [ ] **More post templates.** Twenty-one shapes now reachable (16 designed +
       5 basic). Keep going: the goal is enough that the feed never looks
       repetitive.
@@ -141,6 +153,20 @@ Update both together. See `AGENTS.md`.
 ## Shipped
 
 Newest first.
+
+### 2026-09-01 (evening)
+- **Reel end card rebuilt around the address.** It was the smallest element on
+  the card under a two-line CTA; it is now the largest, with the site's own
+  "Check your risk" wording above it so somebody who types the address lands on
+  a button reading the words they just saw
+- Hold went 2.4s to 4.5s and the fade 0.4s to 0.25s. Everyone who reaches the end
+  card has already watched the whole reel, so the cost falls on the most
+  interested part of the audience
+- The rule under the address is short, centered and teal rather than a full-width
+  coral underline. The old treatment read as a hyperlink, and the address is not
+  tappable: something that looks tappable and is not is worse than no rule
+- **The link sticker turned out to be impossible to automate**, so the pipeline
+  now reminds instead. See the note in Open above
 
 ### 2026-09-01 (later)
 - **The homepage button no longer claims the tool screens you.** "Start

@@ -1227,6 +1227,35 @@ def _collect_reject_reason(manifest: dict) -> str:
     return ""
 
 
+def _maybe_story_reminder(manifest: dict, network: str,
+                          when: datetime | None) -> None:
+    """Nudge the one step in the reel pipeline that cannot be automated.
+
+    Nothing can put a tappable link on a Reel from an API. Reel captions render
+    as plain text, clickable Reel links need a Meta Verified Plus subscription
+    and are capped at a handful a month, and Instagram's publishing API cannot
+    place stickers at all: they exist only in the app. Resharing the reel to a
+    Story with a link sticker is the one route that is free, unlimited, and
+    actually clickable, and it takes about fifteen seconds by hand.
+
+    So the automation's job here is to make sure he never forgets, and to say
+    when it will be worth doing.
+    """
+    if network != "instagram" or manifest.get("media_type") not in ("reel", "animated"):
+        return
+    day = when.strftime("%a %b %d") if when else "when it publishes"
+    tg("sendMessage", chat_id=TELEGRAM_CHAT_ID,
+       text=("Reel scheduled. One manual step when it goes live "
+             f"({day}), and it is the only way a reel sends anyone to the site:\n\n"
+             "1. Open the reel in Instagram\n"
+             "2. Share to your Story\n"
+             "3. Add a Link sticker: oralcheck.org\n\n"
+             "Reel captions are not clickable and a link on the reel itself needs "
+             "Meta Verified, so the Story sticker is the only free clickable path. "
+             "The end card holds the address longer now, but somebody typing it "
+             "from memory is a much weaker ask than a tap."))
+
+
 def handle_decision(manifest: dict, item_dir: Path, decision: str,
                     when: datetime | None = None,
                     network: str = "instagram") -> bool:
@@ -1254,6 +1283,7 @@ def handle_decision(manifest: dict, item_dir: Path, decision: str,
                 record_slot(when)
                 tg_status_done(status, f"Approved. {label}\n{net_label}, {when_txt}.\n(post {pg})")
                 print(f"Publora scheduled: {pg} -> {network} ({when})")
+                _maybe_story_reminder(manifest, network, when)
                 # Never hand off a post that Publora just put on LinkedIn: that
                 # would ask him to publish by hand something already scheduled.
                 if LINKEDIN_HANDOFF and network != "linkedin":

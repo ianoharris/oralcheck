@@ -277,6 +277,39 @@ def main() -> int:
             sheet.paste(im, (i * thumb_w, 0))
         sheet.save(OUT_DIR / "_contact_sheet.jpg", "JPEG", quality=90)
 
+    # --- reel end card -------------------------------------------------------
+    # The whole point of the card is the address: nothing can make a Reel link
+    # tappable from an API, so the only route to the site is somebody reading
+    # the address off the screen. If it ever stops being the biggest thing on
+    # the card, the reel has no working call to action.
+    try:
+        import oralcheck_agent as _A
+        from PIL import Image as _Image
+        card = _A._reel_outro_png()
+        im = _Image.open(card)
+        if im.size != (_A.REEL_W, _A.REEL_H):
+            failures.append(("outro_size", f"{im.size}"))
+        else:
+            print("  [PASS] outro card is 1080x1920")
+
+        url_px = int(_A.REEL_W * 0.105)
+        cta_px = int(_A.REEL_W * 0.068)
+        if url_px <= cta_px:
+            failures.append(("outro_hierarchy",
+                             f"url {url_px}px is not larger than cta {cta_px}px"))
+        else:
+            print(f"  [PASS] url ({url_px}px) dominates the CTA line ({cta_px}px)")
+
+        # Enough time to read an address and decide to act on it. The old 2.4s
+        # included a 0.4s fade and left about two seconds.
+        if _A.REEL_OUTRO_SECONDS < 3.5:
+            failures.append(("outro_hold",
+                             f"{_A.REEL_OUTRO_SECONDS}s is too brief to read a URL"))
+        else:
+            print(f"  [PASS] outro holds {_A.REEL_OUTRO_SECONDS}s")
+    except Exception as exc:                        # pragma: no cover
+        failures.append(("outro_card", str(exc)[:120]))
+
     print(f"\n  Rendered {len(saved)} images to {OUT_DIR}")
     if failures:
         print(f"  {len(failures)} FAILURE(S):")

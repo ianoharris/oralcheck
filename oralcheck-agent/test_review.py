@@ -233,6 +233,30 @@ def main() -> int:
           claimed.capitalize() in hint or (claimed == "linkedin" and "LinkedIn" in hint),
           f"hint={hint!r} claimed={claimed!r}")
 
+    # ---- Story link-sticker reminder ----------------------------------------
+    # The one step nothing can automate: no API can put a tappable link on a
+    # Reel. It must fire for Instagram reels and stay quiet everywhere else, or
+    # it becomes noise that gets ignored on the run where it matters.
+    when = datetime.now(timezone.utc) + timedelta(days=2)
+
+    SENT.clear()
+    T._maybe_story_reminder({"media_type": "reel"}, "instagram", when)
+    reel_msgs = [t for _, t in SENT if "Link sticker" in t]
+    check("reel gets the Story link-sticker reminder", len(reel_msgs) == 1,
+          f"{len(reel_msgs)} sent")
+    check("reminder names the day it becomes actionable",
+          bool(reel_msgs) and when.strftime("%a %b %d") in reel_msgs[0])
+
+    SENT.clear()
+    T._maybe_story_reminder({"media_type": "carousel"}, "instagram", when)
+    check("a carousel gets no reminder",
+          not [t for _, t in SENT if "Link sticker" in t])
+
+    SENT.clear()
+    T._maybe_story_reminder({"media_type": "reel"}, "linkedin", when)
+    check("a LinkedIn post gets no Instagram Story reminder",
+          not [t for _, t in SENT if "Link sticker" in t])
+
     shutil.rmtree(QUEUE, ignore_errors=True)
     if FAILURES:
         print(f"\n  {len(FAILURES)} check(s) failed: {', '.join(FAILURES)}")

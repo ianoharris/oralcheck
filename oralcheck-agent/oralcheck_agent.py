@@ -1158,25 +1158,57 @@ def _media_duration(path: str) -> float:
 
 
 def _reel_outro_png() -> str:
-    """Branded end card (logo mark + CTA) as a full-frame PNG."""
+    """Branded end card as a full-frame PNG.
+
+    The URL is the largest thing on it, which is a deliberate inversion of the
+    previous layout. Nobody can tap a link on a Reel: captions render as plain
+    text and clickable Reel links need Meta Verified Plus. So the only path from
+    a reel to the site is somebody reading the address and typing it in later,
+    and that makes the address the message rather than a footnote under it.
+    """
     img = Image.new("RGB", (REEL_W, REEL_H), C_BG)
     draw = ImageDraw.Draw(img)
     cx = REEL_W // 2
-    mark_font = _load_font("SourceSans3-Regular.ttf", int(REEL_W * 0.052))
-    cta_font  = _load_font("DMSerifDisplay-Regular.ttf", int(REEL_W * 0.085))
-    url_font  = _load_font("SourceSans3-Regular.ttf", int(REEL_W * 0.050))
+
+    mark_font = _load_font("SourceSans3-Regular.ttf", int(REEL_W * 0.046))
+    cta_font  = _load_font("DMSerifDisplay-Regular.ttf", int(REEL_W * 0.068))
+    url_font  = _load_font("DMSerifDisplay-Regular.ttf", int(REEL_W * 0.105))
+    sub_font  = _load_font("SourceSans3-Regular.ttf", int(REEL_W * 0.034))
+
     # brand mark (coral dot + wordmark), centered
     mark = "OralCheck"
     mw = draw.textlength(mark, font=mark_font)
-    dot_r = int(REEL_W * 0.011)
-    draw.ellipse([(cx - mw/2 - dot_r*2 - 12, REEL_H*0.40 + int(REEL_W*0.020)),
-                  (cx - mw/2 - 12, REEL_H*0.40 + int(REEL_W*0.020) + dot_r*2)], fill=C_CORAL)
-    draw.text((cx - mw/2, REEL_H * 0.40), mark, font=mark_font, fill=C_TEAL_RGB)
-    cta = "Take the 2-minute\nscreener"
-    _draw_centered(draw, cta, cta_font, cx, int(REEL_H * 0.46), C_TEXT, int(REEL_W*0.085*0.28))
+    dot_r = int(REEL_W * 0.010)
+    mark_y = REEL_H * 0.33
+    draw.ellipse([(cx - mw/2 - dot_r*2 - 12, mark_y + int(REEL_W*0.018)),
+                  (cx - mw/2 - 12, mark_y + int(REEL_W*0.018) + dot_r*2)], fill=C_CORAL)
+    draw.text((cx - mw/2, mark_y), mark, font=mark_font, fill=C_TEAL_RGB)
+
+    # "Check your risk" matches the site's own CTA, so somebody who does type the
+    # address lands on a button reading the same words they just saw.
+    cta = "Check your risk\nin 2 minutes"
+    _draw_centered(draw, cta, cta_font, cx, int(REEL_H * 0.40), C_TEXT,
+                   int(REEL_W * 0.068 * 0.28))
+
     url = "oralcheck.org"
     uw = draw.textlength(url, font=url_font)
-    draw.text((cx - uw/2, REEL_H * 0.60), url, font=url_font, fill=C_CORAL)
+    url_y = REEL_H * 0.515
+    draw.text((cx - uw/2, url_y), url, font=url_font, fill=C_CORAL)
+
+    # A short centered rule, well clear of the descenders. A full-width rule sat
+    # tight under the text reads as a hyperlink underline, and the address is
+    # not tappable: Reel captions are plain text and clickable Reel links need
+    # Meta Verified. Something that looks tappable and is not is worse than no
+    # rule at all, so this is spaced and narrowed into an editorial divider.
+    rule_w = int(REEL_W * 0.14)
+    rule_y = url_y + int(REEL_W * 0.105 * 1.52)
+    draw.rectangle([(cx - rule_w // 2, rule_y),
+                    (cx + rule_w // 2, rule_y + 3)], fill=C_TEAL_RGB)
+
+    sub = "Free. Private. No account."
+    sw = draw.textlength(sub, font=sub_font)
+    draw.text((cx - sw/2, rule_y + int(REEL_H * 0.026)), sub, font=sub_font, fill=C_MUTED)
+
     tmp = tempfile.NamedTemporaryFile(suffix="_outro.png", delete=False)
     img.save(tmp.name)
     tmp.close()
@@ -1231,7 +1263,17 @@ def _build_kinetic_segment(segment: dict, narration_wav: str,
     return out.name
 
 
-def _build_reel_outro(seconds: float = 2.4) -> str:
+# How long the end card holds. The old 2.4s included a 0.4s fade, leaving about
+# two seconds to read an address and decide to act on it, which is not enough for
+# the one thing the reel is trying to achieve. Everyone who reaches the end card
+# has already watched the whole reel, so the cost of holding it longer falls on
+# the most interested part of the audience and buys them time to actually type
+# the address. Override with REEL_OUTRO_SECONDS.
+REEL_OUTRO_SECONDS = float(os.environ.get("REEL_OUTRO_SECONDS", "4.5"))
+
+
+def _build_reel_outro(seconds: float | None = None) -> str:
+    seconds = REEL_OUTRO_SECONDS if seconds is None else seconds
     outro_png = _reel_outro_png()
     out = tempfile.NamedTemporaryFile(suffix="_outroseg.mp4", delete=False)
     out.close()
@@ -1241,7 +1283,9 @@ def _build_reel_outro(seconds: float = 2.4) -> str:
          "-loop", "1", "-i", outro_png,
          "-f", "lavfi", "-i", "anullsrc=r=44100:cl=stereo",
          "-t", str(seconds),
-         "-vf", f"scale={REEL_W}:{REEL_H},fps={REEL_FPS},fade=in:st=0:d=0.4",
+         # Shorter fade than before: the fade is dead time for reading, so it
+         # buys presence rather than polish to keep it brief.
+         "-vf", f"scale={REEL_W}:{REEL_H},fps={REEL_FPS},fade=in:st=0:d=0.25",
          "-c:v", "libx264", "-pix_fmt", "yuv420p", "-r", str(REEL_FPS),
          "-c:a", "aac", "-ar", "44100", "-ac", "2",
          out.name],
