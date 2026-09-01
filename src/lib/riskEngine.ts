@@ -30,6 +30,7 @@ export type RiskResult = {
   summary: string;
   factors: RiskFactor[];
   hasUrgentSymptom: boolean;
+  site: SiteAttribution;
 };
 
 const MESSAGES: Record<string, typeof enMessages> = {
@@ -63,6 +64,76 @@ function getQuestionsTranslator(locale: string) {
 
 /** Points added when tobacco and alcohol are both used at meaningful levels. */
 const INTERACTION_BONUS = 3;
+
+/**
+ * Which of the two diseases each question actually speaks to.
+ *
+ * Oral cavity and oropharyngeal cancer are epidemiologically distinct: tobacco
+ * and alcohol dominate the first, HPV-16 the second. The instrument has always
+ * blended them into one score, which both reviewing clinicians raised
+ * independently, and the blending has a concrete cost that is visible in the
+ * weights themselves. The HPV weight is 5, derived from a deliberately
+ * conservative blended OR, when the published OR for confirmed HPV-16 in
+ * oropharyngeal cancer is around 15. A young non-smoker whose only real risk is
+ * HPV therefore scores low-to-moderate off a total dominated by the tobacco and
+ * alcohol questions they answered "never" to.
+ *
+ * The score is not split in two. Splitting would build the second score on a
+ * single question, which is not a score, and the recommendation is identical
+ * either way: go and have the exam. What was wrong was the *explanation*, so
+ * that is what this fixes. See `attributeSite` below.
+ */
+const QUESTION_SITE: Record<string, "cavity" | "oropharynx" | "shared"> = {
+  tobacco: "cavity",
+  alcohol: "cavity",
+  betel: "cavity",
+  diet: "cavity",
+  // Lower lip squamous cell carcinoma, which sits in the oral cavity group.
+  sun: "cavity",
+  hpv: "oropharynx",
+  // These raise risk at both sites, or say nothing about which: they cannot
+  // discriminate and are deliberately excluded from the lean.
+  age: "shared",
+  sex: "shared",
+  family: "shared",
+  systemic: "shared",
+  symptom: "shared",
+  dental: "shared",
+  tobacco_alcohol_interaction: "cavity",
+};
+
+export type SiteAttribution = {
+  cavity: number;
+  oropharynx: number;
+  shared: number;
+  lean: "cavity" | "oropharynx" | "mixed" | "none";
+};
+
+/**
+ * Which disease the person's own answers point at, by weight.
+ *
+ * A factor counts only if it discriminates: age and sex raise risk at both
+ * sites, so counting them would drag every profile toward whichever site has
+ * more questions rather than toward the one the person's exposures suggest.
+ *
+ * A site "leads" only at twice the other's weight. Below that the honest answer
+ * is that the profile does not distinguish, and saying so beats manufacturing a
+ * lean out of a one-point difference.
+ */
+export function attributeSite(factors: RiskFactor[]): SiteAttribution {
+  let cavity = 0, oropharynx = 0, shared = 0;
+  for (const f of factors) {
+    const site = QUESTION_SITE[f.questionId] ?? "shared";
+    if (site === "cavity") cavity += f.weight;
+    else if (site === "oropharynx") oropharynx += f.weight;
+    else shared += f.weight;
+  }
+  let lean: SiteAttribution["lean"] = "mixed";
+  if (cavity === 0 && oropharynx === 0) lean = "none";
+  else if (cavity >= oropharynx * 2) lean = "cavity";
+  else if (oropharynx >= cavity * 2) lean = "oropharynx";
+  return { cavity, oropharynx, shared, lean };
+}
 
 /**
  * Highest score a real answer set can produce. The tobacco+alcohol interaction
@@ -235,6 +306,7 @@ export function computeRisk(answers: Answers, locale: string = "en"): RiskResult
     summary,
     factors,
     hasUrgentSymptom,
+    site: attributeSite(factors),
   };
 }
 

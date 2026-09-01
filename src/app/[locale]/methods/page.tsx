@@ -283,6 +283,16 @@ export default async function MethodsPage({ params }: Props) {
         )}
       </section>
 
+      {/* One score, two diseases */}
+      <section className="mb-14">
+        <h2 className="font-serif text-2xl text-ink mb-3">{t("siteHeading")}</h2>
+        <div className="prose prose-sm text-ink-soft max-w-2xl leading-relaxed space-y-3">
+          <p>{t("siteBody")}</p>
+          <p>{t("siteBody2")}</p>
+          <p>{t("siteBody3")}</p>
+        </div>
+      </section>
+
       {/* Survival figures quoted elsewhere on the site */}
       <section className="mb-14">
         <h2 className="font-serif text-2xl text-ink mb-3">{t("seerHeading")}</h2>

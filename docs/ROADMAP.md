@@ -73,14 +73,29 @@ Update both together. See `AGENTS.md`.
       sentence: a faculty mentor cannot tell you whether the stratification is
       valid, and conflating the two roles was a mistake. Ask whether UW's ICTR
       route is open to an undergraduate and whether it needs a faculty sponsor.
-- [ ] **Decide what to do about oral cavity vs oropharynx.** It has been
-      limitation #2 since launch and both Rawal and Brant raised it independently,
-      which makes it the most-flagged weakness in the tool. Two honest options:
-      split the output into two scores, roughly doubling length and explanation
-      burden, or restrict scope to oral cavity and drop the HPV question, which
-      cuts out the fastest-growing part of the problem. Neither is obviously
-      right. Worth putting to a clinician rather than deciding alone.
-
+- [x] ~~Oral cavity vs oropharynx~~ — shipped 2026-09-01, and **neither of the two
+      options in this entry was taken**. Splitting into two scores would have built
+      the oropharyngeal one on a single question, which is not a score. Dropping HPV
+      to narrow the scope would have removed the fastest-growing part of the disease.
+      The score stayed whole and the *explanation* changed: each question is tagged
+      with the disease it speaks to, and the results page names which one a person's
+      own factors point at. Shared factors (age, sex, family, immune, symptoms,
+      dental) are excluded from the comparison so they cannot drag every profile
+      toward whichever site has more questions. A site is named only at twice the
+      other's weight.
+- [ ] **Open, and it belongs to the clinicians: should the HPV weight rise?** It is
+      5, from a conservative pooled OR, where the published association for confirmed
+      HPV-16 with oropharyngeal cancer specifically is roughly 15. It was deflated
+      *because* the score had to cover both diseases. Now that the results page says
+      out loud which disease a profile points at, and admits the score understates an
+      HPV-driven one, the reason for the deflation is weaker. Worth putting to Rawal
+      and Brant together, since it is the one question both of them are placed to
+      answer.
+- [ ] **The web app has no test suite.** Everything in `oralcheck-agent/` has one and
+      is exercised in CI; `src/` has none, so the risk engine is verified by hand
+      each time. The site attribution added on 2026-09-01 is the kind of logic that
+      would fail silently and clinically: worth a small runner over `computeRisk`
+      covering the tier boundaries, the interaction bonus, and the site lean.
 - [x] ~~Systemic risk factor question~~ — shipped 2026-08-27, weight 5.
 - [x] ~~Sex at birth question~~ — shipped 2026-08-27, weight 3.
 - [x] ~~Language dropdown~~ — shipped 2026-08-27. Renders any number of locales,
@@ -154,6 +169,18 @@ Update both together. See `AGENTS.md`.
 ## Shipped
 
 Newest first.
+
+### 2026-09-01 (late)
+- **Reels have a design system.** Six scene archetypes in `reel_scenes.py`
+  (splitstat, contrast, checklist, quote, term, enumerate), mapped to the content
+  pillars, validated before render, de-duplicated within a reel, and never given
+  a photo backdrop that would fight what they exist to show
+- **Oral cavity vs oropharynx, without splitting the score.** The results page now
+  names which of the two a profile points at. The case this fixes is a young
+  non-smoker with HPV history: they scored 5 (moderate) off a total dominated by
+  the tobacco and alcohol questions they answered "never" to, and the page now
+  tells them their factors point at the oropharynx and that the score understates
+  it, rather than leaving them to infer reassurance
 
 ### 2026-09-01 (night)
 - **`find_care_click` has fired 0 times since it shipped**, across roughly 25

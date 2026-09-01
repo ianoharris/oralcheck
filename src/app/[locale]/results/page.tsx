@@ -476,6 +476,32 @@ export default function ResultsPage() {
         </div>
       </div>
 
+      {/* Which of the two diseases the answers point at.
+          Hidden when the profile carries no discriminating factor at all,
+          because "your factors point at neither" is noise on a result that
+          already says the score is low. */}
+      {result.site.lean !== "none" && (
+        <div className="mt-10">
+          <h2 className="font-serif text-2xl text-ink mb-3">{t("siteHeading")}</h2>
+          <p className="text-sm text-ink-soft leading-relaxed max-w-2xl mb-4">
+            {t("siteIntro")}
+          </p>
+          <div className="rounded-2xl border border-warm-dim bg-warm-dim/40 p-5 max-w-2xl">
+            <p className="text-sm text-ink-soft leading-relaxed">
+              {t.rich(
+                result.site.lean === "cavity"
+                  ? "siteCavity"
+                  : result.site.lean === "oropharynx"
+                    ? "siteOropharynx"
+                    : "siteMixed",
+                { b: (chunks) => <strong className="text-ink">{chunks}</strong> },
+              )}
+            </p>
+            <p className="text-sm text-ink-soft leading-relaxed mt-3">{t("siteSame")}</p>
+          </div>
+        </div>
+      )}
+
       {/* Contextual learn links */}
       {learnLinks.length > 0 && (
         <div className="mt-10">
