@@ -34,7 +34,7 @@
     "cankerSoreVsCancer": "Afta vs cáncer",
     "disclaimerHeading": "Aviso",
     "disclaimerBody": "OralCheck no es un diagnóstico médico. Es una herramienta educativa. Consulta a un profesional de la salud calificado sobre cualquier síntoma o inquietud.",
-    "disclaimerScoring": "La lógica de evaluación se basa en las guías clínicas de la ACS, el NCI y la Oral Cancer Foundation.",
+    "disclaimerScoring": "La puntuación de riesgo se basa en las guías clínicas de la ACS, el NCI y la Oral Cancer Foundation.",
     "copyright": "© {year} OralCheck",
     "methods": "Metodología",
     "privacy": "Privacidad",
@@ -59,7 +59,7 @@
     ],
     "overline": "Gratis · Privado · Basado en evidencia",
     "body": "El cáncer oral es uno de los cánceres con menos diagnóstico temprano, en gran parte porque sus primeros síntomas parecen algo común. OralCheck te ayuda a entender tu riesgo en minutos y te guía hacia la atención adecuada.",
-    "startScreening": "Comenzar evaluación →",
+    "startScreening": "Evalúa tu riesgo →",
     "learnSigns": "Conoce las señales",
     "disclaimer": "No es un diagnóstico médico. Es una herramienta educativa.",
     "featured": "Presentado en <b>The Drill</b> · Wisconsin Dental Association"
@@ -1173,7 +1173,7 @@
       }
     ],
     "importantLabel": "Importante:",
-    "importantBody": "OralCheck es una herramienta educativa de concientización, no un instrumento diagnóstico. No reemplaza un examen clínico de cáncer oral. Anima a cualquier paciente con síntomas preocupantes o un resultado de evaluación elevado a programar una evaluación clínica completa.",
+    "importantBody": "OralCheck es un cuestionario de evaluación de riesgo, no una prueba de detección ni un instrumento de diagnóstico. La prueba de detección del cáncer oral es el examen visual y táctil que usted realiza; la única función de OralCheck es aumentar la probabilidad de que el paciente acuda a esa evaluación y mencione los antecedentes relevantes durante la consulta. Se recomienda derivar a una evaluación clínica completa a todo paciente con síntomas preocupantes o con un nivel de riesgo elevado.",
     "previewScreener": "Vista previa de la evaluación →",
     "contactUs": "Contáctanos"
   },
@@ -1288,7 +1288,7 @@
     "contactBody": "¿Preguntas sobre esta política? Escribe a",
     "disclaimerLabel": "Aviso.",
     "disclaimerBody": "OralCheck no es un diagnóstico médico. Es una herramienta educativa. Consulta a un profesional de la salud calificado sobre cualquier síntoma o inquietud.",
-    "scoringNote": "La lógica de evaluación se basa en las guías clínicas de la ACS, el NCI y la Oral Cancer Foundation.",
+    "scoringNote": "La puntuación de riesgo se basa en las guías clínicas de la ACS, el NCI y la Oral Cancer Foundation.",
     "lastUpdated": "Última actualización: junio de 2026."
   },
   "MethodsMeta": {
@@ -1323,14 +1323,14 @@
     "tierP2Rest": "Sin importar el puntaje, cualquier síntoma que dure 2 semanas o más (una llaga persistente, una mancha roja o blanca, un bulto inexplicable o dificultad para tragar) anula el nivel a {bold} y activa una indicación de evaluación inmediata.",
     "limitationsHeading": "Limitaciones conocidas",
     "limitations": [
-      "OralCheck no ha sido validado con un conjunto de datos de resultados clínicos. Los pesos están fundamentados en literatura publicada, pero no han sido calibrados con una cohorte prospectiva.",
-      "Los pesos provienen de estudios realizados en poblaciones distintas y luego se aplican a quien sea que abra la página. La cifra del tabaco viene de un metaanálisis de cohortes de fumadores, la del betel de poblaciones del sur y sudeste de Asia donde su uso es común, y la del VPH de un estudio de casos y controles en Estados Unidos. Sumar los logaritmos de las razones de probabilidad entre ellos asume que esos tamaños de efecto se trasladan a la persona que responde, y esa suposición no está comprobada. Es la mayor fuente individual de incertidumbre en la puntuación, mayor que el hecho de que algún peso concreto esté algo equivocado.",
-      "Los límites entre niveles se fijaron por criterio en lugar de derivarse de datos. Están anclados a perfiles de referencia y verificados frente a la distribución de respuestas posibles, pero ningún conjunto de datos de desenlace los informó, así que la herramienta no puede indicar una sensibilidad ni una especificidad para ningún nivel.",
-      "El evaluador combina el riesgo de cáncer de cavidad oral y de orofaringe en una sola puntuación. Se trata de entidades epidemiológicamente distintas: el VPH-16 es principalmente un factor causante del cáncer de orofaringe, mientras que el tabaco y el alcohol predominan en el cáncer de cavidad oral.",
-      "La pregunta combinada sobre inmunidad y radiación agrupa tres exposiciones con tamaños de efecto genuinamente diferentes en un solo peso. Una persona que toma inmunosupresores a largo plazo tras un trasplante y otra que recibió radiación en cabeza y cuello hace décadas obtienen la misma puntuación, lo cual es una simplificación hecha para mantener el evaluador breve.",
-      "El evaluador se basa en datos autorreportados. El consumo de tabaco y alcohol suele ser subnotificado.",
-      "La frecuencia de visitas al dentista se incluye como indicador indirecto de retraso en la detección, no como factor de riesgo causal con una razón de probabilidades bien caracterizada. Su peso se basa en fundamentos clínicos más que en una derivación epidemiológica directa.",
-      "El sexo se registra como una variable binaria única con opción de no responder. El instrumento no tiene forma de representar a una persona cuyo historial de exposición no coincide con la población de la que provienen los datos de incidencia subyacentes."
+      "OralCheck no ha sido validado con un conjunto de datos de resultados clínicos. Los pesos están fundamentados en la literatura publicada, pero no han sido calibrados con una cohorte prospectiva.",
+      "Los pesos se obtienen de estudios realizados en distintas poblaciones y se aplican a cualquier persona que acceda a la herramienta. El dato sobre tabaco proviene de un metaanálisis de cohortes de fumadores, el dato sobre betel de poblaciones del sur y el sureste de Asia donde su uso es frecuente, y el dato sobre el VPH de un estudio de casos y controles realizado en Estados Unidos. Sumar log-odds entre ellos supone que esos tamaños de efecto se trasladan a la persona que responde, y esa suposición no ha sido comprobada. Es la fuente de incertidumbre más importante en la puntuación, mayor que cualquier error leve en un peso individual.",
+      "Los límites de los niveles de riesgo se establecieron por criterio clínico y no se derivaron de datos. Están anclados a perfiles de referencia y verificados según la distribución de respuestas posibles, pero ningún conjunto de datos de resultados los fundamentó, por lo que la herramienta no puede indicar una sensibilidad ni una especificidad para ningún nivel.",
+      "La herramienta combina el riesgo de cáncer de la cavidad oral y el cáncer de orofaringe en una sola puntuación. Se trata de entidades epidemiológicamente distintas: el VPH-16 es principalmente un factor causante del cáncer de orofaringe, mientras que el tabaco y el alcohol predominan en el cáncer de la cavidad oral.",
+      "La pregunta combinada sobre el sistema inmunitario y la radioterapia agrupa tres exposiciones con tamaños de efecto genuinamente distintos en un solo peso. Una persona que toma inmunosupresores a largo plazo tras un trasplante y otra que recibió radioterapia en cabeza y cuello hace décadas obtienen la misma puntuación, lo cual es una simplificación adoptada para mantener la brevedad del cuestionario.",
+      "La herramienta se basa en datos autorreportados. El consumo de tabaco y alcohol suele declararse por debajo de los niveles reales.",
+      "La frecuencia de visitas al dentista se incluye como indicador indirecto del retraso en la detección, no como un factor de riesgo causal con una razón de momios bien caracterizada. Su peso se basa en criterio clínico y no en una derivación epidemiológica directa.",
+      "El sexo se registra como una variable binaria con opción de no responder. La herramienta no tiene forma de representar a una persona cuyos antecedentes de exposición no coinciden con la población de la que se extrajeron los datos de incidencia subyacentes."
     ],
     "referencesHeading": "Referencias",
     "viewOn": "Ver en PubMed / editorial →",
@@ -1618,7 +1618,7 @@
     "evidenceBasisLabel": "Base de evidencia:",
     "evidenceBasisBody": "Los pesos de los factores de riesgo se basan en evidencia epidemiológica publicada, incluidas las clasificaciones de carcinógenos del Grupo 1 de la IARC para el tabaco (Gandini et al., <i>Oral Oncology</i>, 2008), el alcohol (Bagnardi et al., <i>Annals of Oncology</i>, 2015) y el quid de betel (Monografía 85 de la IARC), así como las razones de momios del VPH-16 para el cáncer orofaríngeo (Gillison et al., <i>JAMA</i>, 2008) y los datos de incidencia por edad de SEER. El término de interacción tabaco-alcohol refleja un riesgo carcinogénico documentado como multiplicativo, no simplemente aditivo. Las tasas de transformación de leucoplasia y eritroplasia provienen de Napier & Speight, <i>Journal of Oral Pathology & Medicine</i>, 2008.",
     "disclaimerLabel": "Aviso:",
-    "disclaimerBody": "OralCheck es una herramienta educativa de estratificación de riesgo, no un instrumento diagnóstico clínico validado. No ha sido evaluada frente a un conjunto de datos de resultados clínicos. No constituye asesoramiento médico, diagnóstico ni tratamiento. Consulta siempre a un profesional dental o médico calificado sobre cualquier inquietud de salud oral.",
+    "disclaimerBody": "OralCheck es un cuestionario de evaluación de riesgo, no una prueba de detección ni un instrumento de diagnóstico. No ha sido validado con un conjunto de datos de resultados clínicos. La prueba de detección del cáncer oral es un breve examen visual y táctil realizado por un dentista o médico, y este resultado es únicamente una razón para acudir a dicho examen. No constituye consejo médico, diagnóstico ni tratamiento. Consulte siempre a un profesional dental o médico calificado ante cualquier inquietud sobre su salud bucal.",
     "primaryCTA": {
       "low": "Encuentra un dentista para tu próxima evaluación →",
       "moderate": "Encontrar atención cerca de ti →",

@@ -245,7 +245,7 @@ export default function HeroMockupE() {
                 transition={{ type: "spring", stiffness: 420, damping: 22 }}
               >
                 <Link href="/screener" style={{ backgroundColor: "#e8634a", color: "#fff", padding: "0.85rem 1.75rem", borderRadius: "9999px", fontWeight: 600, fontSize: "0.875rem", display: "inline-flex", alignItems: "center", gap: "6px", textDecoration: "none", boxShadow: "0 4px 18px rgba(232,99,74,0.28)" }}>
-                  Start Screening →
+                  Check your risk →
                 </Link>
               </motion.div>
               <motion.div

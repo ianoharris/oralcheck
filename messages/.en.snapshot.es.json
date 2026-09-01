@@ -34,7 +34,7 @@
     "cankerSoreVsCancer": "Canker Sore vs Cancer",
     "disclaimerHeading": "Disclaimer",
     "disclaimerBody": "OralCheck is not a medical diagnosis. It is an educational tool. Consult a qualified clinician about any symptom or concern.",
-    "disclaimerScoring": "Screening logic informed by ACS, NCI, and Oral Cancer Foundation clinical guidelines.",
+    "disclaimerScoring": "Risk scoring informed by ACS, NCI, and Oral Cancer Foundation clinical guidelines.",
     "copyright": "© {year} OralCheck",
     "methods": "Methods",
     "privacy": "Privacy",
@@ -59,7 +59,7 @@
     ],
     "overline": "Free · Private · Evidence-based",
     "body": "Oral cancer is one of the most underdiagnosed cancers, largely because early symptoms look ordinary. OralCheck helps you understand your risk in minutes and points you toward care.",
-    "startScreening": "Start Screening →",
+    "startScreening": "Check your risk →",
     "learnSigns": "Learn the signs",
     "disclaimer": "Not a medical diagnosis. An educational awareness tool.",
     "featured": "Featured in <b>The Drill</b> · Wisconsin Dental Association"
@@ -1173,7 +1173,7 @@
       }
     ],
     "importantLabel": "Important:",
-    "importantBody": "OralCheck is an educational awareness tool, not a diagnostic instrument. It does not replace a clinical oral cancer exam. Encourage any patient with concerning symptoms or an elevated screen result to schedule a full clinical evaluation.",
+    "importantBody": "OralCheck is a risk-assessment questionnaire, not a screening test and not a diagnostic instrument. The screening test for oral cancer is the visual and tactile examination you perform; OralCheck's only job is to make a patient more likely to sit down for one and to mention the right history when they do. Encourage any patient with concerning symptoms, or with an elevated risk tier, to schedule a full clinical evaluation.",
     "previewScreener": "Preview the screener →",
     "contactUs": "Contact us"
   },
@@ -1288,7 +1288,7 @@
     "contactBody": "Questions about this policy? Email",
     "disclaimerLabel": "Disclaimer.",
     "disclaimerBody": "OralCheck is not a medical diagnosis. It is an educational tool. Consult a qualified clinician about any symptom or concern.",
-    "scoringNote": "Screening logic informed by ACS, NCI, and Oral Cancer Foundation clinical guidelines.",
+    "scoringNote": "Risk scoring informed by ACS, NCI, and Oral Cancer Foundation clinical guidelines.",
     "lastUpdated": "Last updated June 2026."
   },
   "MethodsMeta": {
@@ -1324,6 +1324,8 @@
     "limitationsHeading": "Known Limitations",
     "limitations": [
       "OralCheck hasn't been validated against a clinical outcome dataset. The weights are grounded in published literature, but they haven't been calibrated against a prospective cohort.",
+      "The weights are pooled from studies conducted in different populations, and then applied to whoever happens to open the page. The tobacco figure comes from a meta-analysis of smoking cohorts, the betel figure from populations in South and Southeast Asia where use is common, the HPV figure from a US case-control study. Summing log-odds across them assumes those effect sizes transport to the person answering, and that assumption is untested. It is the single largest source of uncertainty in the score, larger than any individual weight being slightly wrong.",
+      "The tier boundaries were set by judgment rather than derived from data. They are anchored to reference profiles and sanity-checked against the distribution of possible answers, but no outcome dataset informed them, so the tool cannot state a sensitivity or specificity for any tier.",
       "The screener combines oral cavity and oropharyngeal cancer risk into a single score. These are epidemiologically distinct entities: HPV-16 is primarily a driver of oropharyngeal cancer, while tobacco and alcohol dominate in oral cavity cancer.",
       "The combined immune and radiation question groups three exposures with genuinely different effect sizes into one weight. Someone on long-term immunosuppressants after a transplant and someone who had head and neck radiation decades ago score identically, which is a simplification made to keep the screener short.",
       "The screener relies on self-reported data. Tobacco and alcohol use are commonly under-reported.",
@@ -1491,7 +1493,8 @@
     "seerSourceLine": "Source: NCI SEER Cancer Stat Facts, Oral Cavity and Pharynx Cancer. Survival covers 2016 to 2022; case and death projections are for 2026; incidence rates cover 2019 to 2023.",
     "colStage": "Stage at diagnosis",
     "colSurvival": "5-year relative survival",
-    "colShare": "Share of cases"
+    "colShare": "Share of cases",
+    "thresholdProvenance": "It is worth being blunt about where these four numbers came from, because nothing derived them. They were set by judgment against the reference profiles above: a daily smoker should not read as low, someone using tobacco and alcohol together should land clearly above them, and a profile carrying several Group 1 exposures should reach the top tier. They were then checked against the distribution of plausible answer combinations so that the tiers were not all but empty or all but full. That is a defensible way to set a cutoff for a tool whose job is to prompt a dental visit, and it is not the same thing as a validated threshold. There is no sensitivity, no specificity, and no ROC curve behind these boundaries, because producing those requires outcome data this tool has never had access to."
   },
   "ContactForm": {
     "sentTitle": "Got it, thanks for reaching out.",
@@ -1615,7 +1618,7 @@
     "evidenceBasisLabel": "Evidence basis:",
     "evidenceBasisBody": "Risk factor weights are informed by published epidemiological evidence, including IARC Group 1 carcinogen classifications for tobacco (Gandini et al., <i>Oral Oncology</i>, 2008), alcohol (Bagnardi et al., <i>Annals of Oncology</i>, 2015), and betel quid (IARC Monograph 85), as well as HPV-16 odds ratios for oropharyngeal cancer (Gillison et al., <i>JAMA</i>, 2008) and SEER age-incidence data. The tobacco-alcohol interaction term reflects documented multiplicative, not merely additive, carcinogenic risk. Leukoplakia and erythroplakia transformation rates are drawn from Napier & Speight, <i>Journal of Oral Pathology & Medicine</i>, 2008.",
     "disclaimerLabel": "Disclaimer:",
-    "disclaimerBody": "OralCheck is an educational risk stratification tool, not a validated clinical diagnostic instrument. It has not been tested against a clinical outcome dataset. It does not constitute medical advice, diagnosis, or treatment. Always consult a qualified dental or medical provider regarding any oral health concerns.",
+    "disclaimerBody": "OralCheck is a risk-assessment questionnaire, not a screening test and not a diagnostic instrument. It has not been validated against a clinical outcome dataset. The screening test for oral cancer is a short visual and tactile examination by a dentist or physician, and this result is only a reason to go and have one. It does not constitute medical advice, diagnosis, or treatment. Always consult a qualified dental or medical provider regarding any oral health concerns.",
     "primaryCTA": {
       "low": "Find a dentist for your next screening →",
       "moderate": "Find care near you →",

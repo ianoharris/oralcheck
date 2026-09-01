@@ -34,7 +34,7 @@
     "cankerSoreVsCancer": "Canker Sore vs Cancer",
     "disclaimerHeading": "Disclaimer",
     "disclaimerBody": "OralCheck is not a medical diagnosis. It is an educational tool. Consult a qualified clinician about any symptom or concern.",
-    "disclaimerScoring": "Screening logic informed by ACS, NCI, and Oral Cancer Foundation clinical guidelines.",
+    "disclaimerScoring": "Risk scoring informed by ACS, NCI, and Oral Cancer Foundation clinical guidelines.",
     "copyright": "© {year} OralCheck",
     "methods": "Methods",
     "privacy": "Privacy",
@@ -59,7 +59,7 @@
     ],
     "overline": "Free · Private · Evidence-based",
     "body": "Oral cancer is one of the most underdiagnosed cancers, largely because early symptoms look ordinary. OralCheck helps you understand your risk in minutes and points you toward care.",
-    "startScreening": "Start Screening →",
+    "startScreening": "Check your risk →",
     "learnSigns": "Learn the signs",
     "disclaimer": "Not a medical diagnosis. An educational awareness tool.",
     "featured": "Featured in <b>The Drill</b> · Wisconsin Dental Association"
@@ -1173,7 +1173,7 @@
       }
     ],
     "importantLabel": "Important:",
-    "importantBody": "OralCheck is an educational awareness tool, not a diagnostic instrument. It does not replace a clinical oral cancer exam. Encourage any patient with concerning symptoms or an elevated screen result to schedule a full clinical evaluation.",
+    "importantBody": "OralCheck is a risk-assessment questionnaire, not a screening test and not a diagnostic instrument. The screening test for oral cancer is the visual and tactile examination you perform; OralCheck's only job is to make a patient more likely to sit down for one and to mention the right history when they do. Encourage any patient with concerning symptoms, or with an elevated risk tier, to schedule a full clinical evaluation.",
     "previewScreener": "Preview the screener →",
     "contactUs": "Contact us"
   },
@@ -1288,7 +1288,7 @@
     "contactBody": "Questions about this policy? Email",
     "disclaimerLabel": "Disclaimer.",
     "disclaimerBody": "OralCheck is not a medical diagnosis. It is an educational tool. Consult a qualified clinician about any symptom or concern.",
-    "scoringNote": "Screening logic informed by ACS, NCI, and Oral Cancer Foundation clinical guidelines.",
+    "scoringNote": "Risk scoring informed by ACS, NCI, and Oral Cancer Foundation clinical guidelines.",
     "lastUpdated": "Last updated June 2026."
   },
   "MethodsMeta": {
@@ -1618,7 +1618,7 @@
     "evidenceBasisLabel": "Evidence basis:",
     "evidenceBasisBody": "Risk factor weights are informed by published epidemiological evidence, including IARC Group 1 carcinogen classifications for tobacco (Gandini et al., <i>Oral Oncology</i>, 2008), alcohol (Bagnardi et al., <i>Annals of Oncology</i>, 2015), and betel quid (IARC Monograph 85), as well as HPV-16 odds ratios for oropharyngeal cancer (Gillison et al., <i>JAMA</i>, 2008) and SEER age-incidence data. The tobacco-alcohol interaction term reflects documented multiplicative, not merely additive, carcinogenic risk. Leukoplakia and erythroplakia transformation rates are drawn from Napier & Speight, <i>Journal of Oral Pathology & Medicine</i>, 2008.",
     "disclaimerLabel": "Disclaimer:",
-    "disclaimerBody": "OralCheck is an educational risk stratification tool, not a validated clinical diagnostic instrument. It has not been tested against a clinical outcome dataset. It does not constitute medical advice, diagnosis, or treatment. Always consult a qualified dental or medical provider regarding any oral health concerns.",
+    "disclaimerBody": "OralCheck is a risk-assessment questionnaire, not a screening test and not a diagnostic instrument. It has not been validated against a clinical outcome dataset. The screening test for oral cancer is a short visual and tactile examination by a dentist or physician, and this result is only a reason to go and have one. It does not constitute medical advice, diagnosis, or treatment. Always consult a qualified dental or medical provider regarding any oral health concerns.",
     "primaryCTA": {
       "low": "Find a dentist for your next screening →",
       "moderate": "Find care near you →",

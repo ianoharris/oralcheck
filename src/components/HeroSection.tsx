@@ -50,7 +50,7 @@ export default function HeroSection() {
                 href="/screener"
                 className="bg-accent hover:bg-accent-dark text-white px-7 py-3.5 rounded-full font-semibold transition-colors inline-flex items-center gap-2"
               >
-                Start Screening
+                Check your risk
                 <span aria-hidden>→</span>
               </Link>
               <Link

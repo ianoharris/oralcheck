@@ -456,7 +456,7 @@ export default function HeroMockupC() {
             transition={{ duration: 0.5, delay: 1.35, ease: [0.16, 1, 0.3, 1] }}
           >
             <MagneticBtn href="/screener" variant="filled">
-              Start Screening →
+              Check your risk →
             </MagneticBtn>
             <MagneticBtn href="/learn" variant="ghost">
               Learn the signs

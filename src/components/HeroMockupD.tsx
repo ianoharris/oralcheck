@@ -113,7 +113,7 @@ export default function HeroMockupD() {
                 textDecoration: "none",
               }}
             >
-              Start Screening →
+              Check your risk →
             </Link>
             <Link
               href="/learn"

@@ -89,14 +89,21 @@ Update both together. See `AGENTS.md`.
       source URL and a `lastVerified` date. **Re-check it annually**; the case
       and death figures are year-stamped projections and go stale on schedule.
 
-- [ ] **Tighten the terminology.** *Verified:* USPSTF gives oral cancer screening an
-      "insufficient evidence" rating, but that statement is scoped to **primary care
-      providers and explicitly not dental providers**. NCI says evidence is inadequate
-      that screening reduces mortality. The sharpest framing is not "we are not a
-      screening test" but: **OralCheck is a risk-assessment questionnaire; the
-      screening test is the clinical exam a dentist performs.** OralCheck's job is to
-      get someone to that exam. Worth auditing every use of the word "screening"
-      against that.
+- [x] ~~Tighten the terminology~~ — fixed 2026-09-01, and it was far smaller
+      than this entry implied. An audit of all 71 uses of screening/screener/screen
+      found that **most were already correct**: they describe the dentist's exam,
+      which is exactly what the framing wants. Only four called OralCheck itself a
+      screening, and the homepage CTA was the worst of them. Fixed: "Start
+      Screening" became "Check your risk", "Screening logic informed by" became
+      "Risk scoring informed by" (footer and privacy), and `/for-clinicians` no
+      longer says "an elevated screen result". The results disclaimer now names
+      what the real screening *is* rather than only what OralCheck is not.
+      **Decided: the product keeps the name "risk screener."** It screens risk
+      factors, not tissue, the phrase is accurate on that reading, and renaming it
+      would cost the title tags, meta descriptions and search positioning of every
+      page in three languages. The rule going forward is narrower and easier to
+      hold: never say OralCheck *performs* a screening, and never call its output a
+      screen result.
 - [x] ~~Make `/methods` exceptional~~ — shipped 2026-08-27. Per-question rationale
       for all twelve, a "What this tool cannot tell you" section, a last-reviewed
       dateline at the top, and a review-and-maintenance block at the bottom. The
@@ -134,6 +141,17 @@ Update both together. See `AGENTS.md`.
 ## Shipped
 
 Newest first.
+
+### 2026-09-01 (later)
+- **The homepage button no longer claims the tool screens you.** "Start
+  Screening" became "Check your risk". USPSTF's insufficient-evidence rating for
+  oral cancer screening is the sharpest thing a clinician can raise, and the CTA
+  was handing it to them on the first screen
+- The results disclaimer now says what the screening test actually *is*, a short
+  visual and tactile exam, rather than only listing what OralCheck is not. That
+  turns a legal-sounding paragraph into a concrete next step
+- `/for-clinicians` rewritten for precision, since clinicians are the readers
+  most likely to object to the loose usage
 
 ### 2026-09-01
 - **Cadence is now 2 Instagram + 1 LinkedIn a week**, set by `WEEKLY_PLAN` and

@@ -181,7 +181,7 @@ export default function HeroMockupA() {
                 fontSize: "0.9rem",
               }}
             >
-              Start Screening →
+              Check your risk →
             </Link>
             <Link
               href="/learn"

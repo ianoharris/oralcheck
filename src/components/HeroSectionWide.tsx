@@ -44,7 +44,7 @@ export default function HeroSectionWide() {
           href="/screener"
           className="bg-accent hover:bg-accent-dark text-white px-8 py-4 rounded-full font-semibold text-lg transition-colors inline-flex items-center gap-2"
         >
-          Start Screening
+          Check your risk
           <span aria-hidden>→</span>
         </Link>
         <Link

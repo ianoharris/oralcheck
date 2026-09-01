@@ -34,7 +34,7 @@
     "cankerSoreVsCancer": "Afta ou Câncer?",
     "disclaimerHeading": "Aviso Legal",
     "disclaimerBody": "O OralCheck não é um diagnóstico médico. É uma ferramenta educativa. Consulte um profissional de saúde qualificado sobre qualquer sintoma ou dúvida.",
-    "disclaimerScoring": "A lógica de rastreamento é baseada nas diretrizes clínicas da ACS, do NCI e da Oral Cancer Foundation.",
+    "disclaimerScoring": "Pontuação de risco baseada nas diretrizes clínicas da ACS, do NCI e da Oral Cancer Foundation.",
     "copyright": "© {year} OralCheck",
     "methods": "Métodos",
     "privacy": "Privacidade",
@@ -59,7 +59,7 @@
     ],
     "overline": "Gratuito · Privado · Baseado em evidências",
     "body": "O câncer bucal é um dos cânceres mais subdiagnosticados, em grande parte porque os sintomas iniciais parecem comuns. O OralCheck ajuda você a entender seu risco em minutos e indica o caminho para o atendimento adequado.",
-    "startScreening": "Iniciar triagem →",
+    "startScreening": "Verifique seu risco →",
     "learnSigns": "Conheça os sinais",
     "disclaimer": "Não é um diagnóstico médico. Uma ferramenta educativa de conscientização.",
     "featured": "Destaque em <b>The Drill</b> · Wisconsin Dental Association"
@@ -1173,7 +1173,7 @@
       }
     ],
     "importantLabel": "Importante:",
-    "importantBody": "O OralCheck é uma ferramenta educativa de conscientização, não um instrumento de diagnóstico. Ele não substitui o exame clínico de câncer bucal. Oriente qualquer paciente com sintomas preocupantes ou resultado elevado na triagem a agendar uma avaliação clínica completa.",
+    "importantBody": "O OralCheck é um questionário de avaliação de risco, não um teste de rastreamento nem um instrumento diagnóstico. O teste de rastreamento para câncer bucal é o exame visual e tátil realizado pelo profissional de saúde. A função do OralCheck é aumentar a probabilidade de o paciente comparecer a esse exame e relatar o histórico adequado durante a consulta. Recomenda-se encaminhar para avaliação clínica completa todo paciente com sintomas preocupantes ou classificado em uma faixa de risco elevada.",
     "previewScreener": "Visualizar a triagem →",
     "contactUs": "Entre em contato"
   },
@@ -1288,7 +1288,7 @@
     "contactBody": "Dúvidas sobre esta política? Envie um e-mail para",
     "disclaimerLabel": "Aviso importante.",
     "disclaimerBody": "O OralCheck não é um diagnóstico médico. É uma ferramenta educativa. Consulte um profissional de saúde qualificado sobre qualquer sintoma ou dúvida.",
-    "scoringNote": "A lógica de rastreamento é baseada nas diretrizes clínicas da ACS, do NCI e da Oral Cancer Foundation.",
+    "scoringNote": "Pontuação de risco baseada nas diretrizes clínicas da ACS, do NCI e da Oral Cancer Foundation.",
     "lastUpdated": "Última atualização: junho de 2026."
   },
   "MethodsMeta": {
@@ -1323,14 +1323,14 @@
     "tierP2Rest": "Independentemente da pontuação, qualquer sintoma com duração de 2 semanas ou mais (uma ferida persistente, mancha vermelha ou branca, caroço sem explicação, ou dificuldade para engolir) eleva o nível para {bold} e indica a necessidade de avaliação imediata.",
     "limitationsHeading": "Limitações Conhecidas",
     "limitations": [
-      "O OralCheck não foi validado com base em um conjunto de dados de desfechos clínicos. Os pesos são fundamentados na literatura publicada, mas não foram calibrados com base em uma coorte prospectiva.",
-      "Os pesos vêm de estudos conduzidos em populações diferentes e são então aplicados a quem quer que abra a página. O número do tabaco vem de uma metanálise de coortes de fumantes, o do betel de populações do sul e sudeste da Ásia onde o uso é comum, e o do HPV de um estudo de caso-controle nos Estados Unidos. Somar os logaritmos das razões de chances entre eles pressupõe que esses tamanhos de efeito se transferem para a pessoa que está respondendo, e essa premissa não foi testada. É a maior fonte isolada de incerteza na pontuação, maior do que qualquer peso individual estar um pouco errado.",
-      "Os limites entre as faixas foram definidos por julgamento, e não derivados de dados. Eles são ancorados em perfis de referência e conferidos contra a distribuição de respostas possíveis, mas nenhum conjunto de dados de desfecho os informou, de modo que a ferramenta não consegue informar sensibilidade ou especificidade para nenhuma faixa.",
-      "O rastreador combina o risco de câncer da cavidade bucal e do orofaringe em uma única pontuação. Essas são entidades epidemiologicamente distintas: o HPV-16 é principalmente um fator causador do câncer de orofaringe, enquanto o tabaco e o álcool predominam no câncer da cavidade bucal.",
-      "A pergunta combinada sobre imunidade e radiação agrupa três exposições com tamanhos de efeito genuinamente diferentes em um único peso. Uma pessoa em uso prolongado de imunossupressores após um transplante e outra que fez radioterapia na cabeça e no pescoço décadas atrás recebem a mesma pontuação, o que é uma simplificação feita para manter o rastreador curto.",
-      "O rastreador depende de dados autodeclarados. O uso de tabaco e álcool costuma ser subestimado nas respostas.",
-      "A frequência de visitas ao dentista é incluída como um indicador indireto de atraso no diagnóstico, e não como um fator de risco causal com uma razão de chances bem caracterizada. Seu peso é baseado em raciocínio clínico, e não em derivação epidemiológica direta.",
-      "O sexo é registrado de forma binária com opção de não informar. O instrumento não tem como representar alguém cujo histórico de exposição não corresponde à população da qual os dados de incidência subjacentes foram obtidos."
+      "O OralCheck não foi validado em relação a um conjunto de dados de desfechos clínicos. Os pesos são fundamentados na literatura publicada, mas não foram calibrados em relação a uma coorte prospectiva.",
+      "Os pesos foram reunidos a partir de estudos conduzidos em populações diferentes e, em seguida, aplicados a qualquer pessoa que acesse a página. O dado sobre tabaco vem de uma metanálise de coortes de fumantes, o dado sobre noz de betel vem de populações do Sul e Sudeste Asiático onde o uso é comum, e o dado sobre HPV vem de um estudo de caso-controle realizado nos Estados Unidos. Somar log-odds entre esses estudos pressupõe que os tamanhos de efeito se aplicam à pessoa que responde ao questionário, uma suposição que não foi testada. Essa é a maior fonte individual de incerteza na pontuação, maior do que qualquer peso individual estar ligeiramente incorreto.",
+      "Os limites das faixas foram definidos por critério clínico, não derivados de dados. Estão ancorados em perfis de referência e verificados em relação à distribuição das respostas possíveis, mas nenhum conjunto de dados de desfechos os embasou. Por isso, a ferramenta não pode indicar sensibilidade ou especificidade para nenhuma faixa.",
+      "O rastreador combina o risco de câncer da cavidade oral e de câncer da orofaringe em uma pontuação única. Essas são entidades epidemiologicamente distintas: o HPV-16 é principalmente um fator para o câncer de orofaringe, enquanto tabaco e álcool predominam no câncer da cavidade oral.",
+      "A pergunta combinada sobre imunidade e radioterapia agrupa três exposições com tamanhos de efeito genuinamente diferentes em um único peso. Uma pessoa em uso prolongado de imunossupressores após um transplante e outra que recebeu radioterapia em cabeça e pescoço há décadas recebem a mesma pontuação, o que é uma simplificação feita para manter o questionário curto.",
+      "O rastreador depende de dados autodeclarados. O uso de tabaco e álcool é frequentemente subnotificado.",
+      "A frequência de consultas odontológicas é incluída como uma variável de aproximação para atraso no diagnóstico, não como um fator de risco causal com um OR bem caracterizado. Seu peso é baseado em raciocínio clínico, não em derivação epidemiológica direta.",
+      "O sexo é registrado como uma variável binária única com opção de não responder. O instrumento não tem como representar alguém cujo histórico de exposição não corresponde à população da qual os dados de incidência subjacentes foram extraídos."
     ],
     "referencesHeading": "Referências",
     "viewOn": "Ver no PubMed / editora →",
@@ -1618,7 +1618,7 @@
     "evidenceBasisLabel": "Base de evidências:",
     "evidenceBasisBody": "Os pesos dos fatores de risco são baseados em evidências epidemiológicas publicadas, incluindo as classificações de carcinógenos do Grupo 1 da IARC para tabaco (Gandini et al., <i>Oral Oncology</i>, 2008), álcool (Bagnardi et al., <i>Annals of Oncology</i>, 2015) e noz de areca com bétel (IARC Monograph 85), além de razões de chances para HPV-16 no câncer de orofaringe (Gillison et al., <i>JAMA</i>, 2008) e dados de incidência por idade do SEER. O termo de interação tabaco-álcool reflete um risco carcinogênico multiplicativo documentado, não apenas aditivo. As taxas de transformação de leucoplasia e eritroplasia são provenientes de Napier & Speight, <i>Journal of Oral Pathology & Medicine</i>, 2008.",
     "disclaimerLabel": "Aviso:",
-    "disclaimerBody": "O OralCheck é uma ferramenta educativa de estratificação de risco, não um instrumento clínico diagnóstico validado. Não foi testado com base em um conjunto de dados de desfechos clínicos. Não constitui aconselhamento médico, diagnóstico ou tratamento. Consulte sempre um dentista ou médico qualificado em caso de qualquer dúvida relacionada à saúde bucal.",
+    "disclaimerBody": "O OralCheck é um questionário de avaliação de risco, não um teste de rastreamento nem um instrumento diagnóstico. Ele não foi validado em relação a um conjunto de dados de desfechos clínicos. O teste de rastreamento para câncer bucal é um breve exame visual e tátil realizado por um dentista ou médico, e este resultado é apenas um motivo para realizar esse exame. Ele não constitui aconselhamento médico, diagnóstico ou tratamento. Consulte sempre um dentista ou médico qualificado em caso de qualquer preocupação com a saúde bucal.",
     "primaryCTA": {
       "low": "Encontre um dentista para seu próximo rastreamento →",
       "moderate": "Encontre atendimento perto de você →",
