@@ -64,7 +64,26 @@ Update both together. See `AGENTS.md`.
 - [ ] **Reels have had none of this work.** The sixteen designed layouts are
       carousel/static only. Reels are still the old kinetic-text scenes with
       five backdrop variants, which is the next real design job.
-- [ ] Two of six signs on `/learn/signs` still have **no clinical photo**: red patch
+- [ ] **One of six signs still has no clinical photo: the red patch
+      (erythroplakia).** Ian found a good one at exodontia.info, but the site is
+      all rights reserved ("Copyright @ Exodontia") with full terms and no open
+      licence, so it is not usable as found. A permission request is drafted at
+      `outreach-drafts/2026-09-01-Exodontia-Image-Permission.md`; it is one
+      clinician running a teaching site, which is about as askable as this gets,
+      and a named credit from a consultant oral surgeon beats an anonymous
+      Commons file anyway. Fallback if declined: Openverse filtered to commercial
+      use, or a CC BY case report in PLOS ONE / BMC Oral Health.
+- [x] ~~A photo for lump/thickening~~ — **decided against 2026-09-01.** Ian
+      dropped it. Photographs of a submucosal mass almost all come from surgical
+      case reports, so an openly licensed one that reads clearly to a general
+      audience is unlikely to turn up, and the entry would have sat open forever.
+      The sign keeps its illustrated diagram.
+- [ ] **Two sign photos carry no attribution.** `sore` and `lip` in
+      `src/lib/signPhotos.json` have no `author`, `license` or `source`, where
+      `white` and `mixed` have all three. Their provenance is not recorded
+      anywhere, so it has to be re-established or the images replaced. On a page
+      that argues everything is checkable, two uncredited clinical photos are the
+      weak spot.
       (erythroplakia) and lump/thickening. No openly-licensed image found yet.
 
 ### Product and credibility
