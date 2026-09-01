@@ -10,7 +10,7 @@ The running list. Two rules:
    named. This is the list's whole purpose: the things that come up once, sound
    good, and are never mentioned again.
 
-Last updated: 2026-08-30
+Last updated: 2026-09-01
 
 **Mirrored to an artifact Ian reads:**
 https://claude.ai/code/artifact/cc490e4b-1ee3-4062-bc56-eada066f1003
@@ -32,7 +32,7 @@ Update both together. See `AGENTS.md`.
 | Judge whether the reel skip-rate fix worked | A new reel going out | 83.7% skip. Frame-0 fix and cover image both shipped, but only affect reels rendered *after* they landed. The three currently scheduled were rendered before. |
 | Trustworthy completion rate over 90d | ~2 weeks of clean events | The double-count fix shipped 2026-08-10. Until then only short windows are reliable. 30-day read at fix time: **91.4%**. |
 | Outreach replies | Ian sending them | 10 contacts: the original 7 in `outreach-contacts.csv` (Penn/CIGOH, Tufts x2, Columbia x2, HNCA, AAOM) plus 3 at Marquette. **Drafts are written** in `outreach-drafts/` as of 2026-08-18, so the only remaining step is pasting them into Outlook and sending. Update Status to `Followed Up` after each, or the Sunday tracker will generate duplicates. |
-| LinkedIn auto-publishing | Publora plan | Starter caps 3 active scheduled posts, counted **per platform target**, so 3 Instagram posts fill it. Code already supports LinkedIn: set `PUBLORA_PLATFORMS=instagram,linkedin` and `LINKEDIN_HANDOFF=0` if the plan changes. |
+| ~~LinkedIn auto-publishing~~ | **Done 2026-09-01** | Both accounts are connected in Publora with valid tokens. The plan is now `WEEKLY_PLAN=instagram:2,linkedin:1`: each post targets one network rather than fanning out to all of them, which is what made the quota impossible before. Three platform-targets sits exactly at the Starter cap, so raising either number needs a bigger plan. |
 
 ---
 
@@ -134,6 +134,25 @@ Update both together. See `AGENTS.md`.
 ## Shipped
 
 Newest first.
+
+### 2026-09-01
+- **Cadence is now 2 Instagram + 1 LinkedIn a week**, set by `WEEKLY_PLAN` and
+  published entirely through Publora. LinkedIn lands Tuesday or Wednesday
+  morning rather than in Instagram's 5pm slot, and gets the rewritten LinkedIn
+  caption instead of the hashtag version
+- **A post now targets one network instead of every connected one.** Fanning out
+  was what made the quota impossible: every network a post targets consumes its
+  own scheduled-post slot, so three posts across two networks needed six against
+  a cap of three
+- Reels never take the LinkedIn slot, since a vertical 9:16 video renders there
+  as a small centered box. They take an Instagram slot and LinkedIn waits for a
+  post that suits it, falling back only if the week is nothing but reels
+- **The Monday run reported success while producing nothing.** It ran out of API
+  credits mid-generation, told him "generating 1 post now", then went silent and
+  exited 0 with a green check. Failures now reach Telegram with a plain reason,
+  and a run where nothing could be built exits non-zero
+- Instagram's weekly spread now knows about the LinkedIn slot. Caught by a test:
+  both were landing on the same Wednesday of an otherwise empty week
 
 ### 2026-08-30 (later)
 - **Two gaps closed that a reviewer found before we did.** Dr. Jason Brant's

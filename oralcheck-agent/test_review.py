@@ -123,7 +123,13 @@ def main() -> int:
     captions = [t for t in sends if t.startswith("*Post ")]
     check("every post gets buttons", len(captions) == 2, f"{len(captions)} sent")
     check("scheduled in format order",
-          "carousel" in "".join(sends[:4]) and sends[0].startswith("2 post(s)"))
+          "carousel" in "".join(sends[:4]) and "2 post(s) to review" in sends[0],
+          sends[0][:80] if sends else "no messages")
+    # The opening message is what he reads on his phone before anything else,
+    # so it has to say where the week's posts are going, not just how many.
+    check("batch announcement names the plan",
+          "Instagram" in sends[0] and "LinkedIn" in sends[0],
+          sends[0][:80] if sends else "no messages")
 
     # Progress: a slow publish announces itself, then edits into the outcome.
     check("slow step announces itself",
@@ -177,6 +183,55 @@ def main() -> int:
                                               second=0, microsecond=0)
     T.record_slot(when)
     check("approved slot is remembered", T._booked() == [when])
+
+    # ---- weekly plan: 2 Instagram + 1 LinkedIn -------------------------------
+    T.SCHEDULE_FILE.write_text(json.dumps({"slots": []}))
+
+    check("plan parses to one entry per post",
+          T.parse_weekly_plan("instagram:2,linkedin:1")
+          == ["instagram", "instagram", "linkedin"])
+    check("a malformed count is skipped, not fatal",
+          T.parse_weekly_plan("instagram:two,linkedin:1") == ["linkedin"])
+    check("an empty plan still yields somewhere to post",
+          T.parse_weekly_plan("  ") == ["instagram"])
+
+    dests = T.weekly_destinations()
+    nets = [n for n, _ in dests]
+    check("plan gives 2 Instagram and 1 LinkedIn",
+          nets.count("instagram") == 2 and nets.count("linkedin") == 1, str(nets))
+
+    li = [w for n, w in dests if n == "linkedin"][0]
+    check("LinkedIn lands Tue or Wed", li.weekday() in T.LINKEDIN_WEEKDAYS,
+          f"weekday {li.weekday()}")
+    check("LinkedIn posts in the morning, not the 5pm slot",
+          li.hour == T.LINKEDIN_HOUR and li.hour != T.POST_HOUR, f"hour {li.hour}")
+    check("Instagram keeps the evening slot",
+          all(w.hour == T.POST_HOUR for n, w in dests if n == "instagram"))
+    # The bug this catches: Instagram's spread did not know about the LinkedIn
+    # slot, so both landed on the same Wednesday of an otherwise empty week.
+    check("no two posts share a day",
+          len({w.date() for _, w in dests}) == len(dests),
+          str(sorted(str(w.date()) for _, w in dests)))
+
+    pool = T.weekly_destinations()
+    first, _ = T._claim_destination(pool, "reel")
+    check("a reel never takes the LinkedIn slot", first == "instagram", first)
+    rest = [T._claim_destination(pool, "carousel")[0] for _ in range(2)]
+    check("LinkedIn is still filled by a suitable post", "linkedin" in rest, str(rest))
+
+    pool = T.weekly_destinations()
+    allreels = [T._claim_destination(pool, "reel")[0] for _ in range(3)]
+    check("an all-reel week uses the LinkedIn slot rather than stranding it",
+          len(allreels) == 3 and not pool, str(allreels))
+
+    # The label shown before approval must match where the post actually goes,
+    # or the review message lies about the destination.
+    pool = T.weekly_destinations()
+    hint = T._destination_hint(pool, "reel")
+    claimed, _ = T._claim_destination(pool, "reel")
+    check("destination hint matches the claim",
+          claimed.capitalize() in hint or (claimed == "linkedin" and "LinkedIn" in hint),
+          f"hint={hint!r} claimed={claimed!r}")
 
     shutil.rmtree(QUEUE, ignore_errors=True)
     if FAILURES:

@@ -2797,6 +2797,29 @@ def _queue_idea(idea: dict) -> dict | None:
     return run_pipeline(brief, idea["media_type"], pillar=idea["pillar"])
 
 
+def _explain_failure(exc: Exception) -> str:
+    """One plain sentence about why a post could not be built.
+
+    Raw SDK exceptions are a wall of JSON and a request id. The three that
+    actually happen get named, because the useful part of each is a different
+    action: wait, top up, or look at the log.
+    """
+    text = str(exc)
+    low = text.lower()
+    if "usage limit" in low or "credit balance" in low:
+        when = ""
+        m = re.search(r"regain access on ([0-9-]+ at [0-9:]+ ?UTC)", text)
+        if m:
+            when = f" Access returns {m.group(1)}."
+        return ("The Anthropic API usage limit is reached, so nothing could be "
+                f"written.{when} Raise the workspace spend limit to unblock it sooner.")
+    if "rate limit" in low or "429" in low:
+        return "The API rate limit was hit. Re-running the flow in a few minutes should work."
+    if "overloaded" in low or "529" in low:
+        return "The API was overloaded. This is transient; re-run the flow."
+    return text[:300]
+
+
 def run_pick(numbers: list[int]) -> None:
     """Turn selected idea numbers into queued posts for Telegram/web review."""
     ledger = ideas.load_ledger()
@@ -2811,6 +2834,7 @@ def run_pick(numbers: list[int]) -> None:
             manifest = _queue_idea(idea)
         except Exception as exc:
             log.error("Failed to generate '%s': %s", idea["title"], exc)
+            print(f"  FAILED  {idea['title']}: {_explain_failure(exc)}")
             continue
         if manifest:
             ideas.mark_queued(ledger, idea["id"], manifest["id"])
@@ -2863,16 +2887,36 @@ def run_await_picks(timeout: int = 21600) -> None:
         return
     ideas.save_ledger(ledger)
     _tg_send_message(f"Got it, generating {len(chosen)} post(s) now. They'll come back for approval.")
+    queued, failures = 0, []
     for idea in chosen:
         log.info("Generating post for idea: %s", idea["title"])
         try:
             manifest = _queue_idea(idea)
         except Exception as exc:
             log.error("Failed to generate '%s': %s", idea["title"], exc)
+            failures.append((idea["title"], exc))
+            # Telling him now matters more than the log line. The previous
+            # version promised "generating N post(s)" and then said nothing
+            # ever again, so a failed run was indistinguishable from a slow one
+            # and he waited on posts that were never coming.
+            _tg_send_message(f"Couldn't build \"{idea['title']}\".\n{_explain_failure(exc)}")
             continue
         if manifest:
+            queued += 1
             ideas.mark_queued(ledger, idea["id"], manifest["id"])
             ideas.save_ledger(ledger)
+
+    if failures and not queued:
+        _tg_send_message(
+            f"None of the {len(chosen)} picked post(s) could be built, so there is "
+            "nothing to review. Your picks are still recorded, so re-running the "
+            "flow will pick up where this left off.")
+        # Exit non-zero so the run goes red. It used to exit 0 with nothing
+        # produced, which is the worst of both: no posts, and a green check
+        # saying the week went fine.
+        raise SystemExit(1)
+    if failures:
+        _tg_send_message(f"{queued} of {len(chosen)} built. The rest are above.")
     print("Picks generated and queued. Run telegram_review.py to review and post them.")
 
 

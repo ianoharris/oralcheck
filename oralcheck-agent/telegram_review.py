@@ -42,12 +42,24 @@ PUBLORA_PLATFORMS = os.environ.get("PUBLORA_PLATFORMS", "instagram")
 # some edge configurations (Cloudflare returns "error code: 1010" to
 # Python-urllib), and an identifiable agent is the polite default anyway.
 PUBLORA_UA = "OralCheckBot/1.0 (+https://oralcheck.org)"
-# Publora's Starter plan caps active scheduled posts at 3 counted per platform
-# target, so Instagram alone fills it and LinkedIn cannot be added there. When
-# this is on, an approved post also arrives in Telegram as a LinkedIn-ready
-# package to drop into LinkedIn's own (free, unlimited) scheduler. Set to "0"
-# once LinkedIn is published automatically.
-LINKEDIN_HANDOFF = os.environ.get("LINKEDIN_HANDOFF", "1") != "0"
+# The week's publishing plan: how many posts go to each network, filled in this
+# order as posts are approved. Every entry costs one Publora scheduled-post
+# slot, and the Starter plan allows 3, so "instagram:2,linkedin:1" sits exactly
+# at the cap. Raising either number needs a bigger Publora plan.
+WEEKLY_PLAN = os.environ.get("WEEKLY_PLAN", "instagram:2,linkedin:1")
+# LinkedIn used to be a manual handoff, because Instagram alone filled the
+# Publora quota. It now publishes through Publora like everything else, so the
+# handoff is off by default. Set to "1" to also receive the copy-paste package
+# in Telegram, which is still useful if you want to post somewhere Publora is
+# not connected to.
+LINKEDIN_HANDOFF = os.environ.get("LINKEDIN_HANDOFF", "0") != "0"
+# LinkedIn's audience reads mid-morning on a weekday, not at 5pm with Instagram.
+LINKEDIN_HOUR = int(os.environ.get("LINKEDIN_HOUR", "14"))   # 14:00 UTC ~ 9am CT
+# Monday=0. Tuesday and Wednesday, in preference order.
+LINKEDIN_WEEKDAYS = (1, 2)
+# Formats that do not belong on LinkedIn. A vertical reel is an Instagram
+# artifact; LinkedIn renders it as a small centered video nobody watches.
+LINKEDIN_UNSUITED = {"reel", "animated"}
 QUEUE_DIR         = Path(__file__).parent / "queue"
 APPROVAL_TIMEOUT  = 21600  # 6 hours -- gives you the day to approve, not a rushed window
 
@@ -266,11 +278,13 @@ def _publora_check(resp: httpx.Response, what: str) -> httpx.Response:
     raise PubloraError(f"Publora {resp.status_code} on {what}: {body[:600]}")
 
 
-def _publora_platforms() -> list[str]:
-    """Every connected platform we publish to, Instagram first.
+def _publora_platforms(networks: list[str] | None = None) -> list[str]:
+    """Connection ids for the networks this post targets.
 
     Previously hard-coded to the first instagram- connection, so the LinkedIn
-    page could be connected in Publora and still never receive anything.
+    page could be connected in Publora and still never receive anything. It then
+    fanned out to *every* connected account, which is equally wrong once posts
+    have their own destinations: pass `networks` to name them per post.
     """
     r = _publora_check(
         httpx.get(f"{PUBLORA_BASE}/platform-connections",
@@ -279,7 +293,8 @@ def _publora_platforms() -> list[str]:
     )
     conns = r.json().get("connections", [])
 
-    wanted = [p.strip() for p in PUBLORA_PLATFORMS.split(",") if p.strip()]
+    wanted = ([n.strip() for n in networks if n and n.strip()] if networks
+              else [p.strip() for p in PUBLORA_PLATFORMS.split(",") if p.strip()])
     ids: list[str] = []
     for prefix in wanted:
         for c in conns:
@@ -344,7 +359,8 @@ def record_slot(when: datetime | None) -> None:
 
 
 def _weekly_slots(n: int, start: datetime | None = None,
-                  avoid_booked: bool = True) -> list[datetime]:
+                  avoid_booked: bool = True,
+                  extra_taken: set | None = None) -> list[datetime]:
     """n posting times spread across the coming week (evening slot, ~5pm CT).
 
     Days already booked by an earlier run are skipped, so a top-up spreads into
@@ -362,7 +378,11 @@ def _weekly_slots(n: int, start: datetime | None = None,
         return (base + timedelta(days=day)).replace(
             hour=POST_HOUR, minute=0, second=0, microsecond=0)
 
+    # extra_taken covers days claimed within this same run but not yet written
+    # to schedule.json, which is how the LinkedIn slot and an Instagram slot
+    # first ended up on the same Wednesday of an otherwise empty week.
     taken_dates = {d.date() for d in _booked()} if avoid_booked else set()
+    taken_dates |= (extra_taken or set())
     booked_days = [d for d in range(1, 8) if at(d).date() in taken_dates]
     free = [d for d in range(1, 8) if d not in booked_days]
     if not free:
@@ -400,10 +420,136 @@ def _weekly_slots(n: int, start: datetime | None = None,
     return sorted(slots)
 
 
+def _plan_counts(destinations: list[tuple[str, datetime]]) -> dict[str, int]:
+    counts: dict[str, int] = {}
+    for net, _ in destinations:
+        counts[net] = counts.get(net, 0) + 1
+    return counts
+
+
+def _claim_destination(destinations: list[tuple[str, datetime]],
+                       media_type: str) -> tuple[str, datetime | None]:
+    """Take the next destination this post is actually suited to.
+
+    Destinations are consumed in plan order, with one exception: a reel never
+    takes the LinkedIn slot. A vertical 9:16 video is an Instagram artifact and
+    LinkedIn renders it as a small centered box, so if the next slot up is
+    LinkedIn and the approved post is a reel, the first Instagram slot is used
+    instead and LinkedIn waits for a post that suits it.
+
+    Falls back to the next slot regardless when nothing suitable is left, since
+    a post that publishes to the less ideal network still beats one that never
+    publishes at all.
+    """
+    if not destinations:
+        return "instagram", None
+
+    if media_type in LINKEDIN_UNSUITED:
+        for i, (net, when) in enumerate(destinations):
+            if net != "linkedin":
+                return destinations.pop(i)
+        log.info("Only LinkedIn slots left and this is a %s; using it anyway.", media_type)
+
+    return destinations.pop(0)
+
+
+def parse_weekly_plan(spec: str = "") -> list[str]:
+    """"instagram:2,linkedin:1" -> ["instagram", "instagram", "linkedin"].
+
+    One entry per post, in fill order, because that is what the review loop
+    actually consumes: it hands the next destination to each post as it is
+    approved. Bad entries are skipped rather than raising, so a typo in a
+    workflow env var costs one network for one week instead of the whole run.
+    """
+    out: list[str] = []
+    for part in (spec or WEEKLY_PLAN).split(","):
+        part = part.strip()
+        if not part:
+            continue
+        name, _, count = part.partition(":")
+        name = name.strip().lower()
+        try:
+            n = int(count) if count.strip() else 1
+        except ValueError:
+            log.warning("Ignoring malformed WEEKLY_PLAN entry %r", part)
+            continue
+        if not name or n < 1:
+            log.warning("Ignoring malformed WEEKLY_PLAN entry %r", part)
+            continue
+        out.extend([name] * n)
+    if not out:
+        log.warning("WEEKLY_PLAN %r produced no destinations; using instagram:1", spec or WEEKLY_PLAN)
+        out = ["instagram"]
+    return out
+
+
+def _linkedin_slot(start: datetime | None = None) -> datetime:
+    """The next Tuesday or Wednesday morning, skipping days already booked."""
+    base = start or datetime.now(timezone.utc)
+    taken = {d.date() for d in _booked()}
+    candidates = []
+    for day in range(1, 15):                     # two weeks of runway
+        when = (base + timedelta(days=day)).replace(
+            hour=LINKEDIN_HOUR, minute=0, second=0, microsecond=0)
+        if when.weekday() in LINKEDIN_WEEKDAYS:
+            candidates.append(when)
+    for when in candidates:
+        if when.date() not in taken:
+            return when
+    # Both preferred days booked for a fortnight: take the first one anyway
+    # rather than returning None, which would publish immediately.
+    return candidates[0] if candidates else (
+        base + timedelta(days=1)).replace(hour=LINKEDIN_HOUR, minute=0,
+                                          second=0, microsecond=0)
+
+
+def weekly_destinations(plan: list[str] | None = None) -> list[tuple[str, datetime]]:
+    """(network, time) for each post in the week's plan.
+
+    Instagram keeps the evening spread across the whole week. LinkedIn is placed
+    separately on a weekday morning, because putting it in the same 5pm spread
+    was the difference between a post professionals see and one they scroll past
+    on their way home.
+    """
+    plan = plan or parse_weekly_plan()
+
+    # LinkedIn is placed first, because its days are constrained (Tue/Wed) while
+    # Instagram's are not. Doing it the other way round lets the free-running
+    # Instagram spread take Wednesday and leaves LinkedIn nowhere good to go.
+    li_slots: list[datetime] = []
+    anchor: datetime | None = None
+    for _ in range(sum(1 for p in plan if p == "linkedin")):
+        anchor = _linkedin_slot(anchor and anchor + timedelta(days=1))
+        li_slots.append(anchor)
+
+    ig_count = sum(1 for p in plan if p != "linkedin")
+    ig_slots = _weekly_slots(
+        ig_count, extra_taken={d.date() for d in li_slots}) if ig_count else []
+
+    dests: list[tuple[str, datetime]] = []
+    ig_i = li_i = 0
+    for network in plan:
+        if network == "linkedin":
+            dests.append((network, li_slots[li_i]))
+            li_i += 1
+        else:
+            dests.append((network, ig_slots[ig_i] if ig_i < len(ig_slots) else None))
+            ig_i += 1
+    return dests
+
+
 def post_via_publora(manifest: dict, media_files: list[Path],
-                     when: datetime | None = None) -> str:
+                     when: datetime | None = None,
+                     networks: list[str] | None = None) -> str:
     """Create a Publora post, upload the media, and schedule it. Defaults to ~2
     minutes out; pass `when` to schedule it for a specific time (weekly spread).
+
+    `networks` names which connected accounts this one post goes to, e.g.
+    ["instagram"]. It used to fan out to every connected account on every post,
+    which is wrong once the plan is "two on Instagram, one on LinkedIn": each
+    network a post targets consumes its own scheduled-post slot, so fanning out
+    three posts across two networks needs six slots against a cap of three.
+
     Returns the Publora post group id."""
     headers = {"x-publora-key": PUBLORA_API_KEY, "Content-Type": "application/json",
                "User-Agent": PUBLORA_UA}
@@ -412,10 +558,21 @@ def post_via_publora(manifest: dict, media_files: list[Path],
     ext  = "mp4" if is_video else "jpg"
     typ  = "video" if is_video else "image"
 
-    platforms = _publora_platforms()
-    caption  = manifest.get("caption", "")
-    hashtags = manifest.get("hashtags", [])
-    full = caption + ("\n\n" + " ".join(f"#{h}" for h in hashtags) if hashtags else "")
+    platforms = _publora_platforms(networks)
+    on_linkedin = any(p.startswith("linkedin-") for p in platforms)
+
+    if on_linkedin:
+        # LinkedIn gets its own caption: longer, no hashtag wall, and written
+        # for a professional feed rather than an Instagram one. The generator
+        # already produces it; this is where it finally gets used, instead of
+        # only reaching the manual-handoff message.
+        # Falls back to the Instagram caption on its own when the API is
+        # unavailable, so a credit outage costs register, not the post.
+        full = _linkedin_caption(manifest) or manifest.get("caption", "")
+    else:
+        caption  = manifest.get("caption", "")
+        hashtags = manifest.get("hashtags", [])
+        full = caption + ("\n\n" + " ".join(f"#{h}" for h in hashtags) if hashtags else "")
 
     pr = _publora_check(
         httpx.post(f"{PUBLORA_BASE}/create-post", headers=headers,
@@ -835,7 +992,25 @@ def get_all_pending(prune_stale: bool = True) -> list[tuple[dict, Path]]:
     return sorted(out, key=rank)
 
 
-def send_deck(manifest: dict, item_dir: Path, index: int, total: int) -> bool:
+def _destination_hint(destinations: list[tuple[str, datetime]],
+                      media_type: str) -> str:
+    """Where this post is headed if approved, shown before the decision.
+
+    Peeks rather than claims, using the same suitability rule the claim uses, so
+    the label cannot say Instagram and then schedule LinkedIn.
+    """
+    if not destinations:
+        return ""
+    pool = destinations
+    if media_type in LINKEDIN_UNSUITED:
+        pool = [d for d in destinations if d[0] != "linkedin"] or destinations
+    net, when = pool[0]
+    name = "LinkedIn" if net == "linkedin" else net.capitalize()
+    return f"{name}, {when.strftime('%a %b %d, %-I%p UTC')}" if when else name
+
+
+def send_deck(manifest: dict, item_dir: Path, index: int, total: int,
+              destination: str = "") -> bool:
     """Send one post's media + caption + Approve/Reject buttons. Returns True if sent."""
     media_files = [
         item_dir / f for f in manifest["files"]
@@ -852,7 +1027,9 @@ def send_deck(manifest: dict, item_dir: Path, index: int, total: int) -> bool:
     full_caption = caption + ("\n\n" + " ".join(f"#{h}" for h in hashtags) if hashtags else "")
 
     slide_count = len(media_files)
-    label = f"Post {index} of {total}\nPillar: {pillar}\n\n{manifest.get('hook', '')}"
+    dest_line = f"\nGoing to: {destination}" if destination else ""
+    label = (f"Post {index} of {total}\nPillar: {pillar}{dest_line}\n\n"
+             f"{manifest.get('hook', '')}")
     if is_video:
         tg_upload("sendVideo", "video", str(media_files[0]), chat_id=TELEGRAM_CHAT_ID, caption=label)
     elif manifest["media_type"] == "carousel" and slide_count > 1:
@@ -1051,9 +1228,11 @@ def _collect_reject_reason(manifest: dict) -> str:
 
 
 def handle_decision(manifest: dict, item_dir: Path, decision: str,
-                    when: datetime | None = None) -> bool:
+                    when: datetime | None = None,
+                    network: str = "instagram") -> bool:
     """Publish (approve) or discard (reject) a post. Returns True if it was
-    approved and scheduled. `when` schedules it for a specific time."""
+    approved and scheduled. `when` schedules it for a specific time, `network`
+    names the single destination it goes to."""
     label = _post_label(manifest)
     if decision == "approve":
         print(f"Approved {manifest['id']}. Scheduling...", flush=True)
@@ -1064,16 +1243,20 @@ def handle_decision(manifest: dict, item_dir: Path, decision: str,
         # Uploading and scheduling takes ~30-60s. Say so before starting, and
         # replace this message with the outcome, so a slow step never looks
         # like a dead one.
-        status = tg_status(f"Uploading and scheduling {label}\nThis takes about a minute...")
+        net_label = "LinkedIn" if network == "linkedin" else network.capitalize()
+        status = tg_status(f"Uploading and scheduling {label}\nGoing to {net_label}. This takes about a minute...")
         try:
             if PUBLORA_API_KEY:
-                pg = post_via_publora(manifest, media_files, when=when)
+                pg = post_via_publora(manifest, media_files, when=when,
+                                      networks=[network])
                 when_txt = (f"scheduled for {when.strftime('%a %b %d, %-I%p UTC')}"
                             if when else "posting in ~2 minutes")
                 record_slot(when)
-                tg_status_done(status, f"Approved. {label}\n{when_txt.capitalize()} via Publora.\n(post {pg})")
-                print(f"Publora scheduled: {pg} ({when})")
-                if LINKEDIN_HANDOFF:
+                tg_status_done(status, f"Approved. {label}\n{net_label}, {when_txt}.\n(post {pg})")
+                print(f"Publora scheduled: {pg} -> {network} ({when})")
+                # Never hand off a post that Publora just put on LinkedIn: that
+                # would ask him to publish by hand something already scheduled.
+                if LINKEDIN_HANDOFF and network != "linkedin":
                     _send_linkedin_handoff(manifest, media_files, when)
             else:
                 post_id = post_to_instagram(manifest, item_dir)
@@ -1202,24 +1385,36 @@ def review_batch() -> None:
         return
 
     ledger = ideas.load_ledger()
-    target = len(pending)                 # however many were picked -> how many to schedule
-    slots = _weekly_slots(target)
+    # The week's plan decides how many posts are scheduled and where each goes,
+    # rather than "however many were picked". Picking more ideas than the plan
+    # has room for is normal and useful: the extras become replacements for
+    # anything rejected instead of quietly overshooting the Publora quota.
+    destinations = weekly_destinations()
+    target = min(len(pending), len(destinations))
     approved = 0
     deadline = time.time() + APPROVAL_TIMEOUT
 
+    plan_txt = ", ".join(
+        f"{n} on {'LinkedIn' if net == 'linkedin' else net.capitalize()}"
+        for net, n in _plan_counts(destinations).items()
+    )
     order = ", ".join(dict.fromkeys(m.get("media_type", "post") for m, _ in pending))
+    spare = len(pending) - target
     tg("sendMessage", chat_id=TELEGRAM_CHAT_ID,
-       text=(f"{target} post(s) to review, one at a time, in this order: {order}.\n"
-             "Each one gets approved and scheduled before the next arrives. "
+       text=(f"This week: {plan_txt}.\n"
+             f"{target} post(s) to review, one at a time, in this order: {order}.\n"
+             + (f"{spare} spare held back as replacements.\n" if spare > 0 else "")
+             + "Each one gets approved and scheduled before the next arrives. "
              "Reject any and I'll build a replacement in the same format."))
-    print(f"Reviewing {target} post(s) serially. Order: {order}", flush=True)
+    print(f"Reviewing {target} post(s) serially. Plan: {plan_txt}. Order: {order}", flush=True)
 
     queue = list(pending)
     seen = 0
     while queue and approved < target and time.time() < deadline:
         manifest, item_dir = queue.pop(0)
         seen += 1
-        if not send_deck(manifest, item_dir, seen, target):
+        hint = _destination_hint(destinations, manifest.get("media_type", ""))
+        if not send_deck(manifest, item_dir, seen, target, destination=hint):
             shutil.rmtree(item_dir, ignore_errors=True)
             continue
 
@@ -1230,8 +1425,10 @@ def review_batch() -> None:
             break
 
         if decision == "approve":
-            when = slots[approved] if approved < len(slots) else None
-            if handle_decision(manifest, item_dir, "approve", when=when):
+            network, when = _claim_destination(
+                destinations, manifest.get("media_type", ""))
+            if handle_decision(manifest, item_dir, "approve", when=when,
+                               network=network):
                 approved += 1
             continue
 
