@@ -455,13 +455,15 @@ export default function ResultsPage() {
                       // tagged. Every click that happened here was invisible,
                       // which makes "did anyone go looking for care?" read low
                       // for a reason that has nothing to do with the visitor.
-                      // `source` separates the two so they can be compared
-                      // rather than merged.
+                      // `cta_source` separates the two so they can be compared
+                      // rather than merged. Not `source`: GA4 already has a
+                      // built-in Source dimension for traffic origin, and a
+                      // custom one by that name collides with it.
                       if (hrefs[i] === "/find-care") {
                         sendGAEvent("event", "find_care_click", {
                           risk_tier: result.tier,
                           risk_score: result.score,
-                          source: "results_next_step",
+                          cta_source: "results_next_step",
                         });
                       }
                     }}
@@ -545,7 +547,7 @@ export default function ResultsPage() {
             sendGAEvent("event", "find_care_click", {
               risk_tier: result.tier,
               risk_score: result.score,
-              source: "results_primary_cta",
+              cta_source: "results_primary_cta",
             })
           }
           className="bg-brand hover:bg-brand-dark text-white font-semibold px-6 py-4 rounded-2xl transition-colors text-center"

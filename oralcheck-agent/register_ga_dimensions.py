@@ -35,14 +35,16 @@ from google.analytics.admin_v1beta.types import CustomDimension, CustomMetric
 #   screener_started   -> question_count
 #   screener_completed -> risk_tier, risk_score, has_urgent_symptom
 #   email_prompt_shown -> risk_tier
-#   find_care_click    -> risk_tier, risk_score, source
+#   find_care_click    -> risk_tier, risk_score, cta_source
 DIMENSIONS = [
     ("risk_tier", "Risk tier",
      "low / moderate / elevated / high. The tier shown on the results page."),
     ("has_urgent_symptom", "Urgent symptom reported",
      "true when a symptom lasting 2+ weeks was reported, which overrides the tier."),
-    ("source", "CTA source",
-     "Which control sent the visitor: results_primary_cta or results_next_step."),
+    ("cta_source", "CTA source",
+     "Which control sent the visitor: results_primary_cta or results_next_step. "
+     "Named cta_source rather than source, because GA4 already has a built-in "
+     "Source dimension for traffic origin and a custom one by that name collides."),
 ]
 
 METRICS = [

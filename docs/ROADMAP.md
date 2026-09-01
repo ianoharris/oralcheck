@@ -64,15 +64,12 @@ Update both together. See `AGENTS.md`.
 - [ ] **Reels have had none of this work.** The sixteen designed layouts are
       carousel/static only. Reels are still the old kinetic-text scenes with
       five backdrop variants, which is the next real design job.
-- [ ] **One of six signs still has no clinical photo: the red patch
-      (erythroplakia).** Ian found a good one at exodontia.info, but the site is
-      all rights reserved ("Copyright @ Exodontia") with full terms and no open
-      licence, so it is not usable as found. A permission request is drafted at
-      `outreach-drafts/2026-09-01-Exodontia-Image-Permission.md`; it is one
-      clinician running a teaching site, which is about as askable as this gets,
-      and a named credit from a consultant oral surgeon beats an anonymous
-      Commons file anyway. Fallback if declined: Openverse filtered to commercial
-      use, or a CC BY case report in PLOS ONE / BMC Oral Health.
+- [x] ~~A photo for the red patch (erythroplakia)~~ — **decided against
+      2026-09-01.** The one Ian found is all rights reserved and he does not want
+      to chase permission for it, which is a reasonable call: the sign already has
+      an illustrated diagram and a photo is an upgrade, not a gap. Both remaining
+      signs keep their diagrams. Reopen only if an openly licensed image turns up
+      incidentally; do not go looking.
 - [x] ~~A photo for lump/thickening~~ — **decided against 2026-09-01.** Ian
       dropped it. Photographs of a submucosal mass almost all come from surgical
       case reports, so an openly licensed one that reads clearly to a general
