@@ -32,6 +32,26 @@ The artifact's most useful distinction is **blocked on Ian** versus **blocked on
 someone else**. Preserve it. Everything in the first group should be something he
 can finish without writing code.
 
+# Keep the owner's guide current
+
+`docs/OWNERS_GUIDE.md` explains the whole project to Ian in plain language: the
+medicine, the methodology, the hosting, the decisions and why they went that way,
+the limitations, and the questions he will be asked. It exists so he is never
+caught not knowing something about his own project.
+
+**Update it in the same turn as any change that makes it wrong.** That means:
+
+- a question added, removed, or re-weighted, or a band boundary moved
+- a clinician reviewing it, or agreeing (or declining) to be named
+- a change to hosting, the stack, or a major dependency
+- refreshed SEER figures
+- a change to the social cadence or the agent's design
+- anything significant that broke, and how it was found
+
+It is written for someone who is not a developer. Keep it plain, keep the
+diagrams, and do not let it drift into changelog prose: it is a guide, not a log.
+`docs/ROADMAP.md` is the log.
+
 # House rules
 
 - **No em dashes** in anything written for Ian or published under his name, on
