@@ -5,7 +5,8 @@ Register the site's custom event parameters as GA4 custom definitions.
 Why this exists: GA4 collects custom event parameters but will not report on
 them until they are registered as custom dimensions or metrics, and
 **registration is not retroactive**. Every day a parameter goes unregistered is
-a day of data that can never be analysed. The site has been sending six of them.
+a day of data that can never be analysed. The site sends five distinct ones,
+listed below: three dimensions and two metrics.
 
 Prerequisites, both one-time and both outside this script:
 

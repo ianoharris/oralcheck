@@ -10,7 +10,7 @@ The running list. Two rules:
    named. This is the list's whole purpose: the things that come up once, sound
    good, and are never mentioned again.
 
-Last updated: 2026-09-01
+Last updated: 2026-09-08
 
 **Mirrored to an artifact Ian reads:**
 https://claude.ai/code/artifact/cc490e4b-1ee3-4062-bc56-eada066f1003
@@ -27,7 +27,7 @@ Update both together. See `AGENTS.md`.
 | A real quote on the homepage | The same permission | Currently carries a cited NCI SEER statistic, which is honest but is a citation rather than an endorsement. Rawal's review is the first plausible source for a real one. Do not fabricate one, and do not quote him until he says yes. |
 | A UW-Madison faculty mentor | Their replies | **Ian replied to both Glazer and Brant on 2026-09-01.** Brant's three methodology criticisms were acted on before the reply went out: two were added to `/methods` as stated limitations (pooled ORs across source populations, judgment-set cutoffs), and the third, oral cavity vs oropharynx, is being addressed in the product. Waiting on his answer about the clinical half and about whether UW's ICTR biostatistics route is open to an undergraduate. |
 | Whether UW considers this a university project at all | Ian's academic advisor | **Raised by Dr. Brant, 2026-08-30**, and it outranks the IRB question. Faculty must disclose anything job-related or using university resources, and Brant specifically guessed the source papers were pulled through UW library access. He also questioned whether the site's disclaimer is actually sufficient protection or only reads that way. Ian asserting "this is not a UW project" is not the same as UW determining it. Ask the academic advisor, and ask specifically about (1) what counts as a university resource for an undergraduate and (2) whether the disclaimer holds up. Monetization would raise the stakes on all of it; there is none and no plan for any. |
-| Registering GA4 custom definitions | Two one-time Google console steps | Cannot be done from here: the **Analytics Admin API is disabled** on Cloud project 130228649204 (only the Data API is on), and the service account would then also need **Editor** on the property rather than Viewer. `oralcheck-agent/register_ga_dimensions.py` is written and dry-runs cleanly; it creates all six once those are done. Doing it by hand in GA4 Admin -> Custom definitions is about a minute each and needs no API at all. **It is six parameters, not one**: dimensions `risk_tier`, `has_urgent_symptom`, `source`; metrics `risk_score`, `question_count`. Registration is never retroactive, so every day unregistered is data that cannot be recovered. |
+| Registering GA4 custom definitions | Two one-time Google console steps | Cannot be done from here: the **Analytics Admin API is disabled** on Cloud project 130228649204 (only the Data API is on), and the service account would then also need **Editor** on the property rather than Viewer. `oralcheck-agent/register_ga_dimensions.py` is written and dry-runs cleanly; it creates all five once those are done. Doing it by hand in GA4 Admin -> Custom definitions is about a minute each and needs no API at all. **It is five definitions, not one**: dimensions `risk_tier`, `has_urgent_symptom`, `cta_source`; metrics `risk_score`, `question_count`. (`cta_source`, not `source`: GA4 already has a built-in Source dimension for traffic origin and a custom one by that name collides.) Registration is never retroactive, so every day unregistered is data that cannot be recovered. |
 | A written UW IRB determination | Ian submitting it | The tool stores nothing, so it is almost certainly *not human subjects research* under UW's HRPP, but the assertion is worth having on paper for Marquette's Associate Dean. Free, and Ian can submit it himself. |
 | Co-branded Marquette flyer | The approval above | Rawal proposed a design "to reflect our two institutions". Corrected in the reply: OralCheck is not a UW project and cannot carry UW branding. Marquette + OralCheck only. |
 | Judge whether the reel skip-rate fix worked | A new reel going out | 83.7% skip. Frame-0 fix and cover image both shipped, but only affect reels rendered *after* they landed. The three currently scheduled were rendered before. |
@@ -61,9 +61,12 @@ Update both together. See `AGENTS.md`.
 - [ ] **More post templates.** Twenty-one shapes now reachable (16 designed +
       5 basic). Keep going: the goal is enough that the feed never looks
       repetitive.
-- [ ] **Reels have had none of this work.** The sixteen designed layouts are
-      carousel/static only. Reels are still the old kinetic-text scenes with
-      five backdrop variants, which is the next real design job.
+- [x] ~~Reels have had none of this work~~ — **done 2026-09-01.**
+      `reel_scenes.py` adds six scene archetypes (splitstat, contrast, checklist,
+      quote, term, enumerate) mapped to the content pillars, validated before
+      render and de-duplicated within a reel. Note that their tests did not
+      actually run on the runner until 2026-09-08: the import that reached them
+      was killing the process first.
 - [x] ~~A photo for the red patch (erythroplakia)~~ — **decided against
       2026-09-01.** The one Ian found is all rights reserved and he does not want
       to chase permission for it, which is a reasonable call: the sign already has
