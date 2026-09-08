@@ -186,6 +186,22 @@ Update both together. See `AGENTS.md`.
 
 Newest first.
 
+### 2026-09-08
+- **The Monday idea flow runs again.** It failed twice on 2026-09-07 and no
+  content was scheduled for that week. `oralcheck_agent.py` validated the
+  environment at import and called `sys.exit(1)` when `ANTHROPIC_API_KEY` was
+  absent, and the reels-design-system commit had just made `test_render.py`
+  import it. The verify step carries no secrets by design, so the import killed
+  the runner. `SystemExit` is not an `Exception`, so it slipped through the
+  tests' guards and the log read as "every check passed, exit code 1". Validation
+  moved to `main()`; the CLI still fails fast, `--help` no longer needs a key.
+  A subprocess regression test imports the agent with the key stripped and
+  dotenv stubbed, since `find_dotenv` walks up from the module's own directory
+  and would otherwise hide the bug on the laptop exactly as it did before.
+  Test steps now run unbuffered so the next failure appears beside the check
+  that died. The reel scene and outro checks had never run on the runner; they
+  do now
+
 ### 2026-09-01 (late)
 - **Reels have a design system.** Six scene archetypes in `reel_scenes.py`
   (splitstat, contrast, checklist, quote, term, enumerate), mapped to the content
