@@ -98,6 +98,12 @@ jobs:
 
       - name: Verify render + content logic
         if: steps.guard.outputs.skip != 'true'
+        # Unbuffered, or stdout is flushed in one block at exit while stderr
+        # goes out live, and the log shows the error above a hundred passing
+        # checks instead of next to the one that died. That is exactly how the
+        # 2026-09-07 failure read as "everything passed, exit code 1".
+        env:
+          PYTHONUNBUFFERED: '1'
         run: python test_render.py && python test_content.py && python test_review.py
 
       - name: Suggest ideas (sends to Telegram)

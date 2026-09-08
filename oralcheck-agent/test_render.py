@@ -11,6 +11,7 @@ Run:  python3.11 test_render.py
 Exit code 0 = all good, 1 = one or more failures.
 """
 
+import os
 import sys
 import tempfile
 from io import BytesIO
@@ -365,6 +366,43 @@ def main() -> int:
             print(f"  [PASS] outro holds {_A.REEL_OUTRO_SECONDS}s")
     except Exception as exc:                        # pragma: no cover
         failures.append(("outro_card", str(exc)[:120]))
+
+    # --- importing the agent must not need credentials -----------------------
+    # This test file imports oralcheck_agent for the reel checks above. When
+    # that import validated the environment and called sys.exit(1), CI died
+    # here with no failure line, because SystemExit is not an Exception and
+    # goes straight through the `except Exception` guards. It ran green
+    # locally the whole time: .env supplies the key on this machine and the
+    # runner has no .env. So the probe runs in a subprocess with the key
+    # stripped *and* with dotenv stubbed out, because find_dotenv walks up
+    # from the module's own directory and would load .env whatever the cwd is.
+    # Without the stub this test would pass on this machine for the same
+    # reason the original bug hid here.
+    try:
+        import subprocess
+        env = {k: v for k, v in os.environ.items() if k != "ANTHROPIC_API_KEY"}
+        env["PYTHONPATH"] = str(Path(__file__).parent)
+        probe = (
+            "import sys, types\n"
+            "m = types.ModuleType('dotenv')\n"
+            "m.load_dotenv = lambda *a, **k: False\n"
+            "m.find_dotenv = lambda *a, **k: ''\n"
+            "sys.modules['dotenv'] = m\n"
+            "import oralcheck_agent\n"
+        )
+        with tempfile.TemporaryDirectory() as clean:
+            proc = subprocess.run(
+                [sys.executable, "-c", probe],
+                cwd=clean, env=env, capture_output=True, text=True, timeout=180,
+            )
+        if proc.returncode != 0:
+            failures.append(("import_needs_key",
+                             f"exit {proc.returncode}: "
+                             f"{(proc.stderr or proc.stdout).strip()[:160]}"))
+        else:
+            print("  [PASS] oralcheck_agent imports without ANTHROPIC_API_KEY")
+    except Exception as exc:                        # pragma: no cover
+        failures.append(("import_probe", str(exc)[:160]))
 
     print(f"\n  Rendered {len(saved)} images to {OUT_DIR}")
     if failures:

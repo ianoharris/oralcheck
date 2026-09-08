@@ -42,9 +42,13 @@ jobs:
         run: python -m playwright install chromium --with-deps
 
       - name: Verify render templates
+        env:
+          PYTHONUNBUFFERED: '1'   # see the note in ideas.yml
         run: python test_render.py
 
       - name: Verify content logic
+        env:
+          PYTHONUNBUFFERED: '1'
         run: python test_content.py
 
       - name: Generate content

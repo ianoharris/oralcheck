@@ -65,6 +65,16 @@ _STOCK_ENV    = ["PEXELS_API_KEY", "UNSPLASH_ACCESS_KEY"]
 
 
 def _validate_env() -> None:
+    """Fail fast, but only for a command that is actually about to call out.
+
+    This used to run at import. Importing the module is not the same thing as
+    running it: the tests import it for REEL_SCENE_SPEC, _reel_outro_png and
+    the sanitizers, none of which touch the network. An import that calls
+    sys.exit(1) turned that into a dead runner with the real reason buried
+    above a wall of passing checks, because SystemExit is not an Exception and
+    slips straight through the tests' `except Exception` guards. Called from
+    main() instead, so `--help` and every import stay side-effect free.
+    """
     missing = [k for k in _REQUIRED_ENV if not os.environ.get(k)]
     if missing:
         log.error("Missing required environment variables: %s", ", ".join(missing))
@@ -81,9 +91,9 @@ def _validate_env() -> None:
                     "unaffected.", " or ".join(_STOCK_ENV))
 
 
-_validate_env()
-
-ANTHROPIC_API_KEY   = os.environ["ANTHROPIC_API_KEY"]
+# Read, not required, at import. main() is where a missing key is reported,
+# with a message that says what to do about it.
+ANTHROPIC_API_KEY   = os.environ.get("ANTHROPIC_API_KEY", "")
 PUBLORA_API_KEY     = os.environ.get("PUBLORA_API_KEY", "")
 PEXELS_API_KEY      = os.environ.get("PEXELS_API_KEY", "")
 UNSPLASH_ACCESS_KEY = os.environ.get("UNSPLASH_ACCESS_KEY", "")
@@ -3167,6 +3177,7 @@ def main():
         help="Output file path for --faceless-reel",
     )
     args = parser.parse_args()
+    _validate_env()
 
     if args.faceless_reel is not None:
         run_faceless_reel(args.faceless_reel, args.out)

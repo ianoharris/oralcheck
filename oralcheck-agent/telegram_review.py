@@ -1332,10 +1332,11 @@ def _generate_replacement(ledger: dict, media_type: str | None = None):
             spares = same or spares
         if not spares:
             return None                      # genuinely out of spare ideas
-        # Imported only once there is something to build. oralcheck_agent is a
-        # heavy import that also exits if the content-generation keys are
-        # missing, so paying for it before the "no spares" check turned an
-        # ordinary end-of-batch into a hard failure.
+        # Imported only once there is something to build: oralcheck_agent is a
+        # heavy import and there is no reason to pay for it before the "no
+        # spares" check. It no longer exits when the content keys are missing,
+        # so a missing key now surfaces as a failed replacement below rather
+        # than killing the whole review.
         import oralcheck_agent as agent
         idea = spares[0]
         idea["status"] = "selected"          # claim it so it isn't picked twice
