@@ -8,7 +8,7 @@ know the answer, including the answers that aren't flattering.
 
 Read it once end to end. After that, use the table of contents.
 
-Last updated: **2026-09-01**
+Last updated: **2026-09-14**
 Maintained by: Claude, on request. Ask it to update this file whenever something
 structural changes. See [Keeping this current](#15-keeping-this-current).
 
@@ -696,11 +696,21 @@ code generator, and copy-paste embed code.
 | Results page shows a raw key like `MethodsPage.foo` | English shipped before translations | Same: run the sync |
 | AI summary paragraph missing | Anthropic credits exhausted, or rate limit | Check the workspace spend limit — the workspace cap is separate from the org one |
 | Idea flow "succeeds" but nothing arrives | Used to be a silent API failure | Now sends a Telegram message with the reason and exits red |
+| No Monday idea batch at all, no failed run either | GitHub dropped the cron | A backup cron fires at 19:00 UTC the same Monday. If that misses too, dispatch it by hand |
+| Two idea batches on the same Monday | The backup cron ran while the first was still waiting on you | Fixed 2026-09-14: the guard now also skips when another run today is still going |
+| A topic you picked never appears and never comes back | A run died between claiming the idea and building it | Fixed 2026-09-14: a fresh batch hands back any claim that produced no post |
 | Publora rejects a scheduled post | 3-slot cap reached | Publish or delete something already scheduled |
 | Every route 404s locally | Stale Turbopack cache | `rm -rf .next` |
 
 **A recurring trap:** the Anthropic **workspace** spend limit is enforced
 separately from the organisation limit. Raising the org limit alone does nothing.
+
+**A second one, specific to the robot:** its CI tests import the agent, and for
+a while importing the agent *exited the process* when no API key was present.
+The verify step carries no secrets by design, so the run died with every check
+showing green above it. Anything that makes importing a module require
+credentials will break CI in a way the log actively mislies about. Keep imports
+free of side effects.
 
 **Before quoting any stat**, check `src/lib/seerStats.ts` — it carries a
 `lastVerified` date, and the case and death figures are year-stamped projections

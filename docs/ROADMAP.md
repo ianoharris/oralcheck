@@ -10,7 +10,7 @@ The running list. Two rules:
    named. This is the list's whole purpose: the things that come up once, sound
    good, and are never mentioned again.
 
-Last updated: 2026-09-08
+Last updated: 2026-09-14
 
 **Mirrored to an artifact Ian reads:**
 https://claude.ai/code/artifact/cc490e4b-1ee3-4062-bc56-eada066f1003
@@ -188,6 +188,28 @@ Update both together. See `AGENTS.md`.
 ## Shipped
 
 Newest first.
+
+### 2026-09-14
+- **The backup cron could race the run it was backing up.** "Skip if already run
+  today" counted only runs that had *finished*. This workflow's normal state is
+  waiting on a Telegram reply for hours, so the 14:00 Monday run is very often
+  still in progress when the 19:00 backup fires, and the guard read that as
+  "nothing has happened today": two idea batches, two sets of Publora slots
+  against a cap of three, and both runs racing the same ledger push. It had not
+  bitten yet only because every 14:00 run so far happened to finish inside five
+  hours. The guard now also skips when another run today is still going. A manual
+  dispatch is still never skipped
+- **An idea claimed by a run that died was lost permanently.** `select()` marks
+  an idea "selected" before the post is generated so two runs cannot claim the
+  same one, and "selected" is in `USED_STATUSES`, so a run that dies in between
+  leaves the topic both unbuilt and unsuggestable forever. The 2026-08-31 run
+  stranded "Alcohol Is an Oral Cancer Risk Factor Most People Never Hear About"
+  exactly this way, and neither failed 09-07 run could reach it. A fresh batch
+  now hands back any claim with no manifest behind it, which is safe precisely
+  there: nothing is legitimately mid-build at the start of a batch
+- **Context:** the feed has been dark since 28 Aug. 09-07 failed twice on the
+  import bug fixed the next day, and on 09-14 GitHub simply did not fire the
+  14:00 cron at all, which is what the 19:00 backup exists for
 
 ### 2026-09-08
 - **The Monday idea flow runs again.** It failed twice on 2026-09-07 and no
