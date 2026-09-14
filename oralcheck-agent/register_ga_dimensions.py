@@ -8,6 +8,13 @@ them until they are registered as custom dimensions or metrics, and
 a day of data that can never be analysed. The site sends five distinct ones,
 listed below: three dimensions and two metrics.
 
+DONE 2026-09-14, by hand in the GA4 UI. All five definitions are registered:
+dimensions risk_tier (which turned out to have been registered on 2026-08-23),
+has_urgent_symptom and cta_source; metrics risk_score and question_count. The
+UI route needs neither prerequisite below, no Cloud API and no permission
+grant, which is why it was taken. This script is kept for the next parameter
+the site starts sending, and it still needs both prerequisites to run.
+
 Prerequisites, both one-time and both outside this script:
 
   1. Enable the Google Analytics Admin API on the Cloud project that owns the
@@ -27,6 +34,15 @@ table below is the list to enter.
 """
 import os
 import sys
+
+# Same trap ga_stats.py had: the docstring says to put these in .env and then
+# nothing read it, so the script refused to run for want of credentials it had
+# been told where to find.
+try:
+    from dotenv import load_dotenv
+    load_dotenv(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".env"))
+except ImportError:
+    pass
 
 from google.oauth2 import service_account
 from google.analytics.admin import AnalyticsAdminServiceClient
