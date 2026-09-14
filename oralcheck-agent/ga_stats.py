@@ -18,6 +18,15 @@ import json
 import os
 import sys
 
+# The docstring tells you to put GA_PROPERTY_ID in oralcheck-agent/.env, and
+# then this never read it: the script asked for credentials it had been told
+# where to find and refused to run. Everything else in the agent loads dotenv.
+try:
+    from dotenv import load_dotenv
+    load_dotenv(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".env"))
+except ImportError:
+    pass
+
 # GA4 reports nothing before the property existed; this is early enough to
 # stand in for "all time" without the API rejecting the range.
 ALL_TIME_START = "2020-01-01"

@@ -8,7 +8,7 @@ import { computeRisk, type RiskResult, type RiskTier } from "@/lib/riskEngine";
 import type { Question } from "@/lib/questions";
 import RiskGauge from "@/components/RiskGauge";
 import Modal from "@/components/Modal";
-import { sendGAEvent } from "@next/third-parties/google";
+import { gaEvent } from "@/lib/ga";
 import { track } from "@vercel/analytics";
 
 // href/icon are locale-independent; title/tag/desc come from messages.ResultsPage.
@@ -65,7 +65,7 @@ export default function ResultsPage() {
           try {
             sessionStorage.setItem("oralcheck:completionCounted", "1");
           } catch {}
-          sendGAEvent("event", "screener_completed", {
+          gaEvent("screener_completed", {
             risk_tier: risk.tier,
             risk_score: risk.score,
             has_urgent_symptom: risk.hasUrgentSymptom,
@@ -95,7 +95,7 @@ export default function ResultsPage() {
         sessionStorage.setItem("oralcheck:emailPrompted", "1");
       } catch {}
       setEmailModalOpen(true);
-      sendGAEvent("event", "email_prompt_shown", { risk_tier: result.tier });
+      gaEvent("email_prompt_shown", { risk_tier: result.tier });
     }, 1200);
     return () => clearTimeout(timer);
   }, [result, summaryLoading, emailStatus]);
@@ -175,8 +175,14 @@ export default function ResultsPage() {
         throw new Error(data.error || t("emailGenericError"));
       }
       setEmailStatus("sent");
+      // The prompt had been shown 101 times with nothing recorded on the other
+      // side of it, so there was no way to tell whether the email capture works
+      // at all, let alone which tier bothers to use it. It is the only durable
+      // thing the site can collect, so it is worth counting.
+      gaEvent("email_result_sent", { risk_tier: result?.tier });
     } catch (err) {
       setEmailStatus("error");
+      gaEvent("email_result_failed", { risk_tier: result?.tier });
       setEmailError(err instanceof Error ? err.message : t("emailGenericError"));
     }
   };
@@ -460,7 +466,7 @@ export default function ResultsPage() {
                       // built-in Source dimension for traffic origin, and a
                       // custom one by that name collides with it.
                       if (hrefs[i] === "/find-care") {
-                        sendGAEvent("event", "find_care_click", {
+                        gaEvent("find_care_click", {
                           risk_tier: result.tier,
                           risk_score: result.score,
                           cta_source: "results_next_step",
@@ -544,7 +550,7 @@ export default function ResultsPage() {
         <Link
           href="/find-care"
           onClick={() =>
-            sendGAEvent("event", "find_care_click", {
+            gaEvent("find_care_click", {
               risk_tier: result.tier,
               risk_score: result.score,
               cta_source: "results_primary_cta",

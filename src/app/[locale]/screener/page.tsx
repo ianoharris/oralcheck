@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { useTranslations } from "next-intl";
 import { Link, useRouter } from "@/i18n/navigation";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { sendGAEvent } from "@next/third-parties/google";
+import { gaEvent } from "@/lib/ga";
 import { useQuestions } from "@/lib/questions";
 import ProgressBar from "@/components/ProgressBar";
 import QuestionCard from "@/components/QuestionCard";
@@ -29,7 +29,7 @@ export default function ScreenerPage() {
     try {
       sessionStorage.removeItem("oralcheck:completionCounted");
     } catch {}
-    sendGAEvent("event", "screener_started", {
+    gaEvent("screener_started", {
       question_count: questions.length,
     });
   // eslint-disable-next-line react-hooks/exhaustive-deps
