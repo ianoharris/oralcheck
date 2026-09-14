@@ -481,6 +481,31 @@ def select(ledger: dict, numbers: list[int]) -> list[dict]:
     return chosen
 
 
+def release_stale_selected(ledger: dict) -> list[str]:
+    """Return ideas claimed by a run that died before building them.
+
+    `select()` and the replacement path both mark an idea "selected" *before*
+    generating the post, so two runs cannot claim the same one. If the run then
+    dies between the claim and `mark_queued`, the idea keeps that status
+    forever, and since "selected" is in USED_STATUSES it is also never
+    suggested again. The topic is silently gone.
+
+    That is not hypothetical: the 2026-08-31 run left
+    "Alcohol Is an Oral Cancer Risk Factor Most People Never Hear About"
+    stranded, and the two failed 09-07 runs could not reach it either.
+
+    Safe to call at the start of a fresh batch and nowhere else: at that moment
+    nothing is legitimately mid-build, so any leftover claim is a dead one. An
+    idea that reached a manifest is left alone, since that post exists.
+    """
+    released = []
+    for i in ledger["ideas"]:
+        if i.get("status") == "selected" and not i.get("manifest_id"):
+            i["status"] = "suggested"
+            released.append(i["id"])
+    return released
+
+
 def mark_queued(ledger: dict, idea_id: str, manifest_id: str) -> None:
     """An idea has been turned into a post and queued for review."""
     for i in ledger["ideas"]:

@@ -2878,6 +2878,15 @@ def run_ideas(count: int = 3, per_type: int = 3) -> None:
     regenerated on its own, so no single rejection empties the well.
     """
     ledger = ideas.load_ledger()
+    # Before anything else, hand back ideas a dead run claimed and never built.
+    # Nothing is legitimately mid-build at the start of a fresh batch, so a
+    # leftover "selected" is a dead claim, and it would otherwise sit in
+    # USED_STATUSES blocking that topic forever.
+    freed = ideas.release_stale_selected(ledger)
+    if freed:
+        ideas.save_ledger(ledger)
+        log.info("Released %d idea(s) claimed by a run that never finished: %s",
+                 len(freed), ", ".join(freed))
     upcoming = content_calendar.upcoming(within_days=30)
     hook_block = _refresh_hooks()
     log.info("Generating %d ideas per format (avoiding %d used/recent)...",

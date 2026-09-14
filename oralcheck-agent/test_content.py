@@ -74,6 +74,39 @@ def test_ledger_flow():
     check("out-of-range pick ignored", I.select(ledger, [99]) == [])
 
 
+def test_stale_claims():
+    """An idea claimed by a run that died must come back, not vanish.
+
+    `select()` marks an idea "selected" before the post is generated, so two
+    runs cannot claim the same one. A run that dies in between leaves that
+    status set forever, and "selected" is in USED_STATUSES, so the topic is
+    never suggested again either. That is how the 2026-08-31 run stranded an
+    idea that no later run could reach.
+    """
+    ledger = {"ideas": [], "last_batch": []}
+    fresh = [
+        {"title": "Claimed and stranded", "slug": "claimed-stranded", "pillar": "stats",
+         "media_type": "carousel", "brief": "b", "angle": "surprising-true", "calendar_ref": None},
+        {"title": "Claimed and built", "slug": "claimed-built", "pillar": "stats",
+         "media_type": "image", "brief": "b", "angle": "surprising-true", "calendar_ref": None},
+    ]
+    ledger = I.record_suggested(ledger, fresh)
+    I.select(ledger, [1, 2])
+    I.mark_queued(ledger, ledger["ideas"][1]["id"], "manifest_abc")
+
+    freed = I.release_stale_selected(ledger)
+    check("the stranded claim is released", freed == [ledger["ideas"][0]["id"]])
+    check("released idea is suggestable again",
+          ledger["ideas"][0]["status"] == "suggested")
+    check("a built idea is left alone",
+          ledger["ideas"][1]["status"] == "queued"
+          and ledger["ideas"][1]["manifest_id"] == "manifest_abc")
+    check("the released title is no longer blocked",
+          "Claimed and stranded" not in I._avoid_titles(ledger)
+          or "claimed-stranded" not in I._used_slugs(ledger))
+    check("releasing twice is a no-op", I.release_stale_selected(ledger) == [])
+
+
 def test_coerce():
     good = I._coerce({"title": "T", "pillar": "stats", "media_type": "carousel",
                       "brief": "b", "angle": "a"}, {"stats"})
@@ -138,6 +171,7 @@ def main():
     print("Calendar:");      test_calendar()
     print("Slugify:");       test_slugify()
     print("Ledger flow:");   test_ledger_flow()
+    print("Stale claims:");  test_stale_claims()
     print("Coerce:");        test_coerce()
     print("JSON extraction:"); test_json_extraction()
     if _fails:

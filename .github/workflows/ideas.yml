@@ -38,6 +38,14 @@ jobs:
 
       # The backup cron must not double-post. A manual dispatch always runs, so
       # a run can still be forced after a successful one if needed.
+      #
+      # "Already run today" has to include a run that is *still running*. This
+      # workflow's normal state is waiting on a Telegram reply, for hours, so
+      # the 14:00 run is very often still in progress when 19:00 fires. A
+      # completed-only check counted that as "nothing has happened today" and
+      # sent a second idea batch, booked a second set of Publora slots, and
+      # raced the first run's ledger push. It never bit only because every
+      # 14:00 run so far happened to finish inside five hours.
       - name: Skip if already run today
         if: github.event_name == 'schedule'
         id: guard
@@ -46,15 +54,17 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           today=$(date -u +%Y-%m-%d)
-          done_today=$(gh run list \
+          counts=$(gh run list \
             --workflow "${{ github.workflow }}" --limit 30 \
-            --json conclusion,createdAt,databaseId \
+            --json status,conclusion,createdAt,databaseId \
             --jq "[.[] | select(.createdAt | startswith(\"$today\"))
-                      | select(.databaseId != ${{ github.run_id }})
-                      | select(.conclusion == \"success\" or .conclusion == \"cancelled\")]
-                  | length")
-          echo "completed runs already today: ${done_today:-0}"
-          if [ "${done_today:-0}" -gt 0 ]; then
+                      | select(.databaseId != ${{ github.run_id }})]
+                  | (map(select(.conclusion == \"success\" or .conclusion == \"cancelled\")) | length),
+                    (map(select(.status != \"completed\")) | length)")
+          finished=$(echo "$counts" | sed -n 1p)
+          running=$(echo "$counts" | sed -n 2p)
+          echo "already today -- finished: ${finished:-0}, still running: ${running:-0}"
+          if [ "${finished:-0}" -gt 0 ] || [ "${running:-0}" -gt 0 ]; then
             echo "skip=true" >> "$GITHUB_OUTPUT"
           else
             echo "skip=false" >> "$GITHUB_OUTPUT"
