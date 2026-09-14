@@ -189,6 +189,27 @@ Update both together. See `AGENTS.md`.
 
 Newest first.
 
+### 2026-09-14 (evening)
+- **Analytics have been dropping events on every cold page load, all year.**
+  `sendGAEvent` discards the event when `window.dataLayer` does not exist yet,
+  warning only in the console. A click-through from the home page works; a
+  *direct* load of `/screener` runs the mount effect before the GA script
+  exists, and the event is gone. That is every QR scan, every link shared into
+  a chat app, and every search click landing deep. It is why `screener_completed`
+  has outrun `screener_started` **291 to 139** since January and why
+  `ga_stats.py` kept printing "completion rate not reliable". Verified on
+  production both ways before touching anything. `src/lib/ga.ts` queues the
+  event and flushes it once GA appears, pushing an `arguments` object rather
+  than an array so gtag parses it on the proven path. Live and confirmed
+- **The email capture had no instrumentation.** Shown 101 times, nothing
+  recorded on the far side. Now counted by tier, success and failure
+- **`ga_stats.py` could not read the `.env` its own docstring tells you to fill
+  in.** It was demanding credentials it had been told where to find
+- **The feed is live again after 17 dark days.** The 19:00 backup cron fired,
+  ran green in 22 minutes, and booked 15, 18 and 21 Sept. The stranded alcohol
+  idea was released back into the pool by the fix made hours earlier:
+  `Released 1 idea(s) claimed by a run that never finished: idea_528dc39d`
+
 ### 2026-09-14
 - **The backup cron could race the run it was backing up.** "Skip if already run
   today" counted only runs that had *finished*. This workflow's normal state is
