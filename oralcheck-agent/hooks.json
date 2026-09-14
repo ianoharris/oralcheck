@@ -54,6 +54,39 @@
       "angle": "Oral cancer screening rates are lower in some Hispanic communities, and a free, accessible online questionnaire is a concrete step toward closing that gap.",
       "strength": 3,
       "found_at": "2026-08-31T20:20:12.266276+00:00"
+    },
+    {
+      "id": "hook_24b8db1e",
+      "slug": "stoptober-quit-smoking-challenge-begins",
+      "title": "Stoptober quit-smoking challenge begins",
+      "kind": "awareness",
+      "when": "2026-10-01",
+      "why_now": "NHS England's annual 28-day stop-smoking campaign launches on October 1, driving large-scale public conversation about quitting tobacco in the UK and beyond.",
+      "angle": "Tobacco is one of the most significant modifiable risk factors for oral cancer, making Stoptober a direct and credible moment to encourage an oral cancer risk check.",
+      "strength": 4,
+      "found_at": "2026-09-14T19:12:54.785215+00:00"
+    },
+    {
+      "id": "hook_03375cb3",
+      "slug": "mouth-cancer-action-month-advance-awareness",
+      "title": "Mouth Cancer Action Month advance awareness",
+      "kind": "awareness",
+      "when": "2026-10-01",
+      "why_now": "November's Mouth Cancer Action Month campaign begins its pre-launch communications in early October, and dental and health publications are already publishing preview coverage.",
+      "angle": "Early October is the most credible window to prime audiences that mouth cancer awareness month is weeks away and that a free risk questionnaire is available now.",
+      "strength": 4,
+      "found_at": "2026-09-14T19:12:54.785262+00:00"
+    },
+    {
+      "id": "hook_e270f128",
+      "slug": "world-heart-day-september-29",
+      "title": "World Heart Day, September 29",
+      "kind": "awareness",
+      "when": "2026-09-29",
+      "why_now": "World Heart Day is a WHO-backed global awareness date that reliably trends on health channels every September 29.",
+      "angle": "Tobacco and heavy alcohol use raise risk for both heart disease and oral cancer, so a day dedicated to reducing those shared risk factors connects honestly to an oral cancer questionnaire.",
+      "strength": 3,
+      "found_at": "2026-09-14T19:12:54.785244+00:00"
     }
   ]
 }
