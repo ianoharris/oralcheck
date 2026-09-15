@@ -80,8 +80,13 @@ export default function HeroSectionPhoto() {
           {t("overline")}
         </motion.p>
 
-        {/* Headline — word-blur stagger */}
-        <h1
+        {/* Headline — word-blur stagger.
+            A <p>, not an <h1>: the page already carries a descriptive h1
+            ("Free Oral Cancer Risk Screener") and two h1s on one document is a
+            hierarchy error. This line is display type selling the idea, and
+            "2 minutes could save your life" is a worse document heading than
+            the one it was competing with. */}
+        <p
           className="font-serif"
           style={{
             fontSize: "clamp(3.2rem, 6.8vw, 6.2rem)",
@@ -104,7 +109,7 @@ export default function HeroSectionPhoto() {
           <span style={{ display: "block" }}>
             <WordBlur words={t.raw("headlineLine3")} startDelay={0.52} color="#0d7377" />
           </span>
-        </h1>
+        </p>
 
         {/* Rule */}
         <motion.div
@@ -224,10 +229,17 @@ export default function HeroSectionPhoto() {
           style={{ position: "absolute", inset: "-10% 0", y: reduced ? 0 : photoY }}
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
+          {/* Explicit intrinsic size so the browser reserves the box before
+              the bytes land, and a priority hint because this is the largest
+              element above the fold on every page load. */}
           <img
             src={PHOTO_URL}
             alt=""
             aria-hidden
+            width={1200}
+            height={800}
+            fetchPriority="high"
+            decoding="async"
             style={{
               width: "100%",
               height: "100%",

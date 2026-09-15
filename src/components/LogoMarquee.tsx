@@ -44,7 +44,7 @@ function Track() {
           href={href}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center justify-center mx-10 flex-shrink-0 opacity-50 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-300"
+          className="inline-flex items-center justify-center mx-10 flex-shrink-0 opacity-50 grayscale hover:opacity-100 hover:grayscale-0 transition-[opacity,filter] duration-300"
         >
           <Image
             src={src}

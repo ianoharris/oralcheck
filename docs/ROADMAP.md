@@ -209,6 +209,29 @@ Update both together. See `AGENTS.md`.
 
 Newest first.
 
+### 2026-09-14 (late)
+- **A ninth learn guide: white and red patches.** `/learn/white-and-red-patches`,
+  live in all three languages. Leukoplakia and erythroplakia are the actual
+  precancerous lesions and `/learn/signs` gave them one line each. The topic was
+  chosen off the traffic: `canker-sore-vs-oral-cancer` is the best organic page
+  on the site by a wide margin, and it works because it answers one frightened
+  person's specific question. "White patch in my mouth" is the same shape of
+  query. Transformation rates are given as ranges rather than a single figure,
+  because published estimates differ substantially by population and follow-up,
+  and the page says so
+- **Homepage and learn pages audited against the Web Interface Guidelines.** Two
+  `<h1>` elements on the homepage, one hidden and one visible, so the hero line
+  is now a `<p>` and the descriptive heading is the only h1. The hero photo, the
+  largest above-the-fold element on the site, had no intrinsic size and no
+  priority hint: it now has both, which removes a layout shift on every first
+  load. Eight more `transition-all` declarations replaced with explicit property
+  lists. Fifteen footer links were 18 to 20px tall, under the 24px minimum, and
+  now clear it. The logo marquee pauses on keyboard focus as well as hover,
+  since the logos are links and a keyboard user was chasing a moving target
+- **Not a bug, recorded so it is not re-investigated:** the partner logos appear
+  not to load when a test scrolls past them instantly. They load correctly on a
+  real scroll. Lazy loading simply never fires when `scrollTo` skips an element
+
 ### 2026-09-14 (evening)
 - **Sensitivity analysis of the tiers, run and written up.** `docs/SENSITIVITY_ANALYSIS.md`,
   code in `scripts/sensitivity_analysis.py`, raw outputs in `docs/sensitivity-runs/`.

@@ -1105,6 +1105,11 @@
       "tag": "Comparison",
       "title": "Canker Sore vs. Oral Cancer",
       "description": "They can look similar. Here's how to tell them apart, and when a sore in your mouth needs a clinical eye."
+    },
+    "patches": {
+      "tag": "Warning sign",
+      "title": "White & Red Patches Explained",
+      "description": "Most are harmless. A few are the earliest thing anyone can catch. Why only a biopsy tells them apart."
     }
   },
   "LearnMeta": {
@@ -2083,5 +2088,114 @@
     "privacyPointer": "For what happens to your data, which is very little, see the",
     "privacyLink": "privacy policy",
     "lastUpdated": "Last updated: 18 August 2026"
+  },
+  "PatchesMeta": {
+    "title": "White or Red Patch in Your Mouth: What It Could Mean",
+    "description": "A white or red patch that will not wipe away and has lasted two weeks needs a clinical look. What leukoplakia and erythroplakia are, how often they turn into something serious, and what happens next."
+  },
+  "PatchesPage": {
+    "tag": "Warning sign",
+    "heading": "White and red patches in the mouth",
+    "intro": "Most white and red patches in the mouth are harmless, and the usual causes are ordinary: a cheek you keep biting, a denture that rubs, a burn from hot food, thrush. But two of them, leukoplakia and erythroplakia, are the earliest visible stage of something that can become oral cancer, and nobody can tell which is which by looking. That is the whole reason this page exists.",
+    "ruleHeading": "The part that actually matters",
+    "ruleP1Start": "A patch that ",
+    "ruleBold1": "will not wipe or rub off",
+    "ruleP1Mid": " and has been there ",
+    "ruleBold2": "two weeks or longer",
+    "ruleP1End": " should be looked at by a dentist or doctor. Not because it is probably cancer, because it probably is not, but because the only way to know is to have someone look, and in a small number of cases what they find is worth catching early.",
+    "leukoHeading": "Leukoplakia: the white patch",
+    "leukoP1": "Leukoplakia is the name given to a white patch that cannot be scraped off and cannot be explained by anything else. It is a description, not a diagnosis. Calling a patch leukoplakia says only that the ordinary explanations have been ruled out and nobody yet knows what it is.",
+    "leukoTraits": [
+      "White or grey, and stays put when you try to rub it away",
+      "Usually painless, which is why it goes unnoticed for months",
+      "Flat and even, or thickened, wrinkled and irregular",
+      "Most common on the inside of the cheek, the gums and the tongue"
+    ],
+    "leukoP2": "Reported rates of leukoplakia turning into cancer vary widely between studies and populations, commonly in the range of a few percent over several years. The risk is higher when the patch is uneven or speckled rather than uniform, when it sits on the floor of the mouth or the underside or side of the tongue, and when a biopsy shows dysplasia, meaning the cells are already abnormal but have not become cancer.",
+    "erythroHeading": "Erythroplakia: the red patch",
+    "erythroP1": "Erythroplakia is the same idea in red: a red, often velvety patch with no other explanation. It is far less common than leukoplakia and it matters much more. Across the published case series, the large majority of erythroplakia biopsies come back showing severe dysplasia, carcinoma in situ, or cancer that is already invasive.",
+    "erythroP2": "That makes a persistent red patch the single most concerning thing you can find in your own mouth. It is also the easiest to dismiss, because it does not hurt and it does not look dramatic. A mixed red and white patch, sometimes called speckled leukoplakia, carries similar concern.",
+    "notHeading": "What it usually turns out to be",
+    "notP1": "Worth holding on to while you wait for an appointment. The common causes are all benign:",
+    "notItems": [
+      {
+        "title": "Frictional keratosis",
+        "desc": "A callus, essentially. From a cheek you bite, a sharp tooth, or a denture that rubs. It settles once the cause is removed."
+      },
+      {
+        "title": "Oral thrush",
+        "desc": "A yeast infection. The giveaway is that it wipes away, often leaving a red, sore area underneath."
+      },
+      {
+        "title": "Lichen planus",
+        "desc": "An immune condition producing fine white lines in a lacy pattern, usually on both cheeks at once."
+      },
+      {
+        "title": "A burn",
+        "desc": "Hot food or drink. It looks alarming for a few days and then heals like any other burn."
+      },
+      {
+        "title": "Geographic tongue",
+        "desc": "Smooth red areas with pale borders that move around the tongue over weeks. Harmless and often lifelong."
+      }
+    ],
+    "biopsyHeading": "Why looking is not enough",
+    "biopsyP1": "A clinician cannot tell a harmless patch from a dangerous one by eye, and neither can a photograph. Appearance narrows it down and nothing more. The answer comes from a biopsy, where a small sample is taken, usually under local anaesthetic, and examined under a microscope.",
+    "biopsyP2": "That is the step worth knowing about in advance, because it sounds bigger than it is. It is a short appointment. And it is the only thing that turns \"a patch I have been ignoring\" into an answer.",
+    "whenHeading": "See someone promptly if",
+    "whenItems": [
+      {
+        "title": "It has lasted two weeks",
+        "desc": "The single clearest threshold. Most ordinary causes resolve well inside two weeks."
+      },
+      {
+        "title": "It is red, or red and white together",
+        "desc": "Red patches carry substantially more risk than white ones and should not wait."
+      },
+      {
+        "title": "It is on the floor of the mouth or the underside of the tongue",
+        "desc": "These sites carry higher risk than the cheeks, and they are the places people check least."
+      },
+      {
+        "title": "It is growing, thickening or changing",
+        "desc": "Change over weeks matters more than how it looked on any single day."
+      },
+      {
+        "title": "It bleeds, is numb, or will not heal",
+        "desc": "Any of these alongside a patch moves it up the list."
+      }
+    ],
+    "faqHeading": "Common questions",
+    "faqs": [
+      {
+        "q": "Does a white patch mean I have cancer?",
+        "a": "Almost certainly not. The common causes are friction, thrush, lichen planus and burns, and all of them are benign. Only a small share of persistent white patches ever become cancer. The reason to get it looked at is that the small share cannot be identified by eye."
+      },
+      {
+        "q": "Can I just wait and see if it goes away?",
+        "a": "Waiting two weeks is reasonable, and is exactly what the two-week rule describes. Waiting several months is the pattern behind most late diagnoses. If it is still there at two weeks, book the appointment."
+      },
+      {
+        "q": "It does not hurt. Is that reassuring?",
+        "a": "No, and this is the most important thing on this page. Leukoplakia and erythroplakia are usually painless. Pain is not the signal, persistence is."
+      },
+      {
+        "q": "I stopped smoking. Will the patch go away?",
+        "a": "Sometimes, and stopping is worth it regardless, because it lowers your risk from here onward. But a patch that persists after you stop still needs looking at rather than waiting out."
+      },
+      {
+        "q": "What happens at the appointment?",
+        "a": "They will look, feel the area and the neck, and ask how long it has been there. Depending on what they see they may ask you back in two weeks to check for change, or refer you for a biopsy. Neither means anything has been decided."
+      },
+      {
+        "q": "I do not smoke or drink. Can I still get these?",
+        "a": "Yes. Roughly a quarter of oral cancers occur in people with none of the usual risk factors, so a patch in a non-smoker is not automatically less worth checking."
+      }
+    ],
+    "sourcesLabel": "Sources",
+    "sourcesBody": "Definitions and risk framing follow the WHO collaborating centre consensus on oral potentially malignant disorders (Warnakulasuriya et al., Oral Diseases). Transformation rates are given as ranges because published estimates differ substantially by population and length of follow-up. This page is general information and is not a diagnosis.",
+    "checkRisk": "Check your risk",
+    "seeAllSigns": "See all warning signs",
+    "findDentist": "Find care near you"
   }
 }

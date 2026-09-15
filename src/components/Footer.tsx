@@ -15,26 +15,26 @@ export default async function Footer() {
         <div>
           <div className="font-semibold text-ink mb-2">{t("exploreHeading")}</div>
           <ul className="space-y-1.5 text-ink-soft">
-            <li><Link href="/screener" className="hover:text-brand">{t("riskScreener")}</Link></li>
-            <li><Link href="/find-care" className="hover:text-brand">{t("findCare")}</Link></li>
-            <li><Link href="/for-clinicians" className="hover:text-brand">{t("forClinicians")}</Link></li>
-            <li><Link href="/about" className="hover:text-brand">{t("about")}</Link></li>
-            <li><Link href="/methods" className="hover:text-brand">{t("scoringMethodology")}</Link></li>
-            <li><Link href="/press" className="hover:text-brand">{t("press")}</Link></li>
-            <li><Link href="/about#feedback" className="hover:text-brand">{t("sendFeedback")}</Link></li>
-            <li><Link href="/qr" className="hover:text-brand">{t("printShare")}</Link></li>
+            <li><Link href="/screener" className="inline-block py-1 hover:text-brand">{t("riskScreener")}</Link></li>
+            <li><Link href="/find-care" className="inline-block py-1 hover:text-brand">{t("findCare")}</Link></li>
+            <li><Link href="/for-clinicians" className="inline-block py-1 hover:text-brand">{t("forClinicians")}</Link></li>
+            <li><Link href="/about" className="inline-block py-1 hover:text-brand">{t("about")}</Link></li>
+            <li><Link href="/methods" className="inline-block py-1 hover:text-brand">{t("scoringMethodology")}</Link></li>
+            <li><Link href="/press" className="inline-block py-1 hover:text-brand">{t("press")}</Link></li>
+            <li><Link href="/about#feedback" className="inline-block py-1 hover:text-brand">{t("sendFeedback")}</Link></li>
+            <li><Link href="/qr" className="inline-block py-1 hover:text-brand">{t("printShare")}</Link></li>
           </ul>
         </div>
         <div>
           <div className="font-semibold text-ink mb-2">{t("learnHeading")}</div>
           <ul className="space-y-1.5 text-ink-soft">
-            <li><Link href="/learn/oral-cancer" className="hover:text-brand">{t("whatIsOralCancer")}</Link></li>
-            <li><Link href="/learn/signs" className="hover:text-brand">{t("warningSigns")}</Link></li>
-            <li><Link href="/learn/self-exam" className="hover:text-brand">{t("selfExamGuide")}</Link></li>
-            <li><Link href="/learn/hpv" className="hover:text-brand">{t("hpvOralCancer")}</Link></li>
-            <li><Link href="/learn/prevention" className="hover:text-brand">{t("prevention")}</Link></li>
-            <li><Link href="/learn/facts" className="hover:text-brand">{t("factsStats")}</Link></li>
-            <li><Link href="/learn/canker-sore-vs-oral-cancer" className="hover:text-brand">{t("cankerSoreVsCancer")}</Link></li>
+            <li><Link href="/learn/oral-cancer" className="inline-block py-1 hover:text-brand">{t("whatIsOralCancer")}</Link></li>
+            <li><Link href="/learn/signs" className="inline-block py-1 hover:text-brand">{t("warningSigns")}</Link></li>
+            <li><Link href="/learn/self-exam" className="inline-block py-1 hover:text-brand">{t("selfExamGuide")}</Link></li>
+            <li><Link href="/learn/hpv" className="inline-block py-1 hover:text-brand">{t("hpvOralCancer")}</Link></li>
+            <li><Link href="/learn/prevention" className="inline-block py-1 hover:text-brand">{t("prevention")}</Link></li>
+            <li><Link href="/learn/facts" className="inline-block py-1 hover:text-brand">{t("factsStats")}</Link></li>
+            <li><Link href="/learn/canker-sore-vs-oral-cancer" className="inline-block py-1 hover:text-brand">{t("cankerSoreVsCancer")}</Link></li>
           </ul>
         </div>
         <div>

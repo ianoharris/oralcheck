@@ -1105,6 +1105,11 @@
       "tag": "Comparación",
       "title": "Afta vs. cáncer oral",
       "description": "Pueden verse parecidos. Aquí te explicamos cómo diferenciarlos, y cuándo una llaga en tu boca necesita una revisión clínica."
+    },
+    "patches": {
+      "tag": "Señal de alerta",
+      "title": "Manchas blancas y rojas: qué significan",
+      "description": "La mayoría son inofensivas. Algunas son lo más temprano que se puede detectar. Por qué solo una biopsia permite distinguirlas."
     }
   },
   "LearnMeta": {
@@ -2083,5 +2088,114 @@
     "privacyPointer": "Para saber qué sucede con sus datos, que es muy poco, consulte la",
     "privacyLink": "política de privacidad",
     "lastUpdated": "Última actualización: 18 de agosto de 2026"
+  },
+  "PatchesMeta": {
+    "title": "Mancha blanca o roja en la boca: qué puede significar",
+    "description": "Una mancha blanca o roja que no desaparece al frotarla y lleva dos semanas presente necesita una evaluación clínica. Qué son la leucoplasia y la eritroplasia, con qué frecuencia se convierten en algo grave, y qué sucede después."
+  },
+  "PatchesPage": {
+    "tag": "Señal de alerta",
+    "heading": "Manchas blancas y rojas en la boca",
+    "intro": "La mayoría de las manchas blancas y rojas en la boca son inofensivas, y las causas habituales son simples: una mejilla que se muerde con frecuencia, una dentadura que roza, una quemadura por comida caliente, una infección por hongos. Pero dos de ellas, la leucoplasia y la eritroplasia, son la etapa visible más temprana de algo que puede convertirse en cáncer oral, y nadie puede distinguirlas solo con mirarlas. Esa es la razón de ser de esta página.",
+    "ruleHeading": "La parte que realmente importa",
+    "ruleP1Start": "Una mancha que ",
+    "ruleBold1": "no desaparece al frotarla o limpiarla",
+    "ruleP1Mid": " y lleva ",
+    "ruleBold2": "dos semanas o más",
+    "ruleP1End": " debe ser evaluada por un dentista o médico. No porque probablemente sea cáncer, porque lo más probable es que no lo sea, sino porque la única forma de saberlo es que alguien la examine, y en un pequeño número de casos lo que encuentran vale la pena detectarlo a tiempo.",
+    "leukoHeading": "Leucoplasia: la mancha blanca",
+    "leukoP1": "Leucoplasia es el nombre que se le da a una mancha blanca que no se puede raspar y que no tiene otra explicación. Es una descripción, no un diagnóstico. Llamar leucoplasia a una mancha solo indica que las causas comunes han sido descartadas y que aún no se sabe qué es.",
+    "leukoTraits": [
+      "Blanca o gris, y permanece en su lugar al intentar frotarla",
+      "Generalmente no duele, por eso pasa desapercibida durante meses",
+      "Plana y uniforme, o engrosada, arrugada e irregular",
+      "Más frecuente en la parte interna de la mejilla, las encías y la lengua"
+    ],
+    "leukoP2": "Las tasas reportadas de leucoplasia que se convierte en cáncer varían ampliamente entre estudios y poblaciones, con rangos que suelen ser de unos pocos puntos porcentuales a lo largo de varios años. El riesgo es mayor cuando la mancha es irregular o moteada en lugar de uniforme, cuando se encuentra en el piso de la boca o en la parte inferior o el lado de la lengua, y cuando una biopsia muestra displasia, es decir, que las células ya son anormales pero todavía no se han convertido en cáncer.",
+    "erythroHeading": "Eritroplasia: la mancha roja",
+    "erythroP1": "La eritroplasia es el mismo concepto en rojo: una mancha roja, a menudo de aspecto aterciopelado, sin otra explicación. Es mucho menos frecuente que la leucoplasia y tiene mayor relevancia clínica. En las series de casos publicadas, la gran mayoría de las biopsias de eritroplasia muestran displasia grave, carcinoma in situ o cáncer ya invasivo.",
+    "erythroP2": "Eso convierte a una mancha roja persistente en el hallazgo más preocupante que una persona puede encontrar en su propia boca. También es la más fácil de ignorar, porque no duele y no tiene una apariencia alarmante. Una mancha mixta, roja y blanca a la vez, a veces llamada leucoplasia moteada, genera una preocupación similar.",
+    "notHeading": "Lo que suele resultar ser",
+    "notP1": "Vale la pena tenerlo en cuenta mientras se espera la cita. Las causas más comunes son todas benignas:",
+    "notItems": [
+      {
+        "title": "Queratosis friccional",
+        "desc": "Básicamente, un callo. Provocado por morderse la mejilla, un diente con filo o una dentadura que roza. Se resuelve una vez que se elimina la causa."
+      },
+      {
+        "title": "Candidiasis oral",
+        "desc": "Una infección por hongos. La clave para identificarla es que se puede limpiar frotando, y a menudo deja una zona roja e irritada debajo."
+      },
+      {
+        "title": "Liquen plano",
+        "desc": "Una afección del sistema inmunitario que produce líneas blancas finas en un patrón de encaje, generalmente en ambas mejillas al mismo tiempo."
+      },
+      {
+        "title": "Una quemadura",
+        "desc": "Por comida o bebida caliente. Tiene una apariencia preocupante durante unos días y luego sana como cualquier otra quemadura."
+      },
+      {
+        "title": "Lengua geográfica",
+        "desc": "Áreas rojas y lisas con bordes pálidos que cambian de posición en la lengua a lo largo de semanas. Es inofensiva y a menudo dura toda la vida."
+      }
+    ],
+    "biopsyHeading": "Por qué mirar no es suficiente",
+    "biopsyP1": "Un profesional de salud no puede distinguir una mancha inofensiva de una peligrosa a simple vista, y tampoco una fotografía. La apariencia ayuda a reducir las posibilidades, pero no más que eso. La respuesta viene de una biopsia, en la que se toma una pequeña muestra, generalmente con anestesia local, y se examina bajo el microscopio.",
+    "biopsyP2": "Vale la pena saber esto de antemano, porque suena más complicado de lo que es. Es una cita breve. Y es lo único que transforma \"una mancha que he estado ignorando\" en una respuesta.",
+    "whenHeading": "Consulte a un profesional pronto si",
+    "whenItems": [
+      {
+        "title": "Lleva dos semanas",
+        "desc": "El umbral más claro. La mayoría de las causas comunes se resuelven bien antes de las dos semanas."
+      },
+      {
+        "title": "Es roja, o roja y blanca a la vez",
+        "desc": "Las manchas rojas conllevan un riesgo considerablemente mayor que las blancas y no deben esperar."
+      },
+      {
+        "title": "Está en el piso de la boca o en la parte inferior de la lengua",
+        "desc": "Estas zonas tienen mayor riesgo que las mejillas, y son las que las personas menos suelen revisar."
+      },
+      {
+        "title": "Está creciendo, engrosándose o cambiando",
+        "desc": "Los cambios a lo largo de semanas importan más que cómo se veía en un día determinado."
+      },
+      {
+        "title": "Sangra, produce entumecimiento o no sana",
+        "desc": "Cualquiera de estos síntomas junto con una mancha eleva el nivel de preocupación."
+      }
+    ],
+    "faqHeading": "Preguntas frecuentes",
+    "faqs": [
+      {
+        "q": "¿Una mancha blanca significa que tengo cáncer?",
+        "a": "Casi con toda seguridad, no. Las causas más comunes son la fricción, la candidiasis, el liquen plano y las quemaduras, y todas son benignas. Solo una pequeña proporción de las manchas blancas persistentes llega a convertirse en cáncer. La razón para hacerla revisar es que esa pequeña proporción no se puede identificar a simple vista."
+      },
+      {
+        "q": "¿Puedo simplemente esperar a ver si desaparece?",
+        "a": "Esperar dos semanas es razonable, y es exactamente lo que describe la regla de las dos semanas. Esperar varios meses es el patrón que se repite en la mayoría de los diagnósticos tardíos. Si sigue ahí a las dos semanas, haga la cita."
+      },
+      {
+        "q": "No duele. ¿Es eso tranquilizador?",
+        "a": "No, y esto es lo más importante de esta página. La leucoplasia y la eritroplasia suelen ser indoloras. La señal no es el dolor, sino la persistencia."
+      },
+      {
+        "q": "Dejé de fumar. ¿Desaparecerá la mancha?",
+        "a": "A veces, y dejar de fumar vale la pena de todas formas, porque reduce el riesgo a partir de ese momento. Pero una mancha que persiste después de dejar el tabaco aún necesita evaluación, no solo esperar."
+      },
+      {
+        "q": "¿Qué ocurre en la cita?",
+        "a": "El profesional la examinará, palpará la zona y el cuello, y preguntará cuánto tiempo lleva ahí. Según lo que observe, puede pedirle que regrese en dos semanas para ver si hay cambios, o referirlo a una biopsia. Ninguna de las dos opciones significa que se haya llegado a ninguna conclusión."
+      },
+      {
+        "q": "No fumo ni bebo. ¿Puedo tener estas manchas igual?",
+        "a": "Sí. Aproximadamente una cuarta parte de los cánceres orales ocurre en personas sin ninguno de los factores de riesgo habituales, por lo que una mancha en alguien que no fuma no es automáticamente menos importante de revisar."
+      }
+    ],
+    "sourcesLabel": "Fuentes",
+    "sourcesBody": "Las definiciones y el enfoque de riesgo siguen el consenso del centro colaborador de la OMS sobre trastornos orales potencialmente malignos (Warnakulasuriya et al., Oral Diseases). Las tasas de transformación se presentan como rangos porque las estimaciones publicadas varían considerablemente según la población y el tiempo de seguimiento. Esta página contiene información general y no constituye un diagnóstico.",
+    "checkRisk": "Evalúa tu riesgo",
+    "seeAllSigns": "Ver todas las señales de alerta",
+    "findDentist": "Encuentra atención cerca de ti"
   }
 }

@@ -31,6 +31,7 @@ const PAGES: Entry[] = [
   { path: "/learn/self-exam", changeFrequency: "monthly", priority: 0.8 },
   { path: "/learn/prevention", changeFrequency: "monthly", priority: 0.8 },
   { path: "/learn/canker-sore-vs-oral-cancer", changeFrequency: "monthly", priority: 0.8 },
+  { path: "/learn/white-and-red-patches", changeFrequency: "monthly", priority: 0.8 },
   { path: "/learn/facts", changeFrequency: "monthly", priority: 0.7 },
   { path: "/find-care", changeFrequency: "monthly", priority: 0.8 },
   { path: "/for-clinicians", changeFrequency: "monthly", priority: 0.7 },

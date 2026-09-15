@@ -73,15 +73,15 @@ export default function Nav() {
             className="w-9 h-9 flex flex-col items-center justify-center gap-[5px] rounded-full hover:bg-warm-dim transition-colors"
           >
             <span
-              className="block w-5 h-[1.5px] bg-ink-soft transition-all duration-200 origin-center"
+              className="block w-5 h-[1.5px] bg-ink-soft transition-[transform,opacity] duration-200 origin-center"
               style={{ transform: open ? "translateY(6.5px) rotate(45deg)" : "none" }}
             />
             <span
-              className="block w-5 h-[1.5px] bg-ink-soft transition-all duration-200"
+              className="block w-5 h-[1.5px] bg-ink-soft transition-[transform,opacity] duration-200"
               style={{ opacity: open ? 0 : 1 }}
             />
             <span
-              className="block w-5 h-[1.5px] bg-ink-soft transition-all duration-200 origin-center"
+              className="block w-5 h-[1.5px] bg-ink-soft transition-[transform,opacity] duration-200 origin-center"
               style={{ transform: open ? "translateY(-6.5px) rotate(-45deg)" : "none" }}
             />
           </button>

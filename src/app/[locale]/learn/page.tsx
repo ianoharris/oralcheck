@@ -43,7 +43,7 @@ export default async function LearnPage({ params }: Props) {
                 <Link
                   key={a.slug}
                   href={`/learn/${a.slug}`}
-                  className="flex items-start gap-4 rounded-2xl border border-warm-dim bg-warm-dim p-5 hover:border-brand/40 hover:shadow-sm transition-all group"
+                  className="flex items-start gap-4 rounded-2xl border border-warm-dim bg-warm-dim p-5 hover:border-brand/40 hover:shadow-sm transition-[color,background-color,border-color,box-shadow] group"
                 >
                   <div className="flex-1 min-w-0">
                     <p className="font-semibold text-ink group-hover:text-brand transition-colors leading-snug">

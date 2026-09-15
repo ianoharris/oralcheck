@@ -1105,6 +1105,11 @@
       "tag": "Comparação",
       "title": "Afta ou Câncer Bucal?",
       "description": "Eles podem ser parecidos. Veja como diferenciá-los e quando uma ferida na boca precisa de avaliação profissional."
+    },
+    "patches": {
+      "tag": "Sinal de alerta",
+      "title": "Manchas Brancas e Vermelhas: O Que São",
+      "description": "A maioria é inofensiva. Algumas são o que se pode detectar mais cedo. Por que só uma biópsia consegue diferenciá-las."
     }
   },
   "LearnMeta": {
@@ -2083,5 +2088,114 @@
     "privacyPointer": "Para saber o que acontece com seus dados, que são muito poucos, consulte a",
     "privacyLink": "política de privacidade",
     "lastUpdated": "Última atualização: 18 de agosto de 2026"
+  },
+  "PatchesMeta": {
+    "title": "Mancha Branca ou Vermelha na Boca: O Que Pode Significar",
+    "description": "Uma mancha branca ou vermelha que não sai ao esfregar e persiste há duas semanas precisa ser avaliada por um profissional de saúde. O que são leucoplasia e eritroplasia, com que frequência se tornam algo grave e quais são os próximos passos."
+  },
+  "PatchesPage": {
+    "tag": "Sinal de alerta",
+    "heading": "Manchas brancas e vermelhas na boca",
+    "intro": "A maioria das manchas brancas e vermelhas na boca é inofensiva, e as causas mais comuns são simples: uma bochecha que se morde repetidamente, uma dentadura que machuca, uma queimadura de alimento quente, candidíase. Mas duas delas, a leucoplasia e a eritroplasia, são o estágio visível mais precoce de algo que pode se tornar câncer bucal, e ninguém consegue distinguir uma da outra apenas olhando. Essa é a razão pela qual esta página existe.",
+    "ruleHeading": "O que realmente importa",
+    "ruleP1Start": "Uma mancha que ",
+    "ruleBold1": "não sai ao esfregar ou limpar",
+    "ruleP1Mid": " e está presente há ",
+    "ruleBold2": "duas semanas ou mais",
+    "ruleP1End": " deve ser avaliada por um dentista ou médico. Não porque provavelmente seja câncer, pois provavelmente não é, mas porque a única forma de saber é ter alguém que examine, e em uma pequena parcela dos casos o que se encontra vale a pena detectar cedo.",
+    "leukoHeading": "Leucoplasia: a mancha branca",
+    "leukoP1": "Leucoplasia é o nome dado a uma mancha branca que não pode ser raspada e não tem outra explicação. É uma descrição, não um diagnóstico. Chamar uma mancha de leucoplasia indica apenas que as causas mais comuns foram descartadas e ainda não se sabe o que é.",
+    "leukoTraits": [
+      "Branca ou acinzentada, e permanece no lugar ao tentar esfregar",
+      "Geralmente indolor, o que faz com que passe despercebida por meses",
+      "Plana e uniforme, ou espessada, enrugada e irregular",
+      "Mais comum na parte interna da bochecha, nas gengivas e na língua"
+    ],
+    "leukoP2": "As taxas relatadas de leucoplasia se tornando câncer variam bastante entre estudos e populações, situando-se com frequência na faixa de alguns pontos percentuais ao longo de vários anos. O risco é maior quando a mancha é irregular ou salpicada em vez de uniforme, quando está localizada no assoalho da boca ou na parte inferior ou lateral da língua, e quando a biópsia mostra displasia, ou seja, quando as células já estão alteradas, mas ainda não se tornaram câncer.",
+    "erythroHeading": "Eritroplasia: a mancha vermelha",
+    "erythroP1": "A eritroplasia segue a mesma ideia, mas em vermelho: uma mancha vermelha, frequentemente aveludada, sem outra explicação. É muito menos comum do que a leucoplasia e muito mais preocupante. Nas séries de casos publicadas, a grande maioria das biópsias de eritroplasia retorna com resultado de displasia grave, carcinoma in situ ou câncer já invasivo.",
+    "erythroP2": "Isso faz de uma mancha vermelha persistente o achado mais preocupante que se pode encontrar na própria boca. É também o mais fácil de ignorar, porque não dói e não parece grave. Uma mancha mista, vermelha e branca ao mesmo tempo, às vezes chamada de leucoplasia salpicada, traz preocupação semelhante.",
+    "notHeading": "O que geralmente se descobre ser",
+    "notP1": "Vale ter isso em mente enquanto se aguarda uma consulta. As causas mais comuns são todas benignas:",
+    "notItems": [
+      {
+        "title": "Ceratose friccional",
+        "desc": "Um calo, basicamente. Causado por uma bochecha que se morde, um dente pontiagudo ou uma dentadura que esfrega. Desaparece quando a causa é eliminada."
+      },
+      {
+        "title": "Candidíase bucal",
+        "desc": "Uma infecção por fungo. O sinal característico é que sai ao esfregar, muitas vezes deixando uma área vermelha e sensível abaixo."
+      },
+      {
+        "title": "Líquen plano",
+        "desc": "Uma condição imunológica que produz linhas brancas finas em padrão rendado, geralmente nas duas bochechas ao mesmo tempo."
+      },
+      {
+        "title": "Uma queimadura",
+        "desc": "Causada por alimento ou bebida quente. Parece grave por alguns dias e depois cicatriza como qualquer outra queimadura."
+      },
+      {
+        "title": "Língua geográfica",
+        "desc": "Áreas vermelhas e lisas com bordas claras que mudam de posição na língua ao longo de semanas. Inofensiva e muitas vezes presente por toda a vida."
+      }
+    ],
+    "biopsyHeading": "Por que só olhar não é suficiente",
+    "biopsyP1": "Um profissional de saúde não consegue distinguir uma mancha inofensiva de uma perigosa pelo aspecto visual, e uma fotografia também não resolve. A aparência ajuda a limitar as possibilidades, mas não vai além disso. A resposta vem de uma biópsia, em que uma pequena amostra é retirada, geralmente sob anestesia local, e examinada ao microscópio.",
+    "biopsyP2": "Vale conhecer esse procedimento com antecedência, porque ele parece mais complexo do que realmente é. É uma consulta rápida. E é a única coisa que transforma uma mancha que se vinha ignorando em uma resposta concreta.",
+    "whenHeading": "Procure atendimento em breve se",
+    "whenItems": [
+      {
+        "title": "Passou de duas semanas",
+        "desc": "O critério mais claro. A maioria das causas comuns desaparece bem antes de duas semanas."
+      },
+      {
+        "title": "É vermelha, ou vermelha e branca ao mesmo tempo",
+        "desc": "Manchas vermelhas apresentam risco consideravelmente maior do que as brancas e não devem ser deixadas para depois."
+      },
+      {
+        "title": "Está no assoalho da boca ou na parte inferior da língua",
+        "desc": "Essas regiões apresentam risco maior do que as bochechas, e são os locais que as pessoas menos examinam."
+      },
+      {
+        "title": "Está crescendo, engrossando ou mudando",
+        "desc": "Mudanças ao longo de semanas importam mais do que como a mancha estava em um único dia."
+      },
+      {
+        "title": "Sangra, está anestesiada ou não cicatriza",
+        "desc": "Qualquer um desses sinais junto com uma mancha aumenta a prioridade de avaliação."
+      }
+    ],
+    "faqHeading": "Perguntas frequentes",
+    "faqs": [
+      {
+        "q": "Uma mancha branca significa que tenho câncer?",
+        "a": "Quase certamente não. As causas mais comuns são fricção, candidíase, líquen plano e queimaduras, e todas são benignas. Apenas uma pequena parcela das manchas brancas persistentes se torna câncer. O motivo para avaliá-la é que essa pequena parcela não pode ser identificada visualmente."
+      },
+      {
+        "q": "Posso simplesmente esperar para ver se desaparece?",
+        "a": "Esperar duas semanas é razoável, e é exatamente o que a regra das duas semanas descreve. Esperar vários meses é o padrão por trás da maioria dos diagnósticos tardios. Se ainda estiver lá após duas semanas, marque a consulta."
+      },
+      {
+        "q": "Não dói. Isso é um bom sinal?",
+        "a": "Não, e esse é o ponto mais importante desta página. Leucoplasia e eritroplasia geralmente são indolores. O sinal de alerta não é a dor, é a persistência."
+      },
+      {
+        "q": "Parei de fumar. A mancha vai desaparecer?",
+        "a": "Às vezes, e parar vale a pena de qualquer forma, pois reduz o risco daqui em diante. Mas uma mancha que persiste após a interrupção do tabagismo ainda precisa ser avaliada, e não apenas aguardada."
+      },
+      {
+        "q": "O que acontece na consulta?",
+        "a": "O profissional vai olhar, palpar a área e o pescoço, e perguntar há quanto tempo a mancha está presente. Dependendo do que observar, pode pedir que retorne em duas semanas para verificar se houve mudança, ou encaminhar para uma biópsia. Nenhuma dessas opções significa que algo já foi decidido."
+      },
+      {
+        "q": "Não fumo nem bebo. Ainda assim posso ter essas manchas?",
+        "a": "Sim. Aproximadamente um quarto dos casos de câncer bucal ocorre em pessoas sem nenhum dos fatores de risco habituais, portanto uma mancha em não fumante não é automaticamente menos digna de investigação."
+      }
+    ],
+    "sourcesLabel": "Fontes",
+    "sourcesBody": "As definições e o enquadramento de risco seguem o consenso do centro colaborador da OMS sobre desordens orais potencialmente malignas (Warnakulasuriya et al., Oral Diseases). As taxas de transformação são apresentadas como intervalos porque as estimativas publicadas variam consideravelmente conforme a população e o tempo de acompanhamento. Esta página contém informações gerais e não constitui um diagnóstico.",
+    "checkRisk": "Verifique seu risco",
+    "seeAllSigns": "Ver todos os sinais de alerta",
+    "findDentist": "Encontre atendimento perto de você"
   }
 }

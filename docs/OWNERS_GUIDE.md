@@ -451,7 +451,7 @@ either baked in at build time or computed in the visitor's browser.
 /results                the score, bands, explanation
 /find-care              map + clinic search
 /methods                ⭐ the credibility page. Every weight, every source
-/learn/...              8 hand-written guides, plus published articles
+/learn/...              9 hand-written guides, plus published articles
                         served from content/published/ (8 so far)
 /for-clinicians         embed code, flyer, the professional framing
 /about  /privacy  /terms  /press

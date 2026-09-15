@@ -10,6 +10,7 @@ const HREFS_ICONS = [
   { key: "hpv", href: "/learn/hpv", icon: "virus" },
   { key: "prevention", href: "/learn/prevention", icon: "prevention" },
   { key: "cankerVsCancer", href: "/learn/canker-sore-vs-oral-cancer", icon: "compare" },
+  { key: "patches", href: "/learn/white-and-red-patches", icon: "symptom" },
 ] as const satisfies ReadonlyArray<{key:string;href:string;icon:IconName}>;
 
 /** Client-component hook: returns the fully localized learn-index card list. */

@@ -553,7 +553,7 @@ export default function ResultsPage() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="group bg-warm-dim rounded-2xl border border-warm-dim p-5 hover:border-brand/40 transition-all"
+                className="group bg-warm-dim rounded-2xl border border-warm-dim p-5 hover:border-brand/40 transition-[color,background-color,border-color,box-shadow]"
               >
                 <div className="text-brand mb-2" aria-hidden>
                   <Icon name={link.icon} size={26} />

@@ -29,7 +29,10 @@
   will-change: transform;
 }
 
-.animate-marquee:hover {
+/* Pause on focus as well as hover: the logos are links, so a keyboard user
+   tabbing into the strip was chasing a moving target. */
+.animate-marquee:hover,
+.animate-marquee:focus-within {
   animation-play-state: paused;
 }
 
