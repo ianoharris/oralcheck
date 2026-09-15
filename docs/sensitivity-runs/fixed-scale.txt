@@ -1,0 +1,192 @@
+==============================================================================
+OralCheck sensitivity analysis   mode=fixed  centre=published  alcohol-map=quantity  hpv=deployed  draws=10000  seed=20260914
+==============================================================================
+profiles scored: 995,328   (symptom=yes and unsure excluded: forced high)
+
+Sourced ORs vs deployed weights (k = 4.47)
+factor                       w_dep  impl OR  pub OR         95% CI w_pub  w over CI in CI?
+tobacco=daily                    8     5.99    3.39   2.64-4.35       5    4..7    NO
+tobacco=occasional               5     3.06    1.48   1.04-2.09       2    0..3    NO
+tobacco=former                   2     1.56    1.41   1.20-1.66       2    1..2    yes
+betel=current                    9     7.49    7.74   5.38-11.13      9    8..11   yes
+betel=past                       4     2.45    6.87   4.10-11.52      9    6..11   NO
+family=yes                       3     1.96    1.53   1.11-2.11       2    0..3    yes
+systemic=yes                     5     3.06    2.56   2.17-3.01       4    3..5    NO
+diet=rarely                      3     1.96    1.96   1.54-2.50       3    2..4    yes
+sun=daily                        2     1.56    1.67   1.38-2.03       2    1..3    yes
+tobacco x alcohol bonus          3     1.96    3.09   1.82-5.23       5    3..7    yes
+alcohol=daily                    5     3.06    5.13   4.31-6.10       7    7..8    NO
+alcohol=weekly                   3     1.96    1.83   1.62-2.07       3    2..3    yes
+alcohol=rarely                   1     1.25    1.13   1.00-1.26       1    0..1    yes
+
+Deployed tier share of the profile space: low   0.1%  moderate   6.1%  elevated  34.2%  high  59.6%
+Stable profiles (one tier on >=95% of draws):  73.7%
+  by deployed tier: low  91.1%  moderate  81.6%  elevated  56.3%  high  82.9%
+Mean probability that a profile lands in its deployed tier:  83.3%
+
+Direction of disagreement with the deployed tier
+  UNDER-called (draws say higher tier than deployed reads; dangerous): mean   8.8%, profiles with >=5%:  15.3%, with >=50%:   8.5%
+  OVER-called  (draws say lower tier than deployed reads):            mean   7.8%, profiles with >=5%:  16.7%, with >=50%:   6.9%
+
+Transition matrix (rows: deployed tier; cols: mean % of draws in each tier)
+                 low  moderate  elevated      high
+low            97.4%      2.6%      0.0%      0.0%
+moderate        0.6%     77.4%     21.9%      0.0%
+elevated        0.0%      7.1%     71.0%     21.9%
+high            0.0%      0.0%      9.0%     91.0%
+
+Boundary instability
+  low/moderate       profiles with >=5% of draws on each side:   0.1%   mean crossing mass:   0.0%
+  moderate/elevated  profiles with >=5% of draws on each side:   5.3%   mean crossing mass:   1.3%
+  elevated/high      profiles with >=5% of draws on each side:  20.9%   mean crossing mass:   5.1%
+
+Stratified by tobacco answer:
+  daily       stable  83.7%  under   2.1%  over   8.0%
+  occasional  stable  70.3%  under   3.1%  over  14.0%
+  former      stable  70.4%  under  13.0%  over   5.5%
+  never       stable  70.4%  under  17.2%  over   3.9%
+Stratified by betel answer:
+  current     stable  78.9%  under   1.4%  over   7.2%
+  past        stable  72.6%  under  21.9%  over   0.6%
+  never       stable  69.6%  under   3.2%  over  15.6%
+
+By deployed score (where the fragility sits)
+score tier       profiles   share  stable   under    over
+    0 low               2    0.0%  100.0%    0.0%    0.0%
+    1 low              13    0.0%  100.0%    0.0%    0.0%
+    2 low              48    0.0%  100.0%    0.0%    0.0%
+    3 low             136    0.0%  100.0%    0.0%    0.0%
+    4 low             319    0.0%   85.6%    4.3%    0.0%
+    5 moderate        657    0.1%   42.9%    0.0%   25.8%
+    6 moderate      1,225    0.1%   84.5%    0.0%    4.7%
+    7 moderate      2,103    0.2%   90.6%    0.3%    2.4%
+    8 moderate      3,381    0.3%   86.6%    1.9%    1.6%
+    9 moderate      5,129    0.5%   82.9%    5.8%    0.6%
+   10 moderate      7,407    0.7%   82.7%   11.7%    0.1%
+   11 moderate     10,234    1.0%   79.7%   19.0%    0.0%
+   12 moderate     13,585    1.4%   90.0%   27.8%    0.0%
+   13 moderate     17,407    1.7%   74.4%   37.2%    0.0%
+   14 elevated     21,587    2.2%   49.6%    0.2%   41.0%
+   15 elevated     26,014    2.6%   62.6%    1.0%   24.1%
+   16 elevated     30,513    3.1%   60.7%    3.0%   14.8%
+   17 elevated     34,937    3.5%   52.6%    7.1%    7.7%
+   18 elevated     39,113    3.9%   59.9%   13.4%    3.2%
+   19 elevated     42,887    4.3%   58.6%   20.7%    1.0%
+   20 elevated     46,148    4.6%   56.5%   29.0%    0.3%
+   21 elevated     48,749    4.9%   56.6%   38.3%    0.1%
+   22 elevated     50,641    5.1%   50.8%   48.7%    0.0%
+   23 high         51,716    5.2%   50.9%    0.0%   39.4%
+   24 high         51,979    5.2%   51.8%    0.0%   28.0%
+   25 high         51,418    5.2%   60.4%    0.0%   18.5%
+   26 high         50,067    5.0%   70.7%    0.0%   10.6%
+   27 high         48,016    4.8%   80.6%    0.0%    5.0%
+   28 high         45,334    4.6%   89.1%    0.0%    2.0%
+   29 high         42,178    4.2%   96.1%    0.0%    0.6%
+   30 high         38,649    3.9%   99.4%    0.0%    0.2%
+   31 high         34,915    3.5%  100.0%    0.0%    0.0%
+   32 high         31,085    3.1%  100.0%    0.0%    0.0%
+   33 high         27,290    2.7%  100.0%    0.0%    0.0%
+   34 high         23,620    2.4%  100.0%    0.0%    0.0%
+   35 high         20,149    2.0%  100.0%    0.0%    0.0%
+   36 high         16,936    1.7%  100.0%    0.0%    0.0%
+   37 high         14,004    1.4%  100.0%    0.0%    0.0%
+   38 high         11,390    1.1%  100.0%    0.0%    0.0%
+   39 high          9,085    0.9%  100.0%    0.0%    0.0%
+   40 high          7,109    0.7%  100.0%    0.0%    0.0%
+   41 high          5,432    0.5%  100.0%    0.0%    0.0%
+   42 high          4,055    0.4%  100.0%    0.0%    0.0%
+   43 high          2,943    0.3%  100.0%    0.0%    0.0%
+   44 high          2,070    0.2%  100.0%    0.0%    0.0%
+   45 high          1,412    0.1%  100.0%    0.0%    0.0%
+   46 high            921    0.1%  100.0%    0.0%    0.0%
+   47 high            582    0.1%  100.0%    0.0%    0.0%
+   48 high            347    0.0%  100.0%    0.0%    0.0%
+   49 high            197    0.0%  100.0%    0.0%    0.0%
+   50 high            106    0.0%  100.0%    0.0%    0.0%
+   51 high             51    0.0%  100.0%    0.0%    0.0%
+   52 high             24    0.0%  100.0%    0.0%    0.0%
+   53 high              9    0.0%  100.0%    0.0%    0.0%
+   54 high              3    0.0%  100.0%    0.0%    0.0%
+   55 high              1    0.0%  100.0%    0.0%    0.0%
+
+Answers over-represented in the UNDER-called mass (ratio > 1 = carries more than its share)
+  betel=past             carries  82.6% of the mass vs  33.3% of the space   ratio 2.48
+  tobacco=never          carries  48.8% of the mass vs  25.0% of the space   ratio 1.95
+  tobacco=former         carries  36.7% of the mass vs  25.0% of the space   ratio 1.47
+  age=under35            carries  32.4% of the mass vs  25.0% of the space   ratio 1.29
+  alcohol=daily          carries  31.9% of the mass vs  25.0% of the space   ratio 1.28
+  systemic=no            carries  42.4% of the mass vs  33.3% of the space   ratio 1.27
+  hpv=vaccinated         carries  30.0% of the mass vs  25.0% of the space   ratio 1.20
+  systemic=unsure        carries  39.0% of the mass vs  33.3% of the space   ratio 1.17
+  family=no              carries  29.2% of the mass vs  25.0% of the space   ratio 1.17
+  family=unsure          carries  29.2% of the mass vs  25.0% of the space   ratio 1.17
+  sex=female             carries  38.8% of the mass vs  33.3% of the space   ratio 1.16
+  dental=recent          carries  28.7% of the mass vs  25.0% of the space   ratio 1.15
+Answers over-represented in the OVER-called mass
+  betel=never            carries  66.5% of the mass vs  33.3% of the space   ratio 2.00
+  tobacco=occasional     carries  44.6% of the mass vs  25.0% of the space   ratio 1.79
+  alcohol=rarely         carries  44.2% of the mass vs  25.0% of the space   ratio 1.77
+  alcohol=never          carries  38.0% of the mass vs  25.0% of the space   ratio 1.52
+  family=yes             carries  32.4% of the mass vs  25.0% of the space   ratio 1.30
+  age=under35            carries  30.9% of the mass vs  25.0% of the space   ratio 1.24
+  hpv=vaccinated         carries  29.0% of the mass vs  25.0% of the space   ratio 1.16
+  sex=female             carries  37.6% of the mass vs  33.3% of the space   ratio 1.13
+  sun=minimal            carries  37.2% of the mass vs  33.3% of the space   ratio 1.12
+  dental=recent          carries  27.9% of the mass vs  25.0% of the space   ratio 1.11
+  age=35to54             carries  27.5% of the mass vs  25.0% of the space   ratio 1.10
+  diet=daily             carries  36.5% of the mass vs  33.3% of the space   ratio 1.09
+
+Named profiles
+  young_hpv_history: under 35, female, HPV history
+    deployed score 5 (moderate); score percentiles 2.5/25/50/75/97.5: 5/5/5/5/5
+    tier probabilities: low   0.0%  moderate 100.0%  elevated   0.0%  high   0.0%
+    under-called   0.0%   over-called   0.0%
+  betel_tobacco_alcohol: under 35, female, daily tobacco, daily alcohol, current betel
+    deployed score 25 (high); score percentiles 2.5/25/50/75/97.5: 24/26/27/28/30
+    tier probabilities: low   0.0%  moderate   0.0%  elevated   0.5%  high  99.5%
+    under-called   0.0%   over-called   0.5%
+
+Profiles most at risk of being UNDER-called (deployed tier below what the draws support)
+   99.8%  score 22 elevated  [L 0 M 0 E 0 H 100]  under 35, male, daily alcohol, past betel, daily unprotected sun, close relative with oral cancer, immunosuppressed
+  100.0%  score 22 elevated  [L 0 M 0 E 0 H 100]  under 35, male, former tobacco, daily alcohol, past betel, daily unprotected sun, distant relative, immunosuppressed
+   99.8%  score 21 elevated  [L 0 M 0 E 0 H 100]  under 35, male, former tobacco, daily alcohol, past betel, daily unprotected sun, immunosuppressed
+   99.8%  score 21 elevated  [L 0 M 0 E 0 H 100]  under 35, male, former tobacco, daily alcohol, past betel, daily unprotected sun, immunosuppressed
+   99.6%  score 20 elevated  [L 0 M 0 E 0 H 100]  under 35, male, daily alcohol, past betel, daily unprotected sun, distant relative, immunosuppressed
+   99.6%  score 22 elevated  [L 0 M 0 E 0 H 100]  under 35, male, occasional tobacco, daily alcohol, past betel, daily unprotected sun
+   99.6%  score 22 elevated  [L 0 M 0 E 0 H 100]  under 35, male, occasional tobacco, daily alcohol, past betel, daily unprotected sun
+   99.9%  score 22 elevated  [L 0 M 0 E 0 H 100]  under 35, male, former tobacco, daily alcohol, past betel, daily unprotected sun, close relative with oral cancer, immune status unsure, dental visit over 3 years ago
+   99.9%  score 22 elevated  [L 0 M 0 E 0 H 100]  under 35, male, former tobacco, daily alcohol, past betel, daily unprotected sun, close relative with oral cancer, never seen a dentist
+   99.9%  score 22 elevated  [L 0 M 0 E 0 H 100]  under 35, male, former tobacco, daily alcohol, past betel, unvaccinated, no HPV history, daily unprotected sun, close relative with oral cancer, immune status unsure
+  100.0%  score 22 elevated  [L 0 M 0 E 0 H 100]  under 35, male, former tobacco, daily alcohol, past betel, HPV status unknown, daily unprotected sun, immunosuppressed
+  100.0%  score 22 elevated  [L 0 M 0 E 0 H 100]  under 35, male, former tobacco, daily alcohol, past betel, HPV status unknown, daily unprotected sun, immunosuppressed
+Profiles most at risk of being OVER-called
+   99.9%  score 23 high      [L 0 M 0 E 100 H 0]  under 35, male, daily tobacco, rare alcohol, daily unprotected sun, close relative with oral cancer, immunosuppressed, dental visit 1 to 3 years ago
+   99.9%  score 23 high      [L 0 M 0 E 100 H 0]  under 35, male, daily tobacco, rare alcohol, HPV status unknown, daily unprotected sun, close relative with oral cancer, immunosuppressed
+   99.9%  score 23 high      [L 0 M 0 E 100 H 0]  under 35, male, daily tobacco, daily unprotected sun, close relative with oral cancer, immunosuppressed, dental visit over 3 years ago
+   99.9%  score 23 high      [L 0 M 0 E 100 H 0]  under 35, male, daily tobacco, unvaccinated, no HPV history, daily unprotected sun, close relative with oral cancer, immunosuppressed
+   99.9%  score 23 high      [L 0 M 0 E 100 H 0]  under 35, male, daily tobacco, rare alcohol, daily unprotected sun, distant relative, immunosuppressed, never seen a dentist
+  100.0%  score 23 high      [L 0 M 0 E 100 H 0]  under 35, male, daily tobacco, rare alcohol, unvaccinated, no HPV history, regular sun, close relative with oral cancer, immunosuppressed
+   99.7%  score 23 high      [L 0 M 0 E 100 H 0]  under 35, male, daily tobacco, rare alcohol, HPV history, daily unprotected sun, close relative with oral cancer, immune status unsure
+   99.9%  score 14 elevated  [L 0 M 100 E 0 H 0]  under 35, male, daily tobacco, close relative with oral cancer
+   99.8%  score 23 high      [L 0 M 0 E 100 H 0]  under 35, male, daily tobacco, HPV history, daily unprotected sun, immunosuppressed
+   99.8%  score 23 high      [L 0 M 0 E 100 H 0]  under 35, male, daily tobacco, HPV history, daily unprotected sun, immunosuppressed
+   99.6%  score 24 high      [L 0 M 0 E 100 H 0]  under 35, male, daily tobacco, HPV history, close relative with oral cancer, immunosuppressed
+   99.9%  score 23 high      [L 0 M 0 E 100 H 0]  under 35, male, daily tobacco, HPV status unknown, daily unprotected sun, close relative with oral cancer, immunosuppressed, dental visit 1 to 3 years ago
+
+Boundary shifts (one boundary at a time; deployed tiers recomputed on the shifted boundaries)
+boundary           shift       bounds   stable  under mean  under>=5%  over mean  straddle
+low/moderate          -2  [2, 13, 22]    73.8%        8.8%      15.3%       7.8%      0.0%
+low/moderate          -1  [3, 13, 22]    73.8%        8.8%      15.3%       7.8%      0.0%
+low/moderate          +0  [4, 13, 22]    73.7%        8.8%      15.3%       7.8%      0.1%
+low/moderate          +1  [5, 13, 22]    73.6%        8.8%      15.3%       7.9%      0.2%
+low/moderate          +2  [6, 13, 22]    73.4%        8.8%      15.3%       8.0%      0.5%
+moderate/elevated     -2  [4, 11, 22]    75.7%        8.0%      14.2%       6.9%      3.2%
+moderate/elevated     -1  [4, 12, 22]    74.8%        8.4%      14.7%       7.4%      4.2%
+moderate/elevated     +0  [4, 13, 22]    73.7%        8.8%      15.3%       7.8%      5.3%
+moderate/elevated     +1  [4, 14, 22]    72.4%        9.4%      16.1%       8.3%      6.5%
+moderate/elevated     +2  [4, 15, 22]    70.9%       10.0%      17.0%       8.8%      8.0%
+elevated/high         -2  [4, 13, 20]    77.1%        7.8%      12.7%       7.5%     17.4%
+elevated/high         -1  [4, 13, 21]    75.3%        8.4%      14.1%       7.7%     19.3%
+elevated/high         +0  [4, 13, 22]    73.7%        8.8%      15.3%       7.8%     20.9%
+elevated/high         +1  [4, 13, 23]    72.5%        9.1%      16.2%       7.9%     22.1%
+elevated/high         +2  [4, 13, 24]    71.7%        9.3%      16.9%       7.9%     22.9%

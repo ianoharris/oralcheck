@@ -109,7 +109,27 @@ Update both together. See `AGENTS.md`.
       out loud which disease a profile points at, and admits the score understates an
       HPV-driven one, the reason for the deflation is weaker. Worth putting to Rawal
       and Brant together, since it is the one question both of them are placed to
-      answer.
+      answer. **What the sensitivity analysis adds (2026-09-14):** no published OR
+      exists for the self-report proxy, so the honest weight is unknown. Scored at
+      the D'Souza 2007 OR for confirmed oral HPV-16 infection (14.6, weight 12) the
+      young HPV-history profile is still moderate on 77% of draws; only at the
+      seropositivity OR (32.2, weight 16) does it reach elevated reliably. Raising
+      the weight to 12 moves it one point short of the band, not into it.
+- [ ] **Open, and it needs a biostatistician as much as a clinician: the tobacco
+      anchor and two other weights disagree with the meta-analyses.** From
+      `docs/SENSITIVITY_ANALYSIS.md`. The anchor OR of 6.0 for daily tobacco is above
+      the upper bound of both oral-cavity meta-analyses (Possenti 2026: 3.39, 2.64 to
+      4.35; Gandini 2008: 3.43, 2.37 to 4.94); it is inside Gandini's *pharyngeal*
+      interval, so it is a pharynx number scaling a mostly oral-cavity instrument.
+      Past betel is weighted 4 where the former-chewer OR (Gupta 2022: 6.87) implies
+      9. Occasional tobacco is 5 where the closest INHANCE category (Berthiller 2016:
+      1.48) implies 2. Re-deriving the scale from the published tobacco OR inflates
+      every other weight by about half and the current boundaries no longer mean what
+      they were designed to. Three decisions are needed, none of them code: which
+      tobacco OR the anchor should rest on, whether the boundaries float with it, and
+      how "daily" and "occasionally" map to grams and cigarettes per day. Do not
+      re-weight unilaterally; the betel + tobacco + alcohol profile's place in High
+      depends on the alcohol mapping and that is a judgment call for the reviewers.
 - [ ] **The web app has no test suite.** Everything in `oralcheck-agent/` has one and
       is exercised in CI; `src/` has none, so the risk engine is verified by hand
       each time. The site attribution added on 2026-09-01 is the kind of logic that
@@ -190,6 +210,27 @@ Update both together. See `AGENTS.md`.
 Newest first.
 
 ### 2026-09-14 (evening)
+- **Sensitivity analysis of the tiers, run and written up.** `docs/SENSITIVITY_ANALYSIS.md`,
+  code in `scripts/sensitivity_analysis.py`, raw outputs in `docs/sensitivity-runs/`.
+  Every sourced OR sampled within its published 95% CI, 10,000 draws, the full
+  995,328-profile space enumerated. Headline: **73.7% of profiles keep one tier on
+  95% of draws** with the scale fixed, and the elevated/high boundary is the
+  unstable one (20.9% of profiles straddle it). The fragility is not mainly CI
+  width (that alone moves 6% of tier mass) but point estimates that disagree with
+  the meta-analyses. Three stand out. **The tobacco anchor (OR 6.0) sits above the
+  upper bound of both oral-cavity meta-analyses** (3.39, 2.64 to 4.35; 3.43, 2.37
+  to 4.94), and letting the scale float on the published value inflates every
+  other weight by about half and under-calls 32% of the space. **Past betel** is
+  weighted 4 where the former-chewer OR implies 9. **Occasional tobacco** is 5
+  where the closest published category implies 2. The betel + daily tobacco +
+  daily alcohol profile stays high on 99.5% of draws under the primary alcohol
+  mapping and is a coin flip under the alternative. The young HPV-history profile
+  does not reach elevated at the median even when scored at the OR for confirmed
+  oral HPV-16 infection. Age, sex, dental and the self-reported HPV proxy could
+  not be sourced with a CI and were held fixed, so the stability numbers are
+  upper bounds. **This is not a validation** and the write-up says so. Also found:
+  the spec says only symptom = yes forces high; the code forces it for "unsure"
+  too.
 - **Analytics have been dropping events on every cold page load, all year.**
   `sendGAEvent` discards the event when `window.dataLayer` does not exist yet,
   warning only in the console. A click-through from the home page works; a

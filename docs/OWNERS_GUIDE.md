@@ -165,7 +165,10 @@ risk score uses.
 
 **Where 4.47 comes from:** it's an anchor, chosen so that daily tobacco (OR 6.0)
 lands on a weight of 8. Every other weight follows from that one choice, so the
-whole scale is internally consistent.
+whole scale is internally consistent. Internally consistent is not the same as
+right: the September 2026 sensitivity analysis (section 3.4) found that 6.0 is
+above the published range for current smoking and oral cavity cancer (about
+3.4), so the anchor itself is the weakest number in the formula.
 
 Worked example: alcohol, daily, OR ≈ 3.0
 ```
@@ -222,6 +225,23 @@ proportionally would have pushed the top band's boundary to 26 — which would
 have quietly *demoted* an unchanged betel + tobacco + alcohol profile from the
 top band to the one below. A new question must never make an existing person
 look safer, so the boundaries stayed put.
+
+**How fragile the bands are, in numbers (September 2026).** A sensitivity
+analysis let every weight's source odds ratio wander across its published
+confidence interval, ten thousand times, and re-tiered every possible set of
+answers each time. Three quarters of profiles keep their band on at least 95%
+of draws. The boundary between Elevated and High is the shaky one: one profile
+in five can land on either side of it. The bigger finding is *why*: the
+intervals themselves move only about 6% of band assignments, but several of the
+point estimates disagree with the meta-analyses. The tobacco anchor (OR 6.0) is
+above the upper bound of both meta-analyses of current smoking and oral cavity
+cancer, which puts the whole scale in units that are too large; past betel use
+is weighted as if quitting removes most of the risk when the published data say
+it removes little; occasional tobacco is weighted well above its closest
+published category. None of this is a validation, and the write-up says so. The
+whole thing, with sources, is `docs/SENSITIVITY_ANALYSIS.md`, and it can be
+re-run with `scripts/sensitivity_analysis.py` whenever a weight or a boundary
+changes.
 
 ### 3.5 The symptom override
 
@@ -621,7 +641,11 @@ Yes, and that's the largest single source of uncertainty in the score — it's
 stated as the second limitation on the methods page. The tobacco figure comes
 from a smoking meta-analysis, betel from South and Southeast Asian populations,
 HPV from a US case-control study. Summing log-odds across them assumes those
-effect sizes transport to whoever opens the page, and nothing tests that.
+effect sizes transport to whoever opens the page, and nothing tests that. There
+is a sensitivity analysis over the published confidence intervals
+(`docs/SENSITIVITY_ANALYSIS.md`), and it is honest that it cannot test
+transportability either: it only shows how much the bands move within the
+intervals the source populations reported.
 
 **Q3. "USPSTF says there's insufficient evidence for oral cancer screening."**
 Correct, and that recommendation is scoped to **primary care providers and
