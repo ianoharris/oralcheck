@@ -26,13 +26,13 @@ export default function InfographicPage() {
           <div className="flex gap-3">
             <button
               onClick={() => window.print()}
-              className="bg-brand hover:bg-brand-dark text-white font-semibold px-5 py-2.5 rounded-full text-sm transition-colors"
+              className="inline-flex min-h-11 items-center bg-brand hover:bg-brand-dark text-white font-semibold px-5 py-2.5 rounded-full text-sm touch-manipulation transition-colors"
             >
               Print
             </button>
             <Link
               href="/qr"
-              className="bg-warm-dim hover:bg-warm-dim text-ink font-semibold px-5 py-2.5 rounded-full text-sm transition-colors border border-warm-dim"
+              className="inline-flex min-h-11 items-center bg-warm-dim hover:bg-warm-dim text-ink font-semibold px-5 py-2.5 rounded-full text-sm touch-manipulation transition-colors border border-warm-dim"
             >
               Get QR code
             </Link>

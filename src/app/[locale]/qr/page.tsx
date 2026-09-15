@@ -88,7 +88,7 @@ export default function QRPage() {
             value={source}
             onChange={(e) => setSource(e.target.value)}
             placeholder="e.g. Marquette Dental"
-            className="w-full rounded-full border border-ink/15 px-4 py-2 text-sm bg-white"
+            className="w-full min-h-11 rounded-full border border-ink/15 px-4 py-2 text-sm bg-white"
           />
           <p className="mt-2 text-xs text-ink-soft leading-relaxed">
             {slug ? (

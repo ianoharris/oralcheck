@@ -209,7 +209,7 @@ export default function FindCarePage() {
           <button
             key={f.id}
             onClick={() => setFilter(f.id)}
-            className={`text-sm font-medium px-4 py-1.5 rounded-full transition-colors ${
+            className={`inline-flex min-h-11 items-center text-sm font-medium px-4 py-1.5 rounded-full touch-manipulation transition-colors ${
               filter === f.id
                 ? "bg-brand text-white"
                 : "bg-warm-dim text-ink-soft border border-warm-dim hover:text-ink"
@@ -368,7 +368,7 @@ function ClinicCard({
             <a
               href={`tel:${clinic.phone}`}
               onClick={(e) => e.stopPropagation()}
-              className="text-brand hover:underline"
+              className="inline-flex min-h-11 items-center text-brand hover:underline touch-manipulation"
             >
               {clinic.phone}
             </a>

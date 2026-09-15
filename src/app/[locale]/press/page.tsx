@@ -130,7 +130,7 @@ export default async function PressPage({ params }: Props) {
               key={a.file}
               href={a.file}
               download
-              className="inline-flex items-center gap-2 bg-warm border border-warm-dim rounded-xl px-4 py-2.5 text-sm font-medium text-ink hover:border-brand hover:text-brand transition-colors"
+              className="inline-flex min-h-11 items-center gap-2 bg-warm border border-warm-dim rounded-xl px-4 py-2.5 text-sm font-medium text-ink touch-manipulation hover:border-brand hover:text-brand transition-colors"
             >
               <Icon name="download" size={16} />
               {t(a.labelKey)}

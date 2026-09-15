@@ -78,7 +78,7 @@ export default async function SelfExamPage({ params }: Props) {
       />
       <Link
         href="/learn"
-        className="text-sm font-medium text-ink-soft hover:text-ink mb-6 inline-block"
+        className="inline-flex min-h-11 items-center text-sm font-medium text-ink-soft hover:text-ink mb-4"
       >
         {tSub("backToLearn")}
       </Link>

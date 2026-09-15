@@ -209,6 +209,24 @@ Update both together. See `AGENTS.md`.
 
 Newest first.
 
+### 2026-09-14 (late, iii)
+- **Every page swept at 375x812.** No horizontal overflow anywhere and exactly
+  one `<h1>` on every page, which is the state the earlier passes were aiming at
+- **`/find-care` had 127 touch targets under 44px**, which matters more than the
+  count suggests: it is where the results page sends people, and the undersized
+  controls were the clinic phone numbers (20px) and the category filters (34px).
+  A phone number is the action on that page. Down to 4, and the remainder are
+  Leaflet's own zoom buttons and its required attribution link
+- **`/methods` had 13 "View on PubMed" links at 16px**, on the page whose whole
+  purpose is that a clinician can check the sources. Now 0
+- Back links were 20px on ten learn pages, `/methods` and `/review/[slug]`.
+  Smaller fixes on `/press`, `/infographic`, `/for-clinicians` and the `/qr`
+  input, which was a 38px form field
+- **Inline prose links were deliberately left alone.** "canker sores" inside a
+  sentence is exempt under WCAG 2.5.8, and padding it to 44px breaks the line
+  spacing of the paragraph around it. The rule applies to standalone controls,
+  not to every link
+
 ### 2026-09-14 (late, ii)
 - **Content pages had no shared width, so several read as skinny.** The nav and
   footer are `max-w-6xl` while page containers ranged from `2xl` to `6xl`, and

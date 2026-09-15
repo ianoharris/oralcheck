@@ -158,7 +158,7 @@ export default async function MethodsPage({ params }: Props) {
   return (
     <div className="max-w-5xl mx-auto px-5 py-12 sm:py-20">
       <div className="mb-10">
-        <Link href="/" className="text-sm text-brand hover:underline">{t("back")}</Link>
+        <Link href="/" className="inline-flex min-h-11 items-center text-sm text-brand hover:underline">{t("back")}</Link>
       </div>
 
       <h1 className="font-serif text-4xl sm:text-5xl text-ink mb-4">{t("heading")}</h1>
@@ -372,7 +372,7 @@ export default async function MethodsPage({ params }: Props) {
                     href={r.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="block text-brand hover:underline text-xs mt-0.5"
+                    className="inline-flex min-h-11 items-center text-brand hover:underline text-xs"
                   >
                     {t("viewOn")}
                   </a>

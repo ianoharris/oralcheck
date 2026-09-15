@@ -30,7 +30,7 @@ export default function EmbedBlock() {
       </div>
       <button
         onClick={handleCopy}
-        className="bg-brand hover:bg-brand-dark text-white font-semibold px-5 py-2.5 rounded-full text-sm transition-colors"
+        className="inline-flex min-h-11 items-center bg-brand hover:bg-brand-dark text-white font-semibold px-5 py-2.5 rounded-full text-sm touch-manipulation transition-colors"
       >
         {copied ? <span className="inline-flex items-center gap-1.5"><Icon name="check" size={15} weight="bold" />{t("copied")}</span> : t("copy")}
       </button>
