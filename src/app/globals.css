@@ -61,6 +61,47 @@ body {
   font-feature-settings: "ss01", "cv11";
 }
 
+/* ── Interaction baseline ───────────────────────────────────────────────────
+   None of this existed. Focus fell back to the user agent's near-black ring,
+   which is legible but reads as unstyled next to a designed page, and on the
+   teal buttons it has poor contrast. Tap targets on a twelve-step flow were
+   also inheriting the double-tap-zoom delay for no reason.
+   ──────────────────────────────────────────────────────────────────────── */
+
+/* Native controls and scrollbars were staying light in dark mode, because the
+   theme swapped custom properties but never told the browser. */
+:root { color-scheme: light; }
+html[data-theme="dark"] { color-scheme: dark; }
+
+:where(a, button, [role="button"], [role="radio"], input, select, textarea, summary) {
+  touch-action: manipulation;
+}
+
+/* :focus-visible, not :focus, so a mouse click on a button does not leave a
+   ring behind it. :where() keeps specificity at zero, so any component that
+   wants its own treatment simply overrides this. */
+:where(a, button, [role="button"], [role="radio"], input, select, textarea, summary):focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Anchored headings otherwise land flush against the sticky header. */
+:where(h1, h2, h3) {
+  scroll-margin-top: 5rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 h1,
 h2,
 h3 {

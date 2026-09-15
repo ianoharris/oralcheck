@@ -345,12 +345,44 @@ export default function ResultsPage() {
               </p>
             )}
 
+            {/*
+                The action belongs on the first screen.
+
+                Measured 2026-09-14: the results page is 5,682px tall on an
+                812px phone, and the primary find-care button sat at y=3836,
+                which is 4.7 screenfuls down. find_care_click had fired 4 times
+                against 291 completions. That is not a population declining to
+                act, it is a population that never saw the control.
+
+                Shown only where going to get looked at is the actual
+                recommendation. On the reassuring tiers the bottom CTA is still
+                the right weight. Tagged results_hero so its rate can be
+                compared against the buried one rather than merged with it.
+            */}
+            {(result.tier === "elevated" ||
+              result.tier === "high" ||
+              result.hasUrgentSymptom) && (
+              <Link
+                href="/find-care"
+                onClick={() =>
+                  gaEvent("find_care_click", {
+                    risk_tier: result.tier,
+                    risk_score: result.score,
+                    cta_source: "results_hero",
+                  })
+                }
+                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl bg-brand px-6 py-3 font-semibold text-white touch-manipulation transition-colors hover:bg-brand-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+              >
+                {primaryCTA[result.tier]}
+              </Link>
+            )}
+
             {/* The scoring rationale lived only in the footer. On a health tool
                 the "how was this calculated" answer belongs next to the number
                 it explains, not three scrolls away. */}
             <Link
               href="/methods"
-              className="inline-flex items-center gap-1.5 text-sm font-medium text-brand hover:text-brand-dark transition-colors pt-1"
+              className="inline-flex min-h-11 items-center gap-1.5 text-sm font-medium text-brand hover:text-brand-dark transition-colors"
             >
               <Icon name="overview" size={15} />
               {t("howScored")}
@@ -473,7 +505,7 @@ export default function ResultsPage() {
                         });
                       }
                     }}
-                    className="inline-block mt-2 text-sm font-semibold text-brand hover:underline"
+                    className="inline-flex min-h-11 items-center mt-1 text-sm font-semibold text-brand hover:underline touch-manipulation"
                   >
                     {step.linkLabel}
                   </Link>
@@ -624,7 +656,7 @@ export default function ResultsPage() {
       <div className="mt-6 flex justify-center">
         <Link
           href="/screener"
-          className="text-sm font-medium text-ink-soft hover:text-ink"
+          className="inline-flex min-h-11 items-center px-4 text-sm font-medium text-ink-soft hover:text-ink touch-manipulation"
         >
           {t("retake")}
         </Link>

@@ -76,6 +76,21 @@ export default function ScreenerPage() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [q.options, handleSelect, handleNext]);
 
+  // Advancing a step swapped the entire contents of the page while focus sat
+  // on the Next button, so a screen reader announced nothing and a keyboard
+  // user was left pointing at a control for a question they could no longer
+  // see. Moving focus to the new heading announces the question and puts the
+  // caret back at the top of the step. Skipped on first render, since stealing
+  // focus on load is its own problem.
+  const firstRender = useRef(true);
+  useEffect(() => {
+    if (firstRender.current) {
+      firstRender.current = false;
+      return;
+    }
+    document.getElementById(`q-${q.id}-title`)?.focus();
+  }, [q.id]);
+
   const slideX = reduced ? 0 : 36;
 
   return (
