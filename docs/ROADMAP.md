@@ -209,6 +209,26 @@ Update both together. See `AGENTS.md`.
 
 Newest first.
 
+### 2026-09-14 (late, ii)
+- **Content pages had no shared width, so several read as skinny.** The nav and
+  footer are `max-w-6xl` while page containers ranged from `2xl` to `6xl`, and
+  the learn section alone had six pages at `5xl` and three at `3xl`. About,
+  For Clinicians, Methods, Press, Infographic, Learn Facts and Learn Self-exam
+  are all on `max-w-5xl` now, which is where the learn section and the results
+  page already were. Deliberate exceptions kept and worth not "fixing" later:
+  `/privacy` and `/terms` stay `4xl` and `/learn/[slug]` stays `3xl` because
+  they are single columns of prose, where a wider container makes the line
+  length worse, and `/screener` stays `2xl` because one question at a time is
+  the point
+- **Widening prose is not the same as improving it.** Body copy in the widened
+  pages is capped near 65 characters, since 1024px of unconstrained text runs
+  past 105 characters a line and the guideline is 65 to 75
+- **The About bio card was the case where that tradeoff did not work.** Capping
+  the measure inside a full-width card left half the card empty, which looked
+  worse than the original. It is two columns from `md` up now: identity block
+  left, bio right at about 80 characters. The card uses the width and the
+  measure stays readable, which single-column could not do at once
+
 ### 2026-09-14 (late)
 - **A ninth learn guide: white and red patches.** `/learn/white-and-red-patches`,
   live in all three languages. Leukoplakia and erythroplakia are the actual

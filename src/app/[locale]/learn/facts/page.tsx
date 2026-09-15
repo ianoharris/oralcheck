@@ -53,7 +53,7 @@ export default async function FactsPage({ params }: Props) {
   const facts = t.raw("facts") as Fact[];
 
   return (
-    <article className="max-w-3xl mx-auto px-5 py-10 sm:py-16">
+    <article className="max-w-5xl mx-auto px-5 py-10 sm:py-16">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -70,7 +70,7 @@ export default async function FactsPage({ params }: Props) {
       <h1 className="font-serif text-4xl sm:text-5xl text-ink mb-4">
         {t("heading")}
       </h1>
-      <p className="text-lg text-ink-soft leading-relaxed mb-10">
+      <p className="text-lg text-ink-soft leading-relaxed mb-10 max-w-prose">
         {t("introRest")}{" "}
         <Link
           href="/learn/oral-cancer"
@@ -108,7 +108,7 @@ export default async function FactsPage({ params }: Props) {
             <h2 className="font-serif text-2xl text-ink mb-2 leading-tight">
               {f.title}
             </h2>
-            <p className="text-ink-soft leading-relaxed">{f.detail}</p>
+            <p className="text-ink-soft leading-relaxed max-w-prose">{f.detail}</p>
           </div>
         ))}
       </div>

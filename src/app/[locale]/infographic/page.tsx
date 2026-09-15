@@ -15,7 +15,7 @@ export default function InfographicPage() {
         }
       `}</style>
 
-      <div className="max-w-3xl mx-auto px-5 py-10 sm:py-14">
+      <div className="max-w-5xl mx-auto px-5 py-10 sm:py-14">
 
         {/* Page controls — hidden on print */}
         <div id="controls" className="flex flex-wrap items-center justify-between gap-4 mb-8">

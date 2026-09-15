@@ -64,7 +64,7 @@ export default async function PressPage({ params }: Props) {
   const facts = t.raw("facts") as { label: string; value: string }[];
 
   return (
-    <div className="max-w-4xl mx-auto px-5 py-10 sm:py-16">
+    <div className="max-w-5xl mx-auto px-5 py-10 sm:py-16">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -82,8 +82,8 @@ export default async function PressPage({ params }: Props) {
       {/* Boilerplate — the paragraph a journalist can paste verbatim */}
       <section className="bg-warm-dim rounded-2xl border border-warm-dim p-6 sm:p-8 mb-6">
         <h2 className="font-serif text-2xl text-ink mb-3">{t("boilerplateHeading")}</h2>
-        <p className="text-ink-soft leading-relaxed mb-4">{t("boilerplateShort")}</p>
-        <p className="text-ink-soft leading-relaxed">{t("boilerplateLong")}</p>
+        <p className="text-ink-soft leading-relaxed mb-4 max-w-prose">{t("boilerplateShort")}</p>
+        <p className="text-ink-soft leading-relaxed max-w-prose">{t("boilerplateLong")}</p>
       </section>
 
       {/* Fast facts */}
@@ -117,13 +117,13 @@ export default async function PressPage({ params }: Props) {
             <div className="text-sm text-ink-soft">{t("founderTitle")}</div>
           </div>
         </div>
-        <p className="text-ink-soft leading-relaxed">{t("founderBio")}</p>
+        <p className="text-ink-soft leading-relaxed max-w-prose">{t("founderBio")}</p>
       </section>
 
       {/* Brand assets */}
       <section className="bg-warm-dim rounded-2xl border border-warm-dim p-6 sm:p-8 mb-6">
         <h2 className="font-serif text-2xl text-ink mb-2">{t("assetsHeading")}</h2>
-        <p className="text-sm text-ink-soft leading-relaxed mb-5">{t("assetsBody")}</p>
+        <p className="text-sm text-ink-soft leading-relaxed mb-5 max-w-prose">{t("assetsBody")}</p>
         <div className="flex flex-wrap gap-3 mb-7">
           {ASSETS.map((a) => (
             <a
@@ -160,7 +160,7 @@ export default async function PressPage({ params }: Props) {
       {/* Contact */}
       <section className="bg-brand-soft border border-brand/15 rounded-2xl p-6 sm:p-8">
         <h2 className="font-serif text-2xl text-ink mb-2">{t("contactHeading")}</h2>
-        <p className="text-ink-soft leading-relaxed mb-5">{t("contactBody")}</p>
+        <p className="text-ink-soft leading-relaxed mb-5 max-w-prose">{t("contactBody")}</p>
         <div className="flex flex-wrap gap-3">
           <Link
             href="/about#feedback"

@@ -71,7 +71,7 @@ export default async function SelfExamPage({ params }: Props) {
   const steps = t.raw("steps") as Step[];
 
   return (
-    <article className="max-w-3xl mx-auto px-5 py-10 sm:py-16">
+    <article className="max-w-5xl mx-auto px-5 py-10 sm:py-16">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -88,7 +88,7 @@ export default async function SelfExamPage({ params }: Props) {
       <h1 className="font-serif text-4xl sm:text-5xl text-ink mb-4">
         {t("heading")}
       </h1>
-      <p className="text-lg text-ink-soft leading-relaxed mb-10">
+      <p className="text-lg text-ink-soft leading-relaxed mb-10 max-w-prose">
         {t("introRest")}{" "}
         <Link
           href="/learn/signs"
@@ -112,7 +112,7 @@ export default async function SelfExamPage({ params }: Props) {
               {/* min-w-0 so the photo row can wrap instead of forcing the li wide */}
               <div className="min-w-0">
                 <h2 className="font-semibold text-ink mb-1">{s.area}</h2>
-                <p className="text-ink-soft leading-relaxed">{s.instruction}</p>
+                <p className="text-ink-soft leading-relaxed max-w-prose">{s.instruction}</p>
                 {photos.length > 0 && (
                   <div className="mt-3 flex flex-wrap gap-2">
                     {photos.map((p, n) => (
@@ -134,7 +134,7 @@ export default async function SelfExamPage({ params }: Props) {
         })}
       </ol>
 
-      <p className="mt-3 text-[11px] text-ink-soft leading-relaxed">
+      <p className="mt-3 text-[11px] text-ink-soft leading-relaxed max-w-prose">
         {t("photoCredit")}
       </p>
 
@@ -142,14 +142,14 @@ export default async function SelfExamPage({ params }: Props) {
         <h2 className="font-serif text-2xl text-ink mb-2">
           {t("normalHeading")}
         </h2>
-        <p className="text-ink leading-relaxed mb-2">
+        <p className="text-ink leading-relaxed mb-2 max-w-prose">
           {t("normalP1Rest")}{" "}
           <Link href="/learn/canker-sore-vs-oral-cancer" className="text-brand hover:underline font-medium">
             {t("normalP1Link")}
           </Link>{" "}
           {t("normalP1End")}
         </p>
-        <p className="text-ink leading-relaxed">{t("normalP2")}</p>
+        <p className="text-ink leading-relaxed max-w-prose">{t("normalP2")}</p>
       </div>
 
       <div className="mt-8 flex flex-wrap gap-3">

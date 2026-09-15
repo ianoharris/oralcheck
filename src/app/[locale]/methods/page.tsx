@@ -156,7 +156,7 @@ export default async function MethodsPage({ params }: Props) {
   ];
 
   return (
-    <div className="max-w-4xl mx-auto px-5 py-12 sm:py-20">
+    <div className="max-w-5xl mx-auto px-5 py-12 sm:py-20">
       <div className="mb-10">
         <Link href="/" className="text-sm text-brand hover:underline">{t("back")}</Link>
       </div>
@@ -235,7 +235,7 @@ export default async function MethodsPage({ params }: Props) {
               </span>
               <div className="max-w-2xl">
                 <h3 className="text-ink font-semibold text-sm mb-1">{r.title}</h3>
-                <p className="text-sm text-ink-soft leading-relaxed">{r.body}</p>
+                <p className="text-sm text-ink-soft leading-relaxed max-w-prose">{r.body}</p>
               </div>
             </div>
           ))}
@@ -391,8 +391,8 @@ export default async function MethodsPage({ params }: Props) {
             {t("lastReviewedLabel")}
           </div>
           <div className="font-serif text-xl text-ink mb-4">{t("lastReviewedDate")}</div>
-          <p className="text-sm text-ink-soft leading-relaxed mb-3">{t("reviewBody")}</p>
-          <p className="text-sm text-ink-soft leading-relaxed">{t("reviewCadence")}</p>
+          <p className="text-sm text-ink-soft leading-relaxed mb-3 max-w-prose">{t("reviewBody")}</p>
+          <p className="text-sm text-ink-soft leading-relaxed max-w-prose">{t("reviewCadence")}</p>
         </div>
       </section>
 

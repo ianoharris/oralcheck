@@ -29,12 +29,12 @@ export default async function ForCliniciansPage({ params }: Props) {
   const howToUse = t.raw("howToUse") as Step[];
 
   return (
-    <div className="max-w-3xl mx-auto px-5 py-10 sm:py-16">
+    <div className="max-w-5xl mx-auto px-5 py-10 sm:py-16">
       {/* Hero */}
       <h1 className="font-serif text-4xl sm:text-5xl text-ink mb-4">
         {t("heading")}
       </h1>
-      <p className="text-lg text-ink-soft leading-relaxed mb-8">
+      <p className="text-lg text-ink-soft leading-relaxed mb-8 max-w-prose">
         {t("subheading")}
       </p>
 
@@ -83,7 +83,7 @@ export default async function ForCliniciansPage({ params }: Props) {
 
       {/* Disclaimer note */}
       <section className="bg-accent/10 border border-accent/20 rounded-2xl p-5 mb-10">
-        <p className="text-sm text-ink leading-relaxed">
+        <p className="text-sm text-ink leading-relaxed max-w-prose">
           <strong>{t("importantLabel")}</strong> {t("importantBody")}
         </p>
       </section>

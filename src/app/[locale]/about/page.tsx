@@ -28,43 +28,54 @@ export default async function AboutPage({ params }: Props) {
   const t = await getTranslations({ locale, namespace: "AboutPage" });
 
   return (
-    <div className="max-w-3xl mx-auto px-5 py-10 sm:py-16">
+    <div className="max-w-5xl mx-auto px-5 py-10 sm:py-16">
       <h1 className="font-serif text-4xl sm:text-5xl text-ink mb-4">
         {t("heading")}
       </h1>
-      <p className="text-lg text-ink-soft leading-relaxed mb-10">
+      <p className="text-lg text-ink-soft leading-relaxed mb-10 max-w-prose">
         {t("subheading")}
       </p>
 
       <section className="bg-warm-dim rounded-2xl border border-warm-dim p-6 sm:p-8 mb-6">
         <h2 className="font-serif text-2xl text-ink mb-5">{t("whoBuiltHeading")}</h2>
-        <div className="flex items-center gap-4 mb-6">
-          <Image
-            src="/ian-harris.jpg"
-            alt="Ian Harris, founder of OralCheck"
-            width={200}
-            height={200}
-            className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl object-cover object-[center_25%] border border-warm-dim shrink-0"
-          />
-          <div>
-            <div className="font-serif text-xl text-ink">{t("founderName")}</div>
-            <div className="text-sm text-ink-soft">{t("founderTitle")}</div>
-            {LINKEDIN_URL && (
-              <a
-                href={LINKEDIN_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 mt-1.5 text-sm font-medium text-brand hover:text-brand-dark transition-colors"
-              >
-                <Icon name="linkedin" size={16} weight="fill" />
-                {t("linkedin")}
-              </a>
-            )}
+        {/*
+            Two columns from md up. Single column and this card either runs
+            prose to ~105 characters a line, which is well past readable, or
+            caps the measure and leaves half the card empty. Splitting the
+            identity block off lets the card use the full width while the bio
+            stays near 75 characters, which is the actual constraint.
+        */}
+        <div className="grid gap-8 md:grid-cols-[minmax(0,15rem)_minmax(0,1fr)] md:gap-10">
+          <div className="flex items-center gap-4 md:flex-col md:items-start md:gap-3">
+            <Image
+              src="/ian-harris.jpg"
+              alt="Ian Harris, founder of OralCheck"
+              width={200}
+              height={200}
+              className="w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32 rounded-2xl object-cover object-[center_25%] border border-warm-dim shrink-0"
+            />
+            <div className="min-w-0">
+              <div className="font-serif text-xl text-ink break-words">{t("founderName")}</div>
+              <div className="text-sm text-ink-soft break-words">{t("founderTitle")}</div>
+              {LINKEDIN_URL && (
+                <a
+                  href={LINKEDIN_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex min-h-11 items-center gap-1.5 text-sm font-medium text-brand hover:text-brand-dark transition-colors"
+                >
+                  <Icon name="linkedin" size={16} weight="fill" />
+                  {t("linkedin")}
+                </a>
+              )}
+            </div>
+          </div>
+          <div className="space-y-3 min-w-0">
+            <p className="text-ink-soft leading-relaxed">{t("bio1")}</p>
+            <p className="text-ink-soft leading-relaxed">{t("bio2")}</p>
+            <p className="text-ink-soft leading-relaxed">{t("bio3")}</p>
           </div>
         </div>
-        <p className="text-ink-soft leading-relaxed mb-3">{t("bio1")}</p>
-        <p className="text-ink-soft leading-relaxed mb-3">{t("bio2")}</p>
-        <p className="text-ink-soft leading-relaxed">{t("bio3")}</p>
       </section>
 
       <section className="bg-warm-dim rounded-2xl border border-warm-dim p-6 sm:p-8 mb-6">
@@ -84,7 +95,7 @@ export default async function AboutPage({ params }: Props) {
 
       <section className="bg-accent/10 border border-accent/20 rounded-2xl p-6 sm:p-8 mb-10">
         <h2 className="font-serif text-2xl text-ink mb-3">{t("disclaimerHeading")}</h2>
-        <p className="text-ink leading-relaxed">{t("disclaimerBody")}</p>
+        <p className="text-ink leading-relaxed max-w-prose">{t("disclaimerBody")}</p>
       </section>
 
       <div className="flex flex-wrap gap-3">
@@ -104,7 +115,7 @@ export default async function AboutPage({ params }: Props) {
 
       <section id="feedback" className="bg-warm-dim rounded-2xl border border-warm-dim p-6 sm:p-8 mt-6">
         <h2 className="font-serif text-2xl text-ink mb-1">{t("getInTouchHeading")}</h2>
-        <p className="text-ink-soft leading-relaxed mb-5 text-sm">{t("getInTouchBody")}</p>
+        <p className="text-ink-soft leading-relaxed mb-5 text-sm max-w-prose">{t("getInTouchBody")}</p>
         <ContactForm />
       </section>
 
@@ -113,7 +124,7 @@ export default async function AboutPage({ params }: Props) {
           <Icon name="review" size={22} />
           {t("reviewHeading")}
         </h2>
-        <p className="text-ink-soft leading-relaxed mb-5 text-sm">{t("reviewBody")}</p>
+        <p className="text-ink-soft leading-relaxed mb-5 text-sm max-w-prose">{t("reviewBody")}</p>
         <ReviewForm />
       </section>
     </div>
