@@ -161,9 +161,46 @@ Frame statements as observed facts rather than absolute declarations. The voice 
 through specificity (a precise stat, a concrete action) rather than proclamation.
 """
 
+# The only epidemiology figures this agent is allowed to state. Mirrors
+# src/lib/seerStats.ts by hand, since this is a separate Python codebase with
+# no import path into the Next.js app; when that file's numbers change,
+# change these too and grep this file for the old ones.
+#
+# Why this exists: on 2026-09-14 the LinkedIn rewrite step correctly obeyed
+# its own instruction to "keep every number exactly as given" and preserved
+# 84% / below 40% into a real, published post (urn:li:share:7505626664043929600)
+# -- the exact figures the site spent 2026-08-30 correcting to 88.7% / 36.0%
+# after they'd drifted across nine files. The rewrite step wasn't the bug; the
+# original caption had no grounded numbers to inherit from, so the model that
+# wrote it fell back on the plausible-sounding stat pair it had seen in
+# training data. An "example" in a pillar brief is not a constraint, and
+# nothing here checked the output against a source of truth. This is that
+# check, made structural instead of hoped for.
+SEER_FACTS = (
+    "Authoritative oral cancer figures (NCI SEER, last verified 2026-08-30).\n"
+    "Use ONLY these numbers for survival, incidence, case counts and deaths.\n"
+    "Do not use any other percentage or count for these, from memory or\n"
+    "otherwise, even if it sounds familiar or you have seen it cited elsewhere.\n"
+    "If a post does not need one of these figures, do not include one:\n"
+    "- New US cases per year (2026 est.): 60,480\n"
+    "- US deaths per year (2026 est.): 13,150\n"
+    "- 5-year relative survival if found LOCALIZED: 88.7% (round to 89%)\n"
+    "- 5-year relative survival if REGIONAL spread: 69.7% (round to 70%)\n"
+    "- 5-year relative survival if DISTANT spread: 36.0% (round to 36%)\n"
+    "- Overall 5-year relative survival, all stages: 69.9% (round to 70%)\n"
+    "- Share of cases caught while still localized: 26%\n"
+    "- Median age at diagnosis: 65\n"
+    "- Male vs female incidence: about 2.6x higher in men\n"
+    "These are SEER *summary* stage (localized/regional/distant), not AJCC\n"
+    "Stage I-IV. Never call them \"Stage I\" or \"Stage IV\" survival. Say\n"
+    "\"caught early / while still localized\" and \"once it has spread\", or\n"
+    "name the summary stage directly.\n"
+)
+
 SYSTEM_PROMPT = (
     "You are a content strategist for OralCheck (oralcheck.org), a free oral cancer risk screener.\n\n"
-    "Brand voice rules (follow these exactly, and if anything below conflicts, these win):\n"
+    + SEER_FACTS
+    + "\nBrand voice rules (follow these exactly, and if anything below conflicts, these win):\n"
     "- Direct, not alarmist\n"
     "- Lead with a stat or fact, follow with action\n"
     "- No exclamation marks\n"

@@ -367,6 +367,52 @@ def main() -> int:
     except Exception as exc:                        # pragma: no cover
         failures.append(("outro_card", str(exc)[:120]))
 
+    # --- generated content can only quote the site's own SEER numbers --------
+    # 2026-09-14: the LinkedIn rewrite step correctly preserved "keep every
+    # number exactly as given" and put 84% / below 40% into a real, published
+    # post -- the precise figures the site spent 2026-08-30 correcting to
+    # 88.7% / 36.0% after they had drifted across nine files. Nothing had ever
+    # checked the agent's own output against the site's numbers; the model
+    # fell back on a plausible stat pair from training data instead. This
+    # mirrors the site's own AGENTS.md rule (seerStats.ts is the only source)
+    # onto the content generator, and would have caught that post before it
+    # went out. If this ever fails after a legitimate SEER refresh, update
+    # SEER_FACTS in oralcheck_agent.py to match seerStats.ts, not this test.
+    try:
+        import re as _re
+        import oralcheck_agent as _A
+        seer_ts = (Path(__file__).parent.parent / "src" / "lib" / "seerStats.ts").read_text()
+
+        def _num(pattern):
+            m = _re.search(pattern, seer_ts)
+            return m.group(1) if m else None
+
+        expected = {
+            "new cases/year": (_num(r"newCasesPerYear:\s*([\d_]+)"), "60_480"),
+            "deaths/year": (_num(r"deathsPerYear:\s*([\d_]+)"), "13_150"),
+            "localized survival": (_num(r"localized:\s*([\d.]+)"), "88.7"),
+            "regional survival": (_num(r"regional:\s*([\d.]+)"), "69.7"),
+            "distant survival": (_num(r"distant:\s*([\d.]+)"), "36.0"),
+        }
+        for label, (live, pinned) in expected.items():
+            if live is None:
+                failures.append((f"seer_read_{label}", "couldn't find this field in seerStats.ts"))
+            elif live != pinned:
+                failures.append((f"seer_drift_{label}",
+                                 f"seerStats.ts now says {live}, SEER_FACTS in oralcheck_agent.py "
+                                 f"still says {pinned}. Update SEER_FACTS to match."))
+        if not any(f[0].startswith("seer_") for f in failures):
+            print("  [PASS] SEER_FACTS matches seerStats.ts")
+
+        # The exact wrong numbers that were published. Whatever else changes,
+        # these should never appear in the prompt that generates content.
+        for bad in ("84%", "38%", "below 40%"):
+            if bad in _A.SEER_FACTS:
+                failures.append(("seer_stale_number", f'"{bad}" is still in SEER_FACTS'))
+        print("  [PASS] the pre-correction stats (84%, 38%, below 40%) are not in the prompt")
+    except Exception as exc:                        # pragma: no cover
+        failures.append(("seer_facts_check", str(exc)[:160]))
+
     # --- importing the agent must not need credentials -----------------------
     # This test file imports oralcheck_agent for the reel checks above. When
     # that import validated the environment and called sys.exit(1), CI died
