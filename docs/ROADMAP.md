@@ -22,7 +22,6 @@ Update both together. See `AGENTS.md`.
 
 | Item | Blocked on | Notes |
 |---|---|---|
-| **A wrong survival stat is one API call from re-publishing** | Ian, in the Publora dashboard or by approving the write here | **2026-09-18.** The 2026-09-14 run published a LinkedIn post ("approximately 84%" / "below 40%") and queued an Instagram carousel with the same 84% baked into both the caption and slide 5's image, in Publora as `6aa8493c7410b654c57eca12`, scheduled 2026-09-18 22:00 UTC. Those are the exact numbers `seerStats.ts` corrected on 2026-08-30. Root cause fixed and pushed (`57e0d86`): the content generator had no grounded epidemiology numbers, so the model filled in a plausible stat pair from training data, and the LinkedIn rewrite step correctly preserved it. The fix for *this specific post* is built and verified (corrected caption, and slide 5 re-rendered pixel-identical except 84 to 89 percent, via the exact production pipeline) but not applied: auto mode's classifier declined the live write to a third-party posting API, correctly. Two ways to close this: Ian pulls `6aa8493c7410b654c57eca12` to draft in Publora and either fixes it by hand or asks for the prepared replacement to be posted; or he approves the write and it goes out corrected, same slot. The already-published LinkedIn post (`urn:li:share:7505626664043929600`) cannot be silently fixed and is his call: LinkedIn does not support editing a post's text after publish, only deleting it. |
 | ~~Publishing articles from `/review/<slug>`~~ | **Done — it already was** | `ADMIN_SECRET` has been set in Vercel (Preview + Production) since 2026-08-24; this entry was simply never marked off. Verified 2026-09-01: `/api/publish` and `/api/draft` both return **401**, not 503, for a missing or wrong secret, which is the signature of a configured and correctly-gating secret. The header is `x-oralcheck-admin`. |
 | A named clinical reviewer on `/methods` | Marquette Chair + Associate Dean for Research | **Dr. Yeshwant Rawal reviewed the methodology on 2026-08-24** and called it "done thoughtfully and based on evidence through relevant literature". He is President of the American Board of Oral & Maxillofacial Pathology, so this is a serious credential. **He has agreed in principle** (2026-08-25): "I would be very happy to associate myself with this excellent project." Conditional on his Chair and Associate Dean for Research, both copied. He asked whether there is a UW-Madison mentor or institutional protocol; there is neither, and the reply says so plainly. **Ian sent the final weights on 2026-09-01, as promised.** His name still does not go on the site until his institution clears it. |
 | A real quote on the homepage | The same permission | Currently carries a cited NCI SEER statistic, which is honest but is a citation rather than an endorsement. Rawal's review is the first plausible source for a real one. Do not fabricate one, and do not quote him until he says yes. |
@@ -210,6 +209,14 @@ Update both together. See `AGENTS.md`.
 
 Newest first.
 
+### 2026-09-18 (decided)
+- **Decided against fixing the wrong-stat posts.** Asked directly whether to swap
+  the queued Instagram carousel (still showing 84%/below 40%, scheduled 22:00 UTC)
+  for the corrected, pre-built replacement before it fired. Ian said no, leave it
+  as-is. The already-published LinkedIn post with the same wrong figures also stays
+  up untouched. Root cause is still fixed (`SEER_FACTS`, see below), so this does not
+  recur, but these two specific posts keep the pre-correction numbers permanently.
+
 ### 2026-09-18
 - **The content generator had no grounded epidemiology numbers, and it showed.**
   The 2026-09-14 run published a LinkedIn post stating "approximately 84%"
@@ -226,9 +233,11 @@ Newest first.
   absent from the prompt, so this is a test failure next time, not a silent
   drift. Found by checking Publora directly after being asked why nothing
   seemed to have scheduled; everything had scheduled, which is what surfaced
-  what it had scheduled. **The already-queued Instagram post from the same run
-  still carries the wrong number and is not yet fixed**, see the blocked-on-Ian
-  table above
+  what it had scheduled. The fix for the queued Instagram post (corrected
+  caption, slide 5 re-rendered pixel-identical except 84 to 89 percent) was
+  built and verified but never applied, see the entry directly below: Ian
+  chose to leave both the carousel and the published LinkedIn post as they
+  are
 
 ### 2026-09-14 (late, iii)
 - **Every page swept at 375x812.** No horizontal overflow anywhere and exactly
