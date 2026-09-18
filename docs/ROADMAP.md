@@ -10,7 +10,7 @@ The running list. Two rules:
    named. This is the list's whole purpose: the things that come up once, sound
    good, and are never mentioned again.
 
-Last updated: 2026-09-14
+Last updated: 2026-09-18
 
 **Mirrored to an artifact Ian reads:**
 https://claude.ai/code/artifact/cc490e4b-1ee3-4062-bc56-eada066f1003
@@ -22,6 +22,7 @@ Update both together. See `AGENTS.md`.
 
 | Item | Blocked on | Notes |
 |---|---|---|
+| **A wrong survival stat is one API call from re-publishing** | Ian, in the Publora dashboard or by approving the write here | **2026-09-18.** The 2026-09-14 run published a LinkedIn post ("approximately 84%" / "below 40%") and queued an Instagram carousel with the same 84% baked into both the caption and slide 5's image, in Publora as `6aa8493c7410b654c57eca12`, scheduled 2026-09-18 22:00 UTC. Those are the exact numbers `seerStats.ts` corrected on 2026-08-30. Root cause fixed and pushed (`57e0d86`): the content generator had no grounded epidemiology numbers, so the model filled in a plausible stat pair from training data, and the LinkedIn rewrite step correctly preserved it. The fix for *this specific post* is built and verified (corrected caption, and slide 5 re-rendered pixel-identical except 84 to 89 percent, via the exact production pipeline) but not applied: auto mode's classifier declined the live write to a third-party posting API, correctly. Two ways to close this: Ian pulls `6aa8493c7410b654c57eca12` to draft in Publora and either fixes it by hand or asks for the prepared replacement to be posted; or he approves the write and it goes out corrected, same slot. The already-published LinkedIn post (`urn:li:share:7505626664043929600`) cannot be silently fixed and is his call: LinkedIn does not support editing a post's text after publish, only deleting it. |
 | ~~Publishing articles from `/review/<slug>`~~ | **Done — it already was** | `ADMIN_SECRET` has been set in Vercel (Preview + Production) since 2026-08-24; this entry was simply never marked off. Verified 2026-09-01: `/api/publish` and `/api/draft` both return **401**, not 503, for a missing or wrong secret, which is the signature of a configured and correctly-gating secret. The header is `x-oralcheck-admin`. |
 | A named clinical reviewer on `/methods` | Marquette Chair + Associate Dean for Research | **Dr. Yeshwant Rawal reviewed the methodology on 2026-08-24** and called it "done thoughtfully and based on evidence through relevant literature". He is President of the American Board of Oral & Maxillofacial Pathology, so this is a serious credential. **He has agreed in principle** (2026-08-25): "I would be very happy to associate myself with this excellent project." Conditional on his Chair and Associate Dean for Research, both copied. He asked whether there is a UW-Madison mentor or institutional protocol; there is neither, and the reply says so plainly. **Ian sent the final weights on 2026-09-01, as promised.** His name still does not go on the site until his institution clears it. |
 | A real quote on the homepage | The same permission | Currently carries a cited NCI SEER statistic, which is honest but is a citation rather than an endorsement. Rawal's review is the first plausible source for a real one. Do not fabricate one, and do not quote him until he says yes. |
@@ -208,6 +209,26 @@ Update both together. See `AGENTS.md`.
 ## Shipped
 
 Newest first.
+
+### 2026-09-18
+- **The content generator had no grounded epidemiology numbers, and it showed.**
+  The 2026-09-14 run published a LinkedIn post stating "approximately 84%"
+  early-stage survival and "below 40%" late, the exact figures `seerStats.ts`
+  corrected on 2026-08-30 after they had drifted across nine files on the site
+  itself. The LinkedIn rewrite step wasn't the bug, it correctly obeyed its own
+  instruction to preserve every number exactly as given; the original Instagram
+  caption never had a grounded number to inherit, so the model filled the gap
+  with a plausible stat pair from training data. Fixed: `SEER_FACTS` in
+  `oralcheck_agent.py` mirrors `seerStats.ts` by hand and is now prepended to
+  `SYSTEM_PROMPT`, which every idea and content generation call already
+  receives. `test_render.py` now checks the pinned figures against
+  `seerStats.ts` on every run and confirms the pre-correction numbers are
+  absent from the prompt, so this is a test failure next time, not a silent
+  drift. Found by checking Publora directly after being asked why nothing
+  seemed to have scheduled; everything had scheduled, which is what surfaced
+  what it had scheduled. **The already-queued Instagram post from the same run
+  still carries the wrong number and is not yet fixed**, see the blocked-on-Ian
+  table above
 
 ### 2026-09-14 (late, iii)
 - **Every page swept at 375x812.** No horizontal overflow anywhere and exactly
