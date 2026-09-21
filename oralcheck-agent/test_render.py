@@ -367,6 +367,90 @@ def main() -> int:
     except Exception as exc:                        # pragma: no cover
         failures.append(("outro_card", str(exc)[:120]))
 
+    # --- outro has no black flash into it -------------------------------------
+    # 2026-09-21: a real, about-to-post reel measured (via ffmpeg blackdetect)
+    # a 0.23s black flash right before the end card. The outro faded in from
+    # black while every other cut in the reel (segment to segment, via the
+    # concat demuxer) is an instant hard cut with no fade at all, so the
+    # mismatch produced a visible flash where nothing before it faded to
+    # black either. Fixed by dropping the outro's fade-in to match the cut
+    # style everywhere else in the reel.
+    try:
+        import subprocess as _sp
+        card_mp4 = _A._build_reel_outro(2.0)
+        probe = _sp.run(
+            ["ffmpeg", "-i", card_mp4, "-vf",
+             "blackdetect=d=0.02:pic_th=0.98:pix_th=0.10", "-an", "-f", "null", "-"],
+            capture_output=True, text=True,
+        )
+        if "black_start" in probe.stderr:
+            failures.append(("outro_black_flash",
+                             "ffmpeg blackdetect found a black frame in the outro segment"))
+        else:
+            print("  [PASS] outro has no black flash")
+    except FileNotFoundError:
+        print("  [SKIP] outro black-flash check (ffmpeg not on PATH)")
+    except Exception as exc:                        # pragma: no cover
+        failures.append(("outro_black_flash_probe", str(exc)[:120]))
+
+    # --- a scene hold is not a single frozen frame ----------------------------
+    # Every scene animates in over KINETIC_TOTAL seconds, then used to hold on
+    # a single cloned frame for however long the narration ran: one measured
+    # reel held completely static for ~5s on its longest lines, a plausible
+    # driver of the reel's own 83.7% skip rate. render_kinetic_frames now keeps
+    # rendering slow backdrop motion for KINETIC_HOLD_DRIFT more seconds before
+    # anything freezes, so a segment long enough to need holding at all should
+    # come back with more frames than the reveal alone, and the hold-phase
+    # frames should not be byte-identical to each other.
+    try:
+        n_frames = max(2, round(_A._html_render.KINETIC_TOTAL * _A.CAP_FPS))
+        frame_dir, total = _A._html_render.render_kinetic_frames(
+            {"caption": "Test hold motion", "bg": "blobs"}, n_frames, "dark")
+        if total <= n_frames:
+            failures.append(("hold_no_extra_frames",
+                             f"render_kinetic_frames returned {total} frames, "
+                             f"no more than the {n_frames}-frame reveal"))
+        else:
+            hold_frames = sorted(os.listdir(frame_dir))[n_frames:]
+            distinct = len({Path(frame_dir, f).read_bytes() for f in hold_frames[::5]})
+            if distinct < 2:
+                failures.append(("hold_static",
+                                 "hold-phase frames are all byte-identical; the backdrop is not moving"))
+            else:
+                print(f"  [PASS] scene hold keeps moving ({total - n_frames} extra frames, "
+                      f"{distinct} distinct samples checked)")
+    except Exception as exc:                        # pragma: no cover
+        failures.append(("hold_motion_probe", str(exc)[:120]))
+
+    # --- reel photos stay inside the attributed set ---------------------------
+    # `sore` and `lip` have no attribution recorded anywhere in the repo (see
+    # ROADMAP.md). Reels can now request a real clinical photo per segment;
+    # this pins that they can only ever resolve to the two sign photos that
+    # are actually attributed, regardless of what a script asks for.
+    try:
+        if _A.REEL_SIGN_PHOTOS - {"white_patch", "mixed_patch"}:
+            failures.append(("reel_photo_allowlist",
+                             f"REEL_SIGN_PHOTOS has grown beyond the attributed two: "
+                             f"{_A.REEL_SIGN_PHOTOS}"))
+        elif _A._reel_sign_photo("sore") or _A._reel_sign_photo("lip"):
+            failures.append(("reel_photo_unattributed",
+                             "an unattributed sign photo resolved for reel use"))
+        elif not (_A._reel_sign_photo("white_patch") and _A._reel_sign_photo("mixed_patch")):
+            failures.append(("reel_photo_missing", "an attributed sign photo failed to resolve"))
+        else:
+            print("  [PASS] reel photos stay inside the attributed set")
+    except Exception as exc:                        # pragma: no cover
+        failures.append(("reel_photo_allowlist_probe", str(exc)[:120]))
+
+    # --- music bed sits under the voice, not over it --------------------------
+    # 2026-09-21: Ian flagged the bed as a little too loud under the narration.
+    # amix runs with normalize=0, so this constant is a direct, unattenuated
+    # gain on the bed. Pinned so it cannot silently creep back up.
+    if _A.REEL_MUSIC_VOL > 0.12:
+        failures.append(("music_volume", f"REEL_MUSIC_VOL is {_A.REEL_MUSIC_VOL}, back above the level Ian asked for"))
+    else:
+        print(f"  [PASS] music bed volume is {_A.REEL_MUSIC_VOL}, not the old 0.17")
+
     # --- generated content can only quote the site's own SEER numbers --------
     # 2026-09-14: the LinkedIn rewrite step correctly preserved "keep every
     # number exactly as given" and put 84% / below 40% into a real, published

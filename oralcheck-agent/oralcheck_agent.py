@@ -380,6 +380,20 @@ def _sign_photo(name: str) -> str | None:
     path = PUBLIC_DIR / rel
     return str(path) if path.exists() else None
 
+
+# Reels can only draw on the sign photos that carry real attribution. `sore`
+# and `lip` have none recorded anywhere in the repo (see ROADMAP.md, "Two sign
+# photos carry no attribution"), so they stay out of this allowlist until that
+# is fixed rather than quietly propagating the gap into new content.
+REEL_SIGN_PHOTOS = {"white_patch", "mixed_patch"}
+
+
+def _reel_sign_photo(name: str) -> str | None:
+    key = str(name or "").strip().lower()
+    if key not in REEL_SIGN_PHOTOS:
+        return None
+    return _sign_photo(key)
+
 # Layouts the model may request. Photo-backed ones are filled in by the pipeline
 # after an image is fetched, so the model never names a file path itself.
 PHOTO_LAYOUTS = {name for name, spec in _LAYOUT_SCHEMA.items() if spec.get("photo")}
@@ -1330,9 +1344,14 @@ def _build_reel_outro(seconds: float | None = None) -> str:
          "-loop", "1", "-i", outro_png,
          "-f", "lavfi", "-i", "anullsrc=r=44100:cl=stereo",
          "-t", str(seconds),
-         # Shorter fade than before: the fade is dead time for reading, so it
-         # buys presence rather than polish to keep it brief.
-         "-vf", f"scale={REEL_W}:{REEL_H},fps={REEL_FPS},fade=in:st=0:d=0.25",
+         # No fade-in here: every other cut in the reel (content segment to
+         # content segment, via the concat demuxer) is an instant hard cut with
+         # no fade at all. Fading this one in from black was the odd one out,
+         # and since nothing before it fades to black either, the mismatch
+         # produced a visible black flash right before the end card (measured
+         # 2026-09-21: 0.23s of near-black at the segment boundary). Matching
+         # the cut style everywhere else removes the flash outright.
+         "-vf", f"scale={REEL_W}:{REEL_H},fps={REEL_FPS}",
          "-c:v", "libx264", "-pix_fmt", "yuv420p", "-r", str(REEL_FPS),
          "-c:a", "aac", "-ar", "44100", "-ac", "2",
          out.name],
@@ -1366,7 +1385,10 @@ def _concat_reel(segment_paths: list[str]) -> str:
 
 
 REEL_MUSIC = Path(__file__).parent / "assets" / "reel_music.mp3"   # fallback only
-REEL_MUSIC_VOL = 0.17   # low, so it sits under the voice
+REEL_MUSIC_VOL = 0.11   # low, so it sits under the voice
+# Was 0.17; Ian flagged the bed as sitting a little too loud under the
+# narration (2026-09-21). amix runs with normalize=0, so this is a direct
+# gain on the bed relative to the voice track, not a suggestion.
 FAL_MUSIC_MODEL = "fal-ai/stable-audio"
 
 # Varied so consecutive reels don't share a bed. One is picked per reel from the
@@ -1521,13 +1543,17 @@ def build_faceless_reel(content: dict, theme: str | None = None) -> str:
 
 
 def _assign_reel_visuals(segments: list[dict], content: dict) -> None:
-    """Give each segment a distinct backdrop, and drop one real image in.
+    """Give each segment a distinct backdrop, and drop real images in.
 
     Every scene previously rendered on the same two drifting blobs, so a reel
     read as one long identical shot no matter what it said. Backdrops now rotate
     through the available treatments, offset per reel so two reels in a week
-    don't open the same way, and one middle segment gets a real image (a site
-    screenshot, or the photo the script asked for) to break up the typography.
+    don't open the same way. On top of that, up to two segments can carry a
+    real image instead of pure typography: whichever segment the script asked
+    for a clinical sign photo on (see REEL_SCENE_SPEC), plus one auto-picked
+    segment that gets a site screenshot or a stock photo. A reel that was all
+    type end to end read as flat next to the carousels, which already mix in
+    real photos; this is the reel side of the same fix.
     """
     if not _USE_HTML_RENDER:
         return
@@ -1542,15 +1568,22 @@ def _assign_reel_visuals(segments: list[dict], content: dict) -> None:
     for i, seg in enumerate(segments):
         seg.setdefault("bg", variants[(start + i) % len(variants)])
 
+    # A segment that already has a real photo (the script's own clinical-sign
+    # request, resolved in _sanitize_reel_photo) keeps it untouched and is off
+    # the table for the auto-picked image below.
+    has_photo = {i for i, seg in enumerate(segments) if seg.get("photo")}
+    for i in has_photo:
+        log.info("Reel segment %d uses the clinical photo it asked for.", i + 1)
+
     if len(segments) < 3:
         return
     mid = len(segments) // 2
-    if segments[mid].get("stat", {}).get("value") or segments[mid].get("scene"):
+    if mid in has_photo or segments[mid].get("stat", {}).get("value") or segments[mid].get("scene"):
         # Keep the big-number and designed scenes as clean typography: a photo
         # behind a split-stat or a checklist fights the thing it is supposed to
         # be showing.
         mid = max(1, mid - 1)
-    if segments[mid].get("scene") or segments[mid].get("stat", {}).get("value"):
+    if mid in has_photo or segments[mid].get("scene") or segments[mid].get("stat", {}).get("value"):
         return
 
     shot = str(content.get("site_shot", "")).strip()
@@ -1618,7 +1651,32 @@ REEL_SCENE_SPEC = (
     "        \"enumerate\": step N of M. Add index = 2, of = 3, and caption as the step.\n"
     "        The narration must still work as spoken audio on its own: the scene is\n"
     "        what the viewer SEES while that sentence is read, not a replacement for it.\n"
+    "    - photo (optional, at most ONE segment per reel): use the real clinical photo\n"
+    "        library instead of typography. Only when the line is actually about what a\n"
+    "        sign looks like. Set photo to exactly \"white_patch\" or \"mixed_patch\" (the\n"
+    "        only two with usable rights on file; do not invent or request any other\n"
+    "        name). Do not combine photo with scene on the same segment.\n"
 )
+
+
+def _sanitize_reel_photo(seg: dict) -> None:
+    """Resolve a requested clinical photo to a real path, or drop it.
+
+    Runs before `_sanitize_reel_scene` so a resolved photo can win the
+    photo-vs-scene conflict below; a segment that asked for a name outside
+    `REEL_SIGN_PHOTOS` (misspelled, invented, or one of the two unattributed
+    signs) silently loses the photo rather than crashing the render.
+    """
+    key = str(seg.get("photo", "")).strip().lower()
+    if not key:
+        seg.pop("photo", None)
+        return
+    resolved = _reel_sign_photo(key)
+    if not resolved:
+        log.info("Reel photo %r is not in REEL_SIGN_PHOTOS; staying typographic.", key)
+        seg.pop("photo", None)
+        return
+    seg["photo"] = resolved
 
 
 def _sanitize_reel_scene(seg: dict) -> None:
@@ -1628,9 +1686,17 @@ def _sanitize_reel_scene(seg: dict) -> None:
     nothing is a silent hole in the middle of a reel. Cheaper to fall back to
     the ordinary headline scene here than to find out at render time.
     """
+    _sanitize_reel_photo(seg)
     import reel_scenes
     name = str(seg.get("scene", "")).strip().lower()
     if not name:
+        seg.pop("scene", None)
+        return
+    if seg.get("photo"):
+        # The spec says not to combine them; a real photo is the more
+        # distinctive treatment of the two, so it wins if the model asked
+        # for both anyway.
+        log.info("Segment asked for both a photo and scene %r; keeping the photo.", name)
         seg.pop("scene", None)
         return
     required = reel_scenes.SCENE_FIELDS.get(name)
@@ -1706,6 +1772,12 @@ def generate_reel_script(brief: str) -> dict:
             else:
                 s.pop("stat", None)
             _sanitize_reel_scene(s)
+            if s.get("photo") and s.get("stat"):
+                # A number that animates by counting up is already the
+                # distinctive treatment; a photo behind it fights for the
+                # same attention rather than adding to it.
+                log.info("Segment asked for both a photo and a stat; keeping the stat.")
+                s.pop("photo", None)
             # every segment must have SOMETHING on screen
             if not s["caption"] and not s.get("stat") and not s.get("scene"):
                 s["caption"] = " ".join(s["narration"].split()[:6])
@@ -1724,6 +1796,18 @@ def generate_reel_script(brief: str) -> dict:
                     s["caption"] = " ".join(s["narration"].split()[:6])
             else:
                 seen_scenes.add(name)
+
+        # At most one photo per reel, same reasoning as the scene cap above:
+        # more than one and the typography stops being the through-line.
+        seen_photo = False
+        for s in segs:
+            if not s.get("photo"):
+                continue
+            if seen_photo:
+                log.info("A second segment asked for a photo; the second falls back.")
+                s.pop("photo", None)
+            else:
+                seen_photo = True
 
         data["segments"] = segs[:5]
         data.setdefault("hook", segs[0]["narration"])

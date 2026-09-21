@@ -556,7 +556,14 @@ and gets a rewritten caption (longer, professional, no hashtag wall).
 
 **Reels** get one of six designed scene types (`splitstat`, `contrast`,
 `checklist`, `quote`, `term`, `enumerate`) rather than the same template every
-time, plus an end card that holds the URL for 4.5 seconds.
+time, plus an end card that holds the URL for 4.5 seconds. A scene can also ask
+for one of the two clinical photos that have real attribution on file
+(`white_patch`, `mixed_patch`) instead of pure typography, up to one per reel,
+so it is not typography end to end. Once a scene's text has settled it keeps a
+slow, deterministic backdrop drift going for a few more seconds instead of
+freezing outright, since a fully static frame for several seconds is exactly
+the kind of moment a scrolling viewer swipes past (found 2026-09-21, checking
+the reel that was about to post: one scene sat completely frozen for ~5s).
 
 > **The manual step you can't automate:** no API can put a tappable link on a
 > Reel. Captions are plain text; clickable Reel links need Meta Verified Plus.

@@ -603,6 +603,19 @@ def cta_slide_image() -> str:
 KINETIC_W, KINETIC_H = 1080, 1920
 KINETIC_TOTAL = 2.6   # seconds of animation before the scene holds its end state
 
+# The hold used to be a single frame, cloned by ffmpeg for however long the
+# narration ran, so a scene went fully static the moment its text settled (one
+# reel measured 2026-09-21: ~5s of zero visual change on its longest lines).
+# These add a bounded window of continued, deterministic backdrop motion after
+# the reveal, so a typical hold still has something moving instead of freezing
+# outright. Anything past this window still freezes, same as before; this
+# narrows how often that happens rather than removing it.
+KINETIC_HOLD_DRIFT = 2.6   # extra seconds of slow backdrop motion after the reveal settles
+KINETIC_HOLD_FPS = 6       # capture rate for that extension; the motion is slow enough
+                           # that 6fps reads as smooth once each frame is repeated up to
+                           # the reel's real frame rate, at a fraction of the render cost
+KINETIC_TOTAL_HOLD = KINETIC_TOTAL + KINETIC_HOLD_DRIFT
+
 
 def _kinetic_style(theme: str) -> str:
     dm = _font_b64("DMSerifDisplay-Regular.ttf")
@@ -641,7 +654,7 @@ body {{ overflow:hidden; background:var(--bg); color:var(--text);
 
 .scene {{ position:relative; width:{KINETIC_W}px; height:{KINETIC_H}px; overflow:hidden; }}
 .blob {{ position:absolute; border-radius:50%; filter:blur(70px); opacity:0.5;
-  animation-name:drift; animation-duration:{KINETIC_TOTAL}s; animation-timing-function:ease-in-out; }}
+  animation-name:drift; animation-duration:{KINETIC_TOTAL_HOLD}s; animation-timing-function:ease-in-out; }}
 .blob.a {{ width:760px; height:760px; left:-160px; top:-120px;
   background:radial-gradient(circle, var(--teal) 0%, transparent 70%); }}
 .blob.b {{ width:680px; height:680px; right:-200px; bottom:-140px; opacity:0.4;
@@ -656,7 +669,7 @@ body {{ overflow:hidden; background:var(--bg); color:var(--text);
                       to{{transform:scaleY(1); opacity:0.34;}} }}
 
 .bgsweep, .bggrid, .bghalo {{ position:absolute; inset:-4%;
-  animation-name:bgpan; animation-duration:{KINETIC_TOTAL}s;
+  animation-name:bgpan; animation-duration:{KINETIC_TOTAL_HOLD}s;
   animation-timing-function:ease-out; animation-fill-mode:both; }}
 .bghalo {{ opacity:0.9; }}
 
@@ -664,12 +677,12 @@ body {{ overflow:hidden; background:var(--bg); color:var(--text);
 .bgrays span {{ position:absolute; bottom:0; width:36px; height:100%;
   background:linear-gradient(to top, var(--ray) 0%, transparent 78%);
   transform-origin:bottom center; opacity:0.2;
-  animation-name:rayrise; animation-duration:{KINETIC_TOTAL}s;
+  animation-name:rayrise; animation-duration:{KINETIC_TOTAL_HOLD}s;
   animation-timing-function:ease-out; animation-fill-mode:both; }}
 
 .photobg {{ position:absolute; inset:-4%; background-size:cover;
   background-position:center;
-  animation-name:bgpan; animation-duration:{KINETIC_TOTAL}s;
+  animation-name:bgpan; animation-duration:{KINETIC_TOTAL_HOLD}s;
   animation-timing-function:ease-out; animation-fill-mode:both; }}
 .photoscrim {{ position:absolute; inset:0;
   background:linear-gradient(180deg, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.30) 42%,
@@ -759,32 +772,39 @@ BG_VARIANTS = ("blobs", "sweep", "grid", "halo", "rays")
 
 
 def _kinetic_backdrop(variant: str, t: dict) -> str:
+    # Every backdrop carries `anim` so it is paused and scrubbed by --t like the
+    # text is, instead of running on its own real-time clock. It used to lack
+    # this, which is harmless during the brief reveal capture but meant the
+    # extended hold-drift window below had nothing deterministic to render.
     if variant == "sweep":
         return (
-            f"<div class='bgsweep' style=\"background:linear-gradient(135deg,"
+            f"<div class='anim bgsweep' style=\"background:linear-gradient(135deg,"
             f"{t['bg']} 0%,{t['bg']} 45%,{t['teal']} 130%)\"></div>"
         )
     if variant == "grid":
         line = f"{t['text']}14"
         return (
-            "<div class='bggrid' style=\"background-image:"
+            "<div class='anim bggrid' style=\"background-image:"
             f"linear-gradient(to right,{line} 1px,transparent 1px),"
             f"linear-gradient(to bottom,{line} 1px,transparent 1px);"
             "background-size:120px 120px\"></div>"
-            f"<div class='blob b' style='background:{t['teal']}'></div>"
+            f"<div class='anim blob b' style='background:{t['teal']}'></div>"
         )
     if variant == "halo":
         return (
-            "<div class='bghalo' style=\"background:radial-gradient(circle at 50% 38%,"
+            "<div class='anim bghalo' style=\"background:radial-gradient(circle at 50% 38%,"
             f"{t['teal_brt']}40 0%,transparent 62%)\"></div>"
         )
     if variant == "rays":
+        # --d instead of a literal animation-delay: an inline style's delay
+        # would out-specificity .anim's calc()-driven one and opt these back
+        # out of the --t scrub, exactly the bug being fixed here.
         bars = "".join(
-            f"<span style='left:{8 + i * 12}%;animation-delay:{i * 0.09:.2f}s'></span>"
+            f"<span class='anim' style='left:{8 + i * 12}%;--d:{i * 0.09:.3f}'></span>"
             for i in range(8)
         )
         return f"<div class='bgrays' style=\"--ray:{t['teal']}\">{bars}</div>"
-    return "<div class='blob a'></div><div class='blob b'></div>"
+    return "<div class='anim blob a'></div><div class='anim blob b'></div>"
 
 
 def kinetic_scene_html(segment: dict, theme: str = "dark") -> str:
@@ -812,7 +832,7 @@ def kinetic_scene_html(segment: dict, theme: str = "dark") -> str:
     photo = segment.get("photo")
     if photo:
         backdrop = (
-            f"<div class='photobg' style=\"background-image:url('{_img_data_uri(photo)}')\"></div>"
+            f"<div class='anim photobg' style=\"background-image:url('{_img_data_uri(photo)}')\"></div>"
             "<div class='photoscrim'></div>"
         )
 
@@ -868,12 +888,27 @@ def kinetic_scene_html(segment: dict, theme: str = "dark") -> str:
 
 def render_kinetic_frames(segment: dict, n_frames: int, theme: str = "dark") -> tuple[str, int]:
     """Render a seekable kinetic scene to a directory of PNG frames (frame_%04d.png).
-    Returns (frame_dir, n_frames). Frames are captured at native 1080x1920."""
+
+    Returns (frame_dir, total_frames). Frames are captured at native 1080x1920.
+
+    `n_frames` covers the reveal (0..KINETIC_TOTAL seconds, at the caller's fps).
+    After it, this renders a further KINETIC_HOLD_DRIFT seconds of backdrop-only
+    motion at the cheaper KINETIC_HOLD_FPS and repeats each sample up to the
+    caller's frame rate, so the returned frame count is larger than `n_frames`.
+    The caller (`_build_kinetic_segment`) derives its ffmpeg tpad-clone padding
+    from the returned total, so a longer runway here means less of the segment
+    is a single frozen frame. Anything past KINETIC_HOLD_DRIFT still freezes,
+    same as before.
+    """
     from playwright.sync_api import sync_playwright
     html = kinetic_scene_html(segment, theme)
     frame_dir = tempfile.mkdtemp(prefix="kinetic_")
     fh = tempfile.NamedTemporaryFile(suffix=".html", mode="w", encoding="utf-8", delete=False)
     fh.write(html); fh.close()
+    cap_fps = round(n_frames / KINETIC_TOTAL) if KINETIC_TOTAL else 30
+    repeat = max(1, round(cap_fps / KINETIC_HOLD_FPS))
+    hold_samples = max(0, round(KINETIC_HOLD_DRIFT * KINETIC_HOLD_FPS))
+    idx = 0
     try:
         with sync_playwright() as p:
             browser = p.chromium.launch(args=["--no-sandbox", "--disable-dev-shm-usage",
@@ -882,18 +917,31 @@ def render_kinetic_frames(segment: dict, n_frames: int, theme: str = "dark") -> 
                                     device_scale_factor=1)
             page.goto(f"file://{fh.name}")
             page.evaluate("async () => { await document.fonts.ready; }")
-            for i in range(n_frames):
-                tt = i / max(n_frames - 1, 1)
+
+            def _capture(tt: float) -> bytes:
                 page.evaluate(
                     "(t) => { document.documentElement.style.setProperty('--t', t);"
                     " if (window.__update) window.__update(t); }", tt)
-                png = page.screenshot(type="png", full_page=False)
-                with open(os.path.join(frame_dir, f"frame_{i:04d}.png"), "wb") as out:
+                return page.screenshot(type="png", full_page=False)
+
+            for i in range(n_frames):
+                png = _capture(i / max(n_frames - 1, 1))
+                with open(os.path.join(frame_dir, f"frame_{idx:04d}.png"), "wb") as out:
                     out.write(png)
+                idx += 1
+
+            for j in range(hold_samples):
+                elapsed = KINETIC_TOTAL + (j + 1) / KINETIC_HOLD_FPS
+                png = _capture(elapsed / KINETIC_TOTAL)
+                for _ in range(repeat):
+                    with open(os.path.join(frame_dir, f"frame_{idx:04d}.png"), "wb") as out:
+                        out.write(png)
+                    idx += 1
+
             browser.close()
     finally:
         try:
             os.unlink(fh.name)
         except OSError:
             pass
-    return frame_dir, n_frames
+    return frame_dir, idx

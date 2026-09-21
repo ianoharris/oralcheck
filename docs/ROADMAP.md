@@ -10,7 +10,7 @@ The running list. Two rules:
    named. This is the list's whole purpose: the things that come up once, sound
    good, and are never mentioned again.
 
-Last updated: 2026-09-18
+Last updated: 2026-09-21
 
 **Mirrored to an artifact Ian reads:**
 https://claude.ai/code/artifact/cc490e4b-1ee3-4062-bc56-eada066f1003
@@ -30,7 +30,7 @@ Update both together. See `AGENTS.md`.
 | ~~Registering GA4 custom definitions~~ | **Done 2026-09-14** | All five are registered, done by hand in GA4 Admin -> Custom definitions, which needs neither the Analytics Admin API nor an Editor grant on the property. Dimensions `risk_tier`, `has_urgent_symptom`, `cta_source`; metrics `risk_score`, `question_count`. `risk_tier` turned out to have been registered since 2026-08-23, so that one has been collecting for three weeks. The other four start from today: GA4 does not backfill, so the window before this is permanently blank. `register_ga_dimensions.py` is kept for the next parameter the site starts sending, and still needs the API enabled to run. |
 | A written UW IRB determination | Ian submitting it | The tool stores nothing, so it is almost certainly *not human subjects research* under UW's HRPP, but the assertion is worth having on paper for Marquette's Associate Dean. Free, and Ian can submit it himself. |
 | Co-branded Marquette flyer | The approval above | Rawal proposed a design "to reflect our two institutions". Corrected in the reply: OralCheck is not a UW project and cannot carry UW branding. Marquette + OralCheck only. |
-| Judge whether the reel skip-rate fix worked | A new reel going out | 83.7% skip. Frame-0 fix and cover image both shipped, but only affect reels rendered *after* they landed. The three currently scheduled were rendered before. |
+| Judge whether the reel skip-rate fix worked | Real engagement data on a reel built after 2026-09-21 | 83.7% skip, measured before any of these fixes. Frame-0 was checked directly against tonight's scheduled reel (2026-09-21, Stoptober): confirmed legible by ~0.1s in the real exported video, so that part is working. The same pass found a separate, real bug and a likely bigger contributor to the skip rate; both are fixed, see Shipped. What is still unmeasured either way: whether any of this moves the actual skip number, which needs a reel built with the fixes in place and real Instagram insights on it. |
 | Trustworthy completion rate over 90d | ~2 weeks of clean events | The double-count fix shipped 2026-08-10. Until then only short windows are reliable. 30-day read at fix time: **91.4%**. |
 | Outreach replies | Ian sending them | 10 contacts: the original 7 in `outreach-contacts.csv` (Penn/CIGOH, Tufts x2, Columbia x2, HNCA, AAOM) plus 3 at Marquette. **Drafts are written** in `outreach-drafts/` as of 2026-08-18, so the only remaining step is pasting them into Outlook and sending. Update Status to `Followed Up` after each, or the Sunday tracker will generate duplicates. |
 | ~~LinkedIn auto-publishing~~ | **Done 2026-09-01** | Both accounts are connected in Publora with valid tokens. The plan is now `WEEKLY_PLAN=instagram:2,linkedin:1`: each post targets one network rather than fanning out to all of them, which is what made the quota impossible before. Three platform-targets sits exactly at the Starter cap, so raising either number needs a bigger plan. |
@@ -208,6 +208,53 @@ Update both together. See `AGENTS.md`.
 ## Shipped
 
 Newest first.
+
+### 2026-09-21
+- **Four fixes to the reel pipeline, from frame-by-frame review of the reel
+  that was about to post.** Asked how the reels could be improved; rather than
+  general advice, pulled the actual Stoptober reel scheduled for that night and
+  inspected it with ffmpeg (`blackdetect`, sub-second frame extraction) instead
+  of guessing.
+  1. **A real bug: a 0.23s black flash right before the end card**, measured
+     with `blackdetect` at 28.47 to 28.70s. The outro faded in from black
+     (`fade=in:st=0:d=0.25`) while every other cut in a reel, segment to
+     segment via the concat demuxer, is an instant hard cut with no fade at
+     all. Nothing before the outro faded *to* black either, so the mismatch
+     produced a visible flash. Fixed by dropping the outro's fade-in to match
+     the cut style used everywhere else.
+  2. **Scenes were going fully static for several seconds.** Each scene
+     animates in over 2.6s then held on a single frame, cloned by ffmpeg, for
+     however long the narration ran; the "Tobacco. Alcohol. HPV." scene in
+     tonight's reel sat completely frozen for about 5 seconds. On a feed with
+     an 83.7% measured skip rate, several seconds of zero visual change early
+     in a cold viewer's watch is a plausible driver on its own.
+     `render_kinetic_frames` now keeps rendering slow, deterministic backdrop
+     motion (blobs, sweep, grid, halo, rays, and the new photo backdrop, all
+     now scrubbed by `--t` like the text already was, which some of them
+     previously were not) for a further `KINETIC_HOLD_DRIFT` = 2.6s before
+     anything freezes. Verified locally: a 5s test segment showed continued,
+     measurable motion across nearly the entire hold instead of freezing after
+     ~1.6s. Adds about 16 extra screenshots per segment, not a proportional
+     re-render.
+  3. **Reels had never actually gotten a real photo**, despite
+     `kinetic_scene_html` already supporting one: `_assign_reel_visuals` only
+     ever tried `site_shot` or `search_query`, and the reel-script prompt never
+     told the model those fields existed, so they were always empty in
+     practice. A segment can now ask for one of the two clinical sign photos
+     with real attribution on file (`white_patch`, `mixed_patch`, both from the
+     same library the carousels already use), capped at one per reel and kept
+     out of stat/scene segments. `sore` and `lip` stay excluded (no recorded
+     attribution, see the entry below) even if a script asks for them by name.
+  4. **Music bed lowered from 0.17 to 0.11.** Ian flagged it as sitting a
+     little too loud under the narration; `amix` runs with `normalize=0`, so
+     this is a direct, unattenuated gain on the bed relative to the voice.
+  All four covered by new checks in `test_render.py`: no black frame in the
+  outro, hold-phase frames are not byte-identical, `REEL_SIGN_PHOTOS` cannot
+  resolve `sore` or `lip`, and the music constant is pinned below 0.12. Frame-0
+  legibility was also checked directly against tonight's real exported video
+  and confirmed already working (readable by ~0.1s), so that earlier fix did
+  not need touching. Whether skip rate actually improves is still open, see
+  the entry above: it needs a reel built after this and real engagement data.
 
 ### 2026-09-18 (decided)
 - **Decided against fixing the wrong-stat posts.** Asked directly whether to swap
