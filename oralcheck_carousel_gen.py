@@ -18,7 +18,7 @@ SUBTLE   = (22, 50, 52)
 DIMMED   = (35, 62, 64)
 DARK2    = (10, 20, 21)
 
-FONT_DIR = "/Users/ianharris/Desktop/oralcheck/oralcheck-agent/fonts/"
+FONT_DIR = "/Users/ianharris/OralCheck/oralcheck-agent/fonts/"
 OUT_DIR  = "/Users/ianharris/Desktop/oralcheck_carousel"
 os.makedirs(OUT_DIR, exist_ok=True)
 
