@@ -5,7 +5,7 @@ const fs = require('fs');
 const OUT = path.join(__dirname, 'slides');
 fs.mkdirSync(OUT, { recursive: true });
 
-const FONT_DIR = '/Users/ianharris/OralCheck/oralcheck-agent/fonts';
+const FONT_DIR = '/Users/ianharris/projects/OralCheck/oralcheck-agent/fonts';
 const W = 1080, H = 1080;
 
 function base(content) {
