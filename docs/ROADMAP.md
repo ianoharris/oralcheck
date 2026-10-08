@@ -279,9 +279,9 @@ Newest first.
   pooled studies), the same wording the site now uses. The canker fact
   already said 7 to 14 days. Closes the follow-up the figures fix left open.
 - **One figure everywhere for tobacco plus alcohol, and for canker sore
-  healing time.** Closes "The site contradicts itself on two figures" (that
-  item was added to the uncommitted copy of this file on `master`; move it
-  here when the two are reconciled). The Hashibe figure was taken from the
+  healing time.** Live on oralcheck.org 2026-10-08 (commit f30f7dd, checked
+  on the production pages in all three languages). Closes "The site
+  contradicts itself on two figures". The Hashibe figure was taken from the
   paper's own Table 3, not from the abstract or a secondary quote.
   - **Tobacco plus alcohol: about 15 times, not 30.** Source: Hashibe et al.
     2009, *Cancer Epidemiology, Biomarkers & Prevention*, the pooled INHANCE
