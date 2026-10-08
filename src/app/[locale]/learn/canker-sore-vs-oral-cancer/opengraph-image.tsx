@@ -61,7 +61,7 @@ export default function OgImage() {
               Canker Sore<br />vs Oral Cancer
             </div>
             <div style={{ fontSize: 22, color: "#6b6b6b", fontFamily: "system-ui, sans-serif", lineHeight: 1.5 }}>
-              Canker sores heal in 7–10 days.<br />Oral cancer doesn't.<br />Here's how to tell them apart.
+              Canker sores heal in 7–14 days.<br />Oral cancer doesn't.<br />Here's how to tell them apart.
             </div>
           </div>
 

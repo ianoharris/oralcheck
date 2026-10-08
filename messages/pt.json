@@ -384,7 +384,7 @@
   },
   "CankerMeta": {
     "title": "Afta ou Câncer Bucal: Como Diferenciar",
-    "description": "Aftas curam em 7 a 10 dias. O câncer bucal não. Conheça as principais diferenças, como cada um se apresenta e quando consultar um médico ou dentista."
+    "description": "Aftas curam em 7 a 14 dias. O câncer bucal não. Conheça as principais diferenças, como cada um se apresenta e quando consultar um médico ou dentista."
   },
   "CankerPage": {
     "tag": "Guia",
@@ -509,7 +509,7 @@
       }
     ],
     "sourcesLabel": "Fontes:",
-    "sourcesBody": "American Cancer Society, Oral Cancer Foundation, National Institute of Dental and Craniofacial Research (NIDCR), Mayo Clinic. Este conteúdo é educativo e não substitui orientação médica.",
+    "sourcesBody": "American Cancer Society, Oral Cancer Foundation, National Institute of Dental and Craniofacial Research (NIDCR), Mayo Clinic. Tempo de cicatrização das aftas: <mesh>Biblioteca Nacional de Medicina dos EUA, MeSH: Stomatitis, Aphthous</mesh>; <nhs>NHS: Mouth ulcers</nhs>. Este conteúdo é educativo e não substitui orientação médica.",
     "checkRisk": "Verifique seu risco →",
     "seeAllSigns": "Ver todos os sinais de alerta",
     "findDentist": "Encontre um dentista →"
@@ -525,8 +525,8 @@
     "twoFactorHeading": "A regra dos dois fatores",
     "twoFactorP1": "O tabaco e o álcool, cada um por si só, aumentam o risco de câncer bucal. Usados juntos, seus efeitos são",
     "twoFactorBold1": "sinérgicos, não aditivos",
-    "twoFactorP2": "um fumante pesado que também bebe muito pode enfrentar um",
-    "twoFactorBold2": "aumento de 30 vezes",
+    "twoFactorP2": "alguém que fuma mais de um maço por dia e toma três ou mais doses por dia pode enfrentar um",
+    "twoFactorBold2": "aumento de cerca de 15 vezes",
     "twoFactorP3": "no risco em comparação com alguém que não faz nenhum dos dois. Se você usa ambos, reduzir ou eliminar qualquer um deles diminui significativamente o seu risco.",
     "learnMore": "Saiba mais →",
     "riskFactors": [
@@ -545,7 +545,7 @@
         "weight": "Alto",
         "weightColor": "text-accent",
         "summary": "Bebedores pesados têm 5 a 6 vezes mais chance de desenvolver câncer bucal.",
-        "detail": "O álcool é um agente cancerígeno direto na cavidade bucal. O risco aumenta conforme a quantidade consumida, e o consumo pesado (mais de 3 a 4 doses por dia) representa o maior risco. Quando combinado com tabaco, os efeitos se somam de forma potencializada: o risco combinado supera em muito a soma dos dois riscos individuais. Alguém que fuma muito e bebe muito pode ter um risco até 30 vezes maior do que alguém que não faz nenhum dos dois.",
+        "detail": "O álcool é um agente cancerígeno direto na cavidade bucal. O risco aumenta conforme a quantidade consumida, e o consumo pesado (mais de 3 a 4 doses por dia) representa o maior risco. Quando combinado com tabaco, os efeitos se somam de forma potencializada: o risco combinado supera em muito a soma dos dois riscos individuais. Alguém que fuma mais de um maço por dia e toma três ou mais doses por dia tem um risco cerca de 15 vezes maior do que alguém que não faz nenhum dos dois.",
         "link": null
       },
       {
@@ -651,7 +651,7 @@
       },
       {
         "q": "O álcool aumenta o risco de câncer bucal?",
-        "a": "Sim. O consumo pesado de álcool é um fator de risco independente. A combinação de tabaco e álcool é especialmente perigosa: os efeitos são sinérgicos, e o risco combinado pode ser 30 vezes maior do que para alguém que não usa nenhum dos dois."
+        "a": "Sim. O consumo pesado de álcool é um fator de risco independente. A combinação de tabaco e álcool é especialmente perigosa: os efeitos são sinérgicos, e entre quem mais consome os dois o risco é cerca de 15 vezes maior do que para alguém que não usa nenhum dos dois."
       },
       {
         "q": "É possível ter câncer bucal sem fumar ou beber?",
@@ -667,7 +667,7 @@
       }
     ],
     "sourcesLabel": "Fontes:",
-    "sourcesBody": "American Cancer Society, National Cancer Institute (NCI SEER), Oral Cancer Foundation, CDC HPV and Cancer, International Agency for Research on Cancer (IARC). Esta página tem fins educativos e não constitui aconselhamento médico.",
+    "sourcesBody": "American Cancer Society, National Cancer Institute (NCI SEER), Oral Cancer Foundation, CDC HPV and Cancer, International Agency for Research on Cancer (IARC). Número combinado de tabaco e álcool: <hashibe>Hashibe et al., Cancer Epidemiology, Biomarkers & Prevention, 2009</hashibe>. Esta página tem fins educativos e não constitui aconselhamento médico.",
     "checkRisk": "Avalie seu risco →",
     "warningSigns": "Sinais de alerta",
     "preventionGuide": "Como prevenir o câncer bucal",
@@ -746,7 +746,7 @@
       },
       {
         "factor": "Álcool",
-        "detail": "O consumo pesado de álcool é um fator de risco independente, e a combinação com o tabaco multiplica o risco em vez de simplesmente somá-lo. Pessoas que fumam muito e bebem muito podem ter um risco até 15 vezes maior do que quem não usa nenhum dos dois."
+        "detail": "O consumo pesado de álcool é um fator de risco independente, e a combinação com o tabaco multiplica o risco em vez de simplesmente somá-lo. Pessoas que fumam mais de um maço por dia e tomam três ou mais doses por dia têm um risco cerca de 15 vezes maior do que quem não faz nenhum dos dois."
       },
       {
         "factor": "Infecção pelo HPV",
@@ -804,7 +804,7 @@
       }
     ],
     "sourcesLabel": "Fontes:",
-    "sourcesBody": "American Cancer Society, banco de dados SEER do National Cancer Institute, Oral Cancer Foundation, CDC, Organização Mundial da Saúde. Esta página tem caráter educativo e não constitui aconselhamento médico.",
+    "sourcesBody": "American Cancer Society, banco de dados SEER do National Cancer Institute, Oral Cancer Foundation, CDC, Organização Mundial da Saúde. Número combinado de tabaco e álcool: <hashibe>Hashibe et al., Cancer Epidemiology, Biomarkers & Prevention, 2009</hashibe>. Esta página tem caráter educativo e não constitui aconselhamento médico.",
     "byline": "Escrito por Ian Harris, estudante de pré-odontologia na Universidade de Wisconsin-Madison.",
     "aboutLink": "Sobre o OralCheck",
     "takeScreener": "Fazer o rastreamento gratuito →",
@@ -824,7 +824,7 @@
     "twoWeekHeading": "A regra das 2 semanas",
     "twoWeekP1Start": "Qualquer ferida, mancha, caroço ou alteração incomum na boca que",
     "twoWeekBold": "não tenha desaparecido após 2 semanas",
-    "twoWeekP1End": "deve ser avaliada por um dentista ou médico. As aftas cicatrizam em 7 a 10 dias. O câncer bucal não. Não é necessário esperar para ver se piora, 2 semanas é o limite.",
+    "twoWeekP1End": "deve ser avaliada por um dentista ou médico. As aftas cicatrizam em 7 a 14 dias. O câncer bucal não. Não é necessário esperar para ver se piora, 2 semanas é o limite.",
     "signsHeading": "Sinais de alerta",
     "highPriority": "Alta prioridade",
     "signs": [
@@ -835,7 +835,7 @@
       },
       {
         "title": "Feridas ou úlceras que não cicatrizam",
-        "detail": "Uma ferida ou úlcera na boca que não desaparece após 2 semanas é o sinal de alerta clássico. As aftas (úlceras aftosas) cicatrizam em 7 a 10 dias sem tratamento. As lesões de câncer bucal não cicatrizam. Podem ter bordas irregulares, elevadas ou endurecidas, diferentes da borda redonda e bem definida de uma afta. Podem sangrar facilmente ao toque. A ausência de dor não significa ausência de risco.",
+        "detail": "Uma ferida ou úlcera na boca que não desaparece após 2 semanas é o sinal de alerta clássico. As aftas (úlceras aftosas) cicatrizam em 7 a 14 dias sem tratamento. As lesões de câncer bucal não cicatrizam. Podem ter bordas irregulares, elevadas ou endurecidas, diferentes da borda redonda e bem definida de uma afta. Podem sangrar facilmente ao toque. A ausência de dor não significa ausência de risco.",
         "urgent": true
       },
       {
@@ -921,7 +921,7 @@
     "comparison": [
       {
         "label": "Cicatriza em",
-        "a": "7 a 10 dias",
+        "a": "7 a 14 dias",
         "b": "Não cicatriza"
       },
       {
@@ -985,7 +985,7 @@
       },
       {
         "q": "O que é a regra das 2 semanas?",
-        "a": "Qualquer ferida, mancha, caroço ou alteração na boca que não tenha desaparecido após 2 semanas deve ser avaliada por um profissional de saúde. As aftas cicatrizam em 7 a 10 dias. Qualquer coisa que dure mais tempo merece uma avaliação do dentista."
+        "a": "Qualquer ferida, mancha, caroço ou alteração na boca que não tenha desaparecido após 2 semanas deve ser avaliada por um profissional de saúde. As aftas cicatrizam em 7 a 14 dias. Qualquer coisa que dure mais tempo merece uma avaliação do dentista."
       },
       {
         "q": "Onde o câncer bucal se desenvolve com mais frequência?",
@@ -997,7 +997,7 @@
       }
     ],
     "sourcesLabel": "Fontes:",
-    "sourcesBody": "American Cancer Society, National Cancer Institute, Oral Cancer Foundation, National Institute of Dental and Craniofacial Research (NIDCR). Esta página tem caráter educativo e não substitui orientação médica.",
+    "sourcesBody": "American Cancer Society, National Cancer Institute, Oral Cancer Foundation, National Institute of Dental and Craniofacial Research (NIDCR). Tempo de cicatrização das aftas: <mesh>Biblioteca Nacional de Medicina dos EUA, MeSH: Stomatitis, Aphthous</mesh>; <nhs>NHS: Mouth ulcers</nhs>. Esta página tem caráter educativo e não substitui orientação médica.",
     "takeScreener": "Fazer a triagem gratuita →",
     "howToSelfExam": "Como fazer o autoexame",
     "cankerVsCancer": "Afta versus câncer bucal",
@@ -1316,7 +1316,7 @@
     "colSource": "Fonte",
     "interactionHeading": "Termo de Interação Tabaco + Álcool",
     "interactionP1Rest": "Quando o uso de tabaco e álcool está presente em níveis significativos (diário ou semanal), o modelo adiciona um bônus de interação de <b>+3 pontos</b>.",
-    "interactionP2": "O motivo é que tabaco e álcool juntos produzem um aumento multiplicativo, e não aditivo, no risco de câncer bucal. O uso regular combinado eleva o risco aproximadamente 15 vezes acima da linha de base, enquanto a simples soma dos pesos individuais chega apenas a cerca de 9 vezes. O bônus de +3 captura essa diferença.",
+    "interactionP2": "O motivo é que tabaco e álcool juntos elevam o risco mais do que o produto de seus efeitos isolados. Como cada peso é proporcional ao logaritmo de uma razão de chances, somar os pesos do tabaco e do álcool já pressupõe que os dois se multiplicam. Dados combinados de 17 estudos mostraram que o efeito conjunto é ainda maior, cerca de duas vezes o que a multiplicação sozinha prevê (parâmetro de interação de 2,15 para câncer de cabeça e pescoço em geral e 3,09 para câncer da cavidade bucal). Nesta escala, um fator de 2,15 vale 3 pontos, então +3 é a leitura conservadora. Nos mesmos dados, quem fumava mais de um maço por dia e tomava três ou mais doses por dia tinha chances de câncer da cavidade bucal cerca de 15 vezes maiores do que quem não fazia nenhum dos dois.",
     "interactionSourcesLabel": "Fontes:",
     "tierThresholdsHeading": "Limites dos Níveis de Risco",
     "tierLow": "Baixo",
@@ -1625,7 +1625,7 @@
     "emailGenericError": "Não foi possível enviar. Tente novamente.",
     "retake": "↻ Refazer o rastreamento",
     "evidenceBasisLabel": "Base de evidências:",
-    "evidenceBasisBody": "Os pesos dos fatores de risco são baseados em evidências epidemiológicas publicadas, incluindo as classificações de carcinógenos do Grupo 1 da IARC para tabaco (Gandini et al., <i>Oral Oncology</i>, 2008), álcool (Bagnardi et al., <i>Annals of Oncology</i>, 2015) e noz de areca com bétel (IARC Monograph 85), além de razões de chances para HPV-16 no câncer de orofaringe (Gillison et al., <i>JAMA</i>, 2008) e dados de incidência por idade do SEER. O termo de interação tabaco-álcool reflete um risco carcinogênico multiplicativo documentado, não apenas aditivo. As taxas de transformação de leucoplasia e eritroplasia são provenientes de Napier & Speight, <i>Journal of Oral Pathology & Medicine</i>, 2008.",
+    "evidenceBasisBody": "Os pesos dos fatores de risco são baseados em evidências epidemiológicas publicadas, incluindo as classificações de carcinógenos do Grupo 1 da IARC para tabaco (Gandini et al., <i>International Journal of Cancer</i>, 2008), álcool (Bagnardi et al., <i>British Journal of Cancer</i>, 2015) e noz de areca com bétel (IARC Monograph 85), além de razões de chances para HPV-16 no câncer de orofaringe (Gillison et al., <i>Journal of the National Cancer Institute</i>, 2008) e dados de incidência por idade do SEER. O termo de interação tabaco-álcool reflete um risco carcinogênico multiplicativo documentado, não apenas aditivo (Hashibe et al., <i>Cancer Epidemiology, Biomarkers & Prevention</i>, 2009). As taxas de transformação de leucoplasia e eritroplasia são provenientes de Napier & Speight, <i>Journal of Oral Pathology & Medicine</i>, 2008.",
     "disclaimerLabel": "Aviso:",
     "disclaimerBody": "O OralCheck é um questionário de avaliação de risco, não um teste de rastreamento nem um instrumento diagnóstico. Ele não foi validado em relação a um conjunto de dados de desfechos clínicos. O teste de rastreamento para câncer bucal é um breve exame visual e tátil realizado por um dentista ou médico, e este resultado é apenas um motivo para realizar esse exame. Ele não constitui aconselhamento médico, diagnóstico ou tratamento. Consulte sempre um dentista ou médico qualificado em caso de qualquer preocupação com a saúde bucal.",
     "primaryCTA": {
@@ -1793,7 +1793,7 @@
     },
     "tobacco": {
       "title": "Você usa tabaco?",
-      "subtitle": "O tabaco é o principal fator de risco isolado para o câncer da cavidade bucal e é classificado como carcinógeno do Grupo 1 pela IARC. Fumantes diários têm risco de 2 a 6 vezes maior, e usuários de tabaco sem fumaça têm risco de 4 a 5 vezes maior (Gandini et al., Oral Oncology, 2008).",
+      "subtitle": "O tabaco é o principal fator de risco isolado para o câncer da cavidade bucal e é classificado como carcinógeno do Grupo 1 pela IARC. Fumantes diários têm risco de 2 a 6 vezes maior, e usuários de tabaco sem fumaça têm risco de 4 a 5 vezes maior (Gandini et al., International Journal of Cancer, 2008).",
       "options": {
         "daily": "Sim, diariamente",
         "occasional": "Sim, ocasionalmente",
@@ -1803,7 +1803,7 @@
     },
     "alcohol": {
       "title": "Com que frequência você consome bebidas alcoólicas?",
-      "subtitle": "O álcool é um carcinógeno do Grupo 1 da IARC para o câncer bucal. Pessoas que bebem muito têm risco 2 a 3 vezes maior. Combinado ao tabaco, o efeito é multiplicativo, podendo chegar a 15 vezes o risco basal (Bagnardi et al., Annals of Oncology, 2015).",
+      "subtitle": "O álcool é um carcinógeno do Grupo 1 da IARC para o câncer bucal. O consumo moderado quase dobra o risco, e o consumo pesado (mais de cerca de quatro doses por dia) o multiplica por cerca de cinco (Bagnardi et al., British Journal of Cancer, 2015). Combinado ao tabagismo pesado, os efeitos se multiplicam: cerca de 15 vezes o risco de quem não faz nenhum dos dois (Hashibe et al., Cancer Epidemiology, Biomarkers & Prevention, 2009).",
       "options": {
         "daily": "Diariamente ou quase todos os dias",
         "weekly": "Algumas vezes por semana",
@@ -1813,7 +1813,7 @@
     },
     "hpv": {
       "title": "Situação em relação ao HPV",
-      "subtitle": "O HPV-16 é o principal responsável pelo câncer de orofaringe (amígdalas e base da língua), com uma razão de chances cerca de 15 vezes maior em pessoas infectadas (Gillison et al., JAMA, 2008). Sua associação com o câncer bucal é menor, mas ainda representa um fator de risco relevante. A vacinação reduz significativamente esse risco.",
+      "subtitle": "O HPV-16 é o principal responsável pelo câncer de orofaringe (amígdalas e base da língua), com uma razão de chances cerca de 15 vezes maior em pessoas infectadas (Gillison et al., Journal of the National Cancer Institute, 2008). Sua associação com o câncer bucal é menor, mas ainda representa um fator de risco relevante. A vacinação reduz significativamente esse risco.",
       "options": {
         "vaccinated": "Vacinado contra o HPV",
         "neither": "Não vacinado e sem histórico conhecido",
@@ -1920,7 +1920,7 @@
     "interaction": {
       "label": "Interação tabaco + álcool",
       "answerLabel": "Ambos presentes",
-      "guidance": "Quando tabaco e álcool são usados juntos, o risco de câncer bucal aumenta de forma multiplicativa, não apenas aditiva. O uso regular combinado pode elevar o risco em até 15 vezes acima da linha de base, muito além da soma de cada fator isoladamente. Abordar os dois ao mesmo tempo é a estratégia mais eficaz de redução de risco (Bagnardi et al., Annals of Oncology, 2015)."
+      "guidance": "Quando tabaco e álcool são usados juntos, o risco de câncer bucal aumenta de forma multiplicativa, não apenas aditiva. Quem fuma mais de um maço por dia e toma três ou mais doses por dia tem cerca de 15 vezes o risco de quem não faz nenhum dos dois (Hashibe et al., Cancer Epidemiology, Biomarkers & Prevention, 2009). Abordar os dois ao mesmo tempo é a estratégia mais eficaz de redução de risco."
     },
     "tier": {
       "urgentHeadline": "Um sintoma que você mencionou merece uma avaliação mais detalhada.",

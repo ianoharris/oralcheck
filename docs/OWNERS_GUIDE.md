@@ -137,7 +137,7 @@ exposure than without. OR 6 means roughly six times the odds.
 | Tobacco, daily | 2.5–6x | Direct mucosal carcinogen exposure |
 | Alcohol, daily | ~3x | Acetaldehyde, ethanol's metabolite, is the actual carcinogen |
 | HPV-related history | ~15x for oropharynx specifically | HPV-16 integrates into host cells |
-| Tobacco **and** alcohol together | ~15–35x | Multiplicative, not additive. Alcohol appears to increase mucosal permeability to tobacco carcinogens |
+| Tobacco **and** alcohol together | ~15x for the heaviest users | More than multiplicative. Alcohol appears to increase mucosal permeability to tobacco carcinogens. The figure is for more than a pack a day plus three or more drinks a day, oral cavity, from a pool of 17 studies (Hashibe 2009). You will see "35-fold" quoted too: see Q6a |
 | Age 65+ | ~4x | Cumulative exposure plus age-related immune change |
 | Immunosuppression / transplant / prior head-and-neck radiation | ~2–4x | Reduced immune surveillance of the mucosa |
 | Male sex at birth | ~2.6x raw | Partly, but not entirely, explained by historical tobacco and alcohol use |
@@ -210,6 +210,15 @@ Reference points so you can sanity-check any result in your head:
 - Tobacco + alcohol + the interaction bonus = **16** (elevated)
 - Betel + tobacco + alcohol + bonus = **25** (see a dentist soon)
 - Male sex at birth alone = **3** (still low, correctly)
+
+**Where the +3 comes from.** Because the points are logarithms, adding the
+tobacco and alcohol points already treats the two as multiplying. The pooled
+study of 17 case-control studies (Hashibe 2009) found the real joint effect is
+bigger than that, about 2.15 times what multiplication alone predicts across
+head and neck cancer (3.09 for the mouth itself). Put 2.15 through the same
+formula and it comes out at 3 points. The mouth-only figure would give 5, so 3
+is the cautious choice. Until October 2026 the methods page justified it with a
+"15x versus 9x" comparison that did not hold up, and is now replaced.
 
 ### 3.4 Two things about the bands you should be honest about
 
@@ -679,6 +688,17 @@ the HPV weight is a blended compromise.
 No. It returns a risk band and tells people to see a dentist. It doesn't
 diagnose, doesn't recommend treatment, and says so in the disclaimer on every
 result. There's also a Terms of Use.
+
+**Q6a. "I've seen 35-fold for smoking and drinking. Why do you say 15?"**
+Both are real and they measure different things. The 35-fold figure is Blot
+1988, one US study of about 1,100 patients: oral and throat cancer counted
+together, at two or more packs and more than four drinks a day. The site uses
+Hashibe 2009, which pools 17 studies and over 11,000 patients and reports the
+mouth separately: about 15 times the odds at more than a pack and three or more
+drinks a day. Bigger, newer, and about the right disease. Both are cited on the
+methods page. Until October 2026 the site said 15 on one page and 30 on another,
+and the methods page credited Hashibe with 35.8, which is actually that paper's
+figure for the larynx.
 
 **Q7. "Who reviewed this?"**
 A board-certified oral and maxillofacial pathologist reviewed the methodology in

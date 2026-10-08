@@ -4,6 +4,7 @@ import { getTranslations } from "next-intl/server";
 import LearnReadNext from "@/components/LearnReadNext";
 import SignsVisualGuide from "@/components/SignsVisualGuide";
 import { localizedAlternates } from "@/lib/pageMetadata";
+import { sourceLinks } from "@/lib/sourceLinks";
 
 type Props = { params: Promise<{ locale: string }> };
 
@@ -250,7 +251,7 @@ export default async function SignsPage({ params }: Props) {
       </section>
 
       <div className="p-5 rounded-2xl bg-warm-dim/50 text-xs text-ink-soft leading-relaxed mb-8">
-        <strong className="text-ink">{t("sourcesLabel")}</strong> {t("sourcesBody")}
+        <strong className="text-ink">{t("sourcesLabel")}</strong> {t.rich("sourcesBody", sourceLinks)}
       </div>
 
       <div className="flex flex-wrap gap-3">

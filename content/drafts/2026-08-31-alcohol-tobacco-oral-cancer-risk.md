@@ -16,7 +16,7 @@ Tobacco, whether smoked or used as smokeless products, delivers carcinogens dire
 
 Alcohol works through a different but complementary mechanism. Ethanol is metabolized into acetaldehyde, a compound classified as a Group 1 carcinogen by the International Agency for Research on Cancer. Acetaldehyde damages DNA directly and also impairs the cell's ability to repair that damage. Beyond its own chemical effects, alcohol acts as a solvent. It increases the permeability of the oral mucosa, meaning it makes it easier for other carcinogens, including those from tobacco, to penetrate cells.
 
-This is why researchers consistently find that the combined risk from using both substances is not simply additive. Studies published in journals including the International Journal of Cancer have found that people who both smoke and drink heavily face an oral cancer risk that is 15 to 30 times higher than people who do neither. The two substances amplify each other's effects at the cellular level.
+This is why researchers consistently find that the combined risk from using both substances is not simply additive. A pooled analysis of 17 studies found that people who smoke more than a pack a day and have three or more drinks a day face about 15 times the oral cancer risk of people who do neither ([Hashibe et al., 2009](https://pubmed.ncbi.nlm.nih.gov/19190158/)). The two substances amplify each other's effects at the cellular level.
 
 ## Dose, Duration, and the Concept of Cumulative Risk
 

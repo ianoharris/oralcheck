@@ -384,7 +384,7 @@
   },
   "CankerMeta": {
     "title": "Afta vs. cáncer oral: cómo notar la diferencia",
-    "description": "Las aftas sanan en 7 a 10 días. El cáncer oral no. Conoce las diferencias clave, cómo se ve cada uno y exactamente cuándo consultar a un médico."
+    "description": "Las aftas sanan en 7 a 14 días. El cáncer oral no. Conoce las diferencias clave, cómo se ve cada uno y exactamente cuándo consultar a un médico."
   },
   "CankerPage": {
     "tag": "Guía",
@@ -509,7 +509,7 @@
       }
     ],
     "sourcesLabel": "Fuentes:",
-    "sourcesBody": "American Cancer Society, Oral Cancer Foundation, National Institute of Dental and Craniofacial Research (NIDCR), Mayo Clinic. Esta página es educativa y no constituye asesoramiento médico.",
+    "sourcesBody": "American Cancer Society, Oral Cancer Foundation, National Institute of Dental and Craniofacial Research (NIDCR), Mayo Clinic. Tiempo de curación de las aftas: <mesh>Biblioteca Nacional de Medicina de EE. UU., MeSH: Stomatitis, Aphthous</mesh>; <nhs>NHS: Mouth ulcers</nhs>. Esta página es educativa y no constituye asesoramiento médico.",
     "checkRisk": "Evalúa tu riesgo →",
     "seeAllSigns": "Ver todas las señales de advertencia",
     "findDentist": "Encontrar un dentista →"
@@ -525,8 +525,8 @@
     "twoFactorHeading": "La regla de los dos factores",
     "twoFactorP1": "El tabaco y el alcohol elevan cada uno de forma independiente el riesgo de cáncer oral. Usados juntos, sus efectos son",
     "twoFactorBold1": "sinérgicos, no aditivos",
-    "twoFactorP2": "un fumador empedernido que también bebe en exceso puede enfrentar un aumento de",
-    "twoFactorBold2": "30 veces",
+    "twoFactorP2": "alguien que fuma más de un paquete al día y toma tres o más bebidas al día puede enfrentar un aumento de",
+    "twoFactorBold2": "unas 15 veces",
     "twoFactorP3": "en el riesgo, comparado con alguien que no hace ninguna de las dos cosas. Si usas ambos, reducir o eliminar cualquiera de los dos reduce significativamente tu riesgo.",
     "learnMore": "Aprende más →",
     "riskFactors": [
@@ -545,7 +545,7 @@
         "weight": "Alto",
         "weightColor": "text-accent",
         "summary": "Las personas que beben en exceso tienen entre 5 y 6 veces más probabilidades de desarrollar cáncer oral.",
-        "detail": "El alcohol es un carcinógeno directo en la cavidad oral. El riesgo aumenta con la cantidad consumida, y el consumo excesivo (más de 3 a 4 bebidas alcohólicas por día) conlleva el mayor riesgo. Combinado con el tabaco, los efectos son sinérgicos: el riesgo combinado supera ampliamente la suma de los dos riesgos por separado. Una persona que fuma mucho y también bebe en exceso puede tener un riesgo 30 veces mayor en comparación con alguien que no hace ninguna de las dos cosas.",
+        "detail": "El alcohol es un carcinógeno directo en la cavidad oral. El riesgo aumenta con la cantidad consumida, y el consumo excesivo (más de 3 a 4 bebidas alcohólicas por día) conlleva el mayor riesgo. Combinado con el tabaco, los efectos son sinérgicos: el riesgo combinado supera ampliamente la suma de los dos riesgos por separado. Una persona que fuma más de un paquete al día y toma tres o más bebidas al día tiene un riesgo unas 15 veces mayor que alguien que no hace ninguna de las dos cosas.",
         "link": null
       },
       {
@@ -651,7 +651,7 @@
       },
       {
         "q": "¿El alcohol aumenta el riesgo de cáncer oral?",
-        "a": "Sí. El consumo excesivo de alcohol es un factor de riesgo independiente. La combinación de tabaco y alcohol es especialmente peligrosa: sus efectos son sinérgicos y el riesgo combinado puede ser 30 veces mayor que para alguien que no usa ninguno de los dos."
+        "a": "Sí. El consumo excesivo de alcohol es un factor de riesgo independiente. La combinación de tabaco y alcohol es especialmente peligrosa: sus efectos son sinérgicos y, en quienes más consumen ambos, el riesgo es unas 15 veces mayor que para alguien que no usa ninguno de los dos."
       },
       {
         "q": "¿Se puede tener cáncer oral sin fumar ni beber?",
@@ -667,7 +667,7 @@
       }
     ],
     "sourcesLabel": "Fuentes:",
-    "sourcesBody": "American Cancer Society, National Cancer Institute (NCI SEER), Oral Cancer Foundation, CDC VPH y cáncer, Agencia Internacional para la Investigación sobre el Cáncer (IARC). Esta página es educativa y no constituye asesoramiento médico.",
+    "sourcesBody": "American Cancer Society, National Cancer Institute (NCI SEER), Oral Cancer Foundation, CDC VPH y cáncer, Agencia Internacional para la Investigación sobre el Cáncer (IARC). Cifra combinada de tabaco y alcohol: <hashibe>Hashibe et al., Cancer Epidemiology, Biomarkers & Prevention, 2009</hashibe>. Esta página es educativa y no constituye asesoramiento médico.",
     "checkRisk": "Evalúa tu riesgo →",
     "warningSigns": "Señales de advertencia",
     "preventionGuide": "Cómo prevenir el cáncer oral",
@@ -746,7 +746,7 @@
       },
       {
         "factor": "Alcohol",
-        "detail": "El consumo excesivo de alcohol es un factor de riesgo independiente, y la combinación con el tabaco multiplica el riesgo en lugar de simplemente sumarlo. Las personas que fuman mucho y beben mucho enfrentan un riesgo hasta 15 veces mayor que quienes no usan ninguno de los dos."
+        "detail": "El consumo excesivo de alcohol es un factor de riesgo independiente, y la combinación con el tabaco multiplica el riesgo en lugar de simplemente sumarlo. Las personas que fuman más de un paquete al día y toman tres o más bebidas alcohólicas al día tienen un riesgo unas 15 veces mayor que quienes no hacen ninguna de las dos cosas."
       },
       {
         "factor": "Infección por VPH",
@@ -804,7 +804,7 @@
       }
     ],
     "sourcesLabel": "Fuentes:",
-    "sourcesBody": "American Cancer Society, base de datos SEER del National Cancer Institute, Oral Cancer Foundation, CDC, Organización Mundial de la Salud. Esta página es educativa y no constituye asesoramiento médico.",
+    "sourcesBody": "American Cancer Society, base de datos SEER del National Cancer Institute, Oral Cancer Foundation, CDC, Organización Mundial de la Salud. Cifra combinada de tabaco y alcohol: <hashibe>Hashibe et al., Cancer Epidemiology, Biomarkers & Prevention, 2009</hashibe>. Esta página es educativa y no constituye asesoramiento médico.",
     "byline": "Escrito por Ian Harris, estudiante de predontología en la Universidad de Wisconsin-Madison.",
     "aboutLink": "Acerca de OralCheck",
     "takeScreener": "Realizar la evaluación gratuita →",
@@ -824,7 +824,7 @@
     "twoWeekHeading": "La regla de las 2 semanas",
     "twoWeekP1Start": "Cualquier llaga, mancha, bulto o cambio inusual en tu boca que",
     "twoWeekBold": "no se haya resuelto después de 2 semanas",
-    "twoWeekP1End": "debe ser evaluado por un dentista o médico. Las aftas sanan en 7 a 10 días. El cáncer oral no. No necesitas esperar a ver si empeora, 2 semanas es el límite.",
+    "twoWeekP1End": "debe ser evaluado por un dentista o médico. Las aftas sanan en 7 a 14 días. El cáncer oral no. No necesitas esperar a ver si empeora, 2 semanas es el límite.",
     "signsHeading": "Señales de advertencia",
     "highPriority": "Alta prioridad",
     "signs": [
@@ -835,7 +835,7 @@
       },
       {
         "title": "Llagas o úlceras que no sanan",
-        "detail": "Una llaga o úlcera en la boca que no ha desaparecido después de 2 semanas es la señal de alerta clásica. Las aftas (úlceras aftosas) sanan en 7 a 10 días sin tratamiento. Las lesiones de cáncer oral no. Pueden tener bordes irregulares, elevados o endurecidos, diferentes al borde redondo y definido de un afta. Pueden sangrar fácilmente al tacto. La ausencia de dolor no significa la ausencia de peligro.",
+        "detail": "Una llaga o úlcera en la boca que no ha desaparecido después de 2 semanas es la señal de alerta clásica. Las aftas (úlceras aftosas) sanan en 7 a 14 días sin tratamiento. Las lesiones de cáncer oral no. Pueden tener bordes irregulares, elevados o endurecidos, diferentes al borde redondo y definido de un afta. Pueden sangrar fácilmente al tacto. La ausencia de dolor no significa la ausencia de peligro.",
         "urgent": true
       },
       {
@@ -921,7 +921,7 @@
     "comparison": [
       {
         "label": "Sana en",
-        "a": "7 a 10 días",
+        "a": "7 a 14 días",
         "b": "No sana"
       },
       {
@@ -985,7 +985,7 @@
       },
       {
         "q": "¿Qué es la regla de las 2 semanas?",
-        "a": "Cualquier llaga, mancha, bulto o cambio en la boca que no haya desaparecido después de 2 semanas debe ser evaluado por un profesional. Las aftas sanan en 7 a 10 días. Cualquier cosa que dure más merece la evaluación de un dentista."
+        "a": "Cualquier llaga, mancha, bulto o cambio en la boca que no haya desaparecido después de 2 semanas debe ser evaluado por un profesional. Las aftas sanan en 7 a 14 días. Cualquier cosa que dure más merece la evaluación de un dentista."
       },
       {
         "q": "¿Dónde se desarrolla más comúnmente el cáncer oral?",
@@ -997,7 +997,7 @@
       }
     ],
     "sourcesLabel": "Fuentes:",
-    "sourcesBody": "American Cancer Society, National Cancer Institute, Oral Cancer Foundation, National Institute of Dental and Craniofacial Research (NIDCR). Esta página es educativa y no constituye asesoramiento médico.",
+    "sourcesBody": "American Cancer Society, National Cancer Institute, Oral Cancer Foundation, National Institute of Dental and Craniofacial Research (NIDCR). Tiempo de curación de las aftas: <mesh>Biblioteca Nacional de Medicina de EE. UU., MeSH: Stomatitis, Aphthous</mesh>; <nhs>NHS: Mouth ulcers</nhs>. Esta página es educativa y no constituye asesoramiento médico.",
     "takeScreener": "Realizar la evaluación gratuita →",
     "howToSelfExam": "Cómo hacer un autoexamen",
     "cankerVsCancer": "Afta vs cáncer oral",
@@ -1316,7 +1316,7 @@
     "colSource": "Fuente",
     "interactionHeading": "Término de interacción tabaco + alcohol",
     "interactionP1Rest": "Cuando el uso de tabaco y alcohol están presentes en niveles significativos (diario o semanal), el modelo agrega un bono de interacción de <b>+3 puntos</b>.",
-    "interactionP2": "La razón es que el tabaco y el alcohol juntos producen un aumento multiplicativo, no aditivo, en el riesgo de cáncer oral. El uso combinado y regular eleva el riesgo aproximadamente 15 veces por encima del valor base, mientras que simplemente sumar los pesos individuales solo llega a unas 9 veces. El +3 captura esa diferencia.",
+    "interactionP2": "La razón es que el tabaco y el alcohol juntos elevan el riesgo más que el producto de sus efectos por separado. Como cada peso es proporcional al logaritmo de una razón de momios, sumar los pesos del tabaco y del alcohol ya supone que los dos se multiplican. Los datos combinados de 17 estudios mostraron que el efecto conjunto es aún mayor, unas dos veces lo que predice la multiplicación sola (parámetro de interacción 2.15 para el cáncer de cabeza y cuello en general, 3.09 para el cáncer de cavidad oral). En esta escala, un factor de 2.15 equivale a 3 puntos, así que +3 es la lectura conservadora. En esos mismos datos, quienes fumaban más de un paquete al día y tomaban tres o más bebidas al día tenían unas 15 veces las probabilidades de cáncer de cavidad oral de quienes no hacían ninguna de las dos cosas.",
     "interactionSourcesLabel": "Fuentes:",
     "tierThresholdsHeading": "Umbrales de nivel de riesgo",
     "tierLow": "Bajo",
@@ -1625,7 +1625,7 @@
     "emailGenericError": "No se pudo enviar. Inténtalo de nuevo.",
     "retake": "↻ Repetir la evaluación",
     "evidenceBasisLabel": "Base de evidencia:",
-    "evidenceBasisBody": "Los pesos de los factores de riesgo se basan en evidencia epidemiológica publicada, incluidas las clasificaciones de carcinógenos del Grupo 1 de la IARC para el tabaco (Gandini et al., <i>Oral Oncology</i>, 2008), el alcohol (Bagnardi et al., <i>Annals of Oncology</i>, 2015) y el quid de betel (Monografía 85 de la IARC), así como las razones de momios del VPH-16 para el cáncer orofaríngeo (Gillison et al., <i>JAMA</i>, 2008) y los datos de incidencia por edad de SEER. El término de interacción tabaco-alcohol refleja un riesgo carcinogénico documentado como multiplicativo, no simplemente aditivo. Las tasas de transformación de leucoplasia y eritroplasia provienen de Napier & Speight, <i>Journal of Oral Pathology & Medicine</i>, 2008.",
+    "evidenceBasisBody": "Los pesos de los factores de riesgo se basan en evidencia epidemiológica publicada, incluidas las clasificaciones de carcinógenos del Grupo 1 de la IARC para el tabaco (Gandini et al., <i>International Journal of Cancer</i>, 2008), el alcohol (Bagnardi et al., <i>British Journal of Cancer</i>, 2015) y el quid de betel (Monografía 85 de la IARC), así como las razones de momios del VPH-16 para el cáncer orofaríngeo (Gillison et al., <i>Journal of the National Cancer Institute</i>, 2008) y los datos de incidencia por edad de SEER. El término de interacción tabaco-alcohol refleja un riesgo carcinogénico documentado como multiplicativo, no simplemente aditivo (Hashibe et al., <i>Cancer Epidemiology, Biomarkers & Prevention</i>, 2009). Las tasas de transformación de leucoplasia y eritroplasia provienen de Napier & Speight, <i>Journal of Oral Pathology & Medicine</i>, 2008.",
     "disclaimerLabel": "Aviso:",
     "disclaimerBody": "OralCheck es un cuestionario de evaluación de riesgo, no una prueba de detección ni un instrumento de diagnóstico. No ha sido validado con un conjunto de datos de resultados clínicos. La prueba de detección del cáncer oral es un breve examen visual y táctil realizado por un dentista o médico, y este resultado es únicamente una razón para acudir a dicho examen. No constituye consejo médico, diagnóstico ni tratamiento. Consulte siempre a un profesional dental o médico calificado ante cualquier inquietud sobre su salud bucal.",
     "primaryCTA": {
@@ -1793,7 +1793,7 @@
     },
     "tobacco": {
       "title": "¿Usas tabaco?",
-      "subtitle": "El tabaco es el factor de riesgo individual más fuerte para el cáncer de cavidad oral, un carcinógeno del Grupo 1 según la IARC. Quienes fuman a diario tienen un riesgo de 2 a 6 veces mayor; quienes usan tabaco sin humo tienen un riesgo de 4 a 5 veces mayor (Gandini et al., Oral Oncology, 2008).",
+      "subtitle": "El tabaco es el factor de riesgo individual más fuerte para el cáncer de cavidad oral, un carcinógeno del Grupo 1 según la IARC. Quienes fuman a diario tienen un riesgo de 2 a 6 veces mayor; quienes usan tabaco sin humo tienen un riesgo de 4 a 5 veces mayor (Gandini et al., International Journal of Cancer, 2008).",
       "options": {
         "daily": "Sí, a diario",
         "occasional": "Sí, ocasionalmente",
@@ -1803,7 +1803,7 @@
     },
     "alcohol": {
       "title": "¿Con qué frecuencia consumes alcohol?",
-      "subtitle": "El alcohol es un carcinógeno del Grupo 1 de la IARC para el cáncer de cavidad oral. Quienes beben en exceso tienen un riesgo de 2 a 3 veces mayor. Combinado con el tabaco, el efecto es multiplicativo, hasta 15 veces el riesgo base (Bagnardi et al., Annals of Oncology, 2015).",
+      "subtitle": "El alcohol es un carcinógeno del Grupo 1 de la IARC para el cáncer de cavidad oral. El consumo moderado casi duplica el riesgo, y el consumo excesivo (más de unas cuatro bebidas al día) lo multiplica por cinco aproximadamente (Bagnardi et al., British Journal of Cancer, 2015). Combinado con el tabaquismo intenso, los efectos se multiplican: unas 15 veces el riesgo de quienes no hacen ninguna de las dos cosas (Hashibe et al., Cancer Epidemiology, Biomarkers & Prevention, 2009).",
       "options": {
         "daily": "A diario o casi a diario",
         "weekly": "Algunas veces por semana",
@@ -1813,7 +1813,7 @@
     },
     "hpv": {
       "title": "Estado de VPH",
-      "subtitle": "El VPH-16 es el principal impulsor del cáncer orofaríngeo (amígdalas, base de la lengua), con una razón de momios de ~15 veces en personas infectadas (Gillison et al., JAMA, 2008). Está menos relacionado con el cáncer de cavidad oral, pero sigue siendo un factor de riesgo importante. La vacunación reduce considerablemente el riesgo.",
+      "subtitle": "El VPH-16 es el principal impulsor del cáncer orofaríngeo (amígdalas, base de la lengua), con una razón de momios de ~15 veces en personas infectadas (Gillison et al., Journal of the National Cancer Institute, 2008). Está menos relacionado con el cáncer de cavidad oral, pero sigue siendo un factor de riesgo importante. La vacunación reduce considerablemente el riesgo.",
       "options": {
         "vaccinated": "Vacunado(a) contra el VPH",
         "neither": "No vacunado(a), sin antecedentes conocidos",
@@ -1920,7 +1920,7 @@
     "interaction": {
       "label": "Interacción tabaco + alcohol",
       "answerLabel": "Ambos presentes",
-      "guidance": "Cuando el tabaco y el alcohol se usan juntos, producen un aumento multiplicativo, no simplemente aditivo, en el riesgo de cáncer oral. El uso combinado y regular eleva el riesgo hasta 15 veces por encima del valor base, superando ampliamente la suma de cada factor por separado. Abordar ambos a la vez es la estrategia más eficaz para reducir el riesgo (Bagnardi et al., Annals of Oncology, 2015)."
+      "guidance": "Cuando el tabaco y el alcohol se usan juntos, producen un aumento multiplicativo, no simplemente aditivo, en el riesgo de cáncer oral. Quienes fuman más de un paquete al día y toman tres o más bebidas al día tienen unas 15 veces el riesgo de quienes no hacen ninguna de las dos cosas (Hashibe et al., Cancer Epidemiology, Biomarkers & Prevention, 2009). Abordar ambos a la vez es la estrategia más eficaz para reducir el riesgo."
     },
     "tier": {
       "urgentHeadline": "Un síntoma que mencionaste merece una revisión de cerca.",

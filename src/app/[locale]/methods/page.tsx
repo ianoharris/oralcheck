@@ -28,22 +28,22 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 // keyed by `id`); the OR and source (bibliographic citation) columns are not,
 // citations stay in their original published form regardless of page language.
 const factors = [
-  { id: "tobaccoDaily", or: "2.5 – 6.0×", weight: 8, source: "Gandini et al., Oral Oncology, 2008" },
+  { id: "tobaccoDaily", or: "2.5 – 6.0×", weight: 8, source: "Gandini et al., Int J Cancer, 2008" },
   { id: "betelCurrent", or: "7 – 10×", weight: 9, source: "IARC Monograph 85, 2004" },
-  { id: "tobaccoOccasional", or: "~3.0×", weight: 5, source: "Gandini et al., Oral Oncology, 2008" },
-  { id: "alcoholDaily", or: "~3.0×", weight: 5, source: "Bagnardi et al., Annals of Oncology, 2015" },
-  { id: "hpvHistory", or: "3 – 5× (blended)", weight: 5, source: "Gillison et al., JAMA, 2008" },
+  { id: "tobaccoOccasional", or: "~3.0×", weight: 5, source: "Gandini et al., Int J Cancer, 2008" },
+  { id: "alcoholDaily", or: "~3.0×", weight: 5, source: "Bagnardi et al., Br J Cancer, 2015" },
+  { id: "hpvHistory", or: "3 – 5× (blended)", weight: 5, source: "Gillison et al., J Natl Cancer Inst, 2008" },
   { id: "systemicYes", or: "2 – 4× (blended)", weight: 5, source: "Engels et al., JAMA, 2011; Grulich et al., Lancet, 2007" },
   { id: "age65", or: "~4.0× (adjusted)", weight: 6, source: "SEER, NCI; multivariable-adjusted" },
   { id: "age55", or: "~2.5×", weight: 4, source: "SEER, NCI" },
   { id: "betelPast", or: "~2.5×", weight: 4, source: "IARC Monograph 85, 2004" },
-  { id: "alcoholWeekly", or: "~2.0×", weight: 3, source: "Bagnardi et al., Annals of Oncology, 2015" },
+  { id: "alcoholWeekly", or: "~2.0×", weight: 3, source: "Bagnardi et al., Br J Cancer, 2015" },
   { id: "familyHistory", or: "~2.0×", weight: 3, source: "Negri et al., Eur J Cancer Prev, 2009" },
-  { id: "dietLow", or: "~2.0×", weight: 3, source: "Pavia et al., Oral Oncology, 2006" },
+  { id: "dietLow", or: "~2.0×", weight: 3, source: "Pavia et al., Am J Clin Nutr, 2006" },
   { id: "sexMale", or: "~2.0× (conservative)", weight: 3, source: "SEER, NCI (17.5 vs 6.6 per 100,000)" },
   { id: "age35", or: "~1.5×", weight: 2, source: "SEER, NCI" },
   { id: "sexUnstated", or: "population average", weight: 2, source: "SEER, NCI" },
-  { id: "tobaccoFormer", or: "~1.5×", weight: 2, source: "Gandini et al., Oral Oncology, 2008" },
+  { id: "tobaccoFormer", or: "~1.5×", weight: 2, source: "Gandini et al., Int J Cancer, 2008" },
   { id: "hpvUnvaccinated", or: "~1.5× (proxy)", weight: 2, source: "D'Souza et al., NEJM, 2007; population exposure estimate" },
   { id: "sunExposure", or: "2 – 3×", weight: 2, source: "Perea-Milla López et al., Br J Cancer, 2003" },
   { id: "symptomPresent", or: "override", weight: 6, source: "Napier & Speight, J Oral Pathol Med, 2008" },
@@ -51,10 +51,10 @@ const factors = [
   { id: "dentalNever", or: "detection proxy", weight: 3, source: "SEER stage-at-diagnosis distribution" },
   { id: "dentalLongAgo", or: "detection proxy", weight: 2, source: "SEER stage-at-diagnosis distribution" },
   { id: "dentalFewYears", or: "detection proxy", weight: 1, source: "SEER stage-at-diagnosis distribution" },
-  { id: "alcoholRarely", or: "~1.2×", weight: 1, source: "Bagnardi et al., Annals of Oncology, 2015" },
+  { id: "alcoholRarely", or: "~1.2×", weight: 1, source: "Bagnardi et al., Br J Cancer, 2015" },
   { id: "sunRegular", or: "~1.5×", weight: 1, source: "Perea-Milla López et al., Br J Cancer, 2003" },
   { id: "familyDistant", or: "~1.3×", weight: 1, source: "Negri et al., Eur J Cancer Prev, 2009" },
-  { id: "dietWeekly", or: "~1.3×", weight: 1, source: "Pavia et al., Oral Oncology, 2006" },
+  { id: "dietWeekly", or: "~1.3×", weight: 1, source: "Pavia et al., Am J Clin Nutr, 2006" },
   { id: "hpvUnknown", or: "~1.2× (proxy)", weight: 1, source: "D'Souza et al., NEJM, 2007; population exposure estimate" },
   { id: "systemicUnsure", or: "~1.2× (proxy)", weight: 1, source: "Engels et al., JAMA, 2011; population exposure estimate" },
 ] as const;
@@ -64,18 +64,19 @@ const factors = [
 const refs = [
   {
     id: 1,
-    citation: "Gandini S, et al. Tobacco smoking and cancer: a meta-analysis. Oral Oncology. 2008;44(7):617–638.",
-    url: "https://pubmed.ncbi.nlm.nih.gov/18055252/",
+    citation: "Gandini S, Botteri E, Iodice S, et al. Tobacco smoking and cancer: a meta-analysis. International Journal of Cancer. 2008;122(1):155–164.",
+    url: "https://pubmed.ncbi.nlm.nih.gov/17893872/",
   },
   {
     id: 2,
-    citation: "Bagnardi V, et al. Alcohol consumption and site-specific cancer risk: a comprehensive dose–response meta-analysis. Annals of Oncology. 2015;26(1):39–55.",
-    url: "https://pubmed.ncbi.nlm.nih.gov/25022040/",
+    citation: "Bagnardi V, Rota M, Botteri E, et al. Alcohol consumption and site-specific cancer risk: a comprehensive dose–response meta-analysis. British Journal of Cancer. 2015;112(3):580–593.",
+    url: "https://pubmed.ncbi.nlm.nih.gov/25422909/",
+    note: "Oral cavity and pharynx: RR 1.83 for moderate drinking (12.5 to 50 g/day), 5.13 for heavy drinking (more than 50 g/day)",
   },
   {
     id: 3,
-    citation: "Gillison ML, et al. Distinct risk factor profiles for human papillomavirus type 16–positive and human papillomavirus type 16–negative head and neck cancers. JAMA. 2008;168(3):294–305.",
-    url: "https://pubmed.ncbi.nlm.nih.gov/18195198/",
+    citation: "Gillison ML, D'Souza G, Westra W, et al. Distinct risk factor profiles for human papillomavirus type 16–positive and human papillomavirus type 16–negative head and neck cancers. Journal of the National Cancer Institute. 2008;100(6):407–420.",
+    url: "https://pubmed.ncbi.nlm.nih.gov/18334711/",
   },
   {
     id: 4,
@@ -85,13 +86,14 @@ const refs = [
   {
     id: 5,
     citation: "Napier SS, Speight PM. Natural history of potentially malignant oral lesions and conditions: an overview of the literature. Journal of Oral Pathology & Medicine. 2008;37(1):1–10.",
-    url: "https://pubmed.ncbi.nlm.nih.gov/18154566/",
+    url: "https://pubmed.ncbi.nlm.nih.gov/18154571/",
     note: "Leukoplakia 5–17% and erythroplakia 14–50% malignant transformation rates",
   },
   {
     id: 6,
-    citation: "Pavia M, et al. Evidence-based medicine on the relationship between diet and cancers of the oral cavity and pharynx. Oral Oncology. 2006;42(1):15–25.",
-    url: "https://pubmed.ncbi.nlm.nih.gov/16054866/",
+    citation: "Pavia M, Pileggi C, Nobile CG, Angelillo IF. Association between fruit and vegetable consumption and oral cancer: a meta-analysis of observational studies. American Journal of Clinical Nutrition. 2006;83(5):1126–1134.",
+    url: "https://pubmed.ncbi.nlm.nih.gov/16685056/",
+    note: "OR 0.51 per daily portion of fruit, 0.50 for vegetables, across 16 studies",
   },
   {
     id: 7,
@@ -102,12 +104,12 @@ const refs = [
     id: 8,
     citation: "Hashibe M, Brennan P, Chuang SC, et al. Interaction between tobacco and alcohol use and the risk of head and neck cancer: pooled analysis in the International Head and Neck Cancer Epidemiology Consortium. Cancer Epidemiology, Biomarkers & Prevention. 2009;18(2):541–550.",
     url: "https://pubmed.ncbi.nlm.nih.gov/19190158/",
-    note: "Heavy combined users: OR 35.8× vs non-users of both, supporting supra-multiplicative interaction term",
+    note: "Joint effect greater than multiplicative: interaction parameter 2.15 overall, 3.09 for oral cavity. Oral cavity, more than 20 cigarettes and 3 or more drinks a day: OR 15.5× vs neither",
   },
   {
     id: 9,
     citation: "Negri E, Boffetta P, Berthiller J, et al. Family history of cancer: pooled analysis in the International Head and Neck Cancer Epidemiology Consortium. International Journal of Cancer. 2009;124(2):394–401.",
-    url: "https://pubmed.ncbi.nlm.nih.gov/18814267/",
+    url: "https://pubmed.ncbi.nlm.nih.gov/18814262/",
     note: "OR ~2.0 for first-degree relative with head and neck cancer",
   },
   {
@@ -119,7 +121,7 @@ const refs = [
   {
     id: 11,
     citation: "Perea-Milla López E, Minarro-Del Moral RM, Martinez-Garcia C, et al. Lifestyles, environmental and phenotypic factors associated with lip cancer: a case-control study in southern Spain. British Journal of Cancer. 2003;88(11):1702–1707.",
-    url: "https://pubmed.ncbi.nlm.nih.gov/12771986/",
+    url: "https://pubmed.ncbi.nlm.nih.gov/12771984/",
     note: "Sun exposure OR 2–3× for lower lip squamous cell carcinoma in outdoor vs indoor workers",
   },
   {
@@ -133,6 +135,12 @@ const refs = [
     citation: "Grulich AE, van Leeuwen MT, Falster MO, Vajdic CM. Incidence of cancers in people with HIV/AIDS compared with immunosuppressed transplant recipients: a meta-analysis. Lancet. 2007;370(9581):59–67.",
     url: "https://pubmed.ncbi.nlm.nih.gov/17617273/",
     note: "Establishes that the two immunosuppressed populations share a similar pattern of raised incidence, which is the basis for grouping them into one question",
+  },
+  {
+    id: 14,
+    citation: "Blot WJ, McLaughlin JK, Winn DM, et al. Smoking and drinking in relation to oral and pharyngeal cancer. Cancer Research. 1988;48(11):3282–3287.",
+    url: "https://pubmed.ncbi.nlm.nih.gov/3365707/",
+    note: "The often-quoted \"more than 35-fold\" figure: oral and pharyngeal cancer combined, two or more packs and more than four drinks a day. Not used here: Hashibe 2009 is larger, pooled, and reports the oral cavity separately",
   },
 ] as const;
 
@@ -249,7 +257,7 @@ export default async function MethodsPage({ params }: Props) {
           <p>{t.rich("interactionP1Rest", { b: (c) => <strong className="text-ink">{c}</strong> })}</p>
           <p>{t("interactionP2")}</p>
           <p className="text-xs">
-            {t("interactionSourcesLabel")} Hashibe M, et al. Cancer Epidemiology, Biomarkers &amp; Prevention, 2009 (heavy combined users: OR 35.8×); Bagnardi V, et al. Annals of Oncology, 2015.
+            {t("interactionSourcesLabel")} Hashibe M, et al. Cancer Epidemiology, Biomarkers &amp; Prevention, 2009 (interaction parameter 2.15; oral cavity, heaviest combined users: OR 15.5×).
           </p>
         </div>
       </section>

@@ -159,10 +159,10 @@ export function computeMaxScore(): number {
  * where k = 4.47, anchored so that tobacco daily (OR 6.0) → weight 8.
  *
  * Key sources:
- *   Tobacco:   Gandini et al., Oral Oncology, 2008        (OR 2.5–6.0×)
- *   Alcohol:   Bagnardi et al., Annals of Oncology, 2015  (OR 2.0–3.0×)
+ *   Tobacco:   Gandini et al., Int J Cancer, 2008         (OR 2.5–6.0×)
+ *   Alcohol:   Bagnardi et al., Br J Cancer, 2015         (OR 2.0–3.0×)
  *   Betel:     IARC Monograph 85, 2004                    (OR 7–10×)
- *   HPV:       Gillison et al., JAMA, 2008                (OR ~15× oropharyngeal;
+ *   HPV:       Gillison et al., J Natl Cancer Inst, 2008  (OR ~15× oropharyngeal;
  *              conservative OR ~3–5× blended for oral+oropharyngeal)
  *   Age:       SEER incidence data, multivariable-adjusted ORs (~1.5–4× by decade)
  *   Symptoms:  Napier & Speight, J Oral Pathol Med, 2008  (leukoplakia 5–17%,
@@ -177,9 +177,13 @@ export function computeMaxScore(): number {
  *              2007). The least precisely derived weight in the instrument.
  *
  * Interaction term:
- *   Tobacco + alcohol co-use produces multiplicative rather than additive risk
- *   (~15× combined vs. ~9× additive). The +3 interaction bonus reflects this
- *   excess beyond simple score addition (Bagnardi et al., 2015).
+ *   Summing log-scaled weights already models tobacco and alcohol as
+ *   multiplying. The pooled INHANCE data found the joint effect greater than
+ *   multiplicative: interaction parameter psi 2.15 for head and neck cancer
+ *   overall (3.09 for oral cavity). round(ln(2.15) × 4.47) = 3, hence +3; the
+ *   oral-cavity psi would give 5, so 3 is the conservative choice. Heaviest
+ *   combined users (>20 cigs and >=3 drinks/day), oral cavity: OR 15.5 vs
+ *   neither (Hashibe et al., Cancer Epidemiol Biomarkers Prev, 2009, Table 3).
  *
  * Tier thresholds (max score 61):
  *   Low ≤4 | Moderate 5–13 | Elevated 14–22 | High ≥23
@@ -230,8 +234,8 @@ export function computeRisk(answers: Answers, locale: string = "en"): RiskResult
 
   // Tobacco + alcohol interaction term
   // When both are present at meaningful levels, the combined carcinogenic effect is
-  // multiplicative rather than additive — up to 15× baseline risk vs. the sum-of-parts.
-  // (Bagnardi et al., Annals of Oncology, 2015; IARC Monographs Vol. 100E)
+  // greater than multiplicative; see the interaction note in the header comment.
+  // (Hashibe et al., Cancer Epidemiol Biomarkers Prev, 2009; IARC Monographs Vol. 100E)
   const tobaccoAnswer = answers["tobacco"];
   const alcoholAnswer = answers["alcohol"];
   const hasActiveTobacco = tobaccoAnswer === "daily" || tobaccoAnswer === "occasional";

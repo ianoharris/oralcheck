@@ -384,7 +384,7 @@
   },
   "CankerMeta": {
     "title": "Canker Sore vs Oral Cancer: How to Tell the Difference",
-    "description": "Canker sores heal in 7-10 days. Oral cancer doesn't. Learn the key differences, what each looks like, and exactly when to see a doctor."
+    "description": "Canker sores heal in 7 to 14 days. Oral cancer doesn't. Learn the key differences, what each looks like, and exactly when to see a doctor."
   },
   "CankerPage": {
     "tag": "Guide",
@@ -509,7 +509,7 @@
       }
     ],
     "sourcesLabel": "Sources:",
-    "sourcesBody": "American Cancer Society, Oral Cancer Foundation, National Institute of Dental and Craniofacial Research (NIDCR), Mayo Clinic. This page is educational and does not constitute medical advice.",
+    "sourcesBody": "American Cancer Society, Oral Cancer Foundation, National Institute of Dental and Craniofacial Research (NIDCR), Mayo Clinic. Canker sore healing time: <mesh>US National Library of Medicine, MeSH: Stomatitis, Aphthous</mesh>; <nhs>NHS: Mouth ulcers</nhs>. This page is educational and does not constitute medical advice.",
     "checkRisk": "Check your risk →",
     "seeAllSigns": "See all warning signs",
     "findDentist": "Find a dentist →"
@@ -525,8 +525,8 @@
     "twoFactorHeading": "The two-factor rule",
     "twoFactorP1": "Tobacco and alcohol each independently raise oral cancer risk. Used together, their effects are",
     "twoFactorBold1": "synergistic, not additive",
-    "twoFactorP2": "a heavy smoker who also drinks heavily can face a",
-    "twoFactorBold2": "30-fold increase",
+    "twoFactorP2": "someone who smokes more than a pack a day and has three or more drinks a day can face a roughly",
+    "twoFactorBold2": "15-fold increase",
     "twoFactorP3": "in risk compared to someone who does neither. If you use both, reducing or eliminating either one significantly lowers your risk.",
     "learnMore": "Learn more →",
     "riskFactors": [
@@ -545,7 +545,7 @@
         "weight": "High",
         "weightColor": "text-accent",
         "summary": "Heavy drinkers are 5-6x more likely to develop oral cancer.",
-        "detail": "Alcohol is a direct carcinogen in the oral cavity. The risk increases with the amount consumed, and heavy drinking (more than 3-4 drinks per day) carries the highest risk. When combined with tobacco, the effects are synergistic, the combined risk far exceeds the sum of the two individual risks. Someone who both smokes heavily and drinks heavily can have a 30-fold increased risk compared to someone who does neither.",
+        "detail": "Alcohol is a direct carcinogen in the oral cavity. The risk increases with the amount consumed, and heavy drinking (more than 3-4 drinks per day) carries the highest risk. When combined with tobacco, the effects are synergistic, the combined risk far exceeds the sum of the two individual risks. Someone who smokes more than a pack a day and has three or more drinks a day has about 15 times the risk of someone who does neither.",
         "link": null
       },
       {
@@ -651,7 +651,7 @@
       },
       {
         "q": "Does alcohol increase the risk of oral cancer?",
-        "a": "Yes. Heavy alcohol use is an independent risk factor. The combination of tobacco and alcohol is especially dangerous, their effects are synergistic, and the combined risk can be 30 times higher than for someone who uses neither."
+        "a": "Yes. Heavy alcohol use is an independent risk factor. The combination of tobacco and alcohol is especially dangerous, their effects are synergistic, and for the heaviest users of both the risk is about 15 times that of someone who uses neither."
       },
       {
         "q": "Can you get oral cancer without smoking or drinking?",
@@ -667,7 +667,7 @@
       }
     ],
     "sourcesLabel": "Sources:",
-    "sourcesBody": "American Cancer Society, National Cancer Institute (NCI SEER), Oral Cancer Foundation, CDC HPV and Cancer, International Agency for Research on Cancer (IARC). This page is educational and does not constitute medical advice.",
+    "sourcesBody": "American Cancer Society, National Cancer Institute (NCI SEER), Oral Cancer Foundation, CDC HPV and Cancer, International Agency for Research on Cancer (IARC). Combined tobacco and alcohol figure: <hashibe>Hashibe et al., Cancer Epidemiology, Biomarkers & Prevention, 2009</hashibe>. This page is educational and does not constitute medical advice.",
     "checkRisk": "Check your risk →",
     "warningSigns": "Warning signs",
     "preventionGuide": "How to prevent oral cancer",
@@ -746,7 +746,7 @@
       },
       {
         "factor": "Alcohol",
-        "detail": "Heavy drinking is an independent risk factor, and the combination with tobacco multiplies risk rather than just adding it. People who both smoke heavily and drink heavily face a risk up to 15 times higher than non-users of either."
+        "detail": "Heavy drinking is an independent risk factor, and the combination with tobacco multiplies risk rather than just adding it. People who smoke more than a pack a day and have three or more drinks a day face about 15 times the risk of people who do neither."
       },
       {
         "factor": "HPV infection",
@@ -804,7 +804,7 @@
       }
     ],
     "sourcesLabel": "Sources:",
-    "sourcesBody": "American Cancer Society, National Cancer Institute SEER database, Oral Cancer Foundation, CDC, World Health Organization. This page is educational and does not constitute medical advice.",
+    "sourcesBody": "American Cancer Society, National Cancer Institute SEER database, Oral Cancer Foundation, CDC, World Health Organization. Combined tobacco and alcohol figure: <hashibe>Hashibe et al., Cancer Epidemiology, Biomarkers & Prevention, 2009</hashibe>. This page is educational and does not constitute medical advice.",
     "byline": "Written by Ian Harris, predental student at the University of Wisconsin-Madison.",
     "aboutLink": "About OralCheck",
     "takeScreener": "Take the free screener →",
@@ -824,7 +824,7 @@
     "twoWeekHeading": "The 2-week rule",
     "twoWeekP1Start": "Any sore, patch, lump, or unusual change in your mouth that has",
     "twoWeekBold": "not resolved after 2 weeks",
-    "twoWeekP1End": "should be evaluated by a dentist or doctor. Canker sores heal in 7 to 10 days. Oral cancer does not. You do not need to wait to see if it gets worse, 2 weeks is the threshold.",
+    "twoWeekP1End": "should be evaluated by a dentist or doctor. Canker sores heal in 7 to 14 days. Oral cancer does not. You do not need to wait to see if it gets worse, 2 weeks is the threshold.",
     "signsHeading": "Warning signs",
     "highPriority": "High priority",
     "signs": [
@@ -835,7 +835,7 @@
       },
       {
         "title": "Sores or ulcers that don't heal",
-        "detail": "A sore or ulcer in the mouth that hasn't resolved after 2 weeks is the classic red flag. Canker sores (aphthous ulcers) heal in 7 to 10 days without treatment. Oral cancer lesions do not. They may have irregular, raised, or hardened edges, different from the clean round border of a canker sore. They may bleed easily when touched. The absence of pain does not mean the absence of danger.",
+        "detail": "A sore or ulcer in the mouth that hasn't resolved after 2 weeks is the classic red flag. Canker sores (aphthous ulcers) heal in 7 to 14 days without treatment. Oral cancer lesions do not. They may have irregular, raised, or hardened edges, different from the clean round border of a canker sore. They may bleed easily when touched. The absence of pain does not mean the absence of danger.",
         "urgent": true
       },
       {
@@ -921,7 +921,7 @@
     "comparison": [
       {
         "label": "Heals within",
-        "a": "7-10 days",
+        "a": "7-14 days",
         "b": "Does not heal"
       },
       {
@@ -985,7 +985,7 @@
       },
       {
         "q": "What is the 2-week rule?",
-        "a": "Any sore, patch, lump, or change in your mouth that has not resolved after 2 weeks should be professionally evaluated. Canker sores heal in 7 to 10 days. Anything lasting longer deserves a dentist's assessment."
+        "a": "Any sore, patch, lump, or change in your mouth that has not resolved after 2 weeks should be professionally evaluated. Canker sores heal in 7 to 14 days. Anything lasting longer deserves a dentist's assessment."
       },
       {
         "q": "Where does oral cancer most commonly develop?",
@@ -997,7 +997,7 @@
       }
     ],
     "sourcesLabel": "Sources:",
-    "sourcesBody": "American Cancer Society, National Cancer Institute, Oral Cancer Foundation, National Institute of Dental and Craniofacial Research (NIDCR). This page is educational and does not constitute medical advice.",
+    "sourcesBody": "American Cancer Society, National Cancer Institute, Oral Cancer Foundation, National Institute of Dental and Craniofacial Research (NIDCR). Canker sore healing time: <mesh>US National Library of Medicine, MeSH: Stomatitis, Aphthous</mesh>; <nhs>NHS: Mouth ulcers</nhs>. This page is educational and does not constitute medical advice.",
     "takeScreener": "Take the free screener →",
     "howToSelfExam": "How to do a self-exam",
     "cankerVsCancer": "Canker sore vs oral cancer",
@@ -1316,7 +1316,7 @@
     "colSource": "Source",
     "interactionHeading": "Tobacco + Alcohol Interaction Term",
     "interactionP1Rest": "When both tobacco and alcohol use are present at meaningful levels (daily or weekly), the model adds an interaction bonus of <b>+3 points</b>.",
-    "interactionP2": "The reason is that tobacco and alcohol together produce a multiplicative rather than additive increase in oral cancer risk. Combined regular use raises risk roughly 15× above baseline, while simply summing the individual weights only gets you to about 9×. The +3 captures that gap.",
+    "interactionP2": "The reason is that tobacco and alcohol together raise risk by more than the product of their separate effects. Because each weight is proportional to the logarithm of an odds ratio, adding the tobacco and alcohol weights already assumes the two multiply. Pooled data from 17 studies found the joint effect is larger still, about twice what multiplication alone predicts (interaction parameter 2.15 for head and neck cancer overall, 3.09 for oral cavity cancer). On this scale a factor of 2.15 is worth 3 points, so +3 is the conservative reading. In the same data, people who smoked more than a pack a day and had three or more drinks a day had about 15 times the odds of oral cavity cancer of people who did neither.",
     "interactionSourcesLabel": "Sources:",
     "tierThresholdsHeading": "Risk Tier Thresholds",
     "tierLow": "Low",
@@ -1625,7 +1625,7 @@
     "emailGenericError": "Couldn't send. Try again.",
     "retake": "↻ Retake the screener",
     "evidenceBasisLabel": "Evidence basis:",
-    "evidenceBasisBody": "Risk factor weights are informed by published epidemiological evidence, including IARC Group 1 carcinogen classifications for tobacco (Gandini et al., <i>Oral Oncology</i>, 2008), alcohol (Bagnardi et al., <i>Annals of Oncology</i>, 2015), and betel quid (IARC Monograph 85), as well as HPV-16 odds ratios for oropharyngeal cancer (Gillison et al., <i>JAMA</i>, 2008) and SEER age-incidence data. The tobacco-alcohol interaction term reflects documented multiplicative, not merely additive, carcinogenic risk. Leukoplakia and erythroplakia transformation rates are drawn from Napier & Speight, <i>Journal of Oral Pathology & Medicine</i>, 2008.",
+    "evidenceBasisBody": "Risk factor weights are informed by published epidemiological evidence, including IARC Group 1 carcinogen classifications for tobacco (Gandini et al., <i>International Journal of Cancer</i>, 2008), alcohol (Bagnardi et al., <i>British Journal of Cancer</i>, 2015), and betel quid (IARC Monograph 85), as well as HPV-16 odds ratios for oropharyngeal cancer (Gillison et al., <i>Journal of the National Cancer Institute</i>, 2008) and SEER age-incidence data. The tobacco-alcohol interaction term reflects documented multiplicative, not merely additive, carcinogenic risk (Hashibe et al., <i>Cancer Epidemiology, Biomarkers & Prevention</i>, 2009). Leukoplakia and erythroplakia transformation rates are drawn from Napier & Speight, <i>Journal of Oral Pathology & Medicine</i>, 2008.",
     "disclaimerLabel": "Disclaimer:",
     "disclaimerBody": "OralCheck is a risk-assessment questionnaire, not a screening test and not a diagnostic instrument. It has not been validated against a clinical outcome dataset. The screening test for oral cancer is a short visual and tactile examination by a dentist or physician, and this result is only a reason to go and have one. It does not constitute medical advice, diagnosis, or treatment. Always consult a qualified dental or medical provider regarding any oral health concerns.",
     "primaryCTA": {
@@ -1793,7 +1793,7 @@
     },
     "tobacco": {
       "title": "Do you use tobacco?",
-      "subtitle": "Tobacco is the single strongest risk factor for oral cavity cancer, an IARC Group 1 carcinogen. Daily smokers face 2–6× higher risk; smokeless tobacco users face 4–5× higher risk (Gandini et al., Oral Oncology, 2008).",
+      "subtitle": "Tobacco is the single strongest risk factor for oral cavity cancer, an IARC Group 1 carcinogen. Daily smokers face 2–6× higher risk; smokeless tobacco users face 4–5× higher risk (Gandini et al., International Journal of Cancer, 2008).",
       "options": {
         "daily": "Yes, daily",
         "occasional": "Yes, occasionally",
@@ -1803,7 +1803,7 @@
     },
     "alcohol": {
       "title": "How often do you drink alcohol?",
-      "subtitle": "Alcohol is an IARC Group 1 carcinogen for oral cavity cancer. Heavy drinkers face 2–3× elevated risk. Combined with tobacco, the effect is multiplicative, up to 15× baseline risk (Bagnardi et al., Annals of Oncology, 2015).",
+      "subtitle": "Alcohol is an IARC Group 1 carcinogen for oral cavity cancer. Moderate drinking nearly doubles risk, and heavy drinking (more than about four drinks a day) raises it about fivefold (Bagnardi et al., British Journal of Cancer, 2015). Combined with heavy smoking, the effects multiply: about 15× the risk of people who do neither (Hashibe et al., Cancer Epidemiology, Biomarkers & Prevention, 2009).",
       "options": {
         "daily": "Daily or near-daily",
         "weekly": "A few times a week",
@@ -1813,7 +1813,7 @@
     },
     "hpv": {
       "title": "HPV status",
-      "subtitle": "HPV-16 is the primary driver of oropharyngeal cancer (tonsils, tongue base), with an odds ratio ~15× in infected individuals (Gillison et al., JAMA, 2008). It is less strongly linked to oral cavity cancer but remains a significant risk factor. Vaccination substantially lowers risk.",
+      "subtitle": "HPV-16 is the primary driver of oropharyngeal cancer (tonsils, tongue base), with an odds ratio ~15× in infected individuals (Gillison et al., Journal of the National Cancer Institute, 2008). It is less strongly linked to oral cavity cancer but remains a significant risk factor. Vaccination substantially lowers risk.",
       "options": {
         "vaccinated": "Vaccinated against HPV",
         "neither": "Not vaccinated, no known history",
@@ -1920,7 +1920,7 @@
     "interaction": {
       "label": "Tobacco + alcohol interaction",
       "answerLabel": "Both present",
-      "guidance": "When tobacco and alcohol are used together, they produce a multiplicative, not merely additive, increase in oral cancer risk. Combined regular use raises risk up to 15× above baseline, far exceeding the sum of either factor alone. Addressing both together is the most effective risk-reduction strategy (Bagnardi et al., Annals of Oncology, 2015)."
+      "guidance": "When tobacco and alcohol are used together, they produce a multiplicative, not merely additive, increase in oral cancer risk. People who smoke more than a pack a day and have three or more drinks a day have about 15 times the risk of people who do neither (Hashibe et al., Cancer Epidemiology, Biomarkers & Prevention, 2009). Addressing both together is the most effective risk-reduction strategy."
     },
     "tier": {
       "urgentHeadline": "A symptom you mentioned deserves a close look.",

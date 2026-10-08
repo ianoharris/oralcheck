@@ -86,7 +86,7 @@ export async function POST(req: NextRequest) {
       : "";
 
     const interactionNote = factors.some(f => f.label === "Tobacco + alcohol interaction")
-      ? "\nNote: This person has both tobacco and alcohol use. Their combined risk is multiplicative, not merely additive — approximately 15× baseline, far exceeding the sum of either factor alone (Bagnardi et al., 2015)."
+      ? "\nNote: This person has both tobacco and alcohol use. Their combined risk is multiplicative, not merely additive: people who smoke more than a pack a day and have three or more drinks a day have about 15 times the oral cavity cancer risk of people who do neither (Hashibe et al., 2009). Do not state a multiple for this person, since their own use may be lighter."
       : "";
 
     const userMessage = `A person just completed an evidence-based oral cancer risk screener. Here are their results:

@@ -30,21 +30,21 @@ A log-linear model was chosen deliberately: it means that the sum of weights app
 
 | Factor | Published OR | Weight | Source |
 |---|---|---|---|
-| Tobacco, daily | 2.5 to 6.0x | 8 | Gandini et al., Oral Oncology, 2008 |
+| Tobacco, daily | 2.5 to 6.0x | 8 | Gandini et al., Int J Cancer, 2008 |
 | Betel quid / paan / gutka, current | 7 to 10x | 9 | IARC Monograph 85, 2004 |
-| Tobacco, occasional | ~3.0x | 5 | Gandini et al., Oral Oncology, 2008 |
-| Alcohol, daily | ~3.0x | 5 | Bagnardi et al., Annals of Oncology, 2015 |
-| HPV-related condition (history) | 3 to 5x blended | 5 | Gillison et al., JAMA, 2008 |
+| Tobacco, occasional | ~3.0x | 5 | Gandini et al., Int J Cancer, 2008 |
+| Alcohol, daily | ~3.0x | 5 | Bagnardi et al., Br J Cancer, 2015 |
+| HPV-related condition (history) | 3 to 5x blended | 5 | Gillison et al., J Natl Cancer Inst, 2008 |
 | Immunosuppression, transplant, or prior head/neck radiation | 2 to 4x blended | 5 | Engels et al., JAMA, 2011; Grulich et al., Lancet, 2007 |
 | Male sex at birth | ~2.0x conservative | 3 | NCI SEER (17.5 vs 6.6 per 100,000) |
 | Age 65+ | ~4.0x adjusted | 6 | NCI SEER, multivariable-adjusted |
 | Age 55 to 64 | ~2.5x | 4 | NCI SEER |
 | Betel quid, past use | ~2.5x | 4 | IARC Monograph 85, 2004 |
-| Alcohol, weekly | ~2.0x | 3 | Bagnardi et al., Annals of Oncology, 2015 |
+| Alcohol, weekly | ~2.0x | 3 | Bagnardi et al., Br J Cancer, 2015 |
 | Family history, first-degree | ~2.0x | 3 | Negri et al., Int J Cancer, 2009 |
-| Diet low in fruits and vegetables | ~2.0x | 3 | Pavia et al., Oral Oncology, 2006 |
+| Diet low in fruits and vegetables | ~2.0x | 3 | Pavia et al., Am J Clin Nutr, 2006 |
 | Age 35 to 54 | ~1.5x | 2 | NCI SEER |
-| Tobacco, former | ~1.5x | 2 | Gandini et al., Oral Oncology, 2008 |
+| Tobacco, former | ~1.5x | 2 | Gandini et al., Int J Cancer, 2008 |
 | HPV, unvaccinated / no known history | ~1.5x proxy | 2 | D'Souza et al., NEJM, 2007; population exposure estimate |
 | Sun exposure, lips unprotected | 2 to 3x | 2 | Perea-Milla Lopez et al., Br J Cancer, 2003 |
 
@@ -56,7 +56,7 @@ A log-linear model was chosen deliberately: it means that the sum of weights app
 
 When both tobacco and alcohol use are present at meaningful levels, the model adds an interaction bonus of +3 points.
 
-Under a purely log-linear (multiplicative) model, tobacco OR 6x and alcohol OR 3x would combine to approximately 18x, mapping to 13 points. The published combined OR for heavy users of both is approximately 35x (Hashibe et al., INHANCE Consortium, 2009), which maps to approximately 16 points under the same formula. The +3 interaction bonus closes that gap. Without it, the model underestimates the risk for the highest-risk behavioral profile.
+Under a purely log-linear (multiplicative) model, tobacco OR 6x and alcohol OR 3x would combine to approximately 18x, mapping to 13 points. The pooled INHANCE analysis (Hashibe et al., 2009) found the joint effect greater than multiplicative, with an interaction parameter of 2.15 for head and neck cancer overall and 3.09 for oral cavity cancer. Under the same formula, 2.15 maps to 3 points, which is the bonus; the oral cavity value would map to 5, so +3 is conservative. For the heaviest users (more than 20 cigarettes and 3 or more drinks a day), the oral cavity OR was 15.5 against users of neither.
 
 ### Risk Tier Thresholds
 
@@ -73,15 +73,15 @@ A daily smoker scores 8 (Moderate). Tobacco + alcohol + interaction = 16 (Elevat
 
 ## 3. Primary Sources
 
-1. Gandini S, et al. Tobacco smoking and cancer: a meta-analysis. Oral Oncology. 2008;44(7):617-638.
-2. Bagnardi V, et al. Alcohol consumption and site-specific cancer risk: a comprehensive dose-response meta-analysis. Annals of Oncology. 2015;26(1):39-55.
-3. Gillison ML, et al. Distinct risk factor profiles for HPV type 16-positive and -negative head and neck cancers. JAMA. 2008;168(3):294-305.
+1. Gandini S, et al. Tobacco smoking and cancer: a meta-analysis. International Journal of Cancer. 2008;122(1):155-164.
+2. Bagnardi V, et al. Alcohol consumption and site-specific cancer risk: a comprehensive dose-response meta-analysis. British Journal of Cancer. 2015;112(3):580-593.
+3. Gillison ML, et al. Distinct risk factor profiles for HPV type 16-positive and -negative head and neck cancers. Journal of the National Cancer Institute. 2008;100(6):407-420.
 4. IARC. Betel-quid and Areca-nut Chewing and Some Areca-nut Derived Nitrosamines. IARC Monograph 85. 2004.
 5. Hashibe M, Brennan P, Chuang SC, et al. Interaction between tobacco and alcohol use and the risk of head and neck cancer: pooled analysis in the INHANCE Consortium. Cancer Epidemiology, Biomarkers & Prevention. 2009;18(2):541-550.
 6. Negri E, Boffetta P, Berthiller J, et al. Family history of cancer: pooled analysis in the INHANCE Consortium. International Journal of Cancer. 2009;124(2):394-401.
 7. D'Souza G, Kreimer AR, Viscidi R, et al. Case-control study of human papillomavirus and oropharyngeal cancer. New England Journal of Medicine. 2007;356(19):1944-1956.
 8. Perea-Milla Lopez E, et al. Lifestyles, environmental and phenotypic factors associated with lip cancer. British Journal of Cancer. 2003;88(11):1702-1707.
-9. Pavia M, et al. Evidence-based medicine on the relationship between diet and cancers of the oral cavity and pharynx. Oral Oncology. 2006;42(1):15-25.
+9. Pavia M, et al. Association between fruit and vegetable consumption and oral cancer: a meta-analysis of observational studies. American Journal of Clinical Nutrition. 2006;83(5):1126-1134.
 10. National Cancer Institute. SEER Cancer Statistics Review 1975-2021.
 11. American Cancer Society. Key Statistics for Oral Cavity and Oropharyngeal Cancers. 2024.
 12. Napier SS, Speight PM. Natural history of potentially malignant oral lesions. Journal of Oral Pathology & Medicine. 2008;37(1):1-10.

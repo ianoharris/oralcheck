@@ -10,7 +10,7 @@ The running list. Two rules:
    named. This is the list's whole purpose: the things that come up once, sound
    good, and are never mentioned again.
 
-Last updated: 2026-09-21
+Last updated: 2026-10-08
 
 **Mirrored to an artifact Ian reads:**
 https://claude.ai/code/artifact/cc490e4b-1ee3-4062-bc56-eada066f1003
@@ -88,6 +88,33 @@ Update both together. See `AGENTS.md`.
 
 ### Product and credibility
 
+- [ ] **Two more screener citations that do not match their source (found
+      2026-10-08, while fixing the figures below).** Same pattern as the ones
+      fixed that day, but the fix is a judgment about the number, not just a
+      journal name, so it was left for its own pass. (1) The tobacco question
+      says smokeless tobacco carries 4 to 5x risk and credits Gandini 2008,
+      which is a meta-analysis of *smoking* only. (2) The HPV question says
+      "OR ~15x" and credits Gillison 2008; the ~15x figure looks like D'Souza
+      2007's oral HPV-16 infection result (OR 14.6). Both need the source read
+      and either the number or the citation changed, in all three languages.
+      Not blocked.
+- [ ] **Add the settled tobacco plus alcohol figure to the social topic bank.**
+      `oralcheck-agent/topics.py` (content engine v2, not yet committed) can
+      now carry it in the `tobacco_plus_alcohol` facts: "People who smoke more
+      than a pack a day and have three or more drinks a day have about 15 times
+      the oral cancer risk of people who do neither (a pooled analysis of 17
+      studies)." The canker fact there already says 7 to 14 days, which is now
+      what the site says. Blocked on two things landing first: the figures
+      branch (`claude/distracted-wu-11d568`) merged, so the page the post links
+      to says 15, and the engine v2 files committed. A hook stopped the edit
+      being made from the figures worktree.
+- [ ] **Was `OralCheck_ADA_Briefing_v2.md` sent to anyone?** On Ian. Its
+      reference list had the same wrong journals as `/methods` (Gandini, Bagnardi,
+      Gillison, Pavia) and it said the combined tobacco plus alcohol OR was
+      "approximately 35x" per Hashibe 2009, which is that paper's larynx
+      figure. The repo copy is corrected. If a copy went out, the corrected one
+      is worth resending with a one-line note; reviewers who check a citation
+      and find it wrong stop trusting the rest.
 - [ ] **Find a biostatistician, not another clinician.** Brant's most useful
       sentence: a faculty mentor cannot tell you whether the stratification is
       valid, and conflating the two roles was a mistake. Ask whether UW's ICTR
@@ -208,6 +235,60 @@ Update both together. See `AGENTS.md`.
 ## Shipped
 
 Newest first.
+
+### 2026-10-08
+- **One figure everywhere for tobacco plus alcohol, and for canker sore
+  healing time.** Closes "The site contradicts itself on two figures" (that
+  item was added to the uncommitted copy of this file on `master`; move it
+  here when the two are reconciled). The Hashibe figure was taken from the
+  paper's own Table 3, not from the abstract or a secondary quote.
+  - **Tobacco plus alcohol: about 15 times, not 30.** Source: Hashibe et al.
+    2009, *Cancer Epidemiology, Biomarkers & Prevention*, the pooled INHANCE
+    analysis (17 studies, 11,221 cases). Table 3, oral cavity, more than 20
+    cigarettes and 3 or more drinks a day against neither: OR 15.49 (7.24 to
+    33.14). The "30-fold" had no source behind it; the nearest real figure is
+    Blot 1988, *Cancer Research*, "more than 35-fold", but that is one US study
+    of about 1,100 cases, oral and throat cancer counted together, at two or
+    more packs and more than four drinks a day. Hashibe is larger, newer, and
+    reports the mouth on its own. Copy now names the exposure ("more than a
+    pack a day and three or more drinks a day") instead of "heavily", so the
+    15 is not read as applying to everyone who smokes and drinks.
+  - **Canker sores: 7 to 14 days, not 7 to 10.** Sources: the US National
+    Library of Medicine's MeSH definition of aphthous stomatitis ("lasting for
+    7 to 14 days and then heal without scarring") and the NHS mouth ulcer page
+    ("within a week or 2"). It also lines up with the two-week rule; 7 to 10
+    left an unexplained gap before day 14.
+  - **Where it changed, in English, Spanish and Portuguese:** the oral cancer
+    overview, risk factors page (two-factor box, alcohol card, FAQ), signs page
+    (four places), canker page meta description and its share image, the
+    alcohol question's explainer, the interaction guidance on results, the
+    results page evidence note, and the AI summary prompt, which used to tell
+    the model this person's risk was about 15x; it now gives the heaviest-user
+    figure and tells the model not to state a multiple for the person, since
+    the bonus also fires for occasional smokers and weekly drinkers. The four
+    learn pages now link the figure's source in their Sources box. The
+    alcohol explainer also now matches Bagnardi: about 2x for moderate
+    drinking, about 5x for heavy, where it had said 2 to 3x.
+  - **The `/methods` interaction explanation was wrong and is rewritten.** It
+    said combined use is "roughly 15x" against "about 9x" from adding weights.
+    But the weights are logarithms, so adding them already multiplies (6 x 3 =
+    18x, more than 15). The real justification for +3 is Hashibe's
+    interaction parameter: the joint effect is 2.15 times what multiplication
+    predicts, and round(ln 2.15 x 4.47) = 3. The oral cavity value (3.09)
+    would give 5, so +3 is the conservative reading. No weight or band moved.
+  - **Seven of the 13 PubMed links on `/methods` opened unrelated papers**
+    (a bocavirus review, a COPD index, a glioma study, an ephedra case report
+    and others), and four citations named the wrong journal: Gandini is *Int J
+    Cancer* not *Oral Oncology*, Bagnardi is *Br J Cancer* not *Annals of
+    Oncology*, Gillison is *JNCI* not *JAMA*, and the Pavia entry described a
+    paper that does not exist (the real one is *Am J Clin Nutr* 2006, the
+    fruit and vegetable meta-analysis the sensitivity analysis already used).
+    Every link was checked against PubMed's own record and corrected, and the
+    same names fixed in the screener explainers, results page, risk engine
+    comments and the ADA briefing. The Hashibe note claimed "OR 35.8x for heavy
+    combined users"; that is the paper's larynx figure (36.87). Blot 1988 added
+    as reference 14 so a reader who knows the 35-fold figure sees why it is not
+    used.
 
 ### 2026-09-21
 - **Four fixes to the reel pipeline, from frame-by-frame review of the reel
@@ -659,6 +740,7 @@ Newest first.
 | AI image diagnosis ("upload a photo of your mouth") | Moves the product into clinical decision support, with a far heavier regulatory and validation burden. Current strength is the low-risk awareness → education → professional care model. | Never, without a clinical partner and a validation study |
 | Paying dentists per patient | Wrong incentive; makes a health tool feel commercial | Not planned |
 | Buffer as a second scheduler | Free tier has no open API, so posts would be pasted in by hand anyway. No better than the Telegram handoff, plus a second dashboard. | If Buffer reopens API access |
+| Quoting "30-fold" or "35-fold" for smoking plus drinking | Decided 2026-10-08. The 35-fold figure (Blot 1988) is real but is one 1980s US study, oral and throat cancer pooled, at two or more packs and four or more drinks a day. Hashibe 2009 pools 17 studies, reports the oral cavity alone, and gives about 15 at a pack and three drinks. "30-fold" matched no source at all. | A larger pooled estimate for the oral cavity alone |
 | LinkedIn API direct publishing | Company-page posting needs the Community Management API: restricted to reviewed legal organisations, explicitly not available to individuals | If OralCheck incorporates |
 
 ---
