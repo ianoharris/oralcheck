@@ -92,7 +92,7 @@ jobs:
         if: steps.guard.outputs.skip != 'true'
         run: |
           for i in 1 2 3; do
-            pip install anthropic httpx pillow python-dotenv playwright && exit 0
+            pip install anthropic httpx pillow python-dotenv playwright faster-whisper && exit 0
             echo "pip attempt $i failed; retrying in $((i * 20))s"; sleep $((i * 20))
           done
           exit 1

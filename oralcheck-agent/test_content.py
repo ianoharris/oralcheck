@@ -9,7 +9,9 @@ import sys
 from datetime import date
 
 import content_calendar as C
+import engine as E
 import ideas as I
+import topics as T
 
 _fails = []
 
@@ -167,8 +169,89 @@ def test_json_extraction():
     check("never raises on junk", I._extract_json_array(_Resp("[[[")) == [])
 
 
+# --- Topic, shape and hook assignment --------------------------------------
+def test_slots():
+    ledger = {"ideas": []}
+    media = ["carousel"] * 3 + ["reel"] * 3 + ["image"] * 3
+    slots = T.plan_slots(ledger, media, seed=7)
+    check("every slot filled", len(slots) == 9)
+    check("no topic repeats in a batch", len({s["topic"] for s in slots}) == 9)
+    check("no shape repeats within a format",
+          all(len({s["shape"] for s in slots if s["media_type"] == m}) == 3 for m in set(media)))
+    check("hooks mostly distinct", len({s["hook_style"] for s in slots}) >= 6)
+    for s in slots:
+        need = T.SHAPES[s["media_type"]][s["shape"]]["needs"]
+        if need and need not in T.TOPICS[s["topic"]]["tags"]:
+            check(f"shape {s['shape']} fits topic {s['topic']}", False)
+        if s["hook_style"] == "number" and "stat" not in T.TOPICS[s["topic"]]["tags"]:
+            check(f"number hook only on a stat topic ({s['topic']})", False)
+
+    # A topic used yesterday goes to the back of the queue.
+    first = T.plan_slots(ledger, ["image"], seed=1)[0]
+    used = {"ideas": [{"title": "x", "topic": first["topic"], "shape": "poster",
+                       "used_at": "2026-10-07T00:00:00+00:00"}]}
+    again = T.plan_slots(used, ["image"] * 6, seed=1)
+    check("recently used topic is not picked first", again[0]["topic"] != first["topic"])
+
+    check("old ideas infer a topic", T.infer_topic({"title": "Lift your tongue: the floor of the mouth"}) == "floor_of_mouth")
+    check("substring does not match a keyword", T.infer_topic({"title": "an image post"}) is None)
+    for key, t in T.TOPICS.items():
+        if t.get("photo") and t["photo"] not in E.PHOTOS:
+            check(f"{key} uses a cleared photo", False)
+
+
+def test_voice_checks():
+    check("bans 'most people'", T.banned_phrase("What most people miss about HPV") == "most people")
+    check("bans 'did you know'", T.banned_phrase("Did you know this?") is not None)
+    check("allows a plain line", T.banned_phrase("Lift your tongue to the roof of your mouth") is None)
+    check("flags X. Y. titles", T.two_sentence_title("Ten Questions. Two Minutes."))
+    check("allows one-line titles", not T.two_sentence_title("Floor of the mouth self-check"))
+    bad = {"title": "60,000 Cases. Here's What That Means.", "hook": "x", "brief": "y"}
+    check("idea problems caught", len(I._problems(bad)) >= 2)
+
+
+# --- Engine spec validation (no API) ----------------------------------------
+def test_engine_validation():
+    slides = E.validate_slides([
+        {"template": "cover", "hook": "Lift your *tongue*", "kicker": "Self-check"},
+        {"template": "hologram", "text": "x"},
+        {"template": "icons", "title": "T", "items": [{"icon": "sun", "label": "a"},
+                                                     {"icon": "nope", "label": "b"},
+                                                     {"icon": "alcohol", "label": "c"},
+                                                     {"icon": "tobacco", "label": "d"}]},
+        {"template": "photo", "photo": "sore", "lines": ["a"]},
+        {"template": "step", "n": 1, "area": "Floor", "text": "Look under", "zone": "nowhere"},
+        {"template": "cta"},
+        {"template": "poster", "text": "Two \u2014 weeks"},
+    ], "carousel")
+    kinds = [s["type"] for s in slides]
+    check("unknown template dropped", "hologram" not in kinds)
+    check("uncleared photo dropped", "photo" not in kinds)
+    check("unknown icons filtered", all(i["icon"] != "nope" for s in slides if s["type"] == "icons" for i in s["items"]))
+    check("cta moved to the end, once", kinds[-1] == "cta" and kinds.count("cta") == 1)
+    check("step without a zone gets an icon", any(s["type"] == "step" and s.get("icon") for s in slides))
+    check("em dashes stripped", all("\u2014" not in str(s) for s in slides))
+    check("image keeps one slide", len(E.validate_slides([{"template": "poster", "text": "a"},
+                                                          {"template": "poster", "text": "b"}], "image")) == 1)
+
+    beats = E.validate_beats([
+        {"say": "Quick test.", "visual": {"type": "quiz", "question": "Q", "options": ["a", "b"]}, "hold": 9},
+        {"say": "Nope.", "visual": {"type": "stamp", "text": "NOPE"}},
+        {"say": "Look here.", "visual": {"type": "photo", "photo": "lip"}},
+        {"say": "Go.", "visual": {"type": "cta"}},
+    ])
+    check("hold clamped", beats[0]["hold"] <= 2.4)
+    check("retired stamp visual becomes text", beats[1]["visual"]["type"] == "text")
+    check("uncleared reel photo becomes text", beats[2]["visual"]["type"] == "text")
+    check("reel ends on one cta", beats[-1]["visual"]["type"] == "cta"
+          and sum(b["visual"]["type"] == "cta" for b in beats) == 1)
+
+
 def main():
     print("Calendar:");      test_calendar()
+    print("Slots:");         test_slots()
+    print("Voice checks:");  test_voice_checks()
+    print("Engine specs:");  test_engine_validation()
     print("Slugify:");       test_slugify()
     print("Ledger flow:");   test_ledger_flow()
     print("Stale claims:");  test_stale_claims()

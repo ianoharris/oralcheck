@@ -540,7 +540,7 @@ About 10,000 lines of Python in `oralcheck-agent/` that runs your social media.
 
 ```mermaid
 flowchart TB
-    CRON["GitHub Actions<br/>Monday 14:00 UTC"] --> IDEAS["Research + generate<br/>ideas per format"]
+    CRON["GitHub Actions<br/>Monday 14:00 UTC"] --> IDEAS["Assign topic, shape, opening<br/>then write ideas per format"]
     IDEAS --> TG1["Sends a numbered<br/>list to Telegram"]
     TG1 --> YOU["You reply<br/>'1, 3, 8'"]
     YOU --> GEN["Generates those posts<br/>images / carousels / reels"]
@@ -563,16 +563,52 @@ networks would need six slots against a cap of three.
 **LinkedIn lands Tuesday or Wednesday morning**, not in Instagram's 5pm slot,
 and gets a rewritten caption (longer, professional, no hashtag wall).
 
-**Reels** get one of six designed scene types (`splitstat`, `contrast`,
-`checklist`, `quote`, `term`, `enumerate`) rather than the same template every
-time, plus an end card that holds the URL for 4.5 seconds. A scene can also ask
-for one of the two clinical photos that have real attribution on file
-(`white_patch`, `mixed_patch`) instead of pure typography, up to one per reel,
-so it is not typography end to end. Once a scene's text has settled it keeps a
-slow, deterministic backdrop drift going for a few more seconds instead of
-freezing outright, since a fully static frame for several seconds is exactly
-the kind of moment a scrolling viewer swipes past (found 2026-09-21, checking
-the reel that was about to post: one scene sat completely frozen for ~5s).
+**Where ideas come from.** The robot does not pick its own subjects any more.
+Left to choose, it kept returning to the same five or six (survival by stage,
+HPV overtaking tobacco, the yearly case count) in the same grammar ("X. Y.",
+"Most people don't know"), so the feed read like one post rephrased. Now code
+(`topics.py`) assigns every slot in the weekly batch three things before the
+model writes a word:
+
+- **a topic**, from a bank of 36 drawn from the site's own learn pages (the
+  floor of the mouth, the wipe-away test for thrush, the vaccine's age range,
+  low-cost dental care, and so on). It picks the one used least recently, so
+  everything comes round before anything repeats. Each topic carries the facts
+  it may use and the page they came from, which is how a post can only claim
+  what the site already says.
+- **a shape**: a quiz, a myth taken apart, an illustrated how-to, a side-by-side,
+  a two-week calendar, a notes-app checklist, one big number, and so on.
+- **an opening style**: a question, a concrete moment, a physical instruction,
+  a number, a contrast. No two posts in a batch open the same way.
+
+Any title that still comes back with a worn phrase ("most people", "did you
+know", "here's why", "actually") or the "X. Y." shape is rewritten once and
+dropped if it fails again.
+
+**How posts are drawn.** Everything is rendered from code, nothing is
+AI-generated imagery and nothing costs extra. Carousels and images use 16
+templates in three families: big and graphic (posters, giant numbers, bars),
+illustrated guides (a drawn mouth map that highlights one place at a time,
+step cards, the 14-day calendar, side-by-side comparisons, icon grids), and
+creator-native (a plain text post, a phone-notes checklist, a real clinical
+photo with highlighted lines, a quiz and its answer). Only the two clinical
+photos with attribution on file (`white`, `mixed`) are ever used, and their
+credit goes on the image and in the caption.
+
+**How reels are made.** A reel is a list of beats: one spoken sentence and
+one visual each. The voice is Kokoro on fal (the same voice as before, read at
+1.05x). The captions light up word by word because a small speech model
+(faster-whisper, running free on the build machine) works out exactly when
+each word is said, and the visuals are timed to words too: the mouth map
+lights the gums as the voice says "gums", the bar fills as it says "36". Ten
+visual types (quiz with a countdown, myth struck out, calendar, mouth map,
+photo, icons, a big number, bars, plain captions, the end card), soft sound
+effects, a generated music bed kept low, and the whole mix levelled to the
+loudness Instagram expects. A reel runs about 30 seconds.
+
+**Kept as a fallback for one week:** the old renderers, behind
+`OC_ENGINE=v1`. Once a real Monday batch has gone through cleanly they get
+deleted.
 
 > **The manual step you can't automate:** no API can put a tappable link on a
 > Reel. Captions are plain text; clickable Reel links need Meta Verified Plus.

@@ -19,6 +19,8 @@ from pathlib import Path
 
 import anthropic
 
+import topics
+
 log = logging.getLogger("oralcheck")
 
 LEDGER_FILE = Path(__file__).parent / "ideas.json"
@@ -26,19 +28,14 @@ LEDGER_FILE = Path(__file__).parent / "ideas.json"
 SEED_FILE = Path(__file__).parent / "used_topics.json"
 
 VALID_MEDIA = {"carousel", "image", "reel"}
-# Extra pillars beyond the core rotation.
+# Extra pillars beyond the core rotation. A trend_comparison pillar ("a stadium
+# holds 65,000...") was dropped 2026-10-08: its tie-ins read as forced.
 EXTRA_PILLARS = {
     "awareness": "A branded post tied to a specific awareness day or holiday from the content calendar.",
     "light_lane": (
         "A lighter, more human or gently witty take that still respects the subject. "
         "Never a joke at the expense of patients or the disease. Warmth and relatability, "
         "not shock. This lane always goes to manual review."
-    ),
-    "trend_comparison": (
-        "Connect an oral cancer fact to a current event or trending topic with a striking, "
-        "true comparison (e.g. a World Cup stadium holds ~65,000, and ~60,000 Americans are "
-        "diagnosed with oral cancer each year). Timely and shareable, but never flippant about "
-        "the disease and never an invented number."
     ),
 }
 
@@ -277,30 +274,25 @@ def generate_by_type(per_type, *, api_key, model, system_prompt, pillar_briefs,
                      hook_block: str = "") -> list[dict]:
     """Generate `per_type` ideas for each format, kept in format order.
 
-    A single mixed batch made the weekly format quota a matter of luck, and
-    rejecting everything of one format left nothing of that format to fall back
-    on. Generating per format means each can be topped up on its own without
-    touching the others.
+    Topic, shape and hook style for every slot are assigned up front for the
+    whole batch (topics.plan_slots), so no two ideas share a topic even across
+    formats. The model is then called once per format to write its slots.
+    Each format is still isolated: whatever goes wrong writing one of them, the
+    formats that already succeeded reach Telegram, because the run happens once
+    a week and a failure costs the whole week.
 
     `only` restricts generation to one format, which is what a top-up uses.
     """
-    wanted = [only] if only else ["carousel", "reel", "image"]
+    wanted = [m for m in ([only] if only else ["carousel", "reel", "image"]) if m in VALID_MEDIA]
+    slots = topics.plan_slots(ledger, [m for m in wanted for _ in range(per_type)])
     out: list[dict] = []
     for media in wanted:
-        if media not in VALID_MEDIA:
-            continue
-        # Each format is isolated. Whatever goes wrong generating one of them,
-        # the formats that already succeeded still reach Telegram; a partial
-        # batch is worth far more than a failed run, because the run only
-        # happens once a week and a failure costs the whole week.
+        mine = [sl for sl in slots if sl["media_type"] == media]
         try:
             got = generate_ideas(
-                per_type, api_key=api_key, model=model, system_prompt=system_prompt,
+                len(mine), api_key=api_key, model=model, system_prompt=system_prompt,
                 pillar_briefs=pillar_briefs, calendar_events=calendar_events,
-                ledger=ledger, force_media=media, hook_block=hook_block,
-                # A batch already in hand must not be re-suggested by the next
-                # format's call, which happens within one run before anything is
-                # written to the ledger.
+                ledger=ledger, hook_block=hook_block, slots=mine,
                 extra_avoid=[i["title"] for i in out],
             )
         except Exception as exc:  # noqa: BLE001
@@ -309,100 +301,138 @@ def generate_by_type(per_type, *, api_key, model, system_prompt, pillar_briefs,
             continue
         if not got:
             log.warning("No usable %s ideas came back this run.", media)
-        for idea in got[:per_type]:
-            idea["media_type"] = media  # the model still drifts; the caller asked for this one
-            out.append(idea)
+        out.extend(got)
+    return out
+
+
+def _problems(idea: dict) -> list[str]:
+    """Why a written idea would read like the old feed, if it would."""
+    found = []
+    for field in ("title", "hook"):
+        hit = topics.banned_phrase(idea.get(field, ""))
+        if hit:
+            found.append(f'{field} uses the overused phrase "{hit}"')
+    if topics.two_sentence_title(idea.get("title", "")):
+        found.append('title is two sentences ("X. Y."); write one line')
+    if not idea.get("title") or not idea.get("brief"):
+        found.append("title or brief is missing")
+    return found
+
+
+def _write_slots(slots, *, api_key, model, system_prompt, calendar_events, avoid,
+                 hook_block, notes=None) -> list[dict]:
+    blocks = "\n\n".join(topics.slot_brief(n + 1, sl) for n, sl in enumerate(slots))
+    cal_block = ""
+    if calendar_events:
+        cal_block = ("\nAwareness days coming up. Tie at most ONE slot to one of these, and only "
+                     "when its topic genuinely fits; set calendar_ref to the ref slug. A forced "
+                     "tie-in is worse than none:\n" + "\n".join(
+                         f"  - {e['name']} in {e['days_until']} days (ref: {e['slug']})"
+                         for e in calendar_events))
+    avoid_block = ("\nRecent titles. Do not echo their wording or rhythm:\n"
+                   + "\n".join(f"  - {t}" for t in avoid[-20:])) if avoid else ""
+    notes_block = ""
+    if notes:
+        notes_block = ("\nA previous attempt at these slots was rejected for: "
+                       + "; ".join(notes) + ". Fix that.")
+    user_msg = (
+        "Write one Instagram post idea for each slot below. The topic, shape and opening "
+        "style are already decided. Your job is to find the most interesting way in: a "
+        "specific moment, a surprising detail inside the facts, a question the viewer can "
+        "answer about their own mouth. Make each one feel like it came from a different "
+        "person on a different day.\n\n"
+        f"{blocks}\n{cal_block}\n{hook_block}\n{avoid_block}\n{notes_block}\n\n"
+        "Rules:\n"
+        "  - Use only the facts listed for that slot. No other numbers, no invented statistics.\n"
+        "  - title: at most 10 words, ONE line, not two sentences. It names the post for the "
+        "owner picking from a list, so make it specific rather than clever.\n"
+        "  - hook: the literal first line the viewer sees or hears, in the slot's hook style, "
+        "at most 12 words.\n"
+        "  - brief: 2 to 3 sentences laying out the beats of the post in the slot's shape, "
+        "concrete enough for a designer to build from.\n"
+        "  - Never write: most people, nobody tells you, did you know, here's why, the truth "
+        "about, actually, silent killer. No em dashes.\n"
+        "  - Survival figures are SEER summary stage: say 'while still localized' and 'once it "
+        "has spread to distant sites', never Stage I or Stage IV.\n\n"
+        "Return only a JSON array, one object per slot in order: "
+        '{"slot": n, "title": "...", "hook": "...", "brief": "...", "calendar_ref": null}'
+    )
+    client = anthropic.Anthropic(api_key=api_key)
+    resp = client.messages.create(
+        model=model, max_tokens=3000, system=system_prompt,
+        messages=[{"role": "user", "content": user_msg}],
+    )
+    written = _extract_json_array(resp)
+    out = []
+    for n, sl in enumerate(slots):
+        got = next((w for w in written if isinstance(w, dict) and w.get("slot") == n + 1), None)
+        if got is None and n < len(written) and isinstance(written[n], dict):
+            got = written[n]
+        got = got or {}
+        out.append({
+            **sl,
+            "title": str(got.get("title", "")).strip(),
+            "hook": str(got.get("hook", "")).strip(),
+            "brief": str(got.get("brief", "")).strip(),
+            "angle": sl["shape"],
+            "calendar_ref": got.get("calendar_ref") or None,
+        })
     return out
 
 
 def generate_ideas(count, *, api_key, model, system_prompt, pillar_briefs,
                    calendar_events, ledger, force_media: str | None = None,
                    extra_avoid: list[str] | None = None,
-                   hook_block: str = "") -> list[dict]:
-    """Ask the model for `count` fresh ideas, filtered against the ledger.
+                   hook_block: str = "", slots: list[dict] | None = None) -> list[dict]:
+    """Write `count` ideas, filtered against the ledger.
 
-    Returns coerced idea dicts (not yet written to the ledger).
+    Without `slots`, plans its own: all `force_media`, or a rotation of the
+    three formats. Any idea that comes back in the old feed's voice (a banned
+    phrase, an "X. Y." title) gets one rewrite; if the rewrite fails too, the
+    slot is dropped rather than shipped.
+
+    Returns idea dicts not yet written to the ledger.
     """
-    all_pillars = {**{p: pillar_briefs[p] for p in pillar_briefs}, **EXTRA_PILLARS}
-    valid_pillars = set(all_pillars.keys())
-
-    pillar_lines = "\n".join(f"  - {p}: {desc}" for p, desc in all_pillars.items())
+    if slots is None:
+        cycle = ["carousel", "reel", "image"]
+        media_list = [force_media] * count if force_media else [cycle[n % 3] for n in range(count)]
+        slots = topics.plan_slots(ledger, media_list)
+    if not slots:
+        return []
     avoid = _avoid_titles(ledger) + load_seed_topics() + list(extra_avoid or [])
-    avoid_block = ("\nDo NOT propose anything similar in topic or angle to these already-used ideas "
-                   "(the brand has already posted these). Every idea must be a genuinely new angle:\n"
-                   + "\n".join(f"  - {t}" for t in avoid)) if avoid else ""
+    kw = dict(api_key=api_key, model=model, system_prompt=system_prompt,
+              calendar_events=calendar_events, avoid=avoid, hook_block=hook_block)
 
-    stat_block = _recent_stats_block(ledger)
-    fb_block = _feedback_block(ledger)
-    hooks_txt = hook_block or ""
-
-    cal_block = ""
-    if calendar_events:
-        cal_lines = "\n".join(
-            f"  - {e['name']} in {e['days_until']} days (ref: {e['slug']}): {e['brief']}"
-            for e in calendar_events)
-        cal_block = ("\nUpcoming awareness days and holidays. Tie 1 to 2 ideas to the nearest ones "
-                     "and set calendar_ref to the ref slug:\n" + cal_lines)
-
-    user_msg = (
-        f"First, briefly research the current landscape: search the web for recent oral cancer / HPV "
-        "news, awareness-day context, culturally trending topics and current events (sports, holidays, "
-        "viral moments), and what kinds of health-awareness posts are performing right now. "
-        "Use 2 to 4 searches, then stop researching and write the ideas.\n\n"
-        f"Then propose {count} distinct Instagram content ideas for OralCheck.\n\n"
-        f"Content pillars to draw from (use the pillar key exactly):\n{pillar_lines}\n"
-        f"{fb_block}\n{hooks_txt}\n{cal_block}\n{avoid_block}\n{stat_block}\n\n"
-        "Requirements:\n"
-        f"  - Return a JSON array of exactly {count} objects as your final message, no markdown fences.\n"
-        "  - Each object: title (<=12 words, the specific angle), pillar (one key from above), "
-        "media_type (carousel, image, or reel), brief (2 to 3 sentences that a content "
-        "generator can act on), angle (one of: surprising-true, myth, how-to, timely, human, trend-comparison), "
-        "calendar_ref (a ref slug or null).\n"
-        + (f"  - EVERY idea must have media_type \"{force_media}\". Do not propose any other "
-           "format in this batch.\n" if force_media else
-           "  - Mix the formats: mostly carousels (about half), plus a couple of reels "
-           "(short animated voiceover videos, great for a myth, a single stat, or a timely hook) "
-           "and a couple of single images. Aim for at least 2 reels in a batch of 8.\n") +
-        "  - Every idea must be genuinely distinct from the others and from the avoid list.\n"
-        "  - Only real, defensible oral cancer facts. No invented statistics.\n"
-        "  - Include at least one light_lane idea, at least one trend_comparison idea that ties an oral "
-        "cancer fact to something current or trending with a striking true comparison, and, if a calendar "
-        "event is near, at least one awareness idea. Keep every comparison tasteful, never flippant about the disease."
-    )
-
-    client = anthropic.Anthropic(api_key=api_key)
-    # Called once per format, so this multiplies by three on every run.
-    web_tool = [{"type": "web_search_20260209", "name": "web_search",
-                 "max_uses": int(os.environ.get("IDEA_SEARCHES", "2"))}]
-    try:
-        resp = client.messages.create(
-            model=model, max_tokens=4000, system=system_prompt,
-            tools=web_tool, messages=[{"role": "user", "content": user_msg}],
-        )
-    except Exception as exc:
-        # Web search may be unavailable (plan/model); fall back to no-tools generation.
-        import logging
-        logging.getLogger("oralcheck").warning("Web search unavailable (%s); generating without it.", exc)
-        resp = client.messages.create(
-            model=model, max_tokens=2000, system=system_prompt,
-            messages=[{"role": "user", "content": user_msg}],
-        )
-    parsed = _extract_json_array(resp)
+    written = _write_slots(slots, **kw)
+    bad = [(n, _problems(w)) for n, w in enumerate(written) if _problems(w)]
+    if bad:
+        log.info("Rewriting %d idea(s) that read like the old feed: %s", len(bad),
+                 "; ".join(p[0] for _, p in bad))
+        retry = _write_slots([slots[n] for n, _ in bad], notes=[p for _, ps in bad for p in ps], **kw)
+        for (n, _), w in zip(bad, retry):
+            written[n] = w
 
     used = _used_slugs(ledger)
     seen: set[str] = set()
     out: list[dict] = []
-    for item in parsed:
-        idea = _coerce(item, valid_pillars)
-        if not idea:
+    for w in written:
+        if _problems(w):
+            log.warning("Dropped idea after rewrite (%s): %s", "; ".join(_problems(w)), w.get("title"))
             continue
-        slug = slugify(idea["title"])
+        w["title"] = _strip_dashes(w["title"])
+        w["hook"] = _strip_dashes(w["hook"])
+        w["brief"] = _strip_dashes(w["brief"])
+        slug = slugify(w["title"])
         if slug in used or slug in seen:
             continue
         seen.add(slug)
-        idea["slug"] = slug
-        out.append(idea)
-    return out if force_media else _balance_formats(out)
+        w["slug"] = slug
+        out.append(w)
+    return out
+
+
+def _strip_dashes(text: str) -> str:
+    return re.sub(r"\s*[\u2014\u2013]\s*", ", ", text or "")
 
 
 def _balance_formats(ideas: list[dict]) -> list[dict]:

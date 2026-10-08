@@ -32,6 +32,7 @@ from PIL import Image, ImageDraw, ImageFont
 load_dotenv()
 
 import content_calendar
+import engine
 import hooks as hooks_mod
 import ideas
 
@@ -117,8 +118,9 @@ PILLAR_BRIEFS = {
         "Lead with the number, follow with what the audience can do about it."
     ),
     "myth_busting": (
-        "Bust a common myth about oral cancer. Key myth: 'Only smokers get oral cancer' -- "
-        "false. HPV is now the leading cause in adults under 50. Be clear without being preachy."
+        "Bust a common myth about oral cancer. Key myth: 'Only smokers get oral cancer'. "
+        "HPV has overtaken tobacco as the leading cause of oropharyngeal (throat) cancer, which most "
+        "often affects men aged 40 to 60 who never smoked. Be clear without being preachy."
     ),
     "self_exam": (
         "Teach followers how to do a quick oral cancer self-exam. "
@@ -126,8 +128,9 @@ PILLAR_BRIEFS = {
         "Make it feel approachable, not scary."
     ),
     "hpv_connection": (
-        "Explain the HPV-oral cancer connection. Fastest growing group is adults aged 35-55. "
-        "Many people don't know HPV can cause oral cancer. Lead with that gap in awareness."
+        "Explain the HPV connection: HPV-16 drives most oropharyngeal cancers (tonsils, base of "
+        "tongue), cases have risen more than 300% since the 1980s, and the HPV vaccine is approved "
+        "through age 45. Lead with something concrete, not with what people don't know."
     ),
     "screener_cta": (
         "Drive followers to take the free risk screener at oralcheck.org. "
@@ -202,7 +205,7 @@ SYSTEM_PROMPT = (
     + SEER_FACTS
     + "\nBrand voice rules (follow these exactly, and if anything below conflicts, these win):\n"
     "- Direct, not alarmist\n"
-    "- Lead with a stat or fact, follow with action\n"
+    "- Lead with the most concrete thing you have: a fact, a moment, or a question. Then the action\n"
     "- No exclamation marks\n"
     "- Never say 'we'\n"
     "- No medical jargon, plain language only\n"
@@ -2518,12 +2521,53 @@ def save_to_queue(
 # Pipeline
 # ---------------------------------------------------------------------------
 
+def _ask_engine(prompt: str) -> str:
+    """One model call for the v2 engine, with the brand system prompt."""
+    def _call():
+        client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
+        resp = client.messages.create(model=CONTENT_MODEL, max_tokens=4000, system=SYSTEM_PROMPT,
+                                      messages=[{"role": "user", "content": prompt}])
+        return "".join(b.text for b in resp.content if getattr(b, "type", None) == "text")
+    return _with_retry(_call)
+
+
+# The v2 engine (engine.py: posts2 + reel2) builds every carousel, image and
+# reel. OC_ENGINE=v1 falls back to the old renderers for one transition cycle.
+_ENGINE_V2 = os.environ.get("OC_ENGINE", "v2") != "v1"
+
+
+def _run_engine_v2(brief: str, media_type: str, pillar: str | None, idea: dict | None) -> dict:
+    idea = dict(idea or {"brief": brief})
+    if media_type == "reel":
+        log.info("Writing reel plan (%s / %s)...", idea.get("shape", "free"), idea.get("topic", "brief"))
+        spec = _with_retry(lambda: engine.write_reel(idea, _ask_engine), max_attempts=2)
+        out = tempfile.NamedTemporaryFile(suffix=".mp4", delete=False).name
+        _register_tmp(out)
+        # Generated to length so the bed never loops audibly; the bundled clip is the fallback.
+        music = _generate_music_bed(40, spec["hook"])
+        if music is None and REEL_MUSIC.exists():
+            music = _loop_music_seamless(str(REEL_MUSIC), 42)
+        engine.render_reel(spec, out, tts=_fal_tts, music=music)
+        files = [out]
+    else:
+        log.info("Writing %s spec (%s / %s)...", media_type, idea.get("shape", "free"), idea.get("topic", "brief"))
+        spec = _with_retry(lambda: engine.write_post(idea, media_type, _ask_engine), max_attempts=2)
+        files = engine.render_post(spec)
+    log.info("Hook: %s", spec["hook"])
+    manifest = save_to_queue(spec, media_type, pillar, files)
+    log.info("Queued %s: %s", media_type, manifest["id"])
+    return manifest
+
+
 def run_pipeline(
     brief: str,
     media_type: str,
     pillar: str | None = None,
+    idea: dict | None = None,
 ) -> dict | None:
     """Generate content, create media, and save to queue for review."""
+    if _ENGINE_V2 and media_type in ("carousel", "image", "reel"):
+        return _run_engine_v2(brief, media_type, pillar, idea)
     # Reels use their own script format (kinetic-typography segments), not the
     # single-hook content schema, so they bypass generate_content entirely.
     if media_type == "reel":
@@ -3055,7 +3099,7 @@ def _queue_idea(idea: dict) -> dict | None:
              f"{idea['brief']}")
     if idea.get("calendar_ref"):
         brief += f"\n(Tied to awareness date: {idea['calendar_ref']})"
-    return run_pipeline(brief, idea["media_type"], pillar=idea["pillar"])
+    return run_pipeline(brief, idea["media_type"], pillar=idea["pillar"], idea=idea)
 
 
 def _explain_failure(exc: Exception) -> str:

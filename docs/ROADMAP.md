@@ -41,6 +41,52 @@ Update both together. See `AGENTS.md`.
 
 ### Content and growth
 
+- [ ] **Content engine v2: built and wired in, waiting on its first live week
+      (2026-10-08).** Ian's verdict on the feed: videos not engaging enough,
+      posts and carousels "kinda lame". Asked what he wanted rather than
+      guessing: **fully faceless and automated, $0 extra spend**, all four video
+      directions (word-synced captions with fast cuts, explainer animations,
+      real photos, quiz and myth formats) and three post directions (big and
+      graphic, illustrated guides, creator-native).
+      - **Phase 1, the look:** `art.py` (a code-drawn mouth map following the
+        site's own self-exam steps, with a tongue-raised pose for the floor of
+        the mouth, plus an icon set), `posts2.py` (16 slide templates), and
+        `reel2.py` + `align.py` (the whole reel as one timeline, captions synced
+        word by word via local faster-whisper, diagrams that react to the word
+        being spoken, synthesized sound effects).
+      - **Ian's feedback on the samples:** post styles good, voice fine, reel a
+        touch fast, the NOPE stamp and the group-chat post off brand, and the
+        ideas all sound the same. Acted on all of it: reel slowed (voice 1.12x
+        to 1.05x, longer pauses between beats), stamp and chat removed (see
+        *Decided against*).
+      - **The ideas fix (`topics.py`):** the model used to choose the topic,
+        format and wording itself and kept choosing the same five or six
+        subjects in the same "X. Y." / "Most people don't know" grammar. Code
+        now assigns every slot a topic from a 36-topic bank built from the
+        site's own learn pages (least recently used first), a shape (quiz,
+        myth, guide, compare, timeline, notes...), and an opening style, never
+        repeated within a batch. Titles using the worn phrases get rewritten or
+        dropped. The idea step no longer web-searches, which also makes it
+        cheaper.
+      - **Phase 2, wired in (`engine.py`):** every carousel, image and reel the
+        pipeline builds now goes through the new templates. Reels are
+        loudness-normalised to -14 LUFS (they were sitting near -28) and get a
+        generated music bed. CI installs `faster-whisper`. Tests cover slot
+        assignment, the banned-phrase check and spec validation.
+      - **Tested end to end on 2026-10-08:** fresh ideas, specs, a rendered
+        carousel, image and reel (31s, -14.2 LUFS). That pass caught and fixed:
+        a reel that was mostly plain captions (the model asked for icons that
+        did not exist; eight icons added, and specs that lean on captions,
+        repeat a visual back to back, or use a worn phrase anywhere now get
+        one rewrite), a cover hook running into the swipe pill, "2 minutes"
+        splitting across lines on the end card, a single-place diagram that
+        highlighted nothing, and copy that called a home check a "test".
+      - **Pushed 2026-10-08.** Monday's run (12 Oct) is the first to use it,
+        and that first real batch through Telegram is the real test. Blocked on
+        that run happening, then on Ian's verdict. The old renderers stay in the code for one cycle behind
+        `OC_ENGINE=v1` as a fallback; delete them once a week has gone through
+        cleanly.
+
 - [x] ~~Reels drive follows but not site visits~~ — partly fixed 2026-09-01, and
       the entry contained a false premise. **A link sticker on the reel itself is
       not possible.** Reel captions render as plain text for everyone, clickable
@@ -98,16 +144,6 @@ Update both together. See `AGENTS.md`.
       2007's oral HPV-16 infection result (OR 14.6). Both need the source read
       and either the number or the citation changed, in all three languages.
       Not blocked.
-- [ ] **Add the settled tobacco plus alcohol figure to the social topic bank.**
-      `oralcheck-agent/topics.py` (content engine v2, not yet committed) can
-      now carry it in the `tobacco_plus_alcohol` facts: "People who smoke more
-      than a pack a day and have three or more drinks a day have about 15 times
-      the oral cancer risk of people who do neither (a pooled analysis of 17
-      studies)." The canker fact there already says 7 to 14 days, which is now
-      what the site says. Blocked on two things landing first: the figures
-      branch (`claude/distracted-wu-11d568`) merged, so the page the post links
-      to says 15, and the engine v2 files committed. A hook stopped the edit
-      being made from the figures worktree.
 - [ ] **Was `OralCheck_ADA_Briefing_v2.md` sent to anyone?** On Ian. Its
       reference list had the same wrong journals as `/methods` (Gandini, Bagnardi,
       Gillison, Pavia) and it said the combined tobacco plus alcohol OR was
@@ -237,6 +273,11 @@ Update both together. See `AGENTS.md`.
 Newest first.
 
 ### 2026-10-08
+- **The settled tobacco plus alcohol figure is in the social topic bank.**
+  `oralcheck-agent/topics.py`, `tobacco_plus_alcohol`: about 15 times for
+  more than a pack a day plus three or more drinks a day (Hashibe 2009, 17
+  pooled studies), the same wording the site now uses. The canker fact
+  already said 7 to 14 days. Closes the follow-up the figures fix left open.
 - **One figure everywhere for tobacco plus alcohol, and for canker sore
   healing time.** Closes "The site contradicts itself on two figures" (that
   item was added to the uncommitted copy of this file on `master`; move it
@@ -742,6 +783,8 @@ Newest first.
 | Buffer as a second scheduler | Free tier has no open API, so posts would be pasted in by hand anyway. No better than the Telegram handoff, plus a second dashboard. | If Buffer reopens API access |
 | Quoting "30-fold" or "35-fold" for smoking plus drinking | Decided 2026-10-08. The 35-fold figure (Blot 1988) is real but is one 1980s US study, oral and throat cancer pooled, at two or more packs and four or more drinks a day. Hashibe 2009 pools 17 studies, reports the oral cavity alone, and gives about 15 at a pack and three drinks. "30-fold" matched no source at all. | A larger pooled estimate for the oral cavity alone |
 | LinkedIn API direct publishing | Company-page posting needs the Community Management API: restricted to reviewed legal organisations, explicitly not available to individuals | If OralCheck incorporates |
+| A "NOPE" stamp reel visual and a group-chat-style post template | Sampled 2026-10-08. Ian: off brand. The stamp read as flippant on a cancer account; the chat imitated a conversation nobody had | Not planned |
+| A "trend comparison" idea lane ("a stadium holds 65,000...") | Six of the first 38 ideas used it. The tie-ins (Wimbledon, the Tour de France) read as forced, and a forced hook is worse than a plain post. Real awareness days stay | Not planned |
 
 ---
 

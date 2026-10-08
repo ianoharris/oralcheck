@@ -36,7 +36,7 @@ jobs:
         run: sudo apt-get install -y ffmpeg
 
       - name: Install Python deps
-        run: pip install anthropic httpx pillow python-dotenv playwright
+        run: pip install anthropic httpx pillow python-dotenv playwright faster-whisper
 
       - name: Install Playwright browsers
         run: python -m playwright install chromium --with-deps
