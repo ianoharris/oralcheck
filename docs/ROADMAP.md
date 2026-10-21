@@ -418,17 +418,17 @@ Update both together. See `AGENTS.md`.
 Newest first.
 
 ### 2026-10-21 (late night): analytics unblocked; article pages and fixes live
-- **Google Analytics was being blocked by the site's own security policy**
-  since the policy shipped on 18 Aug. GA4 sends page views to
-  `analytics.google.com` and `www.google.com`; `connect-src` allowed only
-  `*.analytics.google.com`, which never matches the bare host. On the live
-  site, the browser used to check it got zero hits through. GA did keep some
-  data in that window, so other browsers likely used an allowed endpoint, and
-  the loss is partial but unmeasured. Now `*.google.com`, per Google's tag
-  platform CSP guide; checked against a local production build, where the
-  page view reaches `analytics.google.com/g/collect` with no policy errors.
-  Consequence: GA figures from 18 Aug to 21 Oct are undercounts, including the
-  "find_care_click fired zero times" finding, which should be re-read later.
+- **Google Analytics was being blocked by the site's own security policy.**
+  GA4 sends page views to `analytics.google.com` and `www.google.com`;
+  `connect-src` allowed only `*.analytics.google.com`, which never matches the
+  bare host. The policy dates from 18 Aug, but GA kept counting until Google's
+  tag moved to that address around 22 Sep. Measured against Vercel Analytics
+  (unaffected): 21 Sep GA caught 18 of 20 page views; 22 Sep to 20 Oct it
+  caught 32 of 285 (about 11%). Real traffic held at roughly 10 page views a
+  day, so the GA "users drop" Ian saw from late September is mostly a
+  measurement failure, not lost visitors. Now `*.google.com`, per Google's tag
+  platform CSP guide; a live page view was seen reaching
+  `analytics.google.com/g/collect` after the deploy.
 - **Journal-style article page and the article figure fixes merged and
   pushed on Ian's go.** The live articles now use summary-stage wording and
   the seerStats figures.
