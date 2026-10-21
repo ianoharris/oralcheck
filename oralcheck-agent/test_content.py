@@ -251,6 +251,27 @@ def test_engine_validation():
 # --- 3D reels (no API, no render) ------------------------------------------
 def test_reel3d():
     import json
+    # Ian's review notes, 2026-10-21: what the voice names is what lights up.
+    check("lips get the whole mouth, not the teeth", R3.match_focus("Check your lips for any change.", "teeth") == "overview")
+    check("the inner cheek gets the whole mouth", R3.match_focus("Look for patches on the inner cheek.", "floor") == "overview")
+    check("'redness or a patch' stays on the topic", R3.match_focus("Watch for redness or a patch.", "teeth", "tongue") == "tongue")
+    check("tonsils are the throat", R3.match_focus("The tonsils sit at the back.", "tongue") == "throat")
+    check("the neck is the lymph nodes", R3.match_focus("Feel along your neck for a lump.", "overview") == "nodes")
+    check("no lips focus (the atlas has only the muscle)", "lips" not in R3.FOCI)
+    check("no reel topic is left with only lips", all("lips" not in fs for fs in T.TOPIC_FOCI.values()))
+    check("tongue shots open the jaw", R3.FOCI["tongue"].get("open", 0) > 0)
+    slots = T.plan_slots({}, ["reel"] * 30, seed=3)
+    check("the lip topic never becomes a 3D reel", all(s["topic"] != "lower_lip_sun" for s in slots))
+    # sources and pictures
+    check("every cited source is on the verified list", all(k in T.CITES for ks in T.TOPIC_CITES.values() for k in ks))
+    check("statistics posts cite SEER", T.source_line("survival_by_stage") == "Source: NCI SEER")
+    check("risk posts cite the paper", T.source_line("tobacco_plus_alcohol") == "Source: Hashibe et al., 2009")
+    check("caption sources carry links", "pubmed.ncbi.nlm.nih.gov/19190158" in T.caption_sources("tobacco_plus_alcohol"))
+    check("how-to topics cite nothing", T.source_line("monthly_self_exam") == "")
+    check("every picture rule names a real topic", all(t in T.TOPICS for t in T.VISUAL))
+    check("3D pictures use real foci", all(v[1] in R3.FOCI for v in T.VISUAL.values() if v[0] == "3d"))
+    check("sign pictures are only the two attributed photos",
+          all(v[1] in ("white_patch", "mixed_patch") for v in T.VISUAL.values() if v[0] == "sign"))
     check("every topic focus is a real 3D focus",
           all(f in R3.FOCI for fs in T.TOPIC_FOCI.values() for f in fs))
     check("unknown topics still get foci", T.foci_for("no_such_topic")[0] == "overview")
@@ -267,15 +288,20 @@ def test_reel3d():
     calls = []
     def ask(prompt):
         calls.append(prompt)
-        return json.dumps({"shots": [{"say": "Your lips get more sun than you think.", "focus": "overview"},
-                                     {"say": "The lower lip is the most common lip site.", "focus": "lips",
-                                      "label": {"k": "Sun exposure", "t": "Lower lip", "d": "SPF lip balm helps."}},
-                                     {"say": "Look under your tongue as well.", "focus": "tonsils_nope"}],
-                           "caption": "Lips and sun. Check your risk at oralcheck.org.", "hashtags": ["A", "b"]})
-    spec = E.write_reel3d({"topic": "lower_lip_sun", "media_type": "reel", "shape": "close_look",
+        return json.dumps({"shots": [{"say": "Most mouth cancers start somewhere you can see.", "focus": "overview"},
+                                     {"say": "Check the sides of your tongue.", "focus": "teeth",
+                                      "label": {"k": "Where", "t": "Teeth", "d": "x"}},
+                                     {"say": "Look under your tongue as well.", "focus": "tonsils_nope"},
+                                     {"say": "A red or white patch that lasts matters.", "focus": "teeth"}],
+                           "caption": "Check your risk at oralcheck.org.", "hashtags": ["A", "b"]})
+    spec = E.write_reel3d({"topic": "tongue_sides", "media_type": "reel", "shape": "close_look",
                            "hook_style": "plain", "brief": "x"}, ask)
-    check("disallowed focus is replaced", spec["shots"][2]["focus"] == "overview")
-    check("only the topic's foci are offered", "Soft palate" not in calls[0] and "Lips" in calls[0])
+    foci = [s["focus"] for s in spec["shots"]]
+    check("a line naming the tongue lights the tongue", foci[1] == "tongue")
+    check("a refocused shot drops its wrong label", spec["shots"][1]["label"] is None)
+    check("'under your tongue' is the floor of the mouth", foci[2] == "floor")
+    check("a line naming no place never lights the teeth", foci[3] in ("tongue", "overview"))
+    check("only the topic's foci are offered", "Salivary" not in calls[0] and "Tongue" in calls[0])
     check("credit line in the caption", R3.CREDIT in spec["caption"])
     check("hashtags lowercased", spec["hashtags"] == ["a", "b"])
 

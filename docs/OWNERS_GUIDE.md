@@ -622,27 +622,62 @@ know", "here's why", "actually") or the "X. Y." shape is rewritten once and
 dropped if it fails again.
 
 **How posts are drawn.** Carousels and single images use the original
-designs (`render_html.py`): cream and teal cards, serif headlines, layouts
-such as myth, compare, steps, timeline, big number and checklist. A newer
-set of templates ran for one week in October and was dropped because it felt
-too playful. Every post is rendered from code, nothing is AI-generated
-imagery, and only the two clinical photos with attribution on file (`white`,
-`mixed`) are ever used.
+designs (`render_html.py`): serif headlines, layouts such as myth, compare,
+steps, timeline, big number and checklist. A newer set of templates ran for
+one week in October and was dropped because it felt too playful. Nothing is
+AI-generated imagery.
+
+**What picture a post gets** is decided by its topic, not by searching a
+stock library (`topics.VISUAL`). When you reviewed the autumn calendar you
+sent back every image whose stock photo was only loosely related (a woman
+touching her neck for HPV symptoms, two teenagers for the vaccine) and kept
+the ones that showed the thing itself. So now a post shows one of four
+things:
+
+- **the place in the mouth**, as a still from the same 3D model the reels use
+  (the tongue, the floor of the mouth, the back of the mouth, the neck);
+- **the sign itself**, using only the two clinical photos with attribution on
+  file (`white`, `mixed`);
+- **a stock photo of a literal subject** (betel quid, a dentist at work, a
+  vaccine vial), and only if an automatic check of the photo confirms it
+  actually shows that subject;
+- **no picture at all**, for numbers and risk statements, where any photo
+  would be decoration.
+
+**Sources.** A post that makes a research or statistics claim names its
+source: a short line on the slide or reel ("Source: Hashibe et al., 2009"),
+and the full reference with a link in the caption. Sources come from a fixed
+list (`topics.CITES`) of papers the site already cites, each checked against
+PubMed. Posts that only say where to look or how to check cite nothing.
+
+**How carousels are built to be read.** Instagram re-shows a carousel nobody
+swiped starting from slide 2, so slide 2 has to make sense alone. A myth slide
+puts the fact first and the myth once, smaller (the approach recommended by
+the Debunking Handbook). Every slide has a swipe arrow and content slides carry
+the source line. The last slide asks people to save it or send it to someone
+before giving the address, because saves and sends are what Instagram ranks
+on and a link on a slide cannot be tapped.
 
 **How reels are made.** Reels are 3D. Each one is four or five spoken
 lines over a real 3D model of the mouth, from the open-source Z-Anatomy
 atlas: textured ivory bone and glossy teeth on pale grey. As each line is
 read, the camera glides to the part it is about, which turns teal while
 everything around it fades to glass, and a thin label draws in after a tap.
-Captions firm up word by word in time with the voice (Kokoro on fal), the
-sound is quiet (a soft click on each tap, air as the camera moves, a low tone
-under the end card, the usual music bed), and the reel ends on a card with
-the address. The script can only point at the structures its topic is about,
-so a reel on the lips never wanders to the tonsils. It costs nothing beyond
-the voice and music already used. The model's licence (CC BY-SA) means every
-reel carries a credit line, on screen and in the caption, and is itself
-shared under that licence. If a 3D render ever fails, the run builds the
-older text-only reel instead so the week is not lost.
+For the tongue and the floor of the mouth the jaw opens so the camera can see
+in. **What lights up is decided by what the voice says**: a line naming the
+tongue lights the tongue, and a line naming no particular place never lights
+the teeth (three reels in the first calendar draft got this wrong). The model
+has no real lips (only the muscle beneath them), and its throat parts are too
+crude to show, so neither is ever drawn: a line about the throat points into
+the back of the open mouth, and a line about the lips or cheeks shows the
+whole mouth. Captions firm up word by word in time with the voice (Kokoro on
+fal), the sound is quiet (a soft click on each tap, air as the camera moves, a
+low tone under the end card, the usual music bed), and the reel ends on a card
+with the address. It costs nothing beyond the voice and music already used.
+The model's licence (CC BY-SA) means every reel and every post using a 3D still
+carries a credit line, on screen and in the caption, and is itself shared
+under that licence. If a 3D render ever fails, the run builds the older
+text-only reel instead so the week is not lost.
 
 > **The manual step you can't automate:** no API can put a tappable link on a
 > Reel. Captions are plain text; clickable Reel links need Meta Verified Plus.
@@ -652,6 +687,21 @@ older text-only reel instead so the week is not lost.
 
 **Other scheduled jobs:** SEO article drafting (Mondays 10:00 UTC), outreach
 follow-up tracking (Sundays 12:00 UTC).
+
+**How SEO articles are written.** Each Monday `seo_pipeline.py` takes the next
+keyword from `seo_keywords.json` that no existing article already covers,
+writes a draft of about 1,000 words in English and Spanish, and leaves it in
+`content/drafts/` for you to publish from `/review/<slug>`. When the list runs
+dry, Telegram says so. The keywords are real searches: the October batch came
+from Google's autocomplete suggestions for oral cancer terms, and deliberately
+leaves out treatment and staging searches (which pull articles toward staging
+language the site avoids) and vaping or nicotine pouches (the evidence is too
+thin to write a confident article). Since 21 October the writer is given the
+site's SEER figures and the same checked source list the social posts use, and
+is told to state no other statistic, to never use Stage I to IV for survival,
+to quote no named person, and to end with a linked Sources section. Before
+that it had none of this, which is how two published articles came to say
+"54,000 cases" and compare "stage I and stage IV".
 
 ---
 

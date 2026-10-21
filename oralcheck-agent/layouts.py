@@ -149,24 +149,27 @@ def l_steps(s: dict, t: dict, theme: str, counter: str | None) -> str:
 # ---------------------------------------------------------------------------
 
 def l_myth(s: dict, t: dict, theme: str, counter: str | None) -> str:
+    # Fact first, myth once and smaller, per the Debunking Handbook 2020
+    # (Lewandowsky et al., sks.to/db2020): a slide seen on its own must never
+    # leave the myth as the biggest thing on it.
     myth, truth = s.get("myth", ""), s.get("truth", "")
     return _frame(f"""
       {R._brandrow(counter)}
       <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:40px;">
         <div>
           <div style="font-size:19px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
-               color:{t['muted']};margin-bottom:18px;">The myth</div>
-          <div class="serif" style="font-size:{_fit(myth, 64, 34)}px;line-height:1.08;
-               color:{t['muted']};text-decoration:line-through;
-               text-decoration-color:{t['coral']};text-decoration-thickness:5px;">
-            {_lines(myth)}</div>
+               color:{t['coral']};margin-bottom:18px;">The fact</div>
+          <div class="serif" style="font-size:{_fit(truth, 68, 38)}px;line-height:1.08;
+               color:{t['text']};">{_lines(truth)}</div>
         </div>
         <div style="height:2px;background:{t['hair']};"></div>
         <div>
           <div style="font-size:19px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
-               color:{t['coral']};margin-bottom:18px;">Actually</div>
-          <div class="serif" style="font-size:{_fit(truth, 64, 34)}px;line-height:1.08;
-               color:{t['text']};">{_lines(truth)}</div>
+               color:{t['muted']};margin-bottom:14px;">Myth</div>
+          <div style="font-size:{min(34, _fit(myth, 34, 26))}px;line-height:1.3;font-weight:600;
+               color:{t['muted']};text-decoration:line-through;
+               text-decoration-color:{t['coral']};text-decoration-thickness:3px;">
+            {_lines(myth)}</div>
         </div>
       </div>
       {_footnote(s.get("footnote", ""), t, t["teal_brt"])}

@@ -8,6 +8,8 @@ from datetime import datetime
 from pathlib import Path
 
 import httpx
+
+import topics
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -130,6 +132,26 @@ def slugify(keyword: str) -> str:
     return keyword.lower().replace(" ", "-").replace("/", "-").replace("'", "")
 
 
+# Rules the articles broke before 2026-10-21: a "stage I vs stage IV" survival
+# comparison and a case count (54,000) that matched nothing on the site.
+ARTICLE_RULES = (
+    "Rules:\n"
+    "- Every survival figure, case or death count, incidence ratio or median age must be one of the\n"
+    "  figures above, worded as given. State no other statistic, percentage, odds ratio or study\n"
+    "  result unless it appears in the sources list in the request.\n"
+    "- Survival is SEER summary stage. Never write 'Stage I', 'Stage IV' or any AJCC stage number.\n"
+    "- No quotes from named people, no named experts, no invented case stories or patients.\n"
+    "- OralCheck is independent; never mention any university, hospital or sponsor.\n"
+    "- Where evidence is limited or mixed, say so plainly rather than overstating it.\n"
+)
+
+
+def _sources_block() -> str:
+    lines = "\n".join(f"- {name}: {url}" for name, url in topics.CITES.values())
+    return ("Sources you may cite (link them exactly; cite nothing else; a source must actually\n"
+            f"support the sentence that cites it):\n{lines}\n")
+
+
 def generate_article(keyword: str, covered: list[dict] | None = None) -> str:
     covered = covered or []
     if covered:
@@ -147,13 +169,15 @@ def generate_article(keyword: str, covered: list[dict] | None = None) -> str:
 
     payload = {
         "model": "claude-sonnet-4-6",
-        "max_tokens": 2000,
+        # 2000 cut articles off mid-way through the sources list (found 2026-10-21).
+        "max_tokens": 4000,
         "temperature": 0.7,   # variety across articles (0 made every one read the same)
         "system": (
             "You are a medical content writer for OralCheck (oralcheck.org), "
             "a free oral cancer risk screener. Write evidence-based, accurate content. "
             "Brand voice: direct, calm, never alarmist. No em dashes. No exclamation marks. "
-            "Always recommend professional medical consultation."
+            "Always recommend professional medical consultation.\n\n"
+            + topics.SEER_FACTS + "\n" + ARTICLE_RULES
         ),
         "messages": [
             {
@@ -165,7 +189,10 @@ def generate_article(keyword: str, covered: list[dict] | None = None) -> str:
                     "- Intro paragraph: hook + why this matters\n"
                     "- 3-4 H2 sections with substantive content\n"
                     "- Conclusion with a soft CTA to take the free screener at oralcheck.org\n"
+                    "- A '## Sources' section listing, as markdown links, every source you drew on\n"
+                    "  (only from the list below; omit the section if you used none)\n"
                     "- Medical disclaimer at the bottom\n\n"
+                    f"{_sources_block()}\n"
                     f"{differentiate}\n\n"
                     "Output valid markdown only. No preamble."
                 ),
@@ -184,7 +211,10 @@ def generate_article(keyword: str, covered: list[dict] | None = None) -> str:
         timeout=120,
     )
     resp.raise_for_status()
-    return resp.json()["content"][0]["text"]
+    data = resp.json()
+    if data.get("stop_reason") == "max_tokens":
+        raise RuntimeError("article was cut off at the token limit; not saving a truncated draft")
+    return data["content"][0]["text"]
 
 
 def translate_article_to_spanish(article_md: str, title: str, keyword: str) -> str:

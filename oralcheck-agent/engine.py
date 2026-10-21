@@ -423,6 +423,10 @@ def write_reel3d(idea: dict, ask) -> dict:
         "  - Do not use the same focus twice in a row.\n"
         "  - A shot with a focus other than overview gets a label: k (2 to 4 word eyebrow), t (the "
         "structure or idea, at most 4 words), d (one instruction or fact, at most 9 words).\n"
+        "  - The focus must be the structure the sentence names. A sentence naming the tongue uses "
+        "focus tongue; a sentence that names no place (\"a red or white patch\") uses the topic's own "
+        "focus or overview, never teeth. The model has no lips, cheek lining or roof of the mouth: "
+        "do not build a shot around them.\n"
         "  - The focus names above say where the camera points, not what is true. Never name an "
         "anatomical structure more specifically than the facts do (if the facts say 'a lump in the "
         "neck', do not say which nodes).\n"
@@ -448,6 +452,9 @@ def write_reel3d(idea: dict, ask) -> dict:
         if len(shots) < 2:
             return "3D plan had fewer than 2 shots", []
         problems = _worn([s.get("say", "") for s in shots] + [data.get("caption", "")])
+        if any(re.search(reel3d.UNMODELLED, str(s.get("say", "")).lower()) and not reel3d.named_foci(str(s.get("say", "")))
+               for s in shots):
+            problems.append("a shot is built around the lips, cheeks or palate, which the 3D model cannot show")
         foci = [s["focus"] for s in shots]
         if any(a == b for a, b in zip(foci, foci[1:])):
             problems.append("the same focus is used twice in a row")
@@ -457,7 +464,7 @@ def write_reel3d(idea: dict, ask) -> dict:
         return None, problems
 
     data = _attempt(prompt, ask, check)
-    plan = reel3d.validate({"shots": data["shots"]})
+    plan = reel3d.validate({"shots": data["shots"], "home": next((f for f in allowed if f != "overview"), None)})
     data["shots"] = plan["shots"]
     data.setdefault("hook", data["shots"][0]["say"])
     # Share-alike: the credit rides in the caption as well as on screen.

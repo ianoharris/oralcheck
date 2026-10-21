@@ -41,6 +41,23 @@ Update both together. See `AGENTS.md`.
 
 ### Content and growth
 
+- [ ] **Two site changes waiting for Ian's go (21 Oct).** Both built by
+      agents on their own branches, verified in a browser at phone, tablet and
+      desktop widths and in all three languages; neither is merged or deployed.
+      - `/results` cleanup (branch `worktree-agent-a356088ed25a8506d`): next
+        steps now come straight after the result, one booking button per band,
+        the gauge track is visible, share and retake are quiet links. Note:
+        `results_primary_cta` no longer fires on elevated and high, since that
+        button is gone there.
+      - `/learn` condensed (branch `worktree-agent-a96ccdf509ae80eb7`): the grid
+        had 9 cards, so 3 came off it to make 2 rows of 3 (Facts & Stats, HPV,
+        Prevention, which overlap other cards; the pages and their links are
+        untouched). Articles show the 5 newest with a "Load more" button, all
+        links still in the HTML for search engines.
+      - Found on the way, not fixed: on a symptom result the gauge reads a low
+        green score next to a red "see a dentist soon" badge; /learn renders
+        blank with "reduce motion" switched on (also live today).
+
 - [ ] **Posting calendar: 30 posts, 27 Oct 2026 to 1 Jan 2027 (started
       2026-10-20).** Ian asked to stop the weekly back and forth and plan the
       whole autumn at once: 3 a week for 10 weeks, 10 reels (3D), 10 carousels
@@ -56,21 +73,26 @@ Update both together. See `AGENTS.md`.
         post version so a rebuilt post comes back undecided, tests.
       - **Pushed 2026-10-21** (commit 4bba2c7). The daily job ran once by
         hand on GitHub and succeeded (nothing approved yet, so nothing sent).
-      - **In progress:** building on the laptop. 18 of 30 built; the first
-        run stopped overnight with the session and was resumed 21 Oct. One
-        carousel had crashed on a pre-existing bug (a site screenshot's
-        credit was a string, not a credit record); fixed and rebuilt. Then
-        the review page gets published.
-      - **Review page published 2026-10-21** with 18 posts:
+      - **Review page published 2026-10-21:**
         https://claude.ai/artifact/6EAh4JWYH2K9Jub8ViNshy (decisions are saved
-        in its database, collection `decisions`). Republished as the rest finish.
-      - **Waiting on Ian:** mark every post on the review page. **The 27 Oct
-        reel needs a decision by Fri 24 Oct**, since the daily job schedules 3
-        days ahead and skips anything whose date has passed.
-      - **Then:** apply decisions, rebuild redos, upload approved media to the
-        `calendar-2026-fall` release, push calendar.json. Media goes on a release
-        rather than into git; the repo is public, so approved posts are
-        downloadable from there a few days before they go out.
+        in its database, collection `decisions`).
+      - **Ian's first pass, 21 Oct (23 of 24 shown):** 11 approved, 11 redo,
+        1 cut (8 Dec reel, "super boring"). The redos had four causes, all
+        fixed the same day (see Shipped, 2026-10-21 late): six single images
+        and one carousel with an unrelated stock photo; three reels whose
+        highlight did not match the narration (lips, inner cheek, "a red
+        patch" lit the teeth or the floor of the mouth); the 3D lips looking
+        wrong; and a carousel that needed a picture of the patches.
+      - **In progress:** rebuilding the 11 redos with Ian's notes, plus the
+        6 posts that were never built (a network drop, then stopped so they
+        would not be built with the old code). Then the review page is
+        republished and the redone posts come back undecided.
+      - **Waiting on Ian:** the redone posts and the last 7 (Dec 18 to Jan 1).
+        **The 27 Oct reel is a redo, so it needs a decision by Fri 24 Oct.**
+      - **Then:** upload approved media to the `calendar-2026-fall` release,
+        push calendar.json. Media goes on a release rather than into git; the
+        repo is public, so approved posts are downloadable from there a few
+        days before they go out.
 
 - [ ] **Content engine v2: reels only now; posts went back to the original look
       (2026-10-08, revised 2026-10-20).** Ian's verdict on the feed: videos not engaging enough,
@@ -374,6 +396,53 @@ Update both together. See `AGENTS.md`.
 ## Shipped
 
 Newest first.
+
+### 2026-10-21 (evening): SEO keywords and a grounded article writer (not yet pushed)
+- **37 new SEO keywords** (51 in all), from Google autocomplete for oral
+  cancer search terms: look-alikes ("leukoplakia vs thrush", "geographic
+  tongue vs oral cancer"), throat and neck ("lump in neck under jaw"),
+  common questions ("is oral cancer painful"), risk factors and screening
+  ("oral cancer screening light"). Telegram had been saying the list was
+  used up. Skipped on purpose: pet, billing-code, "near me", treatment and
+  staging searches, vaping and nicotine pouches.
+- **The article writer is grounded.** It now gets the site's SEER figures
+  (moved into `topics.py` so the CI job can import them), the checked source
+  list, and rules: no other statistics, no Stage I to IV, no named people, a
+  linked Sources section. Its token limit was too small and cut articles off
+  mid-sources, so it was raised and a cut-off article now fails instead of
+  being saved. A sample article came back with only site figures and listed
+  sources.
+- **Three drafts from the summer are still unpublished** (risk factors, HPV
+  connection, alcohol and tobacco), waiting on Ian at `/review/<slug>`.
+
+### 2026-10-21 (late): fixes from Ian's calendar review (not yet pushed)
+- **Pictures come from the topic, not a stock search.** `topics.VISUAL`
+  gives every topic a 3D still of the place in the mouth, one of the two
+  attributed clinical photos, a stock photo of a literal subject that a
+  vision check must confirm shows it, or no picture. Single images use a new
+  light "plate" layout matching the reels. Carousels show the picture as its
+  own untinted slide.
+- **Reels light up what the voice names.** `reel3d.match_focus` reads each
+  line: "tongue" lights the tongue, "under your tongue" the floor of the
+  mouth, lips or cheeks get the whole mouth (the model has neither), and a
+  line naming no place never lights the teeth. Shot lists are now saved in
+  each reel's manifest.
+- **The jaw opens** for tongue and floor-of-mouth shots, rotating the lower
+  jaw, teeth and lower gums about the jaw joints.
+- **Lips and throat meshes are no longer drawn.** The atlas has only the
+  muscle under the lips, and its soft palate and tonsils are a flat strip and
+  smooth blobs; Ian found both ugly. Throat shots look into the open mouth
+  with a pointer to the back of it. The lip topic no longer becomes a reel.
+- **Sources.** `topics.CITES` holds sources already cited on the site, each
+  PubMed id re-checked on 21 Oct, mapped to topics. Posts with a research or
+  statistics claim carry a short source line on the slide or reel and full
+  references with links in the caption, kept through the LinkedIn rewrite.
+- **Carousels, from sourced research** (Mosseri on carousels being re-shown
+  from slide 2; Socialinsider 2026 benchmarks; the Debunking Handbook 2020;
+  CDC Clear Communication Index): slide 2 must stand alone, myth slides lead
+  with the fact, a swipe cue on every slide, a source line on content slides,
+  4 to 5 content slides instead of 3 to 4, and a closing slide that asks for
+  a save and a send before giving the address.
 
 ### 2026-10-21
 - **3D reels, original-look posts, and the posting calendar are live on

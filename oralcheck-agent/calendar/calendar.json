@@ -9,7 +9,7 @@
       "network": "instagram",
       "media_type": "reel",
       "when": "2026-10-27T22:00:00+00:00",
-      "status": "built",
+      "status": "redo",
       "idea": {
         "title": "Follow along: what a dental oral cancer check covers",
         "hook": "Your dentist checks six things at every visit. Can you find them first?",
@@ -40,7 +40,8 @@
       ],
       "files": [
         "reel.mp4"
-      ]
+      ],
+      "review_note": "It said check your lips and highlighted the teeth"
     },
     {
       "id": "2026-10-28_li_image",
@@ -48,7 +49,7 @@
       "network": "linkedin",
       "media_type": "image",
       "when": "2026-10-28T14:00:00+00:00",
-      "status": "built",
+      "status": "redo",
       "idea": {
         "title": "HPV overtook tobacco as the top throat cancer cause",
         "hook": "Tobacco is not the leading cause of throat cancer anymore.",
@@ -75,7 +76,8 @@
       ],
       "files": [
         "image.jpg"
-      ]
+      ],
+      "review_note": "Picture is unrelated"
     },
     {
       "id": "2026-10-30_in_carousel",
@@ -83,7 +85,7 @@
       "network": "instagram",
       "media_type": "carousel",
       "when": "2026-10-30T22:00:00+00:00",
-      "status": "built",
+      "status": "approved",
       "idea": {
         "title": "A biopsy turns a white patch into an answer",
         "hook": "You notice a white patch. You wait. It is still there.",
@@ -116,7 +118,8 @@
         "slide_05.jpg",
         "slide_06.jpg",
         "preview.jpg"
-      ]
+      ],
+      "review_note": ""
     },
     {
       "id": "2026-11-03_in_image",
@@ -124,7 +127,7 @@
       "network": "instagram",
       "media_type": "image",
       "when": "2026-11-03T23:00:00+00:00",
-      "status": "built",
+      "status": "redo",
       "idea": {
         "title": "Six HPV throat cancer symptoms worth knowing",
         "hook": "Six symptoms can point toward HPV-related throat cancer.",
@@ -151,7 +154,8 @@
       ],
       "files": [
         "image.jpg"
-      ]
+      ],
+      "review_note": "Picture is unrelated"
     },
     {
       "id": "2026-11-04_li_carousel",
@@ -159,7 +163,7 @@
       "network": "linkedin",
       "media_type": "carousel",
       "when": "2026-11-04T15:00:00+00:00",
-      "status": "built",
+      "status": "approved",
       "idea": {
         "title": "The two-week rule for a sore in your mouth",
         "hook": "Most mouth sores heal on their own within two weeks.",
@@ -192,7 +196,8 @@
         "slide_05.jpg",
         "slide_06.jpg",
         "preview.jpg"
-      ]
+      ],
+      "review_note": ""
     },
     {
       "id": "2026-11-06_in_reel",
@@ -200,7 +205,7 @@
       "network": "instagram",
       "media_type": "reel",
       "when": "2026-11-06T23:00:00+00:00",
-      "status": "built",
+      "status": "redo",
       "idea": {
         "title": "Painless patches: the warning sign that feels like nothing",
         "hook": "No pain, no problem. That logic does not apply here.",
@@ -227,7 +232,8 @@
       ],
       "files": [
         "reel.mp4"
-      ]
+      ],
+      "review_note": "it said patches on the inner cheek and then pointed to the floor of the mouth. also the lips are modeled very strangely"
     },
     {
       "id": "2026-11-10_in_reel",
@@ -235,7 +241,7 @@
       "network": "instagram",
       "media_type": "reel",
       "when": "2026-11-10T23:00:00+00:00",
-      "status": "built",
+      "status": "redo",
       "idea": {
         "title": "Lower lip sun exposure risk: what outdoor workers should know",
         "hook": "Press your lower lip forward and take a close look.",
@@ -262,7 +268,8 @@
       ],
       "files": [
         "reel.mp4"
-      ]
+      ],
+      "review_note": "again, the lips look very odd"
     },
     {
       "id": "2026-11-11_li_image",
@@ -270,7 +277,7 @@
       "network": "linkedin",
       "media_type": "image",
       "when": "2026-11-11T15:00:00+00:00",
-      "status": "built",
+      "status": "approved",
       "idea": {
         "title": "The floor of your mouth is the hardest spot to self-check",
         "hook": "Lift your tongue to the roof of your mouth right now.",
@@ -297,7 +304,8 @@
       ],
       "files": [
         "image.jpg"
-      ]
+      ],
+      "review_note": ""
     },
     {
       "id": "2026-11-13_in_carousel",
@@ -305,7 +313,7 @@
       "network": "instagram",
       "media_type": "carousel",
       "when": "2026-11-13T23:00:00+00:00",
-      "status": "built",
+      "status": "redo",
       "idea": {
         "title": "How to check the sides of your tongue right now",
         "hook": "Stick your tongue out as far as it will go.",
@@ -338,7 +346,8 @@
         "slide_05.jpg",
         "slide_06.jpg",
         "preview.jpg"
-      ]
+      ],
+      "review_note": "The picture makes no sense in the middle of the slides with the mirror"
     },
     {
       "id": "2026-11-17_in_image",
@@ -346,7 +355,7 @@
       "network": "instagram",
       "media_type": "image",
       "when": "2026-11-17T23:00:00+00:00",
-      "status": "built",
+      "status": "approved",
       "idea": {
         "title": "Men diagnosed with oral cancer 2.6 times more than women",
         "hook": "2.6 times. That's how much more often men are diagnosed.",
@@ -373,7 +382,8 @@
       ],
       "files": [
         "image.jpg"
-      ]
+      ],
+      "review_note": ""
     },
     {
       "id": "2026-11-18_li_carousel",
@@ -381,7 +391,7 @@
       "network": "linkedin",
       "media_type": "carousel",
       "when": "2026-11-18T15:00:00+00:00",
-      "status": "built",
+      "status": "approved",
       "idea": {
         "title": "Quitting tobacco still cuts oral cancer risk, even now",
         "hook": "Tomorrow is the Great American Smokeout.",
@@ -418,7 +428,8 @@
         "slide_05.jpg",
         "slide_06.jpg",
         "preview.jpg"
-      ]
+      ],
+      "review_note": ""
     },
     {
       "id": "2026-11-20_in_reel",
@@ -426,7 +437,7 @@
       "network": "instagram",
       "media_type": "reel",
       "when": "2026-11-20T23:00:00+00:00",
-      "status": "built",
+      "status": "approved",
       "idea": {
         "title": "Painless neck lump as a first sign of HPV throat cancer",
         "hook": "Have you felt a lump in your neck that just will not go away?",
@@ -453,7 +464,8 @@
       ],
       "files": [
         "reel.mp4"
-      ]
+      ],
+      "review_note": ""
     },
     {
       "id": "2026-11-24_in_reel",
@@ -461,7 +473,7 @@
       "network": "instagram",
       "media_type": "reel",
       "when": "2026-11-24T23:00:00+00:00",
-      "status": "built",
+      "status": "redo",
       "idea": {
         "title": "When Gum Disease Is Not Gum Disease",
         "hook": "Gum disease and gum cancer can look nearly identical.",
@@ -488,7 +500,8 @@
       ],
       "files": [
         "reel.mp4"
-      ]
+      ],
+      "review_note": "It said redness or a patch and then highlighted the teeth"
     },
     {
       "id": "2026-11-25_li_image",
@@ -496,7 +509,7 @@
       "network": "linkedin",
       "media_type": "image",
       "when": "2026-11-25T15:00:00+00:00",
-      "status": "built",
+      "status": "redo",
       "idea": {
         "title": "Five common mouth findings that are not oral cancer",
         "hook": "Five things in your mouth that look worrying but probably aren't.",
@@ -523,7 +536,8 @@
       ],
       "files": [
         "image.jpg"
-      ]
+      ],
+      "review_note": "Picture is very unrelated to the post"
     },
     {
       "id": "2026-11-27_in_carousel",
@@ -531,7 +545,7 @@
       "network": "instagram",
       "media_type": "carousel",
       "when": "2026-11-27T23:00:00+00:00",
-      "status": "planned",
+      "status": "approved",
       "idea": {
         "title": "Low-cost oral care options when you have no dentist",
         "hook": "When did you last have someone look inside your mouth?",
@@ -546,7 +560,28 @@
         "slug": "low-cost-oral-care-options-when-you-have-no-dentist"
       },
       "event": null,
-      "error": "'str' object has no attribute 'get'"
+      "folder": "2026-11-27_in_carousel",
+      "version": 1,
+      "uploaded": false,
+      "hook": "When did you last have someone look inside your mouth?",
+      "caption": "No dentist. No insurance. No budget for a private appointment. That combination stops a lot of people from ever getting their mouth looked at, and it doesn't have to.\n\nCommunity health centers charge on a sliding scale based on what you earn. Dental schools offer care at lower cost, supervised by licensed faculty. Free clinics exist in more places than most people expect. None of them require full-price insurance to walk through the door.\n\noralcheck.org/find-care searches all three by your location. If cost or coverage has been the reason you haven't gone, this is the place to start.",
+      "hashtags": [
+        "oralcancer",
+        "dentalcare",
+        "freeclinic",
+        "oralhealth",
+        "oralcheck"
+      ],
+      "files": [
+        "slide_01.jpg",
+        "slide_02.jpg",
+        "slide_03.jpg",
+        "slide_04.jpg",
+        "slide_05.jpg",
+        "slide_06.jpg",
+        "preview.jpg"
+      ],
+      "review_note": ""
     },
     {
       "id": "2026-12-01_in_image",
@@ -554,7 +589,7 @@
       "network": "instagram",
       "media_type": "image",
       "when": "2026-12-01T23:00:00+00:00",
-      "status": "built",
+      "status": "redo",
       "idea": {
         "title": "Gardasil 9 approved through age 45, most effective earlier",
         "hook": "The vaccine works best before exposure. It's still available after.",
@@ -581,7 +616,8 @@
       ],
       "files": [
         "image.jpg"
-      ]
+      ],
+      "review_note": "This picture makes no sense here"
     },
     {
       "id": "2026-12-02_li_carousel",
@@ -589,7 +625,7 @@
       "network": "linkedin",
       "media_type": "carousel",
       "when": "2026-12-02T15:00:00+00:00",
-      "status": "built",
+      "status": "redo",
       "idea": {
         "title": "Two white patches that look alike but are not the same",
         "hook": "Two patches in your mouth look almost identical.",
@@ -622,7 +658,8 @@
         "slide_05.jpg",
         "slide_06.jpg",
         "preview.jpg"
-      ]
+      ],
+      "review_note": "Add pictures of the patches themselves"
     },
     {
       "id": "2026-12-04_in_reel",
@@ -630,7 +667,7 @@
       "network": "instagram",
       "media_type": "reel",
       "when": "2026-12-04T23:00:00+00:00",
-      "status": "built",
+      "status": "approved",
       "idea": {
         "title": "Leukoplakia: the white patch that cannot be scraped off",
         "hook": "A white patch you can rub off is one thing. One you cannot is another.",
@@ -657,7 +694,8 @@
       ],
       "files": [
         "reel.mp4"
-      ]
+      ],
+      "review_note": ""
     },
     {
       "id": "2026-12-08_in_reel",
@@ -665,7 +703,7 @@
       "network": "instagram",
       "media_type": "reel",
       "when": "2026-12-08T23:00:00+00:00",
-      "status": "planned",
+      "status": "cut",
       "idea": {
         "title": "Mixed red-and-white speckled patches carry the highest risk",
         "hook": "A patch that is partly red, partly white carries more risk than either alone.",
@@ -679,7 +717,23 @@
         "calendar_ref": null,
         "slug": "mixed-red-and-white-speckled-patches-carry-the-highest-risk"
       },
-      "event": null
+      "event": null,
+      "folder": "2026-12-08_in_reel",
+      "version": 1,
+      "uploaded": false,
+      "hook": "A patch that is partly red, partly white carries more risk than either alone.",
+      "caption": "Most mouth sores heal in a week or two. A speckled red-and-white patch that won't rub away is a different thing, and it tends to appear in four specific spots: the inner cheek, the side of the tongue, the floor of the mouth, and the soft palate.\n\nThat one rule is worth remembering. If it does not scrape off, it needs a professional eye on it, not more waiting.\n\nLearn what to look for and take a free risk screener at oralcheck.org/learn/white-and-red-patches.",
+      "hashtags": [
+        "oralcancer",
+        "oralhealth",
+        "selfexam",
+        "earlydetetion",
+        "oralcheck"
+      ],
+      "files": [
+        "reel.mp4"
+      ],
+      "review_note": "This post is super boring"
     },
     {
       "id": "2026-12-09_li_image",
@@ -687,7 +741,7 @@
       "network": "linkedin",
       "media_type": "image",
       "when": "2026-12-09T15:00:00+00:00",
-      "status": "planned",
+      "status": "approved",
       "idea": {
         "title": "Betel quid raises oral cancer risk with or without tobacco",
         "hook": "Tobacco-free doesn't mean risk-free. Not with betel quid.",
@@ -701,7 +755,23 @@
         "calendar_ref": null,
         "slug": "betel-quid-raises-oral-cancer-risk-with-or-without-tobacco"
       },
-      "event": null
+      "event": null,
+      "folder": "2026-12-09_li_image",
+      "version": 1,
+      "uploaded": false,
+      "hook": "Tobacco-free doesn't mean risk-free. Not with betel quid.",
+      "caption": "Betel quid without tobacco is still classified as a Group 1 carcinogen for oral cancer by the WHO's cancer agency, IARC. That classification covers areca nut, paan and gutka. The risk isn't borrowed from tobacco. It stands on its own. Most standard risk checklists don't ask about betel quid, which means a real exposure goes unrecorded. The OralCheck screener asks about it specifically because missing it would leave a meaningful gap in the picture. Take the free screener at oralcheck.org/screener.",
+      "hashtags": [
+        "oralcancer",
+        "betelquid",
+        "oralhealth",
+        "cancerprevention",
+        "oralcheck"
+      ],
+      "files": [
+        "image.jpg"
+      ],
+      "review_note": ""
     },
     {
       "id": "2026-12-11_in_carousel",
@@ -709,7 +779,7 @@
       "network": "instagram",
       "media_type": "carousel",
       "when": "2026-12-11T23:00:00+00:00",
-      "status": "planned",
+      "status": "approved",
       "idea": {
         "title": "Survival rates for oral cancer by stage at detection",
         "hook": "Oral cancer caught while still localized has an 89% five-year survival rate.",
@@ -723,7 +793,28 @@
         "calendar_ref": null,
         "slug": "survival-rates-for-oral-cancer-by-stage-at-detection"
       },
-      "event": null
+      "event": null,
+      "folder": "2026-12-11_in_carousel",
+      "version": 1,
+      "uploaded": false,
+      "hook": "Oral cancer caught early has an 89% survival rate.",
+      "caption": "Oral cancer caught while still localized has an 89% five-year survival rate. Once it has spread to distant sites, that figure falls to 36%. The gap between those two numbers is not luck. It is timing.\n\nOnly about 26% of oral cancer cases are found while still localized, which means most are caught after the odds have already shifted. Regular screening and acting on a sore or patch that does not heal in two weeks are the two things most likely to change that.\n\nLearn what the research shows and take a free risk screener at oralcheck.org/learn/facts.",
+      "hashtags": [
+        "oralcancer",
+        "oralhealth",
+        "earlyd\u0435\u0442ection",
+        "cancerscreening",
+        "oralcheck"
+      ],
+      "files": [
+        "slide_01.jpg",
+        "slide_02.jpg",
+        "slide_03.jpg",
+        "slide_04.jpg",
+        "slide_05.jpg",
+        "preview.jpg"
+      ],
+      "review_note": ""
     },
     {
       "id": "2026-12-15_in_image",
@@ -731,7 +822,7 @@
       "network": "instagram",
       "media_type": "image",
       "when": "2026-12-15T23:00:00+00:00",
-      "status": "planned",
+      "status": "redo",
       "idea": {
         "title": "HPV exposure is common and most infections clear",
         "hook": "Have you ever thought about whether you've been exposed to HPV?",
@@ -745,7 +836,23 @@
         "calendar_ref": null,
         "slug": "hpv-exposure-is-common-and-most-infections-clear"
       },
-      "event": null
+      "event": null,
+      "folder": "2026-12-15_in_image",
+      "version": 1,
+      "uploaded": false,
+      "hook": "Have you ever thought about whether you've been exposed to HPV?",
+      "caption": "Most sexually active adults have been exposed to HPV at some point, and the vast majority of those infections clear on their own without ever causing symptoms or leading to cancer. Certain strains, particularly HPV-16, can drive DNA changes that put some people at higher risk for oral cancer over time, which is why understanding your own risk is worth a few minutes. Take the free screener at oralcheck.org to learn more about where you stand.",
+      "hashtags": [
+        "hpv",
+        "oralcancer",
+        "oralhealth",
+        "hpvawareness",
+        "oralcheck"
+      ],
+      "files": [
+        "image.jpg"
+      ],
+      "review_note": "This picture is super unrelated"
     },
     {
       "id": "2026-12-16_li_carousel",
@@ -753,7 +860,7 @@
       "network": "linkedin",
       "media_type": "carousel",
       "when": "2026-12-16T15:00:00+00:00",
-      "status": "planned",
+      "status": "approved",
       "idea": {
         "title": "Reference card: oral cancer warning signs beyond colour",
         "hook": "Run your finger along the inside of one cheek.",
@@ -767,7 +874,29 @@
         "calendar_ref": null,
         "slug": "reference-card-oral-cancer-warning-signs-beyond-colour"
       },
-      "event": null
+      "event": null,
+      "folder": "2026-12-16_li_carousel",
+      "version": 1,
+      "uploaded": false,
+      "hook": "Run your finger along the inside of one cheek.",
+      "caption": "Run a finger along the inside of your cheek right now. You're not looking for colour alone. The signs worth catching early are often textural: an edge on a sore that feels raised or hardened, a spot that bleeds when you brush against it, or a small firm lump sitting just under the surface of the cheek, tongue, gum, or floor of the mouth.\n\nMost sores heal on their own within a week or two. The ones that don't are the ones that need attention. Two weeks is the line. If something is still there at that point, it's worth getting checked.\n\nThe full list of signs to watch for is at oralcheck.org/learn/signs. Save this card if it's useful to you.",
+      "hashtags": [
+        "oralcancer",
+        "oralhealth",
+        "oralcancerscreening",
+        "knowthesigns",
+        "oralcheck"
+      ],
+      "files": [
+        "slide_01.jpg",
+        "slide_02.jpg",
+        "slide_03.jpg",
+        "slide_04.jpg",
+        "slide_05.jpg",
+        "slide_06.jpg",
+        "preview.jpg"
+      ],
+      "review_note": ""
     },
     {
       "id": "2026-12-18_in_reel",
@@ -789,7 +918,8 @@
         "calendar_ref": null,
         "slug": "tobacco-plus-alcohol-together-multiply-oral-cancer-risk"
       },
-      "event": null
+      "event": null,
+      "error": "Connection error."
     },
     {
       "id": "2026-12-22_in_reel",
@@ -811,7 +941,8 @@
         "calendar_ref": null,
         "slug": "hpv-throat-cancer-at-the-base-of-tongue-and-tonsils"
       },
-      "event": null
+      "event": null,
+      "error": "Connection error."
     },
     {
       "id": "2026-12-23_li_image",
@@ -833,7 +964,8 @@
         "calendar_ref": null,
         "slug": "median-diagnosis-age-is-65-but-the-gap-is-narrowing"
       },
-      "event": null
+      "event": null,
+      "error": "Connection error."
     },
     {
       "id": "2026-12-25_in_carousel",
@@ -855,7 +987,8 @@
         "calendar_ref": null,
         "slug": "red-patch-in-your-mouth-what-it-means"
       },
-      "event": null
+      "event": null,
+      "error": "Connection error."
     },
     {
       "id": "2026-12-29_in_image",
@@ -877,7 +1010,8 @@
         "calendar_ref": null,
         "slug": "60-480-new-oral-cancer-cases-expected-in-the-us-this-year"
       },
-      "event": null
+      "event": null,
+      "error": "Connection error."
     },
     {
       "id": "2026-12-30_li_carousel",
@@ -899,7 +1033,8 @@
         "calendar_ref": null,
         "slug": "hpv-related-oral-cancer-in-men-with-no-tobacco-history"
       },
-      "event": null
+      "event": null,
+      "error": "Connection error."
     },
     {
       "id": "2027-01-01_in_reel",
@@ -907,7 +1042,7 @@
       "network": "instagram",
       "media_type": "reel",
       "when": "2027-01-01T23:00:00+00:00",
-      "status": "planned",
+      "status": "built",
       "idea": {
         "title": "Two-minute oral self-exam you can do right now",
         "hook": "Get a mirror and find a light source.",
@@ -925,7 +1060,22 @@
         "slug": "new-year-screening",
         "name": "New Year",
         "date": "2027-01-01"
-      }
+      },
+      "folder": "2027-01-01_in_reel",
+      "version": 1,
+      "uploaded": false,
+      "hook": "Get a mirror and find a light source.",
+      "caption": "A self-exam takes about two minutes. Once a month, with a mirror and decent light, you move through the same areas a clinician would: face and neck, lips, cheeks, gums, every surface of the tongue, floor of the mouth, roof of the mouth, then the throat. You're looking for anything new. A patch, a sore, a lump, a colour change. If something looks different from last month, that's worth a conversation with your dentist or doctor. The full step-by-step guide is free at oralcheck.org/learn/self-exam.",
+      "hashtags": [
+        "oralcancer",
+        "oralhealth",
+        "selfexam",
+        "earldetection",
+        "oralcheck"
+      ],
+      "files": [
+        "reel.mp4"
+      ]
     }
   ]
 }

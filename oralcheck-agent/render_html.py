@@ -282,10 +282,12 @@ def slide_photo(photo: str, caption: str = "", counter: str | None = None) -> st
     return _doc(body)
 
 
-def slide_cta(headline: str = "Take the free screener.",
-              sub: str = "2 minutes. Free. Private.",
+def slide_cta(headline: str = "Save this for your next check.",
+              sub: str = "Send it to someone who should see it.",
               url: str = "oralcheck.org") -> str:
-    """Closing slide on a teal ground for contrast against dark content slides."""
+    """Closing slide on a teal ground. It asks for a save or a send first:
+    Instagram ranks on saves and sends, and a link on a slide cannot be tapped,
+    so the address is the second thing, not the headline."""
     body = f"""
     <div style="width:{POST_W}px;height:{POST_H}px;display:flex;flex-direction:column;background:{TEAL};">
       <div style="padding:76px 78px 0;">
@@ -296,16 +298,34 @@ def slide_cta(headline: str = "Take the free screener.",
         <div style="height:1px;background:rgba(13,26,27,0.22);margin-top:16px;"></div>
       </div>
       <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:0 78px;">
-        <div class="serif" style="font-size:88px;line-height:1.05;color:{BG};
+        <div class="serif" style="font-size:84px;line-height:1.06;color:{BG};
              text-wrap:balance;margin-bottom:30px;">{_e(headline)}</div>
-        <div style="font-size:30px;color:rgba(13,26,27,0.72);font-weight:600;margin-bottom:44px;">{_e(sub)}</div>
-        <div style="display:inline-flex;align-items:center;gap:14px;">
-          <span style="font-size:34px;font-weight:700;color:{BG};letter-spacing:0.01em;">{_e(url)}</span>
-        </div>
+        <div style="font-size:32px;color:rgba(13,26,27,0.78);font-weight:600;margin-bottom:64px;">{_e(sub)}</div>
+        <div style="height:1px;background:rgba(13,26,27,0.22);margin-bottom:34px;"></div>
+        <div style="font-size:26px;color:rgba(13,26,27,0.7);font-weight:600;margin-bottom:10px;">
+          Check your own risk, free, in two minutes</div>
+        <div style="font-size:40px;font-weight:700;color:{BG};letter-spacing:0.01em;">{_e(url)}</div>
       </div>
       <div style="height:10px;background:{CORAL};width:100%;"></div>
     </div>"""
     return _doc(body, bg=TEAL)
+
+
+def _overlay(html: str, inner: str) -> str:
+    """Add an absolutely positioned layer to a rendered slide."""
+    return html.replace("</body>", inner + "</body>", 1)
+
+
+def _source_footer(source: str, theme: str) -> str:
+    t = THEMES.get(theme, THEMES["dark"])
+    return (f"<div style='position:absolute;left:96px;bottom:40px;font-size:19px;font-weight:600;"
+            f"letter-spacing:0.02em;color:{t['muted']};max-width:760px;'>{_e(source)}</div>")
+
+
+def _swipe_cue(theme: str, on_photo: bool = False) -> str:
+    color = "#e8e4de" if on_photo else THEMES.get(theme, THEMES["dark"])["teal_brt"]
+    return (f"<div style='position:absolute;right:78px;bottom:34px;font-size:34px;line-height:1;"
+            f"color:{color};opacity:0.85;'>&rarr;</div>")
 
 
 # ---------------------------------------------------------------------------
@@ -361,15 +381,104 @@ def render_deck(deck: dict, theme: str = "dark") -> list[str]:
             htmls.append(slide_quote(s.get("text", ""), s.get("attribution", ""), c, theme))
         elif t == "photo":
             htmls.append(slide_photo(s.get("photo", ""), s.get("caption", ""), c))
+        elif t == "plate":
+            htmls.append(slide_plate(s.get("photo", ""), s.get("caption", ""), s.get("credit", ""), c,
+                                     theme, s.get("contain", False)))
         else:  # fact
             htmls.append(slide_fact(s.get("headline", ""), s.get("body", ""),
                                     c, s.get("kicker", ""), theme))
 
+    # A source line on every content slide (any slide can be screenshotted or
+    # re-served on its own) and a swipe cue on every slide but the last.
+    source = deck.get("source", "")
+    for i in range(1, len(htmls)):
+        kind = slides_spec[i - 1].get("type") if i - 1 < len(slides_spec) else None
+        on_photo = kind == "photo"
+        extra = _swipe_cue("light" if kind == "plate" else theme, on_photo)
+        if source and kind not in ("photo", "plate"):
+            extra += _source_footer(source, theme)
+        htmls[i] = _overlay(htmls[i], extra)
+
     cta = deck.get("cta", {})
-    htmls.append(slide_cta(cta.get("headline", "Take the free screener."),
-                           cta.get("sub", "2 minutes. Free. Private."),
+    htmls.append(slide_cta(cta.get("headline") or "Save this for your next check.",
+                           cta.get("sub") or "Send it to someone who should see it.",
                            cta.get("url", "oralcheck.org")))
     return htmls
+
+
+def slide_plate(photo: str, caption: str = "", credit: str = "", counter: str | None = None,
+                theme: str = "dark", contain: bool = False) -> str:
+    """A picture shown as itself: a 3D still or a clinical photo, untinted, on a
+    light ground with its caption and credit beneath. Used where the old deck
+    dropped a teal-washed stock photo between typographic slides."""
+    uri = _img_data_uri(photo)
+    t = THEMES["light"]
+    fit = "contain" if contain else "cover"
+    pad = "padding:40px 78px 0;" if contain else ""
+    body = f"""
+    <div style="width:{POST_W}px;height:{POST_H}px;display:flex;flex-direction:column;background:#eceff0;">
+      <div style="padding:76px 78px 0;">{_brandrow(counter)}</div>
+      <div style="flex:1;min-height:0;{pad}display:flex;">
+        <img src="{uri}" style="width:100%;height:100%;object-fit:{fit};border-radius:{'10px' if contain else '0'};" />
+      </div>
+      <div style="padding:34px 78px 92px;">
+        <div class="serif" style="font-size:50px;line-height:1.12;color:{t['text']};text-wrap:balance;">{_e(caption)}</div>
+        {f"<div style='font-size:18px;color:{t['muted']};margin-top:18px;letter-spacing:0.02em;'>{_e(credit)}</div>" if credit else ""}
+      </div>
+    </div>"""
+    return _doc(body, "light", bg="#eceff0")
+
+
+def render_plate(photo: str, hook: str, kicker: str = "", credit: str = "", source: str = "",
+                 contain: bool = False, cta: str = "oralcheck.org") -> str:
+    """Single image post: the picture above, the hook below, on the light ground
+    the 3D reels use."""
+    uri = _img_data_uri(photo)
+    t = THEMES["light"]
+    fit = "contain" if contain else "cover"
+    pad = "padding:24px 78px 0;" if contain else ""
+    kick = f"<div class='kicker' style='margin-bottom:20px;color:{t['coral']};'>{_e(kicker)}</div>" if kicker else \
+           f"<div class='accent' style='margin-bottom:24px;background:{t['coral']};'></div>"
+    foot = " &nbsp;&middot;&nbsp; ".join(_e(x) for x in (credit, source) if x)
+    body = f"""
+    <div style="width:{POST_W}px;height:{POST_H}px;display:flex;flex-direction:column;background:#eceff0;">
+      <div style="padding:70px 78px 0;"><div class="brandrow"><div class="brand"><div class="dot"></div>
+        <span class="wordmark" style="color:{t['teal']};">OralCheck</span></div></div></div>
+      <div style="height:820px;{pad}display:flex;">
+        <img src="{uri}" style="width:100%;height:100%;object-fit:{fit};border-radius:{'10px' if contain else '0'};" />
+      </div>
+      <div style="flex:1;padding:30px 78px 52px;display:flex;flex-direction:column;justify-content:flex-end;">
+        {kick}
+        <div class="serif" style="font-size:{64 if len(hook) < 70 else 54}px;line-height:1.08;color:{t['text']};
+             text-wrap:balance;">{_e(hook)}</div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-top:26px;gap:30px;">
+          <div class="footurl" style="color:{t['teal']};">{_e(cta)}</div>
+          <div style="font-size:17px;color:{t['muted']};text-align:right;">{foot}</div>
+        </div>
+      </div>
+    </div>"""
+    return _doc(body, "light", bg="#eceff0")
+
+
+def render_card(hook: str, kicker: str = "", source: str = "", theme: str = "light",
+                cta: str = "oralcheck.org") -> str:
+    """Single image post with no picture: the hook set large, for topics where
+    any photo would be decoration (numbers, risk statements)."""
+    t = THEMES.get(theme, THEMES["light"])
+    kick = f"<div class='kicker' style='margin-bottom:28px;'>{_e(kicker)}</div>" if kicker else \
+           "<div class='accent' style='margin-bottom:34px;'></div>"
+    src = f"<div style='font-size:19px;color:{t['muted']};margin-top:18px;'>{_e(source)}</div>" if source else ""
+    body = f"""
+    <div class="frame">
+      {_brandrow(None)}
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:center;">
+        {kick}
+        <div class="serif" style="font-size:{96 if len(hook) < 60 else 80}px;line-height:1.04;letter-spacing:-0.015em;
+             color:var(--text);text-wrap:balance;">{_e(hook)}</div>
+      </div>
+      <div><div class="footurl">{_e(cta)}</div>{src}</div>
+    </div>"""
+    return _doc(body, theme)
 
 
 # ---------------------------------------------------------------------------
@@ -572,6 +681,14 @@ def infographic_image(content: dict, theme: str = "dark") -> str:
 def image_overlay(image_path: str, hook: str, cta: str = "oralcheck.org",
                   kicker: str = "") -> str:
     return _screenshot(render_image_overlay(image_path, hook, cta, kicker))
+
+
+def plate_image(photo: str, hook: str, **kw) -> str:
+    return _screenshot(render_plate(photo, hook, **kw))
+
+
+def card_image(hook: str, **kw) -> str:
+    return _screenshot(render_card(hook, **kw))
 
 
 def pick_theme() -> str:

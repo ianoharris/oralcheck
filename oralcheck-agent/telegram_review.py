@@ -1068,12 +1068,16 @@ def _linkedin_caption(manifest: dict) -> str:
     professional register and punishes hashtag stuffing, and the audience skews
     toward clinicians, students and public-health people rather than patients.
     """
-    ig = manifest.get("caption", "").strip()
-    if not ig:
+    full = manifest.get("caption", "").strip()
+    if not full:
         return ""
+    # Credits and sources are not the model's to rewrite: take them off, put
+    # them back verbatim after.
+    footer = str(manifest.get("footer") or "").strip()
+    ig = full.replace(footer, "").strip() if footer else full
     key = os.environ.get("ANTHROPIC_API_KEY", "")
     if not key:
-        return ig
+        return full
     try:
         import anthropic
         msg = anthropic.Anthropic(api_key=key).messages.create(
@@ -1096,10 +1100,12 @@ def _linkedin_caption(manifest: dict) -> str:
             )}],
         )
         out = "".join(b.text for b in msg.content if getattr(b, "type", None) == "text").strip()
-        return out or ig
+        if not out:
+            return full
+        return f"{out}\n\n{footer}" if footer else out
     except Exception as exc:  # noqa: BLE001
         log.warning("LinkedIn rewrite failed (%s); sending the Instagram caption.", exc)
-        return ig
+        return full
 
 
 def _slides_to_pdf(media_files: list[Path], manifest: dict) -> Path | None:

@@ -42,6 +42,9 @@
   #cta .u{font-weight:700;font-size:84px;color:#0d7377;margin-top:44px}
   #cta .s{font-size:34px;color:#4a5958;margin-top:18px}
   #credit{position:absolute;left:72px;right:72px;top:1560px;font:500 17px "JetBrains Mono",monospace;letter-spacing:.06em;color:#9aa6a5}
+  /* Stills for image posts and carousel slides: only the model and its label. */
+  body.still .chrome, body.still .rule, body.still .view, body.still #cap, body.still .scrub,
+  body.still #cta, body.still #credit, body.still #tap, body.still #tapdot{display:none}
 </style></head>
 <body>
 <div id="ui">
@@ -63,6 +66,7 @@ const {GLTFLoader, RoomEnvironment, EffectComposer, RenderPass, GTAOPass, Output
 
 const W = 1080, H = 1920;
 const PLAN = window.PLAN;
+if (PLAN.still) document.body.classList.add("still");
 const renderer = new THREE.WebGLRenderer({antialias: true, preserveDrawingBuffer: true});
 renderer.localClippingEnabled = true;
 renderer.setPixelRatio(1); renderer.setSize(W, H);
@@ -89,7 +93,13 @@ composer.addPass(new OutputPass());
 // material, so it needs the same cut or it shades bone that is not there.
 const CUT_Y = 0.16;
 const CUT = new THREE.Plane(new THREE.Vector3(0, -1, 0), CUT_Y);
-ao.normalMaterial.clippingPlanes = [new THREE.Plane(new THREE.Vector3(0, -1, 0), CUT_Y)];
+// A midline (sagittal) cut for shots that set `section`: the textbook view of
+// the throat, the head split down the middle and seen from the side. Parked far
+// away otherwise, so the planes never change count and no shader recompiles.
+const FAR = 1e4;
+const SAG = new THREE.Plane(new THREE.Vector3(-1, 0, 0), FAR);
+const AO_SAG = new THREE.Plane(new THREE.Vector3(-1, 0, 0), FAR);
+ao.normalMaterial.clippingPlanes = [new THREE.Plane(new THREE.Vector3(0, -1, 0), CUT_Y), AO_SAG];
 
 // ---- procedural surface detail (the meshes have no UVs) --------------------
 const NOISE = `
@@ -160,9 +170,15 @@ function group(n) {
   return "other";
 }
 // Groups that only appear when they are the subject.
-const ON_DEMAND = new Set(["nodes", "glands", "lips"]);
+const ON_DEMAND = new Set(["nodes", "glands"]);
+// Groups never drawn. The atlas's lips are only the muscle beneath them, and
+// its soft palate, uvula and tonsils are a flat strip and smooth blobs; both
+// looked wrong on screen (Ian's review, 2026-10-21). A throat shot points at
+// the back of the open mouth instead of drawing them.
+const NEVER = new Set(["lips", "throat"]);
 
 const groups = {};
+window.__oc = {groups, THREE};   // inspection hook for dev tooling
 let ready = false;
 new GLTFLoader().load("oral.glb", g => {
   const root = g.scene;
@@ -170,7 +186,7 @@ new GLTFLoader().load("oral.glb", g => {
     if (!o.isMesh) return;
     const k = kind(o.name);
     o.material = surface(new THREE.MeshPhysicalMaterial({...MAT[k], transparent: true}), SURF[k] || SURF.soft);
-    o.material.clippingPlanes = [CUT]; o.material.side = THREE.DoubleSide;
+    o.material.clippingPlanes = [CUT, SAG]; o.material.side = THREE.DoubleSide;
     o.material.userData.base = o.material.color.clone();
     o.geometry.computeVertexNormals();
     (groups[group(o.name)] = groups[group(o.name)] || []).push(o);
@@ -178,8 +194,56 @@ new GLTFLoader().load("oral.glb", g => {
   const c = new THREE.Box3().setFromObject(root).getCenter(new THREE.Vector3());
   root.position.copy(c).multiplyScalar(-10); root.scale.setScalar(10);
   scene.add(root);
+  root.updateMatrixWorld(true);
+  rigJaw(root);
   ready = true;
 });
+
+// ---- the jaw ------------------------------------------------------------------
+// Shots that set `open` swing the lower jaw down about the jaw joints so the
+// camera can see into the mouth. The mandible and lower teeth ride the full
+// angle; the floor of the mouth and the tongue follow part of the way, as they
+// do in life. The gum mesh covers both arches, so it is split along the bite.
+const JAW_PIVOT = new THREE.Vector3(0, 0.24, -0.30);   // between the condyles
+const JAW_MAX = 0.45;                                  // radians, about 26 degrees
+const rigs = [];
+function rig(share) {
+  const g = new THREE.Group(); g.position.copy(JAW_PIVOT); scene.add(g);
+  rigs.push({g, share}); return g;
+}
+const below = (x, y, z) => y < -0.14 - 0.16 * z;      // the bite line, front to back
+function splitGums(o) {
+  const src = o.geometry.index ? o.geometry.toNonIndexed() : o.geometry;
+  const p = src.attributes.position.array, v = new THREE.Vector3();
+  const parts = [[], []];
+  for (let i = 0; i < p.length; i += 9) {
+    let cy = 0, cz = 0;
+    for (let k = 0; k < 3; k++) { v.set(p[i + 3 * k], p[i + 3 * k + 1], p[i + 3 * k + 2]).applyMatrix4(o.matrixWorld); cy += v.y / 3; cz += v.z / 3; }
+    parts[below(0, cy, cz) ? 1 : 0].push(...p.slice(i, i + 9));
+  }
+  return parts.map((arr, k) => {
+    const g = new THREE.BufferGeometry(); g.setAttribute("position", new THREE.Float32BufferAttribute(arr, 3)); g.computeVertexNormals();
+    const m = new THREE.Mesh(g, o.material); m.name = o.name + (k ? "_lower" : "_upper");
+    m.position.copy(o.position); m.quaternion.copy(o.quaternion); m.scale.copy(o.scale);
+    o.parent.add(m); m.updateMatrixWorld(true); return m;
+  });
+}
+function rigJaw(root) {
+  const jaw = rig(1), floor = rig(0.75), tongue = rig(0.55);
+  const take = [];
+  root.traverse(o => { if (o.isMesh) take.push(o); });
+  for (const o of take) {
+    const n = o.name;
+    if (/Gingiva/.test(n)) {
+      const [up, lo] = splitGums(o);
+      groups.gums = groups.gums.filter(x => x !== o).concat([up, lo]);
+      o.parent.remove(o); jaw.attach(lo);
+    } else if (/Mandible|^Lower_/.test(n)) jaw.attach(o);
+    else if (/Mylohyoid|Geniohyoid|Sublingual/.test(n)) floor.attach(o);
+    else if (/Tongue/.test(n)) tongue.attach(o);
+  }
+}
+function openJaw(k) { for (const r of rigs) r.g.rotation.x = k * JAW_MAX * r.share; }
 
 // ---- timeline ---------------------------------------------------------------
 const ease = x => x <= 0 ? 0 : x >= 1 ? 1 : 1 - Math.pow(1 - x, 4);
@@ -195,7 +259,12 @@ const MOVE = 1.1;   // seconds to travel between shots
 // centre instead, offset by `aim` (positive moves the subject down the frame).
 function aimOf(sh) {
   if (!sh.aim || !sh.focus) return target.clone();
-  return centerOf(sh.focus).add(new THREE.Vector3(0, sh.aim, 0));
+  return anchorOf(sh).add(new THREE.Vector3(0, sh.aim, 0));
+}
+// Where the label points: the subject's centre, or a fixed spot for a subject
+// that is not drawn (the throat: the back of the open mouth).
+function anchorOf(sh) {
+  return sh.anchor ? new THREE.Vector3(...sh.anchor) : centerOf(sh.focus);
 }
 function camAt(sh, k) {
   const [a, b] = sh.cam; const kk = smooth(k);
@@ -221,6 +290,12 @@ window.render = (t) => {
     const k = ease(local / MOVE);
     pos = camAt(prev, 1).lerp(pos, k); aim = aimOf(prev).lerp(aim, k);
   }
+  let open = sh.open || 0;
+  if (prev && local < MOVE) open = lerp(prev.open || 0, open, ease(local / MOVE));
+  openJaw(open);
+  // the section snaps in while the camera is mid-move, where it reads as a cut
+  const cutOn = sh.section && !(prev && !prev.section && local < MOVE * 0.5) || (prev && prev.section && !sh.section && local < MOVE * 0.5);
+  SAG.constant = AO_SAG.constant = cutOn ? 0.002 : FAR;
   camera.position.copy(pos); camera.lookAt(aim);
 
   // materials: the subject turns teal, everything in `ghost` fades to glass
@@ -239,7 +314,7 @@ window.render = (t) => {
       o.material.emissive = TEAL.clone().multiplyScalar(0.18 * fk);
       // Must be a real boolean: three.js hides only objects whose visible is
       // exactly false, and on the first shot `prev` is undefined.
-      o.visible = !ON_DEMAND.has(g) || sh.focus === g || Boolean(prev && prev.focus === g && local < 0.6);
+      o.visible = !NEVER.has(g) && (!ON_DEMAND.has(g) || sh.focus === g || Boolean(prev && prev.focus === g && local < 0.6));
     }
     ghostMax = Math.max(ghostMax, gk);
   }
@@ -249,7 +324,7 @@ window.render = (t) => {
   // label, leader line and tap
   const lab = $("label"), show = sh.label && sh.focus;
   if (show) {
-    const p = centerOf(sh.focus).project(camera);
+    const p = anchorOf(sh).project(camera);
     const x = (p.x * .5 + .5) * W, y = (-p.y * .5 + .5) * H;
     const lx = x > W / 2 ? 90 : 600, ly = 330;
     $("lk").textContent = sh.label.k || ""; $("lt").textContent = sh.label.t || ""; $("ld").textContent = sh.label.d || "";

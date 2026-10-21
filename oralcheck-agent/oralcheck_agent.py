@@ -6,6 +6,7 @@ Use review_server.py to preview and approve posts.
 """
 
 import argparse
+import base64
 import atexit
 import hashlib
 import json
@@ -181,26 +182,9 @@ through specificity (a precise stat, a concrete action) rather than proclamation
 # training data. An "example" in a pillar brief is not a constraint, and
 # nothing here checked the output against a source of truth. This is that
 # check, made structural instead of hoped for.
-SEER_FACTS = (
-    "Authoritative oral cancer figures (NCI SEER, last verified 2026-08-30).\n"
-    "Use ONLY these numbers for survival, incidence, case counts and deaths.\n"
-    "Do not use any other percentage or count for these, from memory or\n"
-    "otherwise, even if it sounds familiar or you have seen it cited elsewhere.\n"
-    "If a post does not need one of these figures, do not include one:\n"
-    "- New US cases per year (2026 est.): 60,480\n"
-    "- US deaths per year (2026 est.): 13,150\n"
-    "- 5-year relative survival if found LOCALIZED: 88.7% (round to 89%)\n"
-    "- 5-year relative survival if REGIONAL spread: 69.7% (round to 70%)\n"
-    "- 5-year relative survival if DISTANT spread: 36.0% (round to 36%)\n"
-    "- Overall 5-year relative survival, all stages: 69.9% (round to 70%)\n"
-    "- Share of cases caught while still localized: 26%\n"
-    "- Median age at diagnosis: 65\n"
-    "- Male vs female incidence: about 2.6x higher in men\n"
-    "These are SEER *summary* stage (localized/regional/distant), not AJCC\n"
-    "Stage I-IV. Never call them \"Stage I\" or \"Stage IV\" survival. Say\n"
-    "\"caught early / while still localized\" and \"once it has spread\", or\n"
-    "name the summary stage directly.\n"
-)
+# Lives in topics.py so seo_pipeline.py can ground articles with it without
+# importing this module (CI installs only anthropic, httpx and dotenv there).
+SEER_FACTS = topics.SEER_FACTS
 
 SYSTEM_PROMPT = (
     "You are a content strategist for OralCheck (oralcheck.org), a free oral cancer risk screener.\n\n"
@@ -545,7 +529,8 @@ def _sanitize_carousel_slides(slides: list) -> list[dict]:
     return clean[:5]
 
 
-def build_deck_from_content(content: dict, photo_path: str | None) -> dict:
+def build_deck_from_content(content: dict, photo_path: str | None, plate: dict | None = None,
+                            source: str = "") -> dict:
     """Map generated carousel content + a fetched photo into a render_html deck spec.
 
     The cover is purely typographic. The photo appears as its own full-bleed slide
@@ -574,12 +559,18 @@ def build_deck_from_content(content: dict, photo_path: str | None) -> dict:
     if photo_path and not claimed:
         insert_at = 1 if len(slides) >= 2 else len(slides)
         slides.insert(insert_at, {"type": "photo", "photo": photo_path, "caption": photo_caption})
+    if plate:
+        # After the first content slide: slide 2 has to stand on its own (Instagram
+        # re-serves an unswiped carousel from slide 2), so it stays a statement.
+        slides.insert(1 if len(slides) >= 2 else len(slides), plate)
 
     return {
         "kicker": content.get("kicker", ""),
         "cover": {"hook": content.get("hook", "")},
         "slides": slides,
-        "cta": {},
+        "source": source,
+        "cta": {"headline": _strip_dashes(str(content.get("save_line", ""))).strip(),
+                "sub": _strip_dashes(str(content.get("send_line", ""))).strip()},
     }
 
 
@@ -650,11 +641,23 @@ def generate_content(brief: str, media_type: str) -> dict:
             "  search_query: required when image_source is \"photo\". A 3-6 word web photo query.\n"
             "    Leave an EMPTY STRING \"\" otherwise.\n"
             "  photo_caption: one line, 14 words max, paired with the image (only if not \"none\")\n"
-            "  slides: array of 3 to 4 typed content slides. Each object has a 'type' plus fields.\n"
+            "  slides: array of 4 to 5 typed content slides. Each object has a 'type' plus fields.\n"
             + SLIDE_SPEC +
-            "  caption: full Instagram caption ending with an oralcheck.org CTA\n"
+            "  save_line: the closing slide's headline, 8 words max, saying why this is worth saving\n"
+            "    for later and specific to this post (e.g. 'Save this for your next mirror check.',\n"
+            "    'Keep this list for your next dental visit.'). No exclamation marks.\n"
+            "  send_line: one line, 10 words max, naming who to send it to (e.g. 'Send it to\n"
+            "    someone who has not seen a dentist in years.'). No exclamation marks.\n"
+            "  caption: full Instagram caption ending with an oralcheck.org CTA, then one plain\n"
+            "    question that invites a comment (not 'thoughts?')\n"
             "  hashtags: exactly 5 lowercase tags\n\n"
             "Rules for the slides array:\n"
+            "  - The FIRST content slide (slide 2 of the deck) must make sense on its own:\n"
+            "    Instagram re-shows a carousel to people who did not swipe, starting at slide 2.\n"
+            "    Make it state the post's main fact plainly, not continue the cover's sentence.\n"
+            "  - A myth slide leads with the fact; the myth is shown once, smaller.\n"
+            "  - Numbers as natural frequencies where they exist ('about 1 in 4' beats '26%'),\n"
+            "    and every number gets one line on what it means for the reader.\n"
             "  - At least TWO slides must use a designed layout from the first group.\n"
             "    The four basic types are filler. A deck built only from them looks\n"
             "    like every other deck, which is the single most common failure here.\n"
@@ -2258,7 +2261,7 @@ def render_infographic_image(content: dict) -> str:
 # Carousel generation
 # ---------------------------------------------------------------------------
 
-def generate_carousel_slides(content: dict) -> list[str]:
+def generate_carousel_slides(content: dict, idea: dict | None = None) -> list[str]:
     """
     Build a designed carousel deck:
       Cover (hook over stock photo) -> typed content slides (stat/fact/list/quote)
@@ -2272,10 +2275,26 @@ def generate_carousel_slides(content: dict) -> list[str]:
     source = str(content.get("image_source", "")).strip().lower()
     if not source:
         source = "photo" if query and query.lower() not in ("none", "n/a", "no photo") else "none"
-    raw_path = None
+    raw_path, plate = None, None
     theme = _html_render.pick_theme() if _USE_HTML_RENDER else "dark"
+    topic = (idea or {}).get("topic")
+    content["footer"] = _footer(idea)
 
-    if source == "site":
+    if source != "site" and topic in topics.TOPICS:
+        # The topic decides the picture, not the model's search query: a 3D
+        # still of the place, the clinical photo of the sign, a stock photo that
+        # passed the vision check, or nothing (Ian's review, 2026-10-21).
+        visual = post_visual(idea, content)
+        if visual and visual["kind"] in ("3d", "sign"):
+            plate = {"type": "plate", "photo": visual["path"], "caption": visual["caption"],
+                     "credit": visual["credit"], "contain": visual["contain"]}
+            content["footer"] = _footer(idea, visual)
+        elif visual:
+            raw_path = visual["path"]
+            content["photo_credit"] = visual["photo_credit"]
+        else:
+            log.info("No picture for topic %s -> typographic carousel.", topic)
+    elif source == "site":
         shot = str(content.get("site_shot", "screener")).strip()
         log.info("Capturing site screenshot for carousel (%s)...", shot)
         raw_path = _html_render.site_screenshot(shot, theme)
@@ -2295,7 +2314,7 @@ def generate_carousel_slides(content: dict) -> list[str]:
         log.info("No image requested -> rendering pure typographic carousel.")
 
     if _USE_HTML_RENDER:
-        deck = build_deck_from_content(content, raw_path)
+        deck = build_deck_from_content(content, raw_path, plate=plate, source=topics.source_line(topic))
         log.info("Rendering carousel deck (%d slides + cover + CTA, %s theme)...",
                  len(deck["slides"]), theme)
         return _html_render.carousel_deck(deck, theme)
@@ -2497,6 +2516,11 @@ def save_to_queue(
     credit_line = _credit_line(photo_credit)
     if credit_line and credit_line not in caption:
         caption = f"{caption}\n\n{credit_line}" if caption else credit_line
+    # Picture credits and research sources ride at the end of the caption, and
+    # are kept separately so a rewrite (LinkedIn) can put them back unchanged.
+    footer = str(content.get("footer") or "").strip()
+    if footer and footer not in caption:
+        caption = f"{caption}\n\n{footer}" if caption else footer
 
     manifest = {
         "id": f"{timestamp}_{short_id}",
@@ -2506,6 +2530,7 @@ def save_to_queue(
         "hook": content.get("hook", ""),
         "caption": caption,
         "photo_credit": photo_credit,
+        "footer": footer,
         "hashtags": content.get("hashtags", []),
         "search_query": content.get("search_query", ""),
         "visual_prompt": content.get("visual_prompt", ""),
@@ -2524,6 +2549,99 @@ def save_to_queue(
 # ---------------------------------------------------------------------------
 # Pipeline
 # ---------------------------------------------------------------------------
+
+# ---------------------------------------------------------------------------
+# Post pictures and sources (2026-10-21, from Ian's review of the calendar)
+# ---------------------------------------------------------------------------
+
+_PLATE_NAMES = {"tongue": "The tongue", "floor": "Floor of the mouth", "gums": "The gums",
+                "throat": "Back of the mouth", "nodes": "Lymph nodes in the neck", "teeth": "Teeth and gums"}
+_SIGN_PLATES = {
+    "white_patch": ("Leukoplakia: a white patch that cannot be wiped away.",
+                    "Photo: public domain, via Wikimedia Commons"),
+    "mixed_patch": ("A mixed red and white patch (erythroleukoplakia).",
+                    "Photo: National Institutes of Health, public domain, via Wikimedia Commons"),
+}
+
+
+def _photo_shows(path: str, subject: str) -> bool:
+    """Ask the model whether a stock photo actually shows the post's subject.
+
+    Ian sent back every image whose photo was merely adjacent to the topic (a
+    woman touching her neck for HPV symptoms, teenagers for the vaccine), so a
+    photo now has to show the thing itself or it is not used. Fails closed: if
+    the check cannot run, the post goes out without a photo.
+    """
+    try:
+        from PIL import Image as _Im
+        with _Im.open(path) as im:
+            im = im.convert("RGB"); im.thumbnail((768, 768))
+            buf = BytesIO(); im.save(buf, "JPEG", quality=85)
+        data = base64.b64encode(buf.getvalue()).decode()
+        resp = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY).messages.create(
+            model=CONTENT_MODEL, max_tokens=5,
+            messages=[{"role": "user", "content": [
+                {"type": "image", "source": {"type": "base64", "media_type": "image/jpeg", "data": data}},
+                {"type": "text", "text": f"Does this photo plainly show {subject}, as its main subject? "
+                                         "Answer only yes or no."}]}])
+        answer = "".join(b.text for b in resp.content if getattr(b, "type", None) == "text").strip().lower()
+        return answer.startswith("yes")
+    except Exception as exc:  # noqa: BLE001
+        log.warning("Photo check failed (%s); not using the photo.", exc)
+        return False
+
+
+def post_visual(idea: dict | None, content: dict, media: str = "carousel") -> dict | None:
+    """The picture for an image post or carousel, per topics.VISUAL, or None.
+
+    Returns {path, kind, caption, credit, contain, photo_credit}.
+    """
+    topic = (idea or {}).get("topic")
+    kind, *arg = topics.visual_for(topic) if topic in topics.TOPICS else ("photo", None)
+    if kind == "3d":
+        focus = arg[0]
+        out = tempfile.NamedTemporaryFile(suffix="_still.jpg", delete=False).name
+        _register_tmp(out)
+        # An image post's picture band is 1080x820; a carousel slide's is taller.
+        box = (0, 280, 1080, 1100) if media == "image" else None
+        reel3d.still(focus, out, label={"k": "Where to look", "t": _PLATE_NAMES.get(focus, ""), "d": ""}, box=box)
+        return {"path": out, "kind": "3d", "caption": f"Where to look: {_PLATE_NAMES.get(focus, '').lower()}.",
+                "credit": reel3d.CREDIT, "contain": False, "photo_credit": None}
+    if kind == "sign":
+        path = _sign_photo(arg[0])
+        if path:
+            cap, credit = _SIGN_PLATES[arg[0]]
+            return {"path": path, "kind": "sign", "caption": cap, "credit": credit, "contain": True,
+                    "photo_credit": None}
+        return None
+    if kind == "photo":
+        subject = arg[0] or str(content.get("search_query") or "").strip()
+        query = str(content.get("search_query") or "").strip() or subject
+        if not query or query.lower() in ("none", "n/a", "no photo"):
+            return None
+        for _ in range(3):
+            try:
+                path, credit = fetch_stock_photo(query)
+            except Exception as exc:  # noqa: BLE001
+                log.warning("Photo fetch failed (%s).", exc)
+                return None
+            if _photo_shows(path, subject):
+                return {"path": path, "kind": "photo", "caption": "", "credit": _credit_line(credit),
+                        "contain": False, "photo_credit": credit}
+            log.info("Stock photo rejected: it does not show %s.", subject)
+    return None
+
+
+def _footer(idea: dict | None, visual: dict | None = None) -> str:
+    """Credit for a 3D still or clinical photo, then the topic's sources."""
+    parts = []
+    if visual and visual["kind"] in ("3d", "sign"):
+        parts.append(visual["credit"])
+    sources = topics.caption_sources((idea or {}).get("topic"))
+    if sources:
+        parts.append(sources)
+    return "\n\n".join(parts)
+
 
 def _ask_engine(prompt: str) -> str:
     """One model call for the v2 engine, with the brand system prompt."""
@@ -2573,8 +2691,15 @@ def _run_reel3d(brief: str, pillar: str | None, idea: dict | None) -> dict:
     music = _generate_music_bed(36, spec["hook"])
     if music is None and REEL_MUSIC.exists():
         music = _loop_music_seamless(str(REEL_MUSIC), 38)
-    reel3d.build({"shots": spec["shots"]}, out, tts=_fal_tts, music=music)
+    home = next((f for f in topics.foci_for(idea.get("topic")) if f != "overview"), None)
+    source = topics.source_line(idea.get("topic"))
+    reel3d.build({"shots": spec["shots"], "home": home, "source": source}, out, tts=_fal_tts, music=music)
+    spec["footer"] = _footer(idea)
     manifest = save_to_queue(spec, "reel", pillar, [out])
+    # Keep the shot list beside the video, so a review note like "it said lips
+    # and lit up the teeth" can be checked against what was actually planned.
+    manifest["shots"] = reel3d.validate({"shots": spec["shots"], "home": home})["shots"]
+    (QUEUE_DIR / manifest["id"] / "manifest.json").write_text(json.dumps(manifest, indent=2))
     log.info("Queued 3D reel: %s", manifest["id"])
     return manifest
 
@@ -2624,15 +2749,20 @@ def run_pipeline(
         reel_path = render_manim_reel(content)
         file_paths = [reel_path]
     elif media_type == "carousel":
-        file_paths = generate_carousel_slides(content)
+        file_paths = generate_carousel_slides(content, idea)
     elif media_type == "image":
-        log.info("Fetching stock photo (query: %s)...", content["search_query"])
-        raw_path, credit = fetch_stock_photo(content["search_query"])
-        content["photo_credit"] = credit
-        if _USE_HTML_RENDER:
-            composited = _html_render.image_overlay(raw_path, content["hook"])
+        visual = post_visual(idea, content, media="image")
+        source = topics.source_line((idea or {}).get("topic"))
+        if visual:
+            log.info("Image picture: %s", visual["kind"])
+            content["photo_credit"] = visual["photo_credit"]
+            composited = _html_render.plate_image(
+                visual["path"], content["hook"], source=source, contain=visual["contain"],
+                credit="" if visual["kind"] == "photo" else visual["credit"].split(",")[0])
         else:
-            composited = add_text_overlay(raw_path, content["hook"])
+            log.info("Image picture: none (type-only card)")
+            composited = _html_render.card_image(content["hook"], source=source)
+        content["footer"] = _footer(idea, visual)
         file_paths = [composited]
     else:  # reel
         log.info("Fetching stock video (query: %s)...", content["search_query"])

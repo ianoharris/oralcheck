@@ -490,7 +490,8 @@ def plan_slots(ledger: dict, media_list: list[str], *, seed: int | None = None,
                     continue
                 need = shapes[shape]["needs"]
                 pool = [k for k, t in TOPICS.items()
-                        if k not in used_topics and (need is None or need in t["tags"])]
+                        if k not in used_topics and (need is None or need in t["tags"])
+                        and not (media == "reel" and TOPIC_FOCI.get(k) == [])]
                 if not pool:
                     continue
                 topic = min(pool, key=lambda k: (topic_seen.get(k, 0.0), rng.random()))
@@ -543,7 +544,7 @@ def slot_brief(n: int, slot: dict) -> str:
 TOPIC_FOCI: dict[str, list[str]] = {
     "tongue_sides": ["tongue", "floor"],
     "floor_of_mouth": ["floor", "tongue"],
-    "lower_lip_sun": ["lips"],
+    "lower_lip_sun": [],   # the 3D atlas has no lips, so no 3D reel
     "gums_mimic": ["gums", "teeth"],
     "throat_hpv_site": ["throat", "nodes"],
     "neck_lump": ["nodes", "glands"],
@@ -553,15 +554,140 @@ TOPIC_FOCI: dict[str, list[str]] = {
     "hpv_is_common": ["throat"],
     "hpv_vaccine": ["throat"],
     "dentist_screening": ["teeth", "gums", "tongue", "floor"],
-    "monthly_self_exam": ["lips", "gums", "tongue", "floor", "throat", "nodes"],
+    "monthly_self_exam": ["gums", "tongue", "floor", "throat", "nodes"],
     "biopsy": ["tongue", "gums"],
     "low_cost_care": ["teeth", "gums"],
 }
-_SIGN_SITES = ["tongue", "floor", "gums", "lips"]
+_SIGN_SITES = ["tongue", "floor", "gums"]
 for _k in ("red_patch", "white_patch", "speckled_patch", "wipe_test", "lookalikes", "canker_vs_cancer",
            "edges_and_bleeding", "painless", "two_week_rule", "tobacco_all_forms", "quitting", "alcohol",
            "tobacco_plus_alcohol", "betel_quid"):
     TOPIC_FOCI.setdefault(_k, _SIGN_SITES)
+
+
+# The site's epidemiology figures, mirrored by hand from src/lib/seerStats.ts.
+# test_render.py checks them against that file on every run.
+SEER_FACTS = (
+    "Authoritative oral cancer figures (NCI SEER, last verified 2026-08-30).\n"
+    "Use ONLY these numbers for survival, incidence, case counts and deaths.\n"
+    "Do not use any other percentage or count for these, from memory or\n"
+    "otherwise, even if it sounds familiar or you have seen it cited elsewhere.\n"
+    "If a post does not need one of these figures, do not include one:\n"
+    "- New US cases per year (2026 est.): 60,480\n"
+    "- US deaths per year (2026 est.): 13,150\n"
+    "- 5-year relative survival if found LOCALIZED: 88.7% (round to 89%)\n"
+    "- 5-year relative survival if REGIONAL spread: 69.7% (round to 70%)\n"
+    "- 5-year relative survival if DISTANT spread: 36.0% (round to 36%)\n"
+    "- Overall 5-year relative survival, all stages: 69.9% (round to 70%)\n"
+    "- Share of cases caught while still localized: 26%\n"
+    "- Median age at diagnosis: 65\n"
+    "- Male vs female incidence: about 2.6x higher in men\n"
+    "These are SEER *summary* stage (localized/regional/distant), not AJCC\n"
+    "Stage I-IV. Never call them \"Stage I\" or \"Stage IV\" survival. Say\n"
+    "\"caught early / while still localized\" and \"once it has spread\", or\n"
+    "name the summary stage directly.\n"
+)
+
+
+# ---------------------------------------------------------------------------
+# Sources and pictures
+# ---------------------------------------------------------------------------
+
+# Research a post may cite. Every entry is already cited on the site (the
+# /methods reference list, the learn pages' source boxes, seerStats.ts) and each
+# PubMed id was checked against PubMed on 2026-10-21. Do not add one that has
+# not been checked against its source.
+CITES = {
+    "seer":      ("NCI SEER Cancer Stat Facts: Oral Cavity and Pharynx Cancer", "https://seer.cancer.gov/statfacts/html/oralcav.html"),
+    "hashibe":   ("Hashibe et al., Cancer Epidemiol Biomarkers Prev 2009", "https://pubmed.ncbi.nlm.nih.gov/19190158/"),
+    "gandini":   ("Gandini et al., Int J Cancer 2008", "https://pubmed.ncbi.nlm.nih.gov/17893872/"),
+    "bagnardi":  ("Bagnardi et al., Br J Cancer 2015", "https://pubmed.ncbi.nlm.nih.gov/25422909/"),
+    "iarc85":    ("IARC Monograph 85: Betel-quid and Areca-nut Chewing, 2004", "https://publications.iarc.fr/Book-And-Report-Series/Iarc-Monographs-On-The-Identification-Of-Carcinogenic-Hazards-To-Humans/Betel-Quid-And-Areca-Nut-Chewing-And-Some-Areca-Nut-Derived-Nitrosamines-2004"),
+    "napier":    ("Napier and Speight, J Oral Pathol Med 2008", "https://pubmed.ncbi.nlm.nih.gov/18154571/"),
+    "chaturvedi": ("Chaturvedi et al., J Clin Oncol 2011", "https://pubmed.ncbi.nlm.nih.gov/21969503/"),
+    "gillison":  ("Gillison et al., J Natl Cancer Inst 2008", "https://pubmed.ncbi.nlm.nih.gov/18334711/"),
+    "dsouza":    ("D'Souza et al., N Engl J Med 2007", "https://pubmed.ncbi.nlm.nih.gov/17494927/"),
+    "perea":     ("Perea-Milla Lopez et al., Br J Cancer 2003", "https://pubmed.ncbi.nlm.nih.gov/12771984/"),
+    "negri":     ("Negri et al., Int J Cancer 2009", "https://pubmed.ncbi.nlm.nih.gov/18814262/"),
+    "engels":    ("Engels et al., JAMA 2011", "https://pubmed.ncbi.nlm.nih.gov/22045767/"),
+    "nhs_ulcer": ("NHS: Mouth ulcers", "https://www.nhs.uk/conditions/mouth-ulcers/"),
+}
+# Which sources back which topic's facts. A topic with none here makes no
+# research claim (where to look, how to check) and its posts carry no source line.
+TOPIC_CITES = {
+    "men_vs_women": ["seer"], "median_age": ["seer"], "survival_by_stage": ["seer"],
+    "found_late": ["seer"], "yearly_numbers": ["seer"],
+    "tobacco_plus_alcohol": ["hashibe"], "tobacco_all_forms": ["gandini"], "quitting": ["gandini"],
+    "alcohol": ["bagnardi"], "betel_quid": ["iarc85"],
+    "red_patch": ["napier"], "white_patch": ["napier"], "speckled_patch": ["napier"],
+    "hpv_overtook_tobacco": ["chaturvedi"], "hpv_who": ["gillison"], "throat_hpv_site": ["dsouza"],
+    "lower_lip_sun": ["perea"], "cant_control": ["negri", "engels"], "canker_vs_cancer": ["nhs_ulcer"],
+}
+
+
+def citations_for(topic: str | None) -> list[tuple[str, str]]:
+    return [CITES[k] for k in TOPIC_CITES.get(topic or "", [])]
+
+
+def source_line(topic: str | None) -> str:
+    """Short on-slide credit, e.g. 'Source: Hashibe et al., 2009'."""
+    cites = citations_for(topic)
+    if not cites:
+        return ""
+    short = []
+    for name, _ in cites:
+        if name.startswith("NCI SEER"):
+            short.append("NCI SEER")
+        elif name.startswith("IARC"):
+            short.append("IARC Monograph 85")
+        elif name.startswith("NHS"):
+            short.append("NHS")
+        else:
+            author, _, rest = name.partition(", ")
+            short.append(f"{author}, {rest.split()[-1]}")
+    return ("Sources: " if len(short) > 1 else "Source: ") + "; ".join(short)
+
+
+def caption_sources(topic: str | None) -> str:
+    """The caption's reference block: full name and link for each source."""
+    cites = citations_for(topic)
+    if not cites:
+        return ""
+    return "Sources:\n" + "\n".join(f"{name}. {url}" for name, url in cites)
+
+
+# What picture a post about each topic carries. Ian's review of the autumn
+# calendar sent back every single image whose stock photo was generic (a woman
+# touching her neck for HPV symptoms, two teenagers for the vaccine, a couple
+# outdoors for HPV and tobacco) and approved the two that showed the thing
+# itself (a checkup for "men are diagnosed 2.6 times as often", a betel stall
+# for betel quid). So a post shows the place in the mouth (a still from the 3D
+# model the reels use), the sign itself (the two clinical photos with
+# attribution on file), a photo of a literal subject that a vision check must
+# confirm, or no picture at all.
+#   ("3d", focus) | ("sign", "white_patch" | "mixed_patch") | ("photo", subject) | ("type",)
+VISUAL = {
+    "tongue_sides": ("3d", "tongue"), "floor_of_mouth": ("3d", "floor"), "gums_mimic": ("3d", "gums"),
+    "throat_hpv_site": ("3d", "throat"), "neck_lump": ("3d", "nodes"), "hpv_throat_symptoms": ("3d", "throat"),
+    "hpv_overtook_tobacco": ("3d", "throat"), "hpv_who": ("3d", "throat"), "monthly_self_exam": ("3d", "tongue"),
+    "red_patch": ("3d", "tongue"), "edges_and_bleeding": ("3d", "tongue"), "painless": ("3d", "tongue"),
+    "two_week_rule": ("3d", "tongue"),
+    "white_patch": ("sign", "white_patch"), "speckled_patch": ("sign", "mixed_patch"),
+    "biopsy": ("sign", "white_patch"),
+    "betel_quid": ("photo", "betel leaves or areca nuts"),
+    "tobacco_all_forms": ("photo", "cigarettes, cigars or chewing tobacco"),
+    "quitting": ("photo", "a broken or stubbed-out cigarette"),
+    "alcohol": ("photo", "alcoholic drinks"),
+    "tobacco_plus_alcohol": ("photo", "a cigarette beside an alcoholic drink"),
+    "dentist_screening": ("photo", "a dentist examining a patient's mouth"),
+    "low_cost_care": ("photo", "a dental clinic or dental chair"),
+    "hpv_vaccine": ("photo", "a vaccine vial or syringe"),
+    "lower_lip_sun": ("photo", "strong sun outdoors or a lip balm with SPF"),
+}
+
+
+def visual_for(topic: str | None) -> tuple:
+    return VISUAL.get(topic or "", ("type",))
 
 
 def foci_for(topic: str | None) -> list[str]:
