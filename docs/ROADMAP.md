@@ -54,23 +54,22 @@ Update both together. See `AGENTS.md`.
       **Blocked on Ian:** whether to remove all of it, or keep "predental
       student" without naming the school. Relevant to the open question with
       his academic advisor.
-- [ ] **Two branches waiting for Ian's go (21 Oct).** The journal-style article
-      page (`worktree-agent-a16b9234ccd3a0dda`: label, standfirst, ~70
-      character measure, contents rail, numbered sources when an article links
-      out, Spanish articles canonical to themselves, previews using the
-      article's own title) and the article figure fixes
-      (`claude/article-house-rules-audit`: summary-stage wording, 60,480,
-      2.6 times, llms.txt). The live articles still carry the old figures until
-      the second one merges.
-- [ ] **Internal links inside the articles all go to the home page, and
-      published articles are missing from the sitemap** (found by the article
-      layout agent, 21 Oct). Not blocked.
-
 - [ ] **Link the sources articles attribute claims to (found 2026-10-21).**
       Several published articles credit the ADA, USPSTF, Journal of Clinical
       Oncology and CDC without a link. The claims look accurate and none is a
       quote or endorsement, but the house rule is to cite a real source with a
       link. The stale-figure half of this item shipped the same day, see Shipped.
+
+- [ ] **Article internal links all go to the home page (found 2026-10-21).**
+      Links like "oral cancer screening: what to expect" inside the SEO
+      articles point at `https://oralcheck.org` instead of
+      `/learn/oral-cancer-screening-what-to-expect`. Fix in the markdown (and
+      in the generator so new articles get it right). Not blocked; left alone
+      during the redesign because another session was editing the article text.
+- [ ] **Published articles are missing from the sitemap (found 2026-10-21).**
+      `src/app/sitemap.ts` lists only the hand-written pages, so the 11 SEO
+      articles rely on Google finding them through /learn. Add them from
+      `getAllPublishedArticles()`. Not blocked.
 - [ ] **Posting calendar: 30 posts, 27 Oct 2026 to 1 Jan 2027 (started
       2026-10-20).** Ian asked to stop the weekly back and forth and plan the
       whole autumn at once: 3 a week for 10 weeks, 10 reels (3D), 10 carousels
@@ -542,6 +541,23 @@ Newest first.
   `results_primary_cta` no longer fires on elevated or high, because that
   button is no longer shown there. Files: `src/app/[locale]/results/page.tsx`,
   `src/components/RiskGauge.tsx`.
+
+- **Article pages redesigned in a clinical journal style (not yet pushed;
+  committed on branch `worktree-agent-a16b9234ccd3a0dda`).** Ian called the
+  SEO article layout sloppy. Now: a "Patient guide" label, title, standfirst
+  and one date and reading-time line; body at about 70 characters a line with
+  hairline section breaks; a contents list (sticky on desktop, fold-out on a
+  phone); numbered Sources when an article links out; the article's own
+  disclaimer; a screener box and three related guides. No markdown in
+  `content/` was touched. Also fixed on the way: shared articles now preview
+  with their own title and the Learn image instead of the home page's;
+  Spanish articles now name themselves as canonical instead of the English
+  page; the byline "Written by Ian Harris, predental student at the
+  University of Wisconsin-Madison" is replaced by "Published by OralCheck",
+  since the articles name no author and UW is not to appear on the site.
+  Found and not fixed: every internal link inside the articles points at the
+  home page rather than the article it names, and published articles are not
+  in the sitemap.
 - **3D reels, original-look posts, and the posting calendar are live on
   master** (commit 4bba2c7). Reels render as narrated 3D scenes with the
   classic reel as fallback; posts use the original layouts; the Monday run is

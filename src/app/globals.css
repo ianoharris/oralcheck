@@ -112,18 +112,186 @@ h3 {
   letter-spacing: -0.01em;
 }
 
-/* ── Auto-generated article prose ───────────────────────────────────────── */
-.prose-article { color: var(--color-ink-soft); line-height: 1.75; font-size: 1rem; }
-.prose-article h1 { font-family: var(--font-serif); font-size: 2rem; color: var(--color-ink); margin: 2rem 0 0.75rem; }
-.prose-article h2 { font-family: var(--font-serif); font-size: 1.5rem; color: var(--color-ink); margin: 2.5rem 0 0.75rem; }
-.prose-article h3 { font-family: var(--font-serif); font-size: 1.15rem; color: var(--color-ink); margin: 1.75rem 0 0.5rem; }
-.prose-article p  { margin: 0 0 1.25rem; }
-.prose-article ul, .prose-article ol { padding-left: 1.5rem; margin: 0 0 1.25rem; }
+/* ── Article pages (content/published, rendered by learn/[slug]) ──────────
+   Set like a clinical journal's patient page: near-black body text at a
+   65 to 72 character measure, serif headings, hairline rules in place of
+   boxes, numbered sources. The brand teal is too dark to read as link text
+   on the dark background (3.3:1), so dark mode gets a lighter tint (7.6:1).
+   ──────────────────────────────────────────────────────────────────────── */
+:root {
+  --article-rule: color-mix(in srgb, var(--color-ink) 14%, transparent);
+  --article-link: var(--color-brand);
+  --article-link-hover: var(--color-brand-dark);
+}
+html[data-theme="dark"] {
+  --article-link: #4fb3b6;
+  --article-link-hover: #7fcbcd;
+}
+
+.prose-article {
+  color: var(--color-ink);
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  max-width: 35rem;
+  overflow-wrap: break-word;
+}
+@media (min-width: 640px) {
+  .prose-article { font-size: 1.125rem; line-height: 1.72; }
+}
+.prose-article > :first-child { margin-top: 0; }
+.prose-article h1,
+.prose-article h2,
+.prose-article h3 { font-family: var(--font-serif); color: var(--color-ink); text-wrap: balance; }
+.prose-article h1 { font-size: 1.75rem; line-height: 1.2; margin: 3rem 0 1rem; }
+.prose-article h2 { font-size: 1.5rem; line-height: 1.22; margin: 3rem 0 0.875rem; }
+.prose-article h3 { font-size: 1.1875rem; line-height: 1.3; margin: 2rem 0 0.5rem; }
+@media (min-width: 640px) {
+  .prose-article h2 { font-size: 1.75rem; }
+}
+.prose-article p { margin: 0 0 1.25rem; text-wrap: pretty; }
+/* Run-in heads ("**Tongue.** Stick your tongue out...") read as journal
+   paragraph heads: same size, ink, a touch heavier. */
+.prose-article p > strong:first-child { font-weight: 700; }
+.prose-article strong { color: var(--color-ink); font-weight: 600; }
+.prose-article ul,
+.prose-article ol { padding-left: 1.375rem; margin: 0 0 1.5rem; }
 .prose-article ul { list-style: disc; }
 .prose-article ol { list-style: decimal; }
-.prose-article li { margin-bottom: 0.4rem; }
-.prose-article strong { color: var(--color-ink); font-weight: 600; }
-.prose-article a  { color: var(--color-brand); text-decoration: underline; text-underline-offset: 2px; }
-.prose-article a:hover { color: var(--color-brand-dark); }
-.prose-article hr { border: none; border-top: 1px solid var(--color-warm-dim); margin: 2rem 0; }
-.prose-article blockquote { border-left: 3px solid var(--color-brand); padding-left: 1rem; margin: 1.5rem 0; color: var(--color-ink-soft); font-style: italic; }
+.prose-article li { margin-bottom: 0.5rem; padding-left: 0.25rem; }
+.prose-article li::marker { color: var(--article-link); }
+.prose-article ol > li::marker { font-weight: 600; font-variant-numeric: tabular-nums; }
+.prose-article a {
+  color: var(--article-link);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+.prose-article a:hover { color: var(--article-link-hover); text-decoration-thickness: 2px; }
+/* The articles separate sections with "---". A hairline then the heading,
+   the way NEJM and BMJ divide sections, with no extra gap between them. */
+.prose-article hr { border: none; border-top: 1px solid var(--article-rule); margin: 2.75rem 0 2.25rem; }
+.prose-article hr + h2,
+.prose-article hr + h3 { margin-top: 0; }
+.prose-article blockquote {
+  border-left: 2px solid var(--article-link);
+  padding: 0.125rem 0 0.125rem 1.25rem;
+  margin: 1.75rem 0;
+  color: var(--color-ink-soft);
+}
+.prose-article blockquote p:last-child { margin-bottom: 0; }
+.prose-article img { max-width: 100%; height: auto; border-radius: 0.5rem; margin: 1.5rem 0 0.5rem; }
+.prose-article .table-wrap {
+  overflow-x: auto;
+  margin: 1.75rem 0;
+  border-top: 2px solid var(--color-ink);
+  border-bottom: 1px solid var(--article-rule);
+}
+.prose-article table { width: 100%; border-collapse: collapse; font-size: 0.9375rem; line-height: 1.5; font-variant-numeric: tabular-nums; }
+.prose-article th { text-align: left; font-weight: 600; padding: 0.625rem 0.75rem 0.625rem 0; border-bottom: 1px solid var(--color-ink); }
+.prose-article td { padding: 0.625rem 0.75rem 0.625rem 0; border-bottom: 1px solid var(--article-rule); vertical-align: top; }
+.prose-article tr:last-child td { border-bottom: none; }
+.prose-article code { font-family: var(--font-mono); font-size: 0.875em; }
+.prose-article sup.cite { font-size: 0.7em; line-height: 0; margin-left: 0.1em; }
+.prose-article sup.cite a { text-decoration: none; font-weight: 600; padding: 0 0.1em; scroll-margin-top: 6rem; }
+
+/* Header meta line: hairline above, items separated by a middle dot. */
+.article-meta { border-top: 1px solid var(--article-rule); display: flex; flex-wrap: wrap; row-gap: 0.25rem; }
+.article-meta > span + span::before { content: "\00B7"; margin: 0 0.6em; }
+.article-type { color: var(--article-link); }
+
+/* Section labels for the page furniture (key points, contents, sources,
+   related): small caps in the sans, so they never compete with the H2s. */
+.article-keypoints h2,
+.article-sources h2,
+.article-related h2,
+.article-rail h2 {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-ink-soft);
+  margin-bottom: 0.75rem;
+}
+
+/* Key points (front matter only): BDJ-style, a rule above and a short list. */
+.article-keypoints { border-top: 2px solid var(--article-link); border-bottom: 1px solid var(--article-rule); padding: 1rem 0 1.25rem; max-width: 35rem; }
+.article-keypoints ul { list-style: disc; padding-left: 1.25rem; color: var(--color-ink); line-height: 1.6; }
+.article-keypoints li + li { margin-top: 0.4rem; }
+.article-keypoints li::marker { color: var(--article-link); }
+
+/* On-page contents, numbered like a journal outline. */
+.article-contents { list-style: none; margin: 0; padding: 0; }
+.article-contents a {
+  display: flex;
+  gap: 0.75rem;
+  padding: 0.5rem 0;
+  font-size: 0.9375rem;
+  line-height: 1.4;
+  color: var(--color-ink-soft);
+  text-decoration: none;
+}
+.article-contents a:hover { color: var(--color-ink); }
+.article-contents-n {
+  flex: none;
+  min-width: 1.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: 1.3rem;
+  color: var(--article-link);
+}
+
+.article-contents-mobile { border-top: 1px solid var(--article-rule); border-bottom: 1px solid var(--article-rule); }
+.article-contents-mobile summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 3rem;
+  cursor: pointer;
+  list-style: none;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-ink-soft);
+}
+.article-contents-mobile summary::-webkit-details-marker { display: none; }
+.article-contents-mobile summary::after {
+  content: "";
+  width: 0.5rem;
+  height: 0.5rem;
+  margin-right: 0.375rem;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: translateY(-2px) rotate(45deg);
+  transition: transform 150ms;
+}
+.article-contents-mobile[open] summary::after { transform: translateY(2px) rotate(-135deg); }
+.article-contents-mobile .article-contents { padding-bottom: 0.75rem; }
+
+.article-rail { padding-top: 0.875rem; border-top: 2px solid var(--color-ink); }
+.article-rail .article-contents li + li { border-top: 1px solid var(--article-rule); }
+.article-rail-cta {
+  display: inline-block;
+  margin-top: 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--article-link);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+.article-rail-cta:hover { color: var(--article-link-hover); }
+
+/* Sources: numbered, each with a link back to where it is cited. */
+.article-sources { border-top: 1px solid var(--article-rule); padding-top: 1.25rem; max-width: 35rem; }
+.article-sources ol { list-style: decimal; padding-left: 1.5rem; font-size: 0.9375rem; line-height: 1.55; color: var(--color-ink); }
+.article-sources li { padding-left: 0.25rem; margin-bottom: 0.625rem; scroll-margin-top: 6rem; }
+.article-sources li::marker { color: var(--color-ink-soft); font-variant-numeric: tabular-nums; }
+.article-sources a { color: var(--article-link); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; overflow-wrap: anywhere; }
+.article-sources .article-backref { text-decoration: none; }
+
+.article-note { border-top: 1px solid var(--article-rule); max-width: 35rem; }
+
+.article-related ul { border-top: 1px solid var(--article-rule); }
+.article-related li { border-bottom: 1px solid var(--article-rule); }

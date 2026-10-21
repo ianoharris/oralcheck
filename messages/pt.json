@@ -1124,12 +1124,25 @@
   },
   "ArticlePage": {
     "backToLearn": "← Voltar para Saiba Mais",
-    "defaultTag": "Saúde Bucal",
+    "typeLabel": "Guia para pacientes",
+    "published": "Publicado em {date}",
+    "updated": "Atualizado em {date}",
+    "readingTime": "Leitura de {minutes} min",
+    "byAuthor": "Por {author}",
+    "contents": "Neste artigo",
+    "keyPoints": "Pontos-chave",
+    "sources": "Fontes",
+    "backToText": "Voltar ao texto",
+    "ctaEyebrow": "Gratuito e privado",
+    "ctaHeading": "Verifique seus próprios fatores de risco",
+    "ctaBody": "O rastreamento do OralCheck pergunta sobre os fatores de risco abordados em guias como este. Leva cerca de dois minutos, não exige conta e não armazena suas respostas.",
     "takeScreener": "Faça o rastreamento gratuito →",
-    "byline": "Escrito por Ian Harris, estudante de pré-odontologia na Universidade de Wisconsin-Madison.",
+    "relatedHeading": "Mais guias para pacientes",
+    "publishedBy": "Publicado pelo OralCheck.",
     "aboutLink": "Sobre o OralCheck",
     "disclaimerLabel": "Aviso médico:",
-    "disclaimerBody": "Este artigo tem finalidade exclusivamente informativa e não substitui aconselhamento, diagnóstico ou tratamento médico. Consulte sempre um profissional de saúde qualificado em caso de sintomas ou dúvidas sobre sua saúde."
+    "disclaimerBody": "Este artigo tem finalidade exclusivamente informativa e não substitui aconselhamento, diagnóstico ou tratamento médico. Consulte sempre um profissional de saúde qualificado em caso de sintomas ou dúvidas sobre sua saúde.",
+    "onlyInEnglish": "Este guia está disponível apenas em inglês."
   },
   "ForCliniciansMeta": {
     "title": "Para Profissionais de Odontologia",
