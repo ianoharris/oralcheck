@@ -417,6 +417,23 @@ Update both together. See `AGENTS.md`.
 
 Newest first.
 
+### 2026-10-21 (evening, later): live reach stat, early reel, Halloween post
+- **Home page: "2 min" became a live "people reached since launch" stat**,
+  read from GA's total users on the server and cached for an hour, shown as
+  "847+" with a "Live, updated hourly" label. Ian added the two Vercel values;
+  verified on oralcheck.org after the deploy.
+- **The 27 Oct reel was posted early, on 21 Oct, at Ian's request**, after a
+  3D rebuild with his note applied (gums, sides of the tongue, floor of the
+  mouth, each lit as named). Its first rebuild had timed out while the site
+  build was using the CPU and silently fell back to the classic reel Ian rated
+  "meh"; calendar builds now retry a failed 3D render instead, and frames get a
+  5-minute timeout. Known weakness left in: the hook says "six things" and the
+  model can show three (the caption lists all six).
+- **Halloween carousel added for Sat 31 Oct, 5pm CT** ("Some things in your
+  mouth look frightening. The one that matters looks like nothing."), built
+  from the look-alikes and painless-signs facts, Halloween as framing only.
+  Waiting on Ian's approval on the review page.
+
 ### 2026-10-21 (late night): analytics unblocked; article pages and fixes live
 - **Google Analytics was being blocked by the site's own security policy.**
   GA4 sends page views to `analytics.google.com` and `www.google.com`;

@@ -470,6 +470,16 @@ either baked in at build time or computed in the visitor's browser.
 `/methods` is the most important page on the site. It's what a sceptical
 clinician reads before deciding whether to take you seriously.
 
+**The home page's third number is live.** Under the hero, the three figures
+are new US cases a year, survival when caught early, and **people reached since
+launch**, which the site reads from Google Analytics every hour
+(`src/lib/reach.ts`, using the `GA_PROPERTY_ID` and `GA_SERVICE_ACCOUNT_KEY`
+values stored on Vercel). It always shows a "+", because GA is a floor: it
+misses anyone with an ad blocker, and it missed most visits from 22 September
+to 21 October 2026. If the GA read ever fails, the page quietly shows the last
+total read by hand (847, on 21 October 2026) and drops the "Live" label. It
+replaced "2 min, is all a dental screening takes" on 21 October 2026.
+
 The `/learn` index page shows six of the nine guides as cards, two rows of
 three. Facts & Stats, HPV, and Prevention are left off the grid because the
 Overview and Risk Factors cards already cover most of what they say. Those
