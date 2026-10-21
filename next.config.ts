@@ -24,7 +24,12 @@ const CSP = [
   // Map tiles, Instagram thumbnails and article imagery come from a long tail
   // of hosts; images are a low-risk sink, so this stays broad on purpose.
   "img-src 'self' data: blob: https:",
-  "connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://*.behold.so https://*.tile.openstreetmap.org https://va.vercel-scripts.com https://vitals.vercel-insights.com",
+  // GA4 sends page views to analytics.google.com and www.google.com, which
+  // "*.analytics.google.com" never matched (a wildcard does not cover the bare
+  // host), so every hit from 18 Aug to 21 Oct 2026 was blocked in browsers that
+  // used those endpoints. "*.google.com" is what Google's CSP guide lists for
+  // Analytics without ad features: developers.google.com/tag-platform/security/guides/csp
+  "connect-src 'self' https://*.google-analytics.com https://*.google.com https://www.googletagmanager.com https://*.behold.so https://*.tile.openstreetmap.org https://va.vercel-scripts.com https://vitals.vercel-insights.com",
   "frame-src 'self' https://www.instagram.com",
   "worker-src 'self' blob:",
   "object-src 'none'",
