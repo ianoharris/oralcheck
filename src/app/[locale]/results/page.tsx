@@ -271,13 +271,46 @@ export default function ResultsPage() {
   );
 
   // ── Main render ───────────────────────────────────────────────────────────
+  //
+  // Reading order, top to bottom: the result and what it means, what to do
+  // next, why (the factors and which disease they point at), further reading,
+  // keeping a copy, then the disclaimer.
+  //
+  // Cleaned up 2026-10-21. Before that the page stacked about a dozen
+  // identical grey cards whose borders were the same colour as their fill, put
+  // four long factor write-ups between the result and the next steps (the steps
+  // started 2,400px down on a phone), and ended in a pile of four differently
+  // styled actions. Factors and steps are now one panel each with rows, and
+  // the find-care button appears once per tier rather than three times.
+
+  // Where going to get looked at is the actual recommendation, the find-care
+  // button lives in the result card (see below). On the reassuring tiers it
+  // follows the next steps instead, so there is exactly one big button either
+  // way.
+  const showHeroCTA =
+    result.tier === "elevated" || result.tier === "high" || result.hasUrgentSymptom;
+
+  const renderFactor = (f: (typeof result.factors)[number]) => (
+    <li key={f.questionId} className="flex items-start gap-4 p-5 sm:px-6">
+      <div className="text-brand shrink-0 mt-0.5" aria-hidden>
+        <Icon name={f.icon} size={24} />
+      </div>
+      <div className="flex-1 min-w-0">
+        <div className="font-semibold text-ink leading-snug">{f.label}</div>
+        <div className="text-sm text-ink-soft">{f.answerLabel}</div>
+        <p className="text-sm text-ink-soft mt-2 leading-relaxed max-w-prose">
+          {f.guidance}
+        </p>
+      </div>
+    </li>
+  );
 
   return (
-    <div className="max-w-5xl mx-auto px-5 py-10 sm:py-16">
+    <div className="max-w-4xl mx-auto px-5 py-10 sm:py-16">
 
       {/* Urgent symptom banner */}
       {result.hasUrgentSymptom && (
-        <div className="mb-8 p-4 rounded-2xl bg-high/10 border border-high/30">
+        <div className="mb-6 p-4 rounded-2xl bg-high/10 border border-high/30">
           <div className="flex gap-3 items-start">
             <div className="text-high shrink-0" aria-hidden><Icon name="signs" size={24} weight="fill" /></div>
             <div className="text-sm text-ink leading-relaxed">
@@ -288,16 +321,36 @@ export default function ResultsPage() {
         </div>
       )}
 
-      {/* Risk card */}
-      <div className="bg-warm-dim rounded-3xl border border-warm-dim p-6 sm:p-10">
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-8 items-center">
+      {/* 1. The result and what it means */}
+      <section className="bg-warm-dim rounded-3xl p-6 sm:p-10">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-6 md:gap-10 items-center">
           <div className="md:col-span-2">
             <RiskGauge result={result} />
           </div>
-          <div className="md:col-span-3 space-y-3">
+          <div className="md:col-span-3">
             <h1 className="font-serif text-3xl sm:text-4xl text-ink leading-tight">
               {result.headline}
             </h1>
+
+            {/* Summary with skeleton loading state. The bars were warm-dim on
+                a warm-dim card, so the loading state was invisible. */}
+            {summaryLoading && !claudeSummary ? (
+              <div className="space-y-2 mt-4" aria-live="polite">
+                <div className="flex items-center gap-1.5 mb-3">
+                  <span className="inline-block w-1.5 h-1.5 rounded-full bg-brand animate-pulse" />
+                  <span className="text-xs text-ink-soft font-medium">
+                    {t("personalizing")}
+                  </span>
+                </div>
+                <div className="h-3 bg-ink/10 rounded-full w-full animate-pulse" />
+                <div className="h-3 bg-ink/10 rounded-full w-5/6 animate-pulse" />
+                <div className="h-3 bg-ink/10 rounded-full w-4/6 animate-pulse" />
+              </div>
+            ) : (
+              <p className="mt-4 text-ink-soft leading-relaxed">
+                {claudeSummary || result.summary}
+              </p>
+            )}
 
             {/* Shown on the reassuring tiers only, and only when no urgent
                 symptom was reported.
@@ -313,10 +366,14 @@ export default function ResultsPage() {
 
                 A score built only from risk factors therefore cannot reassure,
                 and "Your current risk profile looks low" on its own invites
-                exactly the wrong conclusion from someone who has a symptom. */}
+                exactly the wrong conclusion from someone who has a symptom.
+
+                It sits directly under the summary, still inside the result
+                card. It used to sit between the headline and the summary,
+                which split the result from its own explanation. */}
             {(result.tier === "low" || result.tier === "moderate") &&
               !result.hasUrgentSymptom && (
-                <div className="rounded-2xl border border-accent/30 bg-accent/5 px-5 py-4">
+                <div className="mt-5 rounded-2xl border border-accent/30 bg-accent/5 px-5 py-4">
                   <p className="text-sm font-semibold text-accent mb-1">
                     {t("noFactorCaveatLabel")}
                   </p>
@@ -326,162 +383,66 @@ export default function ResultsPage() {
                 </div>
               )}
 
-            {/* Summary with skeleton loading state */}
-            {summaryLoading && !claudeSummary ? (
-              <div className="space-y-2 pt-1">
-                <div className="flex items-center gap-1.5 mb-3">
-                  <span className="inline-block w-1.5 h-1.5 rounded-full bg-brand animate-pulse" />
-                  <span className="text-xs text-ink-soft/70 font-medium">
-                    {t("personalizing")}
-                  </span>
-                </div>
-                <div className="h-3 bg-warm-dim rounded-full w-full animate-pulse" />
-                <div className="h-3 bg-warm-dim rounded-full w-5/6 animate-pulse" />
-                <div className="h-3 bg-warm-dim rounded-full w-4/6 animate-pulse" />
-              </div>
-            ) : (
-              <p className="text-ink-soft leading-relaxed">
-                {claudeSummary || result.summary}
-              </p>
-            )}
+            <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2">
+              {/*
+                  The action belongs on the first screen.
 
-            {/*
-                The action belongs on the first screen.
+                  Measured 2026-09-14: the results page is 5,682px tall on an
+                  812px phone, and the primary find-care button sat at y=3836,
+                  which is 4.7 screenfuls down. find_care_click had fired 4
+                  times against 291 completions. That is not a population
+                  declining to act, it is a population that never saw the
+                  control.
 
-                Measured 2026-09-14: the results page is 5,682px tall on an
-                812px phone, and the primary find-care button sat at y=3836,
-                which is 4.7 screenfuls down. find_care_click had fired 4 times
-                against 291 completions. That is not a population declining to
-                act, it is a population that never saw the control.
-
-                Shown only where going to get looked at is the actual
-                recommendation. On the reassuring tiers the bottom CTA is still
-                the right weight. Tagged results_hero so its rate can be
-                compared against the buried one rather than merged with it.
-            */}
-            {(result.tier === "elevated" ||
-              result.tier === "high" ||
-              result.hasUrgentSymptom) && (
-              <Link
-                href="/find-care"
-                onClick={() =>
-                  gaEvent("find_care_click", {
-                    risk_tier: result.tier,
-                    risk_score: result.score,
-                    cta_source: "results_hero",
-                  })
-                }
-                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl bg-brand px-6 py-3 font-semibold text-white touch-manipulation transition-colors hover:bg-brand-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
-              >
-                {primaryCTA[result.tier]}
-              </Link>
-            )}
-
-            {/* The scoring rationale lived only in the footer. On a health tool
-                the "how was this calculated" answer belongs next to the number
-                it explains, not three scrolls away. */}
-            <Link
-              href="/methods"
-              className="inline-flex min-h-11 items-center gap-1.5 text-sm font-medium text-brand hover:text-brand-dark transition-colors"
-            >
-              <Icon name="overview" size={15} />
-              {t("howScored")}
-            </Link>
-          </div>
-        </div>
-      </div>
-
-      {/* What's driving your risk.
-          Only the factors that actually move the score get a full write-up.
-          Listing all ten with a paragraph each read as padding and buried the
-          ones that matter, so the tail collapses behind a toggle. */}
-      {result.factors.length > 0 && (
-        <div className="mt-10">
-          <h2 className="font-serif text-2xl text-ink mb-4">{t("drivingHeading")}</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            {primaryFactors.map((f) => (
-              <div
-                key={f.questionId}
-                className="bg-warm-dim rounded-2xl border border-warm-dim p-5"
-              >
-                <div className="flex items-start gap-4">
-                  <div className="text-brand shrink-0" aria-hidden>
-                    <Icon name={f.icon} size={26} />
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                      <div className="font-semibold text-ink">{f.label}</div>
-                      <div className="text-sm text-ink-soft">
-                        {f.answerLabel}
-                      </div>
-                    </div>
-                    <p className="text-sm text-ink-soft mt-1.5 leading-relaxed">
-                      {f.guidance}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {minorFactors.length > 0 && (
-            <div className="mt-3">
-              <button
-                onClick={() => setShowAllFactors((v) => !v)}
-                aria-expanded={showAllFactors}
-                className="w-full text-left bg-warm-dim/60 rounded-2xl border border-warm-dim px-5 py-3.5 hover:border-brand/40 transition-colors"
-              >
-                <span className="text-sm font-semibold text-ink">
-                  {showAllFactors ? t("hideOthers") : t("alsoContributing")}
-                </span>
-                <span className="text-sm text-ink-soft">
-                  {" "}
-                  {minorFactors.map((f) => f.label).join(" · ")}
-                </span>
-              </button>
-              {showAllFactors && (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3">
-                  {minorFactors.map((f) => (
-                    <div
-                      key={f.questionId}
-                      className="bg-warm-dim rounded-2xl border border-warm-dim p-5"
-                    >
-                      <div className="flex items-start gap-4">
-                        <div className="text-brand shrink-0" aria-hidden><Icon name={f.icon} size={26} /></div>
-                        <div className="flex-1">
-                          <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                            <div className="font-semibold text-ink">{f.label}</div>
-                            <div className="text-sm text-ink-soft">{f.answerLabel}</div>
-                          </div>
-                          <p className="text-sm text-ink-soft mt-1.5 leading-relaxed">
-                            {f.guidance}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                  Shown only where going to get looked at is the actual
+                  recommendation. Tagged results_hero so its rate can be
+                  compared against the other placements rather than merged
+                  with them.
+              */}
+              {showHeroCTA && (
+                <Link
+                  href="/find-care"
+                  onClick={() =>
+                    gaEvent("find_care_click", {
+                      risk_tier: result.tier,
+                      risk_score: result.score,
+                      cta_source: "results_hero",
+                    })
+                  }
+                  className="inline-flex min-h-12 w-full sm:w-auto items-center justify-center gap-2 rounded-2xl bg-brand px-6 py-3 font-semibold text-white touch-manipulation transition-colors hover:bg-brand-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+                >
+                  {primaryCTA[result.tier]}
+                </Link>
               )}
-            </div>
-          )}
-        </div>
-      )}
 
-      {/* Next steps */}
-      <div className="mt-10">
+              {/* The scoring rationale lived only in the footer. On a health
+                  tool the "how was this calculated" answer belongs next to the
+                  number it explains, not three scrolls away. */}
+              <Link
+                href="/methods"
+                className="inline-flex min-h-11 items-center gap-1.5 text-sm font-medium text-brand hover:text-brand-dark transition-colors"
+              >
+                <Icon name="overview" size={15} />
+                {t("howScored")}
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 2. What to do next. Directly under the result, so the action is
+          the second thing read rather than the fourth. */}
+      <section className="mt-12">
         <h2 className="font-serif text-2xl text-ink mb-4">{t("nextStepsHeading")}</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+        <ol className="bg-warm-dim rounded-2xl divide-y divide-ink/10">
           {nextSteps.map((step, i) => (
-            <div
-              key={step.title}
-              className="bg-warm-dim rounded-2xl border border-warm-dim p-5 flex gap-4 items-start"
-            >
-              <div className="flex-shrink-0 w-7 h-7 rounded-full bg-brand/10 text-brand text-xs font-bold flex items-center justify-center mt-0.5">
+            <li key={step.title} className="flex gap-4 items-start p-5 sm:px-6">
+              <div className="shrink-0 w-7 h-7 rounded-full bg-brand/10 text-brand text-xs font-bold flex items-center justify-center mt-0.5">
                 {i + 1}
               </div>
-              <div className="flex-1">
-                <div className="font-semibold text-ink mb-1">{step.title}</div>
-                <p className="text-sm text-ink-soft leading-relaxed">
+              <div className="flex-1 min-w-0">
+                <div className="font-semibold text-ink leading-snug">{step.title}</div>
+                <p className="text-sm text-ink-soft leading-relaxed mt-1 max-w-prose">
                   {step.desc}
                 </p>
                 {step.linkLabel && hrefs[i] && (
@@ -489,7 +450,7 @@ export default function ResultsPage() {
                     href={hrefs[i]!}
                     onClick={() => {
                       // The elevated and high tiers put a second route to
-                      // /find-care in this list, and only the big CTA below was
+                      // /find-care in this list, and only the big CTA was
                       // tagged. Every click that happened here was invisible,
                       // which makes "did anyone go looking for care?" read low
                       // for a reason that has nothing to do with the visitor.
@@ -505,29 +466,97 @@ export default function ResultsPage() {
                         });
                       }
                     }}
-                    className="inline-flex min-h-11 items-center mt-1 text-sm font-semibold text-brand hover:underline touch-manipulation"
+                    className="inline-flex min-h-11 items-center text-sm font-semibold text-brand hover:underline touch-manipulation"
                   >
                     {step.linkLabel}
                   </Link>
                 )}
               </div>
-            </div>
+            </li>
           ))}
-        </div>
-      </div>
+        </ol>
+
+        {/* The single most important number the tool does not currently
+            measure: of the people who get a result, how many go looking for
+            care? Everything else is upstream of this. Tagged with the tier so
+            it can be read as a rate per tier, not just a total.
+
+            Since 2026-10-21 this renders on the low and moderate tiers only.
+            On elevated and high the same button is already in the result card
+            and step 1 links to care, so a third copy here was clutter.
+            results_primary_cta therefore no longer fires on those tiers. */}
+        {!showHeroCTA && (
+          <Link
+            href="/find-care"
+            onClick={() =>
+              gaEvent("find_care_click", {
+                risk_tier: result.tier,
+                risk_score: result.score,
+                cta_source: "results_primary_cta",
+              })
+            }
+            className="mt-4 inline-flex min-h-12 w-full sm:w-auto items-center justify-center rounded-2xl bg-brand px-6 py-3 font-semibold text-white touch-manipulation transition-colors hover:bg-brand-dark"
+          >
+            {primaryCTA[result.tier]}
+          </Link>
+        )}
+      </section>
+
+      {/* 3. What's driving your risk.
+          Only the factors that actually move the score get a full write-up.
+          Listing all ten with a paragraph each read as padding and buried the
+          ones that matter, so the tail collapses behind a toggle. One panel
+          with rows rather than a two-column grid of cards, which stretched
+          short cards to the height of long neighbours. */}
+      {result.factors.length > 0 && (
+        <section className="mt-12">
+          <h2 className="font-serif text-2xl text-ink mb-4">{t("drivingHeading")}</h2>
+          <div className="bg-warm-dim rounded-2xl">
+            <ul className="divide-y divide-ink/10">
+              {primaryFactors.map(renderFactor)}
+              {showAllFactors && minorFactors.map(renderFactor)}
+            </ul>
+            {minorFactors.length > 0 && (
+              <button
+                onClick={() => setShowAllFactors((v) => !v)}
+                aria-expanded={showAllFactors}
+                className="w-full flex items-start gap-3 text-left border-t border-ink/10 px-5 sm:px-6 py-4 rounded-b-2xl hover:bg-ink/5 transition-colors"
+              >
+                <span className="flex-1 min-w-0">
+                  <span className="text-sm font-semibold text-ink">
+                    {showAllFactors ? t("hideOthers") : t("alsoContributing")}
+                  </span>
+                  {!showAllFactors && (
+                    <span className="text-sm text-ink-soft">
+                      {" "}
+                      {minorFactors.map((f) => f.label).join(" · ")}
+                    </span>
+                  )}
+                </span>
+                <span
+                  className={`text-brand shrink-0 mt-0.5 transition-transform ${showAllFactors ? "rotate-180" : ""}`}
+                  aria-hidden
+                >
+                  <Icon name="caretDown" size={16} weight="bold" />
+                </span>
+              </button>
+            )}
+          </div>
+        </section>
+      )}
 
       {/* Which of the two diseases the answers point at.
           Hidden when the profile carries no discriminating factor at all,
           because "your factors point at neither" is noise on a result that
           already says the score is low. */}
       {result.site.lean !== "none" && (
-        <div className="mt-10">
+        <section className="mt-12">
           <h2 className="font-serif text-2xl text-ink mb-3">{t("siteHeading")}</h2>
-          <p className="text-sm text-ink-soft leading-relaxed max-w-2xl mb-4">
+          <p className="text-sm text-ink-soft leading-relaxed max-w-prose mb-4">
             {t("siteIntro")}
           </p>
-          <div className="rounded-2xl border border-warm-dim bg-warm-dim/40 p-5 max-w-2xl">
-            <p className="text-sm text-ink-soft leading-relaxed">
+          <div className="rounded-2xl bg-warm-dim p-5 sm:px-6">
+            <p className="text-sm text-ink-soft leading-relaxed max-w-prose">
               {t.rich(
                 result.site.lean === "cavity"
                   ? "siteCavity"
@@ -537,72 +566,49 @@ export default function ResultsPage() {
                 { b: (chunks) => <strong className="text-ink">{chunks}</strong> },
               )}
             </p>
-            <p className="text-sm text-ink-soft leading-relaxed mt-3">{t("siteSame")}</p>
+            <p className="text-sm text-ink-soft leading-relaxed mt-3 max-w-prose">{t("siteSame")}</p>
           </div>
-        </div>
+        </section>
       )}
 
       {/* Contextual learn links */}
       {learnLinks.length > 0 && (
-        <div className="mt-10">
+        <section className="mt-12">
           <h2 className="font-serif text-2xl text-ink mb-4">
             {t("relatedReadingHeading")}
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {learnLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="group bg-warm-dim rounded-2xl border border-warm-dim p-5 hover:border-brand/40 transition-[color,background-color,border-color,box-shadow]"
+                className="group flex items-start gap-4 bg-warm-dim rounded-2xl border border-transparent p-5 hover:border-brand/40 transition-[color,background-color,border-color,box-shadow]"
               >
-                <div className="text-brand mb-2" aria-hidden>
-                  <Icon name={link.icon} size={26} />
+                <div className="text-brand shrink-0 mt-0.5" aria-hidden>
+                  <Icon name={link.icon} size={24} />
                 </div>
-                <span className="inline-block text-xs font-semibold uppercase tracking-wider text-brand bg-brand-soft px-2 py-0.5 rounded-full mb-2">
-                  {link.tag}
-                </span>
-                <div className="font-serif text-lg text-ink group-hover:text-brand transition-colors leading-snug">
-                  {link.title}
-                </div>
-                <div className="mt-2 text-xs font-semibold text-brand">
-                  {t("read")}
+                <div className="min-w-0">
+                  <span className="text-xs font-semibold uppercase tracking-wider text-brand">
+                    {link.tag}
+                  </span>
+                  <div className="font-serif text-lg text-ink group-hover:text-brand transition-colors leading-snug mt-0.5">
+                    {link.title}
+                  </div>
+                  <div className="mt-1.5 text-xs font-semibold text-brand">
+                    {t("read")}
+                  </div>
                 </div>
               </Link>
             ))}
           </div>
-        </div>
+        </section>
       )}
 
-      {/* CTAs */}
-      <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-4">
-        {/* The single most important number the tool does not currently
-            measure: of the people who get a result, how many go looking for
-            care? Everything else is upstream of this. Tagged with the tier so
-            it can be read as a rate per tier, not just a total. */}
-        <Link
-          href="/find-care"
-          onClick={() =>
-            gaEvent("find_care_click", {
-              risk_tier: result.tier,
-              risk_score: result.score,
-              cta_source: "results_primary_cta",
-            })
-          }
-          className="bg-brand hover:bg-brand-dark text-white font-semibold px-6 py-4 rounded-2xl transition-colors text-center"
-        >
-          {primaryCTA[result.tier]}
-        </Link>
-        <button
-          onClick={handleShare}
-          className="bg-warm-dim hover:bg-warm text-ink font-semibold px-6 py-4 rounded-2xl transition-colors border border-warm-dim text-center"
-        >
-          {copied ? <span className="inline-flex items-center justify-center gap-1.5"><Icon name="check" size={16} weight="bold" />{t("linkCopied")}</span> : t("shareCta")}
-        </button>
-      </div>
-
       {/* Email a copy. Stays on the page as well as in the dialog, so anyone
-          who dismissed the prompt can still find it. */}
-      <div className="mt-8 p-6 rounded-2xl bg-brand-soft border border-brand/15">
+          who dismissed the prompt can still find it. Share and retake are
+          quiet links under it: they used to be a full-size button and a
+          separate row competing with the find-care button. */}
+      <section className="mt-12 p-6 sm:p-8 rounded-2xl bg-brand-soft border border-brand/15">
         {emailStatus === "sent" ? (
           <div className="text-center">
             <div className="font-serif text-xl text-ink mb-1">{t("emailSentTitle")}</div>
@@ -610,11 +616,33 @@ export default function ResultsPage() {
           </div>
         ) : (
           <>
-            <div className="font-serif text-xl text-ink mb-1">{t("emailKeepCopy")}</div>
-            <p className="text-sm text-ink-soft mb-4 leading-relaxed">{t("emailBody")}</p>
+            <h2 className="font-serif text-xl text-ink mb-1">{t("emailKeepCopy")}</h2>
+            <p className="text-sm text-ink-soft mb-4 leading-relaxed max-w-prose">{t("emailBody")}</p>
             {renderEmailForm(false)}
           </>
         )}
+      </section>
+
+      <div className="mt-4 flex flex-wrap items-center justify-center gap-x-6">
+        <button
+          onClick={handleShare}
+          className="inline-flex min-h-11 items-center gap-1.5 px-2 text-sm font-semibold text-brand hover:text-brand-dark touch-manipulation transition-colors"
+        >
+          {copied ? (
+            <>
+              <Icon name="check" size={16} weight="bold" />
+              {t("linkCopied")}
+            </>
+          ) : (
+            t("shareCta")
+          )}
+        </button>
+        <Link
+          href="/screener"
+          className="inline-flex min-h-11 items-center px-2 text-sm font-medium text-ink-soft hover:text-ink touch-manipulation"
+        >
+          {t("retake")}
+        </Link>
       </div>
 
       <Modal
@@ -653,18 +681,9 @@ export default function ResultsPage() {
         )}
       </Modal>
 
-      <div className="mt-6 flex justify-center">
-        <Link
-          href="/screener"
-          className="inline-flex min-h-11 items-center px-4 text-sm font-medium text-ink-soft hover:text-ink touch-manipulation"
-        >
-          {t("retake")}
-        </Link>
-      </div>
-
       {/* Disclaimer stays visible; the citation list is long and only a few
           readers want it, so it collapses instead of padding every result. */}
-      <div className="mt-12 p-5 rounded-2xl bg-warm-dim/50 text-xs text-ink-soft leading-relaxed">
+      <div className="mt-10 p-5 sm:px-6 rounded-2xl bg-warm-dim/50 text-xs text-ink-soft leading-relaxed">
         <p>
           <strong className="text-ink">{t("disclaimerLabel")}</strong> {t("disclaimerBody")}
         </p>

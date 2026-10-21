@@ -19,7 +19,7 @@ export default function RiskGauge({ result }: { result: RiskResult }) {
     <div className="flex flex-col items-center">
       <svg
         viewBox="0 0 200 120"
-        className="w-full max-w-sm"
+        className="w-full max-w-[15rem] md:max-w-sm"
         aria-label={t("ariaLabel", { tier: result.tierLabel })}
       >
         <defs>
@@ -33,7 +33,12 @@ export default function RiskGauge({ result }: { result: RiskResult }) {
         <path
           d="M 20 100 A 80 80 0 0 1 180 100"
           fill="none"
-          stroke="var(--color-warm-dim)"
+          // The track used to be warm-dim, which is also the colour of the
+          // results card the gauge sits on, so it vanished and a low score
+          // drew as a lone blob beside the needle. A faint ink stroke reads
+          // as a track on the card in both themes.
+          stroke="var(--color-ink)"
+          strokeOpacity="0.1"
           strokeWidth="14"
           strokeLinecap="round"
         />

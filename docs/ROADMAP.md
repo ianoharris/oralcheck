@@ -376,6 +376,25 @@ Update both together. See `AGENTS.md`.
 Newest first.
 
 ### 2026-10-21
+- **Results page cleanup** (not yet pushed). Ian called `/results` messy.
+  What was actually wrong: the gauge's grey track was the same colour as the
+  card behind it, so it disappeared and a low score drew as a lone green blob
+  beside the needle (the loading skeleton was invisible the same way); about
+  a dozen identical grey cards, with borders the same colour as their fill;
+  four long factor write-ups sitting between the result and the next steps,
+  which started about 2,400px down on a phone; a two-column factor grid that
+  stretched short cards to the height of long ones; the low-score caveat
+  wedged between the headline and its own summary; and the find-care button
+  three times on elevated and high, ending in a pile of four differently
+  styled actions. Now: result, then next steps, then the factors, the oral
+  cavity or oropharynx note, reading, and the email copy. Steps and factors
+  are one panel each with rows. One big find-care button per band: in the
+  result card on elevated, high, and symptom results, under the next steps on
+  low and moderate. Share and retake are quiet links under the email box. No
+  copy, scoring, bands, or medical content changed. Analytics note:
+  `results_primary_cta` no longer fires on elevated or high, because that
+  button is no longer shown there. Files: `src/app/[locale]/results/page.tsx`,
+  `src/components/RiskGauge.tsx`.
 - **3D reels, original-look posts, and the posting calendar are live on
   master** (commit 4bba2c7). Reels render as narrated 3D scenes with the
   classic reel as fallback; posts use the original layouts; the Monday run is
