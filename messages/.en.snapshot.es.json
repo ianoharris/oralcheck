@@ -1565,7 +1565,9 @@
   "AnimatedStats": {
     "cases": "new US oral & oropharyngeal cancer cases each year",
     "survival": "five-year survival when caught early",
-    "screeningTime": "is all a dental screening takes"
+    "screeningTime": "is all a dental screening takes",
+    "reach": "people reached since launch",
+    "live": "Live, updated hourly"
   },
   "RiskGauge": {
     "ariaLabel": "Risk gauge showing {tier}",

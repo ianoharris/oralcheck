@@ -1565,7 +1565,9 @@
   "AnimatedStats": {
     "cases": "novos casos de câncer bucal e de orofaringe por ano nos EUA",
     "survival": "sobrevida em cinco anos quando detectado precocemente",
-    "screeningTime": "é o tempo necessário para uma triagem odontológica"
+    "screeningTime": "é o tempo necessário para uma triagem odontológica",
+    "reach": "pessoas alcançadas desde o lançamento",
+    "live": "Ao vivo, atualizado a cada hora"
   },
   "RiskGauge": {
     "ariaLabel": "Medidor de risco mostrando {tier}",

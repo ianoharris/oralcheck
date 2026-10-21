@@ -1565,7 +1565,9 @@
   "AnimatedStats": {
     "cases": "nuevos casos de cáncer oral y orofaríngeo en EE. UU. cada año",
     "survival": "de supervivencia a cinco años cuando se detecta a tiempo",
-    "screeningTime": "es lo que toma una evaluación dental"
+    "screeningTime": "es lo que toma una evaluación dental",
+    "reach": "personas alcanzadas desde el lanzamiento",
+    "live": "En vivo, se actualiza cada hora"
   },
   "RiskGauge": {
     "ariaLabel": "Medidor de riesgo mostrando {tier}",

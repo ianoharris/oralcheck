@@ -3,6 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import HeroSectionPhoto from "@/components/HeroSectionPhoto";
 import AnimatedStats from "@/components/AnimatedStats";
+import { getReach } from "@/lib/reach";
 import FadeUp from "@/components/FadeUp";
 import LogoMarquee from "@/components/LogoMarquee";
 import InstagramFeed from "@/components/InstagramFeed";
@@ -31,6 +32,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function Home({ params }: Props) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "HomePage" });
+  const reach = await getReach();
 
   const features = [
     { title: t("feature1Title"), description: t("feature1Desc"), href: "/screener", cta: t("feature1Cta") },
@@ -45,8 +47,8 @@ export default async function Home({ params }: Props) {
       {/* Hero */}
       <HeroSectionPhoto />
 
-      {/* Stats — count-up on scroll */}
-      <AnimatedStats />
+      {/* Stats: count-up on scroll; the last one is live from GA */}
+      <AnimatedStats reach={reach} />
 
       {/* Features */}
       <section className="max-w-6xl mx-auto px-5 py-20">

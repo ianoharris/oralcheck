@@ -2,6 +2,7 @@ import HeroMockupA from "@/components/HeroMockupA";
 import HeroMockupB from "@/components/HeroMockupB";
 import HeroSection from "@/components/HeroSection";
 import AnimatedStats from "@/components/AnimatedStats";
+import { REACH_FLOOR } from "@/lib/reach";
 
 function Label({ text }: { text: string }) {
   return (
@@ -33,7 +34,7 @@ export default function PreviewHeroPage() {
 
       <Label text="Current (reference)" />
       <HeroSection />
-      <AnimatedStats />
+      <AnimatedStats reach={{ users: REACH_FLOOR.users, live: false }} />
     </div>
   );
 }

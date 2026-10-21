@@ -8,7 +8,6 @@ import { SEER, SEER_DISPLAY } from "@/lib/seerStats";
 const STATS = [
   { raw: SEER.newCasesPerYear, display: SEER_DISPLAY.newCases, labelKey: "cases" },
   { raw: Math.round(SEER.survival.localized), display: SEER_DISPLAY.survivalLocalized, labelKey: "survival" },
-  { raw: 2,     display: "2 min",   labelKey: "screeningTime", suffix: " min" },
 ] as const;
 
 function useCountUp(target: number, duration = 1400, active: boolean) {
@@ -32,15 +31,16 @@ function useCountUp(target: number, duration = 1400, active: boolean) {
   return value;
 }
 
-function StatItem({ raw, display, label, suffix, active }: {
+function StatItem({ raw, display, label, suffix, active, live, liveLabel }: {
   raw: number; display: string; label: string; suffix?: string; active: boolean;
+  live?: boolean; liveLabel?: string;
 }) {
   const reduced = useReducedMotion();
   const count = useCountUp(raw, 1400, active && !reduced);
 
   const formatted = reduced || !active
     ? display
-    : raw >= 1000
+    : raw >= 1000 || suffix === "+"
       ? count.toLocaleString() + "+"
       : count + (suffix ?? (display.endsWith("%") ? "%" : ""));
 
@@ -50,11 +50,20 @@ function StatItem({ raw, display, label, suffix, active }: {
         {formatted}
       </div>
       <div className="text-sm text-ink-soft mt-1 leading-snug">{label}</div>
+      {live && (
+        <div className="mt-2 inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.12em] text-ink-soft">
+          <span className="relative flex h-1.5 w-1.5" aria-hidden="true">
+            <span className="absolute inline-flex h-full w-full rounded-full bg-brand opacity-60 motion-safe:animate-ping" />
+            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-brand" />
+          </span>
+          {liveLabel}
+        </div>
+      )}
     </div>
   );
 }
 
-export default function AnimatedStats() {
+export default function AnimatedStats({ reach }: { reach: { users: number; live: boolean } }) {
   const t = useTranslations("AnimatedStats");
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
@@ -68,6 +77,17 @@ export default function AnimatedStats() {
         {STATS.map((s) => (
           <StatItem key={s.labelKey} {...s} label={t(s.labelKey)} active={inView} />
         ))}
+        {/* GA's total is a floor (ad blockers, and a month of blocked hits in
+            autumn 2026), so it always reads "N+". */}
+        <StatItem
+          raw={reach.users}
+          display={reach.users.toLocaleString() + "+"}
+          suffix="+"
+          label={t("reach")}
+          active={inView}
+          live={reach.live}
+          liveLabel={t("live")}
+        />
       </div>
     </section>
   );
