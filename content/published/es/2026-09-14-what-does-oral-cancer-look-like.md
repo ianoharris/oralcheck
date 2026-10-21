@@ -7,7 +7,7 @@ status: "draft"
 
 # ¿Cómo se ve el cáncer oral? Una guía visual sobre los cambios que vale la pena conocer
 
-El cáncer oral se diagnostica en aproximadamente 54,000 estadounidenses cada año, pero muchas personas no lo reconocerían si lo vieran. El problema no es que la gente desconozca que el cáncer oral existe. El problema es que la mayoría nunca ha visto cómo se ve en realidad, y los cambios tempranos son lo suficientemente sutiles como para confundirse con algo sin importancia. Este artículo se enfoca en las características visuales del cáncer oral según el tipo de tejido y la etapa de desarrollo, para darte una imagen más clara de qué buscar cuando examinas tu propia boca.
+Se proyecta que el cáncer oral se diagnosticará en aproximadamente 60,480 estadounidenses en 2026, según el SEER del NCI, pero muchas personas no lo reconocerían si lo vieran. El problema no es que la gente desconozca que el cáncer oral existe. El problema es que la mayoría nunca ha visto cómo se ve en realidad, y los cambios tempranos son lo suficientemente sutiles como para confundirse con algo sin importancia. Este artículo se enfoca en las características visuales del cáncer oral según el tipo de tejido y la etapa de desarrollo, para darte una imagen más clara de qué buscar cuando examinas tu propia boca.
 
 Si quieres orientación sobre cómo hacer un autoexamen paso a paso, el artículo de OralCheck sobre autoexámenes de cáncer oral cubre ese proceso en detalle. Este artículo se enfoca específicamente en las características visuales y táctiles de los cambios en sí.
 

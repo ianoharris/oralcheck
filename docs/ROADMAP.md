@@ -41,6 +41,16 @@ Update both together. See `AGENTS.md`.
 
 ### Content and growth
 
+- [ ] **Stale SEER figures outside the articles (found 2026-10-21).** The
+      article audit turned up copies the 2026-08-30 consolidation missed:
+      `public/llms.txt` (54,000 cases, "over 84%" survival), the `sex`
+      explanation in `messages/en.json` and its translations (men "roughly
+      twice"), the draft `content/drafts/2026-06-29-oral-cancer-risk-factors.md`
+      (men "roughly twice"), and an idea brief in `oralcheck-agent/ideas.json`
+      (54,000). The oropharyngeal article's "men about four times" is an
+      HPV-oropharyngeal figure, not the SEER oral cavity and pharynx ratio, and
+      was left alone. Several articles also attribute claims to the ADA, USPSTF,
+      JCO and CDC without a link; worth linking real sources.
 - [ ] **Posting calendar: 30 posts, 27 Oct 2026 to 1 Jan 2027 (started
       2026-10-20).** Ian asked to stop the weekly back and forth and plan the
       whole autumn at once: 3 a week for 10 weeks, 10 reels (3D), 10 carousels
@@ -374,6 +384,27 @@ Update both together. See `AGENTS.md`.
 ## Shipped
 
 Newest first.
+
+### 2026-10-21 (later)
+- **Published articles brought back in line with the house rules.** Committed
+  on branch `claude/article-house-rules-audit`, **not yet pushed or deployed**,
+  so the live site still has the old copy until it is merged. All 11 published
+  articles and their Spanish translations were audited for stage I to IV
+  survival wording, figures that differ from `seerStats.ts`, em dashes, any
+  UW-Madison mention, and fabricated quotes or credentials. No em dashes, UW
+  mentions, or fabricated quotes were found. Fixed, in English and Spanish:
+  - *Survival rate and early detection:* the excerpt compared "stage I and
+    stage IV" survival; it now says "while still localized" and "once it has
+    spread to distant sites". Survival 84 to 86 / 67 / below 40 became 88.7 /
+    69.7 / 36.0 with a link to SEER. "Roughly half diagnosed late (Oral Cancer
+    Foundation)" became SEER's stage share: 26% localized, about two-thirds
+    after spread. Men 2x became 2.6x.
+  - *What does oral cancer look like:* 54,000 a year became about 60,480
+    projected for 2026 (SEER).
+  - *Self exam:* "over 80% early, below 40% late" became about 89% localized
+    and 36% distant (SEER, 2016 to 2022).
+  - *Symptoms:* men 2x became 2.6x.
+  - Slugs and titles unchanged.
 
 ### 2026-10-21
 - **3D reels, original-look posts, and the posting calendar are live on

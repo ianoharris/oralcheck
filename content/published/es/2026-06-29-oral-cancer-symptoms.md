@@ -41,7 +41,7 @@ Entender los síntomas es más útil cuando se combina con una conciencia del ri
 
 **La exposición prolongada al sol** aumenta el riesgo de cáncer de labio, particularmente en el labio inferior. Las personas que trabajan al aire libre o pasan mucho tiempo bajo el sol sin protección para los labios tienen un riesgo mayor.
 
-**La edad y el sexo** también influyen. El cáncer oral es más común en personas mayores de 40 años, y los hombres son diagnosticados aproximadamente al doble de la tasa que las mujeres, aunque esa diferencia se ha ido reduciendo.
+**La edad y el sexo** también influyen. El cáncer oral es más común en personas mayores de 40 años, y los hombres son diagnosticados aproximadamente 2,6 veces más que las mujeres, aunque esa diferencia se ha ido reduciendo.
 
 **Un diagnóstico previo de cáncer oral** aumenta considerablemente el riesgo de un segundo cáncer primario en la región de la cabeza y el cuello.
 

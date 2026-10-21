@@ -7,7 +7,7 @@ status: "published"
 
 # How to Do an Oral Cancer Self Exam (And What to Look For)
 
-Most people visit a dentist twice a year, which means there are roughly 363 days when no professional is checking your mouth. An oral cancer self exam is a simple, free habit that can help you notice changes between those appointments. When oral cancer is caught early, the five-year survival rate exceeds 80 percent. When it is caught late, that number drops below 40 percent. The difference often comes down to how quickly a change is noticed and evaluated.
+Most people visit a dentist twice a year, which means there are roughly 363 days when no professional is checking your mouth. An oral cancer self exam is a simple, free habit that can help you notice changes between those appointments. When oral cancer is caught while still localized, the five-year relative survival rate is about 89 percent. Once it has spread to distant sites, that number drops to 36 percent (SEER, 2016 to 2022). The difference often comes down to how quickly a change is noticed and evaluated.
 
 This guide walks you through how to perform an oral cancer self exam at home, what findings are worth monitoring, and when to contact a healthcare provider.
 

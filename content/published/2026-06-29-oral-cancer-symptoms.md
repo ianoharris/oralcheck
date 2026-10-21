@@ -41,7 +41,7 @@ Understanding symptoms is more useful when paired with an awareness of risk. Cer
 
 **Prolonged sun exposure** increases the risk of lip cancer, particularly on the lower lip. People who work outdoors or spend significant time in the sun without lip protection are at higher risk.
 
-**Age and sex** also play a role. Oral cancer is more common in people over 40, and men are diagnosed at roughly twice the rate of women, though the gap has been narrowing.
+**Age and sex** also play a role. Oral cancer is more common in people over 40, and men are diagnosed at roughly 2.6 times the rate of women, though the gap has been narrowing.
 
 **A previous oral cancer diagnosis** substantially raises the risk of a second primary cancer in the head and neck region.
 
