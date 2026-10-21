@@ -39,7 +39,7 @@ Age is another factor worth understanding. The majority of oral cancer diagnoses
 
 A few additional factors have been associated with elevated oral cancer risk in the research literature:
 
-- **Gender:** Men are diagnosed with oral cancer at roughly twice the rate of women, though the gap has been narrowing over time.
+- **Gender:** Men are diagnosed with oral cancer at roughly 2.6 times the rate of women, though the gap has been narrowing over time.
 - **Immune suppression:** People who are immunocompromised, whether due to HIV infection, organ transplantation, or certain medications, face a higher risk of oral cancers.
 - **Poor oral hygiene and chronic irritation:** While less definitively established than tobacco or HPV, chronic irritation from ill-fitting dentures or poor dental hygiene has been associated with increased risk in some studies.
 - **Diet:** Diets low in fruits and vegetables may contribute to elevated risk, as these foods contain antioxidants and micronutrients that support cellular health.

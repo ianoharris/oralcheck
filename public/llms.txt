@@ -1,9 +1,9 @@
-# OralCheck — Free Oral Cancer Risk Screener
+# OralCheck: Free Oral Cancer Risk Screener
 # https://oralcheck.org
 
 OralCheck is a free, private oral cancer risk screener based on published clinical risk factors from the American Cancer Society, NCI, and Oral Cancer Foundation. No account required. Answers are not saved or transmitted. Takes 2 minutes.
 
-Oral cancer affects over 54,000 Americans each year. When caught early, the 5-year survival rate is over 84%. OralCheck helps people understand their personal risk and find affordable care.
+Oral cavity and pharynx cancer is projected to be diagnosed in about 60,480 Americans in 2026 (NCI SEER). When caught while still localized, the 5-year relative survival rate is about 89%; once it has spread to distant sites, it is 36%. OralCheck helps people understand their personal risk and find affordable care.
 
 ## Key pages
 

@@ -66,6 +66,11 @@ Update both together. See `AGENTS.md`.
       published articles are missing from the sitemap** (found by the article
       layout agent, 21 Oct). Not blocked.
 
+- [ ] **Link the sources articles attribute claims to (found 2026-10-21).**
+      Several published articles credit the ADA, USPSTF, Journal of Clinical
+      Oncology and CDC without a link. The claims look accurate and none is a
+      quote or endorsement, but the house rule is to cite a real source with a
+      link. The stale-figure half of this item shipped the same day, see Shipped.
 - [ ] **Posting calendar: 30 posts, 27 Oct 2026 to 1 Jan 2027 (started
       2026-10-20).** Ian asked to stop the weekly back and forth and plan the
       whole autumn at once: 3 a week for 10 weeks, 10 reels (3D), 10 carousels
@@ -482,6 +487,40 @@ Newest first.
   articles list shows the five newest and a "Load more" button that adds five
   at a time; every article link is still in the HTML for search engines. New
   string in English, Spanish, and Portuguese.
+
+### 2026-10-21 (later still)
+- **Stale SEER figures outside the articles corrected** (same branch,
+  `claude/article-house-rules-audit`, not yet pushed or deployed).
+  `public/llms.txt`: 54,000 cases and "over 84%" survival became about 60,480
+  projected for 2026 and about 89% localized / 36% distant; its title's em dash
+  became a colon. The sex explanation on the results page: men "roughly twice"
+  became 2.6 times in English, Spanish and Portuguese, with both i18n snapshots
+  updated to match so the next sync does not retranslate over the edit. Same
+  fix in the risk-factors draft. The July Tour de France idea brief in
+  `oralcheck-agent/ideas.json` now says about 60,480 for 2026. The only
+  remaining "84%" mentions are the agent's regression test and comment that
+  check the old figure stays out.
+
+### 2026-10-21 (later)
+- **Published articles brought back in line with the house rules.** Committed
+  on branch `claude/article-house-rules-audit`, **not yet pushed or deployed**,
+  so the live site still has the old copy until it is merged. All 11 published
+  articles and their Spanish translations were audited for stage I to IV
+  survival wording, figures that differ from `seerStats.ts`, em dashes, any
+  UW-Madison mention, and fabricated quotes or credentials. No em dashes, UW
+  mentions, or fabricated quotes were found. Fixed, in English and Spanish:
+  - *Survival rate and early detection:* the excerpt compared "stage I and
+    stage IV" survival; it now says "while still localized" and "once it has
+    spread to distant sites". Survival 84 to 86 / 67 / below 40 became 88.7 /
+    69.7 / 36.0 with a link to SEER. "Roughly half diagnosed late (Oral Cancer
+    Foundation)" became SEER's stage share: 26% localized, about two-thirds
+    after spread. Men 2x became 2.6x.
+  - *What does oral cancer look like:* 54,000 a year became about 60,480
+    projected for 2026 (SEER).
+  - *Self exam:* "over 80% early, below 40% late" became about 89% localized
+    and 36% distant (SEER, 2016 to 2022).
+  - *Symptoms:* men 2x became 2.6x.
+  - Slugs and titles unchanged.
 
 ### 2026-10-21
 - **Results page cleanup** (pushed 21 Oct). Ian called `/results` messy.

@@ -7,7 +7,7 @@ status: "published"
 
 # What Does Oral Cancer Look Like? A Visual Guide to Changes Worth Knowing
 
-Oral cancer is diagnosed in roughly 54,000 Americans each year, yet many people would not recognize it if they saw it. The challenge is not a lack of awareness that oral cancer exists. The challenge is that most people have never seen what it actually looks like, and the early changes are subtle enough to be dismissed as something minor. This article focuses on the visual characteristics of oral cancer across different tissue types and stages, giving you a clearer picture of what to look for when you examine your own mouth.
+Oral cancer is projected to be diagnosed in about 60,480 Americans in 2026, according to NCI SEER, yet many people would not recognize it if they saw it. The challenge is not a lack of awareness that oral cancer exists. The challenge is that most people have never seen what it actually looks like, and the early changes are subtle enough to be dismissed as something minor. This article focuses on the visual characteristics of oral cancer across different tissue types and stages, giving you a clearer picture of what to look for when you examine your own mouth.
 
 If you want guidance on how to conduct a step-by-step self-examination, the OralCheck article on oral cancer self exams covers that process in detail. This article focuses specifically on the visual and tactile characteristics of the changes themselves.
 

@@ -7,7 +7,7 @@ status: "published"
 
 # Cómo hacer un autoexamen de cáncer oral (y qué buscar)
 
-La mayoría de las personas visita al dentista dos veces al año, lo que significa que hay aproximadamente 363 días en los que ningún profesional revisa su boca. El autoexamen de cáncer oral es un hábito sencillo y gratuito que puede ayudarle a notar cambios entre esas citas. Cuando el cáncer oral se detecta a tiempo, la tasa de supervivencia a cinco años supera el 80 por ciento. Cuando se detecta tarde, ese número cae por debajo del 40 por ciento. La diferencia suele depender de qué tan rápido se nota y se evalúa un cambio.
+La mayoría de las personas visita al dentista dos veces al año, lo que significa que hay aproximadamente 363 días en los que ningún profesional revisa su boca. El autoexamen de cáncer oral es un hábito sencillo y gratuito que puede ayudarle a notar cambios entre esas citas. Cuando el cáncer oral se detecta mientras sigue localizado, la tasa de supervivencia relativa a cinco años es de aproximadamente 89 por ciento. Una vez que se ha extendido a sitios distantes, ese número cae al 36 por ciento (SEER, 2016 a 2022). La diferencia suele depender de qué tan rápido se nota y se evalúa un cambio.
 
 Esta guía le explica cómo realizar un autoexamen de cáncer oral en casa, qué hallazgos vale la pena vigilar y cuándo comunicarse con un proveedor de salud.
 

@@ -7,15 +7,15 @@ status: "published"
 
 # Oral Cancer Survival Rate and Early Detection: What the Numbers Actually Mean
 
-Oral cancer is one of the few cancers where the difference between early and late diagnosis is not marginal. It is dramatic. The gap in survival outcomes between stage I and stage IV oral cancer is wide enough that understanding it could genuinely change how you think about your own health decisions. This article breaks down what the survival data shows, why detection timing matters so much, and what that means practically for you.
+Oral cancer is one of the few cancers where the difference between early and late diagnosis is not marginal. It is dramatic. The gap in survival outcomes between oral cancer found while still localized and oral cancer found once it has spread to distant sites is wide enough that understanding it could genuinely change how you think about your own health decisions. This article breaks down what the survival data shows, why detection timing matters so much, and what that means practically for you.
 
 ---
 
 ## The Survival Rate Gap Is Larger Than Most People Realize
 
-The five-year survival rate for oral cavity and pharyngeal cancers diagnosed at a localized stage (meaning the cancer has not spread beyond the original site) is approximately 84 to 86 percent, according to data from the National Cancer Institute's SEER database. When that same cancer is diagnosed after it has spread to regional lymph nodes, the five-year survival rate drops to around 67 percent. When distant metastasis has occurred, survival rates fall below 40 percent.
+The five-year relative survival rate for oral cavity and pharyngeal cancers diagnosed at a localized stage (meaning the cancer has not spread beyond the original site) is 88.7 percent, according to the National Cancer Institute's [SEER program](https://seer.cancer.gov/statfacts/html/oralcav.html) (2016 to 2022). When that same cancer is diagnosed after it has spread to regional lymph nodes, the five-year relative survival rate drops to 69.7 percent. When distant metastasis has occurred, it falls to 36.0 percent.
 
-Those numbers tell a clear story: the stage at which oral cancer is found is one of the strongest predictors of whether treatment will be successful. Yet despite this, roughly half of all oral cancer cases in the United States are still diagnosed at a late stage, according to the Oral Cancer Foundation. That means a significant number of people are being diagnosed at the point where survival odds are substantially lower than they needed to be.
+Those numbers tell a clear story: the stage at which oral cancer is found is one of the strongest predictors of whether treatment will be successful. Yet despite this, only about a quarter of oral cavity and pharyngeal cancers in the United States (26 percent) are diagnosed while still localized, according to SEER. About two-thirds are found only after the cancer has spread to regional lymph nodes or distant sites. That means a significant number of people are being diagnosed at the point where survival odds are substantially lower than they needed to be.
 
 The reason this gap exists is not mysterious. Oral cancer, like many cancers, does not always produce obvious or painful symptoms in its earliest stages. Lesions can be small, painless, and easy to dismiss. By the time a growth becomes uncomfortable or visually alarming, it has often been present for months.
 
@@ -47,7 +47,7 @@ Not everyone faces the same likelihood of late-stage diagnosis. Several factors 
 
 People without regular access to dental care are significantly less likely to receive opportunistic screenings. Tobacco and alcohol use, which are established risk factors discussed in depth in OralCheck's article on [alcohol, tobacco, and oral cancer risk](https://oralcheck.org), are also associated with more aggressive tumor behavior. HPV-related oropharyngeal cancers, while often more responsive to treatment, can also go undetected for longer because they frequently develop in areas of the throat that are harder to visualize.
 
-Age is a factor as well. Oral cancer risk increases with age, and older adults may be less likely to report subtle changes or to seek evaluation promptly. Men are diagnosed with oral cancer at roughly twice the rate of women, though the reasons for this are multifactorial and include historical differences in tobacco and alcohol use patterns.
+Age is a factor as well. Oral cancer risk increases with age, and older adults may be less likely to report subtle changes or to seek evaluation promptly. Men are diagnosed with oral cancer at roughly 2.6 times the rate of women, though the reasons for this are multifactorial and include historical differences in tobacco and alcohol use patterns.
 
 Understanding your own risk profile is a reasonable starting point. It does not replace clinical evaluation, but it can inform how proactive you choose to be about seeking one.
 
