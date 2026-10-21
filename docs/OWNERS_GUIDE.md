@@ -803,6 +803,17 @@ as Google's own guidance lists. For that month use Vercel Analytics (Vercel
 dashboard, Analytics tab; the free plan keeps 31 days), and don't compare GA
 numbers across 22 September or 21 October.
 
+**How many people have used it, then?** GA's all-time total on 21 October
+2026 was 847. The month GA missed had about 60 to 110 more, estimated two ways
+from Vercel's counts using the ratios GA showed the month before (285 page
+views at 3.8 per person gives about 74; 157 visitor-days at 0.8 people per
+visitor-day gives about 126; GA counted 16 of them). So the honest figure is
+**about 900 to 960 people** by 21 October. GA cannot be corrected after the
+fact (it does not accept back-dated visits, and adding estimated users would be
+inventing data), so say "about 900" and, if asked, that a month of analytics
+was partly lost. GA also never counts people with ad blockers, before or after
+this, so every GA total is a floor.
+
 ---
 
 ## 12. Who has looked at this
