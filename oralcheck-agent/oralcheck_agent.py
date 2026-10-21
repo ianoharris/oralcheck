@@ -2721,7 +2721,11 @@ def run_pipeline(
         try:
             return _run_reel3d(brief, pillar, idea)
         except Exception as exc:  # noqa: BLE001
-            # A failed 3D render must not cost the week's reel.
+            # A failed 3D render must not cost the week's reel. The calendar
+            # builds ahead of time and can simply retry, so it opts out
+            # (REEL_NO_FALLBACK=1) rather than ship the reel Ian rated "meh".
+            if os.environ.get("REEL_NO_FALLBACK") == "1":
+                raise
             log.error("3D reel failed (%s); building the classic reel instead.", exc)
     # Reels use their own script format (kinetic-typography segments), not the
     # single-hook content schema, so they bypass generate_content entirely.

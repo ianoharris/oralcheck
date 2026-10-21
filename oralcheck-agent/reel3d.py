@@ -191,7 +191,10 @@ def _render_frames(scene_plan: dict, total: float, out_mp4: str) -> None:
         t0 = time.time()
         for i in range(n):
             page.evaluate(f"window.render({i / FPS})")
-            ff.stdin.write(page.screenshot(type="jpeg", quality=92))
+            # A busy machine (another build, another render) can take well over
+            # the 30s default per frame; on 21 Oct that silently swapped a 3D
+            # reel for the classic fallback.
+            ff.stdin.write(page.screenshot(type="jpeg", quality=92, timeout=300000))
             if i % 150 == 0:
                 log.info("3D frame %d/%d (%.0fs)", i, n, time.time() - t0)
         browser.close()

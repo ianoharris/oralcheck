@@ -183,6 +183,8 @@ def plan(start: date, weeks: int) -> dict:
 
 def build(only: str | None = None) -> None:
     """Render every planned post. Resumable: built posts are skipped."""
+    import os
+    os.environ.setdefault("REEL_NO_FALLBACK", "1")   # retry a failed 3D reel, never swap in the classic one
     import oralcheck_agent as A
 
     cal = load()
