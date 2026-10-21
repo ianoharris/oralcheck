@@ -10,7 +10,7 @@ The running list. Two rules:
    named. This is the list's whole purpose: the things that come up once, sound
    good, and are never mentioned again.
 
-Last updated: 2026-10-20
+Last updated: 2026-10-21
 
 **Mirrored to an artifact Ian reads:**
 https://claude.ai/code/artifact/cc490e4b-1ee3-4062-bc56-eada066f1003
@@ -54,13 +54,18 @@ Update both together. See `AGENTS.md`.
         approved posts 3 days ahead through Publora, so the 3-post cap is never
         exceeded), redo notes fed back into the rewrite, decisions tied to a
         post version so a rebuilt post comes back undecided, tests.
-      - **In progress:** building all 30 on the laptop (about 4 hours, mostly
-        the reels), then publishing the review page.
+      - **Pushed 2026-10-21** (commit 4bba2c7). The daily job ran once by
+        hand on GitHub and succeeded (nothing approved yet, so nothing sent).
+      - **In progress:** building on the laptop. 18 of 30 built; the first
+        run stopped overnight with the session and was resumed 21 Oct. One
+        carousel had crashed on a pre-existing bug (a site screenshot's
+        credit was a string, not a credit record); fixed and rebuilt. Then
+        the review page gets published.
       - **Waiting on Ian:** mark every post on the review page. **The 27 Oct
         reel needs a decision by Fri 24 Oct**, since the daily job schedules 3
         days ahead and skips anything whose date has passed.
       - **Then:** apply decisions, rebuild redos, upload approved media to the
-        `calendar-2026-fall` release, push the code. Media goes on a release
+        `calendar-2026-fall` release, push calendar.json. Media goes on a release
         rather than into git; the repo is public, so approved posts are
         downloadable from there a few days before they go out.
 
@@ -366,6 +371,15 @@ Update both together. See `AGENTS.md`.
 ## Shipped
 
 Newest first.
+
+### 2026-10-21
+- **3D reels, original-look posts, and the posting calendar are live on
+  master** (commit 4bba2c7). Reels render as narrated 3D scenes with the
+  classic reel as fallback; posts use the original layouts; the Monday run is
+  paused; `calendar.yml` runs daily at 13:00 UTC and was test-run once.
+- **Carousels built from a site screenshot no longer crash.** The caption's
+  photo credit expected a credit record and got the string "oralcheck.org".
+  Our own page needs no credit line. Found by the calendar build.
 
 ### 2026-10-08
 - **The settled tobacco plus alcohol figure is in the social topic bank.**
