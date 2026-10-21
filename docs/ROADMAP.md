@@ -61,6 +61,9 @@ Update both together. See `AGENTS.md`.
         carousel had crashed on a pre-existing bug (a site screenshot's
         credit was a string, not a credit record); fixed and rebuilt. Then
         the review page gets published.
+      - **Review page published 2026-10-21** with 18 posts:
+        https://claude.ai/artifact/6EAh4JWYH2K9Jub8ViNshy (decisions are saved
+        in its database, collection `decisions`). Republished as the rest finish.
       - **Waiting on Ian:** mark every post on the review page. **The 27 Oct
         reel needs a decision by Fri 24 Oct**, since the daily job schedules 3
         days ahead and skips anything whose date has passed.

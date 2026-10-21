@@ -230,7 +230,7 @@ $("all").addEventListener("click", async () => {
 
 render();
 (async () => {
-  db = await claude.use("db");
+  db = typeof claude !== "undefined" ? await claude.use("db") : null;
   if (!db) {
     $("status").hidden = false;
     $("status").textContent = "Decisions can only be saved when this page is open signed in to claude.ai. You can still look through every post.";
