@@ -41,16 +41,11 @@ Update both together. See `AGENTS.md`.
 
 ### Content and growth
 
-- [ ] **Stale SEER figures outside the articles (found 2026-10-21).** The
-      article audit turned up copies the 2026-08-30 consolidation missed:
-      `public/llms.txt` (54,000 cases, "over 84%" survival), the `sex`
-      explanation in `messages/en.json` and its translations (men "roughly
-      twice"), the draft `content/drafts/2026-06-29-oral-cancer-risk-factors.md`
-      (men "roughly twice"), and an idea brief in `oralcheck-agent/ideas.json`
-      (54,000). The oropharyngeal article's "men about four times" is an
-      HPV-oropharyngeal figure, not the SEER oral cavity and pharynx ratio, and
-      was left alone. Several articles also attribute claims to the ADA, USPSTF,
-      JCO and CDC without a link; worth linking real sources.
+- [ ] **Link the sources articles attribute claims to (found 2026-10-21).**
+      Several published articles credit the ADA, USPSTF, Journal of Clinical
+      Oncology and CDC without a link. The claims look accurate and none is a
+      quote or endorsement, but the house rule is to cite a real source with a
+      link. The stale-figure half of this item shipped the same day, see Shipped.
 - [ ] **Posting calendar: 30 posts, 27 Oct 2026 to 1 Jan 2027 (started
       2026-10-20).** Ian asked to stop the weekly back and forth and plan the
       whole autumn at once: 3 a week for 10 weeks, 10 reels (3D), 10 carousels
@@ -384,6 +379,19 @@ Update both together. See `AGENTS.md`.
 ## Shipped
 
 Newest first.
+
+### 2026-10-21 (later still)
+- **Stale SEER figures outside the articles corrected** (same branch,
+  `claude/article-house-rules-audit`, not yet pushed or deployed).
+  `public/llms.txt`: 54,000 cases and "over 84%" survival became about 60,480
+  projected for 2026 and about 89% localized / 36% distant; its title's em dash
+  became a colon. The sex explanation on the results page: men "roughly twice"
+  became 2.6 times in English, Spanish and Portuguese, with both i18n snapshots
+  updated to match so the next sync does not retranslate over the edit. Same
+  fix in the risk-factors draft. The July Tour de France idea brief in
+  `oralcheck-agent/ideas.json` now says about 60,480 for 2026. The only
+  remaining "84%" mentions are the agent's regression test and comment that
+  check the old figure stays out.
 
 ### 2026-10-21 (later)
 - **Published articles brought back in line with the house rules.** Committed
