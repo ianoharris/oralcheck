@@ -41,23 +41,6 @@ Update both together. See `AGENTS.md`.
 
 ### Content and growth
 
-- [ ] **Two site changes waiting for Ian's go (21 Oct).** Both built by
-      agents on their own branches, verified in a browser at phone, tablet and
-      desktop widths and in all three languages; neither is merged or deployed.
-      - `/results` cleanup (branch `worktree-agent-a356088ed25a8506d`): next
-        steps now come straight after the result, one booking button per band,
-        the gauge track is visible, share and retake are quiet links. Note:
-        `results_primary_cta` no longer fires on elevated and high, since that
-        button is gone there.
-      - `/learn` condensed (branch `worktree-agent-a96ccdf509ae80eb7`): the grid
-        had 9 cards, so 3 came off it to make 2 rows of 3 (Facts & Stats, HPV,
-        Prevention, which overlap other cards; the pages and their links are
-        untouched). Articles show the 5 newest with a "Load more" button, all
-        links still in the HTML for search engines.
-      - Found on the way, not fixed: on a symptom result the gauge reads a low
-        green score next to a red "see a dentist soon" badge; /learn renders
-        blank with "reduce motion" switched on (also live today).
-
 - [ ] **Posting calendar: 30 posts, 27 Oct 2026 to 1 Jan 2027 (started
       2026-10-20).** Ian asked to stop the weekly back and forth and plan the
       whole autumn at once: 3 a week for 10 weeks, 10 reels (3D), 10 carousels
@@ -405,7 +388,18 @@ Update both together. See `AGENTS.md`.
 
 Newest first.
 
-### 2026-10-21 (evening): SEO keywords and a grounded article writer (not yet pushed)
+### 2026-10-21 (night): results and Learn pages live
+- **Merged and pushed on Ian's go**, after a clean production build. The
+  `/results` cleanup: next steps straight after the result, one booking
+  button per band, a visible gauge track, share and retake as quiet links
+  (`results_primary_cta` no longer fires on elevated and high). The `/learn`
+  page: 2 rows of 3 guide cards (Facts & Stats, HPV and Prevention came off
+  the grid, their pages untouched) and the 5 newest articles with Load more.
+- Still open from that work: on a symptom result the gauge shows a low green
+  score beside a red "see a dentist soon" badge; /learn renders blank with
+  "reduce motion" on.
+
+### 2026-10-21 (evening): SEO keywords and a grounded article writer (pushed 21 Oct)
 - **37 new SEO keywords** (51 in all), from Google autocomplete for oral
   cancer search terms: look-alikes ("leukoplakia vs thrush", "geographic
   tongue vs oral cancer"), throat and neck ("lump in neck under jaw"),
@@ -423,7 +417,7 @@ Newest first.
 - **Three drafts from the summer are still unpublished** (risk factors, HPV
   connection, alcohol and tobacco), waiting on Ian at `/review/<slug>`.
 
-### 2026-10-21 (late): fixes from Ian's calendar review (not yet pushed)
+### 2026-10-21 (late): fixes from Ian's calendar review (pushed 21 Oct)
 - **Pictures come from the topic, not a stock search.** `topics.VISUAL`
   gives every topic a 3D still of the place in the mouth, one of the two
   attributed clinical photos, a stock photo of a literal subject that a
@@ -454,7 +448,7 @@ Newest first.
 
 ### 2026-10-21 (later)
 - **Learn page condensed: six guide cards and a "Load more" article list.**
-  Not yet pushed (branch `worktree-agent-a96ccdf509ae80eb7`). The card grid on
+  Pushed 21 Oct. The card grid on
   `/learn` is now two rows of three on desktop. Facts & Stats, HPV, and
   Prevention left the grid because the Overview and Risk Factors cards cover
   most of the same ground; their pages, the sitemap, the footer links, and the
@@ -465,7 +459,7 @@ Newest first.
   string in English, Spanish, and Portuguese.
 
 ### 2026-10-21
-- **Results page cleanup** (not yet pushed). Ian called `/results` messy.
+- **Results page cleanup** (pushed 21 Oct). Ian called `/results` messy.
   What was actually wrong: the gauge's grey track was the same colour as the
   card behind it, so it disappeared and a low score drew as a lone green blob
   beside the needle (the loading skeleton was invisible the same way); about
