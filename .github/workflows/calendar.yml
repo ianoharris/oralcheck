@@ -1,0 +1,57 @@
+name: OralCheck Posting Calendar
+
+# Daily: hands each approved calendar post to Publora a few days before its
+# date. Publora's plan holds three scheduled posts at a time, so posts are
+# released on a rolling basis rather than all at once. The calendar itself
+# (oralcheck-agent/calendar/calendar.json) is built and reviewed locally; the
+# media lives on the GitHub release named in post_calendar.RELEASE.
+on:
+  schedule:
+    - cron: '0 13 * * *'   # every day 13:00 UTC (~8am Central)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: posting-calendar
+  cancel-in-progress: false
+
+jobs:
+  drip:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: oralcheck-agent
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install Python deps
+        run: pip install anthropic httpx pillow python-dotenv playwright
+      - name: Schedule what is due
+        env:
+          PYTHONUNBUFFERED: '1'
+          GH_TOKEN: ${{ github.token }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          PUBLORA_API_KEY: ${{ secrets.PUBLORA_API_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          IMGBB_API_KEY: ${{ secrets.IMGBB_API_KEY }}
+        run: python post_calendar.py drip
+      - name: Save calendar state
+        working-directory: .
+        run: |
+          git config user.name "OralCheck Bot"
+          git config user.email "bot@oralcheck.org"
+          git add oralcheck-agent/calendar/calendar.json oralcheck-agent/schedule.json
+          git diff --staged --quiet && exit 0
+          git commit -m "chore: calendar state [skip ci]"
+          for attempt in 1 2 3 4 5; do
+            git push && exit 0
+            git pull --rebase --autostash origin master || exit 1
+            sleep $((attempt * 3))
+          done
+          exit 1

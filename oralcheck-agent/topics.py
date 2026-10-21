@@ -299,63 +299,52 @@ TOPICS: dict[str, dict] = {
 
 # ── shapes ────────────────────────────────────────────────────────────────────
 # The structure of a post, independent of its subject. `needs` is the topic tag
-# a shape requires (None means any topic works). `templates` are the posts2 or
-# reel2 visuals the content step should build it from.
+# a shape requires (None means any topic works). `templates` are the layouts
+# (posts) or reel2 visuals (reels) the content step should build it from.
 
 SHAPES: dict[str, dict[str, dict]] = {
+    # Posts use the original renderers (render_html.py): Ian preferred them to
+    # the posts2 templates (2026-10-20), so `templates` here names the old
+    # layouts the content step should lean on.
     "carousel": {
-        "quiz": dict(needs=None, templates=["quiz", "answer", "list", "cta"],
-                     desc="Opens on a multiple-choice question about the topic, answers it on slide 2, then explains why."),
-        "myth_fact": dict(needs="myth", templates=["cover", "split", "poster", "cta"],
-                          desc="States a belief people genuinely hold, then takes it apart one slide at a time."),
-        "guide": dict(needs="steps", templates=["cover", "mouthmap", "step", "cta"],
-                      desc="A short illustrated how-to: one action per slide, drawn on the mouth diagram."),
-        "compare": dict(needs="pair", templates=["cover", "compare", "list", "cta"],
+        "myth_fact": dict(needs="myth", templates=["myth", "checklist"],
+                          desc="States a belief people genuinely hold, then takes it apart."),
+        "compare": dict(needs="pair", templates=["compare", "checklist"],
                         desc="Two things that get confused, side by side, ending on how to tell them apart."),
-        "notes": dict(needs="list", templates=["notes", "list", "cta"],
-                      desc="Written like a phone note or checklist someone saved for themselves."),
-        "timeline": dict(needs="timeline", templates=["cover", "calendar", "list", "cta"],
-                         desc=("The two-week rule laid out on a calendar: what normally clears inside the window "
-                               "and what still being there on day 15 means. Never imply symptoms arrive in a set order.")),
-        "by_the_numbers": dict(needs="stat", templates=["bignum", "bignum", "split", "cta"],
-                               desc="One figure per slide, each with one line of meaning."),
-        "where_to_look": dict(needs="site", templates=["cover", "mouthmap", "step", "cta"],
-                              desc="A tour of one place in the mouth: where it is, what normal looks like, what is not."),
+        "self_check": dict(needs="steps", templates=["steps", "checklist"],
+                           desc="Something the reader can do while holding the phone, one action at a time."),
+        "timeline": dict(needs="timeline", templates=["timeline", "compare"],
+                         desc=("The two-week rule given a shape: what normally clears inside the window and "
+                               "what still being there on day 15 means. Never imply symptoms arrive in a set order.")),
+        "by_the_numbers": dict(needs="stat", templates=["bignumber", "checklist"],
+                               desc="One figure at full size, then what it means and what to do about it."),
+        "for_you_if": dict(needs=None, templates=["qualifier", "checklist"],
+                           desc="Names the reader precisely so the right person stops scrolling, then tells them what to do."),
+        "reference_card": dict(needs="list", templates=["checklist", "receipt"],
+                               desc="A plain, document-like reference card built to be saved."),
+        "question": dict(needs=None, templates=["question", "steps"],
+                         desc="Opens on one quiet question the reader answers about their own mouth."),
     },
+    # Reels are 3D (reel3d.py) since 2026-10-20. Every shot points at a real
+    # structure; `templates` are informational, the foci come from TOPIC_FOCI.
     "reel": {
-        "quiz": dict(needs=None, templates=["quiz", "text", "cta"],
-                     desc="Asks the viewer a question with a countdown, then reveals and explains the answer."),
-        "myth": dict(needs="myth", templates=["myth", "text", "icons", "cta"],
-                     desc="Names a belief, strikes it out, and replaces it with what is true."),
-        "explainer": dict(needs="site", templates=["mouthmap", "text", "cta"],
-                          desc="Animated walk around the mouth diagram, lighting each place as it is named."),
-        "two_weeks": dict(needs="timeline", templates=["calendar", "text", "cta"],
-                          desc=("A calendar fills day by day to the two-week mark while the voice explains what should have "
-                               "cleared by then. Never imply symptoms arrive in a set order.")),
-        "show_me": dict(needs="photo", templates=["photo", "text", "cta"],
-                        desc="Shows a real clinical photo and walks through what the eye should notice."),
-        "list": dict(needs="list", templates=["icons", "text", "cta"],
-                     desc="A short spoken list, each item landing with its own icon."),
-        "one_number": dict(needs="stat", templates=["stat", "bars", "cta"],
-                           desc="Builds to a single figure, then shows what it means with bars."),
+        "tour": dict(needs=None, templates=["3d: 3 or 4 places in turn"],
+                     desc="Moves through three or four places in the mouth, one spoken line and one label each."),
+        "close_look": dict(needs="site", templates=["3d: one structure from several angles"],
+                           desc="Stays on one structure: where it is, what normal looks like, what to watch for."),
+        "self_check": dict(needs="steps", templates=["3d: one step per shot"],
+                           desc="A check the viewer can do along with the video, one step per shot."),
+        "what_to_watch": dict(needs="sign", templates=["3d: the sign, then where it shows up"],
+                              desc="Names one warning sign, then shows the places it most often appears."),
     },
     "image": {
-        "poster": dict(needs=None, templates=["poster"],
-                       desc="One bold sentence, big enough to read from across a room."),
-        "big_number": dict(needs="stat", templates=["bignum"],
-                           desc="One figure, huge, with a single line explaining it."),
-        "textpost": dict(needs=None, templates=["textpost"],
-                         desc="Looks like a short text post: plain, conversational, a thought worth sharing."),
-        "notes": dict(needs="list", templates=["notes"],
-                      desc="A phone-note style checklist someone would screenshot."),
-        "this_or_that": dict(needs="pair", templates=["split"],
-                             desc="Two halves, two things, one difference that matters."),
-        "photo": dict(needs="photo", templates=["photo"],
-                      desc="A real clinical photo with two or three short highlighted lines over it."),
-        "calendar": dict(needs="timeline", templates=["calendar"],
-                         desc="The fourteen-day calendar with day 15 flagged."),
-        "diagram": dict(needs="site", templates=["mouthmap"],
-                        desc="The mouth diagram with one place highlighted and labelled."),
+        # One photo with one line over it; the shape only changes how the line is written.
+        "statement": dict(needs=None, templates=["photo + hook"],
+                          desc="One calm sentence over a real photo that fits the subject."),
+        "question": dict(needs=None, templates=["photo + hook"],
+                         desc="One direct question over a real photo that fits the subject."),
+        "number": dict(needs="stat", templates=["photo + hook"],
+                       desc="One figure and what it means, over a real photo that fits the subject."),
     },
 }
 
@@ -450,6 +439,10 @@ def _last_seen(ledger: dict, field: str) -> dict[str, float]:
     seen: dict[str, float] = {}
     for i in ledger.get("ideas", []):
         val = i.get(field) or (infer_topic(i) if field == "topic" else None)
+        # Shapes are looked up per format ("reel:quiz"), since the same name
+        # can mean different things in different formats.
+        if field == "shape" and val:
+            val = f"{i.get('media_type', '')}:{val}"
         if not val:
             continue
         if i.get("used_at"):
@@ -461,7 +454,7 @@ def _last_seen(ledger: dict, field: str) -> dict[str, float]:
 
 
 def plan_slots(ledger: dict, media_list: list[str], *, seed: int | None = None,
-               light_every: int = 4) -> list[dict]:
+               light_every: int = 0) -> list[dict]:
     """Assign topic, shape, hook and tone to each requested format slot.
 
     Least recently used wins for topics and shapes; ties break randomly so two
@@ -483,17 +476,28 @@ def plan_slots(ledger: dict, media_list: list[str], *, seed: int | None = None,
         shapes = SHAPES[media]
         order = sorted(shapes, key=lambda s: (shape_seen.get(f"{media}:{s}", 0.0), rng.random()))
         picked = None
-        for shape in order:
-            if shape in used_shapes.get(media, set()):
-                continue
-            need = shapes[shape]["needs"]
-            pool = [k for k, t in TOPICS.items()
-                    if k not in used_topics and (need is None or need in t["tags"])]
-            if not pool:
-                continue
-            topic = min(pool, key=lambda k: (topic_seen.get(k, 0.0), rng.random()))
-            picked = (shape, topic)
-            break
+        # A batch can hold more posts of a format than there are shapes (a
+        # month of images, 3 image shapes): once every shape has been used,
+        # start the rotation again instead of dropping the slot.
+        if len(used_shapes.get(media, set())) >= len(shapes):
+            used_shapes[media] = set()
+        # First pass keeps shapes fresh within the batch; if every fresh shape
+        # needs a kind of topic that has run out, a repeated shape beats a
+        # dropped post.
+        for fresh_only in (True, False):
+            for shape in order:
+                if fresh_only and shape in used_shapes.get(media, set()):
+                    continue
+                need = shapes[shape]["needs"]
+                pool = [k for k, t in TOPICS.items()
+                        if k not in used_topics and (need is None or need in t["tags"])]
+                if not pool:
+                    continue
+                topic = min(pool, key=lambda k: (topic_seen.get(k, 0.0), rng.random()))
+                picked = (shape, topic)
+                break
+            if picked:
+                break
         if not picked:
             continue
         shape, topic = picked
@@ -517,15 +521,48 @@ def plan_slots(ledger: dict, media_list: list[str], *, seed: int | None = None,
 def slot_brief(n: int, slot: dict) -> str:
     """The prompt block describing one slot to the model."""
     t = TOPICS[slot["topic"]]
-    shape = SHAPES[slot["media_type"]][slot["shape"]]
-    tone = ("Warm and gently witty, still respectful. Never a joke at a patient's expense."
-            if slot["tone"] == "light" else "Calm and direct.")
+    # Ideas suggested before a shape was retired still carry its name.
+    shape = SHAPES.get(slot["media_type"], {}).get(slot.get("shape") or "")
+    # A "light" tone existed until 2026-10-20; Ian found the feed too playful,
+    # so every slot is now written calm and clinical, whatever the ledger says.
+    tone = "Calm, clinical and direct. No jokes, no wordplay."
     facts = "\n".join(f"      - {f}" for f in t["facts"])
     return (
         f"  Slot {n}: a {slot['media_type']}\n"
         f"    topic: {slot['topic']}  (oralcheck.org{t['page']})\n"
         f"    facts you may use, and nothing beyond them:\n{facts}\n"
-        f"    shape: {slot['shape']}: {shape['desc']}\n"
-        f"    hook: {slot['hook_style']}: {HOOKS[slot['hook_style']]}\n"
+        + (f"    shape: {slot['shape']}: {shape['desc']}\n" if shape else "")
+        + f"    hook: {slot['hook_style']}: {HOOKS[slot['hook_style']]}\n"
         f"    tone: {tone}"
     )
+
+
+# ── 3D reel foci ──────────────────────────────────────────────────────────────
+# Which reel3d.FOCI a topic's shots may point at. A reel only shows structures
+# the topic is actually about; "overview" and "cta" are always allowed.
+TOPIC_FOCI: dict[str, list[str]] = {
+    "tongue_sides": ["tongue", "floor"],
+    "floor_of_mouth": ["floor", "tongue"],
+    "lower_lip_sun": ["lips"],
+    "gums_mimic": ["gums", "teeth"],
+    "throat_hpv_site": ["throat", "nodes"],
+    "neck_lump": ["nodes", "glands"],
+    "hpv_throat_symptoms": ["throat", "nodes"],
+    "hpv_overtook_tobacco": ["throat", "tongue"],
+    "hpv_who": ["throat", "nodes"],
+    "hpv_is_common": ["throat"],
+    "hpv_vaccine": ["throat"],
+    "dentist_screening": ["teeth", "gums", "tongue", "floor"],
+    "monthly_self_exam": ["lips", "gums", "tongue", "floor", "throat", "nodes"],
+    "biopsy": ["tongue", "gums"],
+    "low_cost_care": ["teeth", "gums"],
+}
+_SIGN_SITES = ["tongue", "floor", "gums", "lips"]
+for _k in ("red_patch", "white_patch", "speckled_patch", "wipe_test", "lookalikes", "canker_vs_cancer",
+           "edges_and_bleeding", "painless", "two_week_rule", "tobacco_all_forms", "quitting", "alcohol",
+           "tobacco_plus_alcohol", "betel_quid"):
+    TOPIC_FOCI.setdefault(_k, _SIGN_SITES)
+
+
+def foci_for(topic: str | None) -> list[str]:
+    return ["overview"] + TOPIC_FOCI.get(topic or "", ["tongue", "floor", "gums"])

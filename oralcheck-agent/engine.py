@@ -397,3 +397,68 @@ def _check_visual(v: dict) -> None:
 def render_reel(spec: dict, out_path: str, *, tts, music: str | None = None) -> str:
     reel2.build({"beats": spec["beats"]}, out_path, tts=tts, music=music)
     return out_path
+
+
+# ── 3D reels ──────────────────────────────────────────────────────────────────
+
+def write_reel3d(idea: dict, ask) -> dict:
+    """Ask for a reel3d shot plan for one idea and return it validated.
+
+    Shots may only point at the structures the topic is about
+    (topics.foci_for), so a reel about the lips never wanders to the tonsils.
+    """
+    import reel3d
+    allowed = topics.foci_for(idea.get("topic"))
+    foci_lines = "\n".join(f"  {k}: {reel3d.FOCI[k]['view'] or 'the whole mouth'}" for k in allowed)
+    prompt = (
+        f"Write a faceless 3D Instagram Reel for OralCheck.\n\n{_slot_block(idea)}\n\n"
+        "The video shows a real 3D model of the mouth in a calm, clinical style. Each shot is one "
+        "spoken sentence; the camera moves to that shot's focus, the structure turns teal, and an "
+        "optional label appears beside it.\n\n"
+        f"Foci you may use (no others):\n{foci_lines}\n\n"
+        "Rules:\n"
+        "  - 3 to 5 shots, 40 to 60 spoken words in total. The first shot's `say` is the hook line "
+        "and uses focus overview. Do not write the closing call to action, it is added for you.\n"
+        "  - Each `say` is one sentence of at most 14 words, written to be heard.\n"
+        "  - Do not use the same focus twice in a row.\n"
+        "  - A shot with a focus other than overview gets a label: k (2 to 4 word eyebrow), t (the "
+        "structure or idea, at most 4 words), d (one instruction or fact, at most 9 words).\n"
+        "  - The focus names above say where the camera points, not what is true. Never name an "
+        "anatomical structure more specifically than the facts do (if the facts say 'a lump in the "
+        "neck', do not say which nodes).\n"
+        "  - Only the facts given. Calm and clinical: no jokes, no exclamation marks, never 'we'. "
+        "Survival: 'while still localized', 'once it has spread to distant sites', never Stage I or IV. "
+        "Never present a home check as a test or a diagnosis. No em dashes.\n\n"
+        'Return only JSON: {"shots": [{"say": "...", "focus": "...", "label": {"k": "", "t": "", "d": ""} or null}], '
+        '"caption": "50 to 120 words ending with a call to action naming oralcheck.org", '
+        '"hashtags": [5 lowercase tags]}'
+    )
+
+    def check(data):
+        shots = [s for s in data.get("shots", []) if isinstance(s, dict)]
+        for s in shots:
+            if s.get("focus") not in allowed:
+                s["focus"] = "overview"
+            for k, v in list(s.items()):
+                if isinstance(v, str):
+                    s[k] = _tidy(v)
+            if isinstance(s.get("label"), dict):
+                s["label"] = {k: _tidy(s["label"].get(k, "")) for k in ("k", "t", "d")}
+        data["shots"] = shots
+        if len(shots) < 2:
+            return "3D plan had fewer than 2 shots", []
+        problems = _worn([s.get("say", "") for s in shots] + [data.get("caption", "")])
+        foci = [s["focus"] for s in shots]
+        if any(a == b for a, b in zip(foci, foci[1:])):
+            problems.append("the same focus is used twice in a row")
+        words = sum(len(str(s.get("say", "")).split()) for s in shots)
+        if words > 70:
+            problems.append(f"script runs {words} words; keep it to 40 to 60")
+        return None, problems
+
+    data = _attempt(prompt, ask, check)
+    plan = reel3d.validate({"shots": data["shots"]})
+    data["shots"] = plan["shots"]
+    data.setdefault("hook", data["shots"][0]["say"])
+    # Share-alike: the credit rides in the caption as well as on screen.
+    return _finish(data, [reel3d.CREDIT])

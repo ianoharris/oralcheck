@@ -422,6 +422,37 @@ def main() -> int:
     except Exception as exc:                        # pragma: no cover
         failures.append(("hold_motion_probe", str(exc)[:120]))
 
+    # --- the 3D reel scene loads and draws in software WebGL -----------------
+    # CI has no GPU, so this is the same SwiftShader path the Monday run uses.
+    # A scene that fails to load (a bad import, a missing asset) would
+    # otherwise only show up as a reel that fell back to the classic look.
+    try:
+        import reel3d as _R3
+        f = _R3.FOCI["overview"]   # opaque and fully lit, unlike a ghosted shot at t=0
+        plan = {"shots": [{"t0": 0, "len": 1, "focus": f["focus"], "ghost": f["ghost"], "cam": f["cam"],
+                           "view": f["view"], "label": None, "tap": 0.1,
+                           "words": [{"text": "Test", "start": 0, "end": 0.3}], "step": "01 / 01"}],
+                "cta_t0": 99, "credit": _R3.CREDIT}
+        mp4 = str(OUT_DIR / "reel3d_smoke.mp4")
+        fps0 = _R3.FPS
+        _R3.FPS = 5
+        try:
+            _R3._render_frames(plan, 0.6, mp4)
+        finally:
+            _R3.FPS = fps0
+        import subprocess as _sp
+        png = str(OUT_DIR / "reel3d_smoke.png")
+        _sp.run(["ffmpeg", "-y", "-loglevel", "error", "-i", mp4, "-frames:v", "1", png], check=True)
+        from PIL import ImageStat
+        # Measured over the model's part of the frame, not the plain background.
+        spread = max(ImageStat.Stat(Image.open(png).convert("L").crop((100, 250, 980, 1150))).stddev)
+        if spread < 5:    # a blank frame measures near 0; the clinical palette sits around 10
+            failures.append(("reel3d_blank", f"3D frame looks blank (pixel spread {spread:.1f})"))
+        else:
+            print(f"  [PASS] 3D reel scene renders in software WebGL (pixel spread {spread:.0f})")
+    except Exception as exc:                        # pragma: no cover
+        failures.append(("reel3d_smoke", str(exc)[:160]))
+
     # --- reel photos stay inside the attributed set ---------------------------
     # `sore` and `lip` have no attribution recorded anywhere in the repo (see
     # ROADMAP.md). Reels can now request a real clinical photo per segment;

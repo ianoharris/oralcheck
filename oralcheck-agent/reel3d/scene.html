@@ -1,0 +1,285 @@
+<!doctype html>
+<!--
+  3D reel scene. reel3d.py loads this page in headless Chromium, sets
+  window.PLAN, then calls render(t) once per frame and screenshots it.
+  Everything on screen is a pure function of t, so frames line up exactly
+  with the narration.
+
+  Anatomy: Z-Anatomy (CC BY-SA 4.0), derived from BodyParts3D (DBCLS).
+  See ATTRIBUTION.md. three.js is MIT.
+-->
+<html><head><meta charset="utf-8">
+<style>
+  /* Local copies (OFL) so a render never waits on the network. */
+  @font-face{font-family:"Source Sans 3";src:url("SourceSans3.ttf") format("truetype");font-weight:200 900;font-display:block}
+  @font-face{font-family:"JetBrains Mono";src:url("JetBrainsMono.ttf") format("truetype");font-weight:100 800;font-display:block}
+  html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:#eceff0;font-family:"Source Sans 3",sans-serif;color:#15201f}
+  canvas{position:absolute;inset:0}
+  #ui{position:absolute;inset:0;pointer-events:none}
+  .chrome{position:absolute;top:120px;left:72px;right:72px;display:flex;justify-content:space-between;align-items:center;
+          font:500 22px "JetBrains Mono",monospace;letter-spacing:.12em;color:#5d6c6b;text-transform:uppercase}
+  .brand{display:flex;align-items:center;gap:14px;font-family:"Source Sans 3";font-weight:700;letter-spacing:.02em;text-transform:none;font-size:30px;color:#15201f}
+  .dot{width:12px;height:12px;border-radius:50%;background:#0d7377}
+  .rule{position:absolute;top:176px;left:72px;right:72px;height:1px;background:#c9d1d1}
+  .view{position:absolute;top:196px;left:72px;font:500 20px "JetBrains Mono",monospace;letter-spacing:.14em;color:#8a9796;text-transform:uppercase}
+  #label{position:absolute;opacity:0}
+  #label .k{font:500 20px "JetBrains Mono",monospace;letter-spacing:.16em;color:#0d7377;text-transform:uppercase}
+  #label .t{font-weight:700;font-size:46px;line-height:1.05;margin-top:8px;max-width:420px}
+  #label .d{font-size:27px;line-height:1.3;color:#4a5958;margin-top:10px;max-width:400px}
+  svg#lead{position:absolute;inset:0;width:1080px;height:1920px}
+  #tap{position:absolute;width:60px;height:60px;margin:-30px 0 0 -30px;border-radius:50%;border:3px solid #0d7377;opacity:0}
+  #tapdot{position:absolute;width:22px;height:22px;margin:-11px 0 0 -11px;border-radius:50%;background:rgba(13,115,119,.85);opacity:0;
+          box-shadow:0 0 0 8px rgba(13,115,119,.15)}
+  #cap{position:absolute;left:72px;right:72px;top:1270px;font-weight:600;font-size:54px;line-height:1.18;color:#15201f;letter-spacing:-.005em}
+  #cap span{opacity:.2}
+  #cap span.on{opacity:1}
+  .scrub{position:absolute;left:72px;right:72px;top:1500px;height:3px;background:#d3dbdb;border-radius:2px}
+  .scrub i{position:absolute;left:0;top:0;bottom:0;background:#0d7377;border-radius:2px}
+  #cta{position:absolute;inset:0;opacity:0;display:flex;flex-direction:column;justify-content:center;padding:0 90px;
+       background:linear-gradient(180deg,rgba(246,247,247,.0) 0%,rgba(246,247,247,.86) 30%,rgba(246,247,247,.96) 60%)}
+  #cta .k{font:500 22px "JetBrains Mono",monospace;letter-spacing:.16em;color:#0d7377;text-transform:uppercase}
+  #cta .h{font-weight:700;font-size:96px;line-height:1.02;margin-top:22px;letter-spacing:-.01em}
+  #cta .u{font-weight:700;font-size:84px;color:#0d7377;margin-top:44px}
+  #cta .s{font-size:34px;color:#4a5958;margin-top:18px}
+  #credit{position:absolute;left:72px;right:72px;top:1560px;font:500 17px "JetBrains Mono",monospace;letter-spacing:.06em;color:#9aa6a5}
+</style></head>
+<body>
+<div id="ui">
+  <div class="chrome"><div class="brand"><span class="dot"></span>OralCheck</div><div id="step"></div></div>
+  <div class="rule"></div>
+  <div class="view" id="view"></div>
+  <svg id="lead"><line id="ln" stroke="#0d7377" stroke-width="2"/><circle id="lc" r="7" fill="#fff" stroke="#0d7377" stroke-width="3"/></svg>
+  <div id="label"><div class="k" id="lk"></div><div class="t" id="lt"></div><div class="d" id="ld"></div></div>
+  <div id="tap"></div><div id="tapdot"></div>
+  <div id="cap"></div>
+  <div class="scrub"><i id="scrub"></i></div>
+  <div id="cta"><div class="k">Free · Private · No account</div><div class="h" id="ctah">Check your risk in two minutes.</div>
+    <div class="u">oralcheck.org</div><div class="s">A risk check, not a diagnosis. A sore that lasts two weeks still means a dentist.</div></div>
+  <div id="credit"></div>
+</div>
+<script type="module">
+import * as THREE from "./three.min.js";
+const {GLTFLoader, RoomEnvironment, EffectComposer, RenderPass, GTAOPass, OutputPass} = THREE;
+
+const W = 1080, H = 1920;
+const PLAN = window.PLAN;
+const renderer = new THREE.WebGLRenderer({antialias: true, preserveDrawingBuffer: true});
+renderer.localClippingEnabled = true;
+renderer.setPixelRatio(1); renderer.setSize(W, H);
+renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 0.92;
+document.body.insertBefore(renderer.domElement, document.getElementById("ui"));
+
+const scene = new THREE.Scene();
+{ const c = document.createElement("canvas"); c.width = 540; c.height = 960; const x = c.getContext("2d");
+  const g = x.createRadialGradient(270, 400, 20, 270, 400, 760);
+  g.addColorStop(0, "#fbfcfc"); g.addColorStop(.55, "#eef1f2"); g.addColorStop(1, "#dfe5e6");
+  x.fillStyle = g; x.fillRect(0, 0, 540, 960);
+  const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace; scene.background = tex; }
+scene.environment = new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(), 0.04).texture;
+const key = new THREE.DirectionalLight(0xffffff, 2.1); key.position.set(1.1, 1.0, 0.7); scene.add(key);
+const rim = new THREE.DirectionalLight(0xdff3f3, 0.8); rim.position.set(-1, 0.4, -0.8); scene.add(rim);
+
+const camera = new THREE.PerspectiveCamera(24, W / H, 0.001, 50);
+const composer = new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene, camera));
+const ao = new GTAOPass(scene, camera, W, H); ao.blendIntensity = 1.0; composer.addPass(ao);
+composer.addPass(new OutputPass());
+
+// Atlas-style section through the upper jaw. The AO pass draws with its own
+// material, so it needs the same cut or it shades bone that is not there.
+const CUT_Y = 0.16;
+const CUT = new THREE.Plane(new THREE.Vector3(0, -1, 0), CUT_Y);
+ao.normalMaterial.clippingPlanes = [new THREE.Plane(new THREE.Vector3(0, -1, 0), CUT_Y)];
+
+// ---- procedural surface detail (the meshes have no UVs) --------------------
+const NOISE = `
+varying vec3 vObj;
+uniform float uBump, uRoughVar, uMottleAmt, uPore, uStriate;
+uniform vec3 uTint;
+float ocHash(vec3 p){ p = fract(p * 0.3183099 + 0.1); p *= 17.0; return fract(p.x * p.y * p.z * (p.x + p.y + p.z)); }
+float ocNoise(vec3 x){ vec3 i = floor(x), f = fract(x); f = f * f * (3.0 - 2.0 * f);
+  return mix(mix(mix(ocHash(i), ocHash(i + vec3(1,0,0)), f.x), mix(ocHash(i + vec3(0,1,0)), ocHash(i + vec3(1,1,0)), f.x), f.y),
+             mix(mix(ocHash(i + vec3(0,0,1)), ocHash(i + vec3(1,0,1)), f.x), mix(ocHash(i + vec3(0,1,1)), ocHash(i + vec3(1,1,1)), f.x), f.y), f.z); }
+float ocFbm(vec3 p){ float a = 0.5, s = 0.0; for (int k = 0; k < 4; k++) { s += a * ocNoise(p); p = p * 2.03 + 11.7; a *= 0.5; } return s; }
+float ocHeight(vec3 p){
+  float broad = ocFbm(p * 120.0);
+  float fine  = ocFbm(p * 380.0);
+  float pores = smoothstep(0.70, 0.86, ocNoise(p * 1100.0));
+  float str   = sin(p.y * 2400.0 + ocFbm(p * 300.0) * 6.0) * 0.5 + 0.5;
+  return 0.55 * broad + 0.35 * fine - uPore * pores + uStriate * str;
+}
+float ocMottle(vec3 p){ return ocFbm(p * 55.0 + 3.1); }
+vec3 ocPerturb(vec3 sp, vec3 n, vec2 dH, float fd){
+  vec3 sx = normalize(dFdx(sp)), sy = normalize(dFdy(sp));
+  vec3 r1 = cross(sy, n), r2 = cross(n, sx);
+  float det = dot(sx, r1) * fd;
+  return normalize(abs(det) * n - sign(det) * (dH.x * r1 + dH.y * r2));
+}`;
+function surface(m, o) {
+  m.onBeforeCompile = sh => {
+    Object.assign(sh.uniforms, {uBump: {value: o.bump}, uRoughVar: {value: o.roughVar}, uMottleAmt: {value: o.mottle},
+      uPore: {value: o.pore}, uStriate: {value: o.striate}, uTint: {value: new THREE.Color(o.tint)}});
+    sh.vertexShader = "varying vec3 vObj;\n" + sh.vertexShader.replace("#include <begin_vertex>", "#include <begin_vertex>\nvObj = position;");
+    sh.fragmentShader = NOISE + "\n" + sh.fragmentShader
+      .replace("#include <color_fragment>", "#include <color_fragment>\n diffuseColor.rgb *= mix(vec3(1.0), uTint, uMottleAmt * ocMottle(vObj));")
+      .replace("#include <roughnessmap_fragment>", "#include <roughnessmap_fragment>\n roughnessFactor = clamp(roughnessFactor + (ocMottle(vObj * 3.0) - 0.5) * uRoughVar, 0.05, 1.0);")
+      .replace("#include <normal_fragment_maps>", "#include <normal_fragment_maps>\n { float h = ocHeight(vObj); normal = ocPerturb(-vViewPosition, normal, vec2(dFdx(h), dFdy(h)) * uBump, faceDirection); }");
+  };
+  m.customProgramCacheKey = () => JSON.stringify(o);
+  return m;
+}
+const SURF = {
+  bone:  {bump: 1.5, roughVar: 0.45, mottle: 0.9,  pore: 0.3, striate: 0.0,  tint: "#d6c29d"},
+  tooth: {bump: 0.7, roughVar: 0.2,  mottle: 0.45, pore: 0.0, striate: 0.22, tint: "#e6d6b6"},
+  soft:  {bump: 0.6, roughVar: 0.2,  mottle: 0.35, pore: 0.0, striate: 0.0,  tint: "#c99e98"},
+};
+const MAT = {
+  bone:   {color: "#ece3d2", roughness: 0.55, clearcoat: 0.15, clearcoatRoughness: 0.5},
+  tooth:  {color: "#faf8f2", roughness: 0.28, clearcoat: 0.6, clearcoatRoughness: 0.25},
+  soft:   {color: "#e2c9c4", roughness: 0.6, sheen: 0.4, sheenColor: new THREE.Color("#fff")},
+  gland:  {color: "#e6d9c9", roughness: 0.6},
+  muscle: {color: "#dcc3bd", roughness: 0.65, sheen: 0.3},
+};
+function kind(n) {
+  if (/molar|premolar|incisor|canine/i.test(n)) return "tooth";
+  if (/Mandible|Maxilla|Palatine_bone|Hyoid/.test(n)) return "bone";
+  if (/gland|nodes/i.test(n)) return "gland";
+  if (/Mylohyoid|Geniohyoid|Orbicularis/.test(n)) return "muscle";
+  return "soft";
+}
+function group(n) {
+  if (/Tongue/.test(n)) return "tongue";
+  if (/Gingiva/.test(n)) return "gums";
+  if (/Sublingual|Mylohyoid|Geniohyoid/.test(n)) return "floor";
+  if (/Submandibular_nodes/.test(n)) return "nodes";
+  if (/Submandibular_gland/.test(n)) return "glands";
+  if (/Soft_palate|Uvula|tonsil/i.test(n)) return "throat";
+  if (/Orbicularis/.test(n)) return "lips";
+  if (/Mandible|Maxilla|Palatine_bone|Hyoid/.test(n)) return "bone";
+  if (/molar|premolar|incisor|canine/i.test(n)) return "teeth";
+  return "other";
+}
+// Groups that only appear when they are the subject.
+const ON_DEMAND = new Set(["nodes", "glands", "lips"]);
+
+const groups = {};
+let ready = false;
+new GLTFLoader().load("oral.glb", g => {
+  const root = g.scene;
+  root.traverse(o => {
+    if (!o.isMesh) return;
+    const k = kind(o.name);
+    o.material = surface(new THREE.MeshPhysicalMaterial({...MAT[k], transparent: true}), SURF[k] || SURF.soft);
+    o.material.clippingPlanes = [CUT]; o.material.side = THREE.DoubleSide;
+    o.material.userData.base = o.material.color.clone();
+    o.geometry.computeVertexNormals();
+    (groups[group(o.name)] = groups[group(o.name)] || []).push(o);
+  });
+  const c = new THREE.Box3().setFromObject(root).getCenter(new THREE.Vector3());
+  root.position.copy(c).multiplyScalar(-10); root.scale.setScalar(10);
+  scene.add(root);
+  ready = true;
+});
+
+// ---- timeline ---------------------------------------------------------------
+const ease = x => x <= 0 ? 0 : x >= 1 ? 1 : 1 - Math.pow(1 - x, 4);
+const smooth = x => x <= 0 ? 0 : x >= 1 ? 1 : x * x * (3 - 2 * x);
+const span = (t, a, b) => smooth((t - a) / (b - a));
+const lerp = (a, b, k) => a + (b - a) * k;
+const TEAL = new THREE.Color("#0d7377");
+const target = new THREE.Vector3(0, -0.55, 0.05);
+const MOVE = 1.1;   // seconds to travel between shots
+
+// Most foci frame well around one shared point. A focus that sets `aim`
+// (structures far from the middle, like the tonsils) is orbited around its own
+// centre instead, offset by `aim` (positive moves the subject down the frame).
+function aimOf(sh) {
+  if (!sh.aim || !sh.focus) return target.clone();
+  return centerOf(sh.focus).add(new THREE.Vector3(0, sh.aim, 0));
+}
+function camAt(sh, k) {
+  const [a, b] = sh.cam; const kk = smooth(k);
+  const az = lerp(a[0], b[0], kk) * Math.PI / 180, el = lerp(a[1], b[1], kk) * Math.PI / 180, r = lerp(a[2], b[2], kk);
+  return new THREE.Vector3(Math.sin(az) * Math.cos(el) * r, Math.sin(el) * r, Math.cos(az) * Math.cos(el) * r).add(aimOf(sh));
+}
+function centerOf(name) {
+  const b = new THREE.Box3(); (groups[name] || []).forEach(o => b.expandByObject(o)); return b.getCenter(new THREE.Vector3());
+}
+const $ = id => document.getElementById(id);
+$("credit").textContent = PLAN.credit || "";
+
+window.render = (t) => {
+  if (!ready) return false;
+  const shots = PLAN.shots;
+  let i = shots.length - 1; while (i > 0 && t < shots[i].t0) i--;
+  const sh = shots[i], prev = shots[i - 1];
+  const local = t - sh.t0;
+
+  // camera: drift within the shot, glide in from the previous one
+  let pos = camAt(sh, local / sh.len), aim = aimOf(sh);
+  if (prev && local < MOVE) {
+    const k = ease(local / MOVE);
+    pos = camAt(prev, 1).lerp(pos, k); aim = aimOf(prev).lerp(aim, k);
+  }
+  camera.position.copy(pos); camera.lookAt(aim);
+
+  // materials: the subject turns teal, everything in `ghost` fades to glass
+  const fin = sh.focus ? span(local, 0.45, 1.1) : 0;
+  let ghostMax = 0;
+  for (const [g, list] of Object.entries(groups)) {
+    const was = prev ? (prev.ghost || []).includes(g) : false;
+    const is = (sh.ghost || []).includes(g);
+    const gk = prev && local < MOVE ? lerp(was ? 1 : 0, is ? 1 : 0, span(local, 0.1, MOVE)) : (is ? 1 : 0);
+    const prevFocus = prev && prev.focus === g ? 1 - span(local, 0, 0.6) : 0;
+    const fk = sh.focus === g ? fin : prevFocus;
+    for (const o of list) {
+      o.material.opacity = 1 - 0.62 * gk;
+      o.material.depthWrite = gk < 0.5;
+      o.material.color.copy(o.material.userData.base).lerp(TEAL, 0.85 * fk);
+      o.material.emissive = TEAL.clone().multiplyScalar(0.18 * fk);
+      // Must be a real boolean: three.js hides only objects whose visible is
+      // exactly false, and on the first shot `prev` is undefined.
+      o.visible = !ON_DEMAND.has(g) || sh.focus === g || Boolean(prev && prev.focus === g && local < 0.6);
+    }
+    ghostMax = Math.max(ghostMax, gk);
+  }
+  ao.enabled = ghostMax < 0.05;
+  composer.render();
+
+  // label, leader line and tap
+  const lab = $("label"), show = sh.label && sh.focus;
+  if (show) {
+    const p = centerOf(sh.focus).project(camera);
+    const x = (p.x * .5 + .5) * W, y = (-p.y * .5 + .5) * H;
+    const lx = x > W / 2 ? 90 : 600, ly = 330;
+    $("lk").textContent = sh.label.k || ""; $("lt").textContent = sh.label.t || ""; $("ld").textContent = sh.label.d || "";
+    lab.style.left = lx + "px"; lab.style.top = ly + "px"; lab.style.opacity = span(local, 1.25, 1.75);
+    const ax = lx > x ? lx - 24 : lx + 440, ay = ly + 60, draw = span(local, 1.05, 1.55);
+    $("ln").setAttribute("x1", x); $("ln").setAttribute("y1", y);
+    $("ln").setAttribute("x2", lerp(x, ax, draw)); $("ln").setAttribute("y2", lerp(y, ay, draw));
+    $("ln").style.opacity = $("lc").style.opacity = draw > 0 ? 1 : 0;
+    $("lc").setAttribute("cx", x); $("lc").setAttribute("cy", y);
+    const tk = local - sh.tap;
+    $("tapdot").style.left = $("tap").style.left = x + "px"; $("tapdot").style.top = $("tap").style.top = y + "px";
+    $("tapdot").style.opacity = tk > -0.3 && tk < 0.6 ? Math.min(1, (tk + 0.3) / 0.2) * (1 - span(tk, 0.35, 0.6)) : 0;
+    $("tapdot").style.transform = `scale(${tk > 0 && tk < 0.12 ? 0.8 : 1})`;
+    const rk = span(tk, 0, 0.7);
+    $("tap").style.opacity = tk > 0 ? 1 - rk : 0; $("tap").style.transform = `scale(${1 + rk * 2.2})`;
+  } else {
+    lab.style.opacity = $("ln").style.opacity = $("lc").style.opacity = $("tap").style.opacity = $("tapdot").style.opacity = 0;
+  }
+  $("view").textContent = sh.view || ""; $("step").textContent = sh.step || "";
+
+  // captions: the line sits faint, each word firms up as it is spoken
+  $("cap").innerHTML = (sh.words || []).map(w => `<span class="${t >= w.start ? "on" : ""}">${w.text}</span>`).join(" ");
+  $("scrub").style.width = Math.min(100, t / PLAN.cta_t0 * 100).toFixed(2) + "%";
+
+  // end card
+  const ck = span(t, PLAN.cta_t0, PLAN.cta_t0 + 0.7);
+  $("cta").style.opacity = ck; $("cta").style.transform = `translateY(${(1 - ck) * 24}px)`;
+  $("cap").style.opacity = 1 - ck;
+  for (const id of ["cap", "scrub", "view"]) $(id).style.visibility = ck > 0.6 ? "hidden" : "visible";
+  return true;
+};
+</script>
+</body></html>

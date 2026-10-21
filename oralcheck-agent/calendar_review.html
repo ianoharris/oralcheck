@@ -1,0 +1,252 @@
+<title>OralCheck Fall Calendar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Source+Sans+3:wght@400;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+  :root {
+    --paper: #f4f1ea; --card: #fbf9f5; --ink: #14201f; --soft: #3f5453; --muted: #7c8b8a; --hair: #ded7c8;
+    --teal: #0d7377; --teal-soft: #e0f0f0; --coral: #c9502c; --coral-soft: #f7e3dc;
+    --ok: #3f7a52; --ok-soft: #e3efe5; --warn: #9a6a12; --warn-soft: #f6ecd6; --cut: #8a8f8e; --cut-soft: #ebebe8;
+    --shadow: 0 1px 2px rgba(20,32,31,.05), 0 8px 24px -14px rgba(20,32,31,.18);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #0d1a1b; --card: #132425; --ink: #e8e4de; --soft: #b8cfd1; --muted: #6d8f91; --hair: #1f3b3d;
+      --teal: #4fc3c7; --teal-soft: #10302f; --coral: #f08163; --coral-soft: #33201c;
+      --ok: #8fc79c; --ok-soft: #15281b; --warn: #e6b65c; --warn-soft: #2e2512; --cut: #8a9696; --cut-soft: #1d2626;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px -14px rgba(0,0,0,.6);
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #0d1a1b; --card: #132425; --ink: #e8e4de; --soft: #b8cfd1; --muted: #6d8f91; --hair: #1f3b3d;
+    --teal: #4fc3c7; --teal-soft: #10302f; --coral: #f08163; --coral-soft: #33201c;
+    --ok: #8fc79c; --ok-soft: #15281b; --warn: #e6b65c; --warn-soft: #2e2512; --cut: #8a9696; --cut-soft: #1d2626;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px -14px rgba(0,0,0,.6);
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 16px/1.5 "Source Sans 3", system-ui, sans-serif;
+         padding: clamp(1.25rem, 4vw, 3rem) 16px 5rem; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 72rem; margin: 0 auto; display: flex; flex-direction: column; gap: 2.5rem; }
+  header { display: flex; flex-direction: column; gap: .5rem; }
+  .eyebrow { font: 600 .75rem/1 "Source Sans 3"; letter-spacing: .16em; text-transform: uppercase; color: var(--teal);
+             display: flex; gap: .5rem; align-items: center; }
+  .eyebrow i { width: 8px; height: 8px; border-radius: 50%; background: var(--coral); }
+  h1 { font: 400 clamp(2rem, 5vw, 2.9rem)/1.06 "DM Serif Display", Georgia, serif; margin: 0; text-wrap: balance; }
+  .lede { color: var(--soft); max-width: 40rem; margin: 0; }
+  .bar { position: sticky; top: 0; z-index: 5; background: var(--paper); padding: .75rem 0; border-bottom: 1px solid var(--hair);
+         display: flex; flex-wrap: wrap; gap: .6rem; align-items: center; }
+  .tally { display: flex; flex-wrap: wrap; gap: .4rem; }
+  .pill { font: 600 .8rem/1 "Source Sans 3"; padding: .45rem .7rem; border-radius: 999px; background: var(--card);
+          border: 1px solid var(--hair); font-variant-numeric: tabular-nums; }
+  .pill.ok { color: var(--ok); } .pill.warn { color: var(--warn); } .pill.cut { color: var(--cut); }
+  .spacer { flex: 1; }
+  button { font: 600 .85rem/1 "Source Sans 3"; border-radius: 8px; border: 1px solid var(--hair); background: var(--card);
+           color: var(--ink); padding: .55rem .8rem; cursor: pointer; }
+  button:focus-visible, textarea:focus-visible, summary:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+  button:disabled { opacity: .45; cursor: not-allowed; }
+  button.primary { background: var(--teal); border-color: var(--teal); color: var(--paper); }
+  .note { font-size: .85rem; color: var(--muted); }
+  section.week { display: flex; flex-direction: column; gap: .9rem; }
+  .wk { display: flex; align-items: baseline; gap: .75rem; }
+  .wk h2 { font: 400 1.45rem/1.1 "DM Serif Display", Georgia, serif; margin: 0; }
+  .wk span { font: 500 .72rem/1 "JetBrains Mono", monospace; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+  .grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 21rem), 1fr)); }
+  article { background: var(--card); border: 1px solid var(--hair); border-radius: 14px; box-shadow: var(--shadow);
+            display: flex; flex-direction: column; overflow: hidden; }
+  article[data-d="approve"] { border-color: var(--ok); }
+  article[data-d="redo"] { border-color: var(--warn); }
+  article[data-d="cut"] { opacity: .55; }
+  .meta { display: flex; gap: .5rem; align-items: center; padding: .85rem 1rem .5rem; flex-wrap: wrap; }
+  .when { font: 500 .78rem/1 "JetBrains Mono", monospace; letter-spacing: .04em; color: var(--soft); }
+  .tag { font: 600 .68rem/1 "Source Sans 3"; letter-spacing: .08em; text-transform: uppercase; padding: .3rem .45rem; border-radius: 5px; }
+  .tag.instagram { background: var(--coral-soft); color: var(--coral); }
+  .tag.linkedin { background: var(--teal-soft); color: var(--teal); }
+  .tag.fmt { background: transparent; border: 1px solid var(--hair); color: var(--soft); }
+  .tag.ev { background: var(--warn-soft); color: var(--warn); }
+  h3 { font: 400 1.2rem/1.2 "DM Serif Display", Georgia, serif; margin: 0; padding: 0 1rem .7rem; text-wrap: balance; }
+  .media { background: var(--paper); border-top: 1px solid var(--hair); border-bottom: 1px solid var(--hair); }
+  .strip { display: flex; gap: 6px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 8px; }
+  .strip img { flex: none; width: 78%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 6px; scroll-snap-align: start; background: var(--hair); }
+  .strip img:only-child { width: 100%; }
+  video { display: block; width: 62%; margin: 8px auto; aspect-ratio: 9 / 16; border-radius: 8px; background: #0d1a1b; }
+  .pending { padding: 2.5rem 1rem; text-align: center; color: var(--muted); font-size: .9rem; }
+  .body { padding: .8rem 1rem; display: flex; flex-direction: column; gap: .5rem; }
+  .hook { font-weight: 600; }
+  details { font-size: .9rem; color: var(--soft); }
+  summary { cursor: pointer; color: var(--teal); font-weight: 600; }
+  details p { white-space: pre-wrap; margin: .5rem 0 0; }
+  .tags { color: var(--muted); font-size: .8rem; }
+  .decide { display: grid; grid-template-columns: repeat(3, 1fr); gap: .4rem; padding: 0 1rem .6rem; }
+  .decide button[aria-pressed="true"][data-v="approve"] { background: var(--ok); border-color: var(--ok); color: var(--paper); }
+  .decide button[aria-pressed="true"][data-v="redo"] { background: var(--warn); border-color: var(--warn); color: var(--paper); }
+  .decide button[aria-pressed="true"][data-v="cut"] { background: var(--cut); border-color: var(--cut); color: var(--paper); }
+  textarea { margin: 0 1rem .4rem; font: inherit; font-size: .9rem; border: 1px solid var(--hair); border-radius: 8px;
+             padding: .5rem .6rem; background: var(--paper); color: var(--ink); resize: vertical; min-height: 2.6rem; }
+  .saved { font-size: .78rem; color: var(--muted); padding: 0 1rem .9rem; min-height: 1.2rem; }
+  @media (prefers-reduced-motion: reduce) { .strip { scroll-behavior: auto; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow"><i></i>OralCheck · 27 Oct to 1 Jan</div>
+    <h1>Thirty posts, ten weeks</h1>
+    <p class="lede">Mark each post. Approved posts go to Publora three days before their date. Anything marked redo is rebuilt with your note, anything cut is dropped, and nothing unmarked goes out.</p>
+  </header>
+
+  <div class="bar">
+    <div class="tally" id="tally"></div>
+    <div class="spacer"></div>
+    <button id="filter" aria-pressed="false">Show undecided only</button>
+    <button id="all" class="primary">Approve all undecided</button>
+  </div>
+  <p class="note" id="status" hidden></p>
+
+  <main id="weeks" class="wrap" style="gap:2.5rem"></main>
+</div>
+
+<script>
+const POSTS = /*__POSTS__*/[];
+const decisions = {};          // id -> {decision, note, v}
+const BY_ID = Object.fromEntries(POSTS.map(p => [p.id, p]));
+// A decision belongs to one version of a post; a redone post starts undecided.
+const dec = p => { const d = decisions[p.id]; return d && (d.v || 1) === (p.v || 1) ? d : {}; };
+let db = null, onlyOpen = false, confirmAll = false;
+
+const $ = id => document.getElementById(id);
+const el = (tag, attrs = {}, ...kids) => {
+  const n = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs)) {
+    if (k === "class") n.className = v; else if (k === "text") n.textContent = v; else n.setAttribute(k, v);
+  }
+  for (const c of kids) if (c) n.append(c);
+  return n;
+};
+const fmtWeek = iso => new Date(iso + "T12:00:00").toLocaleDateString("en-US", {day: "numeric", month: "short"});
+const FORMAT = {reel: "Reel", carousel: "Carousel", image: "Image"};
+
+function card(p) {
+  const d = dec(p);
+  const a = el("article", {id: "p-" + p.id, "data-d": d.decision || ""});
+  const meta = el("div", {class: "meta"},
+    el("span", {class: "when", text: p.label}),
+    el("span", {class: "tag " + p.network, text: p.network === "instagram" ? "Instagram" : "LinkedIn"}),
+    el("span", {class: "tag fmt", text: FORMAT[p.format] || p.format}),
+    p.event ? el("span", {class: "tag ev", text: p.event}) : null);
+  a.append(meta, el("h3", {text: p.title}));
+
+  const media = el("div", {class: "media"});
+  if (!p.built || !p.media.length) {
+    media.append(el("div", {class: "pending", text: "Still rendering. Reload in a while."}));
+  } else if (p.media[0].type === "video") {
+    media.append(el("video", {src: p.media[0].src, poster: p.media[0].poster, controls: "", preload: "none", playsinline: ""}));
+  } else {
+    const strip = el("div", {class: "strip"});
+    p.media.forEach((m, i) => strip.append(el("img", {src: m.src, loading: "lazy", alt: `Slide ${i + 1} of ${p.media.length}`})));
+    media.append(strip);
+  }
+  a.append(media);
+
+  const body = el("div", {class: "body"});
+  if (p.hook) body.append(el("div", {class: "hook", text: p.hook}));
+  if (p.caption) {
+    const det = el("details", {}, el("summary", {text: "Caption"}), el("p", {text: p.caption}));
+    if (p.hashtags.length) det.append(el("p", {class: "tags", text: p.hashtags.map(h => "#" + h).join(" ")}));
+    body.append(det);
+  }
+  a.append(body);
+
+  const row = el("div", {class: "decide", role: "group", "aria-label": "Decision"});
+  for (const [v, label] of [["approve", "Approve"], ["redo", "Redo"], ["cut", "Cut"]]) {
+    const b = el("button", {"data-v": v, "aria-pressed": String(d.decision === v), text: label});
+    if (!db || !p.built) b.disabled = true;
+    b.addEventListener("click", () => decide(p.id, d.decision === v ? null : v));
+    row.append(b);
+  }
+  a.append(row);
+  if (d.decision === "redo" || d.decision === "cut") {
+    const ta = el("textarea", {placeholder: d.decision === "redo" ? "What should change?" : "Why cut it? (optional)", "aria-label": "Note"});
+    ta.value = d.note || "";
+    ta.disabled = !db;
+    ta.addEventListener("change", () => save(p.id, {decision: d.decision, note: ta.value, v: p.v || 1}));
+    a.append(ta);
+  }
+  a.append(el("div", {class: "saved", id: "s-" + p.id}));
+  return a;
+}
+
+function render() {
+  const weeks = $("weeks"); weeks.textContent = "";
+  const groups = {};
+  for (const p of POSTS) (groups[p.week] = groups[p.week] || []).push(p);
+  Object.entries(groups).forEach(([wk, posts], i) => {
+    const shown = posts.filter(p => !onlyOpen || !dec(p).decision);
+    if (!shown.length) return;
+    const sec = el("section", {class: "week"},
+      el("div", {class: "wk"}, el("h2", {text: "Week of " + fmtWeek(wk)}), el("span", {text: `Week ${i + 1} of ${Object.keys(groups).length}`})));
+    const grid = el("div", {class: "grid"});
+    shown.forEach(p => grid.append(card(p)));
+    sec.append(grid); weeks.append(sec);
+  });
+  const c = {approve: 0, redo: 0, cut: 0};
+  for (const p of POSTS) { const v = dec(p).decision; if (v) c[v]++; }
+  const open = POSTS.length - c.approve - c.redo - c.cut;
+  const t = $("tally"); t.textContent = "";
+  t.append(el("span", {class: "pill ok", text: `${c.approve} approved`}), el("span", {class: "pill warn", text: `${c.redo} redo`}),
+           el("span", {class: "pill cut", text: `${c.cut} cut`}), el("span", {class: "pill", text: `${open} to decide`}));
+  const ready = POSTS.filter(p => p.built && !dec(p).decision).length;
+  $("all").disabled = !db || !ready;
+  $("all").textContent = confirmAll ? `Confirm: approve ${ready} posts` : "Approve all undecided";
+}
+
+async function save(id, body) {
+  const s = $("s-" + id);
+  try {
+    if (body) await db.collection("decisions").doc(id).set({...body, updatedAt: new Date().toISOString()});
+    else await db.collection("decisions").doc(id).delete();
+    if (s) s.textContent = "Saved";
+  } catch (e) {
+    if (s) s.textContent = e && e.code === "unavailable" ? "Could not save, try again in a moment." : "Could not save this decision.";
+  }
+}
+function decide(id, v) {
+  const prev = dec(BY_ID[id]);
+  if (v) decisions[id] = {decision: v, note: prev.note || "", v: BY_ID[id].v || 1}; else delete decisions[id];
+  render();
+  save(id, v ? decisions[id] : null);
+}
+
+$("filter").addEventListener("click", () => {
+  onlyOpen = !onlyOpen; $("filter").setAttribute("aria-pressed", String(onlyOpen));
+  $("filter").textContent = onlyOpen ? "Show all posts" : "Show undecided only"; render();
+});
+$("all").addEventListener("click", async () => {
+  if (!confirmAll) { confirmAll = true; render(); return; }
+  confirmAll = false;
+  const ids = POSTS.filter(p => p.built && !dec(p).decision).map(p => p.id);
+  for (const id of ids) decisions[id] = {decision: "approve", note: "", v: BY_ID[id].v || 1};
+  render();
+  for (const id of ids) await save(id, decisions[id]);
+});
+
+render();
+(async () => {
+  db = await claude.use("db");
+  if (!db) {
+    $("status").hidden = false;
+    $("status").textContent = "Decisions can only be saved when this page is open signed in to claude.ai. You can still look through every post.";
+    render(); return;
+  }
+  db.collection("decisions").onSnapshot(snap => {
+    for (const k of Object.keys(decisions)) delete decisions[k];
+    for (const d of snap.docs) if (d.exists) decisions[d.id] = d.data();
+    // Re-rendering rebuilds every card, so wait if a note is being typed.
+    if (document.activeElement && document.activeElement.tagName === "TEXTAREA") {
+      document.activeElement.addEventListener("blur", () => setTimeout(render, 0), {once: true});
+    } else render();
+  }, () => {
+    $("status").hidden = false;
+    $("status").textContent = "Lost the connection to saved decisions. Reload the page.";
+  });
+  render();
+})();
+</script>

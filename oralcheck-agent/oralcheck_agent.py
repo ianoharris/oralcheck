@@ -33,6 +33,8 @@ load_dotenv()
 
 import content_calendar
 import engine
+import reel3d
+import topics
 import hooks as hooks_mod
 import ideas
 
@@ -1010,8 +1012,10 @@ def fetch_stock_photo(query: str, size: int = 1080) -> tuple[str, dict | None]:
 def _credit_line(credit: dict | None) -> str:
     """Format a photo credit for a caption, e.g.
     'Photo: Jane Doe (CC BY) via Flickr'. Stock photos pass credit=None and
-    get no line. Returns '' when there is nothing meaningful to credit."""
-    if not credit:
+    get no line. Returns '' when there is nothing meaningful to credit.
+    A screenshot of the site carries the string "oralcheck.org", which is
+    our own page and needs no credit."""
+    if not isinstance(credit, dict):
         return ""
     who = (credit.get("photographer") or "").strip()
     src = (credit.get("source") or "").strip()
@@ -2531,9 +2535,9 @@ def _ask_engine(prompt: str) -> str:
     return _with_retry(_call)
 
 
-# The v2 engine (engine.py: posts2 + reel2) builds every carousel, image and
-# reel. OC_ENGINE=v1 falls back to the old renderers for one transition cycle.
-_ENGINE_V2 = os.environ.get("OC_ENGINE", "v2") != "v1"
+# The v2 engine (engine.py: posts2 + reel2) is off by default since
+# 2026-10-20; set OC_ENGINE=v2 to build reels with it.
+_ENGINE_V2 = os.environ.get("OC_ENGINE") == "v2"
 
 
 def _run_engine_v2(brief: str, media_type: str, pillar: str | None, idea: dict | None) -> dict:
@@ -2559,6 +2563,22 @@ def _run_engine_v2(brief: str, media_type: str, pillar: str | None, idea: dict |
     return manifest
 
 
+def _run_reel3d(brief: str, pillar: str | None, idea: dict | None) -> dict:
+    idea = dict(idea or {"brief": brief})
+    log.info("Writing 3D reel plan (%s / %s)...", idea.get("shape", "free"), idea.get("topic", "brief"))
+    spec = _with_retry(lambda: engine.write_reel3d(idea, _ask_engine), max_attempts=2)
+    log.info("Hook: %s", spec["hook"])
+    out = tempfile.NamedTemporaryFile(suffix="_3d.mp4", delete=False).name
+    _register_tmp(out)
+    music = _generate_music_bed(36, spec["hook"])
+    if music is None and REEL_MUSIC.exists():
+        music = _loop_music_seamless(str(REEL_MUSIC), 38)
+    reel3d.build({"shots": spec["shots"]}, out, tts=_fal_tts, music=music)
+    manifest = save_to_queue(spec, "reel", pillar, [out])
+    log.info("Queued 3D reel: %s", manifest["id"])
+    return manifest
+
+
 def run_pipeline(
     brief: str,
     media_type: str,
@@ -2566,8 +2586,18 @@ def run_pipeline(
     idea: dict | None = None,
 ) -> dict | None:
     """Generate content, create media, and save to queue for review."""
-    if _ENGINE_V2 and media_type in ("carousel", "image", "reel"):
+    # 2026-10-20: posts went back to the original renderers (Ian found the v2
+    # look too playful) and reels moved to 3D (reel3d.py), which he signed off.
+    # OC_ENGINE=v2 still reaches the v2 reel path; REEL_ENGINE=classic the
+    # original kinetic-type reel.
+    if os.environ.get("OC_ENGINE") == "v2" and media_type == "reel":
         return _run_engine_v2(brief, media_type, pillar, idea)
+    if media_type == "reel" and os.environ.get("REEL_ENGINE", "3d") == "3d":
+        try:
+            return _run_reel3d(brief, pillar, idea)
+        except Exception as exc:  # noqa: BLE001
+            # A failed 3D render must not cost the week's reel.
+            log.error("3D reel failed (%s); building the classic reel instead.", exc)
     # Reels use their own script format (kinetic-typography segments), not the
     # single-hook content schema, so they bypass generate_content entirely.
     if media_type == "reel":
@@ -3097,6 +3127,17 @@ def run_more_ideas(media: str, per_type: int = 3) -> list[dict]:
 def _queue_idea(idea: dict) -> dict | None:
     brief = (f"Content pillar: {idea['pillar'].replace('_', ' ').title()}\n"
              f"{idea['brief']}")
+    # Ideas from the topic bank carry the facts they may use and the layouts
+    # their shape suits; posts built by the original renderers get both in the brief.
+    if idea.get("topic") in topics.TOPICS:
+        shape = topics.SHAPES.get(idea["media_type"], {}).get(idea.get("shape") or "")
+        brief += "\n\n" + topics.slot_brief(1, idea)
+        if idea.get("hook"):
+            brief += f"\n    opening line: {idea['hook']}"
+        if shape and idea["media_type"] == "carousel":
+            brief += f"\n    build it mainly from these layouts: {', '.join(shape['templates'])}"
+        elif shape and idea["media_type"] == "reel":
+            brief += f"\n    lean on these scene types: {', '.join(shape['templates'])}"
     if idea.get("calendar_ref"):
         brief += f"\n(Tied to awareness date: {idea['calendar_ref']})"
     return run_pipeline(brief, idea["media_type"], pillar=idea["pillar"], idea=idea)

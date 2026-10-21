@@ -50,5 +50,7 @@ venv/
 # left "pending" drafts in the repo that the NEXT run checked out and sent for
 # review, months later and rendered by old code.
 oralcheck-agent/queue/
+# Posting calendar: the plan is tracked; rendered media lives on the release.
+oralcheck-agent/calendar/*/
 __pycache__/
 *.pyc

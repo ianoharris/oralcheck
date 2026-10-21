@@ -6,14 +6,17 @@ name: OralCheck Idea Flow
 #   3. Generates those posts and sends each back as a swipeable deck to approve
 #   4. Posts approved decks to Instagram
 on:
-  schedule:
-    - cron: '0 14 * * 1'   # every Monday 14:00 UTC (~8am Central) — start of the week
-    # Backup run. GitHub delays or silently drops scheduled workflows during
-    # incidents and periods of high load, and a dropped cron produces no run and
-    # no notification, so a missed week looks identical to a quiet week. This
-    # fires later the same day and the "Skip if already run today" step below
-    # exits immediately when the 14:00 run already succeeded.
-    - cron: '0 19 * * 1'   # Monday 19:00 UTC, five hours later
+  # Paused 2026-10-20: posting runs from the 10-week calendar (calendar.yml,
+  # post_calendar.py) until the end of December. Re-enable the crons below to
+  # return to the weekly pick-and-review flow; a manual run still works.
+  # schedule:
+  #   - cron: '0 14 * * 1'   # every Monday 14:00 UTC (~8am Central) — start of the week
+  #   # Backup run. GitHub delays or silently drops scheduled workflows during
+  #   # incidents and periods of high load, and a dropped cron produces no run and
+  #   # no notification, so a missed week looks identical to a quiet week. This
+  #   # fires later the same day and the "Skip if already run today" step below
+  #   # exits immediately when the 14:00 run already succeeded.
+  #   - cron: '0 19 * * 1'   # Monday 19:00 UTC, five hours later
   workflow_dispatch:
     inputs:
       count:

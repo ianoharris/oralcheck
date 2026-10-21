@@ -11,6 +11,7 @@ from datetime import date
 import content_calendar as C
 import engine as E
 import ideas as I
+import reel3d as R3
 import topics as T
 
 _fails = []
@@ -247,8 +248,83 @@ def test_engine_validation():
           and sum(b["visual"]["type"] == "cta" for b in beats) == 1)
 
 
+# --- 3D reels (no API, no render) ------------------------------------------
+def test_reel3d():
+    import json
+    check("every topic focus is a real 3D focus",
+          all(f in R3.FOCI for fs in T.TOPIC_FOCI.values() for f in fs))
+    check("unknown topics still get foci", T.foci_for("no_such_topic")[0] == "overview")
+    plan = R3.validate({"shots": [{"say": "Look here.", "focus": "tongue", "label": {"k": "a", "t": "b", "d": "c"}},
+                                  {"say": "Then here.", "focus": "spleen"},
+                                  {"say": "", "focus": "floor"},
+                                  {"say": "Go.", "focus": "cta"}]})
+    kinds = [s["focus"] for s in plan["shots"]]
+    check("unknown focus becomes overview", kinds[1] == "overview")
+    check("empty lines dropped", len(plan["shots"]) == 3)
+    check("ends on exactly one end card", kinds[-1] == "cta" and kinds.count("cta") == 1)
+    check("overview shots carry no label", plan["shots"][1]["label"] is None)
+
+    calls = []
+    def ask(prompt):
+        calls.append(prompt)
+        return json.dumps({"shots": [{"say": "Your lips get more sun than you think.", "focus": "overview"},
+                                     {"say": "The lower lip is the most common lip site.", "focus": "lips",
+                                      "label": {"k": "Sun exposure", "t": "Lower lip", "d": "SPF lip balm helps."}},
+                                     {"say": "Look under your tongue as well.", "focus": "tonsils_nope"}],
+                           "caption": "Lips and sun. Check your risk at oralcheck.org.", "hashtags": ["A", "b"]})
+    spec = E.write_reel3d({"topic": "lower_lip_sun", "media_type": "reel", "shape": "close_look",
+                           "hook_style": "plain", "brief": "x"}, ask)
+    check("disallowed focus is replaced", spec["shots"][2]["focus"] == "overview")
+    check("only the topic's foci are offered", "Soft palate" not in calls[0] and "Lips" in calls[0])
+    check("credit line in the caption", R3.CREDIT in spec["caption"])
+    check("hashtags lowercased", spec["hashtags"] == ["a", "b"])
+
+
+# --- posting calendar ------------------------------------------------------
+def test_post_calendar():
+    import collections, tempfile, json
+    from datetime import date as _d, datetime as _dt
+    import post_calendar as PC
+    slots = PC.plan_dates(_d(2026, 10, 26), 10)
+    check("30 dates over ten weeks", len(slots) == 30)
+    check("10 reels, 10 carousels, 10 images",
+          collections.Counter(s["media_type"] for s in slots) == {"reel": 10, "carousel": 10, "image": 10})
+    check("reels only on Instagram", all(s["network"] == "instagram" for s in slots if s["media_type"] == "reel"))
+    check("one LinkedIn post a week", sum(s["network"] == "linkedin" for s in slots) == 10)
+    ig = [s for s in slots if s["network"] == "instagram"]
+    check("Instagram at 5pm Central across the DST change",
+          all(_dt.fromisoformat(s["when"]).astimezone(PC.CT).hour == 17 for s in ig))
+
+    # decisions from the review page land on the calendar, never on a scheduled post
+    old_file, old_dir = PC.CAL_FILE, PC.CAL_DIR
+    with tempfile.TemporaryDirectory() as tmp:
+        PC.CAL_DIR = PC.Path(tmp); PC.CAL_FILE = PC.CAL_DIR / "calendar.json"
+        PC.save({"entries": [{"id": "a", "status": "built"}, {"id": "b", "status": "built"},
+                             {"id": "c", "status": "scheduled"}]})
+        counts = PC.apply_decisions([{"id": "a", "decision": "approve"}, {"id": "b", "decision": "redo", "note": "shorter"},
+                                     {"id": "c", "decision": "cut"}, {"id": "zz", "decision": "approve"}])
+        cal = PC.load()
+        st = {e["id"]: e["status"] for e in cal["entries"]}
+        check("approve and redo applied", st["a"] == "approved" and st["b"] == "redo")
+        check("a scheduled post is not touched", st["c"] == "scheduled")
+        check("redo note kept", cal["entries"][1]["review_note"] == "shorter")
+        check("unknown ids ignored", counts == {"approved": 1, "redo": 1})
+        # a rebuilt post is a new version; a decision about the old one does not carry over
+        PC.save({"entries": [{"id": "a", "status": "built", "version": 2}]})
+        PC.apply_decisions([{"id": "a", "decision": "approve", "v": 1}])
+        check("stale decision ignored", PC.load()["entries"][0]["status"] == "built")
+        PC.apply_decisions([{"id": "a", "decision": "approve", "v": 2}])
+        check("current decision applied", PC.load()["entries"][0]["status"] == "approved")
+    PC.CAL_FILE, PC.CAL_DIR = old_file, old_dir
+
+    import oralcheck_agent as A
+    check("a site screenshot needs no photo credit", A._credit_line("oralcheck.org") == "")
+
+
 def main():
     print("Calendar:");      test_calendar()
+    print("Post calendar:"); test_post_calendar()
+    print("3D reels:");      test_reel3d()
     print("Slots:");         test_slots()
     print("Voice checks:");  test_voice_checks()
     print("Engine specs:");  test_engine_validation()

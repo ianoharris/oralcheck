@@ -10,7 +10,7 @@ The running list. Two rules:
    named. This is the list's whole purpose: the things that come up once, sound
    good, and are never mentioned again.
 
-Last updated: 2026-10-08
+Last updated: 2026-10-20
 
 **Mirrored to an artifact Ian reads:**
 https://claude.ai/code/artifact/cc490e4b-1ee3-4062-bc56-eada066f1003
@@ -41,8 +41,31 @@ Update both together. See `AGENTS.md`.
 
 ### Content and growth
 
-- [ ] **Content engine v2: built and wired in, waiting on its first live week
-      (2026-10-08).** Ian's verdict on the feed: videos not engaging enough,
+- [ ] **Posting calendar: 30 posts, 27 Oct 2026 to 1 Jan 2027 (started
+      2026-10-20).** Ian asked to stop the weekly back and forth and plan the
+      whole autumn at once: 3 a week for 10 weeks, 10 reels (3D), 10 carousels
+      (original look), 10 single images, reviewed on one page. Instagram Tue
+      and Fri 5pm CT, LinkedIn Wed 9am CT, one reel a week. Pinned dates:
+      Dental Hygiene Month (27 Oct reel), Great American Smokeout (LinkedIn
+      18 Nov, the day before), new year (1 Jan reel).
+      - **Done:** `post_calendar.py` (plan, build, review, upload, drip),
+        `calendar/calendar.json` with all 30 ideas written, the review page
+        template, `.github/workflows/calendar.yml` (daily 13:00 UTC, schedules
+        approved posts 3 days ahead through Publora, so the 3-post cap is never
+        exceeded), redo notes fed back into the rewrite, decisions tied to a
+        post version so a rebuilt post comes back undecided, tests.
+      - **In progress:** building all 30 on the laptop (about 4 hours, mostly
+        the reels), then publishing the review page.
+      - **Waiting on Ian:** mark every post on the review page. **The 27 Oct
+        reel needs a decision by Fri 24 Oct**, since the daily job schedules 3
+        days ahead and skips anything whose date has passed.
+      - **Then:** apply decisions, rebuild redos, upload approved media to the
+        `calendar-2026-fall` release, push the code. Media goes on a release
+        rather than into git; the repo is public, so approved posts are
+        downloadable from there a few days before they go out.
+
+- [ ] **Content engine v2: reels only now; posts went back to the original look
+      (2026-10-08, revised 2026-10-20).** Ian's verdict on the feed: videos not engaging enough,
       posts and carousels "kinda lame". Asked what he wanted rather than
       guessing: **fully faceless and automated, $0 extra spend**, all four video
       directions (word-synced captions with fast cuts, explainer animations,
@@ -81,11 +104,68 @@ Update both together. See `AGENTS.md`.
         one rewrite), a cover hook running into the swipe pill, "2 minutes"
         splitting across lines on the end card, a single-place diagram that
         highlighted nothing, and copy that called a home check a "test".
-      - **Pushed 2026-10-08.** Monday's run (12 Oct) is the first to use it,
-        and that first real batch through Telegram is the real test. Blocked on
-        that run happening, then on Ian's verdict. The old renderers stay in the code for one cycle behind
+      - **Pushed 2026-10-08.** First real use was the 19 Oct batch.
+      - **Ian's verdict, 2026-10-20: the new style is too playful.** Posts
+        (carousels and images) are back on the original renderers
+        (`render_html.py`), which he prefers. The topic bank stays: ideas still
+        come from `topics.py`, with post shapes renamed to suit the old
+        layouts (myth, compare, steps, timeline, bignumber, qualifier,
+        checklist, receipt, question), and the brief now carries each topic's
+        facts. The "light" tone lane is retired: every slot is written calm
+        and clinical. Also fixed: the least-recently-used rotation for shapes
+        had never worked (it stored and looked up shapes under different keys).
+      - **Reels are 3D now (2026-10-20).** A cleaned-up version of the
+        original kinetic-type reel was tried the same day (one still
+        background, dissolves, a progress bar) and Ian rated it worse than the
+        original, so it was reverted. The original reel stays only as the
+        automatic fallback when a 3D render fails. The old renderers stay in the code for one cycle behind
         `OC_ENGINE=v1` as a fallback; delete them once a week has gone through
         cleanly.
+
+- [ ] **3D clinical reels (prototype 2026-10-20, narrated version the same day).** Ian wants videos that
+      feel 3D and realistic but stay clinical and minimal, "kinda interactive",
+      for $0. Prototype: real anatomy from **Z-Anatomy** (CC BY-SA 4.0, derived
+      from BodyParts3D; every tooth, jaw, gums, tongue, soft palate, tonsils,
+      floor-of-mouth muscle, salivary glands and neck lymph nodes), trimmed and
+      exported once with **Blender** (already installed, run headless with
+      scripts disabled), and rendered by **three.js** (MIT) inside the same
+      headless-browser frame capture `reel2.py` already uses, so captions,
+      voice alignment and audio carry over. Look: matte ivory anatomy on a pale
+      studio grey, an atlas-style section cut through the upper jaw, the
+      structure being discussed turning teal while everything around it fades
+      to glass, a hairline label with a leader line, a tap ripple for the
+      interactive feel. Renders at about 2 to 4 seconds a frame in software
+      (what CI has), so a 30s reel is roughly 30 to 60 minutes of CI time
+      before any speed work. Licence consequence: CC BY-SA means each reel
+      carries an attribution line and is itself shared under CC BY-SA.
+      **Direction approved 2026-10-20**, with notes (more texture on the bone,
+      narration plus sound), all done the same day: procedural bone texture
+      (fine pitting, mottling, roughness variation, generated in the shader
+      since the meshes have no UVs) with glossier, whiter enamel; and
+      `reel3d.py`, which builds a narrated reel from a list of shots (one
+      spoken line plus a focus each: overview, tongue, floor, lips, gums,
+      teeth, throat, nodes, glands, end card), with preset camera moves,
+      word-timed captions and quiet clinical sound. Ian on the narrated
+      sample: "great". **Wired into the weekly run the same day**: reels
+      default to 3D (`REEL_ENGINE=3d`), the content step writes the shot plan
+      from the topic's facts and may only point at the structures that topic
+      is about (`topics.TOPIC_FOCI`), and a failed render falls back to the
+      original reel. Fixed on the way: hidden structures (lips, nodes, glands)
+      showed on a reel's first shot, because `visible` was `undefined` rather
+      than `false`; fonts are now bundled so a slow Google Fonts request can
+      no longer stall a render; CI renders a real 3D frame on every run.
+      Assets and licences in `oralcheck-agent/reel3d/`. **Not pushed yet.**
+      Still open: render speed (about 10 minutes for 22s locally, likely
+      double on CI) and the interactive formats (see below).
+
+- [ ] **Interactive 3D reel formats (proposed 2026-10-20).** Four ideas, all
+      clinical rather than gimmicky: (1) *Do it with me*, the 3D mouth walks
+      the 8 self-exam steps with a countdown ring so the viewer checks along in
+      real time; (2) *A, B or C*, three pins on the model and "comment your
+      letter" before a tap reveals the answer; (3) a *screener walkthrough*, a
+      finger tapping through the real oralcheck.org screener on a phone; (4)
+      *drag to day 15*, a slider across a 14-day calendar. 1, 2 and 4 reuse
+      `reel3d.py` directly. **Blocked on Ian picking which to build.**
 
 - [x] ~~Reels drive follows but not site visits~~ — partly fixed 2026-09-01, and
       the entry contained a false premise. **A link sticker on the reel itself is
@@ -259,6 +339,21 @@ Update both together. See `AGENTS.md`.
       health data.
 
 ### Infrastructure
+
+- [ ] **The Monday run dies at 6 hours and loses whatever it built (found
+      2026-10-20).** GitHub-hosted runners stop every job at 6 hours; the
+      workflow's `timeout-minutes: 840` is ignored. Waiting for picks (up to
+      6h on its own) and the Telegram review share that one job, so every run
+      since early October ended "cancelled". 12 Oct: no picks arrived, nothing
+      built. 19 Oct: three built, the carousel rejected, then the run was
+      killed mid-review and the built reel and image went with it. Nothing new
+      scheduled either week. Fix: split picks and review into separate jobs
+      (each gets its own 6h) and carry the queue between them as an artifact,
+      or let review resume in a later run. Not blocked. **Worked around
+      2026-10-20:** the Monday crons are paused (dispatch still works) and the
+      autumn runs from the posting calendar, which builds locally and only
+      uses CI for a short daily scheduling job. The real fix is still needed
+      before the weekly flow is switched back on in January.
 
 - [ ] **Meta Graph API** for direct Instagram publishing, removing the Publora
       dependency and its 3-post cap. Needs a Facebook app, a linked Business
@@ -783,6 +878,9 @@ Newest first.
 | Buffer as a second scheduler | Free tier has no open API, so posts would be pasted in by hand anyway. No better than the Telegram handoff, plus a second dashboard. | If Buffer reopens API access |
 | Quoting "30-fold" or "35-fold" for smoking plus drinking | Decided 2026-10-08. The 35-fold figure (Blot 1988) is real but is one 1980s US study, oral and throat cancer pooled, at two or more packs and four or more drinks a day. Hashibe 2009 pools 17 studies, reports the oral cavity alone, and gives about 15 at a pack and three drinks. "30-fold" matched no source at all. | A larger pooled estimate for the oral cavity alone |
 | LinkedIn API direct publishing | Company-page posting needs the Community Management API: restricted to reviewed legal organisations, explicitly not available to individuals | If OralCheck incorporates |
+| The posts2 templates for carousels and images (mouth-map illustrations, notes-app, text-post, bold posters) | Live for one batch, 19 Oct. Ian: too playful, prefers the original post look. The code stays because reels still borrow pieces of it | Not planned |
+| A cleaned-up classic reel (one still background, no blur-in, colour-only emphasis, dissolves, a progress bar, a matching end card) | Built and sampled 2026-10-20 at Ian's request. His verdict: worse than the original, which itself was "very meh". Reverted the same day; reels went 3D instead | Not planned |
+| A "light", gently witty tone lane for ideas | Retired 2026-10-20 with the posts2 look: the account should read clinical | Not planned |
 | A "NOPE" stamp reel visual and a group-chat-style post template | Sampled 2026-10-08. Ian: off brand. The stamp read as flippant on a cancer account; the chat imitated a conversation nobody had | Not planned |
 | A "trend comparison" idea lane ("a stadium holds 65,000...") | Six of the first 38 ideas used it. The tie-ins (Wimbledon, the Tour de France) read as forced, and a forced hook is worse than a plain post. Real awareness days stay | Not planned |
 

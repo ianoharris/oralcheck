@@ -538,9 +538,48 @@ Worth knowing because it's the most serious thing that's happened to the project
 
 About 10,000 lines of Python in `oralcheck-agent/` that runs your social media.
 
+**Right now it runs from a calendar, not a weekly vote.** From late October
+2026 to early January 2027 every post is decided in advance: thirty of them,
+three a week, built all at once and reviewed on one page.
+
 ```mermaid
 flowchart TB
-    CRON["GitHub Actions<br/>Monday 14:00 UTC"] --> IDEAS["Assign topic, shape, opening<br/>then write ideas per format"]
+    PLAN["post_calendar.py plan<br/>30 dates, topic, shape, idea"] --> BUILD["build<br/>renders every post on a laptop"]
+    BUILD --> PAGE["Review page<br/>(a private claude.ai artifact)"]
+    PAGE --> YOU{"You mark each one"}
+    YOU -->|Approve| REL["Media uploaded to a<br/>GitHub release"]
+    YOU -->|Redo + note| BUILD
+    YOU -->|Cut| GONE["Dropped from the calendar"]
+    REL --> DRIP["Daily job, 13:00 UTC<br/>schedules posts due in 3 days"]
+    DRIP --> PUB["Publora posts it on the day"]
+```
+
+**Why a calendar.** The weekly run had to wait for your picks and your
+Telegram taps inside one GitHub job, and GitHub kills every job at six hours.
+In October two Mondays in a row were killed mid-run and nothing was scheduled.
+Building everything ahead on a laptop, where time is not capped, and letting a
+small daily job hand posts to Publora a few days ahead removes the deadline
+entirely. It also respects Publora's three-post cap, since at most three or
+four posts are ever waiting there at once.
+
+**The mix.** Ten reels, ten carousels, ten single images. Instagram gets
+posts on Tuesday and Friday at 5pm Central; LinkedIn gets one on Wednesday at
+9am. One reel a week. Three dates are pinned to real events: Dental Hygiene
+Month (October), the Great American Smokeout (19 November), and the new year.
+
+**You are still the approval gate.** Nothing is scheduled unless you marked it
+Approve on the review page. A post you send back with Redo is rewritten with
+your note added to its brief, and comes back to the page as a fresh, undecided
+version. An approved post whose date has already passed is skipped, not
+posted late. Reels still get the Telegram reminder to reshare them to a Story.
+
+**The weekly Telegram flow** below still exists and still works, but its
+Monday schedule is paused while the calendar runs. It can be started by hand
+from the Actions tab.
+
+```mermaid
+flowchart TB
+    CRON["GitHub Actions<br/>Monday 14:00 UTC (paused)"] --> IDEAS["Assign topic, shape, opening<br/>then write ideas per format"]
     IDEAS --> TG1["Sends a numbered<br/>list to Telegram"]
     TG1 --> YOU["You reply<br/>'1, 3, 8'"]
     YOU --> GEN["Generates those posts<br/>images / carousels / reels"]
@@ -551,9 +590,6 @@ flowchart TB
     WHY --> TG2
     SCHED --> OUT["2 Instagram + 1 LinkedIn<br/>per week"]
 ```
-
-**You are the approval gate.** Nothing posts without you tapping approve. That
-was a deliberate design choice on a health account.
 
 **The weekly plan** is `WEEKLY_PLAN=instagram:2,linkedin:1`. Each post targets
 **one** network, not all of them, because Publora's plan counts every
@@ -585,30 +621,28 @@ Any title that still comes back with a worn phrase ("most people", "did you
 know", "here's why", "actually") or the "X. Y." shape is rewritten once and
 dropped if it fails again.
 
-**How posts are drawn.** Everything is rendered from code, nothing is
-AI-generated imagery and nothing costs extra. Carousels and images use 16
-templates in three families: big and graphic (posters, giant numbers, bars),
-illustrated guides (a drawn mouth map that highlights one place at a time,
-step cards, the 14-day calendar, side-by-side comparisons, icon grids), and
-creator-native (a plain text post, a phone-notes checklist, a real clinical
-photo with highlighted lines, a quiz and its answer). Only the two clinical
-photos with attribution on file (`white`, `mixed`) are ever used, and their
-credit goes on the image and in the caption.
+**How posts are drawn.** Carousels and single images use the original
+designs (`render_html.py`): cream and teal cards, serif headlines, layouts
+such as myth, compare, steps, timeline, big number and checklist. A newer
+set of templates ran for one week in October and was dropped because it felt
+too playful. Every post is rendered from code, nothing is AI-generated
+imagery, and only the two clinical photos with attribution on file (`white`,
+`mixed`) are ever used.
 
-**How reels are made.** A reel is a list of beats: one spoken sentence and
-one visual each. The voice is Kokoro on fal (the same voice as before, read at
-1.05x). The captions light up word by word because a small speech model
-(faster-whisper, running free on the build machine) works out exactly when
-each word is said, and the visuals are timed to words too: the mouth map
-lights the gums as the voice says "gums", the bar fills as it says "36". Ten
-visual types (quiz with a countdown, myth struck out, calendar, mouth map,
-photo, icons, a big number, bars, plain captions, the end card), soft sound
-effects, a generated music bed kept low, and the whole mix levelled to the
-loudness Instagram expects. A reel runs about 30 seconds.
-
-**Kept as a fallback for one week:** the old renderers, behind
-`OC_ENGINE=v1`. Once a real Monday batch has gone through cleanly they get
-deleted.
+**How reels are made.** Reels are 3D. Each one is four or five spoken
+lines over a real 3D model of the mouth, from the open-source Z-Anatomy
+atlas: textured ivory bone and glossy teeth on pale grey. As each line is
+read, the camera glides to the part it is about, which turns teal while
+everything around it fades to glass, and a thin label draws in after a tap.
+Captions firm up word by word in time with the voice (Kokoro on fal), the
+sound is quiet (a soft click on each tap, air as the camera moves, a low tone
+under the end card, the usual music bed), and the reel ends on a card with
+the address. The script can only point at the structures its topic is about,
+so a reel on the lips never wanders to the tonsils. It costs nothing beyond
+the voice and music already used. The model's licence (CC BY-SA) means every
+reel carries a credit line, on screen and in the caption, and is itself
+shared under that licence. If a 3D render ever fails, the run builds the
+older text-only reel instead so the week is not lost.
 
 > **The manual step you can't automate:** no API can put a tappable link on a
 > Reel. Captions are plain text; clickable Reel links need Meta Verified Plus.
@@ -787,6 +821,8 @@ code generator, and copy-paste embed code.
 | Two idea batches on the same Monday | The backup cron ran while the first was still waiting on you | Fixed 2026-09-14: the guard now also skips when another run today is still going |
 | A topic you picked never appears and never comes back | A run died between claiming the idea and building it | Fixed 2026-09-14: a fresh batch hands back any claim that produced no post |
 | Publora rejects a scheduled post | 3-slot cap reached | Publish or delete something already scheduled |
+| A calendar date passes and nothing posts | The post was never approved on the review page, or was approved after its date | The daily job only schedules approved posts up to 3 days ahead and skips past dates. Approve earlier ones in time |
+| The Monday run ends "cancelled" | GitHub's 6-hour cap per job, found 2026-10-20 | Why the Monday schedule is paused and the calendar is used instead |
 | Every route 404s locally | Stale Turbopack cache | `rm -rf .next` |
 
 **A recurring trap:** the Anthropic **workspace** spend limit is enforced
