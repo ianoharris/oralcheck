@@ -727,6 +727,15 @@ that. As of this writing it has fired **zero** times from real users — the
 instrumentation was verified working end to end, so people genuinely aren't
 clicking it. That's a product finding, not a bug.
 
+**Which button was clicked** is in `cta_source`. The results page shows one big
+find-care button per result, so the values split by band:
+
+| `cta_source` | Where it is | Shown on |
+|---|---|---|
+| `results_hero` | Inside the result card, under the summary | Elevated, high, and any symptom |
+| `results_next_step` | The link in next step 1 | Elevated, high, and any symptom |
+| `results_primary_cta` | The button under the next steps | Low and moderate only (since 21 Oct 2026; before that it showed on every band at the foot of the page) |
+
 **A caution about completion rate:** for a stretch in August, recorded
 completions outnumbered starts, which is impossible. Don't quote a completion
 rate from a window that includes 17–18 August.
