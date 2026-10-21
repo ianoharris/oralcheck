@@ -41,6 +41,16 @@ Update both together. See `AGENTS.md`.
 
 ### Content and growth
 
+- [ ] **Article internal links all go to the home page (found 2026-10-21).**
+      Links like "oral cancer screening: what to expect" inside the SEO
+      articles point at `https://oralcheck.org` instead of
+      `/learn/oral-cancer-screening-what-to-expect`. Fix in the markdown (and
+      in the generator so new articles get it right). Not blocked; left alone
+      during the redesign because another session was editing the article text.
+- [ ] **Published articles are missing from the sitemap (found 2026-10-21).**
+      `src/app/sitemap.ts` lists only the hand-written pages, so the 11 SEO
+      articles rely on Google finding them through /learn. Add them from
+      `getAllPublishedArticles()`. Not blocked.
 - [ ] **Posting calendar: 30 posts, 27 Oct 2026 to 1 Jan 2027 (started
       2026-10-20).** Ian asked to stop the weekly back and forth and plan the
       whole autumn at once: 3 a week for 10 weeks, 10 reels (3D), 10 carousels
@@ -376,6 +386,22 @@ Update both together. See `AGENTS.md`.
 Newest first.
 
 ### 2026-10-21
+- **Article pages redesigned in a clinical journal style (not yet pushed;
+  committed on branch `worktree-agent-a16b9234ccd3a0dda`).** Ian called the
+  SEO article layout sloppy. Now: a "Patient guide" label, title, standfirst
+  and one date and reading-time line; body at about 70 characters a line with
+  hairline section breaks; a contents list (sticky on desktop, fold-out on a
+  phone); numbered Sources when an article links out; the article's own
+  disclaimer; a screener box and three related guides. No markdown in
+  `content/` was touched. Also fixed on the way: shared articles now preview
+  with their own title and the Learn image instead of the home page's;
+  Spanish articles now name themselves as canonical instead of the English
+  page; the byline "Written by Ian Harris, predental student at the
+  University of Wisconsin-Madison" is replaced by "Published by OralCheck",
+  since the articles name no author and UW is not to appear on the site.
+  Found and not fixed: every internal link inside the articles points at the
+  home page rather than the article it names, and published articles are not
+  in the sitemap.
 - **3D reels, original-look posts, and the posting calendar are live on
   master** (commit 4bba2c7). Reels render as narrated 3D scenes with the
   classic reel as fallback; posts use the original layouts; the Monday run is

@@ -1123,12 +1123,25 @@
   },
   "ArticlePage": {
     "backToLearn": "← Back to Learn",
-    "defaultTag": "Oral Health",
+    "typeLabel": "Patient guide",
+    "published": "Published {date}",
+    "updated": "Updated {date}",
+    "readingTime": "{minutes} min read",
+    "byAuthor": "By {author}",
+    "contents": "In this article",
+    "keyPoints": "Key points",
+    "sources": "Sources",
+    "backToText": "Back to text",
+    "ctaEyebrow": "Free and private",
+    "ctaHeading": "Check your own risk factors",
+    "ctaBody": "The OralCheck screener asks about the risk factors covered in guides like this one. It takes about two minutes, needs no account, and does not store your answers.",
     "takeScreener": "Take the free screener →",
-    "byline": "Written by Ian Harris, predental student at the University of Wisconsin-Madison.",
+    "relatedHeading": "More patient guides",
+    "publishedBy": "Published by OralCheck.",
     "aboutLink": "About OralCheck",
     "disclaimerLabel": "Medical disclaimer:",
-    "disclaimerBody": "This article is for general informational purposes only and does not constitute medical advice, diagnosis, or treatment. Always consult a qualified healthcare professional regarding any symptoms or health concerns."
+    "disclaimerBody": "This article is for general informational purposes only and does not constitute medical advice, diagnosis, or treatment. Always consult a qualified healthcare professional regarding any symptoms or health concerns.",
+    "onlyInEnglish": "This guide is available in English only."
   },
   "ForCliniciansMeta": {
     "title": "For Dental Professionals",

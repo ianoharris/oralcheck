@@ -461,7 +461,7 @@ either baked in at build time or computed in the visitor's browser.
 /find-care              map + clinic search
 /methods                ⭐ the credibility page. Every weight, every source
 /learn/...              9 hand-written guides, plus published articles
-                        served from content/published/ (8 so far)
+                        served from content/published/ (11 so far)
 /for-clinicians         embed code, flyer, the professional framing
 /about  /privacy  /terms  /press
 /qr                     printable QR generator for flyers
@@ -469,6 +469,42 @@ either baked in at build time or computed in the visitor's browser.
 
 `/methods` is the most important page on the site. It's what a sceptical
 clinician reads before deciding whether to take you seriously.
+
+**How a published article is laid out.** The weekly SEO articles are set like
+the patient pages of a medical journal (NEJM, JAMA, BMJ, the British Dental
+Journal), because that is what reads as careful and trustworthy:
+
+```
+PATIENT GUIDE                         ┌ IN THIS ARTICLE ─┐
+Title                                 │ 1 First heading  │   ← desktop only,
+One or two sentences (the standfirst) │ 2 Second heading │     stays in view;
+──────────────────────────────────    │ ...              │     on a phone it is
+Published 20 July 2026 · 5 min read   └──────────────────┘     a fold-out list
+Body text, about 70 characters a line
+──── hairline, then the next heading
+...
+Sources (only if the article links to outside sites)
+Medical disclaimer (the article's own wording)
+Screener box  ·  More patient guides  ·  "Published by OralCheck"
+```
+
+Everything on that page comes from the markdown file itself. Nothing is made
+up: the standfirst is the first sentence or two of the article's opening
+paragraph (moved up, not copied), the contents list is the article's own
+section headings, and the numbered Sources list only appears when the article
+links to an outside source. Today none of them do, so no article shows one.
+
+There is deliberately **no author line**, because the articles do not name an
+author. Four optional lines can be added to the top of any article file, and
+the page uses them if present: `description:` (replaces the automatic
+standfirst), `keyPoints:` (a short "Key points" list under the title),
+`updated:` (adds "Updated" to the date line) and `author:` (adds "By ...").
+Only put a name in `author:` if that person actually wrote it, and a
+clinician's name only with their written agreement.
+
+What it does not copy from journals, on purpose: author affiliations, DOIs,
+citation counts, abstracts and serif body text. Those belong to research
+papers, not to a guide for patients.
 
 ### 8.3 The server-side bits
 

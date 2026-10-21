@@ -1123,12 +1123,25 @@
   },
   "ArticlePage": {
     "backToLearn": "← Volver a Aprender",
-    "defaultTag": "Salud oral",
+    "typeLabel": "Guía para pacientes",
+    "published": "Publicado el {date}",
+    "updated": "Actualizado el {date}",
+    "readingTime": "Lectura de {minutes} min",
+    "byAuthor": "Por {author}",
+    "contents": "En este artículo",
+    "keyPoints": "Puntos clave",
+    "sources": "Fuentes",
+    "backToText": "Volver al texto",
+    "ctaEyebrow": "Gratis y privado",
+    "ctaHeading": "Revisa tus propios factores de riesgo",
+    "ctaBody": "La evaluación de OralCheck pregunta por los factores de riesgo que se tratan en guías como esta. Toma unos dos minutos, no requiere cuenta y no guarda tus respuestas.",
     "takeScreener": "Realizar la evaluación gratuita →",
-    "byline": "Escrito por Ian Harris, estudiante de predontología en la Universidad de Wisconsin-Madison.",
+    "relatedHeading": "Más guías para pacientes",
+    "publishedBy": "Publicado por OralCheck.",
     "aboutLink": "Acerca de OralCheck",
     "disclaimerLabel": "Aviso médico:",
-    "disclaimerBody": "Este artículo tiene fines informativos generales únicamente y no constituye asesoramiento médico, diagnóstico ni tratamiento. Consulta siempre a un profesional de la salud calificado sobre cualquier síntoma o inquietud de salud."
+    "disclaimerBody": "Este artículo tiene fines informativos generales únicamente y no constituye asesoramiento médico, diagnóstico ni tratamiento. Consulta siempre a un profesional de la salud calificado sobre cualquier síntoma o inquietud de salud.",
+    "onlyInEnglish": "Esta guía solo está disponible en inglés."
   },
   "ForCliniciansMeta": {
     "title": "Para profesionales dentales",
