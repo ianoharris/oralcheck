@@ -417,6 +417,22 @@ Update both together. See `AGENTS.md`.
 
 Newest first.
 
+### 2026-10-21 (late night): analytics unblocked; article pages and fixes live
+- **Google Analytics was being blocked by the site's own security policy**
+  since the policy shipped on 18 Aug. GA4 sends page views to
+  `analytics.google.com` and `www.google.com`; `connect-src` allowed only
+  `*.analytics.google.com`, which never matches the bare host. On the live
+  site, the browser used to check it got zero hits through. GA did keep some
+  data in that window, so other browsers likely used an allowed endpoint, and
+  the loss is partial but unmeasured. Now `*.google.com`, per Google's tag
+  platform CSP guide; checked against a local production build, where the
+  page view reaches `analytics.google.com/g/collect` with no policy errors.
+  Consequence: GA figures from 18 Aug to 21 Oct are undercounts, including the
+  "find_care_click fired zero times" finding, which should be re-read later.
+- **Journal-style article page and the article figure fixes merged and
+  pushed on Ian's go.** The live articles now use summary-stage wording and
+  the seerStats figures.
+
 ### 2026-10-21 (night): results and Learn pages live
 - **Merged and pushed on Ian's go**, after a clean production build. The
   `/results` cleanup: next steps straight after the result, one booking

@@ -770,9 +770,10 @@ that it had none of this, which is how two published articles came to say
 
 **The one number that matters most:** `find_care_click`. It answers "does getting
 a result actually send anyone toward a dentist?" Everything else is upstream of
-that. As of this writing it has fired **zero** times from real users — the
-instrumentation was verified working end to end, so people genuinely aren't
-clicking it. That's a product finding, not a bug.
+that. As of early September it had fired **zero** times from real users. That
+looked like a product finding, but see the caution below: some browsers'
+analytics were being blocked by the site's own security policy at the time, so
+the zero is not trustworthy. Read it again from late October 2026 onward.
 
 **Which button was clicked** is in `cta_source`. The results page shows one big
 find-care button per result, so the values split by band:
@@ -786,6 +787,18 @@ find-care button per result, so the values split by band:
 **A caution about completion rate:** for a stretch in August, recorded
 completions outnumbered starts, which is impossible. Don't quote a completion
 rate from a window that includes 17–18 August.
+
+**A bigger caution, 18 August to 21 October 2026:** the site's security policy
+(the list of other websites a page may talk to, in `next.config.ts`) blocked
+Google Analytics in at least some browsers. Google's tag sends page views to
+`analytics.google.com` and `www.google.com`, and the policy only allowed
+`*.analytics.google.com`, which does not cover the plain address. In the browser
+used to check it, not one analytics hit got through. Other browsers may have
+used an address that was allowed (GA did keep receiving some data, such as the
+screener counts in September), so the loss was partial but unknown in size.
+Fixed on 21 October by allowing `*.google.com`, as Google's own guidance lists.
+Treat every GA number from that window as an undercount, and compare periods
+only on the same side of 21 October.
 
 ---
 
