@@ -41,6 +41,31 @@ Update both together. See `AGENTS.md`.
 
 ### Content and growth
 
+- [ ] **The site names UW-Madison in 17+ places, against its own rule (found
+      2026-10-21).** The structured data Google reads lists "University of
+      Wisconsin-Madison" as Ian's affiliation three times (sitewide in
+      `layout.tsx` as the `reviewedBy` of the site, on the self-exam page, and
+      as the founder's affiliation on `/press`), and the copy names it in the
+      article byline, the About bio and title, the press boilerplate and the
+      About page description, in all three languages. AGENTS.md says the name
+      must not appear on anything, and the owner's guide tells Ian to say it is
+      not a UW project. The structured-data `affiliation` is the strongest
+      claim: it tells search engines the university stands behind the page.
+      **Blocked on Ian:** whether to remove all of it, or keep "predental
+      student" without naming the school. Relevant to the open question with
+      his academic advisor.
+- [ ] **Two branches waiting for Ian's go (21 Oct).** The journal-style article
+      page (`worktree-agent-a16b9234ccd3a0dda`: label, standfirst, ~70
+      character measure, contents rail, numbered sources when an article links
+      out, Spanish articles canonical to themselves, previews using the
+      article's own title) and the article figure fixes
+      (`claude/article-house-rules-audit`: summary-stage wording, 60,480,
+      2.6 times, llms.txt). The live articles still carry the old figures until
+      the second one merges.
+- [ ] **Internal links inside the articles all go to the home page, and
+      published articles are missing from the sitemap** (found by the article
+      layout agent, 21 Oct). Not blocked.
+
 - [ ] **Posting calendar: 30 posts, 27 Oct 2026 to 1 Jan 2027 (started
       2026-10-20).** Ian asked to stop the weekly back and forth and plan the
       whole autumn at once: 3 a week for 10 weeks, 10 reels (3D), 10 carousels
