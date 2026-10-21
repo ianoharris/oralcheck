@@ -1119,7 +1119,8 @@
   "LearnPage": {
     "heading": "Saiba Mais",
     "subheading": "Guias curtos e baseados em evidências sobre detecção e prevenção do câncer bucal. Escritos para o público geral, não para profissionais de saúde.",
-    "moreArticles": "Mais artigos"
+    "moreArticles": "Mais artigos",
+    "loadMore": "Carregar mais"
   },
   "ArticlePage": {
     "backToLearn": "← Voltar para Saiba Mais",

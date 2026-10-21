@@ -4,11 +4,11 @@ import { useTranslations } from "next-intl";
 import Icon from "@/components/Icon";
 import { Link } from "@/i18n/navigation";
 import { motion, useReducedMotion } from "framer-motion";
-import { useLearnArticles } from "@/lib/learnArticles";
+import { LEARN_INDEX_HIDDEN_HREFS, useLearnArticles } from "@/lib/learnArticles";
 
 export default function AnimatedLearnCards() {
   const t = useTranslations("LearnCards");
-  const articles = useLearnArticles();
+  const articles = useLearnArticles().filter((a) => !LEARN_INDEX_HIDDEN_HREFS.has(a.href));
   const reduced = useReducedMotion();
 
   return (

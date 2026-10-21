@@ -222,6 +222,14 @@ Update both together. See `AGENTS.md`.
 
 ### Product and credibility
 
+- [ ] **Pages with fade-in animations can render blank for visitors who turn
+      on "reduce motion" (found 2026-10-21, while testing the learn page).**
+      With reduced motion on, `FadeUp` and the learn cards render differently
+      on the server and in the browser, React reports a hydration mismatch, and
+      in a headless Chrome the `/learn` content stayed invisible, on
+      oralcheck.org as well as locally. Needs a check in a real browser with the
+      system setting on, then a fix in `src/components/FadeUp.tsx` and
+      `AnimatedLearnCards.tsx`. Not blocked.
 - [ ] **Two more screener citations that do not match their source (found
       2026-10-08, while fixing the figures below).** Same pattern as the ones
       fixed that day, but the fix is a judgment about the number, not just a
@@ -374,6 +382,18 @@ Update both together. See `AGENTS.md`.
 ## Shipped
 
 Newest first.
+
+### 2026-10-21 (later)
+- **Learn page condensed: six guide cards and a "Load more" article list.**
+  Not yet pushed (branch `worktree-agent-a96ccdf509ae80eb7`). The card grid on
+  `/learn` is now two rows of three on desktop. Facts & Stats, HPV, and
+  Prevention left the grid because the Overview and Risk Factors cards cover
+  most of the same ground; their pages, the sitemap, the footer links, and the
+  links from other learn pages are unchanged. (Ian asked to drop two, but there
+  were nine cards, so reaching two rows of three meant dropping three.) The
+  articles list shows the five newest and a "Load more" button that adds five
+  at a time; every article link is still in the HTML for search engines. New
+  string in English, Spanish, and Portuguese.
 
 ### 2026-10-21
 - **3D reels, original-look posts, and the posting calendar are live on

@@ -5,6 +5,10 @@ import FadeUp from "@/components/FadeUp";
 import AnimatedLearnCards from "@/components/AnimatedLearnCards";
 import { getAllPublishedArticles } from "@/lib/articles";
 import { localizedAlternates } from "@/lib/pageMetadata";
+import LoadMoreList from "@/components/LoadMoreList";
+
+// Articles shown before "Load more", and how many each click adds.
+const ARTICLES_PER_PAGE = 5;
 
 type Props = { params: Promise<{ locale: string }> };
 
@@ -21,7 +25,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function LearnPage({ params }: Props) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "LearnPage" });
-  const articles = getAllPublishedArticles(locale);
+  // Newest first by the article's publish date (filename date as tiebreak).
+  const articles = getAllPublishedArticles(locale).sort(
+    (a, b) => b.date.localeCompare(a.date) || b.filename.localeCompare(a.filename),
+  );
 
   return (
     <div className="max-w-5xl mx-auto px-5 py-10 sm:py-16">
@@ -38,8 +45,11 @@ export default async function LearnPage({ params }: Props) {
         <FadeUp>
           <div className="mt-16">
             <h2 className="font-serif text-2xl text-ink mb-6">{t("moreArticles")}</h2>
-            <div className="space-y-3">
-              {articles.map((a) => (
+            <LoadMoreList
+              className="flex flex-col gap-3"
+              step={ARTICLES_PER_PAGE}
+              buttonLabel={t("loadMore")}
+              items={articles.map((a) => (
                 <Link
                   key={a.slug}
                   href={`/learn/${a.slug}`}
@@ -53,10 +63,10 @@ export default async function LearnPage({ params }: Props) {
                       <p className="text-sm text-ink-soft mt-1 line-clamp-2">{a.excerpt}</p>
                     )}
                   </div>
-                  <span className="text-brand shrink-0 mt-0.5 text-sm font-semibold">→</span>
+                  <span className="text-brand shrink-0 mt-0.5 text-sm font-semibold" aria-hidden>→</span>
                 </Link>
               ))}
-            </div>
+            />
           </div>
         </FadeUp>
       )}

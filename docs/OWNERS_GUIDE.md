@@ -461,7 +461,7 @@ either baked in at build time or computed in the visitor's browser.
 /find-care              map + clinic search
 /methods                ⭐ the credibility page. Every weight, every source
 /learn/...              9 hand-written guides, plus published articles
-                        served from content/published/ (8 so far)
+                        served from content/published/ (11 so far)
 /for-clinicians         embed code, flyer, the professional framing
 /about  /privacy  /terms  /press
 /qr                     printable QR generator for flyers
@@ -469,6 +469,17 @@ either baked in at build time or computed in the visitor's browser.
 
 `/methods` is the most important page on the site. It's what a sceptical
 clinician reads before deciding whether to take you seriously.
+
+The `/learn` index page shows six of the nine guides as cards, two rows of
+three. Facts & Stats, HPV, and Prevention are left off the grid because the
+Overview and Risk Factors cards already cover most of what they say. Those
+three pages still exist and are still linked from the footer, the sitemap, and
+other learn pages, so nothing that pointed at them broke. To swap one back in,
+edit the list at the top of `src/lib/learnArticles.ts`.
+
+Below the cards, the five newest articles show, with a "Load more" button that
+adds five at a time. Every article link is already in the page for Google; the
+button only unhides them, so the extras still count for search.
 
 ### 8.3 The server-side bits
 
