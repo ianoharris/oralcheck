@@ -1119,7 +1119,8 @@
   "LearnPage": {
     "heading": "Aprender",
     "subheading": "Guías breves y basadas en evidencia sobre la detección y prevención del cáncer oral. Escritas para personas comunes, no para clínicos.",
-    "moreArticles": "Más artículos"
+    "moreArticles": "Más artículos",
+    "loadMore": "Cargar más"
   },
   "ArticlePage": {
     "backToLearn": "← Volver a Aprender",

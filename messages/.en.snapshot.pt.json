@@ -1119,7 +1119,8 @@
   "LearnPage": {
     "heading": "Learn",
     "subheading": "Short, evidence-based guides on oral cancer detection and prevention. Written for regular people, not clinicians.",
-    "moreArticles": "More articles"
+    "moreArticles": "More articles",
+    "loadMore": "Load more"
   },
   "ArticlePage": {
     "backToLearn": "← Back to Learn",
