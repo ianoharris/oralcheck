@@ -10,6 +10,11 @@ import InstagramFeed from "@/components/InstagramFeed";
 
 type Props = { params: Promise<{ locale: string }> };
 
+// The page is prerendered at build, so without this the live "people reached"
+// stat froze at whatever GA said on the day of the last deploy. Rebuild it in
+// the background at most once an hour, matching the GA cache in lib/reach.ts.
+export const revalidate = 3600;
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "Meta" });
