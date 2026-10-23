@@ -1,0 +1,306 @@
+[
+ {
+  "js": [
+   "pl.size(1000,1100,1)",
+   "pl.view({dir:[-1,0,0], target:[0,1.555,0.0], height:0.32})",
+   "pl.jaw(0,0)"
+  ]
+ },
+ {
+  "js": [
+   "pl.cut(null)"
+  ],
+  "mask": "head",
+  "pattern": null
+ },
+ {
+  "js": [
+   "pl.cut(null)"
+  ],
+  "mask": "brain",
+  "pattern": "^brain$"
+ },
+ {
+  "js": [
+   "pl.cut(null)"
+  ],
+  "mask": "cord",
+  "pattern": "spinal cord|Spinal dura|tract$"
+ },
+ {
+  "js": [
+   "pl.cut({offset:0.0005})"
+  ],
+  "mask": "skull_mid",
+  "pattern": "^(Frontal bone|Parietal|Occipital bone|Sphenoid bone|Ethmoid bone|Nasal bone|Vomer|Sinus of)",
+  "section": true
+ },
+ {
+  "js": [
+   "pl.cut({offset:0.0005})"
+  ],
+  "mask": "palate_mid",
+  "pattern": "^(Maxilla|Palatine bone)",
+  "section": true
+ },
+ {
+  "js": [
+   "pl.cut({offset:0.0005})"
+  ],
+  "mask": "mandible_mid",
+  "pattern": "^Mandible$",
+  "section": true
+ },
+ {
+  "js": [
+   "pl.cut(null)"
+  ],
+  "mask": "mandible",
+  "pattern": "^Mandible$"
+ },
+ {
+  "js": [
+   "pl.cut(null)"
+  ],
+  "mask": "teeth_up",
+  "pattern": "^Upper .*(incisor|canine|premolar|molar)"
+ },
+ {
+  "js": [
+   "pl.cut(null)"
+  ],
+  "mask": "teeth_lo",
+  "pattern": "^Lower .*(incisor|canine|premolar|molar)"
+ },
+ {
+  "js": [
+   "pl.cut(null)"
+  ],
+  "mask": "tongue",
+  "pattern": "^Tongue$"
+ },
+ {
+  "js": [
+   "pl.cut(null)"
+  ],
+  "mask": "genio",
+  "pattern": "^Genioglossus"
+ },
+ {
+  "js": [
+   "pl.cut({offset:0.0005})"
+  ],
+  "mask": "floor_mid",
+  "pattern": "^(Geniohyoid|Mylohyoid)",
+  "section": true
+ },
+ {
+  "js": [
+   "pl.cut(null)"
+  ],
+  "mask": "softpalate",
+  "pattern": "^(Soft palate|Uvula of palate)$"
+ },
+ {
+  "js": [
+   "pl.cut({offset:0.0005})"
+  ],
+  "mask": "hyoid",
+  "pattern": "^Hyoid bone$",
+  "section": true
+ },
+ {
+  "js": [
+   "pl.cut(null)"
+  ],
+  "mask": "hyoid_full",
+  "pattern": "^Hyoid bone$"
+ },
+ {
+  "js": [
+   "pl.cut(null)"
+  ],
+  "mask": "epiglottis",
+  "pattern": "^Epiglottis$"
+ },
+ {
+  "js": [
+   "pl.cut({offset:0.0005})"
+  ],
+  "mask": "thyroid_c",
+  "pattern": "^Thyroid cartilage$",
+  "section": true
+ },
+ {
+  "js": [
+   "pl.cut({offset:0.0005})"
+  ],
+  "mask": "cricoid",
+  "pattern": "^Cricoid cartilage$",
+  "section": true
+ },
+ {
+  "js": [
+   "pl.cut(null)"
+  ],
+  "mask": "arytenoid",
+  "pattern": "^(Arytenoid|Corniculate)"
+ },
+ {
+  "js": [
+   "pl.cut(null)"
+  ],
+  "mask": "trachea",
+  "pattern": "^Trachea$"
+ },
+ {
+  "js": [
+   "pl.cut(null)"
+  ],
+  "mask": "oesophagus",
+  "pattern": "^Oesophagus$"
+ },
+ {
+  "js": [
+   "pl.cut({offset:0.0005})"
+  ],
+  "mask": "vertebrae",
+  "pattern": "^(Atlas|Axis|Vertebra)",
+  "section": true
+ },
+ {
+  "js": [
+   "pl.cut({offset:0.0005})"
+  ],
+  "mask": "pharynx_mid",
+  "pattern": "pharyngeal constrictor|^Posterior pharyngeal wall",
+  "section": true
+ },
+ {
+  "js": [
+   "pl.cut(null)"
+  ],
+  "mask": "pharynx",
+  "pattern": "pharyngeal constrictor|^Posterior pharyngeal wall"
+ },
+ {
+  "js": [
+   "pl.cut({offset:0.0005})"
+  ],
+  "mask": "lips_mid",
+  "pattern": "^Orbicularis oris|^Mentalis",
+  "section": true
+ },
+ {
+  "js": [
+   "pl.cut(null)"
+  ],
+  "mask": "lips",
+  "pattern": "^(Upper|Lower) lip$"
+ },
+ {
+  "js": [
+   "pl.cut(null)"
+  ],
+  "mask": "tonsil",
+  "pattern": "^Palatine tonsil.l"
+ },
+ {
+  "js": [
+   "pl.cut(null)"
+  ],
+  "mask": "nose",
+  "pattern": "septal cartilage|alar cartilage"
+ },
+ {
+  "js": [
+   "pl.cut(null)"
+  ],
+  "mask": "concha",
+  "pattern": "^Inferior nasal concha bone.l"
+ },
+ {
+  "js": [
+   "pl.cut({offset:0.0005})"
+  ],
+  "mask": "nasal_muc",
+  "pattern": "^Mucosa of nasal cavity$",
+  "section": true
+ },
+ {
+  "js": [
+   "pl.cut(null)"
+  ],
+  "mask": "gland_sm",
+  "pattern": "^Submandibular gland.l|^Sublingual gland.l"
+ },
+ {
+  "js": [
+   "pl.cut(null)"
+  ],
+  "mask": "thyroid_g",
+  "pattern": "^Thyroid gland$"
+ },
+ {
+  "js": [
+   "pl.cut(null)"
+  ],
+  "mask": "skull",
+  "pattern": "^(Frontal bone|Parietal|Occipital bone|Sphenoid bone|Temporal|Nasal bone|Zygomatic|Maxilla)"
+ },
+ {
+  "js": [
+   "pl.cut(null)"
+  ],
+  "mask": "palate_muc",
+  "pattern": "^(Hard palate mucosa|Soft palate mucosa)$"
+ },
+ {
+  "js": [
+   "pl.cut(null)"
+  ],
+  "mask": "floor_muc",
+  "pattern": "^Floor of mouth mucosa$"
+ },
+ {
+  "js": [
+   "pl.cut({offset:0.0005})"
+  ],
+  "mask": "neckmus",
+  "pattern": "^(Longus colli|Longus capitis|Rectus anterior)",
+  "section": true
+ },
+ {
+  "js": [
+   "pl.cut({offset:0.0005})"
+  ],
+  "mask": "backmus",
+  "pattern": "^(Semispinalis|Splenius|Trapezius|Ascending part of trapezius|Spinalis|Multifidus|Rectus posterior|Obliquus)",
+  "section": true
+ },
+ {
+  "js": [
+   "pl.size(1000,1100,1)",
+   "pl.view({dir:[-1,0,0], target:[0,1.555,0.0], height:0.32})",
+   "pl.jaw(0,0)",
+   "pl.cut(null)"
+  ],
+  "mask": "upper_inc",
+  "pattern": "^Upper medial incisor.l$"
+ },
+ {
+  "js": [],
+  "mask": "lower_inc",
+  "pattern": "^Lower medial incisor.l$"
+ },
+ {
+  "js": [],
+  "mask": "upper_lat",
+  "pattern": "^Upper (lateral incisor|canine).l$"
+ },
+ {
+  "js": [],
+  "mask": "lower_lat",
+  "pattern": "^Lower (lateral incisor|canine).l$"
+ }
+]
