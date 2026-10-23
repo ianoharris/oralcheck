@@ -8,7 +8,7 @@ know the answer, including the answers that aren't flattering.
 
 Read it once end to end. After that, use the table of contents.
 
-Last updated: **2026-09-14**
+Last updated: **2026-10-23**
 Maintained by: Claude, on request. Ask it to update this file whenever something
 structural changes. See [Keeping this current](#15-keeping-this-current).
 
@@ -474,7 +474,10 @@ clinician reads before deciding whether to take you seriously.
 are new US cases a year, survival when caught early, and **people reached since
 launch**, which the site reads from Google Analytics every hour
 (`src/lib/reach.ts`, using the `GA_PROPERTY_ID` and `GA_SERVICE_ACCOUNT_KEY`
-values stored on Vercel). It always shows a "+", because GA is a floor: it
+values stored on Vercel). The home page itself is rebuilt in the background at
+most once an hour, the first time someone visits after the hour is up. For its
+first day it was not: the page was built once per deploy, so the number stayed
+at whatever it was on deploy day (855) until you noticed on 22 October. It always shows a "+", because GA is a floor: it
 misses anyone with an ad blocker, and it missed most visits from 22 September
 to 21 October 2026. If the GA read ever fails, the page quietly shows the last
 total read by hand (847, on 21 October 2026) and drops the "Live" label. It
@@ -619,10 +622,14 @@ small daily job hand posts to Publora a few days ahead removes the deadline
 entirely. It also respects Publora's three-post cap, since at most three or
 four posts are ever waiting there at once.
 
-**The mix.** Ten reels, ten carousels, ten single images. Instagram gets
-posts on Tuesday and Friday at 5pm Central; LinkedIn gets one on Wednesday at
-9am. One reel a week. Three dates are pinned to real events: Dental Hygiene
-Month (October), the Great American Smokeout (19 November), and the new year.
+**The mix.** Ten reels, ten carousels, ten single images. Every regular post
+goes out at 10am Central on a Monday, Tuesday or Thursday, because that is when
+your followers are most active (9am to noon on those days, from your Instagram
+insights, 22 October). Planned batches put Instagram on Monday and Thursday and
+LinkedIn on Tuesday. One reel a week. Holiday posts keep their own day and time:
+Halloween (Saturday 31 October, 5pm), the Great American Smokeout (its
+LinkedIn post goes the day before, since it says "tomorrow"), Thanksgiving
+(Thursday 26 November, 5pm) and the new year.
 
 **You are still the approval gate.** Nothing is scheduled unless you marked it
 Approve on the review page. A post you send back with Redo is rewritten with
@@ -653,8 +660,7 @@ flowchart TB
 network a post targets as its own scheduled slot — three posts across two
 networks would need six slots against a cap of three.
 
-**LinkedIn lands Tuesday or Wednesday morning**, not in Instagram's 5pm slot,
-and gets a rewritten caption (longer, professional, no hashtag wall).
+**LinkedIn gets a rewritten caption** (longer, professional, no hashtag wall).
 
 **Where ideas come from.** The robot does not pick its own subjects any more.
 Left to choose, it kept returning to the same five or six (survival by stage,
@@ -727,20 +733,153 @@ the teeth (three reels in the first calendar draft got this wrong). The model
 has no real lips (only the muscle beneath them), and its throat parts are too
 crude to show, so neither is ever drawn: a line about the throat points into
 the back of the open mouth, and a line about the lips or cheeks shows the
-whole mouth. Captions firm up word by word in time with the voice (Kokoro on
+whole mouth. The label picks its side of the screen once per shot and stays
+there, and its pointer lands on the part being named: the front of the lower
+gum for the gums, the near gland for the salivary glands. (The reel posted
+early on 21 October had labels hopping side to side as the camera drifted, and
+a gums pointer that landed on a tooth. Still frames looked fine, which is why
+it got through; a test now plays every labelled shot and fails if a label
+moves.) Captions firm up word by word in time with the voice (Kokoro on
 fal), the sound is quiet (a soft click on each tap, air as the camera moves, a
 low tone under the end card, the usual music bed), and the reel ends on a card
 with the address. It costs nothing beyond the voice and music already used.
 The model's licence (CC BY-SA) means every reel and every post using a 3D still
 carries a credit line, on screen and in the caption, and is itself shared
-under that licence. If a 3D render ever fails, the run builds the older
-text-only reel instead so the week is not lost.
+under that licence. If a 3D render fails in the weekly run, it builds the
+older text-only reel instead so the week is not lost. Calendar builds do not:
+they retry the 3D render, because a silent swap to the old look once went
+unnoticed.
+
+**A fuller model, waiting in the wings.** The reels above use a trimmed
+model of the jaw, teeth, tongue and mouth floor. A second model now exists
+(`oralcheck-agent/anatomy3d/`), built from the same open atlas but keeping the
+whole head and neck: skin, the fat under it, fascia, muscle, bone, teeth,
+cartilage, about 240 blood vessels and 105 nerves, the glands, lymph nodes,
+eyes, brain, throat and voice box. Each tissue has its own texture (fibrous
+muscle, porous bone, lobular fat and glands, moist lining). It can be cut
+along the three standard planes: sagittal (left from right, down the middle of
+the face), coronal (front from back) and axial (top from bottom), and the cut
+face shows each tissue in section. It can also be peeled layer by layer, or
+turned to glass with one part highlighted in teal. Two honest limits. The
+atlas has no separate skin layers, so the epidermis, dermis and fat are
+generated under its skin surface, with the epidermis drawn thicker than real
+so it can be seen at all. And the atlas skin is low-detail, so the face looks
+like a mannequin rather than a person. To show the skin's layers clearly
+there is a separate textbook-style block, cut in steps. Labels on this model
+are checked before they are drawn: the page renders every structure in its
+own flat colour, and a label appears only if its dot sits on the structure it
+names. This was built after the 27 October reel's pointer landed on a tooth,
+and it replaces the "aim at the middle of the mesh" rule that caused it. You
+can explore it at https://claude.ai/artifact/ECiso41AwjuW8UstJXWYdV. Its
+first version used flesh-coloured skin, raw red muscle and a dark background,
+and you said it looked terrifying; it was restyled to the reels' pale,
+clinical look, and on 22 October the skin and eyes moved to natural colours
+after you said the plaster skin looked bad. At your request the skin is no longer shown unless you ask
+for it: the page opens on the see-through view, and the cut views open with
+the skin and fat peeled back to the muscle. The Skin button and the peel
+slider still bring it back. The mouth gets the most realism, because that
+is where the cancers OralCheck screens for start. The Mouth view shows the
+face with the jaw open: the skin is parted where the lips meet, so the chin
+and lower lip move with the jaw and the upper lip lifts off the teeth. A mouth
+on a bare skull looked uncanny, which is why the face is there; a switch on the
+page turns it off for a cutaway you can turn to any side. The "Back of the
+mouth" preset is the view from a throat exam: mouth wide, the back of the
+tongue pressed down ("say ahh"), looking up past the top teeth at the uvula,
+the soft palate, the tonsils between their two arches, and the back of the
+throat. Inside the mouth the colours are matched to clinical photos you sent
+(pale coral gums, a pale pink tongue with a whitish coat, ivory teeth), the
+light works like a penlight, and the wet surfaces catch small glints of
+saliva. The ChatGPT textures you made add only the fine detail; they are
+illustrations, not photos of a real person. Several parts are not in the atlas
+and are built to fit what is around them: the lips, cheek lining, inner lips,
+floor of the mouth, the arches of the throat, its back wall, and the lining of
+the soft palate. The atlas's tonsils sit oddly high and small, so they are
+moved down into the niche between the arches, where tonsils sit in life. If
+someone asks, those parts are careful approximations, not scanned anatomy.
+**Since 23 October the head has no skin at all**: you found it too frightening,
+so the skin, the fat under it and the eyelashes and brows are left out of the
+model (one switch in `export_head.py` brings them back). The head now opens at
+the muscle, the mouth views are cutaways with no face, and the Skin button, the
+face switch and the Lips preset are gone; the skin's layers are still shown in
+the separate block. A full review of the model, and of whether a different
+approach would look more professional, was done on 23 October; see "The review,
+and the illustrated route" below. The notes below on the skin describe how it was built, for the
+record. Where the lips meet was placed by you, on a page of sliders, on 22 October:
+the atlas's own mouth slit sat about 1.5 cm too low, so it is sealed and the
+skin opens on your line instead. The atlas skin is a hollow shell made of
+pieces that do not quite meet, which showed as a dotted line down the chin and
+neck, dark specks on the neck and cut-looking smile lines. The skin is now
+rebuilt a few millimetres outside the shell and pulled back onto it, which
+closes those gaps; the ears, eyes and nostrils are too tightly curved for that
+and are handled gently. Seen from below, the nostrils are still rough. There
+is a 70-second screen recording of the model
+(`oralcheck-agent/anatomy3d/stills/oralcheck_head_demo.mp4`), made by
+`demo_video.py`, which can be re-run whenever the model changes.
+Earlier versions made muscle and vessels look like painted concrete: fine
+texture turned into glittering grain at normal viewing distance. Every fine
+pattern now fades out before it gets that small. The skin was plaster white
+with a stucco texture, which made the head a mannequin; it is now a natural
+skin tone, warmer over the cheeks, nose and ears, with pores that show only up
+close, and the eyes have soft hazel irises. It is all drawn by the program,
+not a downloaded skin photo, so there is nothing to license. Reels do
+not use it yet: it renders quickly on your Mac's graphics chip, but would be
+very slow on the free GitHub computers that build the weekly reel.
+
+**The review, and the illustrated route (23 October).** You said the head
+model felt off and suspected a better solution. The review
+(`docs/MODEL_REVIEW.md`, and as a page with pictures at
+https://claude.ai/artifact/6fwVAT9B2fAG7iYq6ffYbj) found you were right, and
+why. The atlas the model comes from was built for students to click through,
+not for pictures: its parts are hollow shells that often do not close, and the
+inside of the mouth, the part that matters most, is mostly pieces the export
+script had to invent (cheek lining, throat wall, lips). Cut down the middle, it
+shows slivers and blocks. No amount of colour or lighting work fixes shapes
+that are not there. And realism without a face is exactly what feels uncanny;
+professional anatomy pictures avoid it by showing no face, or only a faint
+outline of one. So the recommendation is to stop investing in 3D and use flat,
+layered drawings in the textbook style you picked. There are two drawings. The
+first is the open mouth from the front, as in a "say ahh" exam, with switches
+that show a white patch, a red patch, a red and white patch, a sore that does
+not heal, a swollen tonsil and a lip sore where they usually appear, plus lichen
+planus, a lacy white pattern on both cheeks that is not cancer but is worth
+showing a dentist, because doctors keep an eye on it. The second is a side view
+with the head as a faint silhouette, with switches that light up where these
+cancers start. Both, two sample posts and two short reels (one drawn, one 3D,
+with the same words, for you to compare) are at
+https://claude.ai/artifact/HNkBy65udqitq3m3WhvyRW, and everything rebuilds from
+`oralcheck-agent/illustration/` with one command. Three things to know if you
+are asked. **Are these real?** No. The outlines are traced from the same open
+atlas, so the proportions are real anatomy, but the parts the atlas gets wrong
+(the soft palate, lips, uvula, tonsils, throat wall) are redrawn by hand, and
+the lesions are drawings matched to published photos. **Who checked the
+lesions?** Nobody clinical yet, and every frame says so. The review recommends
+one dentist or oral pathologist looks at the set once before a series of
+lesion posts goes out. **Can others reuse them?** Yes: because they are traced
+from a CC BY-SA atlas, they are CC BY-SA too, and every post carries a credit
+line. The free alternative with the same look is Blausen Medical's plates,
+which are CC BY (credit only); the 3D atlases you may have heard of
+(BioDigital, Visible Body, Complete Anatomy) look photoreal and need paid
+permission for social posts. Commissioning a professional plate costs roughly
+$500 to $3,400. You chose the drawn route on 23 October, so the 3D head
+is retired from future work. If someone asks why the site has no 3D model: a
+model adds load time and phone trouble and risks looking uncanny, while a clear
+drawing does the job people come for, which is knowing where to look and what
+to look for. A small optional 3D view is parked on the roadmap for after the
+drawings ship.
 
 > **The manual step you can't automate:** no API can put a tappable link on a
 > Reel. Captions are plain text; clickable Reel links need Meta Verified Plus.
 > The only free clickable route is resharing the reel to a **Story** with a link
 > sticker, by hand, which takes about 15 seconds. The bot sends you a reminder
 > with the date when a reel is scheduled.
+
+**Holiday posts get their own look.** A post planned for an occasion renders
+in a seasonal theme instead of the usual light or dark one: Halloween in a
+night theme (moon, bats, a cobweb), Thanksgiving in a fall theme (warm paper,
+maple leaves). The decoration sits behind the text, so it never makes a slide
+harder to read, and the facts stay as calm and exact as any other post. You
+asked for this on 22 October. A new holiday needs a theme added in
+`render_html.py` (`THEMES` and `SEASON_DECOR`) and a line in `pick_theme`.
 
 **Other scheduled jobs:** SEO article drafting (Mondays 10:00 UTC), outreach
 follow-up tracking (Sundays 12:00 UTC).

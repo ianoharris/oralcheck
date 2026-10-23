@@ -1,0 +1,12 @@
+[
+ {
+  "js": [
+   "pl.size(1000,1000,1)",
+   "pl.cut(null)",
+   "pl.jaw(1.3,1)",
+   "pl.show({tooth:{},tongue:{},mucosa:{},softpalate:{},tonsil:{}}, '^(Upper labial|Lower labial|Mucosa of nasal|Trachea|Oesophagus|Floor of mouth|Genioglossus|Hyoglossus|Styloglossus|Buccal)')",
+   "pl.view({dir:[0,-0.30,1], target:[0,1.522,0.05], height:0.1})"
+  ],
+  "ids": "ids"
+ }
+]
