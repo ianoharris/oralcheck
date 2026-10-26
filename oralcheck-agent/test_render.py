@@ -453,6 +453,40 @@ def main() -> int:
     except Exception as exc:                        # pragma: no cover
         failures.append(("reel3d_smoke", str(exc)[:160]))
 
+    # --- a 3D label holds still for its whole shot ----------------------------
+    # The 27 Oct reel went out with labels hopping side to side as the camera
+    # drifted past the subject. Sample every labelled focus through its shot and
+    # require one label position per shot.
+    try:
+        import json as _json
+        import reel3d as _R3
+        names = [n for n, f in _R3.FOCI.items() if f["focus"]]
+        L = 3.0
+        shots = [{"t0": k * L, "len": L, "focus": f["focus"], "ghost": f["ghost"], "cam": f["cam"], "aim": f.get("aim"),
+                  "open": f.get("open", 0), "anchor": f.get("anchor"), "section": f.get("section"), "view": "",
+                  "label": {"k": "", "t": n, "d": ""}, "tap": 0.55, "words": [], "step": ""}
+                 for k, (n, f) in enumerate((n, _R3.FOCI[n]) for n in names)]
+        with sync_playwright() as p:
+            b = p.chromium.launch(args=["--use-gl=angle", "--use-angle=swiftshader", "--enable-unsafe-swiftshader"])
+            pg = b.new_page(viewport={"width": _R3.W, "height": _R3.H})
+            pg.route("http://reel3d.local/**", _R3._serve)
+            pg.add_init_script(f"window.PLAN = {_json.dumps({'shots': shots, 'cta_t0': 999, 'credit': ''})};")
+            pg.goto("http://reel3d.local/scene.html")
+            pg.wait_for_function("window.render && window.render(0)", timeout=180000)
+            jumpy = []
+            for k, n in enumerate(names):
+                lefts = {pg.evaluate(f"() => {{ window.render({k * L + j * 0.25}); return document.getElementById('label').style.left; }}")
+                         for j in range(int(L / 0.25))}
+                if len(lefts) > 1:
+                    jumpy.append(f"{n} {sorted(lefts)}")
+            b.close()
+        if jumpy:
+            failures.append(("reel3d_label_jumps", "; ".join(jumpy)))
+        else:
+            print(f"  [PASS] 3D labels hold one position per shot ({len(names)} foci)")
+    except Exception as exc:                        # pragma: no cover
+        failures.append(("reel3d_label_probe", str(exc)[:160]))
+
     # --- reel photos stay inside the attributed set ---------------------------
     # `sore` and `lip` have no attribution recorded anywhere in the repo (see
     # ROADMAP.md). Reels can now request a real clinical photo per segment;

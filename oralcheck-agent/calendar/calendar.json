@@ -5,14 +5,14 @@
   "entries": [
     {
       "id": "2026-10-27_in_reel",
-      "date": "2026-10-27",
+      "date": "2026-10-26",
       "network": "instagram",
       "media_type": "reel",
-      "when": "2026-10-27T22:00:00+00:00",
-      "status": "redo",
+      "when": "2026-10-26T15:00:00+00:00",
+      "status": "built",
       "idea": {
         "title": "Follow along: what a dental oral cancer check covers",
-        "hook": "Your dentist checks six things at every visit. Can you find them first?",
+        "hook": "Your dentist checks these at every visit. Can you find them first?",
         "brief": "Each shot prompts the viewer to look at one area in their own mouth, lips, gums, tongue, cheeks, palate, throat, in the same order a dentist would. After the self-check, a single title card notes that most early oral cancers are found during routine dental visits, and that people who skip that care tend to reach diagnosis at later stages when outcomes are worse. The reel closes with a prompt to take a free risk screener at oralcheck.org/learn/prevention.",
         "topic": "dentist_screening",
         "shape": "self_check",
@@ -29,8 +29,8 @@
         "date": "2026-10-26"
       },
       "folder": "2026-10-27_in_reel",
-      "hook": "Your dentist checks six things at every visit. Can you find them first?",
-      "caption": "A routine dental visit includes a short check of the lips, gums, tongue, cheeks, palate and throat. Most early oral cancers are caught that way. People who skip regular dental care tend to reach diagnosis at a later stage, when outcomes are harder. This self-check isn't a test, but it helps you know what to bring to your dentist. Take a free risk screener at oralcheck.org/learn/prevention.\n\n3D anatomy: Z-Anatomy (CC BY-SA 4.0), from BodyParts3D, DBCLS",
+      "hook": "Your dentist checks these at every visit. Can you find them first?",
+      "caption": "A dentist covers all of this in about two minutes at every routine visit. The gums, tongue borders, and floor of the mouth are the areas most likely to show early changes, and most early oral cancers are found exactly there. People who skip regular dental care tend to reach diagnosis at later stages, when outcomes are worse. A self-check at home isn't a substitute for professional screening, but it's a reason to pay attention. Take a free oral cancer risk screener at oralcheck.org/learn/prevention.\n\n3D anatomy: Z-Anatomy (CC BY-SA 4.0), from BodyParts3D, DBCLS",
       "hashtags": [
         "oralcancer",
         "oralhealth",
@@ -41,15 +41,25 @@
       "files": [
         "reel.mp4"
       ],
-      "review_note": "It said check your lips and highlighted the teeth"
+      "review_note": "The posted version promised six things but showed three. Only name areas the 3D model can show (gums, tongue sides, floor of mouth, teeth, back of the mouth), and make the hook and caption match the shots exactly.",
+      "version": 4,
+      "uploaded": false,
+      "publora_id": "6ad939fbd0abccef3b5962fd",
+      "scheduled_at": "2026-10-21T22:19:15.077010+00:00",
+      "posted_note": "Posted early on 21 Oct at Ian's request (planned for 27 Oct).",
+      "posted_glitchy": {
+        "publora_group": "6ad939fbd0abccef3b5962fd",
+        "posted_at": "2026-10-21T22:24:00+00:00",
+        "why": "labels jumped side to side; gums pointer landed on the teeth"
+      }
     },
     {
       "id": "2026-10-28_li_image",
-      "date": "2026-10-28",
+      "date": "2026-10-27",
       "network": "linkedin",
       "media_type": "image",
-      "when": "2026-10-28T14:00:00+00:00",
-      "status": "redo",
+      "when": "2026-10-27T15:00:00+00:00",
+      "status": "built",
       "idea": {
         "title": "HPV overtook tobacco as the top throat cancer cause",
         "hook": "Tobacco is not the leading cause of throat cancer anymore.",
@@ -66,25 +76,27 @@
       "event": null,
       "folder": "2026-10-28_li_image",
       "hook": "Tobacco is not the leading cause of throat cancer anymore.",
-      "caption": "Tobacco is not the leading cause of throat cancer anymore. HPV has overtaken it as the primary driver of oropharyngeal cancers, meaning the tonsils, base of tongue, and back of the throat, and cases in that region have risen by more than 300% since the 1980s.\n\nThat shift is specific to the throat. For cancers in the mouth itself, tobacco remains the biggest driver.\n\nKnowing what's actually behind a cancer changes who needs to pay attention. Learn more at oralcheck.org/learn/hpv",
+      "caption": "Tobacco is not the leading cause of throat cancer anymore. HPV has overtaken it as the primary driver of oropharyngeal cancers, which means cancers of the tonsils, the base of the tongue, and the back of the throat. Cases have risen by more than 300% since the 1980s. One thing worth holding onto: this shift is specific to the throat. Tobacco remains the biggest driver of cancers in the mouth itself. Knowing what actually raises your risk is where protection starts. Learn more and take a free risk screener at oralcheck.org/learn/hpv\n\n3D anatomy: Z-Anatomy (CC BY-SA 4.0), from BodyParts3D, DBCLS\n\nSources:\nChaturvedi et al., J Clin Oncol 2011. https://pubmed.ncbi.nlm.nih.gov/21969503/",
       "hashtags": [
-        "oralcancer",
-        "hpv",
-        "throatcancer",
         "oropharyngealcancer",
+        "hpvawareness",
+        "throatcancer",
+        "oralcancer",
         "oralcheck"
       ],
       "files": [
         "image.jpg"
       ],
-      "review_note": "Picture is unrelated"
+      "review_note": "Picture is unrelated",
+      "version": 2,
+      "uploaded": false
     },
     {
       "id": "2026-10-30_in_carousel",
-      "date": "2026-10-30",
+      "date": "2026-10-29",
       "network": "instagram",
       "media_type": "carousel",
-      "when": "2026-10-30T22:00:00+00:00",
+      "when": "2026-10-29T15:00:00+00:00",
       "status": "approved",
       "idea": {
         "title": "A biopsy turns a white patch into an answer",
@@ -122,12 +134,58 @@
       "review_note": ""
     },
     {
+      "id": "2026-10-31_in_carousel",
+      "date": "2026-10-31",
+      "network": "instagram",
+      "media_type": "carousel",
+      "when": "2026-10-31T22:00:00+00:00",
+      "status": "built",
+      "idea": {
+        "title": "Halloween: what looks scary in your mouth, and what quietly matters",
+        "hook": "Some things in your mouth look frightening and are not. One looks like nothing and is.",
+        "brief": "A Halloween post that is a little spooky: the slides render in a night theme (moon, bats, a cobweb), and the words can carry a light spooky touch (things that look frightening, the one that should haunt you, what lurks quietly), but the facts stay calm and exact. No gore, no fear-mongering, no exclamation marks, never 'we'. Slide 1: the alarming-looking things that are usually harmless, from the facts (geographic tongue, thrush that wipes away, a burn from hot food, lacy lichen planus on both cheeks, a callus from a bitten cheek). Slide 2 compares the two sides: looks scary but usually harmless, against looks like nothing but worth a check (a painless patch or sore that is new and still there after two weeks). Slide 3: early oral cancer often does not hurt, so no pain is not reassurance. Close on the two-week rule and oralcheck.org/learn/white-and-red-patches.",
+        "topic": "lookalikes",
+        "shape": "compare",
+        "hook_style": "contrast",
+        "tone": "calm",
+        "pillar": "self_exam",
+        "media_type": "carousel",
+        "calendar_ref": "Halloween (31 October)",
+        "slug": "halloween-what-looks-scary-and-what-quietly-matters"
+      },
+      "event": {
+        "name": "Halloween"
+      },
+      "review_note": "Ian, 22 Oct: make it a little spooky. The design now has a Halloween night theme; let the hook and slide headlines carry a light spooky touch too, while every fact stays exact and calm.",
+      "folder": "2026-10-31_in_carousel",
+      "version": 2,
+      "uploaded": false,
+      "hook": "Some things look frightening. One looks like nothing.",
+      "caption": "Some things in your mouth look frightening and are not. One looks like nothing and is.\n\nGeographic tongue moves around the tongue over weeks and is harmless. Oral thrush wipes clean away. A burn from hot food or drink heals on its own. Lacy white lines on both cheeks at the same time are almost always lichen planus. A callus from a cheek you bite settles once the cause is gone.\n\nNone of those are the thing to watch for.\n\nWhat actually lurks quietly is a patch or sore that is new, doesn't hurt, and is still there two weeks later. No pain. No obvious cause. Just still there.\n\nEarly oral cancer often doesn't hurt at all, which is exactly why the two-week rule exists. Painless is not the same as harmless.\n\nIf something in your mouth has been there for more than two weeks and you can't explain it, that's the moment to act. Learn what to look for at oralcheck.org/learn/white-and-red-patches.\n\nWhat's the mouth change you've talked yourself out of worrying about?",
+      "hashtags": [
+        "oralcancer",
+        "oralhealth",
+        "selfcheck",
+        "halloween",
+        "earlydetection"
+      ],
+      "files": [
+        "slide_01.jpg",
+        "slide_02.jpg",
+        "slide_03.jpg",
+        "slide_04.jpg",
+        "slide_05.jpg",
+        "slide_06.jpg",
+        "preview.jpg"
+      ]
+    },
+    {
       "id": "2026-11-03_in_image",
-      "date": "2026-11-03",
+      "date": "2026-11-02",
       "network": "instagram",
       "media_type": "image",
-      "when": "2026-11-03T23:00:00+00:00",
-      "status": "redo",
+      "when": "2026-11-02T16:00:00+00:00",
+      "status": "built",
       "idea": {
         "title": "Six HPV throat cancer symptoms worth knowing",
         "hook": "Six symptoms can point toward HPV-related throat cancer.",
@@ -144,25 +202,27 @@
       "event": null,
       "folder": "2026-11-03_in_image",
       "hook": "Six symptoms can point toward HPV-related throat cancer.",
-      "caption": "Six symptoms can point toward HPV-related throat cancer. A sore throat that hasn't cleared in two weeks. A painless lump in the neck. The feeling that food is catching when you swallow. Ear pain on one side with no ear infection to explain it. Hoarseness that has lasted more than two weeks. Unexplained weight loss. None of these is proof of anything on its own, but any one that persists beyond two weeks is worth getting checked. Learn more at oralcheck.org/learn/hpv",
+      "caption": "Six symptoms can point toward HPV-related throat cancer. A sore throat that hasn't resolved in two weeks. A painless lump in the neck. Food that feels like it's catching on the way down. Ear pain on one side with no ear infection to explain it. Hoarseness lasting more than two weeks. Unexplained weight loss. None of these is proof of anything on its own, but any one that persists beyond two weeks is worth getting checked. Learn more at oralcheck.org/learn/hpv.\n\n3D anatomy: Z-Anatomy (CC BY-SA 4.0), from BodyParts3D, DBCLS",
       "hashtags": [
-        "hpvcancer",
+        "hpv",
         "throatcancer",
         "oralcancer",
-        "hpvawareness",
+        "cancersymptoms",
         "oralcheck"
       ],
       "files": [
         "image.jpg"
       ],
-      "review_note": "Picture is unrelated"
+      "review_note": "Picture is unrelated",
+      "version": 2,
+      "uploaded": false
     },
     {
       "id": "2026-11-04_li_carousel",
-      "date": "2026-11-04",
+      "date": "2026-11-03",
       "network": "linkedin",
       "media_type": "carousel",
-      "when": "2026-11-04T15:00:00+00:00",
+      "when": "2026-11-03T16:00:00+00:00",
       "status": "approved",
       "idea": {
         "title": "The two-week rule for a sore in your mouth",
@@ -201,10 +261,10 @@
     },
     {
       "id": "2026-11-06_in_reel",
-      "date": "2026-11-06",
+      "date": "2026-11-05",
       "network": "instagram",
       "media_type": "reel",
-      "when": "2026-11-06T23:00:00+00:00",
+      "when": "2026-11-05T16:00:00+00:00",
       "status": "redo",
       "idea": {
         "title": "Painless patches: the warning sign that feels like nothing",
@@ -233,27 +293,28 @@
       "files": [
         "reel.mp4"
       ],
-      "review_note": "it said patches on the inner cheek and then pointed to the floor of the mouth. also the lips are modeled very strangely"
+      "review_note": "it said patches on the inner cheek and then pointed to the floor of the mouth. also the lips are modeled very strangely",
+      "error": "Page.screenshot: Timeout 300000ms exceeded.\nCall log:\n  - taking page screenshot\n  - waiting for fonts to load...\n  - fonts loaded\n"
     },
     {
       "id": "2026-11-10_in_reel",
-      "date": "2026-11-10",
+      "date": "2026-11-09",
       "network": "instagram",
       "media_type": "reel",
-      "when": "2026-11-10T23:00:00+00:00",
-      "status": "redo",
+      "when": "2026-11-09T16:00:00+00:00",
+      "status": "planned",
       "idea": {
-        "title": "Lower lip sun exposure risk: what outdoor workers should know",
-        "hook": "Press your lower lip forward and take a close look.",
-        "brief": "Start with the instruction: pull the lower lip out and look at its outer surface, the part that faces the sun. Explain that chronic sun exposure is a leading risk factor specifically for lower lip cancer, and that people who work outdoors are at higher risk than those who do not. Close on the two practical steps that offer meaningful protection: SPF lip balm and a wide-brimmed hat. Learn more at oralcheck.org/learn/prevention.",
-        "topic": "lower_lip_sun",
-        "shape": "close_look",
+        "title": "The two-week rule, place by place",
+        "hook": "Anything new in your mouth gets two weeks. Here is where to look.",
+        "brief": "A calm 3D walk through the places to check, each paired with the same question: is it still there after two weeks? Start on the sides of the tongue, then the floor of the mouth, then the gums. Name what counts: a sore, a patch, a lump or a colour change. Most things heal within two weeks; what has not deserves a look from a dentist or doctor, and it often does not hurt. Close on oralcheck.org/learn/signs.",
+        "topic": "two_week_rule",
+        "shape": "tour",
         "hook_style": "instruction",
         "tone": "calm",
         "pillar": "self_exam",
         "media_type": "reel",
         "calendar_ref": null,
-        "slug": "lower-lip-sun-exposure-risk-what-outdoor-workers-should-know"
+        "slug": "the-two-week-rule-place-by-place"
       },
       "event": null,
       "folder": "2026-11-10_in_reel",
@@ -269,14 +330,16 @@
       "files": [
         "reel.mp4"
       ],
-      "review_note": "again, the lips look very odd"
+      "review_note": "",
+      "error": "Connection error.",
+      "swapped": "Was 'Lower lip sun exposure risk: what outdoor workers should know' (lower lip). The 3D model has no lips, so the reel moved to the two-week rule on 21 Oct."
     },
     {
       "id": "2026-11-11_li_image",
-      "date": "2026-11-11",
+      "date": "2026-11-10",
       "network": "linkedin",
       "media_type": "image",
-      "when": "2026-11-11T15:00:00+00:00",
+      "when": "2026-11-10T16:00:00+00:00",
       "status": "approved",
       "idea": {
         "title": "The floor of your mouth is the hardest spot to self-check",
@@ -309,10 +372,10 @@
     },
     {
       "id": "2026-11-13_in_carousel",
-      "date": "2026-11-13",
+      "date": "2026-11-12",
       "network": "instagram",
       "media_type": "carousel",
-      "when": "2026-11-13T23:00:00+00:00",
+      "when": "2026-11-12T16:00:00+00:00",
       "status": "redo",
       "idea": {
         "title": "How to check the sides of your tongue right now",
@@ -347,14 +410,15 @@
         "slide_06.jpg",
         "preview.jpg"
       ],
-      "review_note": "The picture makes no sense in the middle of the slides with the mirror"
+      "review_note": "The picture makes no sense in the middle of the slides with the mirror",
+      "error": "Connection error."
     },
     {
       "id": "2026-11-17_in_image",
-      "date": "2026-11-17",
+      "date": "2026-11-16",
       "network": "instagram",
       "media_type": "image",
-      "when": "2026-11-17T23:00:00+00:00",
+      "when": "2026-11-16T16:00:00+00:00",
       "status": "approved",
       "idea": {
         "title": "Men diagnosed with oral cancer 2.6 times more than women",
@@ -382,6 +446,42 @@
       ],
       "files": [
         "image.jpg"
+      ],
+      "review_note": ""
+    },
+    {
+      "id": "2026-11-20_in_reel",
+      "date": "2026-11-17",
+      "network": "instagram",
+      "media_type": "reel",
+      "when": "2026-11-17T16:00:00+00:00",
+      "status": "approved",
+      "idea": {
+        "title": "Painless neck lump as a first sign of HPV throat cancer",
+        "hook": "Have you felt a lump in your neck that just will not go away?",
+        "brief": "Open with the question aimed at the viewer's own experience, then explain that a painless swollen node in the neck is often the first sign of HPV-related throat cancer, caused by lymph node involvement. Show the location: the sides of the neck, just below the jaw. Land on the threshold that matters: a lump that persists for more than two weeks without an obvious infection is worth getting checked. More at oralcheck.org/learn/hpv.",
+        "topic": "neck_lump",
+        "shape": "what_to_watch",
+        "hook_style": "question",
+        "tone": "calm",
+        "pillar": "hpv_connection",
+        "media_type": "reel",
+        "calendar_ref": null,
+        "slug": "painless-neck-lump-as-a-first-sign-of-hpv-throat-cancer"
+      },
+      "event": null,
+      "folder": "2026-11-20_in_reel",
+      "hook": "Have you felt a lump in your neck that just will not go away?",
+      "caption": "A painless lump in the neck is one of the more commonly missed early signs of HPV-related throat cancer. It shows up on the sides of the neck, just below the jaw, because it involves the lymph nodes in that area. The threshold worth knowing: a swollen node that stays for more than two weeks without an obvious infection is worth a conversation with your doctor. Learn more about HPV and oral cancer at oralcheck.org/learn/hpv, and take the free risk screener at oralcheck.org.\n\n3D anatomy: Z-Anatomy (CC BY-SA 4.0), from BodyParts3D, DBCLS",
+      "hashtags": [
+        "oralcancer",
+        "hpv",
+        "throatcancer",
+        "earlydetection",
+        "oralcheck"
+      ],
+      "files": [
+        "reel.mp4"
       ],
       "review_note": ""
     },
@@ -432,47 +532,11 @@
       "review_note": ""
     },
     {
-      "id": "2026-11-20_in_reel",
-      "date": "2026-11-20",
-      "network": "instagram",
-      "media_type": "reel",
-      "when": "2026-11-20T23:00:00+00:00",
-      "status": "approved",
-      "idea": {
-        "title": "Painless neck lump as a first sign of HPV throat cancer",
-        "hook": "Have you felt a lump in your neck that just will not go away?",
-        "brief": "Open with the question aimed at the viewer's own experience, then explain that a painless swollen node in the neck is often the first sign of HPV-related throat cancer, caused by lymph node involvement. Show the location: the sides of the neck, just below the jaw. Land on the threshold that matters: a lump that persists for more than two weeks without an obvious infection is worth getting checked. More at oralcheck.org/learn/hpv.",
-        "topic": "neck_lump",
-        "shape": "what_to_watch",
-        "hook_style": "question",
-        "tone": "calm",
-        "pillar": "hpv_connection",
-        "media_type": "reel",
-        "calendar_ref": null,
-        "slug": "painless-neck-lump-as-a-first-sign-of-hpv-throat-cancer"
-      },
-      "event": null,
-      "folder": "2026-11-20_in_reel",
-      "hook": "Have you felt a lump in your neck that just will not go away?",
-      "caption": "A painless lump in the neck is one of the more commonly missed early signs of HPV-related throat cancer. It shows up on the sides of the neck, just below the jaw, because it involves the lymph nodes in that area. The threshold worth knowing: a swollen node that stays for more than two weeks without an obvious infection is worth a conversation with your doctor. Learn more about HPV and oral cancer at oralcheck.org/learn/hpv, and take the free risk screener at oralcheck.org.\n\n3D anatomy: Z-Anatomy (CC BY-SA 4.0), from BodyParts3D, DBCLS",
-      "hashtags": [
-        "oralcancer",
-        "hpv",
-        "throatcancer",
-        "earlydetection",
-        "oralcheck"
-      ],
-      "files": [
-        "reel.mp4"
-      ],
-      "review_note": ""
-    },
-    {
       "id": "2026-11-24_in_reel",
-      "date": "2026-11-24",
+      "date": "2026-11-23",
       "network": "instagram",
       "media_type": "reel",
-      "when": "2026-11-24T23:00:00+00:00",
+      "when": "2026-11-23T16:00:00+00:00",
       "status": "redo",
       "idea": {
         "title": "When Gum Disease Is Not Gum Disease",
@@ -501,14 +565,15 @@
       "files": [
         "reel.mp4"
       ],
-      "review_note": "It said redness or a patch and then highlighted the teeth"
+      "review_note": "It said redness or a patch and then highlighted the teeth",
+      "error": "Connection error."
     },
     {
       "id": "2026-11-25_li_image",
-      "date": "2026-11-25",
+      "date": "2026-11-24",
       "network": "linkedin",
       "media_type": "image",
-      "when": "2026-11-25T15:00:00+00:00",
+      "when": "2026-11-24T16:00:00+00:00",
       "status": "redo",
       "idea": {
         "title": "Five common mouth findings that are not oral cancer",
@@ -537,14 +602,63 @@
       "files": [
         "image.jpg"
       ],
-      "review_note": "Picture is very unrelated to the post"
+      "review_note": "Picture is very unrelated to the post",
+      "error": "Connection error."
+    },
+    {
+      "id": "2026-11-26_in_carousel",
+      "date": "2026-11-26",
+      "network": "instagram",
+      "media_type": "carousel",
+      "when": "2026-11-26T23:00:00+00:00",
+      "status": "built",
+      "idea": {
+        "title": "Thanksgiving: a two-minute check worth passing around the table",
+        "hook": "Before the leftovers, two minutes and a mirror.",
+        "brief": "A Thanksgiving post with a warm fall feel: the slides render in an autumn theme (warm paper, maple leaves), and the words can nod to the season and the table (leftovers, gathering, gratitude) without puns. No exclamation marks, never 'we'. The angle is that the people around the table are the ones most likely to notice a change in each other, and the self-exam takes about two minutes with a mirror and good light. Slides walk the self-exam one place at a time, from the facts: lips, inside of the cheeks, gums, tongue (top, sides, underneath), floor of the mouth, roof of the mouth, throat, and the neck. Then the two-week rule: anything new that is still there after two weeks deserves a look from a dentist or doctor, and early oral cancer often does not hurt. Close by inviting the reader to share the check with someone at the table, and on oralcheck.org/learn/self-exam.",
+        "topic": "monthly_self_exam",
+        "shape": "self_check",
+        "hook_style": "instruction",
+        "tone": "calm",
+        "pillar": "self_exam",
+        "media_type": "carousel",
+        "calendar_ref": "Thanksgiving (26 November)",
+        "slug": "thanksgiving-two-minute-check"
+      },
+      "event": {
+        "name": "Thanksgiving"
+      },
+      "review_note": "",
+      "folder": "2026-11-26_in_carousel",
+      "version": 1,
+      "uploaded": false,
+      "hook": "Before the leftovers, two minutes and a mirror.",
+      "caption": "Before the second round of pie, take two minutes with a mirror.\n\nThe people gathered around your table this week are often the ones best placed to notice a change in your face or neck. But a monthly self-exam means you can spot something first.\n\nStart at your lips and work inward: cheeks, gums, tongue (top, sides, and underneath), the floor of your mouth, the roof of your mouth, your throat, and then both sides of your neck. You're looking for anything new: a patch, a sore, a lump, or a change in colour.\n\nThe two-week rule is worth knowing. Early oral cancer often doesn't hurt, so pain isn't a reliable guide. If something new is still there after fourteen days, that's the moment to call a dentist or doctor and have it looked at.\n\nShare this with someone at the table who might not have heard of the two-week rule. And for a step-by-step illustrated guide, oralcheck.org/learn/self-exam is there whenever you're ready.\n\nWhich part of the mouth do you think most people skip when they check?\n\n3D anatomy: Z-Anatomy (CC BY-SA 4.0), from BodyParts3D, DBCLS",
+      "hashtags": [
+        "oralcancer",
+        "oralhealth",
+        "selfexam",
+        "thanksgiving",
+        "oralcheck"
+      ],
+      "files": [
+        "slide_01.jpg",
+        "slide_02.jpg",
+        "slide_03.jpg",
+        "slide_04.jpg",
+        "slide_05.jpg",
+        "slide_06.jpg",
+        "slide_07.jpg",
+        "slide_08.jpg",
+        "preview.jpg"
+      ]
     },
     {
       "id": "2026-11-27_in_carousel",
-      "date": "2026-11-27",
+      "date": "2026-11-30",
       "network": "instagram",
       "media_type": "carousel",
-      "when": "2026-11-27T23:00:00+00:00",
+      "when": "2026-11-30T16:00:00+00:00",
       "status": "approved",
       "idea": {
         "title": "Low-cost oral care options when you have no dentist",
@@ -588,7 +702,7 @@
       "date": "2026-12-01",
       "network": "instagram",
       "media_type": "image",
-      "when": "2026-12-01T23:00:00+00:00",
+      "when": "2026-12-01T16:00:00+00:00",
       "status": "redo",
       "idea": {
         "title": "Gardasil 9 approved through age 45, most effective earlier",
@@ -617,14 +731,15 @@
       "files": [
         "image.jpg"
       ],
-      "review_note": "This picture makes no sense here"
+      "review_note": "This picture makes no sense here",
+      "error": "Connection error."
     },
     {
       "id": "2026-12-02_li_carousel",
-      "date": "2026-12-02",
+      "date": "2026-12-03",
       "network": "linkedin",
       "media_type": "carousel",
-      "when": "2026-12-02T15:00:00+00:00",
+      "when": "2026-12-03T16:00:00+00:00",
       "status": "redo",
       "idea": {
         "title": "Two white patches that look alike but are not the same",
@@ -659,14 +774,15 @@
         "slide_06.jpg",
         "preview.jpg"
       ],
-      "review_note": "Add pictures of the patches themselves"
+      "review_note": "Add pictures of the patches themselves",
+      "error": "Connection error."
     },
     {
       "id": "2026-12-04_in_reel",
-      "date": "2026-12-04",
+      "date": "2026-12-07",
       "network": "instagram",
       "media_type": "reel",
-      "when": "2026-12-04T23:00:00+00:00",
+      "when": "2026-12-07T16:00:00+00:00",
       "status": "approved",
       "idea": {
         "title": "Leukoplakia: the white patch that cannot be scraped off",
@@ -694,6 +810,44 @@
       ],
       "files": [
         "reel.mp4"
+      ],
+      "review_note": ""
+    },
+    {
+      "id": "2026-12-09_li_image",
+      "date": "2026-12-08",
+      "network": "linkedin",
+      "media_type": "image",
+      "when": "2026-12-08T16:00:00+00:00",
+      "status": "approved",
+      "idea": {
+        "title": "Betel quid raises oral cancer risk with or without tobacco",
+        "hook": "Tobacco-free doesn't mean risk-free. Not with betel quid.",
+        "brief": "The contrast opens the post by challenging an assumption, then the caption grounds it in IARC's classification: betel quid, whether it contains tobacco or not, is a Group 1 carcinogen for oral cancer. That includes areca nut, paan and gutka. The closing line explains why the OralCheck screener asks about it specifically: the risk is independent of tobacco, so leaving it off a standard risk checklist would miss a meaningful exposure. Photo shows betel leaves and areca nut on a surface, or a market stall with paan ingredients. Caption closes with oralcheck.org/screener.",
+        "topic": "betel_quid",
+        "shape": "question",
+        "hook_style": "contrast",
+        "tone": "calm",
+        "pillar": "myth_busting",
+        "media_type": "image",
+        "calendar_ref": null,
+        "slug": "betel-quid-raises-oral-cancer-risk-with-or-without-tobacco"
+      },
+      "event": null,
+      "folder": "2026-12-09_li_image",
+      "version": 1,
+      "uploaded": false,
+      "hook": "Tobacco-free doesn't mean risk-free. Not with betel quid.",
+      "caption": "Betel quid without tobacco is still classified as a Group 1 carcinogen for oral cancer by the WHO's cancer agency, IARC. That classification covers areca nut, paan and gutka. The risk isn't borrowed from tobacco. It stands on its own. Most standard risk checklists don't ask about betel quid, which means a real exposure goes unrecorded. The OralCheck screener asks about it specifically because missing it would leave a meaningful gap in the picture. Take the free screener at oralcheck.org/screener.",
+      "hashtags": [
+        "oralcancer",
+        "betelquid",
+        "oralhealth",
+        "cancerprevention",
+        "oralcheck"
+      ],
+      "files": [
+        "image.jpg"
       ],
       "review_note": ""
     },
@@ -736,49 +890,11 @@
       "review_note": "This post is super boring"
     },
     {
-      "id": "2026-12-09_li_image",
-      "date": "2026-12-09",
-      "network": "linkedin",
-      "media_type": "image",
-      "when": "2026-12-09T15:00:00+00:00",
-      "status": "approved",
-      "idea": {
-        "title": "Betel quid raises oral cancer risk with or without tobacco",
-        "hook": "Tobacco-free doesn't mean risk-free. Not with betel quid.",
-        "brief": "The contrast opens the post by challenging an assumption, then the caption grounds it in IARC's classification: betel quid, whether it contains tobacco or not, is a Group 1 carcinogen for oral cancer. That includes areca nut, paan and gutka. The closing line explains why the OralCheck screener asks about it specifically: the risk is independent of tobacco, so leaving it off a standard risk checklist would miss a meaningful exposure. Photo shows betel leaves and areca nut on a surface, or a market stall with paan ingredients. Caption closes with oralcheck.org/screener.",
-        "topic": "betel_quid",
-        "shape": "question",
-        "hook_style": "contrast",
-        "tone": "calm",
-        "pillar": "myth_busting",
-        "media_type": "image",
-        "calendar_ref": null,
-        "slug": "betel-quid-raises-oral-cancer-risk-with-or-without-tobacco"
-      },
-      "event": null,
-      "folder": "2026-12-09_li_image",
-      "version": 1,
-      "uploaded": false,
-      "hook": "Tobacco-free doesn't mean risk-free. Not with betel quid.",
-      "caption": "Betel quid without tobacco is still classified as a Group 1 carcinogen for oral cancer by the WHO's cancer agency, IARC. That classification covers areca nut, paan and gutka. The risk isn't borrowed from tobacco. It stands on its own. Most standard risk checklists don't ask about betel quid, which means a real exposure goes unrecorded. The OralCheck screener asks about it specifically because missing it would leave a meaningful gap in the picture. Take the free screener at oralcheck.org/screener.",
-      "hashtags": [
-        "oralcancer",
-        "betelquid",
-        "oralhealth",
-        "cancerprevention",
-        "oralcheck"
-      ],
-      "files": [
-        "image.jpg"
-      ],
-      "review_note": ""
-    },
-    {
       "id": "2026-12-11_in_carousel",
-      "date": "2026-12-11",
+      "date": "2026-12-10",
       "network": "instagram",
       "media_type": "carousel",
-      "when": "2026-12-11T23:00:00+00:00",
+      "when": "2026-12-10T16:00:00+00:00",
       "status": "approved",
       "idea": {
         "title": "Survival rates for oral cancer by stage at detection",
@@ -802,7 +918,7 @@
       "hashtags": [
         "oralcancer",
         "oralhealth",
-        "earlyd\u0435\u0442ection",
+        "earlydетection",
         "cancerscreening",
         "oralcheck"
       ],
@@ -818,10 +934,10 @@
     },
     {
       "id": "2026-12-15_in_image",
-      "date": "2026-12-15",
+      "date": "2026-12-14",
       "network": "instagram",
       "media_type": "image",
-      "when": "2026-12-15T23:00:00+00:00",
+      "when": "2026-12-14T16:00:00+00:00",
       "status": "redo",
       "idea": {
         "title": "HPV exposure is common and most infections clear",
@@ -852,14 +968,15 @@
       "files": [
         "image.jpg"
       ],
-      "review_note": "This picture is super unrelated"
+      "review_note": "This picture is super unrelated",
+      "error": "Connection error."
     },
     {
       "id": "2026-12-16_li_carousel",
-      "date": "2026-12-16",
+      "date": "2026-12-15",
       "network": "linkedin",
       "media_type": "carousel",
-      "when": "2026-12-16T15:00:00+00:00",
+      "when": "2026-12-15T16:00:00+00:00",
       "status": "approved",
       "idea": {
         "title": "Reference card: oral cancer warning signs beyond colour",
@@ -900,10 +1017,10 @@
     },
     {
       "id": "2026-12-18_in_reel",
-      "date": "2026-12-18",
+      "date": "2026-12-17",
       "network": "instagram",
       "media_type": "reel",
-      "when": "2026-12-18T23:00:00+00:00",
+      "when": "2026-12-17T16:00:00+00:00",
       "status": "planned",
       "idea": {
         "title": "Tobacco plus alcohol together multiply oral cancer risk",
@@ -923,10 +1040,10 @@
     },
     {
       "id": "2026-12-22_in_reel",
-      "date": "2026-12-22",
+      "date": "2026-12-21",
       "network": "instagram",
       "media_type": "reel",
-      "when": "2026-12-22T23:00:00+00:00",
+      "when": "2026-12-21T16:00:00+00:00",
       "status": "planned",
       "idea": {
         "title": "HPV throat cancer at the base of tongue and tonsils",
@@ -946,10 +1063,10 @@
     },
     {
       "id": "2026-12-23_li_image",
-      "date": "2026-12-23",
+      "date": "2026-12-22",
       "network": "linkedin",
       "media_type": "image",
-      "when": "2026-12-23T15:00:00+00:00",
+      "when": "2026-12-22T16:00:00+00:00",
       "status": "planned",
       "idea": {
         "title": "Median age at diagnosis is 65, but age alone rules nothing out",
@@ -969,10 +1086,10 @@
     },
     {
       "id": "2026-12-25_in_carousel",
-      "date": "2026-12-25",
+      "date": "2026-12-24",
       "network": "instagram",
       "media_type": "carousel",
-      "when": "2026-12-25T23:00:00+00:00",
+      "when": "2026-12-24T16:00:00+00:00",
       "status": "planned",
       "idea": {
         "title": "Red patch in your mouth: what it means",
@@ -992,10 +1109,10 @@
     },
     {
       "id": "2026-12-29_in_image",
-      "date": "2026-12-29",
+      "date": "2026-12-28",
       "network": "instagram",
       "media_type": "image",
-      "when": "2026-12-29T23:00:00+00:00",
+      "when": "2026-12-28T16:00:00+00:00",
       "status": "planned",
       "idea": {
         "title": "60,480 new oral cancer cases expected in the US this year",
@@ -1015,10 +1132,10 @@
     },
     {
       "id": "2026-12-30_li_carousel",
-      "date": "2026-12-30",
+      "date": "2026-12-29",
       "network": "linkedin",
       "media_type": "carousel",
-      "when": "2026-12-30T15:00:00+00:00",
+      "when": "2026-12-29T16:00:00+00:00",
       "status": "planned",
       "idea": {
         "title": "HPV-related oral cancer in men with no tobacco history",

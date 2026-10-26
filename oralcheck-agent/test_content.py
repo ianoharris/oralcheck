@@ -256,6 +256,8 @@ def test_reel3d():
     check("the inner cheek gets the whole mouth", R3.match_focus("Look for patches on the inner cheek.", "floor") == "overview")
     check("'redness or a patch' stays on the topic", R3.match_focus("Watch for redness or a patch.", "teeth", "tongue") == "tongue")
     check("tonsils are the throat", R3.match_focus("The tonsils sit at the back.", "tongue") == "throat")
+    # The 27 Oct rebuild said "run your tongue along your gumline" and lit the tongue.
+    check("the gumline is the gums", R3.match_focus("Run your tongue along your gumline and look for swelling.", "gums") == "gums")
     check("the neck is the lymph nodes", R3.match_focus("Feel along your neck for a lump.", "overview") == "nodes")
     check("no lips focus (the atlas has only the muscle)", "lips" not in R3.FOCI)
     check("no reel topic is left with only lips", all("lips" not in fs for fs in T.TOPIC_FOCI.values()))
@@ -317,9 +319,10 @@ def test_post_calendar():
           collections.Counter(s["media_type"] for s in slots) == {"reel": 10, "carousel": 10, "image": 10})
     check("reels only on Instagram", all(s["network"] == "instagram" for s in slots if s["media_type"] == "reel"))
     check("one LinkedIn post a week", sum(s["network"] == "linkedin" for s in slots) == 10)
-    ig = [s for s in slots if s["network"] == "instagram"]
-    check("Instagram at 5pm Central across the DST change",
-          all(_dt.fromisoformat(s["when"]).astimezone(PC.CT).hour == 17 for s in ig))
+    check("every post at 10am Central across the DST change",
+          all(_dt.fromisoformat(s["when"]).astimezone(PC.CT).hour == 10 for s in slots))
+    check("only on Mondays, Tuesdays and Thursdays",
+          all(_d.fromisoformat(s["date"]).weekday() in (0, 1, 3) for s in slots))
 
     # decisions from the review page land on the calendar, never on a scheduled post
     old_file, old_dir = PC.CAL_FILE, PC.CAL_DIR

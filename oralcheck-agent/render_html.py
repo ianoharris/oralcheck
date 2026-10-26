@@ -12,6 +12,7 @@ variety is what stops a profile grid reading as one long identical block.
 """
 
 import base64
+import math
 import html as _html
 from io import BytesIO
 
@@ -58,6 +59,60 @@ THEMES = {
         "teal": "#0d7377", "teal_brt": "#0d7377", "coral": "#d9552f",
     },
 }
+
+# Seasonal worlds for holiday posts (Ian, 22 Oct: "make the halloween one a little
+# spooky and thanksgiving with some fall designs"). Same tokens, so every layout
+# works in them; the decoration sits behind the text (SEASON_DECOR).
+THEMES["halloween"] = {
+    "bg": "#141019", "text": "#ece6dc", "text_soft": "#c9bfd2",
+    "muted": "#7d6f8a", "hair": "#2a2233",
+    "teal": "#14a8ae", "teal_brt": "#14a8ae", "coral": "#f07f2d",
+}
+THEMES["fall"] = {
+    "bg": "#f6eee2", "text": "#2a1d14", "text_soft": "#5a4636",
+    "muted": "#9a8571", "hair": "#e6d6c0",
+    "teal": "#0d7377", "teal_brt": "#0d7377", "coral": "#c4561c",
+}
+DARKISH = {"dark", "halloween"}
+
+_BAT = ("<svg viewBox='0 0 44 16' width='{w}' style='position:absolute;left:{x}px;top:{y}px;"
+        "transform:rotate({r}deg);opacity:0.85;'><path fill='#08060b' d='M0,10 C6,2 12,2 16,8 C18,4 20,4 22,8 "
+        "C24,4 26,4 28,8 C32,2 38,2 44,10 C38,8 34,10 32,14 C30,11 27,11 25,15 L22,12 L19,15 C17,11 14,11 12,14 "
+        "C10,10 6,8 0,10 Z'/></svg>")
+# a cobweb in the bottom-left corner: spokes from the corner, sagging threads between them
+_WEB = "".join(f"<line x1='0' y1='380' x2='{380 * math.cos(a):.0f}' y2='{380 - 380 * math.sin(a):.0f}'/>"
+               for a in [i * math.pi / 12 for i in range(7)])
+_WEB += "".join(
+    "<polyline fill='none' points='" + " ".join(
+        f"{r * (1 - 0.06 * (k % 2)) * math.cos(k * math.pi / 12):.0f},{380 - r * (1 - 0.06 * (k % 2)) * math.sin(k * math.pi / 12):.0f}"
+        for k in range(7)) + "'/>" for r in (90, 160, 230, 300))
+# a maple leaf: five pointed lobes with small teeth (outline computed once from a polar profile)
+_LEAF = ("<svg viewBox='0 0 100 110' width='{w}' style='position:absolute;left:{x}px;top:{y}px;"
+         "transform:rotate({r}deg);opacity:{o};'><path fill='{c}' d='M72.9 56.0 L71.9 55.4 L70.9 54.9 L69.7 54.4 L68.5 54.1 L67.3 53.7 L66.2 53.4 L65.6 53.1 L66.4 52.5 L67.4 51.8 L68.3 51.1 L69.1 50.3 L70.0 49.5 L70.8 48.6 L72.3 47.4 L74.2 46.0 L76.0 44.4 L77.6 42.8 L78.9 41.3 L79.8 39.8 L80.3 38.5 L81.9 36.4 L83.2 34.5 L83.8 32.8 L83.8 31.5 L83.0 30.7 L81.7 30.4 L80.4 30.1 L79.7 29.3 L78.5 29.0 L76.8 29.2 L74.7 30.0 L72.4 31.2 L70.0 32.6 L68.2 33.5 L66.7 34.2 L65.2 35.1 L63.6 36.2 L62.1 37.4 L60.7 38.6 L59.4 39.8 L58.6 40.1 L58.2 40.0 L58.2 38.7 L58.3 37.5 L58.2 36.2 L58.1 35.0 L58.0 33.3 L58.2 30.7 L58.3 28.1 L58.2 25.6 L57.9 23.2 L57.4 21.2 L56.8 19.5 L56.2 16.9 L55.5 14.0 L54.7 11.6 L53.6 9.9 L52.5 9.1 L51.2 9.2 L50.0 10.0 L48.8 9.2 L47.5 9.1 L46.4 9.9 L45.3 11.6 L44.5 14.0 L43.8 16.9 L43.2 19.5 L42.6 21.2 L42.1 23.2 L41.8 25.6 L41.7 28.1 L41.8 30.7 L42.0 33.3 L41.9 35.0 L41.8 36.2 L41.7 37.5 L41.8 38.7 L41.8 40.0 L41.4 40.1 L40.6 39.8 L39.3 38.6 L37.9 37.4 L36.4 36.2 L34.8 35.1 L33.3 34.2 L31.8 33.5 L30.0 32.6 L27.6 31.2 L25.3 30.0 L23.2 29.2 L21.5 29.0 L20.3 29.3 L19.6 30.1 L18.3 30.4 L17.0 30.7 L16.2 31.5 L16.2 32.8 L16.8 34.5 L18.1 36.4 L19.7 38.5 L20.2 39.8 L21.1 41.3 L22.4 42.8 L24.0 44.4 L25.8 46.0 L27.7 47.4 L29.2 48.6 L30.0 49.5 L30.9 50.3 L31.7 51.1 L32.6 51.8 L33.6 52.5 L34.4 53.1 L33.8 53.4 L32.7 53.7 L31.5 54.1 L30.3 54.4 L29.1 54.9 L28.1 55.4 L27.1 56.0 L25.0 56.7 L23.0 57.4 L21.3 58.3 L20.0 59.2 L19.3 60.0 L19.1 60.9 L19.0 61.8 L18.3 62.7 L18.2 63.6 L18.8 64.4 L20.0 64.9 L21.8 65.2 L23.9 65.2 L25.4 65.5 L26.6 65.7 L28.1 65.8 L29.7 65.7 L31.4 65.5 L33.1 65.2 L34.6 64.9 L35.3 65.0 L35.9 65.1 L36.6 65.2 L37.3 65.3 L37.9 65.3 L38.6 65.2 L39.1 65.3 L39.2 65.7 L39.4 66.1 L39.7 66.3 L40.0 66.5 L40.5 66.6 L40.9 66.6 L41.2 66.9 L41.3 67.3 L41.5 67.7 L41.8 67.9 L42.2 68.0 L42.6 68.0 L43.1 68.0 L43.3 68.4 L43.5 68.8 L43.8 69.1 L44.1 69.2 L44.5 69.2 L45.0 69.1 L45.4 69.0 L45.8 68.9 L46.2 68.7 L46.7 68.4 L47.1 68.0 L47.6 67.4 L48.0 66.8 L48.4 66.4 L48.7 66.2 L49.0 65.8 L49.3 65.4 L49.5 64.9 L49.8 64.2 L50.0 63.6 L50.2 64.2 L50.5 64.9 L50.7 65.4 L51.0 65.8 L51.3 66.2 L51.6 66.4 L52.0 66.8 L52.4 67.4 L52.9 68.0 L53.3 68.4 L53.8 68.7 L54.2 68.9 L54.6 69.0 L55.0 69.1 L55.5 69.2 L55.9 69.2 L56.2 69.1 L56.5 68.8 L56.7 68.4 L56.9 68.0 L57.4 68.0 L57.8 68.0 L58.2 67.9 L58.5 67.7 L58.7 67.3 L58.8 66.9 L59.1 66.6 L59.5 66.6 L60.0 66.5 L60.3 66.3 L60.6 66.1 L60.8 65.7 L60.9 65.3 L61.4 65.2 L62.1 65.3 L62.7 65.3 L63.4 65.2 L64.1 65.1 L64.7 65.0 L65.4 64.9 L66.9 65.2 L68.6 65.5 L70.3 65.7 L71.9 65.8 L73.4 65.7 L74.6 65.5 L76.1 65.2 L78.2 65.2 L80.0 64.9 L81.2 64.4 L81.8 63.6 L81.7 62.7 L81.0 61.8 L80.9 60.9 L80.7 60.0 L80.0 59.2 L78.7 58.3 L77.0 57.4 L75.0 56.7 Z'/>"
+         "<path stroke='{c}' stroke-width='2.5' fill='none' d='M50 60 L50 106'/></svg>")
+SEASON_DECOR = {
+    "halloween": (
+        "<div class='decor'>"
+        "<div style='position:absolute;right:-160px;top:-60px;width:640px;height:640px;border-radius:50%;"
+        "background:radial-gradient(circle,rgba(255,232,190,0.20) 0%,rgba(255,232,190,0.08) 40%,transparent 68%);'></div>"
+        "<div style='position:absolute;right:56px;top:150px;width:230px;height:230px;border-radius:50%;"
+        "background:radial-gradient(circle at 38% 36%,#fbf0d8,#d8c49c);opacity:0.22;'></div>"
+        + _BAT.format(w=96, x=800, y=270, r=-8) + _BAT.format(w=64, x=920, y=370, r=10) + _BAT.format(w=48, x=740, y=390, r=4)
+        + "<svg viewBox='0 0 380 380' width='380' style='position:absolute;left:0;bottom:0;' "
+          f"stroke='rgba(236,230,220,0.14)' stroke-width='1.6'>{_WEB}</svg>"
+        "<div style='position:absolute;left:0;right:0;bottom:0;height:300px;"
+        "background:linear-gradient(to top,rgba(120,96,150,0.14),transparent);'></div>"
+        "</div>"),
+    "fall": (
+        "<div class='decor'>"
+        "<div style='position:absolute;inset:0;background:radial-gradient(ellipse at 100% 0%,rgba(214,140,60,0.16),transparent 55%),"
+        "radial-gradient(ellipse at 0% 100%,rgba(160,60,30,0.12),transparent 50%);'></div>"
+        + _LEAF.format(w=230, x=900, y=-60, r=24, o=0.55, c="#c4561c") + _LEAF.format(w=160, x=840, y=120, r=-30, o=0.45, c="#d99a2b")
+        + _LEAF.format(w=120, x=990, y=180, r=60, o=0.5, c="#9b2f1f")
+        + _LEAF.format(w=170, x=-70, y=1150, r=-20, o=0.45, c="#a8892f") + _LEAF.format(w=110, x=-30, y=1050, r=35, o=0.45, c="#c4561c")
+        + "</div>"),
+}
+
 
 # Back-compat aliases (dark values) for any single-theme callers.
 BG        = THEMES["dark"]["bg"]
@@ -143,6 +198,11 @@ def _doc(body_html: str, theme: str = "dark", bg: str | None = None) -> str:
     style = _style(theme)
     if bg is not None:
         style += f"\nbody {{ background: {bg}; }}"
+    if theme in SEASON_DECOR and bg is None:
+        # behind everything: body makes the stacking context, the decoration sits at z -1
+        style += ("\nbody { position: relative; z-index: 0; }"
+                  " .decor { position: absolute; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }")
+        body_html = SEASON_DECOR[theme] + body_html
     return (f"<!DOCTYPE html><html><head><meta charset='utf-8'><style>{style}</style></head>"
             f"<body>{body_html}</body></html>")
 
@@ -356,7 +416,8 @@ def render_deck(deck: dict, theme: str = "dark") -> list[str]:
     htmls.append(slide_cover(cover.get("hook", ""), kicker,
                              cover.get("photo"), ctr(1), theme))
 
-    stat_palette = [CORAL, TEAL_BRT, TEAL] if theme == "dark" else [CORAL, TEAL, TEAL]
+    stat_palette = ([THEMES[theme]["coral"], TEAL_BRT, TEAL] if theme in DARKISH
+                    else [THEMES.get(theme, THEMES["light"])["coral"], TEAL, TEAL])
     stat_i = 0
     for idx, s in enumerate(slides_spec, start=2):
         t = s.get("type", "fact")
@@ -630,7 +691,7 @@ def site_screenshot(shot: str, theme: str = "dark") -> str | None:
                                               "--force-color-profile=srgb"])
             page = browser.new_page(viewport={"width": 1200, "height": 1200},
                                     device_scale_factor=2,
-                                    color_scheme="dark" if theme == "dark" else "light")
+                                    color_scheme="dark" if theme in DARKISH else "light")
             page.goto(f"{SITE_BASE}{spec['path']}", wait_until="networkidle", timeout=45_000)
             page.evaluate("async () => { await document.fonts.ready; }")
             target = page.locator(spec["selector"]).first
@@ -691,8 +752,14 @@ def card_image(hook: str, **kw) -> str:
     return _screenshot(render_card(hook, **kw))
 
 
-def pick_theme() -> str:
-    """Rotate visual themes, biased toward the light (higher-legibility) look."""
+def pick_theme(occasion: str = "") -> str:
+    """Rotate visual themes, biased toward the light (higher-legibility) look.
+    A holiday post gets its seasonal world instead."""
+    occ = occasion.lower()
+    if "halloween" in occ:
+        return "halloween"
+    if "thanksgiving" in occ:
+        return "fall"
     import random
     return random.choice(["light", "light", "dark"])
 

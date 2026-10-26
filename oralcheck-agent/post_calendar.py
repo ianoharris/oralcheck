@@ -35,8 +35,11 @@ CAL_DIR = HERE / "calendar"
 CAL_FILE = CAL_DIR / "calendar.json"
 CT = ZoneInfo("America/Chicago")
 
-IG_HOUR_CT = 17          # Instagram posts at 5pm Central, as the weekly flow did
-LI_HOUR_CT = 9           # LinkedIn at 9am Central
+# Ian's followers are most active 9am to noon Central on Mondays, Tuesdays and
+# Thursdays (22 Oct 2026), so every regular post goes out at 10am on one of
+# those days. Holiday posts keep their own date and time.
+IG_HOUR_CT = 10
+LI_HOUR_CT = 10
 DRIP_DAYS = 3            # schedule a post this many days before it goes out
 RELEASE = "calendar-2026-fall"   # GitHub release holding approved posts' media for CI
 
@@ -65,22 +68,22 @@ def _at(day: date, hour: int) -> str:
 
 
 def plan_dates(start: date, weeks: int) -> list[dict]:
-    """Three posts a week: Instagram Tuesday and Friday, LinkedIn Wednesday.
+    """Three posts a week: Instagram Monday and Thursday, LinkedIn Tuesday.
 
-    Each week carries one reel (Instagram only, alternating Tuesday and
-    Friday), and the other two slots alternate carousel and image, so the
+    Each week carries one reel (Instagram only, alternating Monday and
+    Thursday), and the other two slots alternate carousel and image, so the
     batch comes out 10 reels, 10 carousels, 10 images over ten weeks.
     """
     monday = start - timedelta(days=start.weekday())
     out = []
     for w in range(weeks):
         wk = monday + timedelta(weeks=w)
-        reel_on_tue = w % 2 == 0
+        reel_first = w % 2 == 0
         ig_post = "carousel" if w % 2 == 0 else "image"
         li_post = "image" if w % 2 == 0 else "carousel"
-        out.append({"date": wk + timedelta(days=1), "network": "instagram", "media_type": "reel" if reel_on_tue else ig_post})
-        out.append({"date": wk + timedelta(days=2), "network": "linkedin", "media_type": li_post})
-        out.append({"date": wk + timedelta(days=4), "network": "instagram", "media_type": ig_post if reel_on_tue else "reel"})
+        out.append({"date": wk, "network": "instagram", "media_type": "reel" if reel_first else ig_post})
+        out.append({"date": wk + timedelta(days=1), "network": "linkedin", "media_type": li_post})
+        out.append({"date": wk + timedelta(days=3), "network": "instagram", "media_type": ig_post if reel_first else "reel"})
     for e in out:
         e["when"] = _at(e["date"], IG_HOUR_CT if e["network"] == "instagram" else LI_HOUR_CT)
         e["date"] = e["date"].isoformat()

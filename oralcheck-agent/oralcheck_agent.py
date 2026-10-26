@@ -2276,7 +2276,7 @@ def generate_carousel_slides(content: dict, idea: dict | None = None) -> list[st
     if not source:
         source = "photo" if query and query.lower() not in ("none", "n/a", "no photo") else "none"
     raw_path, plate = None, None
-    theme = _html_render.pick_theme() if _USE_HTML_RENDER else "dark"
+    theme = _html_render.pick_theme((idea or {}).get("calendar_ref", "")) if _USE_HTML_RENDER else "dark"
     topic = (idea or {}).get("topic")
     content["footer"] = _footer(idea)
 
