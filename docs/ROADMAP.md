@@ -10,7 +10,7 @@ The running list. Two rules:
    named. This is the list's whole purpose: the things that come up once, sound
    good, and are never mentioned again.
 
-Last updated: 2026-10-21
+Last updated: 2026-10-23
 
 **Mirrored to an artifact Ian reads:**
 https://claude.ai/code/artifact/cc490e4b-1ee3-4062-bc56-eada066f1003
@@ -40,6 +40,159 @@ Update both together. See `AGENTS.md`.
 ## Open — ready to do
 
 ### Content and growth
+
+- [ ] **New post formats, from a look at what works for health-education
+      accounts (2026-10-22).** Ian asked for ideas. Proposed:
+      1. **Quiz carousels** ("three things in a mouth, one needs a check;
+         comment A, B or C, then swipe"). Sample built, not scheduled:
+         `oralcheck-agent/queue/20261022_165517_474c3e1a/` (7 slides; the
+         caption was edited so it does not give the answer away).
+      2. **Comment-to-DM** ("comment CHECK for the screener link"), which
+         gets round links not being tappable on posts and reels. **Blocked on
+         Ian:** a comment-to-DM tool (ManyChat or similar) connected to the
+         Instagram account; the captions can then carry the keyword.
+      3. **A weekly series**, same format each week ("one place, one
+         minute"), to build the habit of coming back.
+      4. **Real questions answered**, one per card, from what people search.
+      5. **Collab posts** with dental hygiene students or clinicians, only
+         with people who have agreed in writing.
+      6. **Trial Reels** (an Instagram setting that shows a reel to
+         non-followers first). **Blocked on Ian:** toggled per reel in the app.
+      **Blocked on Ian:** say which to add to the calendar. If quizzes, the
+      sample can take a slot.
+
+- [ ] **New layered head-and-neck model: built, not yet in the reels
+      (2026-10-21).** Ian asked for a full head with every layer, textured,
+      realistic, with a see-through option, the mouth and throat, all three
+      planes, and pointers that hit the right thing. Built in
+      `oralcheck-agent/anatomy3d/` from the whole Z-Anatomy atlas (about 1,100
+      structures: skin, generated epidermis/dermis/fat layers, fascia, muscle,
+      bone, teeth, cartilage, 240 vessels, 105 nerves, glands, nodes, eyes,
+      brain, pharynx, larynx), with procedural tissue textures, capped
+      sagittal, coronal and axial cuts, a peel slider, a see-through mode, and
+      a stepped skin-layer block. Labels are checked against a GPU id pass: a
+      label is drawn only if its dot sits on the structure it names (31 of 31
+      in the test gallery). Interactive version:
+      https://claude.ai/artifact/ECiso41AwjuW8UstJXWYdV
+      - **First look (21 Oct): "lowkey looks terrifying."** Restyled the same
+        night to the reels' clinical look: pale grey ground, plaster-white
+        skin, desaturated tissue colours, no staring irises, opening on the
+        see-through view. Labels re-checked: 31 of 31.
+      - **Ian: "drop the skin from the default view" (21 Oct).** Done: it opens
+        on see-through, the cut presets open peeled to muscle, Skin is an
+        opt-in button. Labels re-checked: 31 of 31.
+      - **Ian (22 Oct): the mouth should look real and wet, since that is
+        where the cancers are.** Added an open-mouth view (the jaw swings on
+        its joints, the tongue bends with it), true-to-life wet tissue with a
+        camera exam light, and photo textures Ian generated with ChatGPT for
+        the top and underside of the tongue, gums, lips and cheek lining. The
+        atlas has no lips, cheek, palate or floor lining; generated versions
+        of the cheek, inner lips and floor looked wrong and are hidden, and
+        the lips are painted onto the skin instead. Still to do: a tonsil
+        texture (Ian hit his image limit), better cheek and floor linings,
+        and the soft palate, which is a flat plate in the atlas.
+      - **Ian: "fix the missing pieces" (22 Oct). Done the same day.** The
+        cheek linings, inner lips and floor of the mouth are rebuilt as
+        smooth surfaces swept along the dental arch, measured from the gums,
+        skin and tongue, and drawn from the inside only, so the open mouth
+        reads as a cutaway; the lower lining moves with the jaw and the
+        cheeks stretch. The soft palate is thickened. Swept lips looked like
+        loose bands without the face around them, so lips stay painted on
+        the skin in the Skin view. All 44 label checks pass. Still open: a
+        tonsil texture.
+      - **Ian (22 Oct): the back of the mouth cannot be seen from the front,
+        it still looks uncanny ("gums without any skin"), the textures look
+        weird, and muscle, tissue and vessels look like painted concrete.
+        Done the same day.** The concrete look was fine texture flickering
+        into grain at viewing distance: every fine pattern now fades out
+        before it gets smaller than a pixel, vessels and fat are smooth and
+        glossy, muscle is satiny with long fibres. The mouth takes its
+        colours from clinical photos Ian sent as references (pale coral gum,
+        pale pink tongue with a whitish coat, ivory teeth), is lit like a
+        penlight exam, and catches small saliva glints; Ian's ChatGPT
+        textures now give only fine detail. The Mouth view now shows the
+        face around the open mouth: the skin is parted at the lips, the chin
+        and lower lip move with the jaw, and the upper lip lifts. A new "Back
+        of the mouth" preset opens wide, lowers the back of the tongue ("say
+        ahh") and looks up from below the teeth, as in an exam, onto the
+        uvula, the soft palate, the tonsils between their arches and the back
+        of the throat. The atlas has no arches, throat wall or proper soft
+        palate lining, so those are generated, and its tonsils (small and set
+        level with the palate) are moved down into the arches; see
+        `ATTRIBUTION.md`. An Open slider and a Show-the-face switch are on
+        the page.
+      - **Ian (22 Oct): "the main skin texture is so shitty." Done the same
+        day.** The stucco was a bump texture, and the plaster white made it a
+        mannequin. The skin is now a natural skin tone with soft mottling,
+        warmer cheeks, nose, chin and ears, a faint sheen, light bleeding at
+        the edges as in real skin, and pores only up close; the eyes have
+        soft hazel irises and dark pupils instead of blank sculpted ones.
+        Openings in the atlas's skin under the nose and along the smile lines
+        are filled, and the inner skin layers no longer show through folds,
+        which is what crumpled the skin under the nose. No downloaded texture
+        was needed. All 51 label checks pass (31 gallery, 13 mouth, 7 in the
+        face and "say ahh" views); the page has no errors on desktop or
+        phone. Published as version 6.
+      - **Blocked on Ian:** look at the restyled version and say whether
+        reels and image posts should move to it.
+      - **Then (code):** port `reel3d` to it. Renders take about a second a
+        frame on the Mac GPU but would be far slower in software, so reels
+        would render locally or on a GPU runner, not the current CPU-only
+        GitHub runner.
+      - **Known limits:** the outer skin is the atlas's low-detail surface:
+        faint seam lines cross the forehead and cheeks, a few thin slits by
+        the nose show the lining behind, and the inside of the skull in a
+        midline cut is lumpy (the atlas's dura sheet). The open face looks
+        right from the front; turned far to the side, the corners of the mouth
+        stretch. The skin-layer block
+        exists because the real layers are too thin to read on the head.
+      - **Reviewed 23 Oct: replace it rather than port it** (see the next
+        item and `docs/MODEL_REVIEW.md`). The review found the problems sit in
+        the atlas itself (hollow, unclosed shells; generated sheets for the
+        cheeks, throat wall and lips), so the "port `reel3d` to it" step above
+        is on hold until Ian picks a direction. The artifact stays as it is.
+
+- [ ] **Anatomy illustrations: pick the direction (prototypes 2026-10-23).**
+      The model review recommends layered 2D illustration in the textbook
+      style Ian picked (Blausen), traced from the same atlas, instead of 3D.
+      Built: plate A (the open mouth from the front, seven switchable lesions),
+      plate B (a side cut-away with a ghost head, switchable "where it starts"
+      zones), two 4:5 posts, and two 12-second reels with identical captions,
+      one illustrated and one 3D, for comparison. Code in
+      `oralcheck-agent/illustration/` (`build_all.py` rebuilds everything).
+      Review: https://claude.ai/artifact/6fwVAT9B2fAG7iYq6ffYbj ;
+      prototypes: https://claude.ai/artifact/HNkBy65udqitq3m3WhvyRW
+      - **Decided 23 Oct: 2D.** Ian: "go 2d". Scope not stated, so both
+        plates go ahead as recommended unless he says otherwise. The 3D head
+        is retired from future work: no reel port, no site page.
+      - **Ian asked (23 Oct) whether a free 3D anatomy would still be cool
+        somewhere on the site.** Answer given: not now. People come to check
+        their risk and their own mouth; a 3D model adds load time, phone
+        trouble and the same uncanny risk without helping them do either. If
+        it comes back, the only version worth testing is a small optional
+        "turn the mouth" view on one Learn page, off by default behind the 2D
+        plate, built from a clean openly licensed mouth model (NIH 3D
+        "Mouth, Female", CC BY 4.0) in the same illustration shading, and
+        only after the 2D set ships. Parked, not rejected.
+      - **Still blocked on Ian:** (2) plate A, plate B, or both (defaulting
+        to both); (3) sources only for the lesion
+        drawings, or one clinician look at the set before a lesion series
+        goes out (recommended; an oral pathologist such as Dr. Rawal could do
+        it without his name going on anything); (4) whether it goes on the
+        Learn pages (`/learn/signs`, `/learn/white-and-red-patches`,
+        `/learn/oral-cancer`).
+      - **Done 23 Oct: lesion set redrawn** against the reference photos in
+        the review (section 5), on both plates. Plate A: white patch, red
+        patch, red and white (speckled) patch, sore that does not heal,
+        swollen tonsil, lip sore, and lichen planus on both cheeks as a
+        look-alike. Plate B: lumps in the floor of the mouth and at the base
+        of the tongue. Each sits at its real site and depth. Still drawings
+        by a non-clinician, so the caption line stays.
+      - **Then (code):** move the reel pipeline to the plates and, if
+        wanted, put the plates on the Learn pages (read
+        `node_modules/next/dist/docs/` first).
+      - **Licence:** traced from Z-Anatomy, so every output is CC BY-SA 4.0
+        and carries the credit line in `oralcheck-agent/illustration/README.md`.
 
 - [ ] **The site names UW-Madison in 17+ places, against its own rule (found
       2026-10-21).** The structured data Google reads lists "University of
@@ -101,6 +254,11 @@ Update both together. See `AGENTS.md`.
         republished and the redone posts come back undecided.
       - **Waiting on Ian:** the redone posts and the last 7 (Dec 18 to Jan 1).
         **The 27 Oct reel is a redo, so it needs a decision by Fri 24 Oct.**
+      - **27 Oct reel, again (21 Oct, night):** the early post was glitchy
+        (labels jumping sides, gums pointer on a tooth). Both are fixed and
+        it is being rebuilt with a hook that only names what it shows.
+        **Waiting on Ian:** archive the glitchy post on Instagram, then
+        approve the new one before it is reposted.
       - **Then:** upload approved media to the `calendar-2026-fall` release,
         push calendar.json. Media goes on a release rather than into git; the
         repo is public, so approved posts are downloadable from there a few
@@ -416,6 +574,98 @@ Update both together. See `AGENTS.md`.
 ## Shipped
 
 Newest first.
+
+### 2026-10-21 (late night): 27 Oct reel rebuilt
+- Rebuilt with the label fixes. The first rebuild switched the gums shot to
+  the tongue, because the gums pattern matched "gum" and "gums" but not
+  "gumline" ("run your tongue along your gumline"); the pattern and a test
+  now cover it. Its caption also claimed the gums were where most early
+  cancers show; the new caption names the sides of the tongue and the floor
+  of the mouth. Checked frame by frame and sent to Ian. **Not reposted:**
+  waiting on Ian to archive the glitchy post and approve this one.
+
+### 2026-10-21 (night): 3D reel label fixes, after the glitchy 27 Oct post
+- **Ian: "the text boxes moved side to side and the arrow ... pointed at the
+  teeth."** Two causes. The label chose its side of the screen every frame
+  from where the subject was, so a camera drifting across the middle flipped
+  it back and forth; it now chooses once per shot, from where the camera
+  settles. The gums pointer aimed at the centre of the gum mesh, which wraps
+  the teeth, so it landed on a tooth; it now aims at the front of the lower
+  gum and follows the jaw. The same check found the salivary-glands pointer
+  floating between the two glands; it now picks the near one.
+- **How it got through:** only still frames were checked before posting. A
+  new render test plays every labelled shot and fails if a label moves; it
+  fails on the old code (tongue, gums, throat) and passes now.
+- The 27 Oct reel goes back to redo with the hook changed from "six things"
+  to "these" and a note to name only what the model shows.
+
+### 2026-10-23 (evening): lesion set redrawn on both plates
+
+- Ian chose 2D ("go 2d"). The lesion drawings, the roughest part of the prototypes, were redrawn against the openly licensed reference photos listed in `docs/MODEL_REVIEW.md` section 5 and checked side by side with them: a filmy, mottled white patch; a flat, velvety red patch; a new red and white (speckled) patch; a sore with a pale raised rim, raw base and yellow slough instead of a fried-egg look; a lobed, swollen tonsil; a scaly lip border with a crusted sore; and new lichen planus (a lacy web on both cheeks) as a look-alike. Plate B gained a floor-of-mouth lump and a base-of-tongue lump at the right depth.
+- Code: `oralcheck-agent/illustration/lesions.py`. Prototypes artifact republished with all seven lesion buttons and their sources.
+
+### 2026-10-23 (later): model review delivered; illustration prototypes
+
+- Ian answered the review's opening questions: the rendered textbook look (Blausen) over photoreal 3D; none of the current looks; teach where it starts plus credibility with clinicians; mainly Instagram; a faded side silhouette for the face; illustrated, switchable lesions checked against published photos only; one-off payment if anything is bought; prototype both scopes and both motion styles. The brief with his answers is `docs/MODEL_REVIEW_BRIEF.md`.
+- Review: `docs/MODEL_REVIEW.md`, pictures in `docs/model-review/`, artifact https://claude.ai/artifact/6fwVAT9B2fAG7iYq6ffYbj. Verdict: the model's problems are in the Z-Anatomy data (cutting it down the middle shows open shells, block-like nasal lining and slivers; the mouth is mostly generated sheets), so more shader work will not make it professional; 2D illustration is the better tool for this site.
+- Prototypes: `oralcheck-agent/illustration/`, artifact https://claude.ai/artifact/HNkBy65udqitq3m3WhvyRW. Outlines traced from the atlas; the soft palate, lips, uvula, tonsils, pillars, cheeks and throat wall redrawn by hand. Both reels share captions; the end line uses the site's "more than two weeks" wording (ADA, Oral Cancer Foundation). Every frame says "Illustration for education, not a real case. Not reviewed by a clinician."
+- Licensing research: Blausen plates are CC BY 3.0 (free, edits allowed, credit only); BioDigital, Visible Body and Complete Anatomy need paid permission for social posts; Netter web use expires after a year; one-off 3D models are $50 to $250 but bar AI use; commissioning runs about $500 to $3,400 a plate. OpenStax A&P 2e is now CC BY-NC-SA, not CC BY.
+- Side finding: `oralcheck-agent/venv` is Python 3.14 with a numpy built for 3.13; nothing imports numpy there today.
+
+### 2026-10-23: skin removed from the head model; review briefed
+
+- Ian: "ok just delete the skin layer its honestly too terrifying". The skin, the fat under it and the lashes and brows are left out of the model file (`SKIN_IN_MODEL = False` in `export_head.py`; they are still built, because the mouth linings are fitted against the skin). The model dropped from 14 MB to 10.7 MB.
+- Page: the Skin button, the "show the face" switch and the Lips preset are gone; the peel slider runs Muscle, Bone, Deep; the mouth presets are cutaways; the inner-lip linings are hidden in the whole-head view (they floated in front of the teeth). Labels: mouth 12 of 13 (the miss is the old Lips-on-skin check), gallery 29 of 31 (the same known bone-layer shot). Model republished (v9). Demo video re-recorded without the skin.
+- Ian: the model "lacks depth, realism, and is uncanny / doesn't look professional", and "there might be a better solution". A brief for a full review is at `oralcheck-agent/anatomy3d/MODEL_REVIEW_PROMPT.md`: ask Ian questions first, study professional anatomy references online, list every issue with its fix, weigh fixing the Z-Anatomy pipeline against a licensed model, a stylised look, 2D illustration or a mouth-only scope, write directions for use, and plan a page on oralcheck.org. Offered to Ian as a task chip to run on Opus 5.5 at max effort. Done the same day: see the entry above.
+
+### 2026-10-22 (late): neck, chin and smile-line marks fixed; demo video
+
+- Ian: "fix the neck and chin marks first and the smile lines, then make the demo video".
+- Cause: the atlas skin is a hollow shell about 3 mm thick, made of pieces that do not quite meet. Where it thins (chin and neck midline, sides of the neck, the folds from nose to mouth) the rebuild fused its two layers in patches, leaving pits, pleats and slits.
+- Fix in `export_head.py`: thicken 2.5 mm each way so the layers fuse fully and the gaps close, then step back along the normal and snap onto the atlas skin where it is within 0.6 mm. The ears, eyes and nostrils are thickened only 0.6 mm and not stepped back (stepping back tore the ears). Also: the slit beside each nose wing now gets the full treatment, holes are closed regardless of height (small neck holes were being taken for the neck cut), leftover inner lining deep behind the teeth is removed, the jaw rig's fades are longer (they folded the skin at the angle of the jaw), and the lips part with a 0.1 mm gap (wider showed the teeth as a white line).
+- Several attempts on the way made things worse (blobby smile lines, scattered dark flecks, torn ears, a hole beside the nose); each was reverted. The final build was checked by eye from the front, both sides, below the chin, the ear, the eye, the open mouth and "say ahh", and by casting rays across the neck and nose creases.
+- Label checks: mouth 13 of 13 pass; gallery 29 of 31. The two failures are an old gallery shot that labels a nerve and an artery on the bone-only layer, which hides them by design since Ian's 22 Oct request; no published preset does that.
+- Still rough: the underside of the nostrils seen from below, and two faint marks under the lower lip where the atlas slit was sealed. Logged under the head model item.
+- Model republished (v8). Demo video: `oralcheck-agent/anatomy3d/stills/oralcheck_head_demo.mp4` (70 s, 1920x1080), recorded by `demo_video.py`.
+
+### 2026-10-22 (evening): lips placed by Ian on the head model
+
+- Ian: "the lip color is below the actual lip surface", then "let me adjust where the lips are and the mouth opening is myself". He set them with a private lip tuner (https://claude.ai/artifact/CJtRLTGNetc53Wyq3xz65o): the lips meet 14.5 mm above the slit the atlas skin has for a mouth, colour 9.5 mm up, 12.5 mm down, 31 mm half width.
+- The atlas's slit is now sealed for good (edges drawn together and welded, the crease smoothed), and the skin is parted on Ian's line (`STOMION` in `export_head.py`, `LIP_LINE` in `src/main.js`). The upper lip now only lifts 3 mm when the mouth opens, since the upper teeth end just below the new line.
+- Fixed the pink slivers that hung across the open mouth: the cut along the lip line had gaps wherever the bisect landed on an existing vertex, and the jaw rig moved those points halfway. Every edge between an upper and a lower face is now split and every point near the line is pushed onto its own lip. Checked by counting stretched triangles; the only ones left are at the corners, where the cheek is meant to stretch.
+- Model republished (v7). Renders: `oralcheck-agent/anatomy3d/stills/lips_22oct.jpg`.
+- Still to tidy: a faint mark where the old slit was sealed, dark specks on the sides of the neck, and a dotted line under the chin.
+
+### 2026-10-22: posting moved to Mon/Tue/Thu 10am Central
+- **Ian: followers are most active 9am to noon CDT on Mondays, Tuesdays and
+  Thursdays; post then, except holidays.** Every regular calendar post (27 of
+  them, through 29 Dec) moved, in order, to the next free Monday, Tuesday or
+  Thursday at 10am Central, one per day. Holiday posts kept their slots
+  (Halloween, the Smokeout's "tomorrow" post, Thanksgiving, New Year). Future
+  batches plan Instagram Mon and Thu, LinkedIn Tue, all 10am Central; the
+  calendar test checks the days and hour. **Blocked on Ian:** the daily
+  GitHub job reads the calendar from the repo, so the new times take effect
+  once it is committed and pushed.
+
+### 2026-10-22: reach stat updates hourly; holiday posts themed
+- **Ian: the "people reached" number hasn't updated.** The home page was
+  prerendered once per deploy, so it showed 855+ from deploy day; the
+  one-hour cache only applied to the GA read, which only ran at build. The
+  page now declares `revalidate = 3600`; the build's route table shows `/en`,
+  `/es` and `/pt` revalidating every hour. Pushed as `ae1aa0a` at Ian's
+  request. After the deploy the site still read 855+, and so did GA itself
+  (all-time users, read directly): GA's totals lag a day or two, so the number
+  moves when GA's does, within the hour.
+- **Halloween made "a little spooky" and a Thanksgiving post added (Ian).**
+  Slides can now render in seasonal worlds: a Halloween night theme (moon,
+  bats, a cobweb, pumpkin-orange accents) and a fall theme (warm paper, maple
+  leaves), picked from the post's occasion and drawn behind the text so
+  legibility is unchanged. The Halloween carousel (Sat 31 Oct, 5pm CT) was
+  rebuilt with a lightly spooky hook ("Some things look frightening. One looks
+  like nothing."). New: a Thanksgiving carousel for Thu 26 Nov, 5pm CT, the
+  two-minute self-exam ("Before the leftovers, two minutes and a mirror."), 8
+  slides. Note it lands the day before the 27 Nov low-cost-care carousel.
+  **Blocked on Ian:** approve both on the review page.
 
 ### 2026-10-21 (evening, later): live reach stat, early reel, Halloween post
 - **Home page: "2 min" became a live "people reached since launch" stat**,
