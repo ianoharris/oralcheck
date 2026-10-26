@@ -68,12 +68,20 @@ THEMES["halloween"] = {
     "muted": "#7d6f8a", "hair": "#2a2233",
     "teal": "#14a8ae", "teal_brt": "#14a8ae", "coral": "#f07f2d",
 }
+# Brewers World Series week (Ian, 26 Oct: team colours and logo on the
+# "banned at the Brewers' ballpark" post). Navy ground, gold for the accent
+# beat, the brand's bright teal kept for the address so it is still ours.
+THEMES["brewers"] = {
+    "bg": "#12284b", "text": "#f4efe3", "text_soft": "#c9d3e3",
+    "muted": "#8496b5", "hair": "#253f6b",
+    "teal": "#3cc3c3", "teal_brt": "#3cc3c3", "coral": "#ffc52f",
+}
 THEMES["fall"] = {
     "bg": "#f6eee2", "text": "#2a1d14", "text_soft": "#5a4636",
     "muted": "#9a8571", "hair": "#e6d6c0",
     "teal": "#0d7377", "teal_brt": "#0d7377", "coral": "#c4561c",
 }
-DARKISH = {"dark", "halloween"}
+DARKISH = {"dark", "halloween", "brewers"}
 
 _BAT = ("<svg viewBox='0 0 44 16' width='{w}' style='position:absolute;left:{x}px;top:{y}px;"
         "transform:rotate({r}deg);opacity:0.85;'><path fill='#08060b' d='M0,10 C6,2 12,2 16,8 C18,4 20,4 22,8 "
@@ -90,7 +98,30 @@ _WEB += "".join(
 _LEAF = ("<svg viewBox='0 0 100 110' width='{w}' style='position:absolute;left:{x}px;top:{y}px;"
          "transform:rotate({r}deg);opacity:{o};'><path fill='{c}' d='M72.9 56.0 L71.9 55.4 L70.9 54.9 L69.7 54.4 L68.5 54.1 L67.3 53.7 L66.2 53.4 L65.6 53.1 L66.4 52.5 L67.4 51.8 L68.3 51.1 L69.1 50.3 L70.0 49.5 L70.8 48.6 L72.3 47.4 L74.2 46.0 L76.0 44.4 L77.6 42.8 L78.9 41.3 L79.8 39.8 L80.3 38.5 L81.9 36.4 L83.2 34.5 L83.8 32.8 L83.8 31.5 L83.0 30.7 L81.7 30.4 L80.4 30.1 L79.7 29.3 L78.5 29.0 L76.8 29.2 L74.7 30.0 L72.4 31.2 L70.0 32.6 L68.2 33.5 L66.7 34.2 L65.2 35.1 L63.6 36.2 L62.1 37.4 L60.7 38.6 L59.4 39.8 L58.6 40.1 L58.2 40.0 L58.2 38.7 L58.3 37.5 L58.2 36.2 L58.1 35.0 L58.0 33.3 L58.2 30.7 L58.3 28.1 L58.2 25.6 L57.9 23.2 L57.4 21.2 L56.8 19.5 L56.2 16.9 L55.5 14.0 L54.7 11.6 L53.6 9.9 L52.5 9.1 L51.2 9.2 L50.0 10.0 L48.8 9.2 L47.5 9.1 L46.4 9.9 L45.3 11.6 L44.5 14.0 L43.8 16.9 L43.2 19.5 L42.6 21.2 L42.1 23.2 L41.8 25.6 L41.7 28.1 L41.8 30.7 L42.0 33.3 L41.9 35.0 L41.8 36.2 L41.7 37.5 L41.8 38.7 L41.8 40.0 L41.4 40.1 L40.6 39.8 L39.3 38.6 L37.9 37.4 L36.4 36.2 L34.8 35.1 L33.3 34.2 L31.8 33.5 L30.0 32.6 L27.6 31.2 L25.3 30.0 L23.2 29.2 L21.5 29.0 L20.3 29.3 L19.6 30.1 L18.3 30.4 L17.0 30.7 L16.2 31.5 L16.2 32.8 L16.8 34.5 L18.1 36.4 L19.7 38.5 L20.2 39.8 L21.1 41.3 L22.4 42.8 L24.0 44.4 L25.8 46.0 L27.7 47.4 L29.2 48.6 L30.0 49.5 L30.9 50.3 L31.7 51.1 L32.6 51.8 L33.6 52.5 L34.4 53.1 L33.8 53.4 L32.7 53.7 L31.5 54.1 L30.3 54.4 L29.1 54.9 L28.1 55.4 L27.1 56.0 L25.0 56.7 L23.0 57.4 L21.3 58.3 L20.0 59.2 L19.3 60.0 L19.1 60.9 L19.0 61.8 L18.3 62.7 L18.2 63.6 L18.8 64.4 L20.0 64.9 L21.8 65.2 L23.9 65.2 L25.4 65.5 L26.6 65.7 L28.1 65.8 L29.7 65.7 L31.4 65.5 L33.1 65.2 L34.6 64.9 L35.3 65.0 L35.9 65.1 L36.6 65.2 L37.3 65.3 L37.9 65.3 L38.6 65.2 L39.1 65.3 L39.2 65.7 L39.4 66.1 L39.7 66.3 L40.0 66.5 L40.5 66.6 L40.9 66.6 L41.2 66.9 L41.3 67.3 L41.5 67.7 L41.8 67.9 L42.2 68.0 L42.6 68.0 L43.1 68.0 L43.3 68.4 L43.5 68.8 L43.8 69.1 L44.1 69.2 L44.5 69.2 L45.0 69.1 L45.4 69.0 L45.8 68.9 L46.2 68.7 L46.7 68.4 L47.1 68.0 L47.6 67.4 L48.0 66.8 L48.4 66.4 L48.7 66.2 L49.0 65.8 L49.3 65.4 L49.5 64.9 L49.8 64.2 L50.0 63.6 L50.2 64.2 L50.5 64.9 L50.7 65.4 L51.0 65.8 L51.3 66.2 L51.6 66.4 L52.0 66.8 L52.4 67.4 L52.9 68.0 L53.3 68.4 L53.8 68.7 L54.2 68.9 L54.6 69.0 L55.0 69.1 L55.5 69.2 L55.9 69.2 L56.2 69.1 L56.5 68.8 L56.7 68.4 L56.9 68.0 L57.4 68.0 L57.8 68.0 L58.2 67.9 L58.5 67.7 L58.7 67.3 L58.8 66.9 L59.1 66.6 L59.5 66.6 L60.0 66.5 L60.3 66.3 L60.6 66.1 L60.8 65.7 L60.9 65.3 L61.4 65.2 L62.1 65.3 L62.7 65.3 L63.4 65.2 L64.1 65.1 L64.7 65.0 L65.4 64.9 L66.9 65.2 L68.6 65.5 L70.3 65.7 L71.9 65.8 L73.4 65.7 L74.6 65.5 L76.1 65.2 L78.2 65.2 L80.0 64.9 L81.2 64.4 L81.8 63.6 L81.7 62.7 L81.0 61.8 L80.9 60.9 L80.7 60.0 L80.0 59.2 L78.7 58.3 L77.0 57.4 L75.0 56.7 Z'/>"
          "<path stroke='{c}' stroke-width='2.5' fill='none' d='M50 60 L50 106'/></svg>")
+# A baseball's two seams with their stitches, drawn as arcs off the slide's corner.
+def _seam(cx, cy, r, a0, a1, flip):
+    pts, stitches = [], []
+    for i in range(41):
+        a = a0 + (a1 - a0) * i / 40
+        x, y = cx + flip * r * math.cos(a), cy + r * math.sin(a)
+        pts.append(f"{x:.0f},{y:.0f}")
+        if i % 3 == 1:   # a stitch: a short dash across the seam
+            nx, ny = flip * math.cos(a), math.sin(a)
+            tx, ty = -ny, nx
+            stitches.append(f"<line x1='{x - 13 * nx + 6 * tx:.0f}' y1='{y - 13 * ny + 6 * ty:.0f}' "
+                            f"x2='{x + 13 * nx - 6 * tx:.0f}' y2='{y + 13 * ny - 6 * ty:.0f}'/>")
+    return f"<polyline fill='none' points='{' '.join(pts)}'/>" + "".join(stitches)
+_BALL = (_seam(1240, -40, 430, math.pi * 0.55, math.pi * 1.05, 1) + _seam(1240, -40, 260, math.pi * 0.5, math.pi * 1.1, 1))
+
 SEASON_DECOR = {
+    "brewers": (
+        "<div class='decor'>"
+        "<div style='position:absolute;right:-300px;top:-420px;width:1000px;height:1000px;border-radius:50%;"
+        "background:radial-gradient(circle,rgba(244,239,227,0.07),rgba(244,239,227,0.02) 60%,transparent 71%);'></div>"
+        f"<svg viewBox='0 0 1080 1350' width='1080' height='1350' style='position:absolute;inset:0;' "
+        f"stroke='rgba(255,197,47,0.22)' stroke-width='3' stroke-linecap='round'>{_BALL}</svg>"
+        "<div style='position:absolute;left:0;right:0;bottom:0;height:10px;background:#ffc52f;'></div>"
+        "</div>"),
     "halloween": (
         "<div class='decor'>"
         "<div style='position:absolute;right:-160px;top:-60px;width:640px;height:640px;border-radius:50%;"
@@ -132,7 +163,7 @@ def _font_b64(name: str) -> str:
 
 def _img_data_uri(path: str) -> str:
     ext = Path(path).suffix.lower()
-    mime = "image/png" if ext == ".png" else "image/jpeg"
+    mime = {".png": "image/png", ".svg": "image/svg+xml", ".webp": "image/webp"}.get(ext, "image/jpeg")
     return f"data:{mime};base64,{base64.b64encode(Path(path).read_bytes()).decode()}"
 
 
@@ -219,18 +250,27 @@ def _brandrow(counter: str | None) -> str:
 # ---------------------------------------------------------------------------
 
 def slide_cover(hook: str, kicker: str = "", photo: str | None = None,
-                counter: str | None = None, theme: str = "dark") -> str:
+                counter: str | None = None, theme: str = "dark",
+                logo: str | None = None, note: str = "") -> str:
     """Opening slide: a clean, purely typographic hook. Photos live on their own
     full-bleed slides mid-deck, never as an awkward band under the cover text."""
     kicker_html = f"<div class='kicker' style='margin-bottom:26px;'>{_e(kicker)}</div>" if kicker else ""
+    # `logo`: a partner or occasion mark above the hook; `note`: a small line
+    # under it (a "not affiliated with" line goes here when a team mark is used)
+    logo_html = (f"<img src='{_img_data_uri(logo)}' style='height:150px;width:auto;align-self:flex-start;"
+                 f"margin-bottom:40px;'>") if logo else ""
+    note_html = (f"<div style='font-size:20px;line-height:1.4;color:var(--muted);margin-top:30px;'>{_e(note)}</div>"
+                 if note else "")
     body = f"""
     <div class="frame">
       {_brandrow(counter)}
       <div style="flex:1;display:flex;flex-direction:column;justify-content:center;">
+        {logo_html}
         {kicker_html}
         <div class="accent" style="margin-bottom:32px;"></div>
         <div class="serif" style="font-size:90px;line-height:1.04;letter-spacing:-0.015em;
              color:var(--text);text-wrap:balance;">{_e(hook)}</div>
+        {note_html}
       </div>
       <div style="display:flex;align-items:center;gap:12px;">
         <span class="footurl">Swipe</span><span style="color:var(--teal);font-size:24px;">&rarr;</span>
@@ -436,7 +476,8 @@ def render_deck(deck: dict, theme: str = "dark") -> list[str]:
 
     cover = deck.get("cover", {})
     htmls.append(slide_cover(cover.get("hook", ""), kicker,
-                             cover.get("photo"), ctr(1), theme))
+                             cover.get("photo"), ctr(1), theme,
+                             cover.get("logo"), cover.get("note", "")))
 
     stat_palette = ([THEMES[theme]["coral"], TEAL_BRT, TEAL] if theme in DARKISH
                     else [THEMES.get(theme, THEMES["light"])["coral"], TEAL, TEAL])
@@ -512,19 +553,39 @@ def slide_plate(photo: str, caption: str = "", credit: str = "", counter: str | 
     return _doc(body, "light", bg="#eceff0")
 
 
+def _photo_ground(photo: str, default: str = "#eceff0") -> str:
+    """The card's ground: the photo's own background when it is a product shot on
+    plain white (all four corners the same near-white), else the usual grey.
+    A grey band around a white-backed photo reads as a pasted-in box (Ian,
+    26 Oct, on the vial: "make the background white the same color as the
+    background of the vial image's white")."""
+    try:
+        with Image.open(photo) as im:
+            im = im.convert("RGB"); w, h = im.size
+            corners = [im.getpixel(p) for p in ((1, 1), (w - 2, 1), (1, h - 2), (w - 2, h - 2))]
+    except Exception:  # noqa: BLE001
+        return default
+    lo = [min(c[i] for c in corners) for i in range(3)]
+    hi = [max(c[i] for c in corners) for i in range(3)]
+    if min(lo) >= 236 and max(h_ - l_ for h_, l_ in zip(hi, lo)) <= 6:
+        return "#%02x%02x%02x" % tuple(sum(c[i] for c in corners) // 4 for i in range(3))
+    return default
+
+
 def render_plate(photo: str, hook: str, kicker: str = "", credit: str = "", source: str = "",
                  contain: bool = False, cta: str = "oralcheck.org") -> str:
     """Single image post: the picture above, the hook below, on the light ground
-    the 3D reels use."""
+    the 3D reels use, or on the photo's own white when it has one."""
     uri = _img_data_uri(photo)
     t = THEMES["light"]
+    ground = _photo_ground(photo)
     fit = "contain" if contain else "cover"
     pad = "padding:24px 78px 0;" if contain else ""
     kick = f"<div class='kicker' style='margin-bottom:20px;color:{t['coral']};'>{_e(kicker)}</div>" if kicker else \
            f"<div class='accent' style='margin-bottom:24px;background:{t['coral']};'></div>"
     foot = " &nbsp;&middot;&nbsp; ".join(_e(x) for x in (credit, source) if x)
     body = f"""
-    <div style="width:{POST_W}px;height:{POST_H}px;display:flex;flex-direction:column;background:#eceff0;">
+    <div style="width:{POST_W}px;height:{POST_H}px;display:flex;flex-direction:column;background:{ground};">
       <div style="padding:70px 78px 0;"><div class="brandrow"><div class="brand"><div class="dot"></div>
         <span class="wordmark" style="color:{t['teal']};">OralCheck</span></div></div></div>
       <div style="height:820px;{pad}display:flex;">
@@ -540,7 +601,7 @@ def render_plate(photo: str, hook: str, kicker: str = "", credit: str = "", sour
         </div>
       </div>
     </div>"""
-    return _doc(body, "light", bg="#eceff0")
+    return _doc(body, "light", bg=ground)
 
 
 def render_card(hook: str, kicker: str = "", source: str = "", theme: str = "light",
@@ -870,6 +931,8 @@ def pick_theme(occasion: str = "") -> str:
         return "halloween"
     if "thanksgiving" in occ:
         return "fall"
+    if "brewers" in occ or "world series" in occ:
+        return "brewers"
     import random
     return random.choice(["light", "light", "dark"])
 

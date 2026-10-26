@@ -6,6 +6,7 @@ Run:  python3.11 test_content.py   ->  exit 0 all pass, 1 on failure.
 """
 
 import sys
+from pathlib import Path
 from datetime import date
 
 import content_calendar as C
@@ -394,8 +395,42 @@ def test_post_calendar():
     check("a site screenshot needs no photo credit", A._credit_line("oralcheck.org") == "")
 
 
+def test_meta_publish():
+    """Direct Instagram publishing: what is due, what is too late, and the switch."""
+    import os
+    from datetime import datetime, timedelta, timezone
+    import post_calendar as PC, meta_ig as M
+    now = datetime(2026, 10, 27, 15, 10, tzinfo=timezone.utc)
+    def e(i, net, status, mins, **kw):
+        return {"id": i, "network": net, "status": status, "media_type": "image",
+                "when": (now + timedelta(minutes=mins)).isoformat(), **kw}
+    cal = {"entries": [e("due", "instagram", "approved", -10), e("future", "instagram", "approved", 30),
+                       e("li", "linkedin", "approved", -10), e("built", "instagram", "built", -10),
+                       e("late", "instagram", "approved", -60 * 7), e("tried", "instagram", "approved", -5, publish_attempts=3)]}
+    due, late = PC.due_for_instagram(cal, now)
+    check("only the due, approved Instagram post is sent", [x["id"] for x in due] == ["due"])
+    check("a post over six hours late is held back", [x["id"] for x in late] == ["late"])
+    old = os.environ.pop("IG_DIRECT", None)
+    check("Publora stays in charge until IG_DIRECT=1", not PC.ig_direct() and PC.publish() == [])
+    if old is not None:
+        os.environ["IG_DIRECT"] = old
+    cap = M.full_caption({"caption": "Hi", "hashtags": ["a", "b"]})
+    check("caption ends with the hashtags", cap == "Hi\n\n#a #b")
+    try:
+        M.full_caption({"caption": "x" * 2300}); ok = False
+    except M.MetaError:
+        ok = True
+    check("a caption over 2,200 characters is refused, not cut", ok)
+    try:
+        M.post_carousel([Path("a.jpg")], "x"); ok = False
+    except M.MetaError:
+        ok = True
+    check("a one-picture carousel is refused before any upload", ok)
+
+
 def main():
     print("Calendar:");      test_calendar()
+    print("Instagram direct:"); test_meta_publish()
     print("Post calendar:"); test_post_calendar()
     print("Illustrated reels:"); test_reel2d()
     print("Slots:");         test_slots()

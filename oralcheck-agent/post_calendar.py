@@ -12,10 +12,11 @@ never schedules further ahead than that allows.
     python post_calendar.py plan --start 2026-10-26 --weeks 10    # dates, formats, topics, ideas
     python post_calendar.py build                                  # render every post (resumable)
     python post_calendar.py drip                                   # daily: schedule what is due
+    python post_calendar.py publish                                # half-hourly: post due Instagram posts
 
 Everything lives in calendar/: calendar.json (the plan and each post's status)
 and one folder per post with its media and manifest. Statuses:
-planned -> built -> approved | redo | cut -> scheduled.
+planned -> built -> approved | redo | cut -> scheduled (Publora) | posted (Meta).
 """
 from __future__ import annotations
 
@@ -42,6 +43,10 @@ IG_HOUR_CT = 10
 LI_HOUR_CT = 10
 DRIP_DAYS = 3            # schedule a post this many days before it goes out
 RELEASE = "calendar-2026-fall"   # GitHub release holding approved posts' media for CI
+REPO = "ianoharris/oralcheck"
+# Instagram goes straight to Meta when IG_DIRECT=1 (a repo variable), and
+# Publora keeps LinkedIn. Off until the Meta token has passed `meta_ig.py check`.
+PUBLISH_LATE_HOURS = 6   # a post this late is left for a decision, not sent
 
 # Awareness days pinned to a date in the window, with the topic that fits.
 PINNED = {
@@ -282,6 +287,8 @@ def drip(now: datetime | None = None, dry_run: bool = False) -> list[str]:
     for e in cal["entries"]:
         if e["status"] != "approved":
             continue
+        if ig_direct() and e["network"] == "instagram":
+            continue          # `publish` sends these at their time
         when = datetime.fromisoformat(e["when"])
         if when < now:
             log.warning("%s was approved but its date has passed; leaving it for a decision.", e["id"])
@@ -291,10 +298,19 @@ def drip(now: datetime | None = None, dry_run: bool = False) -> list[str]:
         if dry_run:
             log.info("Would schedule %s for %s on %s", e["id"], e["when"], e["network"])
             continue
-        folder = _ensure_media(e)
-        manifest = json.loads((folder / "manifest.json").read_text())
-        media = [folder / f for f in manifest["files"] if f != "preview.jpg"]
-        gid = T.post_via_publora(manifest, media, when=when, networks=[e["network"]])
+        # One post that cannot be fetched or scheduled must not stop the rest:
+        # on 26 Oct the first approved post's media was missing from the
+        # release and the whole run died, so nothing was scheduled at all.
+        try:
+            folder = _ensure_media(e)
+            manifest = json.loads((folder / "manifest.json").read_text())
+            media = [folder / f for f in manifest["files"] if f != "preview.jpg"]
+            gid = T.post_via_publora(manifest, media, when=when, networks=[e["network"]])
+        except Exception as exc:  # noqa: BLE001
+            log.error("Could not schedule %s: %s", e["id"], exc)
+            T.tg("sendMessage", chat_id=T.TELEGRAM_CHAT_ID,
+                 text=f"Could not schedule {e['idea']['title']} ({e['date']}): {exc}")
+            continue
         e.update(status="scheduled", publora_id=gid, scheduled_at=now.isoformat())
         save(cal)
         T.record_slot(when)
@@ -305,6 +321,85 @@ def drip(now: datetime | None = None, dry_run: bool = False) -> list[str]:
                  text=(f"Reel scheduled for {when.astimezone(CT):%a %d %b, %-I%p} CT: {e['idea']['title']}.\n"
                        "Once it is live, share it to your Story with a link sticker to oralcheck.org."))
     return done
+
+
+def ig_direct() -> bool:
+    import os
+    return os.environ.get("IG_DIRECT", "") == "1"
+
+
+def due_for_instagram(cal: dict, now: datetime) -> tuple[list[dict], list[dict]]:
+    """Approved Instagram posts whose time has come: (send now, too late to send)."""
+    due, late = [], []
+    for e in cal["entries"]:
+        if e["network"] != "instagram" or e["status"] != "approved" or e.get("publish_attempts", 0) >= 3:
+            continue
+        when = datetime.fromisoformat(e["when"])
+        if when > now:
+            continue
+        (late if now - when > timedelta(hours=PUBLISH_LATE_HOURS) else due).append(e)
+    return due, late
+
+
+def _send(e: dict) -> str:
+    """Publish one calendar post to Instagram. Returns the Instagram media id."""
+    import meta_ig as M
+    folder = _ensure_media(e)
+    manifest = json.loads((folder / "manifest.json").read_text())
+    files = [f for f in manifest["files"] if f != "preview.jpg"]
+    caption = M.full_caption(manifest)
+    kind = e["media_type"]
+    if kind in ("reel", "animated"):
+        import telegram_review as T
+        url = M.release_url(REPO, RELEASE, f"{e['id']}__{files[0]}")
+        return M.post_reel(url, caption, cover=T._extract_cover_frame(folder / files[0]))
+    if kind == "carousel":
+        return M.post_carousel([folder / f for f in files], caption)
+    return M.post_image(folder / files[0], caption)
+
+
+def publish(now: datetime | None = None, dry_run: bool = False) -> list[str]:
+    """Send approved Instagram posts whose time has come, straight to Meta.
+    Instagram's API cannot schedule, so this runs every half hour. A failure
+    leaves the post approved and tries again next run, three times at most."""
+    import telegram_review as T
+    if not ig_direct():
+        log.info("IG_DIRECT is off; Instagram still goes through Publora.")
+        return []
+    now = now or datetime.now(timezone.utc)
+    cal = load()
+    due, late = due_for_instagram(cal, now)
+    for e in late:
+        if not e.get("late_warned"):
+            log.warning("%s is over %dh late; not sending it.", e["id"], PUBLISH_LATE_HOURS)
+            T.tg("sendMessage", chat_id=T.TELEGRAM_CHAT_ID,
+                 text=f"Not posted: {e['idea']['title']} was due {e['when']} and is too late to send automatically.")
+            e["late_warned"] = True
+            save(cal)
+    sent = []
+    for e in due:
+        if dry_run:
+            log.info("Would publish %s (%s) now", e["id"], e["media_type"]); continue
+        try:
+            mid = _send(e)
+        except Exception as exc:  # noqa: BLE001
+            e["publish_attempts"] = e.get("publish_attempts", 0) + 1
+            e["publish_error"] = str(exc)[:500]
+            save(cal)
+            log.error("Publishing %s failed (attempt %d): %s", e["id"], e["publish_attempts"], exc)
+            T.tg("sendMessage", chat_id=T.TELEGRAM_CHAT_ID,
+                 text=f"Instagram post failed (attempt {e['publish_attempts']} of 3): {e['idea']['title']}\n{exc}")
+            continue
+        e.update(status="posted", ig_media_id=mid, posted_at=datetime.now(timezone.utc).isoformat())
+        e.pop("publish_error", None)
+        save(cal)
+        sent.append(e["id"])
+        log.info("Posted %s to Instagram (%s)", e["id"], mid)
+        if e["media_type"] in ("reel", "animated"):
+            T.tg("sendMessage", chat_id=T.TELEGRAM_CHAT_ID,
+                 text=(f"Reel is live: {e['idea']['title']}.\n"
+                       "Share it to your Story with a link sticker to oralcheck.org."))
+    return sent
 
 
 REVIEW_DIR = CAL_DIR / "review"
@@ -389,6 +484,7 @@ def main() -> None:
     p = sub.add_parser("plan"); p.add_argument("--start", required=True); p.add_argument("--weeks", type=int, default=10)
     b = sub.add_parser("build"); b.add_argument("--only")
     d = sub.add_parser("drip"); d.add_argument("--dry-run", action="store_true")
+    pu = sub.add_parser("publish"); pu.add_argument("--dry-run", action="store_true")
     sub.add_parser("review")
     sub.add_parser("upload")
     args = ap.parse_args()
@@ -402,6 +498,8 @@ def main() -> None:
         print(review_page())
     elif args.cmd == "upload":
         print(f"uploaded {upload_approved()} post(s)")
+    elif args.cmd == "publish":
+        print(publish(dry_run=args.dry_run))
     else:
         print(drip(dry_run=args.dry_run))
 

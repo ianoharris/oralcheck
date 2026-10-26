@@ -1,7 +1,8 @@
 name: Diagnose Instagram Token
 
-# Reports what the Instagram access token can and cannot do, so we can see why
-# publishing returns "(#10) Application does not have permission". Prints no secrets.
+# Reports what the Instagram access token can do (account, publishing quota,
+# Imgbb key) without publishing anything. Prints no secrets. Run it after
+# setting a new token, before turning IG_DIRECT on.
 on:
   workflow_dispatch:
 
@@ -21,4 +22,18 @@ jobs:
         env:
           INSTAGRAM_USER_ID: ${{ secrets.INSTAGRAM_USER_ID }}
           INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
-        run: python check_ig.py
+          IMGBB_API_KEY: ${{ secrets.IMGBB_API_KEY }}
+          META_GRAPH_HOST: ${{ vars.META_GRAPH_HOST }}
+        run: python meta_ig.py check
+      - name: Probe a real picture and reel (nothing is published)
+        env:
+          GH_TOKEN: ${{ github.token }}
+          INSTAGRAM_USER_ID: ${{ secrets.INSTAGRAM_USER_ID }}
+          INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
+          IMGBB_API_KEY: ${{ secrets.IMGBB_API_KEY }}
+          META_GRAPH_HOST: ${{ vars.META_GRAPH_HOST }}
+        run: |
+          IMG=$(gh release view calendar-2026-fall --json assets -q '.assets[].name' | grep -m1 '\.jpg$')
+          REEL=$(gh release view calendar-2026-fall --json assets -q '.assets[].name' | grep -m1 '\.mp4$')
+          gh release download calendar-2026-fall --pattern "$IMG" --dir /tmp/probe --clobber
+          python meta_ig.py probe "/tmp/probe/$IMG" "$REEL"

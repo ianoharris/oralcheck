@@ -43,6 +43,16 @@ Update both together. See `AGENTS.md`.
 
 ### Content and growth
 
+- [ ] **Post idea, for later: oral cancer by age (Ian, 2026-10-26: "oral
+      cancer incidence by age by 20-30, 30-40...").** A chart post, one bar
+      per age band. Source: SEER. Stat Facts gives the share of new cases by
+      age band (20 to 34, 35 to 44, 45 to 54 and so on, 2019 to 2023), not by
+      decade; decade bands (20s, 30s) need SEER*Explorer's age-specific rates,
+      read in 5-year groups and combined properly, not averaged. The figures
+      go into `src/lib/seerStats.ts` with the URL and date before any post
+      uses them. The honest framing: the young bars are small, which is the
+      point to handle with care (HPV-linked throat cancers are the ones rising
+      in younger adults, a separate figure).
 - [ ] **New post formats, from a look at what works for health-education
       accounts (2026-10-22).** Ian asked for ideas. Proposed:
       1. **Quiz carousels** ("three things in a mouth, one needs a check;
@@ -304,6 +314,11 @@ Update both together. See `AGENTS.md`.
         6 Nov, 13 Nov, 25 Nov and 26 Nov rebuilt to his notes, 1 Dec uses his
         vial photo; all back on the page undecided (page version 4). Approved
         and kept: 10 Nov reel, 24 Nov reel, 2 Dec carousel. See Shipped.
+      - **26 Oct, evening: Brewers World Series carousel added**, Tue 27 Oct
+        10am CT (the Instagram slot the cut reel left open; Game 4 is that
+        night). "Banned at the Brewers' ballpark since 2016." Waiting on Ian's
+        approval on the review page, and on the logo file if he wants it on the
+        cover (the slot is built; it renders without one).
       - **Still to decide:** the 15 Dec image still shows the open-mouth view
         of the throat; it could move to the new HPV side view like 28 Oct.
         The reels built before today keep the old monospace look unless they
@@ -615,6 +630,34 @@ Update both together. See `AGENTS.md`.
 - [ ] **Meta Graph API** for direct Instagram publishing, removing the Publora
       dependency and its 3-post cap. Needs a Facebook app, a linked Business
       account, and token refresh handling.
+      - **Code built 2026-10-26, switched off.** Ian: "we need to connect meta
+        api so i dont get limited by publora". `meta_ig.py` publishes pictures,
+        carousels and reels with Meta's own API (100 posts a day, so no
+        practical cap); `post_calendar.py publish` sends each approved
+        Instagram post at its time, every half hour
+        (`.github/workflows/publish-instagram.yml`), because Instagram's API
+        cannot schedule. Publora keeps LinkedIn. A weekly job refreshes the
+        token (`meta-token.yml`). Everything stays off until the repo variable
+        `IG_DIRECT` is 1. Tests cover what is due, what is too late, the
+        switch, and caption limits.
+      - **History:** the same idea failed in July with Meta's "(#10)
+        Application does not have permission" on a Facebook Login token, and
+        posting moved to Publora that day. Meta has since added Instagram
+        Login, which needs no Facebook Page, and the new code defaults to it.
+      - **Blocked on Ian** (no code): create a Meta app with the Instagram use
+        case, add the OralCheck Instagram account (it must be a Business or
+        Creator account), generate a token there, and paste the token and the
+        Instagram user ID into the repo's secrets `INSTAGRAM_ACCESS_TOKEN` and
+        `INSTAGRAM_USER_ID`. Then a fine-grained GitHub token (this repo only,
+        Secrets: read and write) as the secret `SECRETS_WRITE_TOKEN`, so the
+        weekly refresh can store the new token.
+      - **Then:** run "Diagnose Instagram Token" (it checks the account and
+        quota, and has Meta prepare one real picture and reel without
+        publishing), and only if both pass, set `IG_DIRECT` to 1.
+      - **Watch:** GitHub starts scheduled jobs late. The daily calendar job
+        set for 13:00 UTC has been starting between 16:25 and 19:00. If the
+        half-hourly publish job is late in the same way, posts go out late;
+        check the first week's actual post times.
 - [ ] Rotate the Google Places API key. Low priority: it is restricted to Places
       API (New) with a daily cap, so the blast radius is small.
 
@@ -623,6 +666,43 @@ Update both together. See `AGENTS.md`.
 ## Shipped
 
 Newest first.
+
+### 2026-10-26 (night): approved posts finally uploaded; daily job fixed
+- **Nothing had been handed to Publora since the calendar was pushed.** The
+  media release CI downloads from (`calendar-2026-fall`) had never been
+  created, so the daily job crashed on the first approved post (Thu 29 Oct
+  carousel) and scheduled nothing. Found while checking the release for the
+  Meta work. The release is now created and all 14 approved posts are on it.
+- **The daily job no longer dies on one bad post:** it logs it, tells Ian on
+  Telegram, and carries on with the rest.
+- **Not fixed by this:** the daily job starts hours late (see the Meta item),
+  so a post approved the night before its date can miss its slot. Tomorrow's
+  two posts (Brewers carousel, HPV LinkedIn image), approved tonight, need the
+  calendar pushed and the job started by hand. **Waiting on Ian's go.**
+- Ian's page decisions applied: approved the Brewers carousel, 28 Oct, 31 Oct
+  and 3 Nov (18 approved in all, all uploaded). New redo on 1 Dec ("make the
+  background white the same color as the background of the vial image's
+  white"): photo cards now take the photo's own white as their ground when it
+  sits on plain white (`render_html._photo_ground`); 1 Dec rebuilt, back on
+  the page undecided.
+
+### 2026-10-26 (night): Brewers World Series carousel
+- Ian asked for a Brewers post (Brewers lead the Rays 2 to 0) and picked
+  "banned at the Brewers' ballpark since 2016" from three pitches. Eight
+  slides: Milwaukee's November 2016 ban on smokeless tobacco at every city
+  sports venue, 14 to 1, backed by the Brewers (WUWM); MLB's ban for new
+  players nine days later (Sports Illustrated); why (NCI: causes oral cancer);
+  where to look (ACS: leukoplakia is often found where it sits between the
+  teeth and gums); and the two-week check.
+- **A Brewers theme** in `render_html` (navy and gold, drawn baseball seams,
+  the brand teal kept for the address), picked by an occasion naming the
+  Brewers or the World Series. Covers can now carry a logo and a small note.
+- **Team marks:** Ian chose team colours and the logo and took on the
+  trademark risk. The cover and caption say the post is not affiliated with
+  or endorsed by the Brewers or MLB, which keeps the no-implied-affiliation
+  rule. The ballpark photo is a stock photo of American Family Field.
+- **A white patch on the lower gum** added to plate A (`lesion-whitegum`,
+  in `build_plate_a.py` and the pipeline's copy), where dip is held.
 
 ### 2026-10-26 (evening): Ian's third review round, the HPV figure, a new look
 - **28 Oct LinkedIn image** ("low quality, intimidating"): now the side view
@@ -1514,6 +1594,11 @@ Newest first.
 ---
 
 ## Decided against (for now)
+
+- **Player photos on the Brewers post (2026-10-26).** Ian offered to take the
+  liability, but the problem is not his risk: a real player's face beside
+  "chewing tobacco causes oral cancer" says that player dips, a claim about a
+  real person nobody can back up. A ballpark photo carries the same idea.
 
 | Idea | Why | Revisit when |
 |---|---|---|

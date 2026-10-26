@@ -113,10 +113,11 @@ LESION_AT = {
     "cheek": {"speckled": "speckled", "lichen": "lichen", "white": "whitecheek", "red": "redcheek"},
     "tonsil": {"lump": "lump"}, "throat": {"lump": "lump"},
     "lips": {"ulcer": "lip"},
+    "gums": {"white": "whitegum"},
     "floor": {"lump": "floor"}, "base": {"lump": "base"},
 }
 LESIONS = {"white": [386, 640], "red": [640, 572], "ulcer": [608, 694], "thrush": [470, 610], "speckled": [214, 600],
-           "lichen": [214, 495], "whitecheek": [220, 600], "redcheek": [220, 600], "lump": [340, 482], "lip": [640, 934], "floor": [756, 683], "base": [588, 712]}
+           "lichen": [214, 495], "whitecheek": [220, 600], "redcheek": [220, 600], "whitegum": [562, 877], "lump": [340, 482], "lip": [640, 934], "floor": [756, 683], "base": [588, 712]}
 # A line that names a sign but no place shows it where it is drawn.
 KIND_HOME = {"white": "tongue", "red": "tongue", "ulcer": "tongue", "thrush": "tongue",
              "speckled": "cheek", "lichen": "cheek", "lump": "tonsil"}

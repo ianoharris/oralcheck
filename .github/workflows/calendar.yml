@@ -1,7 +1,8 @@
 name: OralCheck Posting Calendar
 
 # Daily: hands each approved calendar post to Publora a few days before its
-# date. Publora's plan holds three scheduled posts at a time, so posts are
+# date. Once IG_DIRECT is 1, Publora gets LinkedIn only and Instagram is sent
+# by publish-instagram.yml at its time. Publora's plan holds three scheduled posts at a time, so posts are
 # released on a rolling basis rather than all at once. The calendar itself
 # (oralcheck-agent/calendar/calendar.json) is built and reviewed locally; the
 # media lives on the GitHub release named in post_calendar.RELEASE.
@@ -40,6 +41,7 @@ jobs:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           IMGBB_API_KEY: ${{ secrets.IMGBB_API_KEY }}
+          IG_DIRECT: ${{ vars.IG_DIRECT }}
         run: python post_calendar.py drip
       - name: Save calendar state
         working-directory: .

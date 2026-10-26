@@ -1,0 +1,40 @@
+name: Refresh Instagram Token
+
+# An Instagram Login token lasts 60 days. This refreshes it weekly and writes
+# the new one back to the INSTAGRAM_ACCESS_TOKEN secret, so it never lapses.
+# Writing a secret needs SECRETS_WRITE_TOKEN: a fine-grained GitHub token for
+# this repo only, with "Secrets: read and write". Facebook Login tokens from a
+# system user never expire: set META_GRAPH_HOST to graph.facebook.com and this
+# job skips itself.
+on:
+  schedule:
+    - cron: '0 12 * * 1'   # Mondays 12:00 UTC
+  workflow_dispatch:
+
+jobs:
+  refresh:
+    if: vars.IG_DIRECT == '1' && vars.META_GRAPH_HOST != 'graph.facebook.com'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: oralcheck-agent
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install httpx
+      - name: Refresh and store
+        env:
+          GH_TOKEN: ${{ secrets.SECRETS_WRITE_TOKEN }}
+          INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
+        run: python meta_ig.py refresh --save
+      - name: Tell Ian if it failed
+        if: failure()
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          curl -s "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
+            --data-urlencode "text=The Instagram token refresh failed. Posting stops when the token expires; check the Refresh Instagram Token workflow." >/dev/null

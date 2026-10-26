@@ -1,0 +1,59 @@
+name: Publish Instagram Posts
+
+# Instagram's API cannot schedule a post, so this sends each approved calendar
+# post when its time comes (oralcheck-agent/meta_ig.py). Runs only once the
+# repo variable IG_DIRECT is 1; until then Instagram goes through Publora via
+# calendar.yml. GitHub may start a scheduled run some minutes late.
+on:
+  schedule:
+    - cron: '5,35 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: posting-calendar
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    if: vars.IG_DIRECT == '1'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    defaults:
+      run:
+        working-directory: oralcheck-agent
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install Python deps
+        run: pip install anthropic httpx pillow python-dotenv playwright && sudo apt-get install -y ffmpeg >/dev/null
+      - name: Publish what is due
+        env:
+          PYTHONUNBUFFERED: '1'
+          IG_DIRECT: ${{ vars.IG_DIRECT }}
+          META_GRAPH_HOST: ${{ vars.META_GRAPH_HOST }}
+          GH_TOKEN: ${{ github.token }}
+          INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
+          INSTAGRAM_USER_ID: ${{ secrets.INSTAGRAM_USER_ID }}
+          IMGBB_API_KEY: ${{ secrets.IMGBB_API_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python post_calendar.py publish
+      - name: Save calendar state
+        working-directory: .
+        run: |
+          git config user.name "OralCheck Bot"
+          git config user.email "bot@oralcheck.org"
+          git add oralcheck-agent/calendar/calendar.json
+          git diff --staged --quiet && exit 0
+          git commit -m "chore: calendar state [skip ci]"
+          for attempt in 1 2 3 4 5; do
+            git push && exit 0
+            git pull --rebase --autostash origin master || exit 1
+            sleep $((attempt * 3))
+          done
+          exit 1

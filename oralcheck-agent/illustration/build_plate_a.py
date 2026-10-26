@@ -74,6 +74,7 @@ def lesion_groups():
         "thrush": L.thrush("lesion-thrush", 500, 600, 78, 92, 29, clip="tongueOnly"),                 # look-alike: wipes away (added 26 Oct)
         "whitecheek": L.leukoplakia("lesion-whitecheek", 220, 600, 20, 46, 23, rot=0.12, clip="cheekL"),   # inside of the cheek (added 26 Oct)
         "redcheek": L.erythroplakia("lesion-redcheek", 220, 600, 20, 26, 9, rot=0.3, clip="cheekL"),
+        "whitegum": L.leukoplakia("lesion-whitegum", 562, 877, 36, 11, 27, rot=0.06, clip="gumLoOnly"),   # lower front gum, where dip is held (added 26 Oct)
         "canker": L.canker("lesion-canker", 392, 694, 15, 11, 41, rot=0.3, clip="tongueOnly"),          # look-alike: heals in 7 to 14 days (added 26 Oct)
     }
 
@@ -157,6 +158,7 @@ def svg():
   <clipPath id="cheekR"><path d="{path(mirror(CHEEK))}"/></clipPath>
   <clipPath id="palateR"><path d="{path(mirror(ANT_PILLAR))}"/><path d="{path(SOFT_HAND)}"/></clipPath>
 {lesions.LESION_DEFS}
+  <clipPath id="gumLoOnly"><path d="{GUM_LO}"/></clipPath>
   <clipPath id="lowTeeth"><rect x="0" y="688" width="1000" height="312"/></clipPath>
   <clipPath id="opening"><path d="{path(LIP_INNER)}"/></clipPath>
 </defs>
@@ -187,6 +189,7 @@ def svg():
   {LZ["canker"]}
   <path id="gumUp" d="{GUM_UP}" fill="url(#gumG)" stroke="#a6545c" stroke-width="1.2" filter="url(#soft)"/>
   <path id="gumLo" d="{GUM_LO}" fill="url(#gumG)" stroke="#a6545c" stroke-width="1.2" filter="url(#soft)"/>
+  {LZ["whitegum"]}
   <g id="teeth" fill="url(#enamelA)" stroke="#a3967f" stroke-width="1.1" filter="url(#soft)">
 {teeth(teeth_up, 'up')}
 {teeth(teeth_lo, 'lo')}

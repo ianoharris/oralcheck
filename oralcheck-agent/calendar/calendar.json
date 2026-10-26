@@ -54,12 +54,63 @@
       }
     },
     {
+      "id": "2026-10-27_in_carousel",
+      "date": "2026-10-27",
+      "network": "instagram",
+      "media_type": "carousel",
+      "when": "2026-10-27T15:00:00+00:00",
+      "status": "approved",
+      "idea": {
+        "title": "Banned at the Brewers’ ballpark since 2016",
+        "hook": "One thing has been banned at the Brewers’ ballpark since 2016.",
+        "brief": "World Series week (Brewers v Rays). Milwaukee's 2016 smokeless tobacco ban at city sports venues (WUWM), MLB's ban for new players nine days later (SI), why (NCI: causes oral cancer; ACS: leukoplakia often where it is held between teeth and gums), and what to check. Hand-built by Claude at Ian's request, 26 Oct; Ian chose team colours and the logo.",
+        "topic": "tobacco_all_forms",
+        "shape": "story",
+        "hook_style": "local",
+        "tone": "calm",
+        "pillar": "stats",
+        "media_type": "carousel",
+        "calendar_ref": "World Series (Brewers)",
+        "slug": "banned-at-the-brewers-ballpark"
+      },
+      "event": {
+        "name": "World Series"
+      },
+      "folder": "2026-10-27_in_carousel",
+      "version": 1,
+      "uploaded": true,
+      "hook": "One thing has been banned at the Brewers’ ballpark since 2016.",
+      "caption": "Since November 2016, smokeless tobacco has been banned at every sports venue in Milwaukee, the Brewers’ ballpark included. The Common Council voted 14 to 1, and the Brewers backed it. Nine days later, Major League Baseball banned it for every new player.\n\nThe reason is in the mouth. Chewing tobacco causes oral cancer. Gray-white patches called leukoplakia are often found where it sits between the teeth and gums, and they can become cancer.\n\nIf you dip, pull your lower lip down and look at that spot. A patch still there after two weeks is worth showing a dentist. Check your own risk, free and private, at oralcheck.org.\n\nGame 4 is tonight. Go Brewers.\n\nNot affiliated with or endorsed by the Milwaukee Brewers or Major League Baseball.\n\nIllustration based on Z-Anatomy (CC BY-SA 4.0) and BodyParts3D (CC BY-SA 2.1 JP). Shared under CC BY-SA 4.0.\n\nSources:\nWUWM, 22 Nov 2016. https://www.wuwm.com/regional/2016-11-22/milwaukee-to-ban-smokeless-tobacco-at-sports-venues-including-miller-park\nSports Illustrated, 1 Dec 2016. https://www.si.com/mlb/2016/12/01/mlb-bans-smokeless-tobacco-new-players-cba\nNational Cancer Institute. https://www.cancer.gov/about-cancer/causes-prevention/risk/tobacco/smokeless-fact-sheet\nAmerican Cancer Society. https://www.cancer.org/cancer/risk-prevention/tobacco/smokeless-tobacco.html",
+      "hashtags": [
+        "brewers",
+        "worldseries",
+        "oralcancer",
+        "smokelesstobacco",
+        "oralcheck"
+      ],
+      "files": [
+        "slide_01.jpg",
+        "slide_02.jpg",
+        "slide_03.jpg",
+        "slide_04.jpg",
+        "slide_05.jpg",
+        "slide_06.jpg",
+        "slide_07.jpg",
+        "slide_08.jpg",
+        "preview.jpg"
+      ],
+      "notes": [
+        "26 Oct: Ian asked for a Brewers World Series post and picked 'banned at the Brewers'. Team colours and logo at his call; player photos left out (a player's face beside 'causes oral cancer' implies that player dips)."
+      ],
+      "review_note": ""
+    },
+    {
       "id": "2026-10-28_li_image",
       "date": "2026-10-27",
       "network": "linkedin",
       "media_type": "image",
       "when": "2026-10-27T15:00:00+00:00",
-      "status": "built",
+      "status": "approved",
       "idea": {
         "title": "HPV overtook tobacco as the top throat cancer cause",
         "hook": "Tobacco is not the leading cause of throat cancer anymore.",
@@ -87,9 +138,9 @@
       "files": [
         "image.jpg"
       ],
-      "review_note": "The quality is really low and the picture is kind of intimidating",
+      "review_note": "",
       "version": 6,
-      "uploaded": false,
+      "uploaded": true,
       "notes": [
         "26 Oct: Ian supplied an HPV render and a tobacco photo ('use these pics for the hpv one. make the design nice'). Rebuilt as a side-by-side card (render_html.versus_image): up 225% / down 50%, Chaturvedi 2011."
       ]
@@ -134,7 +185,8 @@
         "slide_06.jpg",
         "preview.jpg"
       ],
-      "review_note": ""
+      "review_note": "",
+      "uploaded": true
     },
     {
       "id": "2026-10-31_in_carousel",
@@ -142,7 +194,7 @@
       "network": "instagram",
       "media_type": "carousel",
       "when": "2026-10-31T22:00:00+00:00",
-      "status": "built",
+      "status": "approved",
       "idea": {
         "title": "Halloween: what looks scary in your mouth, and what quietly matters",
         "hook": "Some things in your mouth look frightening and are not. One looks like nothing and is.",
@@ -159,10 +211,10 @@
       "event": {
         "name": "Halloween"
       },
-      "review_note": "perfect except for the last slide, the quality is really shitty and the theme doesnt match the rest of the slides Fixed 26 Oct: the last slide now uses the holiday theme; the rest of the deck is unchanged.",
+      "review_note": "",
       "folder": "2026-10-31_in_carousel",
       "version": 3,
-      "uploaded": false,
+      "uploaded": true,
       "hook": "Some things look frightening. One looks like nothing.",
       "caption": "Some things in your mouth look frightening and are not. One looks like nothing and is.\n\nGeographic tongue moves around the tongue over weeks and is harmless. Oral thrush wipes clean away. A burn from hot food or drink heals on its own. Lacy white lines on both cheeks at the same time are almost always lichen planus. A callus from a cheek you bite settles once the cause is gone.\n\nNone of those are the thing to watch for.\n\nWhat actually lurks quietly is a patch or sore that is new, doesn't hurt, and is still there two weeks later. No pain. No obvious cause. Just still there.\n\nEarly oral cancer often doesn't hurt at all, which is exactly why the two-week rule exists. Painless is not the same as harmless.\n\nIf something in your mouth has been there for more than two weeks and you can't explain it, that's the moment to act. Learn what to look for at oralcheck.org/learn/white-and-red-patches.\n\nWhat's the mouth change you've talked yourself out of worrying about?",
       "hashtags": [
@@ -188,7 +240,7 @@
       "network": "instagram",
       "media_type": "image",
       "when": "2026-11-02T16:00:00+00:00",
-      "status": "built",
+      "status": "approved",
       "idea": {
         "title": "Six HPV throat cancer symptoms worth knowing",
         "hook": "Six symptoms can point toward HPV-related throat cancer.",
@@ -216,9 +268,9 @@
       "files": [
         "image.jpg"
       ],
-      "review_note": "Again this picture is super unrelated and looks out of place. just dont use a picture for this, just design the cover nicely like a 6 numbers thing or something get creative but no picutre",
+      "review_note": "",
       "version": 4,
-      "uploaded": false
+      "uploaded": true
     },
     {
       "id": "2026-11-04_li_carousel",
@@ -260,7 +312,8 @@
         "slide_06.jpg",
         "preview.jpg"
       ],
-      "review_note": ""
+      "review_note": "",
+      "uploaded": true
     },
     {
       "id": "2026-11-06_in_reel",
@@ -340,7 +393,7 @@
       "review_note": "",
       "swapped": "Was 'Lower lip sun exposure risk: what outdoor workers should know' (lower lip). The 3D model has no lips, so the reel moved to the two-week rule on 21 Oct.",
       "version": 2,
-      "uploaded": false
+      "uploaded": true
     },
     {
       "id": "2026-11-11_li_image",
@@ -376,7 +429,8 @@
       "files": [
         "image.jpg"
       ],
-      "review_note": ""
+      "review_note": "",
+      "uploaded": true
     },
     {
       "id": "2026-11-13_in_carousel",
@@ -457,7 +511,8 @@
       "files": [
         "image.jpg"
       ],
-      "review_note": ""
+      "review_note": "",
+      "uploaded": true
     },
     {
       "id": "2026-11-20_in_reel",
@@ -493,7 +548,8 @@
       "files": [
         "reel.mp4"
       ],
-      "review_note": ""
+      "review_note": "",
+      "uploaded": true
     },
     {
       "id": "2026-11-18_li_carousel",
@@ -539,7 +595,8 @@
         "slide_06.jpg",
         "preview.jpg"
       ],
-      "review_note": ""
+      "review_note": "",
+      "uploaded": true
     },
     {
       "id": "2026-11-24_in_reel",
@@ -577,7 +634,7 @@
       ],
       "review_note": "",
       "version": 2,
-      "uploaded": false
+      "uploaded": true
     },
     {
       "id": "2026-11-25_li_image",
@@ -688,7 +745,7 @@
       "event": null,
       "folder": "2026-11-27_in_carousel",
       "version": 1,
-      "uploaded": false,
+      "uploaded": true,
       "hook": "When did you last have someone look inside your mouth?",
       "caption": "No dentist. No insurance. No budget for a private appointment. That combination stops a lot of people from ever getting their mouth looked at, and it doesn't have to.\n\nCommunity health centers charge on a sliding scale based on what you earn. Dental schools offer care at lower cost, supervised by licensed faculty. Free clinics exist in more places than most people expect. None of them require full-price insurance to walk through the door.\n\noralcheck.org/find-care searches all three by your location. If cost or coverage has been the reason you haven't gone, this is the place to start.",
       "hashtags": [
@@ -743,8 +800,8 @@
       "files": [
         "image.jpg"
       ],
-      "review_note": "Picture: the vial photo Ian supplied on 26 Oct (unlabelled vial).",
-      "version": 6,
+      "review_note": "make the background white the same color as the background of the vial image's white Fixed 26 Oct: the card's ground is now the vial photo's own white.",
+      "version": 7,
       "uploaded": false
     },
     {
@@ -789,7 +846,7 @@
       ],
       "review_note": "",
       "version": 4,
-      "uploaded": false
+      "uploaded": true
     },
     {
       "id": "2026-12-04_in_reel",
@@ -825,7 +882,8 @@
       "files": [
         "reel.mp4"
       ],
-      "review_note": ""
+      "review_note": "",
+      "uploaded": true
     },
     {
       "id": "2026-12-09_li_image",
@@ -850,7 +908,7 @@
       "event": null,
       "folder": "2026-12-09_li_image",
       "version": 1,
-      "uploaded": false,
+      "uploaded": true,
       "hook": "Tobacco-free doesn't mean risk-free. Not with betel quid.",
       "caption": "Betel quid without tobacco is still classified as a Group 1 carcinogen for oral cancer by the WHO's cancer agency, IARC. That classification covers areca nut, paan and gutka. The risk isn't borrowed from tobacco. It stands on its own. Most standard risk checklists don't ask about betel quid, which means a real exposure goes unrecorded. The OralCheck screener asks about it specifically because missing it would leave a meaningful gap in the picture. Take the free screener at oralcheck.org/screener.",
       "hashtags": [
@@ -926,7 +984,7 @@
       "event": null,
       "folder": "2026-12-11_in_carousel",
       "version": 1,
-      "uploaded": false,
+      "uploaded": true,
       "hook": "Oral cancer caught early has an 89% survival rate.",
       "caption": "Oral cancer caught while still localized has an 89% five-year survival rate. Once it has spread to distant sites, that figure falls to 36%. The gap between those two numbers is not luck. It is timing.\n\nOnly about 26% of oral cancer cases are found while still localized, which means most are caught after the odds have already shifted. Regular screening and acting on a sore or patch that does not heal in two weeks are the two things most likely to change that.\n\nLearn what the research shows and take a free risk screener at oralcheck.org/learn/facts.",
       "hashtags": [
@@ -1007,7 +1065,7 @@
       "event": null,
       "folder": "2026-12-16_li_carousel",
       "version": 1,
-      "uploaded": false,
+      "uploaded": true,
       "hook": "Run your finger along the inside of one cheek.",
       "caption": "Run a finger along the inside of your cheek right now. You're not looking for colour alone. The signs worth catching early are often textural: an edge on a sore that feels raised or hardened, a spot that bleeds when you brush against it, or a small firm lump sitting just under the surface of the cheek, tongue, gum, or floor of the mouth.\n\nMost sores heal on their own within a week or two. The ones that don't are the ones that need attention. Two weeks is the line. If something is still there at that point, it's worth getting checked.\n\nThe full list of signs to watch for is at oralcheck.org/learn/signs. Save this card if it's useful to you.",
       "hashtags": [
