@@ -39,6 +39,11 @@ from pathlib import Path
 import httpx
 
 log = logging.getLogger("oralcheck.meta")
+# httpx logs every request URL at INFO, and Meta's token rides in the query
+# string. On a public repo the Actions log is public, so request logging stays
+# off whenever this module is loaded (26 Oct: a bad secret showed up in one).
+for _name in ("httpx", "httpcore"):
+    logging.getLogger(_name).setLevel(logging.WARNING)
 
 API_VERSION = "v26.0"
 HOST = os.environ.get("META_GRAPH_HOST", "graph.instagram.com").strip() or "graph.instagram.com"
