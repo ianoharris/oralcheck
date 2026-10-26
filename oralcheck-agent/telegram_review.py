@@ -296,6 +296,7 @@ def _publora_platforms(networks: list[str] | None = None) -> list[str]:
     wanted = ([n.strip() for n in networks if n and n.strip()] if networks
               else [p.strip() for p in PUBLORA_PLATFORMS.split(",") if p.strip()])
     ids: list[str] = []
+    expired: list[str] = []
     for prefix in wanted:
         for c in conns:
             pid = str(c.get("platformId", ""))
@@ -306,8 +307,15 @@ def _publora_platforms(networks: list[str] | None = None) -> list[str]:
             # never appears.
             if c.get("tokenStatus") not in (None, "valid"):
                 log.warning("Skipping %s: tokenStatus=%s", pid, c.get("tokenStatus"))
+                expired.append(pid)
                 continue
             ids.append(pid)
+    if not ids and expired:
+        # The account is there but its login has lapsed: only reconnecting it
+        # in Publora fixes this (26 Oct: LinkedIn expired, and the old message
+        # read as if it had never been connected).
+        raise PubloraError(f"The Publora connection for {', '.join(expired)} has expired. "
+                           "Reconnect it in Publora (Connections), then run the calendar job again.")
     if not ids:
         raise PubloraError(
             f"No connected Publora account matched {wanted}. "

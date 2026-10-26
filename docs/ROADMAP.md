@@ -648,9 +648,8 @@ Update both together. See `AGENTS.md`.
         case, add the OralCheck Instagram account (it must be a Business or
         Creator account), generate a token there, and paste the token and the
         Instagram user ID into the repo's secrets `INSTAGRAM_ACCESS_TOKEN` and
-        `INSTAGRAM_USER_ID`. Then a fine-grained GitHub token (this repo only,
-        Secrets: read and write) as the secret `SECRETS_WRITE_TOKEN`, so the
-        weekly refresh can store the new token.
+        `INSTAGRAM_USER_ID`. (`SECRETS_WRITE_TOKEN`, the GitHub token the
+        weekly refresh uses to store the new token, was set by Ian on 26 Oct.)
       - **Then:** run "Diagnose Instagram Token" (it checks the account and
         quota, and has Meta prepare one real picture and reel without
         publishing), and only if both pass, set `IG_DIRECT` to 1.
@@ -678,7 +677,14 @@ Newest first.
 - **Not fixed by this:** the daily job starts hours late (see the Meta item),
   so a post approved the night before its date can miss its slot. Tomorrow's
   two posts (Brewers carousel, HPV LinkedIn image), approved tonight, need the
-  calendar pushed and the job started by hand. **Waiting on Ian's go.**
+  calendar pushed and the job started by hand. Ian said go; pushed (c3c997c)
+  and run by hand at 22:50 UTC: **the Brewers carousel (Tue 27 Oct 10am) and
+  the 29 Oct carousel are scheduled in Publora.**
+- **The HPV LinkedIn image was not scheduled: Publora's LinkedIn connection
+  has expired.** Blocked on Ian: reconnect LinkedIn in Publora, then run the
+  "OralCheck Posting Calendar" workflow again before 10am CT Tuesday (or
+  that post waits for a new date). The error message now says an expired
+  login plainly instead of "no connected account matched".
 - Ian's page decisions applied: approved the Brewers carousel, 28 Oct, 31 Oct
   and 3 Nov (18 approved in all, all uploaded). New redo on 1 Dec ("make the
   background white the same color as the background of the vial image's
