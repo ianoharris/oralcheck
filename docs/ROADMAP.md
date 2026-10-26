@@ -680,10 +680,9 @@ Newest first.
   calendar pushed and the job started by hand. Ian said go; pushed (c3c997c)
   and run by hand at 22:50 UTC: **the Brewers carousel (Tue 27 Oct 10am) and
   the 29 Oct carousel are scheduled in Publora.**
-- **The HPV LinkedIn image was not scheduled: Publora's LinkedIn connection
-  has expired.** Blocked on Ian: reconnect LinkedIn in Publora, then run the
-  "OralCheck Posting Calendar" workflow again before 10am CT Tuesday (or
-  that post waits for a new date). The error message now says an expired
+- **The HPV LinkedIn image was not scheduled at first: Publora's LinkedIn
+  connection had expired.** Ian reconnected it the same night; the job was
+  run again and **the HPV LinkedIn image is scheduled for Tue 27 Oct 10am.** The error message now says an expired
   login plainly instead of "no connected account matched".
 - Ian's page decisions applied: approved the Brewers carousel, 28 Oct, 31 Oct
   and 3 Nov (18 approved in all, all uploaded). New redo on 1 Dec ("make the
