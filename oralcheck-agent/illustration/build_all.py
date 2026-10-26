@@ -18,7 +18,7 @@ run("build_plate_b.py", work / "side_paths.json", work / "side", out / "plate_b.
 run("build_plate_a.py", work / "front", out / "plate_a.svg")
 run("make_post.py", out / "plate_a.svg", out / "plate_b.svg", out)
 LESIONS = [("a", "white", 386, 640, 340), ("a", "red", 640, 572, 340), ("a", "speckled", 214, 600, 340), ("a", "ulcer", 608, 694, 340),
-           ("a", "lump", 340, 482, 340), ("a", "lip", 640, 934, 340), ("a", "lichen", 500, 500, 1000),
+           ("a", "lump", 340, 482, 340), ("a", "lip", 640, 934, 340), ("a", "lichen", 500, 500, 1000), ("a", "thrush", 500, 600, 340), ("a", "whitecheek", 220, 600, 300), ("a", "redcheek", 220, 600, 300), ("a", "canker", 392, 694, 200),
            ("b", "floor", 756, 683, 160), ("b", "base", 590, 705, 160)]                     # plate, name, centre, crop width
 for p, n, x, y, w in LESIONS:
     run("preview.py", out / f"plate_{p}.svg", work / f"les_{n}.html", f"{x - w // 2} {y - w // 2} {w} {w}", f"lesion-{n}")

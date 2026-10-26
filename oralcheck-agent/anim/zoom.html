@@ -1,0 +1,234 @@
+<!doctype html>
+<!--
+  "From your jaw to the cells where almost every oral cancer starts" (3D sample, 26 Oct 2026).
+  Two worlds, cross-faded: the jaw model the 3D reels used (Z-Anatomy, CC BY-SA,
+  from BodyParts3D), and a cut-away slab of the lining built from instanced
+  cells (an illustration: shapes and layering follow textbook stratified
+  squamous epithelium, the number of cells does not).
+  Fact: American Cancer Society, "What Are Oral Cavity and Oropharyngeal
+  Cancers?": almost all are squamous cell carcinomas; squamous cells are the
+  flat, thin cells that line the mouth and throat.
+-->
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="house.css">
+<style>#stage canvas{position:absolute;inset:0}</style></head>
+<body>
+<div id="stage"></div>
+<script type="module">
+import * as THREE from "./three.min.js";
+import {PLAN, at, label, readout, frame, span, ease, lerp, smooth} from "./house.js";
+const {GLTFLoader, RoomEnvironment, EffectComposer, RenderPass, GTAOPass, OutputPass} = THREE;
+const SW = 1080, SH = 1000;
+const T = Object.fromEntries(PLAN.shots.map(s => [s.key, s.t0]));
+const TEAL = new THREE.Color("#0d7377");
+
+function world(bg) {
+  const r = new THREE.WebGLRenderer({antialias: true, preserveDrawingBuffer: true, alpha: true});
+  r.setPixelRatio(1); r.setSize(SW, SH); r.localClippingEnabled = true;
+  r.toneMapping = THREE.ACESFilmicToneMapping; r.toneMappingExposure = 0.95;
+  document.getElementById("stage").appendChild(r.domElement);
+  const scene = new THREE.Scene();
+  scene.background = null; r.setClearColor(0x000000, 0);   // the page's paper shows through
+  scene.environment = new THREE.PMREMGenerator(r).fromScene(new RoomEnvironment(), 0.04).texture;
+  const key = new THREE.DirectionalLight(0xffffff, 2.0); key.position.set(1.1, 1.3, 0.8); scene.add(key);
+  const rim = new THREE.DirectionalLight(0xdff3f3, 0.7); rim.position.set(-1, 0.4, -0.8); scene.add(rim);
+  const camera = new THREE.PerspectiveCamera(24, SW / SH, 0.001, 200);
+  const composer = new EffectComposer(r);
+  composer.addPass(new RenderPass(scene, camera));
+  const ao = new GTAOPass(scene, camera, SW, SH); ao.blendIntensity = 1.0; composer.addPass(ao);
+  composer.addPass(new OutputPass());
+  return {r, scene, camera, composer, ao};
+}
+// paper, the house ground; the cell world sits on the same colour so the cross-fade reads as one space
+const A = world("#f2f0ec"), B = world("#f2f0ec");
+
+// ---- world A: the jaw ------------------------------------------------------------
+const CUT = new THREE.Plane(new THREE.Vector3(0, -1, 0), 0.16);      // atlas-style section through the upper jaw
+A.ao.normalMaterial.clippingPlanes = [CUT.clone()];
+const CLAY = {
+  bone:  {color: "#efe8db", roughness: 0.62},
+  tooth: {color: "#fbfaf6", roughness: 0.3, clearcoat: 0.5, clearcoatRoughness: 0.3},
+  soft:  {color: "#ecd6d2", roughness: 0.55, sheen: 0.4, sheenColor: new THREE.Color("#fff")},
+};
+const kind = n => /molar|premolar|incisor|canine/i.test(n) ? "tooth" : /Mandible|Maxilla|Palatine_bone|Hyoid/.test(n) ? "bone" : "soft";
+const HIDE = /Submandibular_nodes|Submandibular_gland|Soft_palate|Uvula|tonsil|Orbicularis/i;
+let tongue = [], jaw = {}, BORDER = null, readyA = false;
+new GLTFLoader().load("oral.glb", g => {
+  const root = g.scene;
+  root.traverse(o => {
+    if (!o.isMesh) return;
+    if (HIDE.test(o.name)) { o.visible = false; return; }
+    o.material = new THREE.MeshPhysicalMaterial({...CLAY[kind(o.name)], side: THREE.DoubleSide, clippingPlanes: [CUT]});
+    o.material.userData.base = o.material.color.clone();
+    o.geometry.computeVertexNormals();
+    if (/Tongue/.test(o.name)) tongue.push(o);
+  });
+  const c = new THREE.Box3().setFromObject(root).getCenter(new THREE.Vector3());
+  root.position.copy(c).multiplyScalar(-10); root.scale.setScalar(10);
+  A.scene.add(root); root.updateMatrixWorld(true);
+  // the jaw opens about the joints so the camera can see the tongue (reel3d's rig, simplified)
+  const pivot = new THREE.Vector3(0, 0.24, -0.30);
+  const mk = share => { const gg = new THREE.Group(); gg.position.copy(pivot); A.scene.add(gg); return {g: gg, share}; };
+  jaw = {bone: mk(1), tongue: mk(0.55)};
+  const take = []; root.traverse(o => o.isMesh && o.visible && take.push(o));
+  for (const o of take) {
+    // One gum mesh covers both arches: split it along the bite so only the
+    // lower gum swings with the jaw. Attaching it whole dropped the upper gum
+    // below the teeth, where it read as a second tongue (Ian, 26 Oct).
+    if (/Gingiva/.test(o.name)) { const [up, lo] = splitGums(o); o.parent.remove(o); jaw.bone.g.attach(lo); }
+    else if (/Mandible|^Lower_/.test(o.name)) jaw.bone.g.attach(o);
+    else if (/Tongue|Mylohyoid|Geniohyoid|Sublingual/.test(o.name)) jaw.tongue.g.attach(o);
+  }
+  // the side of the tongue: its most lateral points, half way along
+  const b = new THREE.Box3(); tongue.forEach(o => b.expandByObject(o));
+  BORDER = new THREE.Vector3(b.max.x * 0.92, lerp(b.min.y, b.max.y, 0.62), lerp(b.min.z, b.max.z, 0.62));
+  readyA = true;
+});
+// reel3d's split: each triangle goes to the upper or lower gum by which side of the bite line it sits.
+const below = (y, z) => y < -0.14 - 0.16 * z;
+function splitGums(o) {
+  o.updateMatrixWorld(true);
+  const src = o.geometry.index ? o.geometry.toNonIndexed() : o.geometry;
+  const p = src.attributes.position.array, v = new THREE.Vector3(), parts = [[], []];
+  for (let i = 0; i < p.length; i += 9) {
+    let cy = 0, cz = 0;
+    for (let k = 0; k < 3; k++) { v.set(p[i + 3 * k], p[i + 3 * k + 1], p[i + 3 * k + 2]).applyMatrix4(o.matrixWorld); cy += v.y / 3; cz += v.z / 3; }
+    parts[below(cy, cz) ? 1 : 0].push(...p.slice(i, i + 9));
+  }
+  return parts.map((arr, k) => {
+    const g = new THREE.BufferGeometry(); g.setAttribute("position", new THREE.Float32BufferAttribute(arr, 3)); g.computeVertexNormals();
+    const m = new THREE.Mesh(g, o.material); m.name = o.name + (k ? "_lower" : "_upper");
+    m.position.copy(o.position); m.quaternion.copy(o.quaternion); m.scale.copy(o.scale);
+    o.parent.add(m); m.updateMatrixWorld(true); return m;
+  });
+}
+const openJaw = k => { for (const r of Object.values(jaw)) r.g.rotation.x = k * 0.45 * r.share; };
+const sph = (az, el, r, aim) => new THREE.Vector3(Math.sin(az) * Math.cos(el) * r, Math.sin(el) * r, Math.cos(az) * Math.cos(el) * r).add(aim);
+const D = Math.PI / 180;
+
+// ---- world B: the lining, cut in section -----------------------------------------
+// 1 unit = 10 micrometres. A 600 x 400 micrometre block: connective tissue below a
+// wavy basement membrane, then basal, spinous and flattened surface layers.
+const SX = 60, SZ = 40;
+const base = (x, z) => -24 + 3.2 * Math.sin(x * 0.42) * Math.cos(z * 0.38) + 1.2 * Math.sin(x * 0.13 + z * 0.2);
+const rng = (() => { let s = 7; return () => (s = (s * 16807) % 2147483647) / 2147483647; })();
+const cells = [];   // {pos, scale, rot, layer}
+for (let x = -SX / 2 + 0.6; x < SX / 2; x += 1.15) for (let z = -SZ / 2 + 0.6; z < SZ / 2; z += 1.15)
+  cells.push({p: [x + rng() * .2, base(x, z) + 0.6, z + rng() * .2], s: [0.55, 0.75, 0.55], layer: 0});                       // basal: upright, small
+for (let k = 0; k < 9; k++) for (let x = -SX / 2 + 1; x < SX / 2; x += 1.9) for (let z = -SZ / 2 + 1; z < SZ / 2; z += 1.9) {
+  const y = base(x, z) * (1 - k / 13) + 1.6 + k * 1.75 + rng() * .3;                                                          // spinous: round, flattening as they rise
+  cells.push({p: [x + rng() * .5, y, z + rng() * .5], s: [0.95 + k * .08, 0.85 - k * .04, 0.95 + k * .08], layer: 1});
+}
+for (let k = 0; k < 4; k++) for (let x = -SX / 2 + 2; x < SX / 2; x += 3.6) for (let z = -SZ / 2 + 2; z < SZ / 2; z += 3.6)
+  cells.push({p: [x + rng() * 1.4 + (k % 2) * 1.8, 2.2 + k * 0.62, z + rng() * 1.4 + (k % 2) * 1.8], s: [2.3, 0.26, 2.0], r: rng() * 3, layer: 2});  // surface: flat, thin, shingled
+const cellGeo = new THREE.SphereGeometry(1, 14, 10);
+const cellMat = new THREE.MeshStandardMaterial({roughness: 0.55, metalness: 0});
+// Dark edges, so every cell reads as its own shape (Ian, 26 Oct: "the cells are
+// kinda hard to see"): darken where the surface turns away from the camera.
+cellMat.onBeforeCompile = sh => {
+  sh.fragmentShader = sh.fragmentShader.replace("#include <dithering_fragment>", `#include <dithering_fragment>
+    float ndv = abs(dot(normalize(normal), normalize(vViewPosition)));
+    gl_FragColor.rgb *= mix(0.32, 1.0, smoothstep(0.08, 0.6, ndv));`);
+};
+const IM = new THREE.InstancedMesh(cellGeo, cellMat, cells.length);
+const BASECOL = [new THREE.Color("#d79ea3"), new THREE.Color("#ecd0cd"), new THREE.Color("#f8f1ee")];   // basal deeper, surface palest
+const m4 = new THREE.Matrix4(), q = new THREE.Quaternion(), col = new THREE.Color();
+cells.forEach((c, i) => {
+  q.setFromEuler(new THREE.Euler(0, c.r || rng() * 3, 0));
+  m4.compose(new THREE.Vector3(...c.p), q, new THREE.Vector3(...c.s)); IM.setMatrixAt(i, m4);
+  IM.setColorAt(i, BASECOL[c.layer].clone().offsetHSL(0, 0, (rng() - .5) * .04));
+});
+B.scene.add(IM);
+// connective tissue under it: a block whose top follows the basement membrane
+const ct = new THREE.PlaneGeometry(SX, SZ, 90, 60); ct.rotateX(-Math.PI / 2);
+const pa = ct.attributes.position;
+for (let i = 0; i < pa.count; i++) pa.setY(i, base(pa.getX(i), pa.getZ(i)) - 0.5);
+ct.computeVertexNormals();
+B.scene.add(new THREE.Mesh(ct, new THREE.MeshStandardMaterial({color: "#e6c4c2", roughness: 0.7, side: THREE.DoubleSide})));
+const block = new THREE.Mesh(new THREE.BoxGeometry(SX, 14, SZ), new THREE.MeshStandardMaterial({color: "#e2bcbb", roughness: 0.8}));
+block.position.y = -33; B.scene.add(block);
+function tintCells(k) {
+  cells.forEach((c, i) => IM.setColorAt(i, col.copy(BASECOL[c.layer]).lerp(TEAL, k * (0.62 + 0.12 * c.layer))));
+  IM.instanceColor.needsUpdate = true;
+}
+
+// ---- the timeline -------------------------------------------------------------------
+// Field of view, in millimetres, by moment: drives the readout on a log scale.
+const fmt = mm => mm >= 10 ? `${Math.round(mm / 10)} cm` : mm >= 1 ? `${mm.toFixed(1)} mm` : `${mm.toFixed(2)} mm`;
+const logLerp = (a, b, k) => Math.exp(lerp(Math.log(a), Math.log(b), k));
+
+window.render = (t) => {
+  if (!readyA) return false;
+  const {sh, local} = at(t);
+  const end = T.cta;
+  // --- world A camera: overview orbit, glide to the tongue's side, dive, and back out
+  const aim0 = new THREE.Vector3(0, -0.32, 0.1);
+  let pos, aim = aim0.clone(), open = 0, tongueTeal = 0, fov = 200;
+  const ov = k => sph(lerp(38, 22, k) * D, lerp(12, 7, k) * D, lerp(4.4, 3.9, k), aim0);
+  const side = (k) => sph(lerp(70, 62, k) * D, 6 * D, lerp(3.4, 3.0, k), BORDER);
+  if (t < T.tongue) { pos = ov(t / T.tongue); open = span(t, T.tongue - 1.4, T.tongue); }
+  else if (t < T.lining) {
+    const k = ease(span(t, T.tongue, T.tongue + 1.3));
+    const s = side((t - T.tongue) / (T.lining - T.tongue));
+    pos = ov(1).lerp(s, k); aim = aim0.clone().lerp(BORDER, k); open = 1;
+    tongueTeal = span(t, T.tongue + 0.6, T.tongue + 1.4);
+    fov = logLerp(200, 60, k);
+    // the dive: straight into the border in the last stretch of the shot
+    const dive = ease(span(t, T.lining - 1.3, T.lining + 0.3));
+    pos.lerp(BORDER.clone().add(s.clone().sub(BORDER).multiplyScalar(0.06)), dive);
+    fov = logLerp(fov, 2, dive);
+  } else if (t >= T.mirror) {
+    const k = ease(span(t, T.mirror, T.mirror + 2.0));
+    pos = BORDER.clone().add(side(1).sub(BORDER).multiplyScalar(0.06)).lerp(ov(0.5), k);
+    aim = BORDER.clone().lerp(aim0, k); open = 1 - 0.4 * k; tongueTeal = 1;
+    fov = logLerp(2, 200, k);
+    if (t >= end) pos = sph(lerp(30, -10, span(t, end, end + 4)) * D, 8 * D, 4.4, aim0);
+  } else { pos = BORDER.clone(); }
+  openJaw(open);
+  for (const o of tongue) {
+    o.material.color.copy(o.material.userData.base).lerp(TEAL, 0.8 * tongueTeal);
+    o.material.emissive = TEAL.clone().multiplyScalar(0.15 * tongueTeal);
+  }
+  A.camera.position.copy(pos); A.camera.lookAt(aim);
+
+  // --- world B camera: high over the cut block, down to the surface cells, then up and away
+  const lin = t - T.lining;
+  let bpos = sph(lerp(34, 24, span(lin, 0, T.cells - T.lining)) * D, lerp(72, 14, ease(span(lin, 0, 2.2))) * D, lerp(150, 118, span(lin, 0, 3)), new THREE.Vector3(0, -12, 0));
+  let baim = new THREE.Vector3(0, -12, 0);
+  if (t >= T.lining && t < T.cells) fov = logLerp(2, 1.0, ease(span(lin, 0, 1.6)));
+  if (t >= T.cells) {
+    const k = ease(span(t, T.cells, T.cells + 1.6));
+    const near = sph(lerp(36, 28, span(t, T.cells, T.start)) * D, 22 * D, 26, new THREE.Vector3(-6, 1.5, 4));
+    bpos.lerp(near, k); baim.lerp(new THREE.Vector3(-6, 0.5, 4), k);
+    fov = logLerp(1.0, 0.12, k);
+  }
+  if (t >= T.start) {
+    const k = ease(span(t, T.start, T.start + 1.4));
+    bpos.lerp(sph(28 * D, 12 * D, 95, new THREE.Vector3(0, -10, 0)), k); baim.lerp(new THREE.Vector3(0, -10, 0), k);
+    fov = logLerp(0.12, 0.6, k);
+  }
+  tintCells(span(t, T.start + 0.3, T.start + 1.2) * (t < T.mirror ? 1 : 1 - span(t, T.mirror, T.mirror + 0.6)));
+  if (t >= T.mirror) fov = logLerp(2, 200, ease(span(t, T.mirror, T.mirror + 2.0)));
+  B.camera.position.copy(bpos); B.camera.lookAt(baim);
+
+  // --- the cross-fade: into the cells as the dive lands, out as the camera pulls back
+  const bOn = span(t, T.lining - 0.5, T.lining + 0.25) * (1 - span(t, T.mirror + 0.2, T.mirror + 0.8));
+  A.r.domElement.style.opacity = 1 - bOn; B.r.domElement.style.opacity = bOn;
+  if (bOn < 0.999) A.composer.render();
+  if (bOn > 0.001) B.composer.render();
+
+  // labels
+  if (sh.key === "tongue" && local < (T.lining - T.tongue) - 1.3) {
+    const p = BORDER.clone().project(A.camera);
+    label({k: "Most common site", t: "Side of the tongue", d: ""}, (p.x * .5 + .5) * SW, 230 + (-p.y * .5 + .5) * SH, "left", local - 0.6);
+  } else if (sh.key === "cells") {
+    const p = new THREE.Vector3(-6, 3.4, 4).project(B.camera);
+    label({k: "Near the surface", t: "Squamous cells", d: "Flat and thin"}, (p.x * .5 + .5) * SW, 230 + (-p.y * .5 + .5) * SH, "right", local - 0.4);
+  } else if (sh.key === "start") {
+    const p = new THREE.Vector3(10, -6, 18).project(B.camera);
+    label({k: "Where almost all start", t: "The squamous lining", d: ""}, (p.x * .5 + .5) * SW, 230 + (-p.y * .5 + .5) * SH, "right", local - 0.4);
+  } else label(null);
+  readout(fmt(fov), "Field of view", 0, t < T.cta ? span(t, 0.1, 0.5) : 0);
+  return frame(t);
+};
+</script>
+</body></html>

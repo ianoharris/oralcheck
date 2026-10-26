@@ -175,8 +175,8 @@ def svg():
   <clipPath id="tongueClip"><path d="{tongue}"/></clipPath>
   <clipPath id="hardPalate"><rect x="600" y="550" width="215" height="62"/></clipPath>
   <clipPath id="lipClip"><rect x="800" y="600" width="60" height="108"/></clipPath>
-  <clipPath id="frontTongue"><rect x="645" y="560" width="200" height="200"/></clipPath>
-  <clipPath id="backTongue"><rect x="560" y="560" width="85" height="200"/></clipPath>
+  <clipPath id="frontTongue"><path d="M664,556 L848,556 L848,764 L640,764 C628,700 642,620 664,556 Z"/></clipPath>
+  <clipPath id="backTongue"><path d="M556,556 L664,556 C642,620 628,700 640,764 L556,764 Z"/></clipPath>
 </defs>
 <rect id="paper" width="{W}" height="{H}" fill="#f5f3f0"/>
 <g id="ghost"><path d="{G}" fill="url(#ghostFill)" stroke="url(#ghostEdge)" stroke-width="2.2"/></g>

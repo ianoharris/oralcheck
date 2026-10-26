@@ -697,10 +697,20 @@ touching her neck for HPV symptoms, two teenagers for the vaccine) and kept
 the ones that showed the thing itself. So now a post shows one of four
 things:
 
-- **the place in the mouth**, as a still from the same 3D model the reels use
-  (the tongue, the floor of the mouth, the back of the mouth, the neck);
-- **the sign itself**, using only the two clinical photos with attribution on
-  file (`white`, `mixed`);
+- **the place in the mouth**, as a still from the same drawings the reels use
+  (the tongue, the cheek, the lips, the floor of the mouth, the neck), with
+  the part in teal and a label. HPV throat posts use the calm side view of the
+  tonsils and base of the tongue rather than the open mouth up close, which you
+  found intimidating. Stills are drawn at twice the size so they stay sharp;
+- **the list itself**, for posts that are a list (six HPV throat symptoms, five
+  harmless look-alikes): a big numeral per item and no picture, after you
+  pointed out the picture hid the list;
+- **the sign itself**, either one of the two clinical photos with attribution
+  on file (`white`, `mixed`), or a drawing of it from the plates (a red patch,
+  a sore that does not heal, lichen planus, or thrush beside a white patch for
+  the "does it wipe away" post). A drawing always says, on the picture or in
+  its caption, that it is an illustration and not a real case, and that no
+  clinician has reviewed it;
 - **a stock photo of a literal subject** (betel quid, a dentist at work, a
   vaccine vial), and only if an automatic check of the photo confirms it
   actually shows that subject;
@@ -714,41 +724,75 @@ list (`topics.CITES`) of papers the site already cites, each checked against
 PubMed. Posts that only say where to look or how to check cite nothing.
 
 **How carousels are built to be read.** Instagram re-shows a carousel nobody
-swiped starting from slide 2, so slide 2 has to make sense alone. A myth slide
+swiped starting from slide 2, so slide 2 has to make sense alone. When a
+carousel has a picture of the place or the sign, it is slide 2, straight
+after the cover, so it says what the deck is about before the steps begin
+(it used to come after the first step, which put a picture of the mouth
+between "grab a mirror" and the rest of the steps). A myth slide
 puts the fact first and the myth once, smaller (the approach recommended by
 the Debunking Handbook). Every slide has a swipe arrow and content slides carry
 the source line. The last slide asks people to save it or send it to someone
 before giving the address, because saves and sends are what Instagram ranks
 on and a link on a slide cannot be tapped.
 
-**How reels are made.** Reels are 3D. Each one is four or five spoken
-lines over a real 3D model of the mouth, from the open-source Z-Anatomy
-atlas: textured ivory bone and glossy teeth on pale grey. As each line is
-read, the camera glides to the part it is about, which turns teal while
-everything around it fades to glass, and a thin label draws in after a tap.
-For the tongue and the floor of the mouth the jaw opens so the camera can see
-in. **What lights up is decided by what the voice says**: a line naming the
-tongue lights the tongue, and a line naming no particular place never lights
-the teeth (three reels in the first calendar draft got this wrong). The model
-has no real lips (only the muscle beneath them), and its throat parts are too
-crude to show, so neither is ever drawn: a line about the throat points into
-the back of the open mouth, and a line about the lips or cheeks shows the
-whole mouth. The label picks its side of the screen once per shot and stays
-there, and its pointer lands on the part being named: the front of the lower
-gum for the gums, the near gland for the salivary glands. (The reel posted
-early on 21 October had labels hopping side to side as the camera drifted, and
-a gums pointer that landed on a tooth. Still frames looked fine, which is why
-it got through; a test now plays every labelled shot and fails if a label
-moves.) Captions firm up word by word in time with the voice (Kokoro on
-fal), the sound is quiet (a soft click on each tap, air as the camera moves, a
-low tone under the end card, the usual music bed), and the reel ends on a card
-with the address. It costs nothing beyond the voice and music already used.
-The model's licence (CC BY-SA) means every reel and every post using a 3D still
-carries a credit line, on screen and in the caption, and is itself shared
-under that licence. If a 3D render fails in the weekly run, it builds the
-older text-only reel instead so the week is not lost. Calendar builds do not:
-they retry the 3D render, because a silent swap to the old look once went
-unnoticed.
+**How reels are made.** Reels are drawn. Each one is four or five spoken
+lines over the two illustrated plates described further down (the open mouth
+from the front, and the head in section from the side). As each line is read,
+the view glides to the part it is about, the part turns teal, and a thin label
+draws in after a tap; a line about the floor of the mouth, the base of the
+tongue or the roof of the mouth crosses over to the side view, where those can
+actually be seen. **What lights up is decided by what the voice says**: a line
+naming the inner cheek lights the cheek, a line naming the tongue lights the
+tongue, and a line naming no particular place stays on the reel's own subject
+and never lights the teeth. (Three reels in the first calendar draft got this
+wrong, and the 3D model could not show the lips, cheeks or palate at all,
+which is how "patches on the inner cheek" ended up pointing at the floor of
+the mouth.) When a line names a sign, its drawing fades in at the place the
+line names: "a white patch on the side of the tongue" shows the white patch
+there. A sign is never drawn somewhere the line did not put it, and whenever
+one is on screen a footer says it is an illustration for education, not a
+real case, and not reviewed by a clinician. The label picks its side of the
+screen once per shot and stays there (the reel posted early on 21 October had
+labels hopping side to side; a test now plays every labelled shot and fails
+if a label moves). Captions firm up word by word in time with the voice
+(Kokoro on fal), the sound is quiet (a soft click on each tap, air as the view
+moves, a low tone under the end card, the usual music bed), and the reel ends
+on a card with the address. It costs nothing beyond the voice and music
+already used, and renders in a few minutes on any computer, so the free GitHub
+machines have no trouble with it. The drawings are traced from a CC BY-SA
+atlas, so every reel and every post using a plate carries a credit line, on
+screen and in the caption, and is itself shared under that licence. If a
+render fails in the weekly run, it builds the older text-only reel instead so
+the week is not lost. Calendar builds do not: they retry, because a silent
+swap to the old look once went unnoticed. **Reels were 3D from 20 to 26
+October** (a trimmed model of the jaw, teeth, tongue and mouth floor); they
+moved to the drawings on 26 October, after the review below.
+
+**Animated reels (samples, 26 October).** You pointed out that animation gets
+views (your 3D skull reel doubled your average) and that reels are what drive
+people to the site. So there is now a house style for animated reels
+(`oralcheck-agent/anim/STYLE.md`): warm paper background, teal only for the
+thing being talked about, clay-white everything else, no faces, captions in
+time with the voice, the readout of one meaningful number, a source line on
+screen and the usual end card. It mixes the 2D drawings with 3D. Two samples:
+"why does your dentist grab your tongue with gauze?" (2D, from the NIH's own
+exam card) and a zoom from the jaw down to the cells that line the mouth and
+back (3D, from the American Cancer Society). Every idea is checked first
+against what the feed has already posted, because the core topics are played
+out, and every claim has a checked source shown on screen. If asked whether
+the cells are real: they are an illustration whose shapes and layers follow
+the textbook, not the real number of cells, and the credit line says so.
+
+**Music level.** The music sits a fixed 24 decibels under the voice, measured
+on every reel. It used to be a fixed volume setting, which only suited one
+track: the generated music beds are mastered louder, and you heard them as
+"way too loud". 18 decibels was still too loud for you on the 6 November reel,
+so it went to 24.
+
+**The look of animated and calendar reels.** They use the brand's own type:
+DM Serif Display for titles, labels and numbers, Source Sans in sentence case
+for everything small. The first samples used a monospace, all-caps style with
+a step counter that you said looked "so claude code"; that is gone.
 
 **A fuller model, waiting in the wings.** The reels above use a trimmed
 model of the jaw, teeth, tongue and mouth floor. A second model now exists
@@ -861,7 +905,11 @@ which are CC BY (credit only); the 3D atlases you may have heard of
 (BioDigital, Visible Body, Complete Anatomy) look photoreal and need paid
 permission for social posts. Commissioning a professional plate costs roughly
 $500 to $3,400. You chose the drawn route on 23 October, so the 3D head
-is retired from future work. If someone asks why the site has no 3D model: a
+is retired from future work, and on 26 October the reels and post pictures
+moved onto the drawings. A drawing of oral thrush was added then for the
+"does it wipe away" post (creamy white spots on a reddened tongue, one wiped
+to show the red underneath), drawn from the CDC's description rather than
+matched to a photo. If someone asks why the site has no 3D model: a
 model adds load time and phone trouble and risks looking uncanny, while a clear
 drawing does the job people come for, which is knowing where to look and what
 to look for. A small optional 3D view is parked on the roadmap for after the

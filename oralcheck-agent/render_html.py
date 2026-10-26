@@ -344,10 +344,32 @@ def slide_photo(photo: str, caption: str = "", counter: str | None = None) -> st
 
 def slide_cta(headline: str = "Save this for your next check.",
               sub: str = "Send it to someone who should see it.",
-              url: str = "oralcheck.org") -> str:
+              url: str = "oralcheck.org", theme: str = "dark") -> str:
     """Closing slide on a teal ground. It asks for a save or a send first:
     Instagram ranks on saves and sends, and a link on a slide cannot be tapped,
-    so the address is the second thing, not the headline."""
+    so the address is the second thing, not the headline.
+
+    A holiday deck closes in its own world instead: the flat teal card broke
+    the Halloween and Thanksgiving decks on their last slide (Ian, 26 Oct:
+    "the theme doesn't match the rest of the slides")."""
+    if theme in SEASON_DECOR:
+        t = THEMES[theme]
+        body = f"""
+    <div style="width:{POST_W}px;height:{POST_H}px;display:flex;flex-direction:column;">
+      <div style="padding:76px 78px 0;">
+        <div class="brandrow"><div class="brand"><div class="dot"></div><span class="wordmark">OralCheck</span></div></div>
+        <div style="height:1px;background:{t['hair']};margin-top:16px;"></div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:0 78px;">
+        <div class="serif" style="font-size:88px;line-height:1.04;color:{t['text']};text-wrap:balance;margin-bottom:30px;">{_e(headline)}</div>
+        <div style="font-size:34px;color:{t['text_soft']};font-weight:600;margin-bottom:64px;">{_e(sub)}</div>
+        <div style="height:1px;background:{t['hair']};margin-bottom:34px;"></div>
+        <div style="font-size:28px;color:{t['text_soft']};font-weight:600;margin-bottom:10px;">Check your own risk, free, in two minutes</div>
+        <div style="font-size:52px;font-weight:700;color:{t['coral']};letter-spacing:0.01em;">{_e(url)}</div>
+      </div>
+      <div style="height:10px;background:{t['coral']};width:100%;"></div>
+    </div>"""
+        return _doc(body, theme=theme)
     body = f"""
     <div style="width:{POST_W}px;height:{POST_H}px;display:flex;flex-direction:column;background:{TEAL};">
       <div style="padding:76px 78px 0;">
@@ -463,7 +485,7 @@ def render_deck(deck: dict, theme: str = "dark") -> list[str]:
     cta = deck.get("cta", {})
     htmls.append(slide_cta(cta.get("headline") or "Save this for your next check.",
                            cta.get("sub") or "Send it to someone who should see it.",
-                           cta.get("url", "oralcheck.org")))
+                           cta.get("url", "oralcheck.org"), theme=theme))
     return htmls
 
 
@@ -540,6 +562,94 @@ def render_card(hook: str, kicker: str = "", source: str = "", theme: str = "lig
       <div><div class="footurl">{_e(cta)}</div>{src}</div>
     </div>"""
     return _doc(body, theme)
+
+
+def render_list_card(hook: str, items: list[str], note: str = "", source: str = "", theme: str = "light",
+                     cta: str = "oralcheck.org") -> str:
+    """Single image post that is the list itself: a big numeral per item, the
+    hook above. For "six symptoms" and "five look-alikes" posts, where a
+    picture of one thing hid the list (Ian, 26 Oct: "I don't see the 5 things
+    being listed anywhere"; "just design the cover nicely like a 6 numbers thing")."""
+    t = THEMES.get(theme, THEMES["light"])
+    n = len(items)
+    size = 34 if n <= 5 else 31
+    rows = "".join(
+        f"""<div style="display:flex;gap:30px;align-items:baseline;padding:{20 if n <= 5 else 16}px 0;
+              border-top:1px solid var(--hair);">
+          <div class="serif tnum" style="font-size:64px;line-height:0.9;color:var(--teal);min-width:46px;">{k}</div>
+          <div style="font-size:{size}px;line-height:1.25;color:var(--text);">{_list_item(it)}</div></div>"""
+        for k, it in enumerate(items, 1))
+    nt = f"<div style='font-size:28px;font-weight:600;color:var(--coral);margin-top:26px;'>{_e(note)}</div>" if note else ""
+    src = f"<div style='font-size:19px;color:{t['muted']};margin-top:12px;'>{_e(source)}</div>" if source else ""
+    body = f"""
+    <div class="frame">
+      {_brandrow(None)}
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:center;">
+        <div class="accent" style="margin-bottom:28px;"></div>
+        <div class="serif" style="font-size:{68 if len(hook) < 60 else 58}px;line-height:1.05;letter-spacing:-0.01em;
+             color:var(--text);text-wrap:balance;margin-bottom:34px;">{_e(hook)}</div>
+        <div style="border-bottom:1px solid var(--hair);">{rows}</div>
+        {nt}
+      </div>
+      <div><div class="footurl">{_e(cta)}</div>{src}</div>
+    </div>"""
+    return _doc(body, theme)
+
+
+def _list_item(text: str) -> str:
+    """'Name: what it is' sets the name in bold."""
+    head, sep, tail = text.partition(": ")
+    return f"<b style='font-weight:700;'>{_e(head)}</b>: {_e(tail)}" if sep else _e(text)
+
+
+def list_image(hook: str, items: list[str], **kw) -> str:
+    return _screenshot(render_list_card(hook, items, **kw))
+
+
+def render_versus_card(hook: str, sides: list[dict], note: str = "", source: str = "",
+                       theme: str = "light", cta: str = "oralcheck.org") -> str:
+    """Single image post comparing two causes side by side: a photo each, with
+    the number that carries the comparison under it. `sides` is two dicts of
+    {photo, value, label, detail, direction, accent}; `direction` (up or down)
+    draws an arrow before the number, `accent` puts it in coral, the one beat
+    that matters. Built for the HPV-versus-tobacco post
+    (Ian, 26 Oct: "use these pics for the hpv one. make the design nice")."""
+    t = THEMES.get(theme, THEMES["light"])
+
+    def side(s: dict) -> str:
+        color = "var(--coral)" if s.get("accent") else "var(--text)"
+        # a drawn arrow, not a +/- sign: the serif minus reads as a dash
+        tri = "8,0 16,14 0,14" if s.get("direction") == "up" else "0,0 16,0 8,14"
+        arrow = (f"<svg viewBox='0 0 16 14' style='width:44px;height:38px;margin-right:14px;flex:none;'>"
+                 f"<polygon points='{tri}' fill='{color}'/></svg>") if s.get("direction") else ""
+        return f"""
+        <div style="flex:1;display:flex;flex-direction:column;min-width:0;">
+          <div style="height:452px;border-radius:22px;overflow:hidden;background:var(--hair);">
+            <img src="{_img_data_uri(s['photo'])}" style="width:100%;height:100%;object-fit:cover;
+                 object-position:{s.get('focus', 'center')};display:block;"></div>
+          <div style="font-size:27px;font-weight:600;color:var(--teal);margin-top:30px;">{_e(s['label'])}</div>
+          <div class="serif tnum" style="display:flex;align-items:center;font-size:118px;line-height:0.95;
+               letter-spacing:-0.02em;color:{color};margin-top:10px;">{arrow}{_e(s['value'])}</div>
+          <div style="font-size:27px;line-height:1.3;color:var(--text-soft);margin-top:12px;
+               text-wrap:balance;">{_e(s['detail'])}</div>
+        </div>"""
+
+    nt = f"<div style='font-size:25px;line-height:1.35;color:var(--text-soft);margin-top:30px;'>{_e(note)}</div>" if note else ""
+    src = f"<div style='font-size:18px;color:{t['muted']};margin-top:10px;'>{_e(source)}</div>" if source else ""
+    body = f"""
+    <div class="frame" style="padding:84px 84px 76px;">
+      {_brandrow(None)}
+      <div class="serif" style="font-size:{64 if len(hook) < 60 else 56}px;line-height:1.04;letter-spacing:-0.012em;
+           color:var(--text);text-wrap:balance;margin-top:44px;">{_e(hook)}</div>
+      <div style="display:flex;gap:28px;margin-top:44px;">{''.join(side(s) for s in sides)}</div>
+      {nt}
+      <div style="margin-top:auto;"><div class="footurl">{_e(cta)}</div>{src}</div>
+    </div>"""
+    return _doc(body, theme)
+
+
+def versus_image(hook: str, sides: list[dict], **kw) -> str:
+    return _screenshot(render_versus_card(hook, sides, **kw))
 
 
 # ---------------------------------------------------------------------------
@@ -755,7 +865,7 @@ def card_image(hook: str, **kw) -> str:
 def pick_theme(occasion: str = "") -> str:
     """Rotate visual themes, biased toward the light (higher-legibility) look.
     A holiday post gets its seasonal world instead."""
-    occ = occasion.lower()
+    occ = (occasion or "").lower()   # calendar ideas store a missing occasion as null
     if "halloween" in occ:
         return "halloween"
     if "thanksgiving" in occ:

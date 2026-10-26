@@ -34,7 +34,7 @@ load_dotenv()
 
 import content_calendar
 import engine
-import reel3d
+import reel2d
 import topics
 import hooks as hooks_mod
 import ideas
@@ -132,7 +132,7 @@ PILLAR_BRIEFS = {
     ),
     "hpv_connection": (
         "Explain the HPV connection: HPV-16 drives most oropharyngeal cancers (tonsils, base of "
-        "tongue), cases have risen more than 300% since the 1980s, and the HPV vaccine is approved "
+        "tongue), HPV-positive cases rose 225% from 1988 to 2004 (Chaturvedi 2011), and the HPV vaccine is approved "
         "through age 45. Lead with something concrete, not with what people don't know."
     ),
     "screener_cta": (
@@ -375,6 +375,8 @@ def _sign_photo(name: str) -> str | None:
 # photos carry no attribution"), so they stay out of this allowlist until that
 # is fixed rather than quietly propagating the gap into new content.
 REEL_SIGN_PHOTOS = {"white_patch", "mixed_patch"}
+# What each attributed photo shows; a label over it must say so.
+SIGN_LABELS = {"white_patch": r"leukoplakia|white patch", "mixed_patch": r"speckled|red and white|red-and-white|erythroleukoplakia|mixed"}
 
 
 def _reel_sign_photo(name: str) -> str | None:
@@ -544,13 +546,25 @@ def build_deck_from_content(content: dict, photo_path: str | None, plate: dict |
     # only known here, after the fetch. Fill them first, and only fall back to a
     # standalone photo slide if no layout claimed the image.
     claimed = False
-    for slide in slides:
+    for slide in list(slides):
         t = slide.get("type")
         if t == "photocompare":
             # Resolved from the local clinical library, not the stock fetch:
             # this layout needs a matched pair and the fetch returns one image.
-            slide["a_photo"] = _sign_photo(slide.get("a_sign", ""))
-            slide["b_photo"] = _sign_photo(slide.get("b_sign", ""))
+            # Only attributed photos, and each label must name what its photo
+            # shows: on 26 Oct the 2 Dec carousel captioned the ulcer photo
+            # (sore.jpg, no attribution on file) as "oral thrush". A pair that
+            # fails either test is dropped rather than shipped mislabelled.
+            ok = all(_reel_sign_photo(slide.get(f"{s}_sign", "")) and
+                     re.search(SIGN_LABELS[slide[f"{s}_sign"]], str(slide.get(f"{s}_label", "")), re.I)
+                     for s in "ab")
+            if not ok:
+                log.warning("Dropping photo pair: %s / %s does not match its photos (%s / %s)",
+                            slide.get("a_label"), slide.get("b_label"), slide.get("a_sign"), slide.get("b_sign"))
+                slides.remove(slide)
+                continue
+            slide["a_photo"] = _sign_photo(slide["a_sign"])
+            slide["b_photo"] = _sign_photo(slide["b_sign"])
             continue
         if t in PHOTO_LAYOUTS and photo_path:
             slide["photo"] = photo_path
@@ -560,9 +574,11 @@ def build_deck_from_content(content: dict, photo_path: str | None, plate: dict |
         insert_at = 1 if len(slides) >= 2 else len(slides)
         slides.insert(insert_at, {"type": "photo", "photo": photo_path, "caption": photo_caption})
     if plate:
-        # After the first content slide: slide 2 has to stand on its own (Instagram
-        # re-serves an unswiped carousel from slide 2), so it stays a statement.
-        slides.insert(1 if len(slides) >= 2 else len(slides), plate)
+        # Straight after the cover, where it says what the deck is about. It
+        # used to sit after the first content slide, which put a picture of
+        # the mouth between "grab a mirror" and the steps (Ian, on 13 Nov's
+        # carousel: "makes no sense in the middle of the slides").
+        slides.insert(0, plate)
 
     return {
         "kicker": content.get("kicker", ""),
@@ -892,7 +908,10 @@ def _try_pexels(query: str) -> list[tuple[str, None]]:
     """Pexels stock candidates. No attribution required, so credit is None."""
     if not PEXELS_API_KEY:
         return []
-    params = {"query": query, "per_page": 15, "orientation": "square"}
+    # No orientation filter: Pexels' square set is small, and for "syringe" it
+    # returned only dental probes (26 Oct). The download is cropped square
+    # anyway, and _photo_shows checks the crop.
+    params = {"query": query, "per_page": 15}
     headers = {"Authorization": PEXELS_API_KEY}
     with httpx.Client(timeout=15) as client:
         resp = client.get("https://api.pexels.com/v1/search", params=params, headers=headers)
@@ -909,7 +928,7 @@ def _try_unsplash(query: str) -> list[tuple[str, None]]:
     """Unsplash stock candidates. Credit is None (not attributed on-post)."""
     if not UNSPLASH_ACCESS_KEY:
         return []
-    params = {"query": query, "per_page": 15, "orientation": "squarish"}
+    params = {"query": query, "per_page": 15}
     headers = {"Authorization": f"Client-ID {UNSPLASH_ACCESS_KEY}"}
     with httpx.Client(timeout=15) as client:
         resp = client.get("https://api.unsplash.com/search/photos", params=params, headers=headers)
@@ -2285,7 +2304,7 @@ def generate_carousel_slides(content: dict, idea: dict | None = None) -> list[st
         # still of the place, the clinical photo of the sign, a stock photo that
         # passed the vision check, or nothing (Ian's review, 2026-10-21).
         visual = post_visual(idea, content)
-        if visual and visual["kind"] in ("3d", "sign"):
+        if visual and visual["kind"] in ("plate", "sign"):
             plate = {"type": "plate", "photo": visual["path"], "caption": visual["caption"],
                      "credit": visual["credit"], "contain": visual["contain"]}
             content["footer"] = _footer(idea, visual)
@@ -2554,8 +2573,39 @@ def save_to_queue(
 # Post pictures and sources (2026-10-21, from Ian's review of the calendar)
 # ---------------------------------------------------------------------------
 
-_PLATE_NAMES = {"tongue": "The tongue", "floor": "Floor of the mouth", "gums": "The gums",
-                "throat": "Back of the mouth", "nodes": "Lymph nodes in the neck", "teeth": "Teeth and gums"}
+_PLATE_NAMES = {"oropharynx": "Tonsils and base of the tongue", "tongue": "Sides of the tongue", "floor": "Floor of the mouth", "gums": "The gums",
+                "throat": "Back of the mouth", "nodes": "The neck, under the jaw", "teeth": "Teeth and gums",
+                "cheek": "Inside of the cheek", "lips": "The lips", "tonsil": "The tonsils",
+                "base": "Base of the tongue", "palate": "Roof of the mouth"}
+_LESION_NAMES = {"white": "A white patch", "red": "A red patch", "ulcer": "A sore that does not heal",
+                 "thrush": "Thrush", "speckled": "A speckled red and white patch", "lichen": "Lichen planus",
+                 "lump": "A lump", "lip": "A sore on the lip", "floor": "A lump", "base": "A lump"}
+
+
+def _plate_pair(items, out: str) -> str:
+    """Two plate stills side by side, each titled: [(focus, lesion, title, note), ...].
+    Built at 2x (2160 wide), like the stills themselves, so it stays sharp at 1440."""
+    from PIL import Image as _Im, ImageDraw as _Dr, ImageFont as _Fn
+    font = str(Path(__file__).parent / "reel3d" / "SourceSans3.ttf")
+    S = 2
+    tiles = []
+    for focus, lesion, _, _ in items:
+        path = tempfile.NamedTemporaryFile(suffix="_tile.png", delete=False).name
+        _register_tmp(path)
+        x, y = reel2d.LESIONS[lesion]
+        reel2d.still(focus, path, lesion=lesion, size=(540, 620), box=[x, y, 300], scale=S)
+        tiles.append(_Im.open(path).convert("RGB"))
+    sheet = _Im.new("RGB", (1080 * S, 820 * S), (245, 243, 240))
+    draw = _Dr.Draw(sheet)
+    bold, reg = _Fn.truetype(font, 40 * S), _Fn.truetype(font, 30 * S)
+    bold.set_variation_by_axes([700]); reg.set_variation_by_axes([400])
+    for k, (tile, (_, _, title, note)) in enumerate(zip(tiles, items)):
+        sheet.paste(tile, (k * 540 * S, 0))
+        draw.text(((k * 540 + 36) * S, 650 * S), title, font=bold, fill=(21, 32, 31))
+        draw.text(((k * 540 + 36) * S, 704 * S), note, font=reg, fill=(74, 89, 88))
+    draw.line([(540 * S, 0), (540 * S, 620 * S)], fill=(245, 243, 240), width=8 * S)
+    sheet.save(out, quality=92)
+    return out
 _SIGN_PLATES = {
     "white_patch": ("Leukoplakia: a white patch that cannot be wiped away.",
                     "Photo: public domain, via Wikimedia Commons"),
@@ -2582,8 +2632,9 @@ def _photo_shows(path: str, subject: str) -> bool:
             model=CONTENT_MODEL, max_tokens=5,
             messages=[{"role": "user", "content": [
                 {"type": "image", "source": {"type": "base64", "media_type": "image/jpeg", "data": data}},
-                {"type": "text", "text": f"Does this photo plainly show {subject}, as its main subject? "
-                                         "Answer only yes or no."}]}])
+                {"type": "text", "text": f"Does this photo plainly show {subject}, as its main subject, with no "
+                                         "readable label or text naming a specific product, brand or disease "
+                                         "(for example a COVID-19 vaccine label)? Answer only yes or no."}]}])
         answer = "".join(b.text for b in resp.content if getattr(b, "type", None) == "text").strip().lower()
         return answer.startswith("yes")
     except Exception as exc:  # noqa: BLE001
@@ -2598,15 +2649,27 @@ def post_visual(idea: dict | None, content: dict, media: str = "carousel") -> di
     """
     topic = (idea or {}).get("topic")
     kind, *arg = topics.visual_for(topic) if topic in topics.TOPICS else ("photo", None)
-    if kind == "3d":
-        focus = arg[0]
+    if kind == "plate":
+        focus, lesion = arg[0], (arg[1] if len(arg) > 1 else None)
         out = tempfile.NamedTemporaryFile(suffix="_still.jpg", delete=False).name
         _register_tmp(out)
         # An image post's picture band is 1080x820; a carousel slide's is taller.
-        box = (0, 280, 1080, 1100) if media == "image" else None
-        reel3d.still(focus, out, label={"k": "Where to look", "t": _PLATE_NAMES.get(focus, ""), "d": ""}, box=box)
-        return {"path": out, "kind": "3d", "caption": f"Where to look: {_PLATE_NAMES.get(focus, '').lower()}.",
-                "credit": reel3d.CREDIT, "contain": False, "photo_credit": None}
+        size = (1080, 820) if media == "image" else (1080, 1000)
+        name = _PLATE_NAMES.get(focus, "")
+        label = ({"k": "Illustration", "t": _LESION_NAMES[lesion], "d": name} if lesion
+                 else {"k": "Where HPV throat cancers start" if focus == "oropharynx" else "Where to look", "t": name, "d": ""})
+        reel2d.still(focus, out, label=label, lesion=lesion, size=size)
+        cap = (f"{_LESION_NAMES[lesion]}, drawn. {reel2d.FOOT}" if lesion else f"Where to look: {name.lower()}.")
+        return {"path": out, "kind": "plate", "caption": cap, "credit": reel2d.CREDIT, "contain": False, "photo_credit": None}
+    if kind == "pair":
+        # Two signs side by side, each drawn on its plate (wipe_test: thrush
+        # against a white patch). Ian, 21 Oct: "add pictures of the patches themselves".
+        out = tempfile.NamedTemporaryFile(suffix="_pair.jpg", delete=False).name
+        _register_tmp(out)
+        _plate_pair(arg[0], out)
+        cap = ". ".join(f"{t}: {d}" for _, _, t, d in arg[0]) + f". {reel2d.FOOT}"
+        return {"path": out, "kind": "plate", "caption": cap, "credit": reel2d.CREDIT, "contain": True,
+                "photo_credit": None}
     if kind == "sign":
         path = _sign_photo(arg[0])
         if path:
@@ -2617,25 +2680,28 @@ def post_visual(idea: dict | None, content: dict, media: str = "carousel") -> di
     if kind == "photo":
         subject = arg[0] or str(content.get("search_query") or "").strip()
         query = str(content.get("search_query") or "").strip() or subject
-        if not query or query.lower() in ("none", "n/a", "no photo"):
-            return None
-        for _ in range(3):
-            try:
-                path, credit = fetch_stock_photo(query)
-            except Exception as exc:  # noqa: BLE001
-                log.warning("Photo fetch failed (%s).", exc)
-                return None
-            if _photo_shows(path, subject):
-                return {"path": path, "kind": "photo", "caption": "", "credit": _credit_line(credit),
-                        "contain": False, "photo_credit": credit}
-            log.info("Stock photo rejected: it does not show %s.", subject)
+        # The topic's own concrete searches first: the model's query for the
+        # 1 Dec vaccine post found three photos and none showed a vaccine.
+        queries = [q for q in [*(arg[1] if len(arg) > 1 else []), query]
+                   if q and q.lower() not in ("none", "n/a", "no photo")]
+        for q in queries:
+            for _ in range(2):
+                try:
+                    path, credit = fetch_stock_photo(q)
+                except Exception as exc:  # noqa: BLE001
+                    log.warning("Photo fetch failed for '%s' (%s).", q, exc)
+                    break
+                if _photo_shows(path, subject):
+                    return {"path": path, "kind": "photo", "caption": "", "credit": _credit_line(credit),
+                            "contain": False, "photo_credit": credit}
+                log.info("Stock photo for '%s' rejected: it does not show %s.", q, subject)
     return None
 
 
 def _footer(idea: dict | None, visual: dict | None = None) -> str:
     """Credit for a 3D still or clinical photo, then the topic's sources."""
     parts = []
-    if visual and visual["kind"] in ("3d", "sign"):
+    if visual and visual["kind"] in ("plate", "sign"):
         parts.append(visual["credit"])
     sources = topics.caption_sources((idea or {}).get("topic"))
     if sources:
@@ -2681,26 +2747,26 @@ def _run_engine_v2(brief: str, media_type: str, pillar: str | None, idea: dict |
     return manifest
 
 
-def _run_reel3d(brief: str, pillar: str | None, idea: dict | None) -> dict:
+def _run_reel2d(brief: str, pillar: str | None, idea: dict | None) -> dict:
     idea = dict(idea or {"brief": brief})
-    log.info("Writing 3D reel plan (%s / %s)...", idea.get("shape", "free"), idea.get("topic", "brief"))
-    spec = _with_retry(lambda: engine.write_reel3d(idea, _ask_engine), max_attempts=2)
+    log.info("Writing illustrated reel plan (%s / %s)...", idea.get("shape", "free"), idea.get("topic", "brief"))
+    spec = _with_retry(lambda: engine.write_reel2d(idea, _ask_engine), max_attempts=2)
     log.info("Hook: %s", spec["hook"])
-    out = tempfile.NamedTemporaryFile(suffix="_3d.mp4", delete=False).name
+    out = tempfile.NamedTemporaryFile(suffix="_2d.mp4", delete=False).name
     _register_tmp(out)
     music = _generate_music_bed(36, spec["hook"])
     if music is None and REEL_MUSIC.exists():
         music = _loop_music_seamless(str(REEL_MUSIC), 38)
-    home = next((f for f in topics.foci_for(idea.get("topic")) if f != "overview"), None)
+    home = topics.home_for(idea.get("topic"))
     source = topics.source_line(idea.get("topic"))
-    reel3d.build({"shots": spec["shots"], "home": home, "source": source}, out, tts=_fal_tts, music=music)
+    reel2d.build({"shots": spec["shots"], "home": home, "source": source}, out, tts=_fal_tts, music=music)
     spec["footer"] = _footer(idea)
     manifest = save_to_queue(spec, "reel", pillar, [out])
     # Keep the shot list beside the video, so a review note like "it said lips
     # and lit up the teeth" can be checked against what was actually planned.
-    manifest["shots"] = reel3d.validate({"shots": spec["shots"], "home": home})["shots"]
+    manifest["shots"] = reel2d.validate({"shots": spec["shots"], "home": home})["shots"]
     (QUEUE_DIR / manifest["id"] / "manifest.json").write_text(json.dumps(manifest, indent=2))
-    log.info("Queued 3D reel: %s", manifest["id"])
+    log.info("Queued illustrated reel: %s", manifest["id"])
     return manifest
 
 
@@ -2712,21 +2778,23 @@ def run_pipeline(
 ) -> dict | None:
     """Generate content, create media, and save to queue for review."""
     # 2026-10-20: posts went back to the original renderers (Ian found the v2
-    # look too playful) and reels moved to 3D (reel3d.py), which he signed off.
+    # look too playful) and reels moved to 3D (reel3d.py). On 26 Oct the 3D
+    # model retired for the illustrated plates (reel2d.py); REEL_ENGINE=3d
+    # still means "the anatomy reel", which is now the plates.
     # OC_ENGINE=v2 still reaches the v2 reel path; REEL_ENGINE=classic the
     # original kinetic-type reel.
     if os.environ.get("OC_ENGINE") == "v2" and media_type == "reel":
         return _run_engine_v2(brief, media_type, pillar, idea)
-    if media_type == "reel" and os.environ.get("REEL_ENGINE", "3d") == "3d":
+    if media_type == "reel" and os.environ.get("REEL_ENGINE", "2d") in ("2d", "3d"):
         try:
-            return _run_reel3d(brief, pillar, idea)
+            return _run_reel2d(brief, pillar, idea)
         except Exception as exc:  # noqa: BLE001
-            # A failed 3D render must not cost the week's reel. The calendar
+            # A failed render must not cost the week's reel. The calendar
             # builds ahead of time and can simply retry, so it opts out
             # (REEL_NO_FALLBACK=1) rather than ship the reel Ian rated "meh".
             if os.environ.get("REEL_NO_FALLBACK") == "1":
                 raise
-            log.error("3D reel failed (%s); building the classic reel instead.", exc)
+            log.error("Illustrated reel failed (%s); building the classic reel instead.", exc)
     # Reels use their own script format (kinetic-typography segments), not the
     # single-hook content schema, so they bypass generate_content entirely.
     if media_type == "reel":
@@ -2757,7 +2825,11 @@ def run_pipeline(
     elif media_type == "image":
         visual = post_visual(idea, content, media="image")
         source = topics.source_line((idea or {}).get("topic"))
-        if visual:
+        listing = topics.visual_for((idea or {}).get("topic"))
+        if listing[0] == "list":
+            log.info("Image picture: none (the list is the post)")
+            composited = _html_render.list_image(content["hook"], listing[1], note=listing[2], source=source)
+        elif visual:
             log.info("Image picture: %s", visual["kind"])
             content["photo_credit"] = visual["photo_credit"]
             composited = _html_render.plate_image(

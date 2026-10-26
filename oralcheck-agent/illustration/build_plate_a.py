@@ -71,6 +71,10 @@ def lesion_groups():
         "lip": L.lip_sore("lesion-lip", 640, 934, 28, 13, 17),                                       # lower lip, sun damage
         "speckled": L.speckled("lesion-speckled", 214, 600, 40, 54, 19, rot=0.15, clip="cheekL"),     # inside of the cheek near the corner
         "lichen": '<g id="lesion-lichen" opacity="0">' + lichen("lichen-l", 214, 3, "cheekL") + lichen("lichen-r", 786, 8, "cheekR") + "</g>",
+        "thrush": L.thrush("lesion-thrush", 500, 600, 78, 92, 29, clip="tongueOnly"),                 # look-alike: wipes away (added 26 Oct)
+        "whitecheek": L.leukoplakia("lesion-whitecheek", 220, 600, 20, 46, 23, rot=0.12, clip="cheekL"),   # inside of the cheek (added 26 Oct)
+        "redcheek": L.erythroplakia("lesion-redcheek", 220, 600, 20, 26, 9, rot=0.3, clip="cheekL"),
+        "canker": L.canker("lesion-canker", 392, 694, 15, 11, 41, rot=0.3, clip="tongueOnly"),          # look-alike: heals in 7 to 14 days (added 26 Oct)
     }
 
 # (id, text, anchor, label position, side)
@@ -167,6 +171,8 @@ def svg():
   <g id="pillarsAnt" fill="#d27b83" stroke="#8f3b49" stroke-width="1.2" filter="url(#vol)"><path d="{path(ANT_PILLAR)}"/><path d="{path(mirror(ANT_PILLAR))}"/></g>
   <g id="cheeks" fill="url(#cheekG)" stroke="#9b4752" stroke-width="1.2" filter="url(#vol)"><path d="{path(CHEEK)}"/><path d="{path(mirror(CHEEK))}"/></g>
   {LZ["speckled"]}
+  {LZ["whitecheek"]}
+  {LZ["redcheek"]}
   {LZ["lichen"]}
   <path id="softpalate" d="{path(SOFT_HAND)}" fill="url(#softG)" stroke="#9a4553" stroke-width="1.3" filter="url(#vol)"/>
   <path id="uvula" d="{path(UVULA)}" fill="#d9838a" stroke="#93404e" stroke-width="1.3" filter="url(#vol)"/>
@@ -177,6 +183,8 @@ def svg():
   {LZ["white"]}
   {LZ["red"]}
   {LZ["ulcer"]}
+  {LZ["thrush"]}
+  {LZ["canker"]}
   <path id="gumUp" d="{GUM_UP}" fill="url(#gumG)" stroke="#a6545c" stroke-width="1.2" filter="url(#soft)"/>
   <path id="gumLo" d="{GUM_LO}" fill="url(#gumG)" stroke="#a6545c" stroke-width="1.2" filter="url(#soft)"/>
   <g id="teeth" fill="url(#enamelA)" stroke="#a3967f" stroke-width="1.1" filter="url(#soft)">

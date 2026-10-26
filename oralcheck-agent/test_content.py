@@ -11,7 +11,7 @@ from datetime import date
 import content_calendar as C
 import engine as E
 import ideas as I
-import reel3d as R3
+import reel2d as R2D
 import topics as T
 
 _fails = []
@@ -248,22 +248,62 @@ def test_engine_validation():
           and sum(b["visual"]["type"] == "cta" for b in beats) == 1)
 
 
-# --- 3D reels (no API, no render) ------------------------------------------
-def test_reel3d():
+# --- illustrated reels (no API, no render) ----------------------------------
+def test_reel2d():
     import json
     # Ian's review notes, 2026-10-21: what the voice names is what lights up.
-    check("lips get the whole mouth, not the teeth", R3.match_focus("Check your lips for any change.", "teeth") == "overview")
-    check("the inner cheek gets the whole mouth", R3.match_focus("Look for patches on the inner cheek.", "floor") == "overview")
-    check("'redness or a patch' stays on the topic", R3.match_focus("Watch for redness or a patch.", "teeth", "tongue") == "tongue")
-    check("tonsils are the throat", R3.match_focus("The tonsils sit at the back.", "tongue") == "throat")
+    check("lips get the lips, not the teeth", R2D.match_focus("Check your lips for any change.", "teeth") == "lips")
+    check("the inner cheek gets the cheek, not the floor",
+          R2D.match_focus("Look for patches on the inner cheek.", "floor") == "cheek")
+    check("'redness or a patch' stays on the topic", R2D.match_focus("Watch for redness or a patch.", "teeth", "gums") == "gums")
+    check("tonsils are the tonsils", R2D.match_focus("The tonsils sit at the back.", "tongue") == "tonsil")
+    check("the base of the tongue is not the tongue", R2D.match_focus("It starts at the base of the tongue.", "tongue") == "base")
+    check("the soft palate is the throat", R2D.match_focus("Look at the soft palate.", "overview") == "throat")
+    check("the roof of the mouth is the palate", R2D.match_focus("Check the roof of your mouth.", "overview") == "palate")
     # The 27 Oct rebuild said "run your tongue along your gumline" and lit the tongue.
-    check("the gumline is the gums", R3.match_focus("Run your tongue along your gumline and look for swelling.", "gums") == "gums")
-    check("the neck is the lymph nodes", R3.match_focus("Feel along your neck for a lump.", "overview") == "nodes")
-    check("no lips focus (the atlas has only the muscle)", "lips" not in R3.FOCI)
-    check("no reel topic is left with only lips", all("lips" not in fs for fs in T.TOPIC_FOCI.values()))
-    check("tongue shots open the jaw", R3.FOCI["tongue"].get("open", 0) > 0)
-    slots = T.plan_slots({}, ["reel"] * 30, seed=3)
-    check("the lip topic never becomes a 3D reel", all(s["topic"] != "lower_lip_sun" for s in slots))
+    check("the gumline is the gums", R2D.match_focus("Run your tongue along your gumline and look for swelling.", "gums") == "gums")
+    check("the neck is the lymph nodes", R2D.match_focus("Feel along your neck for a lump.", "overview") == "nodes")
+    check("under the jaw is the neck", R2D.match_focus("Feel under your jaw for any lump.", "overview", "tongue") == "nodes")
+    # signs are drawn only where the line puts them
+    check("a white patch with no place goes to the tongue",
+          R2D.lesion_for("A white patch that will not wipe away.", "overview") == ("tongue", "white"))
+    check("'won't wipe away' is not thrush", R2D.lesion_kind("A white patch that won't wipe away.") == "white")
+    check("'wipes away' is thrush", R2D.lesion_kind("Thrush usually wipes away.") == "thrush")
+    check("a sign is never drawn somewhere else",
+          R2D.lesion_for("Redness or a patch along the gumline.", "gums") == ("gums", None))
+    check("a lip sore is drawn on the lip", R2D.lesion_for("A sore on the lip.", "lips") == ("lips", "lip"))
+    check("every drawn sign has an anchor", all(l in R2D.LESIONS for d in R2D.LESION_AT.values() for l in d.values()))
+    check("lesion shots drop the teal tint", R2D._shot("tongue", "white")["hi"] == [])
+    # 6 Nov reel (26 Oct): "if a patch is still there after two weeks" lit and labelled the lips
+    check("a line naming no place never shows a place the writer picked",
+          R2D.match_focus("If a patch is still there after two weeks, get it checked.", "lips", None) == "overview")
+    check("a topic with one place keeps it for unnamed lines", T.home_for("gums_mimic") == "gums" and T.home_for("painless") is None)
+    # 27 Oct reel: "promised six, showed three"
+    shown = [{"focus": "lips"}, {"focus": "cheek"}, {"focus": "tongue"}]
+    check("a caption naming places no shot shows is caught",
+          R2D.unshown_places("Your dentist checks your lips, gums, tongue and the back of your throat.", shown) == ["gums", "throat"])
+    import oralcheck_agent as _A
+    bad = {"type": "photocompare", "a_sign": "sore", "a_label": "Oral thrush: wipes away",
+           "b_sign": "white_patch", "b_label": "Leukoplakia: stays put"}
+    good = {"type": "photocompare", "a_sign": "white_patch", "a_label": "A white patch (leukoplakia)",
+            "b_sign": "mixed_patch", "b_label": "A speckled red and white patch"}
+    check("a photo pair captioned as something else is dropped (2 Dec carousel)",
+          not any(s.get("type") == "photocompare" for s in _A.build_deck_from_content({"slides": [dict(bad)]}, None)["slides"]))
+    check("a correctly labelled photo pair stays",
+          any(s.get("type") == "photocompare" for s in _A.build_deck_from_content({"slides": [dict(good)]}, None)["slides"]))
+    # 26 Oct, Ian's second pass
+    check("a patch on the cheek is drawn on the cheek",
+          R2D.lesion_for("A white or red patch on the inside of the cheek.", "cheek") == ("cheek", "whitecheek"))
+    check("a patch of no stated colour is still drawn",
+          R2D.lesion_for("The same painless patches appear on the sides of the tongue.", "tongue") == ("tongue", "white"))
+    lists = [v for v in T.VISUAL.values() if v[0] == "list"]
+    check("list posts carry their items and a closing line, no em dashes",
+          lists and all(len(v[1]) >= 3 and v[2] and not any("\u2014" in x for x in v[1] + [v[2]]) for v in lists))
+    check("HPV throat pictures use the side view, not the open mouth up close",
+          all(T.VISUAL[k][1] == "oropharynx" for k in ("hpv_overtook_tobacco", "hpv_who", "hpv_is_common", "throat_hpv_site")))
+    import reel2 as _R2
+    check("the music sits well under the voice", _R2.MUSIC_UNDER_VOICE >= 24)
+    check("the throat is shown by the tonsils", R2D.unshown_places("HPV throat cancer.", [{"focus": "tonsil"}]) == [])
     # sources and pictures
     check("every cited source is on the verified list", all(k in T.CITES for ks in T.TOPIC_CITES.values() for k in ks))
     check("statistics posts cite SEER", T.source_line("survival_by_stage") == "Source: NCI SEER")
@@ -271,16 +311,20 @@ def test_reel3d():
     check("caption sources carry links", "pubmed.ncbi.nlm.nih.gov/19190158" in T.caption_sources("tobacco_plus_alcohol"))
     check("how-to topics cite nothing", T.source_line("monthly_self_exam") == "")
     check("every picture rule names a real topic", all(t in T.TOPICS for t in T.VISUAL))
-    check("3D pictures use real foci", all(v[1] in R3.FOCI for v in T.VISUAL.values() if v[0] == "3d"))
+    check("plate pictures use real foci and signs",
+          all(v[1] in R2D.FOCI and (len(v) < 3 or v[2] in R2D.LESIONS) for v in T.VISUAL.values() if v[0] == "plate"))
+    check("paired pictures use real signs",
+          all(l in R2D.LESIONS and f in R2D.FOCI for v in T.VISUAL.values() if v[0] == "pair" for f, l, _, _ in v[1]))
     check("sign pictures are only the two attributed photos",
           all(v[1] in ("white_patch", "mixed_patch") for v in T.VISUAL.values() if v[0] == "sign"))
-    check("every topic focus is a real 3D focus",
-          all(f in R3.FOCI for fs in T.TOPIC_FOCI.values() for f in fs))
+    check("no picture is a retired 3D still", all(v[0] != "3d" for v in T.VISUAL.values()))
+    check("every topic focus is a real plate focus",
+          all(f in R2D.FOCI for fs in T.TOPIC_FOCI.values() for f in fs))
     check("unknown topics still get foci", T.foci_for("no_such_topic")[0] == "overview")
-    plan = R3.validate({"shots": [{"say": "Look here.", "focus": "tongue", "label": {"k": "a", "t": "b", "d": "c"}},
-                                  {"say": "Then here.", "focus": "spleen"},
-                                  {"say": "", "focus": "floor"},
-                                  {"say": "Go.", "focus": "cta"}]})
+    plan = R2D.validate({"shots": [{"say": "Look here.", "focus": "tongue", "label": {"k": "a", "t": "b", "d": "c"}},
+                                   {"say": "Then here.", "focus": "spleen"},
+                                   {"say": "", "focus": "floor"},
+                                   {"say": "Go.", "focus": "cta"}]})
     kinds = [s["focus"] for s in plan["shots"]]
     check("unknown focus becomes overview", kinds[1] == "overview")
     check("empty lines dropped", len(plan["shots"]) == 3)
@@ -296,7 +340,7 @@ def test_reel3d():
                                      {"say": "Look under your tongue as well.", "focus": "tonsils_nope"},
                                      {"say": "A red or white patch that lasts matters.", "focus": "teeth"}],
                            "caption": "Check your risk at oralcheck.org.", "hashtags": ["A", "b"]})
-    spec = E.write_reel3d({"topic": "tongue_sides", "media_type": "reel", "shape": "close_look",
+    spec = E.write_reel2d({"topic": "tongue_sides", "media_type": "reel", "shape": "close_look",
                            "hook_style": "plain", "brief": "x"}, ask)
     foci = [s["focus"] for s in spec["shots"]]
     check("a line naming the tongue lights the tongue", foci[1] == "tongue")
@@ -304,7 +348,7 @@ def test_reel3d():
     check("'under your tongue' is the floor of the mouth", foci[2] == "floor")
     check("a line naming no place never lights the teeth", foci[3] in ("tongue", "overview"))
     check("only the topic's foci are offered", "Salivary" not in calls[0] and "Tongue" in calls[0])
-    check("credit line in the caption", R3.CREDIT in spec["caption"])
+    check("credit line in the caption", R2D.CREDIT in spec["caption"])
     check("hashtags lowercased", spec["hashtags"] == ["a", "b"])
 
 
@@ -353,7 +397,7 @@ def test_post_calendar():
 def main():
     print("Calendar:");      test_calendar()
     print("Post calendar:"); test_post_calendar()
-    print("3D reels:");      test_reel3d()
+    print("Illustrated reels:"); test_reel2d()
     print("Slots:");         test_slots()
     print("Voice checks:");  test_voice_checks()
     print("Engine specs:");  test_engine_validation()

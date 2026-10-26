@@ -1,0 +1,55 @@
+/*
+  OralCheck house animation style, shared by every animated reel (anim/*.html).
+  See anim/STYLE.md for the rules; this file is the frame around the stage:
+  the brand mark, the readout, labels, word-synced captions, the
+  progress line, footers and the end card. Scenes draw only the stage.
+*/
+@font-face{font-family:"Source Sans 3";src:url("SourceSans3.ttf") format("truetype");font-weight:200 900;font-display:block}
+@font-face{font-family:"DM Serif Display";src:url("DMSerifDisplay-Regular.ttf") format("truetype");font-display:block}
+:root{
+  --paper:#f5f3f0;      /* the ground: warm white, never pure white */
+  --ink:#15201f;
+  --ink-soft:#4a5958;
+  --muted:#8a9796;
+  --hair:#c9d1d1;
+  --teal:#0d7377;       /* the subject, and only the subject */
+  --teal-glow:#3cc3c3;
+  --coral:#e8634a;      /* at most one beat per reel: the thing that matters */
+}
+html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:var(--paper);font-family:"Source Sans 3",sans-serif;color:var(--ink)}
+#stage{position:absolute;left:0;top:230px;width:1080px;height:1000px;overflow:hidden}
+#stage::before,#stage::after{content:"";position:absolute;left:0;right:0;height:70px;z-index:2;pointer-events:none}
+#stage::before{top:0;background:linear-gradient(var(--paper),rgba(245,243,240,0))}
+#stage::after{bottom:0;background:linear-gradient(rgba(245,243,240,0),var(--paper))}
+/* The brand's own type, not a dashboard: DM Serif Display for titles and
+   numbers, Source Sans 3 in sentence case for everything small. No monospace,
+   no uppercase tracking, no step counter (Ian, 26 Oct: the first samples
+   looked "so claude code"). */
+#ui{position:absolute;inset:0;pointer-events:none;z-index:5}
+.brand{position:absolute;top:118px;left:72px;display:flex;align-items:center;gap:12px;font-weight:700;font-size:30px;color:var(--ink)}
+.dot{width:12px;height:12px;border-radius:50%;background:var(--teal)}
+#eyebrow{display:none}
+#readout{position:absolute;right:72px;top:1120px;text-align:right;opacity:0}
+#readout .v{font-family:"DM Serif Display",serif;font-size:84px;line-height:1;color:var(--ink);font-variant-numeric:lining-nums}
+#readout .u{font-size:24px;color:var(--muted);margin-top:4px}
+#readout .bar{height:3px;background:var(--teal);margin:10px 0 0 auto;border-radius:2px}
+#label{position:absolute;opacity:0;max-width:440px;padding:14px 20px 16px;border-radius:14px;background:rgba(245,243,240,.92)}
+#label .k{font-weight:600;font-size:26px;color:var(--teal)}
+#label .t{font-family:"DM Serif Display",serif;font-size:50px;line-height:1.02;margin-top:2px}
+#label .d{font-size:27px;line-height:1.3;color:var(--ink-soft);margin-top:8px}
+#label .d:empty{display:none}
+svg#lead{position:absolute;inset:0;width:1080px;height:1920px}
+#tap{position:absolute;width:56px;height:56px;margin:-28px 0 0 -28px;border-radius:50%;border:2px solid var(--teal);opacity:0}
+#cap{position:absolute;left:72px;right:72px;top:1270px;font-weight:600;font-size:54px;line-height:1.18;letter-spacing:-.005em}
+#cap span{opacity:.2}
+#cap span.on{opacity:1}
+.scrub{position:absolute;left:72px;right:72px;top:1500px;height:3px;background:#dfe3e2;border-radius:2px}
+.scrub i{position:absolute;left:0;top:0;bottom:0;background:var(--teal);border-radius:2px}
+#foot{position:absolute;left:72px;right:72px;top:1530px;font-size:24px;color:#5b6766;opacity:0}
+#credit{position:absolute;left:72px;right:72px;top:1576px;font-size:19px;line-height:1.45;color:#98a3a2}
+#cta{position:absolute;inset:0;opacity:0;display:flex;flex-direction:column;justify-content:center;padding:0 90px;z-index:6;
+     background:linear-gradient(180deg,rgba(245,243,240,0) 0%,rgba(245,243,240,.9) 30%,rgba(245,243,240,.97) 60%)}
+#cta .k{font-weight:600;font-size:30px;color:var(--teal)}
+#cta .h{font-family:"DM Serif Display",serif;font-size:104px;line-height:1.0;margin-top:18px}
+#cta .u{font-weight:700;font-size:80px;color:var(--teal);margin-top:44px}
+#cta .s{font-size:34px;color:var(--ink-soft);margin-top:18px}

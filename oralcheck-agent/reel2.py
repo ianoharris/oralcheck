@@ -522,6 +522,32 @@ def _voice_track(wavs: list[str], pads: list[float], workdir: str) -> str:
     return out
 
 
+MUSIC_UNDER_VOICE = 24.0   # dB under the voice. 18 was still "too loud" (Ian, 26 Oct, 6 Nov reel)
+
+
+def _lufs(path: str) -> float | None:
+    """Integrated loudness of an audio file (EBU R128), or None if it cannot be measured."""
+    out = subprocess.run(["ffmpeg", "-nostats", "-i", path, "-af", "ebur128", "-f", "null", "-"],
+                         capture_output=True, text=True).stderr
+    m = re.findall(r"I:\s+(-?[\d.]+) LUFS", out)
+    return float(m[-1]) if m and float(m[-1]) > -70 else None
+
+
+def _music_gain(voice: str, music: str) -> float:
+    """Linear gain that seats the music MUSIC_UNDER_VOICE dB under the voice.
+
+    A fixed volume (MUSIC_VOL) only works for one track. The bundled bed
+    sits about 14 dB under the voice at 0.11, which Ian approved; the
+    generated beds are mastered up to 9 dB hotter, so at the same setting
+    they played 6 to 10 dB under and Ian found the music "way too loud"
+    (26 Oct, the gauze animation sample).
+    """
+    v, m = _lufs(voice), _lufs(music)
+    if v is None or m is None:
+        return MUSIC_VOL
+    return 10 ** ((v - MUSIC_UNDER_VOICE - m) / 20)
+
+
 def _final_audio(voice, sfx, music, total, workdir) -> str:
     cmd, parts, labels = ["ffmpeg", "-y", "-i", voice], ["[0:a]aformat=channel_layouts=stereo[v]"], ["[v]"]
     n = 1
@@ -533,7 +559,7 @@ def _final_audio(voice, sfx, music, total, workdir) -> str:
     if music:
         cmd += ["-stream_loop", "-1", "-i", music]
         fade_out = max(0.0, total - 1.5)
-        parts.append(f"[{n}:a]atrim=0:{total:.3f},volume={MUSIC_VOL},afade=t=in:d=1.0,"
+        parts.append(f"[{n}:a]atrim=0:{total:.3f},volume={_music_gain(voice, music):.4f},afade=t=in:d=1.0,"
                      f"afade=t=out:st={fade_out:.2f}:d=1.5,aformat=channel_layouts=stereo[m]")
         labels.append("[m]")
     # Normalised to -14 LUFS, where Instagram and most phones expect speech to

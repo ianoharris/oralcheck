@@ -1,0 +1,213 @@
+<!doctype html>
+<!--
+  2D reel scene. reel2d.py serves this page with both plates inlined (ids
+  prefixed a- and b-), sets window.PLAN, then calls render(t) once per frame
+  and screenshots it. Everything on screen is a pure function of t, so frames
+  line up exactly with the narration. The camera is the SVG viewBox.
+
+  Plates: illustration based on Z-Anatomy (CC BY-SA 4.0) and BodyParts3D
+  (CC BY-SA 2.1 JP), shared under CC BY-SA 4.0. See ../illustration/README.md.
+-->
+<html><head><meta charset="utf-8">
+<style>
+  /* Local copies (OFL) so a render never waits on the network. */
+  @font-face{font-family:"Source Sans 3";src:url("SourceSans3.ttf") format("truetype");font-weight:200 900;font-display:block}
+  @font-face{font-family:"DM Serif Display";src:url("DMSerifDisplay-Regular.ttf") format("truetype");font-display:block}
+  html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#f5f3f0;font-family:"Source Sans 3",sans-serif;color:#15201f}
+  #stage{position:absolute;left:0;right:0;overflow:hidden}
+  .plate{position:absolute;inset:0;opacity:0}
+  .plate svg{display:block}
+  /* The plate's band melts into the page above and below. */
+  #stage::before,#stage::after{content:"";position:absolute;left:0;right:0;height:60px;z-index:2}
+  #stage::before{top:0;background:linear-gradient(#f5f3f0,rgba(245,243,240,0))}
+  #stage::after{bottom:0;background:linear-gradient(rgba(245,243,240,0),#f5f3f0)}
+  #ui{position:absolute;inset:0;pointer-events:none;z-index:3}
+  /* The brand's own type (DM Serif Display, Source Sans 3 in sentence case), no monospace or step
+     counter: Ian found the mono chrome "so claude code" (26 Oct). Same frame as anim/house.css. */
+  .chrome{position:absolute;top:118px;left:72px;right:72px;display:flex;align-items:center}
+  #step{display:none}
+  .brand{display:flex;align-items:center;gap:12px;font-family:"Source Sans 3";font-weight:700;font-size:30px;color:#15201f}
+  .dot{width:12px;height:12px;border-radius:50%;background:#0d7377}
+  .rule,.view{display:none}
+  /* The label sits on the plate, so it carries the page colour behind it. */
+  #label{position:absolute;opacity:0;background:rgba(245,243,240,.92);padding:14px 20px 16px;border-radius:14px;max-width:440px}
+  #label .k{font-weight:600;font-size:26px;color:#0d7377}
+  #label .t{font-family:"DM Serif Display",serif;font-size:50px;line-height:1.02;margin-top:2px}
+  #label .d{font-size:27px;line-height:1.3;color:#4a5958;margin-top:10px}
+  #label .d:empty{display:none}
+  svg#lead{position:absolute;inset:0;width:100%;height:100%}
+  #tap{position:absolute;width:60px;height:60px;margin:-30px 0 0 -30px;border-radius:50%;border:3px solid #0d7377;opacity:0}
+  #tapdot{position:absolute;width:22px;height:22px;margin:-11px 0 0 -11px;border-radius:50%;background:rgba(13,115,119,.85);opacity:0;
+          box-shadow:0 0 0 8px rgba(13,115,119,.15)}
+  #cap{position:absolute;left:72px;right:72px;top:1270px;font-weight:600;font-size:54px;line-height:1.18;color:#15201f;letter-spacing:-.005em}
+  #cap span{opacity:.2}
+  #cap span.on{opacity:1}
+  .scrub{position:absolute;left:72px;right:72px;top:1500px;height:3px;background:#d3dbdb;border-radius:2px}
+  .scrub i{position:absolute;left:0;top:0;bottom:0;background:#0d7377;border-radius:2px}
+  #cta{position:absolute;inset:0;opacity:0;display:flex;flex-direction:column;justify-content:center;padding:0 90px;
+       background:linear-gradient(180deg,rgba(245,243,240,.0) 0%,rgba(245,243,240,.88) 30%,rgba(245,243,240,.97) 60%)}
+  #cta .k{font-weight:600;font-size:30px;color:#0d7377}
+  #cta .h{font-family:"DM Serif Display",serif;font-size:104px;line-height:1.0;margin-top:18px}
+  #cta .u{font-weight:700;font-size:84px;color:#0d7377;margin-top:44px}
+  #cta .s{font-size:34px;color:#4a5958;margin-top:18px}
+  #foot{position:absolute;left:72px;right:72px;top:1530px;font-size:24px;color:#5b6766;opacity:0}
+  #credit{position:absolute;left:72px;right:72px;top:1576px;font-size:19px;line-height:1.45;color:#98a3a2}
+  /* Stills for image posts and carousel slides: only the plate and its label. */
+  body.still .chrome, body.still .rule, body.still .view, body.still #cap, body.still .scrub,
+  body.still #cta, body.still #credit, body.still #foot, body.still #tap, body.still #tapdot{display:none}
+  body.still #stage::before, body.still #stage::after{display:none}
+</style></head>
+<body>
+<div id="stage"><!--PLATES--></div>
+<div id="ui">
+  <div class="chrome"><div class="brand"><span class="dot"></span>OralCheck</div><div id="step"></div></div>
+  <div class="rule"></div>
+  <div class="view" id="view"></div>
+  <svg id="lead"><line id="ln" stroke="#0d7377" stroke-width="2" stroke-linecap="round"/><circle id="lc" r="7" fill="#0d7377"/></svg>
+  <div id="label"><div class="k" id="lk"></div><div class="t" id="lt"></div><div class="d" id="ld"></div></div>
+  <div id="tap"></div><div id="tapdot"></div>
+  <div id="cap"></div>
+  <div class="scrub"><i id="scrub"></i></div>
+  <div id="cta"><div class="k">Free, private, no account</div><div class="h">Check your risk in two minutes.</div>
+    <div class="u">oralcheck.org</div><div class="s">A risk check, not a diagnosis. A sore that lasts two weeks still means a dentist.</div></div>
+  <div id="foot"></div>
+  <div id="credit"></div>
+</div>
+<script>
+const PLAN = window.PLAN;
+const $ = id => document.getElementById(id);
+if (PLAN.still) document.body.classList.add("still");
+const [TOP, SH] = PLAN.stage || [230, 1000];
+const SW = window.innerWidth;
+$("stage").style.top = TOP + "px"; $("stage").style.height = SH + "px";
+$("credit").textContent = PLAN.credit || ""; $("foot").textContent = PLAN.foot || "";
+
+const ease = x => x <= 0 ? 0 : x >= 1 ? 1 : 1 - Math.pow(1 - x, 4);
+const smooth = x => x <= 0 ? 0 : x >= 1 ? 1 : x * x * (3 - 2 * x);
+const span = (t, a, b) => smooth((t - a) / (b - a));
+const lerp = (a, b, k) => a + (b - a) * k;
+const MOVE = 1.1;   // seconds to travel between shots on the same plate
+const FADE = 0.7;   // seconds to cross between plates
+
+// ---- highlights ---------------------------------------------------------------
+// Plate B ships teal zones; anything else turns teal through a copy of itself
+// laid just above it with a filter that keeps its shading but swaps its hue,
+// so whatever is drawn in front of it (teeth over the tongue) stays in front.
+const NS = "http://www.w3.org/2000/svg";
+for (const p of "ab") {
+  const svg = document.querySelector(`#P${p} svg`), defs = svg.querySelector("defs");
+  const f = document.createElementNS(NS, "filter");
+  f.setAttribute("id", `${p}-teal`); f.setAttribute("color-interpolation-filters", "sRGB");
+  const m = document.createElementNS(NS, "feColorMatrix");
+  // luminance into a teal ramp: base + slope * L, so white teeth stay a soft
+  // teal rather than going cyan
+  const ramp = [[0.03, 0.12], [0.25, 0.45], [0.26, 0.46]];
+  m.setAttribute("values", ramp.map(([b, k]) => `${0.3 * k} ${0.59 * k} ${0.11 * k} 0 ${b}`).join(" ") + " 0 0 0 1 0");
+  f.appendChild(m); defs.appendChild(f);
+  const zones = $(`${p}-zones`);
+  if (zones) { zones.setAttribute("opacity", "1"); zones.querySelectorAll("[id^='" + p + "-zone-']").forEach(z => z.setAttribute("opacity", "0")); }
+}
+const tint = {};
+function tintOf(p, id) {
+  const key = `${p}-${id}`;
+  if (key in tint) return tint[key];
+  const el = $(key);
+  if (!el) return (tint[key] = null);
+  if (id.startsWith("zone-")) return (tint[key] = el);
+  const u = document.createElementNS(NS, "use");
+  u.setAttribute("href", "#" + key); u.setAttribute("filter", `url(#${p}-teal)`); u.setAttribute("opacity", "0");
+  u.style.pointerEvents = "none";
+  el.after(u);
+  return (tint[key] = u);
+}
+const touched = new Set();
+function setOpacity(el, v) { if (el) { el.setAttribute("opacity", v.toFixed(3)); touched.add(el); } }
+
+// ---- camera -------------------------------------------------------------------
+function boxAt(sh, k) {
+  const [a, b] = sh.box, kk = smooth(k);
+  return [lerp(a[0], b[0], kk), lerp(a[1], b[1], kk), lerp(a[2], b[2], kk)];
+}
+function setView(p, [cx, cy, w]) {
+  const h = w * SH / SW;
+  document.querySelector(`#P${p} svg`).setAttribute("viewBox", [cx - w / 2, cy - h / 2, w, h].map(v => v.toFixed(2)).join(" "));
+}
+function toScreen([cx, cy, w], [x, y]) {
+  const h = w * SH / SW;
+  return [(x - (cx - w / 2)) / w * SW, TOP + (y - (cy - h / 2)) / h * SH];
+}
+// Which side the label sits on, decided once per shot from where the camera
+// settles, so it never jumps mid-shot.
+const sideCache = new Map();
+function labelLeft(i, sh) {
+  if (!sideCache.has(i)) sideCache.set(i, toScreen(boxAt(sh, 0.6), sh.anchor)[0] > SW / 2);
+  return sideCache.get(i);
+}
+
+window.render = (t) => {
+  const shots = PLAN.shots;
+  let i = shots.length - 1; while (i > 0 && t < shots[i].t0) i--;
+  const sh = shots[i], prev = shots[i - 1];
+  const local = t - sh.t0;
+  for (const el of touched) el.setAttribute("opacity", "0");
+  touched.clear();
+
+  // camera: drift within the shot; glide from the last shot on the same
+  // plate, or cross-fade when the plate changes
+  let box = boxAt(sh, local / sh.len);
+  const cross = prev && prev.plate !== sh.plate && local < FADE;
+  if (prev && prev.plate === sh.plate && local < MOVE) {
+    const k = ease(local / MOVE), from = boxAt(prev, 1);
+    box = box.map((v, j) => lerp(from[j], v, k));
+  }
+  for (const p of "ab") $(`P${p}`).style.opacity = p === sh.plate ? (cross ? span(local, 0, FADE) : 1) : (cross && p === prev.plate ? 1 - span(local, 0, FADE) : 0);
+  setView(sh.plate, box);
+  if (cross) setView(prev.plate, boxAt(prev, 1));
+
+  // the subject turns teal; a sign fades in on its site
+  const fin = span(local, 0.45, 1.1), fout = prev ? 1 - span(local, 0, 0.6) : 0;
+  if (prev && fout > 0) {
+    for (const id of prev.hi || []) setOpacity(tintOf(prev.plate, id), (id.startsWith("zone-") ? 1 : 0.85) * fout);
+    if (prev.lesion && prev.lesion !== sh.lesion) setOpacity($(`${prev.plate}-lesion-${prev.lesion}`), fout);
+  }
+  for (const id of sh.hi || []) setOpacity(tintOf(sh.plate, id), (id.startsWith("zone-") ? 1 : 0.85) * fin);
+  const lk = sh.lesion ? (prev && prev.lesion === sh.lesion ? 1 : span(local, 0.5, 1.2)) : 0;
+  if (sh.lesion) setOpacity($(`${sh.plate}-lesion-${sh.lesion}`), lk);
+  $("foot").style.opacity = sh.lesion ? lk : (prev && prev.lesion ? fout : 0);
+
+  // label, leader line and tap
+  const lab = $("label"), show = sh.label && sh.anchor;
+  if (show) {
+    const [x, y] = toScreen(box, sh.anchor);
+    $("lk").textContent = sh.label.k || ""; $("lt").textContent = sh.label.t || ""; $("ld").textContent = sh.label.d || "";
+    const left = labelLeft(i, sh), lw = lab.offsetWidth, lx = left ? 60 : SW - 60 - lw, ly = TOP + (PLAN.still ? 36 : 60);
+    lab.style.left = lx + "px"; lab.style.top = ly + "px"; lab.style.opacity = span(local, 1.25, 1.75);
+    const ax = left ? lx + lw : lx, ay = ly + lab.offsetHeight / 2, draw = span(local, 1.05, 1.55);
+    $("ln").setAttribute("x1", x); $("ln").setAttribute("y1", y);
+    $("ln").setAttribute("x2", lerp(x, ax, draw)); $("ln").setAttribute("y2", lerp(y, ay, draw));
+    $("ln").style.opacity = $("lc").style.opacity = draw > 0 ? 1 : 0;
+    $("lc").setAttribute("cx", x); $("lc").setAttribute("cy", y);
+    const tk = local - sh.tap;
+    $("tapdot").style.left = $("tap").style.left = x + "px"; $("tapdot").style.top = $("tap").style.top = y + "px";
+    $("tapdot").style.opacity = tk > -0.3 && tk < 0.6 ? Math.min(1, (tk + 0.3) / 0.2) * (1 - span(tk, 0.35, 0.6)) : 0;
+    $("tapdot").style.transform = `scale(${tk > 0 && tk < 0.12 ? 0.8 : 1})`;
+    const rk = span(tk, 0, 0.7);
+    $("tap").style.opacity = tk > 0 ? 1 - rk : 0; $("tap").style.transform = `scale(${1 + rk * 2.2})`;
+  } else {
+    lab.style.opacity = $("ln").style.opacity = $("lc").style.opacity = $("tap").style.opacity = $("tapdot").style.opacity = 0;
+  }
+  $("view").textContent = sh.view || ""; $("step").textContent = sh.step || "";
+
+  // captions: the line sits faint, each word firms up as it is spoken
+  $("cap").innerHTML = (sh.words || []).map(w => `<span class="${t >= w.start ? "on" : ""}">${w.text}</span>`).join(" ");
+  $("scrub").style.width = Math.min(100, t / PLAN.cta_t0 * 100).toFixed(2) + "%";
+
+  // end card
+  const ck = span(t, PLAN.cta_t0, PLAN.cta_t0 + 0.7);
+  $("cta").style.opacity = ck; $("cta").style.transform = `translateY(${(1 - ck) * 24}px)`;
+  $("cap").style.opacity = 1 - ck;
+  for (const id of ["cap", "scrub", "view"]) $(id).style.visibility = ck > 0.6 ? "hidden" : "visible";
+  return true;
+};
+</script>
+</body></html>

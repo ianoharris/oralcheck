@@ -10,7 +10,7 @@ The running list. Two rules:
    named. This is the list's whole purpose: the things that come up once, sound
    good, and are never mentioned again.
 
-Last updated: 2026-10-23
+Last updated: 2026-10-26
 
 **Mirrored to an artifact Ian reads:**
 https://claude.ai/code/artifact/cc490e4b-1ee3-4062-bc56-eada066f1003
@@ -33,6 +33,8 @@ Update both together. See `AGENTS.md`.
 | Judge whether the reel skip-rate fix worked | Real engagement data on a reel built after 2026-09-21 | 83.7% skip, measured before any of these fixes. Frame-0 was checked directly against tonight's scheduled reel (2026-09-21, Stoptober): confirmed legible by ~0.1s in the real exported video, so that part is working. The same pass found a separate, real bug and a likely bigger contributor to the skip rate; both are fixed, see Shipped. What is still unmeasured either way: whether any of this moves the actual skip number, which needs a reel built with the fixes in place and real Instagram insights on it. |
 | Trustworthy completion rate over 90d | ~2 weeks of clean events | The double-count fix shipped 2026-08-10. Until then only short windows are reliable. 30-day read at fix time: **91.4%**. |
 | Outreach replies | Ian sending them | 10 contacts: the original 7 in `outreach-contacts.csv` (Penn/CIGOH, Tufts x2, Columbia x2, HNCA, AAOM) plus 3 at Marquette. **Drafts are written** in `outreach-drafts/` as of 2026-08-18, so the only remaining step is pasting them into Outlook and sending. Update Status to `Followed Up` after each, or the Sunday tracker will generate duplicates. |
+| ~~Site's HPV stat corrected to 225%~~ | **Done 2026-10-26** | The homepage said "300% since the 1980s", citing a paper that says 225% from 1988 to 2004. Fixed in all three languages; Ian said "commit and push" on 26 Oct, so it goes live with the next Vercel deploy. |
+| ~~Where Ian's three supplied photos came from~~ | **Done 2026-10-26** | The 1 Dec vial and the HPV render and tobacco photo in the 28 Oct LinkedIn image. Ian: "they're free to use". No licence or credit line needed. |
 | ~~LinkedIn auto-publishing~~ | **Done 2026-09-01** | Both accounts are connected in Publora with valid tokens. The plan is now `WEEKLY_PLAN=instagram:2,linkedin:1`: each post targets one network rather than fanning out to all of them, which is what made the quota impossible before. Three platform-targets sits exactly at the Starter cap, so raising either number needs a bigger plan. |
 
 ---
@@ -152,6 +154,17 @@ Update both together. See `AGENTS.md`.
         cheeks, throat wall and lips), so the "port `reel3d` to it" step above
         is on hold until Ian picks a direction. The artifact stays as it is.
 
+- [ ] **Animated reels: Ian to rate the two samples (2026-10-26).** 2D
+      (gauze) and 3D (zoom) in the house style, `oralcheck-agent/anim/`.
+      **Waiting on Ian:** keep, change, or drop each, and whether animated
+      reels replace some calendar reels. Unpicked ideas, kept for later, all
+      checked against the posting history: why a white patch looks white
+      (needs a pathology source), habits ranked by risk on a tier board (the
+      screener's own sourced weights), what a swallow passes (side view), a
+      drone flight over the tongue (3D), watching HPV settle into tonsil folds
+      (needs a source on tonsil crypts), and a POV exam-light fly-through
+      (overlaps the dental-check posts, ranked last).
+
 - [ ] **Anatomy illustrations: pick the direction (prototypes 2026-10-23).**
       The model review recommends layered 2D illustration in the textbook
       style Ian picked (Blausen), traced from the same atlas, instead of 3D.
@@ -188,9 +201,11 @@ Update both together. See `AGENTS.md`.
         look-alike. Plate B: lumps in the floor of the mouth and at the base
         of the tongue. Each sits at its real site and depth. Still drawings
         by a non-clinician, so the caption line stays.
-      - **Then (code):** move the reel pipeline to the plates and, if
-        wanted, put the plates on the Learn pages (read
-        `node_modules/next/dist/docs/` first).
+      - **Done 26 Oct: the reel pipeline and post pictures run on the
+        plates** (`reel2d.py`, see Shipped). Thrush added to plate A for the
+        wipe-test post.
+      - **Then (code):** if wanted, put the plates on the Learn pages (read
+        `node_modules/next/dist/docs/` first). Waits on (4) above.
       - **Licence:** traced from Z-Anatomy, so every output is CC BY-SA 4.0
         and carries the credit line in `oralcheck-agent/illustration/README.md`.
 
@@ -259,6 +274,40 @@ Update both together. See `AGENTS.md`.
         it is being rebuilt with a hook that only names what it shows.
         **Waiting on Ian:** archive the glitchy post on Instagram, then
         approve the new one before it is reposted.
+      - **26 Oct: the redo posts rebuilt on the illustrated plates.** The
+        3D model is retired, so every redo, plus the three built posts that
+        still carried 3D pictures or reels (28 Oct LinkedIn image, 3 Nov
+        image, 1 Jan reel), is rebuilt with the plates: 27 Oct reel, 28 Oct,
+        3 Nov, 6 Nov reel, 10 Nov reel (never built before), 13 Nov
+        carousel, 24 Nov reel, 25 Nov LinkedIn image, 1 Dec image, 2 Dec
+        LinkedIn carousel, 15 Dec image, 1 Jan reel. Each one answers its
+        note: the inner cheek now lights the cheek, "redness or a patch"
+        stays on the gums, the lips are drawn properly, the tongue carousel's
+        picture comes straight after the cover, the wipe-test carousel shows
+        thrush beside a white patch, and the look-alikes image shows lichen
+        planus. The 1 Dec vaccine image keeps the "photo of a vaccine vial,
+        or none" rule from 21 Oct.
+      - **Ian cut the 27 Oct reel on 22 Oct** ("it said check your lips and
+        highlighted the teeth"), on the 3D version. The rebuild answers that
+        note, so it is back on the page undecided; cut it again if the idea
+        itself is unwanted.
+      - **The 27 Oct reel's date had passed** (Mon 26 Oct). Moved to the one
+        open October Instagram slot, **Tue 27 Oct 10am CT**. The plates can
+        show all six areas its brief names, so the "promised six, showed
+        three" note is answered properly this time. If it is not approved
+        by Tue morning, it moves to Tue 3 Nov, the next open slot.
+      - **26 Oct, later: 27 Oct reel cut for good.** Ian: "forget the 27 oct
+        just push the dates back i left the glitchy one." The glitchy post
+        stays live on Instagram; nothing replaces it and the other dates do
+        not move. The archive step above no longer applies.
+      - **26 Oct, review round 3 (Ian's page notes):** 28 Oct, 31 Oct, 3 Nov,
+        6 Nov, 13 Nov, 25 Nov and 26 Nov rebuilt to his notes, 1 Dec uses his
+        vial photo; all back on the page undecided (page version 4). Approved
+        and kept: 10 Nov reel, 24 Nov reel, 2 Dec carousel. See Shipped.
+      - **Still to decide:** the 15 Dec image still shows the open-mouth view
+        of the throat; it could move to the new HPV side view like 28 Oct.
+        The reels built before today keep the old monospace look unless they
+        are re-rendered.
       - **Then:** upload approved media to the `calendar-2026-fall` release,
         push calendar.json. Media goes on a release rather than into git; the
         repo is public, so approved posts are downloadable from there a few
@@ -574,6 +623,119 @@ Update both together. See `AGENTS.md`.
 ## Shipped
 
 Newest first.
+
+### 2026-10-26 (evening): Ian's third review round, the HPV figure, a new look
+- **28 Oct LinkedIn image** ("low quality, intimidating"): now the side view
+  with the base of the tongue and tonsils tinted ("Where HPV throat cancers
+  start"), and the zone follows the curve of the tongue instead of a straight
+  cut. Every plate still is now rendered at twice the size, which was the
+  real cause of the soft pictures: a 1080 picture was being stretched to 1440.
+- **31 Oct and 26 Nov holiday carousels** ("last slide not same theme, low
+  quality"): the closing slide now carries the holiday's own theme.
+- **3 Nov image** ("no picture, design the cover nicely"): a designed list
+  card of six throat symptoms, no picture. **25 Nov** ("I don't see the 5
+  things"): the same card listing the five look-alikes, caption trimmed to
+  what the sources say.
+- **6 Nov reel** ("audio too loud, no patches shown"): the patches are now
+  drawn on the inner cheek and the side of the tongue. Two fixes made that
+  work: the cheek has its own white and red patch drawings, and a bare
+  "patch" now counts as a white patch.
+- **13 Nov carousel** ("this idea is dumb"): swapped to the lower lip and the
+  sun, a did-you-know, trimmed to the facts in `topics.py`.
+- **1 Dec image**: Ian's own vial photo. **27 Oct reel**: cut (see Open).
+- **28 Oct LinkedIn image, again** (Ian supplied an HPV render and a tobacco
+  photo: "make the design nice"): a new side-by-side card,
+  `render_html.versus_image`. Each photo carries its figure from Chaturvedi
+  2011: HPV-positive throat cancers up 225%, HPV-negative ones (the kind linked
+  to smoking) down 50%, 1988 to 2004. Drawn arrows, not +/- signs, since the
+  serif minus reads as a dash. The plate credit came off the caption.
+- **Music lowered again**, to 24 dB under the voice (was 18). Tested.
+- **The HPV figure was wrong.** The topic fact and the site's homepage stat
+  said HPV-positive throat cancers rose "300% since the 1980s", citing
+  Chaturvedi 2011, which actually reports **225%, from 1988 to 2004**
+  (HPV-negative fell by half). Corrected in `topics.py`, the writer's prompt,
+  and `messages/en.json`, `es.json`, `pt.json`. Committed and pushed the same
+  evening, with everything else from today.
+- **A new look for reels and animations** (Ian: "so claude code looking"):
+  monospace, uppercase tracking and step counters are gone; titles, labels
+  and numbers are in DM Serif Display, everything small in Source Sans 3,
+  the same as the site. Applies to `reel2d/scene.html` and `anim/house.css`.
+- **Animation fixes:** the 3D jaw showed a second tongue when it opened (the
+  upper gum swung down with the jaw); the gum mesh is now split at the bite.
+  Cells have dark edges so each one reads. The 2D tongue's side wall only
+  shows on the trailing side. All three are rules in `anim/STYLE.md`.
+- **Photo search:** stock results whose labels are readable (a COVID vaccine
+  brand passed once) are now rejected.
+- **Review page republished** (version 4) with each rebuilt post undecided.
+
+### 2026-10-26: reels and post pictures move to the illustrated plates
+- **`reel2d.py` replaces `reel3d.py`** in the weekly run and the calendar.
+  Same plan format (shots, each a spoken line and a focus), so the writer and
+  the calendar did not change shape. `reel2d/scene.html` inlines both plates
+  and moves a viewBox camera between foci, tints the subject teal (plate B's
+  own zones, or a shaded copy laid just above the part on plate A so the
+  teeth stay in front of the tongue), crosses over to the side view for the
+  floor of the mouth, base of the tongue and roof of the mouth, and keeps the
+  3D reel's captions, label, tap, sound and end card. Renders a 30-second reel
+  in about 3 minutes without a GPU.
+- **Signs follow the words.** A line naming a sign (white patch, red patch,
+  sore, lump, speckled, thrush, lichen) shows its drawing at the place the
+  line names, and never somewhere else; the footer "Illustration for
+  education, not a real case. Not reviewed by a clinician." shows whenever
+  one is on screen. New foci the 3D model could not show: lips, cheek,
+  tonsils, base of the tongue, roof of the mouth.
+- **Post pictures** (`topics.VISUAL`): "3d" stills became "plate" stills,
+  optionally with a sign, and a new "pair" picture puts two signs side by
+  side (wipe test: thrush, which wipes away, beside leukoplakia, which stays
+  put). Look-alikes get lichen planus; lip, red patch, painless, two-week,
+  edges and canker topics get their sign. Carousels now put the picture
+  straight after the cover (Ian on the 13 Nov carousel).
+- **Thrush drawn** on plate A (`lesions.thrush`), from the CDC's
+  description; the illustration README says how to refresh the pipeline's
+  copies of the plates.
+- Tests: the reel content tests now cover Ian's three mismatch notes against
+  the plates, the sign matching ("won't wipe away" is a white patch, "wipes
+  away" is thrush), and that no picture is a retired 3D still; the render test
+  checks the 2D scene draws, labels hold still, and every named sign exists on
+  its plate. All pass.
+- Docs: the owner's guide's reel and picture sections rewritten.
+- Earlier today: the fork's review, the Mon/Tue/Thu 10am schedule and the
+  retired 3D work were committed and pushed (master 7634ba0), so the new
+  posting times are live for the daily job.
+- **Review page republished** (https://claude.ai/artifact/6EAh4JWYH2K9Jub8ViNshy,
+  version 3) with every rebuilt post undecided and Ian's 11 approvals kept.
+  Review copies are now stored per version, so a rebuilt post can never show
+  its old video. The heading no longer counts posts.
+- **Caught while checking the rebuilds, and fixed in code:**
+  - The 2 Dec carousel captioned the ulcer photo (`sore.jpg`, no attribution
+    on file) as "oral thrush". A photo pair may now use only the two
+    attributed photos, and each label must name what its photo shows, or the
+    slide is dropped (tested). The rebuild tried the same mislabel with the
+    leukoplakia photo and was dropped too. Its "day 3 to 5, thrush often
+    resolves" timeline had no source and was removed.
+  - The 27 Oct reel's caption again named six places while the shots showed
+    three; the writer now rejects a caption or hook naming a place no shot
+    shows. Rebuilt: four places shown, four named.
+  - A line naming no place used to keep whatever place the writer picked (the
+    6 Nov reel labelled the lips on "if a patch is still there"); it now shows
+    the topic's own place (`topics.home_for`) or the whole mouth. "Under your
+    jaw" now means the neck (1 Jan reel).
+  - Two carousels crashed on a calendar idea with no occasion (`null`); fixed.
+- **Music was too loud** (Ian, on the gauze sample). The bed was a fixed 0.11
+  of whatever level the track arrived at; generated tracks are mastered up to
+  9 dB hotter than the bundled one, so they played 6 to 10 dB under the voice.
+  `reel2._final_audio` now measures both and seats the music 18 dB under the
+  voice. Today's five rebuilt reels and both samples were re-mixed (all at
+  -14 LUFS overall).
+- **Animated reels: house style and two samples** (Ian: animation gets views;
+  his 3D skull reel doubled his average). `anim.py`, `anim/house.css`,
+  `anim/house.js`, `anim/STYLE.md`. Samples in `oralcheck-agent/anim/samples/`
+  (not in git): `gauze.mp4`, 2D, "why does your dentist grab your tongue
+  with gauze?" (NIDCR exam card, step 6), and `zoom.mp4`, 3D, a zoom from the
+  jaw into the squamous lining and back out (ACS: almost all oral cancers are
+  squamous cell carcinomas). Ideas were picked by Ian from a list checked
+  against everything already posted, after he pointed out the first two
+  pitches (a stadium crowd, the two-week sore) were played out.
 
 ### 2026-10-21 (late night): 27 Oct reel rebuilt
 - Rebuilt with the label fixes. The first rebuild switched the gums shot to

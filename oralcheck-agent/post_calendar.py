@@ -316,7 +316,10 @@ def _review_media(e: dict, out: Path) -> list[dict]:
     from PIL import Image
 
     folder = CAL_DIR / e["folder"]
-    dest = out / "m" / e["id"]
+    # Keyed by version: a rebuilt post must not show its old video (the copy
+    # below is skipped when it already exists).
+    rel = f"m/{e['id']}/v{e.get('version', 1)}"
+    dest = out / rel
     dest.mkdir(parents=True, exist_ok=True)
     items = []
     for n, f in enumerate(x for x in e.get("files", []) if x != "preview.jpg"):
@@ -329,14 +332,14 @@ def _review_media(e: dict, out: Path) -> list[dict]:
                                 "-movflags", "+faststart", str(vid)], check=True)
                 subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-ss", "1.2", "-i", str(src), "-frames:v", "1",
                                 "-vf", "scale=540:-2", str(poster)], check=True)
-            items.append({"type": "video", "src": f"m/{e['id']}/{n}.mp4", "poster": f"m/{e['id']}/{n}.jpg"})
+            items.append({"type": "video", "src": f"{rel}/{n}.mp4", "poster": f"{rel}/{n}.jpg"})
         else:
             img = dest / f"{n}.jpg"
             if not img.exists():
                 im = Image.open(src).convert("RGB")
                 im.thumbnail((540, 675))
                 im.save(img, "JPEG", quality=82)
-            items.append({"type": "image", "src": f"m/{e['id']}/{n}.jpg"})
+            items.append({"type": "image", "src": f"{rel}/{n}.jpg"})
     return items
 
 

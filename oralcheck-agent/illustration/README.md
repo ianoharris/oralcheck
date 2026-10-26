@@ -14,11 +14,17 @@ builders, each marked in a comment.
 ../.venv-stats/bin/python3.11 build_all.py OUT_DIR [--no-video]
 ```
 
-rebuilds both plates (SVG), the two 4:5 posts, the nine lesion crops (seven on plate A, two on plate B), `lesions.py` draws them, and the two 12-second reels
+rebuilds both plates (SVG), the two 4:5 posts, the ten lesion crops (eight on plate A, thrush added 26 Oct; two on plate B), `lesions.py` draws them, and the two 12-second reels
 (illustration and 3D, same captions). Steps: `render_plate.py` draws flat masks and id maps from the
 model (`shots/*.json`), `tracer.py` turns them into smooth outlines, the two builders style them,
 `make_post.py` and `make_reel.py` lay out posts and reels, `reel3d_frames.py` renders the 3D comparison.
 `src/plate.js` is the renderer (bundle with `node build.mjs`).
+
+The social pipeline uses its own copies, `../reel2d/plate_a.svg` and `../reel2d/plate_b.svg`
+(reels via `reel2d.py`, post pictures via `reel2d.still`). After rebuilding, copy the new
+`plate_a.svg` and `plate_b.svg` there; the ids the pipeline drives (`tongue`, `cheeks`, `gumUp`,
+`zone-floor`, `lesion-*` and the rest, see `reel2d.FOCI` and `reel2d.LESION_AT`) must keep their names.
+`test_render.py` checks that every sign the pipeline names is on its plate.
 
 **Licence.** Traced from Z-Anatomy (CC BY-SA 4.0), built on BodyParts3D (CC BY-SA 2.1 JP), so every
 output is an adaptation and is shared under CC BY-SA 4.0. Captions carry:

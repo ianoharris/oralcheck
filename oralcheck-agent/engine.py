@@ -399,22 +399,25 @@ def render_reel(spec: dict, out_path: str, *, tts, music: str | None = None) -> 
     return out_path
 
 
-# ── 3D reels ──────────────────────────────────────────────────────────────────
+# ── Illustrated reels ─────────────────────────────────────────────────────────
 
-def write_reel3d(idea: dict, ask) -> dict:
-    """Ask for a reel3d shot plan for one idea and return it validated.
+def write_reel2d(idea: dict, ask) -> dict:
+    """Ask for a reel2d shot plan for one idea and return it validated.
 
     Shots may only point at the structures the topic is about
     (topics.foci_for), so a reel about the lips never wanders to the tonsils.
+    The plan format is the one reel3d used; the 3D model retired on 26 Oct.
     """
-    import reel3d
+    import reel2d
     allowed = topics.foci_for(idea.get("topic"))
-    foci_lines = "\n".join(f"  {k}: {reel3d.FOCI[k]['view'] or 'the whole mouth'}" for k in allowed)
+    foci_lines = "\n".join(f"  {k}: {reel2d.FOCI[k]['view'] or 'the whole mouth'}" for k in allowed)
     prompt = (
-        f"Write a faceless 3D Instagram Reel for OralCheck.\n\n{_slot_block(idea)}\n\n"
-        "The video shows a real 3D model of the mouth in a calm, clinical style. Each shot is one "
-        "spoken sentence; the camera moves to that shot's focus, the structure turns teal, and an "
-        "optional label appears beside it.\n\n"
+        f"Write a faceless illustrated Instagram Reel for OralCheck.\n\n{_slot_block(idea)}\n\n"
+        "The video shows calm, clinical anatomy illustrations of the mouth: the open mouth from the "
+        "front, and the head in section from the side. Each shot is one spoken sentence; the view "
+        "moves to that shot's focus, the structure turns teal, and an optional label appears beside "
+        "it. When a sentence names a sign (a white patch, a red patch, a sore, a lump, speckled "
+        "patches, thrush, lichen planus), a drawing of it appears at the place the sentence names.\n\n"
         f"Foci you may use (no others):\n{foci_lines}\n\n"
         "Rules:\n"
         "  - 3 to 5 shots, 40 to 60 spoken words in total. The first shot's `say` is the hook line "
@@ -425,8 +428,11 @@ def write_reel3d(idea: dict, ask) -> dict:
         "structure or idea, at most 4 words), d (one instruction or fact, at most 9 words).\n"
         "  - The focus must be the structure the sentence names. A sentence naming the tongue uses "
         "focus tongue; a sentence that names no place (\"a red or white patch\") uses the topic's own "
-        "focus or overview, never teeth. The model has no lips, cheek lining or roof of the mouth: "
-        "do not build a shot around them.\n"
+        "focus or overview, never teeth. Name the place and the sign together when you can "
+        "(\"a white patch on the side of the tongue\") so the picture shows both. The hook and "
+        "the caption name only places the shots show.\n"
+        "  - Name the place in the line itself: a line that names no place shows the topic's own "
+        "place, or the whole mouth.\n"
         "  - The focus names above say where the camera points, not what is true. Never name an "
         "anatomical structure more specifically than the facts do (if the facts say 'a lump in the "
         "neck', do not say which nodes).\n"
@@ -450,11 +456,13 @@ def write_reel3d(idea: dict, ask) -> dict:
                 s["label"] = {k: _tidy(s["label"].get(k, "")) for k in ("k", "t", "d")}
         data["shots"] = shots
         if len(shots) < 2:
-            return "3D plan had fewer than 2 shots", []
+            return "reel plan had fewer than 2 shots", []
         problems = _worn([s.get("say", "") for s in shots] + [data.get("caption", "")])
-        if any(re.search(reel3d.UNMODELLED, str(s.get("say", "")).lower()) and not reel3d.named_foci(str(s.get("say", "")))
-               for s in shots):
-            problems.append("a shot is built around the lips, cheeks or palate, which the 3D model cannot show")
+        home = topics.home_for(idea.get("topic"))
+        checked = reel2d.validate({"shots": shots, "home": home})["shots"]
+        missing = reel2d.unshown_places(" ".join([str(data.get("caption", "")), str(data.get("hook", ""))]), checked)
+        if missing:
+            problems.append(f"the caption names {', '.join(missing)} but no shot shows it; name only places the shots show")
         foci = [s["focus"] for s in shots]
         if any(a == b for a, b in zip(foci, foci[1:])):
             problems.append("the same focus is used twice in a row")
@@ -464,8 +472,8 @@ def write_reel3d(idea: dict, ask) -> dict:
         return None, problems
 
     data = _attempt(prompt, ask, check)
-    plan = reel3d.validate({"shots": data["shots"], "home": next((f for f in allowed if f != "overview"), None)})
+    plan = reel2d.validate({"shots": data["shots"], "home": topics.home_for(idea.get("topic"))})
     data["shots"] = plan["shots"]
     data.setdefault("hook", data["shots"][0]["say"])
     # Share-alike: the credit rides in the caption as well as on screen.
-    return _finish(data, [reel3d.CREDIT])
+    return _finish(data, [reel2d.CREDIT])

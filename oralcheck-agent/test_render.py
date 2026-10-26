@@ -422,70 +422,63 @@ def main() -> int:
     except Exception as exc:                        # pragma: no cover
         failures.append(("hold_motion_probe", str(exc)[:120]))
 
-    # --- the 3D reel scene loads and draws in software WebGL -----------------
-    # CI has no GPU, so this is the same SwiftShader path the Monday run uses.
-    # A scene that fails to load (a bad import, a missing asset) would
-    # otherwise only show up as a reel that fell back to the classic look.
+    # --- the illustrated reel scene loads and draws --------------------------
+    # A scene that fails to load (a bad id, a missing plate) would otherwise
+    # only show up as a reel that fell back to the classic look.
     try:
-        import reel3d as _R3
-        f = _R3.FOCI["overview"]   # opaque and fully lit, unlike a ghosted shot at t=0
-        plan = {"shots": [{"t0": 0, "len": 1, "focus": f["focus"], "ghost": f["ghost"], "cam": f["cam"],
-                           "view": f["view"], "label": None, "tap": 0.1,
-                           "words": [{"text": "Test", "start": 0, "end": 0.3}], "step": "01 / 01"}],
-                "cta_t0": 99, "credit": _R3.CREDIT}
-        mp4 = str(OUT_DIR / "reel3d_smoke.mp4")
-        fps0 = _R3.FPS
-        _R3.FPS = 5
+        import reel2d as _R2
+        shot = {"t0": 0, "len": 1, **_R2._shot("overview"), "view": "", "label": None, "tap": 0.1,
+                "words": [{"text": "Test", "start": 0, "end": 0.3}], "step": "01 / 01"}
+        plan = {"shots": [shot], "cta_t0": 99, "credit": _R2.CREDIT, "foot": ""}
+        mp4 = str(OUT_DIR / "reel2d_smoke.mp4")
+        fps0 = _R2.FPS
+        _R2.FPS = 5
         try:
-            _R3._render_frames(plan, 0.6, mp4)
+            _R2._render_frames(plan, 0.6, mp4)
         finally:
-            _R3.FPS = fps0
+            _R2.FPS = fps0
         import subprocess as _sp
-        png = str(OUT_DIR / "reel3d_smoke.png")
+        png = str(OUT_DIR / "reel2d_smoke.png")
         _sp.run(["ffmpeg", "-y", "-loglevel", "error", "-i", mp4, "-frames:v", "1", png], check=True)
         from PIL import ImageStat
-        # Measured over the model's part of the frame, not the plain background.
         spread = max(ImageStat.Stat(Image.open(png).convert("L").crop((100, 250, 980, 1150))).stddev)
-        if spread < 5:    # a blank frame measures near 0; the clinical palette sits around 10
-            failures.append(("reel3d_blank", f"3D frame looks blank (pixel spread {spread:.1f})"))
+        if spread < 5:    # a blank frame measures near 0
+            failures.append(("reel2d_blank", f"2D frame looks blank (pixel spread {spread:.1f})"))
         else:
-            print(f"  [PASS] 3D reel scene renders in software WebGL (pixel spread {spread:.0f})")
+            print(f"  [PASS] illustrated reel scene renders (pixel spread {spread:.0f})")
     except Exception as exc:                        # pragma: no cover
-        failures.append(("reel3d_smoke", str(exc)[:160]))
+        failures.append(("reel2d_smoke", str(exc)[:160]))
 
-    # --- a 3D label holds still for its whole shot ----------------------------
-    # The 27 Oct reel went out with labels hopping side to side as the camera
-    # drifted past the subject. Sample every labelled focus through its shot and
-    # require one label position per shot.
+    # --- a label holds still for its whole shot, and every sign exists -------
+    # The 27 Oct reel went out with labels hopping side to side. Sample every
+    # labelled focus through its shot and require one label position per shot;
+    # then switch on every sign the plates claim to draw.
     try:
         import json as _json
-        import reel3d as _R3
-        names = [n for n, f in _R3.FOCI.items() if f["focus"]]
+        import reel2d as _R2
+        names = [n for n, f in _R2.FOCI.items() if f["anchor"]]
         L = 3.0
-        shots = [{"t0": k * L, "len": L, "focus": f["focus"], "ghost": f["ghost"], "cam": f["cam"], "aim": f.get("aim"),
-                  "open": f.get("open", 0), "anchor": f.get("anchor"), "section": f.get("section"), "view": "",
-                  "label": {"k": "", "t": n, "d": ""}, "tap": 0.55, "words": [], "step": ""}
-                 for k, (n, f) in enumerate((n, _R3.FOCI[n]) for n in names)]
+        shots = [{"t0": k * L, "len": L, **_R2._shot(n), "view": "", "label": {"k": "", "t": n, "d": ""},
+                  "tap": 0.55, "words": [], "step": ""} for k, n in enumerate(names)]
         with sync_playwright() as p:
-            b = p.chromium.launch(args=["--use-gl=angle", "--use-angle=swiftshader", "--enable-unsafe-swiftshader"])
-            pg = b.new_page(viewport={"width": _R3.W, "height": _R3.H})
-            pg.route("http://reel3d.local/**", _R3._serve)
-            pg.add_init_script(f"window.PLAN = {_json.dumps({'shots': shots, 'cta_t0': 999, 'credit': ''})};")
-            pg.goto("http://reel3d.local/scene.html")
-            pg.wait_for_function("window.render && window.render(0)", timeout=180000)
+            pg = _R2._open(p, {"shots": shots, "cta_t0": 999, "credit": "", "foot": ""}, (_R2.W, _R2.H))
             jumpy = []
             for k, n in enumerate(names):
                 lefts = {pg.evaluate(f"() => {{ window.render({k * L + j * 0.25}); return document.getElementById('label').style.left; }}")
                          for j in range(int(L / 0.25))}
                 if len(lefts) > 1:
                     jumpy.append(f"{n} {sorted(lefts)}")
-            b.close()
+            missing = [f"{pl}-lesion-{l}" for f, d in _R2.LESION_AT.items() for l in d.values()
+                       for pl in [_R2.FOCI[f]["plate"]] if not pg.evaluate(f"() => !!document.getElementById('{pl}-lesion-{l}')")]
+            pg.context.browser.close()
         if jumpy:
-            failures.append(("reel3d_label_jumps", "; ".join(jumpy)))
+            failures.append(("reel2d_label_jumps", "; ".join(jumpy)))
+        elif missing:
+            failures.append(("reel2d_missing_signs", ", ".join(missing)))
         else:
-            print(f"  [PASS] 3D labels hold one position per shot ({len(names)} foci)")
+            print(f"  [PASS] labels hold one position per shot ({len(names)} foci); every sign is on its plate")
     except Exception as exc:                        # pragma: no cover
-        failures.append(("reel3d_label_probe", str(exc)[:160]))
+        failures.append(("reel2d_label_probe", str(exc)[:160]))
 
     # --- reel photos stay inside the attributed set ---------------------------
     # `sore` and `lip` have no attribution recorded anywhere in the repo (see

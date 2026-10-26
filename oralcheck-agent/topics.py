@@ -155,9 +155,9 @@ TOPICS: dict[str, dict] = {
     "hpv_overtook_tobacco": dict(
         pillar="hpv_connection", page="/learn/hpv",
         tags={"myth", "stat"},
-        kw=("overtaken", "overtook", "leading cause", "300%"),
+        kw=("overtaken", "overtook", "leading cause", "225%"),
         facts=["HPV has overtaken tobacco as the leading cause of oropharyngeal cancers: the tonsils, base of tongue and back of the throat.",
-               "Cases have risen by more than 300% since the 1980s.",
+               "HPV-positive oropharyngeal cancers rose 225% from 1988 to 2004, while HPV-negative ones fell by half (Chaturvedi et al., 2011).",
                "This is the throat, specifically. Tobacco is still the biggest driver of cancers in the mouth itself."]),
     "hpv_who": dict(
         pillar="hpv_connection", page="/learn/hpv",
@@ -325,7 +325,8 @@ SHAPES: dict[str, dict[str, dict]] = {
         "question": dict(needs=None, templates=["question", "steps"],
                          desc="Opens on one quiet question the reader answers about their own mouth."),
     },
-    # Reels are 3D (reel3d.py) since 2026-10-20. Every shot points at a real
+    # Reels are anatomy reels: 3D (reel3d.py) from 2026-10-20, the illustrated
+    # plates (reel2d.py) from 2026-10-26. Every shot points at a real
     # structure; `templates` are informational, the foci come from TOPIC_FOCI.
     "reel": {
         "tour": dict(needs=None, templates=["3d: 3 or 4 places in turn"],
@@ -538,27 +539,29 @@ def slot_brief(n: int, slot: dict) -> str:
     )
 
 
-# ── 3D reel foci ──────────────────────────────────────────────────────────────
-# Which reel3d.FOCI a topic's shots may point at. A reel only shows structures
-# the topic is actually about; "overview" and "cta" are always allowed.
+# ── Reel foci ─────────────────────────────────────────────────────────────────
+# Which reel2d.FOCI a topic's shots may point at. A reel only shows structures
+# the topic is actually about; "overview" and "cta" are always allowed. The
+# plates draw the lips, cheeks and roof of the mouth, which the 3D model could
+# not, so the self-checks now cover every place a dentist looks.
 TOPIC_FOCI: dict[str, list[str]] = {
     "tongue_sides": ["tongue", "floor"],
     "floor_of_mouth": ["floor", "tongue"],
-    "lower_lip_sun": [],   # the 3D atlas has no lips, so no 3D reel
-    "gums_mimic": ["gums", "teeth"],
-    "throat_hpv_site": ["throat", "nodes"],
+    "lower_lip_sun": ["lips"],
+    "gums_mimic": ["gums"],
+    "throat_hpv_site": ["base", "tonsil", "throat"],
     "neck_lump": ["nodes", "glands"],
-    "hpv_throat_symptoms": ["throat", "nodes"],
-    "hpv_overtook_tobacco": ["throat", "tongue"],
-    "hpv_who": ["throat", "nodes"],
-    "hpv_is_common": ["throat"],
-    "hpv_vaccine": ["throat"],
-    "dentist_screening": ["teeth", "gums", "tongue", "floor"],
-    "monthly_self_exam": ["gums", "tongue", "floor", "throat", "nodes"],
-    "biopsy": ["tongue", "gums"],
-    "low_cost_care": ["teeth", "gums"],
+    "hpv_throat_symptoms": ["throat", "tonsil", "nodes"],
+    "hpv_overtook_tobacco": ["throat", "base", "tonsil"],
+    "hpv_who": ["throat", "base", "tonsil"],
+    "hpv_is_common": ["throat", "tonsil"],
+    "hpv_vaccine": ["throat", "tonsil"],
+    "dentist_screening": ["lips", "cheek", "gums", "tongue", "floor", "palate", "throat"],
+    "monthly_self_exam": ["lips", "cheek", "gums", "tongue", "floor", "palate", "throat", "nodes"],
+    "biopsy": ["tongue", "cheek", "gums"],
+    "low_cost_care": ["gums", "tongue"],
 }
-_SIGN_SITES = ["tongue", "floor", "gums"]
+_SIGN_SITES = ["tongue", "cheek", "floor", "gums", "lips"]
 for _k in ("red_patch", "white_patch", "speckled_patch", "wipe_test", "lookalikes", "canker_vs_cancer",
            "edges_and_bleeding", "painless", "two_week_rule", "tobacco_all_forms", "quitting", "alcohol",
            "tobacco_plus_alcohol", "betel_quid"):
@@ -661,17 +664,39 @@ def caption_sources(topic: str | None) -> str:
 # touching her neck for HPV symptoms, two teenagers for the vaccine, a couple
 # outdoors for HPV and tobacco) and approved the two that showed the thing
 # itself (a checkup for "men are diagnosed 2.6 times as often", a betel stall
-# for betel quid). So a post shows the place in the mouth (a still from the 3D
-# model the reels use), the sign itself (the two clinical photos with
-# attribution on file), a photo of a literal subject that a vision check must
-# confirm, or no picture at all.
-#   ("3d", focus) | ("sign", "white_patch" | "mixed_patch") | ("photo", subject) | ("type",)
+# for betel quid). So a post shows the place in the mouth (a still of the
+# illustrated plates the reels use, 3D stills until 26 Oct), a drawing or
+# clinical photo of the sign itself, a photo of a literal subject that a
+# vision check must confirm, or no picture at all.
+#   ("plate", focus[, lesion]) | ("pair", [(focus, lesion, title, note), ...])
+#   | ("sign", "white_patch" | "mixed_patch") | ("photo", subject[, [searches]])
+#   | ("list", [items], note) (the post is the list: no picture) | ("type",)
 VISUAL = {
-    "tongue_sides": ("3d", "tongue"), "floor_of_mouth": ("3d", "floor"), "gums_mimic": ("3d", "gums"),
-    "throat_hpv_site": ("3d", "throat"), "neck_lump": ("3d", "nodes"), "hpv_throat_symptoms": ("3d", "throat"),
-    "hpv_overtook_tobacco": ("3d", "throat"), "hpv_who": ("3d", "throat"), "monthly_self_exam": ("3d", "tongue"),
-    "red_patch": ("3d", "tongue"), "edges_and_bleeding": ("3d", "tongue"), "painless": ("3d", "tongue"),
-    "two_week_rule": ("3d", "tongue"),
+    "tongue_sides": ("plate", "tongue"), "floor_of_mouth": ("plate", "floor"), "gums_mimic": ("plate", "gums"),
+    "lower_lip_sun": ("plate", "lips", "lip"),
+    # HPV throat topics show the side view of where these cancers start, not the
+    # open mouth up close, which Ian found "kind of intimidating" (26 Oct).
+    "throat_hpv_site": ("plate", "oropharynx"), "neck_lump": ("plate", "nodes"),
+    "hpv_throat_symptoms": ("list", [
+        "A sore throat that does not go away in two weeks", "A painless lump in the neck",
+        "Food that feels like it is catching", "Ear pain on one side, with no ear infection",
+        "Hoarseness lasting more than two weeks", "Weight loss you cannot explain"],
+        "Any one that lasts more than two weeks is worth getting checked."),
+    "hpv_overtook_tobacco": ("plate", "oropharynx"), "hpv_who": ("plate", "oropharynx"),
+    "hpv_is_common": ("plate", "oropharynx"),
+    "monthly_self_exam": ("plate", "tongue"),
+    "red_patch": ("plate", "tongue", "red"), "edges_and_bleeding": ("plate", "tongue", "ulcer"),
+    "painless": ("plate", "tongue", "white"), "two_week_rule": ("plate", "tongue", "ulcer"),
+    "canker_vs_cancer": ("plate", "tongue", "ulcer"),
+    "lookalikes": ("list", [
+        "Frictional keratosis: a callus from a bitten cheek, a sharp tooth or a denture",
+        "Oral thrush: a yeast infection that wipes away",
+        "Lichen planus: fine white lacy lines, usually on both cheeks",
+        "A burn from hot food or drink: alarming for a few days, then heals",
+        "Geographic tongue: smooth red areas with pale borders that move over weeks"],
+        "What matters is anything new that is still there after two weeks."),
+    "wipe_test": ("pair", [("tongue", "thrush", "Thrush", "wipes away"),
+                           ("tongue", "white", "Leukoplakia", "stays put when rubbed")]),
     "white_patch": ("sign", "white_patch"), "speckled_patch": ("sign", "mixed_patch"),
     "biopsy": ("sign", "white_patch"),
     "betel_quid": ("photo", "betel leaves or areca nuts"),
@@ -681,13 +706,25 @@ VISUAL = {
     "tobacco_plus_alcohol": ("photo", "a cigarette beside an alcoholic drink"),
     "dentist_screening": ("photo", "a dentist examining a patient's mouth"),
     "low_cost_care": ("photo", "a dental clinic or dental chair"),
-    "hpv_vaccine": ("photo", "a vaccine vial or syringe"),
-    "lower_lip_sun": ("photo", "strong sun outdoors or a lip balm with SPF"),
+    "hpv_vaccine": ("photo", "a vaccine vial or syringe",
+                    ["vaccine vial", "vaccine syringe", "syringe and vial", "medical vial", "syringe"]),
 }
 
 
 def visual_for(topic: str | None) -> tuple:
     return VISUAL.get(topic or "", ("type",))
+
+
+def home_for(topic: str | None) -> str | None:
+    """The one place a topic is about (its `zone`), as a reel focus, or None.
+
+    A reel line that names no place shows this, or the whole mouth when the
+    topic has no single place (painless patches, the two-week rule). It used
+    to fall back to the topic's first allowed focus, which put a "Lips" label
+    on "if a patch is still there after two weeks" (6 Nov reel, 26 Oct).
+    """
+    zone = TOPICS.get(topic or "", {}).get("zone")
+    return {"cheeks": "cheek"}.get(zone, zone)
 
 
 def foci_for(topic: str | None) -> list[str]:

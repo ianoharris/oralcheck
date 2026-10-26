@@ -164,6 +164,23 @@ def ulcer(gid, cx, cy, rx, ry, seed=4, rot=0.0, clip=None):
   {highlights([(cx - rx * 0.6, cy - ry * 0.75, 2.8, 1.2, 0.75), (cx + rx * 0.15, cy - ry * 0.1, 1.8, 0.8, 0.55), (cx + rx * 0.5, cy + ry * 0.4, 1.4, 0.7, 0.5)])}
 </g>'''
 
+def canker(gid, cx, cy, rx, ry, seed=41, rot=0.0, clip=None):
+    """A canker sore (aphthous ulcer), the everyday look-alike: small, round or oval, shallow, a clean
+    yellow-grey base and a thin red halo, with a neat edge. Matched to File:Aphthous_stomatitisNZ.jpg and the
+    site's own description (round or oval, white or yellow center, red rim). Added 26 Oct for the
+    day-by-day reel, where it heals and the sore beside it does not."""
+    halo = organic(cx, cy, rx * 1.55, ry * 1.55, seed, 0.06, rot, harmonics=(2, 3))
+    ring = organic(cx, cy, rx * 1.12, ry * 1.12, seed + 1, 0.05, rot, harmonics=(2, 3))
+    base = organic(cx, cy, rx, ry, seed + 2, 0.05, rot, harmonics=(2, 3))
+    cp = f' clip-path="url(#{clip})"' if clip else ""
+    return f'''<g id="{gid}" opacity="0"{cp}>
+  <path d="{smooth(halo)}" fill="#d0525f" opacity="0.55" filter="url(#lzFeather)"/>
+  <path d="{smooth(ring)}" fill="#c43e4f" opacity="0.9" filter="url(#lzSoft)"/>
+  <path d="{smooth(base)}" fill="#e9dcb8" filter="url(#lzCrater)"/>
+  <path d="{smooth(organic(cx, cy + ry * 0.1, rx * 0.7, ry * 0.6, seed + 3, 0.08, rot))}" fill="#d9c99b" opacity="0.6" filter="url(#lzSoft)"/>
+  {highlights([(cx - rx * 0.35, cy - ry * 0.4, 2.0, 0.9, 0.7)])}
+</g>'''
+
 def lump(gid, cx, cy, rx, ry, seed=13, rot=0.0, clip=None, color=("#c96579", "#a5455b")):
     """A lump: a firm, lobulated swelling, here an enlarged uneven tonsil, with a small ulcer and fine vessels.
     Matched to the OCF and NCI PDQ descriptions (no open photo of a tonsil tumour was found)."""
@@ -228,3 +245,26 @@ def lip_sore(gid, cx, cy, rx, ry, seed=17, rot=0.0, clip=None):
   <path d="{smooth(crust_in)}" fill="#6e2f26" opacity="0.85" filter="url(#lzSoft)"/>
   <path d="{smooth(organic(cx - rx * 0.35, cy - ry * 0.2, rx * 0.3, ry * 0.2, seed + 4, 0.3))}" fill="#e8dccb" opacity="0.85"/>
 </g>'''
+
+
+def thrush(gid, cx, cy, rx, ry, seed=29, rot=0.0, clip=None):
+    """Oral thrush (candidiasis), the white patch that is NOT a warning sign on its own: creamy white,
+    slightly raised, curd-like spots scattered over a reddened surface, one wiped away to show the raw red
+    underneath (it wipes off, a leukoplakia does not). Drawn from the CDC's description ("Candida infections
+    of the mouth, throat, and esophagus": white patches that can be wiped away, leaving redness), not matched
+    to a photo like the others; worth a clinician's look with the rest of the set."""
+    r = np.random.default_rng(seed)
+    base = organic(cx, cy, rx, ry, seed, 0.2, rot)
+    spots = []
+    for x, y in scatter(base, 13, seed + 1, 0.0):
+        k = r.uniform(0.6, 1.25)
+        spots.append(organic(x, y, 9 * k, 6.5 * k, int(r.integers(1e6)), 0.32, r.uniform(0, math.pi), n=24))
+    wiped = organic(cx + rx * 0.35, cy + ry * 0.3, 11, 8, seed + 5, 0.3, 0.4, n=24)
+    cp = f' clip-path="url(#{clip})"' if clip else ""
+    return f'''<g id="{gid}" opacity="0"{cp}>
+  <path d="{smooth(base)}" fill="#d9707a" opacity="0.38" filter="url(#lzFeather)"/>
+  <path d="{smooth(wiped)}" fill="#c3404f" opacity="0.75" filter="url(#lzSoft)"/>
+  <g fill="#f7f1e4" stroke="#e2d6c4" stroke-width="0.6" filter="url(#lzRim)">{"".join(f'<path d="{smooth(sp)}"/>' for sp in spots)}</g>
+  <g fill="#fffdf7" opacity="0.7">{"".join(f'<ellipse cx="{sp[0][0] - 3:.1f}" cy="{sp[0][1] - 2:.1f}" rx="2.2" ry="1.1"/>' for sp in spots[::3])}</g>
+</g>'''
+

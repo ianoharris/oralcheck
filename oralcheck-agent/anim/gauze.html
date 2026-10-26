@@ -1,0 +1,124 @@
+<!doctype html>
+<!--
+  "Why does your dentist grab your tongue with gauze?" (2D sample, 26 Oct 2026).
+  Plate A (the open mouth) with its tongue lifted out of the mouth's clip so it
+  can stick out, be pulled to each side by a gauze square, and turn: a 2.5D
+  trick where the top surface narrows towards the pull and a darker copy
+  behind it shows as the side wall, which turns teal.
+  Facts: NIDCR, "The Oral Cancer Exam" (step 6: gauze, pull to one side then
+  the other); topics.py tongue_sides (the sides and underside are the most
+  common site). Plate: Z-Anatomy / BodyParts3D, CC BY-SA.
+-->
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="house.css">
+<style>
+  #stage svg{display:block;width:1080px;height:1000px}
+</style></head>
+<body>
+<div id="stage"><!--PLATE_A--></div>
+<script type="module">
+import {PLAN, at, startOf, label, readout, frame, span, ease, lerp, smooth} from "./house.js";
+const NS = "http://www.w3.org/2000/svg";
+const svg = document.querySelector("#stage svg");
+const $ = id => document.getElementById(id);
+
+// ---- the tongue, lifted out --------------------------------------------------
+const orig = $("a-tongue");
+const defs = svg.querySelector("defs");
+defs.insertAdjacentHTML("beforeend", `
+  <pattern id="folds" width="9" height="40" patternUnits="userSpaceOnUse" patternTransform="rotate(8)">
+    <rect width="9" height="40" fill="none"/><line x1="2" y1="0" x2="2" y2="40" stroke="#7a2b38" stroke-width="2" opacity=".35"/></pattern>
+  <pattern id="weave" width="7" height="7" patternUnits="userSpaceOnUse">
+    <rect width="7" height="7" fill="#fbfaf7"/><path d="M0 3.5H7M3.5 0V7" stroke="#d9d6cf" stroke-width="1.1"/></pattern>
+  <clipPath id="trailL" clipPathUnits="userSpaceOnUse"><rect x="-1000" y="-1000" width="1500" height="3000"/></clipPath>
+  <clipPath id="trailR" clipPathUnits="userSpaceOnUse"><rect x="500" y="-1000" width="1500" height="3000"/></clipPath>
+  <filter id="gz" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur in="SourceAlpha" stdDeviation="5"/>
+    <feOffset dy="6"/><feComponentTransfer><feFuncA type="linear" slope=".25"/></feComponentTransfer><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>`);
+const out = document.createElementNS(NS, "g"); out.id = "pulled";
+svg.appendChild(out);
+const wall = orig.cloneNode(true); wall.removeAttribute("id");   // the side wall: the same outline, behind
+const wallFill = wall.querySelector("path"); wallFill.removeAttribute("filter");
+const wallFolds = wallFill.cloneNode(); wallFolds.setAttribute("fill", "url(#folds)"); wallFolds.setAttribute("stroke", "none");
+wall.querySelectorAll("path:not(:first-child)").forEach(p => p.remove());
+wall.appendChild(wallFolds);
+const top_ = orig.cloneNode(true); top_.removeAttribute("id");   // the top surface
+out.append(wall, top_);
+const gauze = document.createElementNS(NS, "g");
+gauze.innerHTML = `<path d="M-44,-40 L42,-46 L48,38 L-40,46 Z" fill="url(#weave)" stroke="#cfcac0" stroke-width="1.5" filter="url(#gz)"/>
+  <path d="M-30,-20 C-10,-30 12,-24 30,-30 M-34,6 C-12,-2 10,4 34,-2" stroke="#e4e0d8" stroke-width="2" fill="none"/>`;
+out.appendChild(gauze);
+
+const PIV = [500, 470];          // where the tongue turns: well back, near its root
+const TIP = [500, 770];          // the tip at rest
+function M(p, a) {
+  // p: how far it is out (0..1); a: the pull, -1 (viewer's left) .. 1 (viewer's right)
+  return new DOMMatrix().translate(PIV[0] + a * 80, PIV[1] + 235 * p).rotate(a * 20).scale(1 + 0.12 * p).translate(-PIV[0], -PIV[1]);
+}
+function place(p, a, teal) {
+  const turn = Math.abs(a), side = Math.sign(a) || 1;
+  const m = M(p, a);
+  // The tongue turns about its long axis: the top surface narrows towards the
+  // pull, and the same outline narrowed far less sits behind it, so only a
+  // thin band shows on the trailing edge: the side wall. (The first version
+  // shifted a whole second tongue behind, which read as two tongues, Ian 26 Oct.)
+  const at = k => new DOMMatrix().translate(500 + side * 105, 0).scale(1 - k * turn, 1).translate(-(500 + side * 105), 0);
+  top_.setAttribute("transform", m.multiply(at(0.2)).toString());
+  wall.setAttribute("transform", m.multiply(at(0)).toString());
+  wall.setAttribute("clip-path", side > 0 ? "url(#trailL)" : "url(#trailR)");   // only the trailing side, never round the back
+  wall.style.opacity = turn > 0.02 ? 1 : 0;
+  const base = [176, 84, 97], tl = [13, 115, 119];
+  wallFill.setAttribute("fill", `rgb(${base.map((c, j) => Math.round(lerp(c, tl[j], 0.85 * teal))).join(",")})`);
+  wallFill.setAttribute("stroke", teal > 0.5 ? "#0b5d60" : "#7d3343");
+  wallFolds.setAttribute("opacity", 0.5 * (1 - teal));
+  const tip = new DOMPoint(...TIP).matrixTransform(m.multiply(at(0.2)));
+  gauze.setAttribute("transform", `translate(${tip.x},${tip.y - 10}) rotate(${a * 20 - 6})`);
+  // a point on the band, for the label: the trailing border, two thirds of the way back
+  return new DOMPoint(500 - side * 104, 650).matrixTransform(m.multiply(at(0.1)));
+}
+
+// ---- camera -----------------------------------------------------------------
+const view = ([cx, cy, w]) => { const h = w * 1000 / 1080; svg.setAttribute("viewBox", [cx - w / 2, cy - h / 2, w, h].map(v => v.toFixed(1)).join(" ")); };
+const toScreen = ([cx, cy, w], p) => { const h = w * 1000 / 1080; return [(p.x - (cx - w / 2)) / w * 1080, 230 + (p.y - (cy - h / 2)) / h * 1000]; };
+const WIDE = [500, 560, 1040], CLOSE = [500, 740, 820], TIGHT = [480, 770, 700];
+
+const T = Object.fromEntries(PLAN.shots.map(s => [s.key, s.t0]));
+window.render = (t) => {
+  const {sh, local, k} = at(t);
+  // the gauze floats in from the right on frame 0 and reaches the tip as the hook ends
+  const hookEnd = T.exam;
+  const gIn = ease(t / (hookEnd * 0.8));
+  const p = ease(span(t, hookEnd - 0.9, hookEnd + 0.6));
+  // the pull: right, then left (pull); hold right (why); back to centre (hidden); left, slowly (you)
+  let a = 0, teal = 0;
+  const pullK = t - T.pull;
+  if (t >= T.pull && t < T.why) a = smooth(pullK / 1.2) - 2 * span(pullK, 1.9, 3.3);
+  if (t >= T.why && t < T.hidden) a = lerp(-1, 1, span(t - T.why, 0, 0.9));
+  if (t >= T.hidden && t < T.you) a = 1 - span(t - T.hidden, 0, 1.0);
+  if (t >= T.you) a = -span(t - T.you, 0.2, 2.2);
+  if (t >= T.why) teal = t < T.hidden ? span(t - T.why, 0.6, 1.3) : 1;
+  const anchor = place(p, a, teal);
+  if (t < hookEnd - 0.9) {
+    // before it moves, the tongue is the plate's own, with the gauze on its way in
+    orig.style.visibility = "visible"; out.style.visibility = "visible";
+    top_.style.visibility = wall.style.visibility = "hidden";
+    const tip = new DOMPoint(...TIP);
+    gauze.setAttribute("transform", `translate(${lerp(900, tip.x, gIn)},${lerp(520, tip.y - 10, gIn)}) rotate(${lerp(30, -6, gIn)})`);
+  } else {
+    orig.style.visibility = "hidden"; top_.style.visibility = wall.style.visibility = "visible";
+  }
+
+  // camera: a slow push throughout; closer once the tongue is out
+  let box = WIDE.map((v, j) => lerp(v, CLOSE[j], ease(t / (hookEnd + 1.2))));
+  if (t >= T.why) box = box.map((v, j) => lerp(v, TIGHT[j], span(t - T.why, 0, 1.4) * (t < T.you ? 1 : 1 - span(t - T.you, 0, 1.2))));
+  box[2] *= 1 - 0.012 * Math.sin(t * 0.7);   // never quite still
+  view(box);
+
+  // label on the side wall while it is the subject
+  const [sx, sy] = toScreen(box, anchor);
+  if (sh.key === "why") label({k: "Most common site", t: "The sides of the tongue", d: "and the underside"}, sx, sy, "right", local);
+  else if (sh.key === "you") label({k: "Your turn", t: "Look at each side", d: "Tongue out, then left, then right"}, sx, sy, "right", local);
+  else label(null);
+  readout("Step 6 of 8", "NIDCR oral cancer exam", 0, sh.key === "exam" || sh.key === "pull" ? span(local, 0.2, 0.7) : 0);
+  return frame(t);
+};
+</script>
+</body></html>
