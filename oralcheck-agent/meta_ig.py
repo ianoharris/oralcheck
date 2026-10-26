@@ -19,7 +19,7 @@ Works with either kind of token: Instagram Login (graph.instagram.com, no
 Facebook Page needed, the default) or Facebook Login (graph.facebook.com).
 The publishing calls are the same on both; only the host differs.
 
-Env: INSTAGRAM_ACCESS_TOKEN, INSTAGRAM_USER_ID, IMGBB_API_KEY,
+Env: INSTAGRAM_ACCESS_TOKEN, IMGBB_API_KEY, INSTAGRAM_USER_ID (Facebook Login only),
      META_GRAPH_HOST (optional: graph.instagram.com | graph.facebook.com)
 
     python meta_ig.py check            # what the token can do; publishes nothing
@@ -58,8 +58,29 @@ class MetaError(RuntimeError):
     pass
 
 
+_ACCOUNT: dict = {}
+
+
+def account() -> dict:
+    """The Instagram account this token belongs to: {id, username}.
+
+    On Instagram Login the token itself names its account (`/me` returns the
+    professional account's `user_id`), so that is used and INSTAGRAM_USER_ID is
+    only a cross-check: on 26 Oct the ID secret was saved from a clipboard that
+    still held the token. Facebook Login has no such lookup, so there the
+    secret is the account."""
+    if not _ACCOUNT:
+        if HOST == "graph.instagram.com":
+            me = _get("me", fields="user_id,username")
+            _ACCOUNT.update(id=str(me.get("user_id") or me.get("id")), username=me.get("username"))
+        else:
+            me = _get(IG_ID, fields="username")
+            _ACCOUNT.update(id=IG_ID, username=me.get("username"))
+    return _ACCOUNT
+
+
 def configured() -> bool:
-    return bool(TOKEN and IG_ID and IMGBB_KEY)
+    return bool(TOKEN and IMGBB_KEY and (IG_ID or HOST == "graph.instagram.com"))
 
 
 def _err(r: httpx.Response, what: str) -> MetaError:
@@ -130,7 +151,7 @@ def wait_ready(container: str, timeout_s: int = 300, every: float = 5.0) -> None
 
 def publish_container(container: str) -> str:
     wait_ready(container)
-    return _post(f"{IG_ID}/media_publish", creation_id=container)["id"]
+    return _post(f"{account()['id']}/media_publish", creation_id=container)["id"]
 
 
 def image_container(url: str, caption: str | None = None, carousel_item: bool = False) -> str:
@@ -139,7 +160,7 @@ def image_container(url: str, caption: str | None = None, carousel_item: bool = 
         params["is_carousel_item"] = "true"
     if caption is not None:
         params["caption"] = caption
-    return _post(f"{IG_ID}/media", **params)["id"]
+    return _post(f"{account()['id']}/media", **params)["id"]
 
 
 def post_image(path: Path, caption: str) -> str:
@@ -152,7 +173,7 @@ def post_carousel(paths: list[Path], caption: str) -> str:
     children = [image_container(host_image(p), carousel_item=True) for p in paths]
     for c in children:
         wait_ready(c, timeout_s=120, every=3)
-    box = _post(f"{IG_ID}/media", media_type="CAROUSEL", children=",".join(children), caption=caption)["id"]
+    box = _post(f"{account()['id']}/media", media_type="CAROUSEL", children=",".join(children), caption=caption)["id"]
     return publish_container(box)
 
 
@@ -163,7 +184,7 @@ def post_reel(video_url: str, caption: str, cover: Path | None = None) -> str:
             params["cover_url"] = host_image(cover)
         except MetaError as e:            # a missing cover is not worth a missing post
             log.warning("%s; using the first frame as the cover.", e)
-    return publish_container(_post(f"{IG_ID}/media", **params)["id"])
+    return publish_container(_post(f"{account()['id']}/media", **params)["id"])
 
 
 def full_caption(manifest: dict) -> str:
@@ -178,7 +199,7 @@ def full_caption(manifest: dict) -> str:
 
 def usage() -> dict:
     """Posts published through the API in the last 24 hours, against the quota."""
-    d = _get(f"{IG_ID}/content_publishing_limit", fields="quota_usage,config")
+    d = _get(f"{account()['id']}/content_publishing_limit", fields="quota_usage,config")
     row = (d.get("data") or [{}])[0]
     return {"used": row.get("quota_usage"), "total": (row.get("config") or {}).get("quota_total")}
 
@@ -207,22 +228,25 @@ def refresh_and_store(secret: str = "INSTAGRAM_ACCESS_TOKEN") -> int:
 
 def check() -> int:
     """Report what the token can do, publishing nothing. Prints no secrets."""
-    if not (TOKEN and IG_ID):
-        print("Missing INSTAGRAM_ACCESS_TOKEN or INSTAGRAM_USER_ID.")
+    if not TOKEN or (not IG_ID and HOST != "graph.instagram.com"):
+        print("Missing INSTAGRAM_ACCESS_TOKEN (or INSTAGRAM_USER_ID on Facebook Login).")
         return 1
     print(f"Host: {HOST}")
     ok = True
     try:
-        fields = "username,account_type" if HOST == "graph.instagram.com" else "username,name"
-        me = _get(IG_ID, fields=fields)
-        print(f"Account: @{me.get('username')} ({me.get('account_type', 'business')})")
+        a = account()
+        print(f"Account: @{a['username']}")
+        if IG_ID and HOST == "graph.instagram.com":
+            print("INSTAGRAM_USER_ID secret: " + ("matches the token's account" if IG_ID == a["id"]
+                  else "does not match; the token's own account is used (the secret can be corrected or left)"))
     except MetaError as e:
         print(f"Account lookup failed: {e}"); ok = False
-    try:
-        u = usage()
-        print(f"Publishing quota: {u['used']} of {u['total']} used in the last 24 hours")
-    except MetaError as e:
-        print(f"Quota check failed (this is the call that needs publish permission): {e}"); ok = False
+    if ok:
+        try:
+            u = usage()
+            print(f"Publishing quota: {u['used']} of {u['total']} used in the last 24 hours")
+        except MetaError as e:
+            print(f"Quota check failed (this is the call that needs publish permission): {e}"); ok = False
     print("Imgbb key: " + ("set" if IMGBB_KEY else "MISSING (pictures cannot be hosted)"))
     print("Ready to publish." if ok and IMGBB_KEY else "Not ready; see above.")
     return 0 if ok and IMGBB_KEY else 1
@@ -235,7 +259,7 @@ def probe(image: Path, reel_asset: str, repo: str = "ianoharris/oralcheck",
     their own after a day. This is the test to pass before IG_DIRECT goes on."""
     ok = True
     for what, make in (("picture", lambda: image_container(host_image(image), "probe")),
-                       ("reel", lambda: _post(f"{IG_ID}/media", media_type="REELS", caption="probe",
+                       ("reel", lambda: _post(f"{account()['id']}/media", media_type="REELS", caption="probe",
                                               video_url=release_url(repo, tag, reel_asset))["id"])):
         try:
             c = make(); wait_ready(c)
