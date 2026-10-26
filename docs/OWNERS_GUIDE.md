@@ -610,17 +610,37 @@ flowchart TB
     YOU -->|Approve| REL["Media uploaded to a<br/>GitHub release"]
     YOU -->|Redo + note| BUILD
     YOU -->|Cut| GONE["Dropped from the calendar"]
-    REL --> DRIP["Daily job, 13:00 UTC<br/>schedules posts due in 3 days"]
-    DRIP --> PUB["Publora posts it on the day"]
+    REL --> NET{"Which network?"}
+    NET -->|Instagram| META["Half-hourly job sends it<br/>straight to Meta at its time"]
+    NET -->|LinkedIn| DRIP["Daily job schedules it<br/>in Publora 3 days ahead"]
 ```
+
+**Instagram goes straight to Meta; LinkedIn goes through Publora** (since
+26 October 2026). Publora's plan holds only three scheduled posts at a time,
+across every network, and that cap was what limited the feed. Meta's own
+limit is 100 posts a day per account. Two consequences worth knowing:
+
+- **Instagram's API cannot schedule a post**, so a small job runs every half
+  hour and publishes whatever is due. GitHub sometimes starts scheduled jobs
+  late (the daily one has started up to six hours late), so a post can go out
+  a little after its time. A post more than six hours late is held back and
+  you get a Telegram message instead.
+- **The Meta login is a token that lasts 60 days.** A weekly job renews it and
+  saves the new one itself. If renewing ever fails, you get a Telegram
+  message, and posting stops when the token runs out. To make a new one: the
+  OralCheck app on developers.facebook.com, Instagram use case, "API setup
+  with Instagram login", Generate token, then save it as the repo secret
+  `INSTAGRAM_ACCESS_TOKEN`.
+
+The switch is the repo variable `IG_DIRECT`: 1 sends Instagram to Meta, 0
+puts it back on Publora. A "Diagnose Instagram Token" workflow checks the
+connection and has Meta prepare a picture and a reel without posting them.
 
 **Why a calendar.** The weekly run had to wait for your picks and your
 Telegram taps inside one GitHub job, and GitHub kills every job at six hours.
 In October two Mondays in a row were killed mid-run and nothing was scheduled.
-Building everything ahead on a laptop, where time is not capped, and letting a
-small daily job hand posts to Publora a few days ahead removes the deadline
-entirely. It also respects Publora's three-post cap, since at most three or
-four posts are ever waiting there at once.
+Building everything ahead on a laptop, where time is not capped, and letting
+small jobs hand each approved post on removes the deadline entirely.
 
 **The mix.** Ten reels, ten carousels, ten single images. Every regular post
 goes out at 10am Central on a Monday, Tuesday or Thursday, because that is when
@@ -1150,8 +1170,11 @@ code generator, and copy-paste embed code.
 | No Monday idea batch at all, no failed run either | GitHub dropped the cron | A backup cron fires at 19:00 UTC the same Monday. If that misses too, dispatch it by hand |
 | Two idea batches on the same Monday | The backup cron ran while the first was still waiting on you | Fixed 2026-09-14: the guard now also skips when another run today is still going |
 | A topic you picked never appears and never comes back | A run died between claiming the idea and building it | Fixed 2026-09-14: a fresh batch hands back any claim that produced no post |
-| Publora rejects a scheduled post | 3-slot cap reached | Publish or delete something already scheduled |
-| A calendar date passes and nothing posts | The post was never approved on the review page, or was approved after its date | The daily job only schedules approved posts up to 3 days ahead and skips past dates. Approve earlier ones in time |
+| Publora rejects a scheduled post | 3-slot cap reached | Publish or delete something already scheduled. Only LinkedIn uses Publora now, so this should be rare |
+| "The Publora connection ... has expired" | Publora's login to that network lapsed (LinkedIn did, 26 Oct 2026) | Reconnect it in Publora, then run the calendar job again |
+| An Instagram post did not go out, Telegram says it failed | Meta refused it, or the token expired | The message carries Meta's reason. It retries twice more; run "Diagnose Instagram Token" to see the connection's state |
+| Instagram posts go out late | GitHub started the half-hourly job late | Nothing to fix per post. If it is often more than an hour, tell Claude: the publishing job can move somewhere with a reliable clock |
+| A calendar date passes and nothing posts | The post was never approved on the review page, or was approved after its date, or its media never reached the release (found 26 Oct 2026: nothing had been uploaded, so nothing was scheduled) | Approve in time; approved posts are uploaded with `post_calendar.py upload` |
 | The Monday run ends "cancelled" | GitHub's 6-hour cap per job, found 2026-10-20 | Why the Monday schedule is paused and the calendar is used instead |
 | Every route 404s locally | Stale Turbopack cache | `rm -rf .next` |
 

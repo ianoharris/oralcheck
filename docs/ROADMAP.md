@@ -627,36 +627,16 @@ Update both together. See `AGENTS.md`.
       uses CI for a short daily scheduling job. The real fix is still needed
       before the weekly flow is switched back on in January.
 
-- [ ] **Meta Graph API** for direct Instagram publishing, removing the Publora
-      dependency and its 3-post cap. Needs a Facebook app, a linked Business
-      account, and token refresh handling.
-      - **Code built 2026-10-26, switched off.** Ian: "we need to connect meta
-        api so i dont get limited by publora". `meta_ig.py` publishes pictures,
-        carousels and reels with Meta's own API (100 posts a day, so no
-        practical cap); `post_calendar.py publish` sends each approved
-        Instagram post at its time, every half hour
-        (`.github/workflows/publish-instagram.yml`), because Instagram's API
-        cannot schedule. Publora keeps LinkedIn. A weekly job refreshes the
-        token (`meta-token.yml`). Everything stays off until the repo variable
-        `IG_DIRECT` is 1. Tests cover what is due, what is too late, the
-        switch, and caption limits.
-      - **History:** the same idea failed in July with Meta's "(#10)
-        Application does not have permission" on a Facebook Login token, and
-        posting moved to Publora that day. Meta has since added Instagram
-        Login, which needs no Facebook Page, and the new code defaults to it.
-      - **Blocked on Ian** (no code): create a Meta app with the Instagram use
-        case, add the OralCheck Instagram account (it must be a Business or
-        Creator account), generate a token there, and paste the token and the
-        Instagram user ID into the repo's secrets `INSTAGRAM_ACCESS_TOKEN` and
-        `INSTAGRAM_USER_ID`. (`SECRETS_WRITE_TOKEN`, the GitHub token the
-        weekly refresh uses to store the new token, was set by Ian on 26 Oct.)
-      - **Then:** run "Diagnose Instagram Token" (it checks the account and
-        quota, and has Meta prepare one real picture and reel without
-        publishing), and only if both pass, set `IG_DIRECT` to 1.
-      - **Watch:** GitHub starts scheduled jobs late. The daily calendar job
-        set for 13:00 UTC has been starting between 16:25 and 19:00. If the
-        half-hourly publish job is late in the same way, posts go out late;
-        check the first week's actual post times.
+- [ ] **Check the first Instagram posts sent through Meta go out on time**
+      (from Halloween, Sat 31 Oct 5pm CT). GitHub has started the daily job
+      up to six hours late; if the half-hourly publish job is late by more
+      than an hour, move publishing to a reliable clock. Also confirm the first
+      weekly token renewal (Mon 2 Nov) succeeds: if `SECRETS_WRITE_TOKEN` was
+      overwritten with the wrong clipboard on Ian's second save, it fails and
+      Telegram says so; re-save it then. **Blocked on:** those dates.
+- [ ] **Ian: turn on GitHub two-factor authentication before 23 Nov 2026.**
+      GitHub's notice says the account will be restricted from actions
+      otherwise, which would stop pushes to this repo.
 - [ ] Rotate the Google Places API key. Low priority: it is restricted to Places
       API (New) with a daily cap, so the blast radius is small.
 
@@ -665,6 +645,28 @@ Update both together. See `AGENTS.md`.
 ## Shipped
 
 Newest first.
+
+### 2026-10-26 (late): Instagram publishes straight to Meta
+- **Meta Graph API, done.** Ian: "we need to connect meta api so i dont get
+  limited by publora". `meta_ig.py` publishes pictures, carousels and reels
+  through Meta's own API (100 posts a day); `post_calendar.py publish` sends
+  each approved Instagram post at its time from a half-hourly job
+  (`publish-instagram.yml`), because Instagram's API cannot schedule. Publora
+  keeps LinkedIn only. A weekly job renews the 60-day token and saves it
+  (`meta-token.yml`, using Ian's `SECRETS_WRITE_TOKEN`).
+- Ian set up the OralCheck app's Instagram use case (Instagram Tester role,
+  `instagram_business_content_publish`) and saved the token. The diagnostic
+  passed: @oralcheckdotorg, 0 of 100 used, and Meta fetched and processed a
+  real picture and a real reel (from the calendar release) without
+  publishing. Ian chose to switch on now; `IG_DIRECT` = 1 at 23:19 UTC, and a
+  hand run of the publish job worked (nothing due yet).
+- **Two fixes found on the way:** request URLs, which carry the token, are no
+  longer logged (the Actions log is public on this repo); and the account is
+  taken from the token itself, since the first ID secret was saved from a
+  clipboard still holding something else.
+- History: the July attempt failed with "(#10) Application does not have
+  permission" on a Facebook Login token and posting moved to Publora that day.
+- Owner's guide: the posting section and the troubleshooting table updated.
 
 ### 2026-10-26 (night): approved posts finally uploaded; daily job fixed
 - **Nothing had been handed to Publora since the calendar was pushed.** The
