@@ -59,10 +59,10 @@
       "network": "instagram",
       "media_type": "carousel",
       "when": "2026-10-27T15:00:00+00:00",
-      "status": "approved",
+      "status": "scheduled",
       "idea": {
-        "title": "Banned at the Brewers’ ballpark since 2016",
-        "hook": "One thing has been banned at the Brewers’ ballpark since 2016.",
+        "title": "Banned at the Brewers\u2019 ballpark since 2016",
+        "hook": "One thing has been banned at the Brewers\u2019 ballpark since 2016.",
         "brief": "World Series week (Brewers v Rays). Milwaukee's 2016 smokeless tobacco ban at city sports venues (WUWM), MLB's ban for new players nine days later (SI), why (NCI: causes oral cancer; ACS: leukoplakia often where it is held between teeth and gums), and what to check. Hand-built by Claude at Ian's request, 26 Oct; Ian chose team colours and the logo.",
         "topic": "tobacco_all_forms",
         "shape": "story",
@@ -79,8 +79,8 @@
       "folder": "2026-10-27_in_carousel",
       "version": 1,
       "uploaded": true,
-      "hook": "One thing has been banned at the Brewers’ ballpark since 2016.",
-      "caption": "Since November 2016, smokeless tobacco has been banned at every sports venue in Milwaukee, the Brewers’ ballpark included. The Common Council voted 14 to 1, and the Brewers backed it. Nine days later, Major League Baseball banned it for every new player.\n\nThe reason is in the mouth. Chewing tobacco causes oral cancer. Gray-white patches called leukoplakia are often found where it sits between the teeth and gums, and they can become cancer.\n\nIf you dip, pull your lower lip down and look at that spot. A patch still there after two weeks is worth showing a dentist. Check your own risk, free and private, at oralcheck.org.\n\nGame 4 is tonight. Go Brewers.\n\nNot affiliated with or endorsed by the Milwaukee Brewers or Major League Baseball.\n\nIllustration based on Z-Anatomy (CC BY-SA 4.0) and BodyParts3D (CC BY-SA 2.1 JP). Shared under CC BY-SA 4.0.\n\nSources:\nWUWM, 22 Nov 2016. https://www.wuwm.com/regional/2016-11-22/milwaukee-to-ban-smokeless-tobacco-at-sports-venues-including-miller-park\nSports Illustrated, 1 Dec 2016. https://www.si.com/mlb/2016/12/01/mlb-bans-smokeless-tobacco-new-players-cba\nNational Cancer Institute. https://www.cancer.gov/about-cancer/causes-prevention/risk/tobacco/smokeless-fact-sheet\nAmerican Cancer Society. https://www.cancer.org/cancer/risk-prevention/tobacco/smokeless-tobacco.html",
+      "hook": "One thing has been banned at the Brewers\u2019 ballpark since 2016.",
+      "caption": "Since November 2016, smokeless tobacco has been banned at every sports venue in Milwaukee, the Brewers\u2019 ballpark included. The Common Council voted 14 to 1, and the Brewers backed it. Nine days later, Major League Baseball banned it for every new player.\n\nThe reason is in the mouth. Chewing tobacco causes oral cancer. Gray-white patches called leukoplakia are often found where it sits between the teeth and gums, and they can become cancer.\n\nIf you dip, pull your lower lip down and look at that spot. A patch still there after two weeks is worth showing a dentist. Check your own risk, free and private, at oralcheck.org.\n\nGame 4 is tonight. Go Brewers.\n\nNot affiliated with or endorsed by the Milwaukee Brewers or Major League Baseball.\n\nIllustration based on Z-Anatomy (CC BY-SA 4.0) and BodyParts3D (CC BY-SA 2.1 JP). Shared under CC BY-SA 4.0.\n\nSources:\nWUWM, 22 Nov 2016. https://www.wuwm.com/regional/2016-11-22/milwaukee-to-ban-smokeless-tobacco-at-sports-venues-including-miller-park\nSports Illustrated, 1 Dec 2016. https://www.si.com/mlb/2016/12/01/mlb-bans-smokeless-tobacco-new-players-cba\nNational Cancer Institute. https://www.cancer.gov/about-cancer/causes-prevention/risk/tobacco/smokeless-fact-sheet\nAmerican Cancer Society. https://www.cancer.org/cancer/risk-prevention/tobacco/smokeless-tobacco.html",
       "hashtags": [
         "brewers",
         "worldseries",
@@ -102,7 +102,9 @@
       "notes": [
         "26 Oct: Ian asked for a Brewers World Series post and picked 'banned at the Brewers'. Team colours and logo at his call; player photos left out (a player's face beside 'causes oral cancer' implies that player dips)."
       ],
-      "review_note": ""
+      "review_note": "",
+      "publora_id": "6adfd95221af69534ce1bf4b",
+      "scheduled_at": "2026-10-26T22:50:56.199866+00:00"
     },
     {
       "id": "2026-10-28_li_image",
@@ -151,7 +153,7 @@
       "network": "instagram",
       "media_type": "carousel",
       "when": "2026-10-29T15:00:00+00:00",
-      "status": "approved",
+      "status": "scheduled",
       "idea": {
         "title": "A biopsy turns a white patch into an answer",
         "hook": "You notice a white patch. You wait. It is still there.",
@@ -186,7 +188,9 @@
         "preview.jpg"
       ],
       "review_note": "",
-      "uploaded": true
+      "uploaded": true,
+      "publora_id": "6adfd9cded849b64de4a15c1",
+      "scheduled_at": "2026-10-26T22:50:56.199866+00:00"
     },
     {
       "id": "2026-10-31_in_carousel",
@@ -263,7 +267,7 @@
         "hpv",
         "throatcancer",
         "oralhealth",
-        "earlydетесtion"
+        "earlyd\u0435\u0442\u0435\u0441tion"
       ],
       "files": [
         "image.jpg"
@@ -990,7 +994,7 @@
       "hashtags": [
         "oralcancer",
         "oralhealth",
-        "earlydетection",
+        "earlyd\u0435\u0442ection",
         "cancerscreening",
         "oralcheck"
       ],
