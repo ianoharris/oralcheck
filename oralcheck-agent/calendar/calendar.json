@@ -112,7 +112,7 @@
       "network": "linkedin",
       "media_type": "image",
       "when": "2026-10-27T15:00:00+00:00",
-      "status": "approved",
+      "status": "scheduled",
       "idea": {
         "title": "HPV overtook tobacco as the top throat cancer cause",
         "hook": "Tobacco is not the leading cause of throat cancer anymore.",
@@ -145,7 +145,9 @@
       "uploaded": true,
       "notes": [
         "26 Oct: Ian supplied an HPV render and a tobacco photo ('use these pics for the hpv one. make the design nice'). Rebuilt as a side-by-side card (render_html.versus_image): up 225% / down 50%, Chaturvedi 2011."
-      ]
+      ],
+      "publora_id": "6adfdadeed849b64de4a1ea2",
+      "scheduled_at": "2026-10-26T22:57:25.861977+00:00"
     },
     {
       "id": "2026-10-30_in_carousel",
