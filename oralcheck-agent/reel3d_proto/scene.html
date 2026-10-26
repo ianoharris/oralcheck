@@ -1,0 +1,258 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<script type="importmap">{"imports":{"three":"./node_modules/three/build/three.module.js","three/addons/":"./node_modules/three/examples/jsm/"}}</script>
+<style>
+  html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:#eceff0;font-family:"Source Sans 3",sans-serif;color:#15201f}
+  #bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 55% at 50% 42%,#fbfcfc 0%,#eef1f2 55%,#e1e6e7 100%)}
+  canvas{position:absolute;inset:0}
+  #ui{position:absolute;inset:0;pointer-events:none}
+  .chrome{position:absolute;top:120px;left:72px;right:72px;display:flex;justify-content:space-between;align-items:center;
+          font:500 22px "JetBrains Mono",monospace;letter-spacing:.12em;color:#5d6c6b;text-transform:uppercase}
+  .chrome .brand{display:flex;align-items:center;gap:14px;font-family:"Source Sans 3";font-weight:700;letter-spacing:.02em;text-transform:none;font-size:30px;color:#15201f}
+  .chrome .dot{width:12px;height:12px;border-radius:50%;background:#0d7377}
+  .rule{position:absolute;top:176px;left:72px;right:72px;height:1px;background:#c9d1d1}
+  .view{position:absolute;top:196px;left:72px;font:500 20px "JetBrains Mono",monospace;letter-spacing:.14em;color:#8a9796;text-transform:uppercase}
+  #label{position:absolute;opacity:0;transition:none}
+  #label .k{font:500 20px "JetBrains Mono",monospace;letter-spacing:.16em;color:#0d7377;text-transform:uppercase}
+  #label .t{font-weight:700;font-size:46px;line-height:1.05;margin-top:8px;max-width:420px}
+  #label .d{font-size:27px;line-height:1.3;color:#4a5958;margin-top:10px;max-width:400px}
+  svg#lead{position:absolute;inset:0;width:1080px;height:1920px}
+  #tap{position:absolute;width:60px;height:60px;margin:-30px 0 0 -30px;border-radius:50%;border:3px solid #0d7377;opacity:0}
+  #tapdot{position:absolute;width:22px;height:22px;margin:-11px 0 0 -11px;border-radius:50%;background:rgba(13,115,119,.85);opacity:0;
+          box-shadow:0 0 0 8px rgba(13,115,119,.15)}
+  #cap{position:absolute;left:72px;right:72px;top:1270px;font-weight:600;font-size:54px;line-height:1.18;color:#15201f;letter-spacing:-.005em}
+  #cap span{opacity:.18}
+  #cap span.on{opacity:1}
+  .scrub{position:absolute;left:72px;right:72px;top:1500px;height:3px;background:#d3dbdb;border-radius:2px}
+  .scrub i{position:absolute;left:0;top:0;bottom:0;background:#0d7377;border-radius:2px}
+</style></head>
+<body>
+<div id="bg"></div>
+<div id="ui">
+  <div class="chrome"><div class="brand"><span class="dot"></span>OralCheck</div><div id="step">01 / 03</div></div>
+  <div class="rule"></div>
+  <div class="view" id="view">Oral cavity · anterolateral</div>
+  <svg id="lead"><line id="ln" x1="0" y1="0" x2="0" y2="0" stroke="#0d7377" stroke-width="2"/><circle id="lc" r="7" fill="#fff" stroke="#0d7377" stroke-width="3"/></svg>
+  <div id="label"><div class="k" id="lk"></div><div class="t" id="lt"></div><div class="d" id="ld"></div></div>
+  <div id="tap"></div><div id="tapdot"></div>
+  <div id="cap"></div>
+  <div class="scrub"><i id="scrub"></i></div>
+</div>
+<script type="module">
+import * as THREE from "three";
+import {GLTFLoader} from "three/addons/loaders/GLTFLoader.js";
+import {RoomEnvironment} from "three/addons/environments/RoomEnvironment.js";
+import {EffectComposer} from "three/addons/postprocessing/EffectComposer.js";
+import {RenderPass} from "three/addons/postprocessing/RenderPass.js";
+import {GTAOPass} from "three/addons/postprocessing/GTAOPass.js";
+import {OutputPass} from "three/addons/postprocessing/OutputPass.js";
+
+const W = 1080, H = 1920, DUR = 12;
+const renderer = new THREE.WebGLRenderer({antialias: true, preserveDrawingBuffer: true});
+renderer.localClippingEnabled = true;
+renderer.setPixelRatio(1); renderer.setSize(W, H);
+renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 0.92;
+document.body.insertBefore(renderer.domElement, document.getElementById("ui"));
+const scene = new THREE.Scene();
+{ const c = document.createElement("canvas"); c.width = 540; c.height = 960; const x = c.getContext("2d");
+  const g = x.createRadialGradient(270, 400, 20, 270, 400, 760); g.addColorStop(0, "#fbfcfc"); g.addColorStop(.55, "#eef1f2"); g.addColorStop(1, "#dfe5e6");
+  x.fillStyle = g; x.fillRect(0, 0, 540, 960); const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace; scene.background = tex; }
+// Cutaway: the upper jaw is sliced just above the palate, like an atlas section.
+const CUT = new THREE.Plane(new THREE.Vector3(0, -1, 0), 0.16);
+const pmrem = new THREE.PMREMGenerator(renderer);
+scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+const key = new THREE.DirectionalLight(0xffffff, 2.1); key.position.set(1.1, 1.0, 0.7); scene.add(key);
+const rim = new THREE.DirectionalLight(0xdff3f3, 0.8); rim.position.set(-1, 0.4, -0.8); scene.add(rim);
+
+const camera = new THREE.PerspectiveCamera(24, W / H, 0.001, 10);
+const composer = new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene, camera));
+const ao = new GTAOPass(scene, camera, W, H);
+// The AO pass draws with its own material; it must honour the section cut too.
+ao.normalMaterial.clippingPlanes = [new THREE.Plane(new THREE.Vector3(0, -1, 0), 0.16)]; ao.blendIntensity = 1.0; composer.addPass(ao);
+composer.addPass(new OutputPass());
+
+const TEAL = new THREE.Color("#0d7377");
+const mat = {
+  bone:   () => new THREE.MeshPhysicalMaterial({color: "#ece3d2", roughness: 0.55, clearcoat: 0.15, clearcoatRoughness: 0.5, transparent: true}),
+  tooth:  () => new THREE.MeshPhysicalMaterial({color: "#faf8f2", roughness: 0.28, clearcoat: 0.6, clearcoatRoughness: 0.25, transparent: true}),
+  soft:   () => new THREE.MeshPhysicalMaterial({color: "#e2c9c4", roughness: 0.6, sheen: 0.4, sheenColor: new THREE.Color("#fff"), transparent: true}),
+  gland:  () => new THREE.MeshPhysicalMaterial({color: "#e6d9c9", roughness: 0.6, transparent: true}),
+  muscle: () => new THREE.MeshPhysicalMaterial({color: "#dcc3bd", roughness: 0.65, sheen: 0.3, transparent: true}),
+};
+// ---- procedural surface detail ------------------------------------------
+// The meshes carry no UVs, so texture is generated in the shader from object-
+// space position: a bump (pores and unevenness), colour mottling and
+// roughness variation. Units are metres, the model's native scale.
+const NOISE = `
+varying vec3 vObj;
+uniform float uBump, uRoughVar, uMottleAmt, uPore, uStriate;
+uniform vec3 uTint;
+float ocHash(vec3 p){ p = fract(p * 0.3183099 + 0.1); p *= 17.0; return fract(p.x * p.y * p.z * (p.x + p.y + p.z)); }
+float ocNoise(vec3 x){ vec3 i = floor(x), f = fract(x); f = f * f * (3.0 - 2.0 * f);
+  return mix(mix(mix(ocHash(i), ocHash(i + vec3(1,0,0)), f.x), mix(ocHash(i + vec3(0,1,0)), ocHash(i + vec3(1,1,0)), f.x), f.y),
+             mix(mix(ocHash(i + vec3(0,0,1)), ocHash(i + vec3(1,0,1)), f.x), mix(ocHash(i + vec3(0,1,1)), ocHash(i + vec3(1,1,1)), f.x), f.y), f.z); }
+float ocFbm(vec3 p){ float a = 0.5, s = 0.0; for (int k = 0; k < 4; k++) { s += a * ocNoise(p); p = p * 2.03 + 11.7; a *= 0.5; } return s; }
+float ocHeight(vec3 p){
+  float broad = ocFbm(p * 120.0);
+  float fine  = ocFbm(p * 380.0);
+  float pores = smoothstep(0.70, 0.86, ocNoise(p * 1100.0));         // small pits
+  float str   = sin(p.y * 2400.0 + ocFbm(p * 300.0) * 6.0) * 0.5 + 0.5; // enamel growth lines
+  return 0.55 * broad + 0.35 * fine - uPore * pores + uStriate * str;
+}
+float ocMottle(vec3 p){ return ocFbm(p * 55.0 + 3.1); }
+vec3 ocPerturb(vec3 surf_pos, vec3 surf_norm, vec2 dHdxy, float faceDir){
+  vec3 sx = normalize(dFdx(surf_pos)), sy = normalize(dFdy(surf_pos));
+  vec3 r1 = cross(sy, surf_norm), r2 = cross(surf_norm, sx);
+  float det = dot(sx, r1) * faceDir;
+  vec3 grad = sign(det) * (dHdxy.x * r1 + dHdxy.y * r2);
+  return normalize(abs(det) * surf_norm - grad);
+}`;
+function surface(m, o) {
+  m.userData.surface = o;
+  m.onBeforeCompile = sh => {
+    Object.assign(sh.uniforms, {uBump: {value: o.bump}, uRoughVar: {value: o.roughVar}, uMottleAmt: {value: o.mottle},
+      uPore: {value: o.pore}, uStriate: {value: o.striate}, uTint: {value: new THREE.Color(o.tint)}});
+    sh.vertexShader = "varying vec3 vObj;\n" + sh.vertexShader.replace("#include <begin_vertex>", "#include <begin_vertex>\nvObj = position;");
+    sh.fragmentShader = NOISE + "\n" + sh.fragmentShader
+      .replace("#include <color_fragment>", "#include <color_fragment>\n diffuseColor.rgb *= mix(vec3(1.0), uTint, uMottleAmt * ocMottle(vObj));")
+      .replace("#include <roughnessmap_fragment>", "#include <roughnessmap_fragment>\n roughnessFactor = clamp(roughnessFactor + (ocMottle(vObj * 3.0) - 0.5) * uRoughVar, 0.05, 1.0);")
+      .replace("#include <normal_fragment_maps>", "#include <normal_fragment_maps>\n { float h = ocHeight(vObj); normal = ocPerturb(-vViewPosition, normal, vec2(dFdx(h), dFdy(h)) * uBump, faceDirection); }");
+  };
+  m.customProgramCacheKey = () => JSON.stringify(o);
+  return m;
+}
+const SURF = {
+  bone:  {bump: 1.5, roughVar: 0.45, mottle: 0.9, pore: 0.3, striate: 0.0,  tint: "#d6c29d"},
+  tooth: {bump: 0.7, roughVar: 0.2, mottle: 0.45, pore: 0.0,  striate: 0.22, tint: "#e6d6b6"},
+  soft:  {bump: 0.6, roughVar: 0.2,  mottle: 0.35, pore: 0.0,  striate: 0.0,  tint: "#c99e98"},
+};
+
+const groups = {}; const all = [];
+function kind(n) {
+  if (/molar|premolar|incisor|canine/i.test(n)) return "tooth";
+  if (/Mandible|Maxilla|Palatine_bone|Hyoid/.test(n)) return "bone";
+  if (/gland|nodes/i.test(n)) return "gland";
+  if (/Mylohyoid|Geniohyoid/.test(n)) return "muscle";
+  return "soft";
+}
+function group(n) {
+  if (/Tongue/.test(n)) return "tongue";
+  if (/Gingiva/.test(n)) return "gums";
+  if (/Sublingual|Mylohyoid|Geniohyoid/.test(n)) return "floor";
+  if (/Submandibular_nodes/.test(n)) return "nodes";
+  if (/Submandibular_gland/.test(n)) return "glandSM";
+  if (/Mandible|Maxilla|Palatine_bone|Hyoid/.test(n)) return "bone";
+  if (/molar|premolar|incisor|canine/i.test(n)) return "teeth";
+  return "other";
+}
+let root, ready = false;
+new GLTFLoader().load("oral.glb", g => {
+  root = g.scene;
+  root.traverse(o => {
+    if (!o.isMesh) return;
+    o.material = mat[kind(o.name)]();
+    const sk = kind(o.name); if (SURF[sk] || sk === "muscle" || sk === "gland") surface(o.material, SURF[sk] || SURF.soft);
+    o.material.clippingPlanes = [CUT]; o.material.side = THREE.DoubleSide;
+    o.material.userData.base = o.material.color.clone();
+    o.geometry.computeVertexNormals();
+    const k = group(o.name); (groups[k] = groups[k] || []).push(o); all.push(o);
+  });
+  const c = new THREE.Box3().setFromObject(root).getCenter(new THREE.Vector3());
+  root.position.sub(c); root.scale.setScalar(10);   // metres -> decimetres for nicer numbers
+  root.position.multiplyScalar(10);
+  scene.add(root);
+  ready = true;
+});
+
+// ---- timeline -------------------------------------------------------------
+const ease = x => x < 0 ? 0 : x > 1 ? 1 : 1 - Math.pow(1 - x, 4);
+const smooth = x => x < 0 ? 0 : x > 1 ? 1 : x * x * (3 - 2 * x);
+const span = (t, a, b) => smooth((t - a) / (b - a));
+const lerp = (a, b, k) => a + (b - a) * k;
+
+const shots = [
+  {t0: 0, view: "Oral cavity · anterolateral", step: "01 / 03",
+   cam: [[38, 10, 6.4], [20, 6, 5.8]], focus: null,
+   cap: "Oral cancer most often starts in places you rarely look."},
+  {t0: 4, view: "Tongue · lateral border", step: "02 / 03",
+   cam: [[70, 2, 4.6], [80, 0, 4.3]], focus: "tongue", ghost: ["bone", "teeth", "gums", "other", "floor"],
+   label: {k: "Most common site", t: "Sides of the tongue", d: "Stick it out, look left, then right."},
+   cap: "The sides and underside of the tongue come first."},
+  {t0: 8, view: "Floor of mouth · inferior", step: "03 / 03",
+   cam: [[34, -40, 4.6], [22, -44, 4.3]], focus: "floor", ghost: ["bone", "teeth", "tongue", "gums", "other"],
+   label: {k: "Hard to see", t: "Floor of the mouth", d: "Lift your tongue to the roof of your mouth."},
+   cap: "Then lift it, and check the floor beneath."},
+];
+const target = new THREE.Vector3(0, -0.55, 0.05);
+function camAt(sh, k) {
+  const [a, b] = sh.cam; const az = lerp(a[0], b[0], k) * Math.PI / 180, el = lerp(a[1], b[1], k) * Math.PI / 180, r = lerp(a[2], b[2], k);
+  return new THREE.Vector3(Math.sin(az) * Math.cos(el) * r, Math.sin(el) * r, Math.cos(az) * Math.cos(el) * r).add(target);
+}
+function centerOf(name) {
+  const b = new THREE.Box3(); (groups[name] || []).forEach(o => b.expandByObject(o)); return b.getCenter(new THREE.Vector3());
+}
+const $ = id => document.getElementById(id);
+
+window.render = (t) => {
+  if (!ready) return false;
+  let i = shots.length - 1; while (i > 0 && t < shots[i].t0) i--;
+  const sh = shots[i], next = shots[i + 1];
+  const local = t - sh.t0, len = (next ? next.t0 : DUR) - sh.t0;
+  // camera: drift within a shot, ease between shots over 0.9s
+  let pos = camAt(sh, local / len);
+  if (i > 0 && local < 0.9) pos = camAt(shots[i - 1], 1).lerp(pos, ease(local / 0.9));
+  camera.position.copy(pos); camera.lookAt(target);
+  // materials: focus turns teal, ghosted groups fade to glass
+  const fin = span(local, 0.5, 1.1);
+  const prev = shots[i - 1];
+  for (const [g, list] of Object.entries(groups)) {
+    const wasGhost = prev && local < 0.9 && (prev.ghost || []).includes(g);
+    const isGhost = (sh.ghost || []).includes(g);
+    const gk = isGhost ? (wasGhost ? 1 : span(local, 0.2, 0.9)) : (wasGhost ? 1 - span(local, 0, 0.6) : 0);
+    const fk = sh.focus === g ? fin : 0;
+    for (const o of list) {
+      o.material.opacity = 1 - 0.62 * gk;
+      o.material.depthWrite = gk < 0.5;
+      o.material.color.copy(o.material.userData.base).lerp(TEAL, 0.85 * fk);
+      o.material.emissive = TEAL.clone().multiplyScalar(0.18 * fk);
+      o.visible = !(g === "nodes" || g === "glandSM") || sh.focus === g;
+    }
+  }
+  let ghostMax = 0;
+  for (const list of Object.values(groups)) for (const o of list) ghostMax = Math.max(ghostMax, 1 - o.material.opacity);
+  ao.enabled = ghostMax < 0.05;
+  composer.render();
+  // overlay: label + leader + tap
+  const lab = $("label");
+  if (sh.label) {
+    const p = centerOf(sh.focus).project(camera);
+    const x = (p.x * .5 + .5) * W, y = (-p.y * .5 + .5) * H;
+    const lx = x > W / 2 ? 90 : 600, ly = 330;
+    const k = span(local, 1.2, 1.7);
+    $("lk").textContent = sh.label.k; $("lt").textContent = sh.label.t; $("ld").textContent = sh.label.d;
+    lab.style.left = lx + "px"; lab.style.top = ly + "px"; lab.style.opacity = k;
+    const ax = lx > x ? lx - 24 : lx + 440, ay = ly + 60;
+    const draw = span(local, 1.0, 1.5);
+    $("ln").setAttribute("x1", x); $("ln").setAttribute("y1", y);
+    $("ln").setAttribute("x2", lerp(x, ax, draw)); $("ln").setAttribute("y2", lerp(y, ay, draw));
+    $("ln").style.opacity = draw > 0 ? 1 : 0; $("lc").setAttribute("cx", x); $("lc").setAttribute("cy", y); $("lc").style.opacity = draw > 0 ? 1 : 0;
+    // tap: dot arrives, presses, ripples
+    const tk = local - 0.55;
+    $("tapdot").style.left = x + "px"; $("tapdot").style.top = y + "px";
+    $("tapdot").style.opacity = tk > -0.3 && tk < 0.6 ? Math.min(1, (tk + 0.3) / 0.2) * (1 - span(tk, 0.35, 0.6)) : 0;
+    $("tapdot").style.transform = `scale(${tk > 0 && tk < 0.15 ? 0.8 : 1})`;
+    $("tap").style.left = x + "px"; $("tap").style.top = y + "px";
+    const rk = span(tk, 0.0, 0.7);
+    $("tap").style.opacity = tk > 0 ? 1 - rk : 0; $("tap").style.transform = `scale(${1 + rk * 2.2})`;
+  } else { lab.style.opacity = 0; $("ln").style.opacity = 0; $("lc").style.opacity = 0; $("tap").style.opacity = 0; $("tapdot").style.opacity = 0; }
+  $("view").textContent = sh.view; $("step").textContent = sh.step;
+  // captions: the whole line sits faint, words firm up as they are spoken
+  const words = sh.cap.split(" "); const per = (len - 1.2) / words.length;
+  $("cap").innerHTML = words.map((w, j) => `<span class="${local > 0.4 + j * per ? "on" : ""}">${w}</span>`).join(" ");
+  $("scrub").style.width = (t / DUR * 100).toFixed(2) + "%";
+  return true;
+};
+</script>
+</body></html>

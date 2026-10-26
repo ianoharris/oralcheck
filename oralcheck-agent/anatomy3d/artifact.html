@@ -1,0 +1,213 @@
+<title>OralCheck Head Atlas</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Source+Sans+3:wght@400;600&display=swap">
+<style>
+  /* Layout: the specimen fills the room; controls sit in a side rail on wide screens, a bottom drawer on phones. */
+  :root {
+    --bg: #0d1a1b; --room-hi: #f3f5f5; --room: #dde3e4; --lead: #2b3d3f; --panel: #122324; --line: #23393b; --ink: #e8e4de; --muted: #8fa3a5; --teal: #14a8ae; --coral: #e8634a;
+    --display: "DM Serif Display", Georgia, serif; --body: "Source Sans 3", system-ui, sans-serif;
+    color-scheme: dark;
+  }
+  html, body { height: 100%; }
+  body { background: var(--bg); color: var(--ink); font: 15px/1.45 var(--body); overflow: hidden; }
+  .app { height: 100%; display: grid; grid-template-columns: 330px 1fr; }
+  .rail { background: var(--panel); border-right: 1px solid var(--line); overflow-y: auto; padding-block: 18px 24px;
+    padding-left: max(18px, env(safe-area-inset-left, 0px)); padding-right: 18px; display: flex; flex-direction: column; gap: 20px; }
+  .room { position: relative; min-width: 0; min-height: 0; background: radial-gradient(110% 80% at 50% 38%, var(--room-hi) 0%, var(--room) 75%); }
+  #stage { position: absolute; inset: 0; }
+  #stage canvas { display: block; touch-action: none; }
+  h1 { font: 400 26px/1.1 var(--display); margin: 0; text-wrap: balance; }
+  .kicker { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--teal); margin: 0 0 6px; }
+  .hint { color: var(--muted); font-size: 13px; margin: 8px 0 0; }
+  h2 { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin: 0 0 8px; }
+  .seg { display: grid; grid-template-columns: repeat(var(--n, 4), 1fr); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+  .seg button { background: none; border: 0; border-right: 1px solid var(--line); color: var(--ink); font: 600 13px var(--body); padding: 9px 4px; cursor: pointer; }
+  .seg button:last-child { border-right: 0; }
+  .seg button[aria-pressed="true"] { background: var(--teal); color: #062022; }
+  button:focus-visible, input:focus-visible { outline: 2px solid var(--coral); outline-offset: 2px; }
+  .row { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
+  .row label { font-size: 13px; color: var(--muted); min-width: 64px; }
+  input[type=range] { flex: 1; min-width: 0; accent-color: var(--teal); }
+  .check { display: flex; align-items: center; gap: 8px; margin-top: 10px; font-size: 13px; color: var(--muted); cursor: pointer; }
+  .check input { accent-color: var(--teal); }
+  .ticks { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); margin-top: 2px; padding-left: 74px; }
+  .ghost { background: none; border: 1px solid var(--line); color: var(--ink); border-radius: 6px; font: 600 12px var(--body); padding: 5px 9px; cursor: pointer; }
+  .presets { display: flex; flex-direction: column; gap: 6px; }
+  .presets button { text-align: left; background: none; border: 1px solid var(--line); border-radius: 8px; color: var(--ink); font: 15px var(--body); padding: 9px 12px; cursor: pointer; display: flex; justify-content: space-between; gap: 8px; }
+  .presets button span { color: var(--muted); font-size: 12px; white-space: nowrap; }
+  .presets button:hover, .presets button[aria-pressed="true"] { border-color: var(--teal); }
+  .find { display: flex; gap: 6px; }
+  .find input { flex: 1; min-width: 0; background: var(--bg); border: 1px solid var(--line); border-radius: 8px; color: var(--ink); font: 15px var(--body); padding: 8px 10px; }
+  .credit { font-size: 12px; color: var(--muted); margin-top: auto; border-top: 1px solid var(--line); padding-top: 12px; }
+  .credit a { color: var(--muted); }
+  #lead { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+  #lead line { stroke: var(--lead); stroke-width: 1.4; } #lead circle { fill: var(--teal); stroke: var(--ink); stroke-width: 2; }
+  #tags { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+  .tag { position: absolute; box-sizing: border-box; padding: 7px 11px; border-radius: 9px; background: rgba(13, 26, 27, .78); backdrop-filter: blur(6px); }
+  .tag b { display: block; font-size: clamp(15px, 1.7vw, 22px); font-weight: 600; } .tag span { color: var(--muted); font-size: 12px; }
+  .status { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); color: #4a5f61; font-size: 14px; text-align: center; }
+  .status b { display: block; font: 400 34px var(--display); color: #0d1a1b; font-variant-numeric: tabular-nums; }
+  @media (max-width: 760px) {
+    .app { grid-template-columns: 1fr; grid-template-rows: 1fr auto; }
+    .room { order: 1; } .rail { order: 2; max-height: 46vh; border-right: 0; border-top: 1px solid var(--line);
+      padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-left: max(16px, env(safe-area-inset-left, 0px));
+      padding-bottom: max(18px, env(safe-area-inset-bottom, 0px)); }
+    h1 { font-size: 22px; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="app">
+  <aside class="rail" aria-label="Controls">
+    <header>
+      <p class="kicker">OralCheck</p>
+      <h1>Head and neck, layer by layer</h1>
+      <p class="hint">Drag to turn, scroll or pinch to zoom, right-drag to pan. Tap any part to name it.</p>
+    </header>
+
+    <section>
+      <h2>Look</h2>
+      <div class="seg" id="look" style="--n: 4">
+        <button type="button" data-look="xray" aria-pressed="false">See-through</button>
+        <button type="button" data-look="layers" aria-pressed="false">Layers</button>
+        <button type="button" data-look="mouth" aria-pressed="false">Mouth</button>
+        <button type="button" data-look="block" aria-pressed="false">Skin block</button>
+      </div>
+      <div id="mouthRow">
+        <div class="row"><label for="open">Open</label><input id="open" type="range" min="0" max="130" step="1" value="100"></div>
+      </div>
+      <div id="layerRow">
+        <div class="row"><label for="depth">Peel to</label><input id="depth" type="range" min="2" max="4" step="1" value="2"></div>
+        <div class="ticks"><span>Muscle</span><span>Bone</span><span>Deep</span></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Cut</h2>
+      <div class="seg" id="cut">
+        <button type="button" data-cut="none" aria-pressed="true">None</button>
+        <button type="button" data-cut="sagittal" aria-pressed="false">Sagittal</button>
+        <button type="button" data-cut="coronal" aria-pressed="false">Coronal</button>
+        <button type="button" data-cut="axial" aria-pressed="false">Axial</button>
+      </div>
+      <div class="row"><label for="cutpos">Position</label><input id="cutpos" type="range" min="-90" max="90" step="1" value="0"><button type="button" class="ghost" id="flip">Flip</button></div>
+      <p class="hint" id="cutHint">Sagittal splits left from right, coronal front from back, axial top from bottom.</p>
+    </section>
+
+    <section>
+      <h2>Show me</h2>
+      <div class="presets" id="presets"></div>
+    </section>
+
+    <section>
+      <h2>Find a structure</h2>
+      <div class="find">
+        <input id="q" list="names" placeholder="Tongue, parotid, lingual nerve" autocomplete="off">
+        <button type="button" class="ghost" id="go">Show</button>
+      </div>
+      <datalist id="names"></datalist>
+    </section>
+
+    <p class="credit">Anatomy from <a href="https://github.com/Z-Anatomy/Models-of-human-anatomy" target="_blank" rel="noopener">Z-Anatomy</a> (CC BY-SA 4.0), built on BodyParts3D, DBCLS. The head is shown without its skin; the skin's layers are shown in the separate block, with the epidermis drawn thicker than life so it can be seen. Shared under CC BY-SA 4.0.</p>
+  </aside>
+
+  <main class="room">
+    <div id="stage"></div>
+    <svg id="lead"></svg>
+    <div id="tags"></div>
+    <div class="status" id="status"><b id="pct">0%</b>Loading the model (20 MB)</div>
+  </main>
+</div>
+
+<script>window.MODEL_PARTS = ["head.part1.txt", "head.part2.txt"];</script>
+<script src="anatomy.bundle.js"></script>
+<script>
+(() => {
+  const $ = (s) => document.querySelector(s);
+  // (no skin on the head since 23 Oct, so no face in the mouth view: Ian found it too frightening)
+  const state = { look: "mouth", cut: "none", pos: 0, flip: false, depth: 2, open: 1, ahh: 0, face: false };
+  const CUT_RANGE = 0.09;   // metres either side of the middle
+
+  const PRESETS = [
+    { t: "Inside the mouth", s: "open", run() { look("mouth"); mouth(1, 0, false); oc.view(0, 6, 1.0, [0, 1.515, 0.07]); oc.label("^Tongue$", "Tongue", ""); oc.addLabel("^Floor of mouth", "Floor of the mouth", ""); oc.addLabel("^Lower labial mucosa", "Inner lip", ""); } },
+    { t: "Back of the mouth", s: "say ahh", run() { look("mouth"); mouth(1.3, 1, false); oc.view(0, -34, 0.7, [0, 1.552, 0.03]); oc.label("^Uvula of palate", "Uvula", ""); oc.addLabel("^Palatine tonsil.l", "Tonsil", "between the arches"); oc.addLabel("^Soft palate", "Soft palate", ""); oc.addLabel("^Posterior pharyngeal", "Back of the throat", "oropharynx"); } },
+    { t: "Inside of the cheek", s: "open", run() { look("mouth"); mouth(1, 0, false); oc.view(-50, 8, 0.7, [0.01, 1.53, 0.055]); oc.label("^Buccal mucosa.l", "Inside of the cheek", "buccal mucosa"); } },
+    { t: "Top of the tongue", s: "open", run() { look("mouth"); mouth(1, 0, false); oc.view(28, 18, 0.5, [0.008, 1.512, 0.055]); oc.label("^Tongue$", "Side of the tongue", "where most tongue cancers start", null, [1, 0, 0]); } },
+    { t: "Gums", s: "open", run() { look("mouth"); mouth(1, 0, false); oc.view(15, 0, 0.4, [0, 1.535, 0.088]); oc.label("^Upper gingiva", "Gums", "firm and stippled when healthy"); } },
+    { t: "Sides of the tongue", s: "see-through", run() { look("xray"); oc.highlight("^Tongue$"); oc.view(35, 4, 2.2); oc.label("^Tongue$", "Sides of the tongue", "where most tongue cancers start", null, [1, 0, 0]); } },
+    { t: "Floor of the mouth", s: "see-through", run() { look("xray"); oc.highlight("Mylohyoid muscle|Geniohyoid muscle|^Sublingual gland"); oc.view(40, -18, 2.2); oc.label("Mylohyoid muscle|Geniohyoid muscle", "Floor of the mouth", "mylohyoid, geniohyoid, sublingual glands"); } },
+    { t: "Neck lymph nodes", s: "see-through", run() { look("xray"); oc.highlight("nodes?\\b"); oc.view(45, -4, 2.2); oc.label("^Submandibular nodes", "Submandibular nodes", "under the jaw"); oc.addLabel("jugul", "Jugular chain", "along the big neck vein"); } },
+    { t: "Midline section", s: "sagittal", run() { look("layers", 2); cut("sagittal", 0.002); oc.view(90, 0, 2.0); oc.label("^Tongue$", "Tongue", ""); oc.addLabel("^Soft palate", "Soft palate", ""); oc.addLabel("^Epiglottis", "Epiglottis", ""); oc.addLabel("^Hyoid bone", "Hyoid bone", ""); oc.addLabel("^Genioglossus", "Genioglossus", "muscle of the tongue"); } },
+    { t: "Through the mouth", s: "coronal", run() { look("layers", 2); cut("coronal", 0.035); oc.view(0, 0, 1.9); oc.label("^Tongue$", "Tongue", ""); oc.addLabel("^Mylohyoid", "Mylohyoid", "floor of the mouth"); oc.addLabel("^Mandible", "Mandible", "lower jaw"); } },
+    { t: "Across the mouth", s: "axial", run() { look("layers", 2); cut("axial", -0.025); oc.view(0, 72, 2.0); oc.label("^Tongue$", "Tongue", ""); oc.addLabel("part of masseter", "Masseter", ""); oc.addLabel("^Mandible", "Mandible", ""); } },
+    { t: "Glands, vessels, nerves", s: "layers", run() { look("layers", 2); oc.view(55, 4, 2.1); oc.label("^Parotid gland", "Parotid gland", "largest salivary gland"); oc.addLabel("^Facial nerve", "Facial nerve", "VII"); oc.addLabel("^Facial artery", "Facial artery", ""); oc.addLabel("^(Superficial|Deep) part of masseter", "Masseter", "chewing muscle"); } },
+    { t: "Skin layers", s: "block", run() { look("block"); oc.label("^Epidermis \\(block", "Epidermis", "outer layer"); oc.addLabel("^Dermis \\(block", "Dermis", "collagen, capillaries, nerve endings"); oc.addLabel("^Hypodermis \\(block", "Hypodermis", "subcutaneous fat"); oc.addLabel("^Muscle \\(block", "Muscle", ""); oc.addLabel("^Bone \\(block", "Bone", ""); oc.addLabel("^Artery \\(block", "Artery", ""); oc.addLabel("^Vein \\(block", "Vein", ""); oc.addLabel("^Nerve \\(block", "Nerve", ""); } },
+  ];
+
+  function press(group, attr, val) { group.querySelectorAll("button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset[attr] === val))); }
+  function applyCut() {
+    const spec = {}; if (state.cut !== "none") spec[state.cut] = { offset: state.pos * CUT_RANGE / 90 * (state.cut === "sagittal" ? 1 : 1), flip: state.flip };
+    oc.planes(state.cut === "none" ? null : spec);
+    $("#cutpos").disabled = $("#flip").disabled = state.cut === "none";
+  }
+  function look(l, depth) {
+    state.look = l; press($("#look"), "look", l); oc.clearLabels(); oc.highlight(null);
+    oc.block(l === "block");
+    if (l === "mouth") mouth(state.open, 0, state.face); else oc.mode(l === "xray" ? "xray" : "full");
+    state.depth = l === "layers" ? Math.max(2, depth ?? (state.depth || 2)) : 2; $("#depth").value = state.depth; oc.depth(state.depth);
+    $("#layerRow").hidden = l !== "layers"; $("#mouthRow").hidden = l !== "mouth";
+    if (l === "block" || l === "xray" || l === "mouth") { cut("none"); if (l === "mouth") oc.view(0, 6, 1.0, [0, 1.515, 0.07]); }
+  }
+  // how wide the mouth is open, whether the tongue is down ("ahh"), and whether the face is on
+  function mouth(open, ahh, face) {
+    Object.assign(state, { open, ahh, face }); $("#open").value = Math.round(open * 100);
+    oc.mouth(open, ahh, face);
+  }
+  function cut(c, pos) {
+    state.cut = c; if (pos !== undefined) { state.pos = Math.round(pos * 90 / CUT_RANGE); $("#cutpos").value = state.pos; }
+    press($("#cut"), "cut", c); oc.clearLabels(); applyCut();
+  }
+
+  function boot() {
+    $("#status").hidden = true;
+    $("#look").addEventListener("click", (e) => { const b = e.target.closest("button"); if (b) { look(b.dataset.look); if (b.dataset.look === "block") PRESETS.at(-1).run(); } markPreset(null); });
+    $("#cut").addEventListener("click", (e) => { const b = e.target.closest("button"); if (!b) return; if (state.look === "block" || state.look === "xray" || state.look === "mouth") look("layers", 2); cut(b.dataset.cut); markPreset(null); });
+    $("#open").addEventListener("input", (e) => { oc.clearLabels(); mouth(+e.target.value / 100, state.ahh, state.face); });
+    $("#depth").addEventListener("input", (e) => { state.depth = +e.target.value; oc.clearLabels(); oc.depth(state.depth); });
+    $("#cutpos").addEventListener("input", (e) => { state.pos = +e.target.value; oc.clearLabels(); applyCut(); });
+    $("#flip").addEventListener("click", () => { state.flip = !state.flip; oc.clearLabels(); applyCut(); });
+    const box = $("#presets");
+    PRESETS.forEach((p, i) => {
+      const b = document.createElement("button"); b.type = "button"; b.setAttribute("aria-pressed", "false");
+      b.innerHTML = `${p.t}<span>${p.s}</span>`; b.addEventListener("click", () => { p.run(); markPreset(i); }); box.appendChild(b);
+    });
+    const dl = $("#names"); oc.names().filter((n) => !/\(block\)/.test(n)).forEach((n) => { const o = document.createElement("option"); o.value = n; dl.appendChild(o); });
+    const find = () => {
+      const q = $("#q").value.trim(); if (!q) return;
+      const exact = oc.names().includes(q), pat = exact ? "^" + q.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "$" : q.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      if (state.look !== "xray") look("xray");
+      oc.highlight(pat); oc.label(pat, q, exact ? "" : "matching parts"); markPreset(null);
+    };
+    $("#go").addEventListener("click", find); $("#q").addEventListener("keydown", (e) => { if (e.key === "Enter") find(); });
+    $("#q").addEventListener("change", () => { if (oc.names().includes($("#q").value)) find(); });
+    // a tap (not a drag) names what is under it
+    const stage = $("#stage"); let down = null;
+    stage.addEventListener("pointerdown", (e) => { down = { x: e.clientX, y: e.clientY, t: Date.now() }; });
+    stage.addEventListener("pointerup", (e) => {
+      if (!down || Math.hypot(e.clientX - down.x, e.clientY - down.y) > 6 || Date.now() - down.t > 500) return;
+      const r = stage.getBoundingClientRect(); oc.labelAt(e.clientX - r.left, e.clientY - r.top);
+    });
+    $("#layerRow").hidden = true; $("#mouthRow").hidden = state.look !== "mouth"; applyCut();
+  }
+  function markPreset(i) { $("#presets").querySelectorAll("button").forEach((b, j) => b.setAttribute("aria-pressed", String(j === i))); }
+
+  const tick = setInterval(() => {
+    const d = document.body.dataset;
+    if (d.error) { $("#status").innerHTML = "<b>!</b>The model did not load. Reload the page to try again."; clearInterval(tick); }
+    else if (d.progress) $("#pct").textContent = d.progress + "%";
+  }, 200);
+  window.onOcReady = () => { clearInterval(tick); boot(); PRESETS[0].run(); markPreset(0); };
+  if (document.body.dataset.ready === "1") window.onOcReady();
+})();
+</script>

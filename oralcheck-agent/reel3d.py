@@ -113,7 +113,7 @@ NAMES = [
     ("tongue", r"\btongue"),
     ("nodes", r"\bneck\b|lymph node"),
     ("glands", r"saliva|salivary|\bglands?\b"),
-    ("gums", r"\bgums?\b|gingiva"),
+    ("gums", r"\bgum(?:s|line| line)?\b|gingiva"),
     ("teeth", r"\bteeth\b|\btooth\b"),
 ]
 # Places the model cannot show. The atlas has the muscle under the lips but no

@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Head anatomy</title>
+<style>
+  :root { --bg: #101617; --ink: #e8e4de; --muted: #8fa3a5; --teal: #14a8ae; }
+  html, body { margin: 0; height: 100%; background: radial-gradient(120% 90% at 50% 35%, #f3f5f5 0%, #dde3e4 75%); color: var(--ink);
+    font: 15px/1.4 "Source Sans 3", system-ui, sans-serif; overflow: hidden; }
+  #stage { position: fixed; inset: 0; }
+  #lead { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+  #lead line { stroke: #2b3d3f; stroke-width: 1.5; } #lead circle { fill: var(--teal); stroke: var(--ink); stroke-width: 2; }
+  .tag { position: fixed; pointer-events: none; box-sizing: border-box; padding: 8px 12px; border-radius: 10px;
+    background: rgba(13, 26, 27, 0.72); backdrop-filter: blur(6px); }
+  .tag b { display: block; font-size: clamp(18px, 2.4vw, 34px); font-weight: 600; } .tag span { color: var(--muted); font-size: clamp(12px, 1.3vw, 18px); }
+</style></head>
+<body>
+<div id="stage"></div>
+<svg id="lead"></svg>
+<div id="tags"></div>
+<script src="anatomy.bundle.js"></script>
+</body></html>

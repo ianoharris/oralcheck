@@ -54,3 +54,9 @@ oralcheck-agent/queue/
 oralcheck-agent/calendar/*/
 __pycache__/
 *.pyc
+
+# anatomy3d: base64 copies of head.glb for the artifact, regenerated from it
+oralcheck-agent/anatomy3d/head.part*.txt
+# videos are outputs and stay local (none are tracked); the prototype's node_modules is a symlink
+oralcheck-agent/**/*.mp4
+oralcheck-agent/reel3d_proto/node_modules

@@ -228,6 +228,20 @@ function splitGums(o) {
     o.parent.add(m); m.updateMatrixWorld(true); return m;
   });
 }
+// The gum mesh wraps the teeth, so its centre sits on a tooth (Ian, 21 Oct:
+// "pointed at the teeth"). Point at the front of the lower gum instead: the
+// average of the lower gum's most forward vertices near the midline, kept in
+// the mesh's own space so it rides along when the jaw opens.
+let GUM_ANCHOR = null;
+function gumAnchor(lower) {
+  lower.updateMatrixWorld(true);
+  const p = lower.geometry.attributes.position, v = new THREE.Vector3(), pts = [];
+  let zmax = -Infinity;
+  for (let i = 0; i < p.count; i++) { v.fromBufferAttribute(p, i).applyMatrix4(lower.matrixWorld); if (Math.abs(v.x) < 0.1) zmax = Math.max(zmax, v.z); }
+  for (let i = 0; i < p.count; i++) { v.fromBufferAttribute(p, i).applyMatrix4(lower.matrixWorld); if (Math.abs(v.x) < 0.1 && v.z > zmax - 0.04) pts.push(v.clone()); }
+  const c = pts.reduce((a, b) => a.add(b), new THREE.Vector3()).divideScalar(Math.max(1, pts.length));
+  return { mesh: lower, local: lower.worldToLocal(c) };
+}
 function rigJaw(root) {
   const jaw = rig(1), floor = rig(0.75), tongue = rig(0.55);
   const take = [];
@@ -237,7 +251,7 @@ function rigJaw(root) {
     if (/Gingiva/.test(n)) {
       const [up, lo] = splitGums(o);
       groups.gums = groups.gums.filter(x => x !== o).concat([up, lo]);
-      o.parent.remove(o); jaw.attach(lo);
+      o.parent.remove(o); jaw.attach(lo); GUM_ANCHOR = gumAnchor(lo);
     } else if (/Mandible|^Lower_/.test(n)) jaw.attach(o);
     else if (/Mylohyoid|Geniohyoid|Sublingual/.test(n)) floor.attach(o);
     else if (/Tongue/.test(n)) tongue.attach(o);
@@ -264,15 +278,39 @@ function aimOf(sh) {
 // Where the label points: the subject's centre, or a fixed spot for a subject
 // that is not drawn (the throat: the back of the open mouth).
 function anchorOf(sh) {
-  return sh.anchor ? new THREE.Vector3(...sh.anchor) : centerOf(sh.focus);
+  if (sh.anchor) return new THREE.Vector3(...sh.anchor);
+  if (sh.focus === "gums" && GUM_ANCHOR) { GUM_ANCHOR.mesh.updateMatrixWorld(true); return GUM_ANCHOR.mesh.localToWorld(GUM_ANCHOR.local.clone()); }
+  if (BILATERAL.has(sh.focus)) return centerOf(sh.focus, sh.cam[1][0]);
+  return centerOf(sh.focus);
+}
+// Paired structures: the centre of both glands is empty space between them, so
+// point at the one on the camera's side.
+const BILATERAL = new Set(["glands"]);
+// Which side of the frame a shot's label sits on, decided once per shot from
+// where the camera settles. Deciding it every frame made labels jump side to
+// side as the camera drifted past the subject (Ian, 21 Oct).
+const sideCache = new Map();
+const probe = new THREE.PerspectiveCamera(24, W / H, 0.001, 50);
+function labelSide(i, sh) {
+  if (!sideCache.has(i)) {
+    probe.position.copy(camAt(sh, 0.6)); probe.lookAt(aimOf(sh)); probe.updateMatrixWorld(true);
+    const p = anchorOf(sh).project(probe);
+    sideCache.set(i, (p.x * .5 + .5) * W > W / 2 ? "left" : "right");
+  }
+  return sideCache.get(i);
 }
 function camAt(sh, k) {
   const [a, b] = sh.cam; const kk = smooth(k);
   const az = lerp(a[0], b[0], kk) * Math.PI / 180, el = lerp(a[1], b[1], kk) * Math.PI / 180, r = lerp(a[2], b[2], kk);
   return new THREE.Vector3(Math.sin(az) * Math.cos(el) * r, Math.sin(el) * r, Math.cos(az) * Math.cos(el) * r).add(aimOf(sh));
 }
-function centerOf(name) {
-  const b = new THREE.Box3(); (groups[name] || []).forEach(o => b.expandByObject(o)); return b.getCenter(new THREE.Vector3());
+function centerOf(name, az) {
+  const b = new THREE.Box3(), c = new THREE.Vector3();
+  (groups[name] || []).forEach(o => {
+    if (az !== undefined && Math.sign(new THREE.Box3().setFromObject(o).getCenter(c).x) !== Math.sign(az)) return;
+    b.expandByObject(o);
+  });
+  return b.isEmpty() ? centerOf(name) : b.getCenter(new THREE.Vector3());
 }
 const $ = id => document.getElementById(id);
 $("credit").textContent = PLAN.credit || "";
@@ -326,10 +364,10 @@ window.render = (t) => {
   if (show) {
     const p = anchorOf(sh).project(camera);
     const x = (p.x * .5 + .5) * W, y = (-p.y * .5 + .5) * H;
-    const lx = x > W / 2 ? 90 : 600, ly = 330;
+    const left = labelSide(i, sh) === "left", lx = left ? 90 : 600, ly = 330;
     $("lk").textContent = sh.label.k || ""; $("lt").textContent = sh.label.t || ""; $("ld").textContent = sh.label.d || "";
     lab.style.left = lx + "px"; lab.style.top = ly + "px"; lab.style.opacity = span(local, 1.25, 1.75);
-    const ax = lx > x ? lx - 24 : lx + 440, ay = ly + 60, draw = span(local, 1.05, 1.55);
+    const ax = left ? lx + 440 : lx - 24, ay = ly + 60, draw = span(local, 1.05, 1.55);
     $("ln").setAttribute("x1", x); $("ln").setAttribute("y1", y);
     $("ln").setAttribute("x2", lerp(x, ax, draw)); $("ln").setAttribute("y2", lerp(y, ay, draw));
     $("ln").style.opacity = $("lc").style.opacity = draw > 0 ? 1 : 0;
