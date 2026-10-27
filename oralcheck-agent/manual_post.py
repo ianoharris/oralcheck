@@ -82,7 +82,6 @@ DECK = {
             "footnote": "Free. Private. oralcheck.org",
         },
     ],
-    "cta": {},
 }
 
 CAPTION = (

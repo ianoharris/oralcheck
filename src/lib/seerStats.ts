@@ -47,6 +47,55 @@ export const SEER = {
 
   /** 2019–2023. */
   medianAgeAtDiagnosis: 65,
+
+  /**
+   * Share of new cases by age at diagnosis, SEER 21, 2019–2023, from the same
+   * Stat Facts page. These are SEER's own bands, which are not decades
+   * (20–34, then 35–44 and so on); do not relabel them as "your 20s".
+   */
+  newCaseShareByAge: {
+    under20: 0.4,
+    "20-34": 1.7,
+    "35-44": 3.9,
+    "45-54": 12.6,
+    "55-64": 29.0,
+    "65-74": 30.3,
+    "75-84": 16.3,
+    over84: 5.8,
+  },
+} as const;
+
+/**
+ * Age-specific incidence: new cases per 100,000 people in each five-year age
+ * group, per year. Both sexes, all races, delay-adjusted, SEER 21, 2019–2023
+ * (November 2025 submission), read off SEER*Explorer's "Rates by Age" table.
+ *
+ * Kept in five-year groups because that is how SEER publishes them. Two
+ * adjacent groups cannot be merged into a decade by averaging their rates;
+ * that needs each group's population, which this table does not give.
+ */
+export const SEER_BY_AGE = {
+  source:
+    "https://seer.cancer.gov/statistics-network/explorer/application.html?site=3&data_type=1&graph_type=3&compareBy=sex&chk_sex_1=1&rate_type=2&race=1",
+  lastVerified: "2026-10-26",
+  ratePer100k: {
+    "15-19": 0.4,
+    "20-24": 0.6,
+    "25-29": 1.1,
+    "30-34": 1.8,
+    "35-39": 3.0,
+    "40-44": 5.5,
+    "45-49": 10.2,
+    "50-54": 18.8,
+    "55-59": 29.0,
+    "60-64": 38.6,
+    "65-69": 45.3,
+    "70-74": 49.0,
+    "75-79": 50.9,
+    "80-84": 51.6,
+    "85-89": 49.8,
+    "90+": 46.6,
+  },
 } as const;
 
 /**

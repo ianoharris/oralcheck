@@ -382,55 +382,40 @@ def slide_photo(photo: str, caption: str = "", counter: str | None = None) -> st
     return _doc(body)
 
 
-def slide_cta(headline: str = "Save this for your next check.",
-              sub: str = "Send it to someone who should see it.",
-              url: str = "oralcheck.org", theme: str = "dark") -> str:
-    """Closing slide on a teal ground. It asks for a save or a send first:
-    Instagram ranks on saves and sends, and a link on a slide cannot be tapped,
-    so the address is the second thing, not the headline.
+def slide_close(headline: str, body: str = "", kicker: str = "", counter: str | None = None,
+                theme: str = "dark", url: str = "oralcheck.org") -> str:
+    """The last slide of a carousel, written for that carousel.
 
-    A holiday deck closes in its own world instead: the flat teal card broke
-    the Halloween and Thanksgiving decks on their last slide (Ian, 26 Oct:
-    "the theme doesn't match the rest of the slides")."""
-    if theme in SEASON_DECOR:
-        t = THEMES[theme]
-        body = f"""
-    <div style="width:{POST_W}px;height:{POST_H}px;display:flex;flex-direction:column;">
-      <div style="padding:76px 78px 0;">
-        <div class="brandrow"><div class="brand"><div class="dot"></div><span class="wordmark">OralCheck</span></div></div>
-        <div style="height:1px;background:{t['hair']};margin-top:16px;"></div>
+    Every deck used to end on the same teal card, appended here whether the
+    deck asked for it or not, so a follower saw one identical slide at the end
+    of every post (Ian, 26 Oct: "why is this slide on every carousel"). The
+    closing words now come from the deck itself (the generator writes them for
+    the post's focus) and the slide sits in the deck's own theme, holiday
+    decoration included. The address stays, smaller, because a link on a
+    slide cannot be tapped and reading it off the screen is the only route."""
+    t = THEMES.get(theme, THEMES["dark"])
+    size = 84 if len(headline) <= 40 else (72 if len(headline) <= 60 else 62)
+    kicker_html = (f"<div class='kicker' style='margin-bottom:26px;'>{_e(kicker)}</div>" if kicker
+                   else "<div class='accent' style='margin-bottom:32px;'></div>")
+    body_html = (f"<div class='body' style='font-size:32px;margin-top:34px;'>{_e(body)}</div>"
+                 if body else "")
+    inner = f"""
+    <div class="frame">
+      {_brandrow(counter)}
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:center;">
+        {kicker_html}
+        <div class="serif" style="font-size:{size}px;line-height:1.06;letter-spacing:-0.01em;
+             color:var(--text);text-wrap:balance;">{_e(headline)}</div>
+        {body_html}
       </div>
-      <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:0 78px;">
-        <div class="serif" style="font-size:88px;line-height:1.04;color:{t['text']};text-wrap:balance;margin-bottom:30px;">{_e(headline)}</div>
-        <div style="font-size:34px;color:{t['text_soft']};font-weight:600;margin-bottom:64px;">{_e(sub)}</div>
-        <div style="height:1px;background:{t['hair']};margin-bottom:34px;"></div>
-        <div style="font-size:28px;color:{t['text_soft']};font-weight:600;margin-bottom:10px;">Check your own risk, free, in two minutes</div>
-        <div style="font-size:52px;font-weight:700;color:{t['coral']};letter-spacing:0.01em;">{_e(url)}</div>
+      <div style="height:1px;background:var(--hair);margin-bottom:30px;"></div>
+      <div style="display:flex;align-items:baseline;justify-content:space-between;gap:24px;">
+        <span style="font-size:42px;font-weight:700;color:{t['teal_brt'] if theme in DARKISH else t['teal']};
+              letter-spacing:0.01em;">{_e(url)}</span>
+        <span style="font-size:22px;font-weight:600;color:var(--muted);">Free, private, about two minutes</span>
       </div>
-      <div style="height:10px;background:{t['coral']};width:100%;"></div>
     </div>"""
-        return _doc(body, theme=theme)
-    body = f"""
-    <div style="width:{POST_W}px;height:{POST_H}px;display:flex;flex-direction:column;background:{TEAL};">
-      <div style="padding:76px 78px 0;">
-        <div class="brandrow">
-          <div class="brand"><div class="dot"></div>
-            <span class="wordmark" style="color:rgba(13,26,27,0.6);">OralCheck</span></div>
-        </div>
-        <div style="height:1px;background:rgba(13,26,27,0.22);margin-top:16px;"></div>
-      </div>
-      <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:0 78px;">
-        <div class="serif" style="font-size:84px;line-height:1.06;color:{BG};
-             text-wrap:balance;margin-bottom:30px;">{_e(headline)}</div>
-        <div style="font-size:32px;color:rgba(13,26,27,0.78);font-weight:600;margin-bottom:64px;">{_e(sub)}</div>
-        <div style="height:1px;background:rgba(13,26,27,0.22);margin-bottom:34px;"></div>
-        <div style="font-size:26px;color:rgba(13,26,27,0.7);font-weight:600;margin-bottom:10px;">
-          Check your own risk, free, in two minutes</div>
-        <div style="font-size:40px;font-weight:700;color:{BG};letter-spacing:0.01em;">{_e(url)}</div>
-      </div>
-      <div style="height:10px;background:{CORAL};width:100%;"></div>
-    </div>"""
-    return _doc(body, bg=TEAL)
+    return _doc(inner, theme)
 
 
 def _overlay(html: str, inner: str) -> str:
@@ -460,15 +445,17 @@ def render_deck(deck: dict, theme: str = "dark") -> list[str]:
     deck = {
       "kicker": "HPV & Oral Cancer",
       "cover":  {"hook": str, "photo": path|None},
-      "slides": [ {"type": "stat"|"fact"|"list"|"quote"|"photo", ...}, ... ],
-      "cta":    {"headline": str, "sub": str, "url": str}  # optional overrides
+      "slides": [ {"type": "stat"|"fact"|"list"|"quote"|"photo", ...}, ...,
+                  {"type": "close", "kicker", "headline", "body"} ],
     }
+    Nothing is added after the slides: a deck that wants a closing slide ends
+    on a "close" slide written for it.
     theme picks the visual world (dark | light) for the typographic slides.
     """
     theme = deck.get("theme", theme)
     kicker = deck.get("kicker", "")
     slides_spec = deck.get("slides", [])
-    total = 1 + len(slides_spec) + 1  # cover + content + cta
+    total = 1 + len(slides_spec)  # cover + slides (the close, if any, is one of them)
     htmls: list[str] = []
 
     def ctr(n: int) -> str:
@@ -505,6 +492,9 @@ def render_deck(deck: dict, theme: str = "dark") -> list[str]:
             htmls.append(slide_quote(s.get("text", ""), s.get("attribution", ""), c, theme))
         elif t == "photo":
             htmls.append(slide_photo(s.get("photo", ""), s.get("caption", ""), c))
+        elif t == "close":
+            htmls.append(slide_close(s.get("headline", ""), s.get("body", ""), s.get("kicker", ""),
+                                     c, theme, s.get("url", "oralcheck.org")))
         elif t == "plate":
             htmls.append(slide_plate(s.get("photo", ""), s.get("caption", ""), s.get("credit", ""), c,
                                      theme, s.get("contain", False)))
@@ -516,17 +506,14 @@ def render_deck(deck: dict, theme: str = "dark") -> list[str]:
     # re-served on its own) and a swipe cue on every slide but the last.
     source = deck.get("source", "")
     for i in range(1, len(htmls)):
-        kind = slides_spec[i - 1].get("type") if i - 1 < len(slides_spec) else None
+        kind = slides_spec[i - 1].get("type")
+        if kind == "close":
+            continue                      # the last word: no swipe cue, and it carries the address
         on_photo = kind == "photo"
-        extra = _swipe_cue("light" if kind == "plate" else theme, on_photo)
+        extra = _swipe_cue("light" if kind == "plate" else theme, on_photo) if i < len(htmls) - 1 else ""
         if source and kind not in ("photo", "plate"):
             extra += _source_footer(source, theme)
         htmls[i] = _overlay(htmls[i], extra)
-
-    cta = deck.get("cta", {})
-    htmls.append(slide_cta(cta.get("headline") or "Save this for your next check.",
-                           cta.get("sub") or "Send it to someone who should see it.",
-                           cta.get("url", "oralcheck.org"), theme=theme))
     return htmls
 
 
@@ -941,10 +928,6 @@ def pick_theme(occasion: str = "") -> str:
 
 def info_slide_image(headline: str, body: str) -> str:
     return _screenshot(slide_fact(headline, body, None))
-
-
-def cta_slide_image() -> str:
-    return _screenshot(slide_cta())
 
 
 # ---------------------------------------------------------------------------

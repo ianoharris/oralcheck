@@ -110,7 +110,14 @@ All from **NCI SEER**, the US national cancer registry. These live in one file
 | 5-year survival, spread **distant** | **36.0%** |
 | Share of cases found while still localized | **only 26%** |
 | Median age at diagnosis | **65** |
+| Share of new cases in people 45 and older | **94%** (so about 6 in 100 are under 45) |
+| New cases a year per 100,000, by age | **0.6** at 20 to 24, **5.5** at 40 to 44, **18.8** at 50 to 54, about **50** from 70 on |
 | Male vs female incidence | **17.5 vs 6.6** per 100,000 (about 2.6x) |
+
+The age rates come from SEER*Explorer, in five-year groups. If someone asks for
+"your 20s" or "your 30s" as one number, the honest answer is the two five-year
+figures side by side: turning them into one decade figure needs population
+counts the table does not give, and simply averaging them is wrong.
 
 **The one statistic that is the entire argument:** 88.7% versus 36.0%, and only
 about a quarter of cases are caught in the good column.
@@ -751,9 +758,14 @@ after the cover, so it says what the deck is about before the steps begin
 between "grab a mirror" and the rest of the steps). A myth slide
 puts the fact first and the myth once, smaller (the approach recommended by
 the Debunking Handbook). Every slide has a swipe arrow and content slides carry
-the source line. The last slide asks people to save it or send it to someone
-before giving the address, because saves and sends are what Instagram ranks
-on and a link on a slide cannot be tapped.
+the source line. The last slide is written for that post: the one thing to
+do or remember from it (a self-exam deck ends on the check to do tonight, a
+sun deck on lip SPF), then a reason to save it or someone to send it to,
+because saves and sends are what Instagram ranks on. It is in the same
+colours as the rest of the deck, with oralcheck.org along the bottom, since a
+link on a slide cannot be tapped. Until 26 Oct 2026 every carousel ended on
+the same teal card, added automatically; you noticed it was identical on
+every post, so it was removed and nothing is added any more.
 
 **How reels are made.** Reels are drawn. Each one is four or five spoken
 lines over the two illustrated plates described further down (the open mouth

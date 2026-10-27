@@ -395,6 +395,21 @@ def test_post_calendar():
     check("a site screenshot needs no photo credit", A._credit_line("oralcheck.org") == "")
 
 
+def test_closing_slide():
+    """Each carousel ends on a close written for it; nothing is appended after."""
+    import oralcheck_agent as A
+    import render_html as R
+    close = {"kicker": "Tonight", "headline": "Check under your tongue.", "body": "Save this \u2014 really."}
+    deck = A.build_deck_from_content({"hook": "h", "slides": [{"type": "fact", "headline": "x", "body": "y"}],
+                                      "close": close}, None)
+    check("the close is the last slide", deck["slides"][-1]["type"] == "close")
+    check("no stock end card in the deck", "cta" not in deck)
+    check("no em dash survives in the close", "\u2014" not in deck["slides"][-1]["body"])
+    check("render adds nothing after the slides", len(R.render_deck(deck)) == 1 + len(deck["slides"]))
+    bare = A.build_deck_from_content({"slides": [{"type": "fact"}]}, None)
+    check("no close written, none invented", [s["type"] for s in bare["slides"]] == ["fact"])
+
+
 def test_meta_publish():
     """Direct Instagram publishing: what is due, what is too late, and the switch."""
     import os
@@ -430,6 +445,7 @@ def test_meta_publish():
 
 def main():
     print("Calendar:");      test_calendar()
+    print("Closing slide:"); test_closing_slide()
     print("Instagram direct:"); test_meta_publish()
     print("Post calendar:"); test_post_calendar()
     print("Illustrated reels:"); test_reel2d()

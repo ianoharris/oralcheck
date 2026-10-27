@@ -568,6 +568,52 @@ def l_photocompare(s: dict, t: dict, theme: str, counter: str | None) -> str | N
 
 
 # ---------------------------------------------------------------------------
+# 17. Bars - a real chart, one bar per group, drawn to scale
+# ---------------------------------------------------------------------------
+# Hand-built posts only, so it is deliberately not in SLIDE_SPEC: the generator
+# would have to supply the values, and a chart is the easiest place to slip in
+# a number that came from nowhere. Values come from src/lib/seerStats.ts.
+
+def l_bars(s: dict, t: dict, theme: str, counter: str | None) -> str | None:
+    bars = s.get("bars") or []
+    if not bars:
+        return None
+    hi = set(s.get("highlight", []))
+    top = max(float(b["value"]) for b in bars)
+    plot_h = 520
+    cols = ""
+    for b in bars:
+        v = float(b["value"])
+        h = max(3, round(plot_h * v / top))
+        col = t["coral"] if b["label"] in hi else t["teal"]
+        num = f"{v:.1f}" if v < 10 else f"{v:.0f}"
+        cols += f"""
+          <div style="flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;
+               justify-content:flex-end;height:100%;">
+            <div class="tnum" style="font-size:17px;font-weight:600;color:{col};margin-bottom:8px;">{num}</div>
+            <div style="width:100%;height:{h}px;background:{col};border-radius:6px 6px 0 0;"></div>
+          </div>"""
+    ticks = "".join(
+        f"<div class='tnum' style='flex:1;min-width:0;text-align:center;font-size:17px;"
+        f"font-weight:600;color:{t['coral'] if b['label'] in hi else t['muted']};'>"
+        f"{_e(b.get('tick', b['label']))}</div>" for b in bars)
+    head = s.get("headline", "")
+    return _frame(f"""
+      {R._brandrow(counter)}
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:center;">
+        <div class="serif" style="font-size:{_fit(head, 60, 34)}px;line-height:1.08;
+             letter-spacing:-0.005em;margin-bottom:14px;">{_lines(head)}</div>
+        <div style="font-size:24px;color:{t['text_soft']};margin-bottom:40px;">{_e(s.get("sub", ""))}</div>
+        <div style="height:{plot_h + 30}px;display:flex;gap:10px;align-items:flex-end;
+             border-bottom:2px solid {t['hair']};">{cols}</div>
+        <div style="display:flex;gap:10px;margin-top:12px;">{ticks}</div>
+        <div style="font-size:20px;font-weight:600;color:{t['muted']};margin-top:12px;">
+          {_e(s.get("axis", ""))}</div>
+      </div>
+    """, theme)
+
+
+# ---------------------------------------------------------------------------
 # Registry
 # ---------------------------------------------------------------------------
 
@@ -588,6 +634,7 @@ LAYOUTS = {
     "pov": l_pov,
     "news": l_news,
     "photocompare": l_photocompare,
+    "bars": l_bars,
 }
 
 # Layouts that cannot render without an image. The deck builder only offers

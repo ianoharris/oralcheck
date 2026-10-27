@@ -432,8 +432,10 @@ def _review_media(e: dict, out: Path) -> list[dict]:
             img = dest / f"{n}.jpg"
             if not img.exists():
                 im = Image.open(src).convert("RGB")
-                im.thumbnail((540, 675))
-                im.save(img, "JPEG", quality=82)
+                # 1080 wide, the size Instagram shows: at 540 the page read as
+                # blurry on a phone and the slides looked broken (Ian, 26 Oct)
+                im.thumbnail((1080, 1350))
+                im.save(img, "JPEG", quality=85)
             items.append({"type": "image", "src": f"{rel}/{n}.jpg"})
     return items
 

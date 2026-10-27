@@ -219,7 +219,7 @@
       },
       "review_note": "",
       "folder": "2026-10-31_in_carousel",
-      "version": 3,
+      "version": 4,
       "uploaded": true,
       "hook": "Some things look frightening. One looks like nothing.",
       "caption": "Some things in your mouth look frightening and are not. One looks like nothing and is.\n\nGeographic tongue moves around the tongue over weeks and is harmless. Oral thrush wipes clean away. A burn from hot food or drink heals on its own. Lacy white lines on both cheeks at the same time are almost always lichen planus. A callus from a cheek you bite settles once the cause is gone.\n\nNone of those are the thing to watch for.\n\nWhat actually lurks quietly is a patch or sore that is new, doesn't hurt, and is still there two weeks later. No pain. No obvious cause. Just still there.\n\nEarly oral cancer often doesn't hurt at all, which is exactly why the two-week rule exists. Painless is not the same as harmless.\n\nIf something in your mouth has been there for more than two weeks and you can't explain it, that's the moment to act. Learn what to look for at oralcheck.org/learn/white-and-red-patches.\n\nWhat's the mouth change you've talked yourself out of worrying about?",
@@ -238,6 +238,9 @@
         "slide_05.jpg",
         "slide_06.jpg",
         "preview.jpg"
+      ],
+      "notes": [
+        "26 Oct: stock end card replaced with a closing slide written for this post (Ian asked for closes that follow each carousel's focus)."
       ]
     },
     {
@@ -319,7 +322,11 @@
         "preview.jpg"
       ],
       "review_note": "",
-      "uploaded": true
+      "uploaded": true,
+      "version": 2,
+      "notes": [
+        "26 Oct: stock end card replaced with a closing slide written for this post (Ian asked for closes that follow each carousel's focus)."
+      ]
     },
     {
       "id": "2026-11-06_in_reel",
@@ -480,8 +487,11 @@
         "preview.jpg"
       ],
       "review_note": "This idea is dumb and also just sounds weird. people know how to check the sides of their tongues. swap the idea for something more interesting or like a did you know. (Swapped 26 Oct to the lower lip and sun, an unused topic.)",
-      "version": 4,
-      "uploaded": false
+      "version": 5,
+      "uploaded": false,
+      "notes": [
+        "26 Oct: stock end card replaced with a closing slide written for this post (Ian asked for closes that follow each carousel's focus)."
+      ]
     },
     {
       "id": "2026-11-17_in_image",
@@ -602,7 +612,56 @@
         "preview.jpg"
       ],
       "review_note": "",
-      "uploaded": true
+      "uploaded": true,
+      "version": 2,
+      "notes": [
+        "26 Oct: stock end card replaced with a closing slide written for this post (Ian asked for closes that follow each carousel's focus)."
+      ]
+    },
+    {
+      "id": "2026-11-19_in_carousel",
+      "date": "2026-11-19",
+      "network": "instagram",
+      "media_type": "carousel",
+      "when": "2026-11-19T16:00:00+00:00",
+      "status": "built",
+      "idea": {
+        "title": "Oral cancer by age: how the rate climbs from your 20s",
+        "hook": "How common is oral cancer at 25? At 45? At 65?",
+        "brief": "Chart post Ian asked for on 26 Oct. SEER*Explorer age-specific rates (SEER 21, 2019 to 2023, five-year groups, not merged into decades since that needs population weights) and Stat Facts' share of new cases by age (94% at 45 and over). Handles the young bars with care: small, not zero. Hand-built by Claude.",
+        "topic": "age",
+        "shape": "chart",
+        "hook_style": "question",
+        "tone": "calm",
+        "pillar": "stats",
+        "media_type": "carousel",
+        "slug": "oral-cancer-by-age"
+      },
+      "folder": "2026-11-19_in_carousel",
+      "version": 2,
+      "uploaded": false,
+      "hook": "How common is oral cancer at 25? At 45? At 65?",
+      "caption": "Oral cancer is rare in your 20s and common by your 60s, and the climb between them is steep. In people aged 20 to 24, about 0.6 in 100,000 are diagnosed each year. At 50 to 54 it is 18.8. From your 20s to your 50s the rate nearly doubles every five years, then keeps rising into the 70s before it levels off.\n\nThat is why 94% of new cases are in people 45 and older. It is also why the other 6% are easy to miss: a sore that will not heal looks like nothing at 30.\n\nAge is one factor, not a verdict. Tobacco, alcohol, HPV and sun on the lips all change the picture. A sore, patch or lump that lasts more than two weeks is worth a check at any age. Check your own risk, free and private, at oralcheck.org.\n\nSources:\nRates by age: NCI SEER*Explorer, SEER 21, 2019 to 2023. https://seer.cancer.gov/statistics-network/explorer/\nShare of new cases by age: NCI SEER Cancer Stat Facts, Oral Cavity and Pharynx Cancer. https://seer.cancer.gov/statfacts/html/oralcav.html",
+      "hashtags": [
+        "oralcancer",
+        "cancerawareness",
+        "oralhealth",
+        "earlydetection",
+        "oralcheck"
+      ],
+      "files": [
+        "slide_01.jpg",
+        "slide_02.jpg",
+        "slide_03.jpg",
+        "slide_04.jpg",
+        "slide_05.jpg",
+        "slide_06.jpg",
+        "slide_07.jpg",
+        "preview.jpg"
+      ],
+      "notes": [
+        "26 Oct: built from Ian's idea ('oral cancer incidence by age by 20-30, 30-40'). SEER publishes five-year groups; the chart labels them as such rather than presenting averaged decades."
+      ]
     },
     {
       "id": "2026-11-24_in_reel",
@@ -705,7 +764,7 @@
       },
       "review_note": "Same as the halloween, the last slide is not same theme and is low quality Fixed 26 Oct: the last slide now uses the holiday theme; the rest of the deck is unchanged.",
       "folder": "2026-11-26_in_carousel",
-      "version": 2,
+      "version": 3,
       "uploaded": false,
       "hook": "Before the leftovers, two minutes and a mirror.",
       "caption": "Before the second round of pie, take two minutes with a mirror.\n\nThe people gathered around your table this week are often the ones best placed to notice a change in your face or neck. But a monthly self-exam means you can spot something first.\n\nStart at your lips and work inward: cheeks, gums, tongue (top, sides, and underneath), the floor of your mouth, the roof of your mouth, your throat, and then both sides of your neck. You're looking for anything new: a patch, a sore, a lump, or a change in colour.\n\nThe two-week rule is worth knowing. Early oral cancer often doesn't hurt, so pain isn't a reliable guide. If something new is still there after fourteen days, that's the moment to call a dentist or doctor and have it looked at.\n\nShare this with someone at the table who might not have heard of the two-week rule. And for a step-by-step illustrated guide, oralcheck.org/learn/self-exam is there whenever you're ready.\n\nWhich part of the mouth do you think most people skip when they check?\n\n3D anatomy: Z-Anatomy (CC BY-SA 4.0), from BodyParts3D, DBCLS",
@@ -726,6 +785,9 @@
         "slide_07.jpg",
         "slide_08.jpg",
         "preview.jpg"
+      ],
+      "notes": [
+        "26 Oct: stock end card replaced with a closing slide written for this post (Ian asked for closes that follow each carousel's focus)."
       ]
     },
     {
@@ -750,7 +812,7 @@
       },
       "event": null,
       "folder": "2026-11-27_in_carousel",
-      "version": 1,
+      "version": 2,
       "uploaded": true,
       "hook": "When did you last have someone look inside your mouth?",
       "caption": "No dentist. No insurance. No budget for a private appointment. That combination stops a lot of people from ever getting their mouth looked at, and it doesn't have to.\n\nCommunity health centers charge on a sliding scale based on what you earn. Dental schools offer care at lower cost, supervised by licensed faculty. Free clinics exist in more places than most people expect. None of them require full-price insurance to walk through the door.\n\noralcheck.org/find-care searches all three by your location. If cost or coverage has been the reason you haven't gone, this is the place to start.",
@@ -770,7 +832,10 @@
         "slide_06.jpg",
         "preview.jpg"
       ],
-      "review_note": ""
+      "review_note": "",
+      "notes": [
+        "26 Oct: stock end card replaced with a closing slide written for this post (Ian asked for closes that follow each carousel's focus)."
+      ]
     },
     {
       "id": "2026-12-01_in_image",
@@ -851,8 +916,11 @@
         "preview.jpg"
       ],
       "review_note": "",
-      "version": 4,
-      "uploaded": true
+      "version": 5,
+      "uploaded": true,
+      "notes": [
+        "26 Oct: stock end card replaced with a closing slide written for this post (Ian asked for closes that follow each carousel's focus)."
+      ]
     },
     {
       "id": "2026-12-04_in_reel",
@@ -989,7 +1057,7 @@
       },
       "event": null,
       "folder": "2026-12-11_in_carousel",
-      "version": 1,
+      "version": 2,
       "uploaded": true,
       "hook": "Oral cancer caught early has an 89% survival rate.",
       "caption": "Oral cancer caught while still localized has an 89% five-year survival rate. Once it has spread to distant sites, that figure falls to 36%. The gap between those two numbers is not luck. It is timing.\n\nOnly about 26% of oral cancer cases are found while still localized, which means most are caught after the odds have already shifted. Regular screening and acting on a sore or patch that does not heal in two weeks are the two things most likely to change that.\n\nLearn what the research shows and take a free risk screener at oralcheck.org/learn/facts.",
@@ -1008,7 +1076,10 @@
         "slide_05.jpg",
         "preview.jpg"
       ],
-      "review_note": ""
+      "review_note": "",
+      "notes": [
+        "26 Oct: stock end card replaced with a closing slide written for this post (Ian asked for closes that follow each carousel's focus)."
+      ]
     },
     {
       "id": "2026-12-15_in_image",
@@ -1070,7 +1141,7 @@
       },
       "event": null,
       "folder": "2026-12-16_li_carousel",
-      "version": 1,
+      "version": 2,
       "uploaded": true,
       "hook": "Run your finger along the inside of one cheek.",
       "caption": "Run a finger along the inside of your cheek right now. You're not looking for colour alone. The signs worth catching early are often textural: an edge on a sore that feels raised or hardened, a spot that bleeds when you brush against it, or a small firm lump sitting just under the surface of the cheek, tongue, gum, or floor of the mouth.\n\nMost sores heal on their own within a week or two. The ones that don't are the ones that need attention. Two weeks is the line. If something is still there at that point, it's worth getting checked.\n\nThe full list of signs to watch for is at oralcheck.org/learn/signs. Save this card if it's useful to you.",
@@ -1090,7 +1161,10 @@
         "slide_06.jpg",
         "preview.jpg"
       ],
-      "review_note": ""
+      "review_note": "",
+      "notes": [
+        "26 Oct: stock end card replaced with a closing slide written for this post (Ian asked for closes that follow each carousel's focus)."
+      ]
     },
     {
       "id": "2026-12-18_in_reel",

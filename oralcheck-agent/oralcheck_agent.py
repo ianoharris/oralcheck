@@ -580,13 +580,21 @@ def build_deck_from_content(content: dict, photo_path: str | None, plate: dict |
         # carousel: "makes no sense in the middle of the slides").
         slides.insert(0, plate)
 
+    # The closing slide is the deck's own, written for this post's focus. There
+    # is no stock end card to fall back on (that card ended every carousel the
+    # same way); a deck whose content has no close ends on its last slide.
+    close = content.get("close") or {}
+    if isinstance(close, dict) and str(close.get("headline", "")).strip():
+        slides.append({"type": "close", **{k: _strip_dashes(str(close.get(k, ""))).strip()
+                                           for k in ("kicker", "headline", "body")}})
+    else:
+        log.warning("Carousel content has no closing slide; the deck ends on its last content slide.")
+
     return {
         "kicker": content.get("kicker", ""),
         "cover": {"hook": content.get("hook", "")},
         "slides": slides,
         "source": source,
-        "cta": {"headline": _strip_dashes(str(content.get("save_line", ""))).strip(),
-                "sub": _strip_dashes(str(content.get("send_line", ""))).strip()},
     }
 
 
@@ -640,7 +648,7 @@ def generate_content(brief: str, media_type: str) -> dict:
             "  - a cover slide (your hook), optionally over a real photo\n"
             "  - a mid-deck photo slide (only when you supply a photo)\n"
             "  - your typed content slides, rendered in distinct brand layouts\n"
-            "  - an auto-generated CTA closing slide (do NOT include it)\n\n"
+            "  - your closing slide (the 'close' field below), which ends the deck\n\n"
             "Output JSON with these exact fields:\n"
             "  hook: cover headline, 10 words max, the single strongest insight or surprising-true fact\n"
             "  kicker: 2-4 word topic eyebrow in title case (e.g. 'HPV & Oral Cancer', 'Know The Signs')\n"
@@ -659,11 +667,15 @@ def generate_content(brief: str, media_type: str) -> dict:
             "  photo_caption: one line, 14 words max, paired with the image (only if not \"none\")\n"
             "  slides: array of 4 to 5 typed content slides. Each object has a 'type' plus fields.\n"
             + SLIDE_SPEC +
-            "  save_line: the closing slide's headline, 8 words max, saying why this is worth saving\n"
-            "    for later and specific to this post (e.g. 'Save this for your next mirror check.',\n"
-            "    'Keep this list for your next dental visit.'). No exclamation marks.\n"
-            "  send_line: one line, 10 words max, naming who to send it to (e.g. 'Send it to\n"
-            "    someone who has not seen a dentist in years.'). No exclamation marks.\n"
+            "  close: the deck's last slide, written for THIS post's focus, never a stock sign-off.\n"
+            "    {\"kicker\": \"1-4 words naming the moment or the reader, e.g. 'Tonight', 'If you dip',\n"
+            "      'At your next cleaning'\", \"headline\": \"8 words max, the one thing to do, keep or\n"
+            "      remember from this post\", \"body\": \"12-24 words: why it is worth saving, or who to\n"
+            "      send it to, specific to this post\"}. It must follow from the slides before it, not\n"
+            "    repeat the cover. The address oralcheck.org is added to it automatically; do not write it.\n"
+            "    No exclamation marks. Examples of the range: a self-exam deck closes on the check to\n"
+            "    do tonight; a myth deck on the true version to remember; a stat deck on what the\n"
+            "    number means for the reader.\n"
             "  caption: full Instagram caption ending with an oralcheck.org CTA, then one plain\n"
             "    question that invites a comment (not 'thoughts?')\n"
             "  hashtags: exactly 5 lowercase tags\n\n"
@@ -681,7 +693,7 @@ def generate_content(brief: str, media_type: str) -> dict:
             "  - Pick layouts that suit the idea. A myth deck wants 'myth'. A signs deck\n"
             "    wants 'checklist' or 'compare'. A 'when do I worry' deck wants 'timeline'.\n"
             "    A habits deck wants 'tier' or 'versus'. Do not pick one at random.\n"
-            "  - Slides must tell a cohesive story: surprising hook -> why it matters -> what to do -> (auto CTA).\n"
+            "  - Slides must tell a cohesive story: surprising hook -> why it matters -> what to do -> close.\n"
             "  - Every number must be real and defensible for oral cancer. No invented statistics."
         )
     else:
@@ -2284,7 +2296,7 @@ def generate_carousel_slides(content: dict, idea: dict | None = None) -> list[st
     """
     Build a designed carousel deck:
       Cover (hook over stock photo) -> typed content slides (stat/fact/list/quote)
-      with one mid-deck photo slide -> auto CTA closing slide.
+      with one mid-deck photo slide -> the closing slide the content wrote.
     Rendered via the HTML/Playwright design system for crisp typography.
     """
     # Photos are optional on carousels: only add one when it genuinely helps.
@@ -2334,7 +2346,7 @@ def generate_carousel_slides(content: dict, idea: dict | None = None) -> list[st
 
     if _USE_HTML_RENDER:
         deck = build_deck_from_content(content, raw_path, plate=plate, source=topics.source_line(topic))
-        log.info("Rendering carousel deck (%d slides + cover + CTA, %s theme)...",
+        log.info("Rendering carousel deck (cover + %d slides, %s theme)...",
                  len(deck["slides"]), theme)
         return _html_render.carousel_deck(deck, theme)
 

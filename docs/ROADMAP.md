@@ -43,16 +43,27 @@ Update both together. See `AGENTS.md`.
 
 ### Content and growth
 
-- [ ] **Post idea, for later: oral cancer by age (Ian, 2026-10-26: "oral
-      cancer incidence by age by 20-30, 30-40...").** A chart post, one bar
-      per age band. Source: SEER. Stat Facts gives the share of new cases by
-      age band (20 to 34, 35 to 44, 45 to 54 and so on, 2019 to 2023), not by
-      decade; decade bands (20s, 30s) need SEER*Explorer's age-specific rates,
-      read in 5-year groups and combined properly, not averaged. The figures
-      go into `src/lib/seerStats.ts` with the URL and date before any post
-      uses them. The honest framing: the young bars are small, which is the
-      point to handle with care (HPV-linked throat cancers are the ones rising
-      in younger adults, a separate figure).
+- [x] **Done 2026-10-26: re-uploaded the carousels with their new closing
+      slides (Ian: "go, re-upload and push").** The seven approved ones went
+      up to the release, checked byte for byte on Halloween's last slide; the
+      two still awaiting review (13 and 26 Nov) go up when approved. Nine carousels already built (31 Oct to 16 Dec) had
+      their last slide swapped on 26 Oct from the stock teal card to a close
+      written for each post. Nothing else on them changed, and their approvals
+      were kept. The copies on the GitHub release still have the old card, so
+      until they are re-uploaded and the calendar pushed, that old version is
+      what posts. **Halloween posts Sat 31 Oct 5pm Central**, so the re-upload
+      has to happen before then for it to carry its new close. Any of the nine
+      can be sent back from the review page.
+- [ ] **Oral cancer by age carousel: built, waiting on Ian's review (Ian,
+      2026-10-26: "make the age post now").** Instagram carousel for Thu 19
+      Nov, 10am Central (`calendar/2026-11-19_in_carousel/`, 7 slides). The
+      chart is SEER*Explorer's age-specific rates in SEER's own five-year
+      groups, not decades: merging two groups needs their populations, which
+      the table does not give, so averaging was ruled out. **Blocked on Ian:**
+      approve, redo or cut it on the review page. Overlap to decide: the 22 Dec
+      LinkedIn post ("Median age at diagnosis is 65, but age alone rules
+      nothing out", still only planned) covers the same ground and could be
+      cut or turned into a LinkedIn version of this chart.
 - [ ] **New post formats, from a look at what works for health-education
       accounts (2026-10-22).** Ian asked for ideas. Proposed:
       1. **Quiz carousels** ("three things in a mouth, one needs a check;
@@ -645,6 +656,42 @@ Update both together. See `AGENTS.md`.
 ## Shipped
 
 Newest first.
+
+### 2026-10-26 (late night): the stock end card is gone
+- **Ian: "why is this slide on every carousel"**, then "remove that code
+  that builds that. it should just know to have a closing card on carousels
+  that can change depending on the focus of the carousel".
+- `render_deck` no longer appends anything. A deck ends on a `close` slide
+  (kicker, headline, body) that is part of the deck, rendered in the deck's
+  own theme with oralcheck.org along the bottom. `slide_cta` and
+  `cta_slide_image` are deleted.
+- The generator now writes `close` for each carousel instead of the old
+  `save_line` and `send_line`, which only changed two lines on the fixed card.
+  If the model leaves it out, the deck ends on its last content slide; no
+  generic close is invented. Tested in `test_content.py`.
+- The nine built carousels got hand-written closes (see the open item on
+  re-uploading). The dormant v2 engine (`engine.py`, off since 20 Oct) still
+  has its own end card and was left alone.
+- **"Why is it so blurry":** the posted files were sharp (1440 x 1800); the
+  review page showed 540-wide copies. Review copies are now 1080 wide, for
+  every post rebuilt from here on.
+
+### 2026-10-26 (late night): oral cancer by age carousel
+- **Built from Ian's idea** ("oral cancer incidence by age by 20-30,
+  30-40"). Seven slides: a question cover, a bar chart of new cases per
+  100,000 by age (20 to 24 up to 90+, under 45 in coral), the shape (nearly
+  doubling every five years from the 20s to the 50s, levelling off in the
+  70s and 80s), 94% of new cases at 45 and over, "young is not the same as
+  zero", and age as one factor alongside tobacco, alcohol, HPV and sun.
+- **New figures in `src/lib/seerStats.ts`**: `SEER_BY_AGE` (age-specific
+  rates, SEER 21, 2019 to 2023, delay-adjusted, read off SEER*Explorer) and
+  `newCaseShareByAge` (Stat Facts). The build script reads the numbers out of
+  that file rather than typing them.
+- **New `bars` slide layout** in `layouts.py`, a to-scale bar chart. It is
+  left out of the generator's `SLIDE_SPEC` on purpose, so a model can never
+  be the one supplying chart values.
+- Headline first said "It climbs with every decade"; changed, since the rate
+  dips slightly after 80.
 
 ### 2026-10-26 (late): Instagram publishes straight to Meta
 - **Meta Graph API, done.** Ian: "we need to connect meta api so i dont get

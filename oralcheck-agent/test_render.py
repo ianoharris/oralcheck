@@ -72,8 +72,10 @@ SAMPLE_DECK = {
          "attribution": "OralCheck user"},
         {"type": "photo", "photo": PHOTO,
          "caption": "Two minutes now can change what your options look like later."},
+        {"type": "close", "kicker": "Tonight",
+         "headline": "Look under your tongue before bed.",
+         "body": "Thirty seconds with a mirror. Save this so the checklist is here when you do."},
     ],
-    "cta": {},
 }
 
 # --- Edge cases: long strings that must not overflow -----------------------
