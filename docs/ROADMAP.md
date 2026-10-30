@@ -10,7 +10,7 @@ The running list. Two rules:
    named. This is the list's whole purpose: the things that come up once, sound
    good, and are never mentioned again.
 
-Last updated: 2026-10-26
+Last updated: 2026-10-30
 
 **Mirrored to an artifact Ian reads:**
 https://claude.ai/code/artifact/cc490e4b-1ee3-4062-bc56-eada066f1003
@@ -255,10 +255,11 @@ Update both together. See `AGENTS.md`.
       `/learn/oral-cancer-screening-what-to-expect`. Fix in the markdown (and
       in the generator so new articles get it right). Not blocked; left alone
       during the redesign because another session was editing the article text.
-- [ ] **Published articles are missing from the sitemap (found 2026-10-21).**
-      `src/app/sitemap.ts` lists only the hand-written pages, so the 11 SEO
-      articles rely on Google finding them through /learn. Add them from
-      `getAllPublishedArticles()`. Not blocked.
+- [x] **Fixed and pushed 2026-10-30: published articles are missing from the sitemap (found 2026-10-21).**
+      `src/app/sitemap.ts` lists only the hand-written pages, so the 12 SEO
+      articles relied on Google finding them through /learn. They are now
+      listed from `getAllPublishedArticles()`, with the Spanish version as an
+      alternate where one exists (32 URLs, was 20).
 - [ ] **Posting calendar: 30 posts, 27 Oct 2026 to 1 Jan 2027 (started
       2026-10-20).** Ian asked to stop the weekly back and forth and plan the
       whole autumn at once: 3 a week for 10 weeks, 10 reels (3D), 10 carousels
@@ -487,6 +488,18 @@ Update both together. See `AGENTS.md`.
       weak spot.
       (erythroplakia) and lump/thickening. No openly-licensed image found yet.
 
+- [ ] **Backburner (Ian, 2026-10-30): "What's this in my mouth?" explorer.**
+      Tap a spot on the head model, say what is there (white patch, red patch,
+      sore, lump) and for how long; the page gives the common harmless causes,
+      what makes it worth a dentist's look, and the two-week line, and links the
+      article. Each spot and appearance becomes its own indexable page, aimed at
+      the symptom searches that already bring the most engaged visitors.
+      Education, not diagnosis, and no photo upload, so it stays clear of the
+      image-diagnosis idea in Decided against. Needs a clinician read of the
+      content grid before launch. Parked by Ian in favour of a UI audit first.
+      The runner-up, a guided self-exam using the front camera as a mirror with
+      a monthly calendar reminder, is parked with it.
+
 ### Product and credibility
 
 - [ ] **Pages with fade-in animations can render blank for visitors who turn
@@ -611,6 +624,51 @@ Update both together. See `AGENTS.md`.
 
 ### Distribution
 
+- [ ] **Link Search Console to GA4 (blocked on Ian, five minutes, no code).**
+      Raised by GA's own insights panel, 2026-10-28. The domain is already
+      verified in Search Console (a `google-site-verification` TXT record is on
+      oralcheck.org), but GA reports 0 Search Console links, so search queries
+      never show up next to the analytics. GA4: Admin, Product links, Search
+      Console links, Link, pick oralcheck.org. Until then the queries are in
+      Search Console itself (Performance, Search results).
+- [x] **Done 2026-10-28 (Ian set both himself): tag the link in bio.** Instagram's in-app
+      browser often drops the referrer, so visits from the bio link land in
+      Direct or Unassigned rather than Organic Social. Change the Instagram bio
+      link to `https://oralcheck.org/?utm_source=instagram&utm_medium=social&utm_campaign=bio`
+      and LinkedIn's to the same with `utm_source=linkedin`. Links inside
+      posts cannot be tapped, so the bio link is the one that matters.
+- [ ] **Pushed 2026-10-30. Left for Ian: open `oralcheck.org/?notrack=1` once on
+      your phone and laptop.** (The fixes themselves are in Shipped.) Three
+      fixes from a read of GA4, all built and checked locally:
+      1. *Dev servers were reporting to the live GA property.* 376 of 1,321
+         pageviews in the 90 days to 30 Oct came from `localhost`, 242 of them
+         one `/pt` tab on 21 Oct, which outnumbered every real visitor in
+         October. Now only `oralcheck.org` reports, and a browser opened once
+         with `?notrack=1` stops counting itself (`?notrack=0` undoes it).
+      2. *Returning visitors were stuck on stale pages.* The offline cache
+         served `/`, `/learn` and `/about` stale-while-revalidate, but never
+         kept the refresh alive, so a returning visitor got the page as it was
+         on their first visit, indefinitely. Those copies carry the pre-21-Oct
+         security policy (GA blocked) and point at deleted scripts (seen
+         live: `ChunkLoadError` on `/learn/signs`). Pages are now network-first
+         and the cache name is bumped, which clears everyone's stale copies.
+      3. The sitemap item above.
+- [ ] **What GA4 says, read 2026-10-30 (live site only, Madison and localhost
+      excluded).** From 22 Oct, when the counts are trustworthy again: 37
+      visitors, 2 started the screener, 1 finished. Organic search (Google)
+      is the only channel with real engagement (62 to 77%); Direct is mostly
+      one-page, zero-engagement sessions; Instagram and Facebook sent 8
+      sessions in October across about a dozen posts. The articles that land
+      search visitors are the symptom comparisons (`canker-sore-vs-oral-cancer`
+      in English, `mouth-sore-vs-oral-cancer` and `white-and-red-patches` in
+      Spanish). Since 14 Sep the email-a-copy prompt was shown 10 times and
+      never sent. Find-care has fired once since the 14 Sep tracking fix.
+      The bottleneck is visitors, not the screener: most who start it finish.
+- [ ] **Read the month-on-month numbers with care.** GA's insights (28 Oct)
+      called a 44% swing in Direct and Organic Search new users. At 14 to 16
+      new users a channel a month, a swing that size is a handful of people,
+      within ordinary noise. Worth watching over three months, not acting on.
+
 - [ ] **Dental-office pilot.** The infrastructure already exists and is under-used:
       printable waiting-room flyer, QR generator, and a copy-paste embed on
       `/for-clinicians`. Ask for a **30-day pilot, not a partnership** — far easier
@@ -656,6 +714,16 @@ Update both together. See `AGENTS.md`.
 ## Shipped
 
 Newest first.
+
+### 2026-10-30: analytics you can trust again
+
+- **Only oralcheck.org reports to Google Analytics.** Dev servers on
+  `localhost` had been counting as visitors (376 of 1,321 page views in 90
+  days). A browser opened once with `?notrack=1` stops counting itself.
+- **Pages load network-first.** The offline cache kept returning visitors on
+  their first-ever copy of `/`, `/learn` and `/about`, with GA blocked and
+  some scripts missing. Cache bumped to v2, which clears the stale copies.
+- **All 12 published articles are in the sitemap**, with Spanish alternates.
 
 ### 2026-10-26 (late night): the stock end card is gone
 - **Ian: "why is this slide on every carousel"**, then "remove that code
@@ -1661,6 +1729,7 @@ Newest first.
 | Buffer as a second scheduler | Free tier has no open API, so posts would be pasted in by hand anyway. No better than the Telegram handoff, plus a second dashboard. | If Buffer reopens API access |
 | Quoting "30-fold" or "35-fold" for smoking plus drinking | Decided 2026-10-08. The 35-fold figure (Blot 1988) is real but is one 1980s US study, oral and throat cancer pooled, at two or more packs and four or more drinks a day. Hashibe 2009 pools 17 studies, reports the oral cavity alone, and gives about 15 at a pack and three drinks. "30-fold" matched no source at all. | A larger pooled estimate for the oral cavity alone |
 | LinkedIn API direct publishing | Company-page posting needs the Community Management API: restricted to reviewed legal organisations, explicitly not available to individuals | If OralCheck incorporates |
+| Local SEO: a Google Business Profile, "near me" results, `MedicalBusiness` schema | Suggested by GA's insights panel, 2026-10-28. OralCheck has no premises and sees no patients, so a Business Profile would misdescribe it (Google requires a real location or in-person service), and `MedicalBusiness` markup would tell search engines it is a clinic. Both conflict with the rule against claiming affiliations or credentials the project does not have. The same panel's other suggestion, translating `/learn/facts` and `/learn/signs` into Spanish, was already done: every page is in English, Spanish and Portuguese | If OralCheck ever runs an in-person screening service |
 | The posts2 templates for carousels and images (mouth-map illustrations, notes-app, text-post, bold posters) | Live for one batch, 19 Oct. Ian: too playful, prefers the original post look. The code stays because reels still borrow pieces of it | Not planned |
 | A cleaned-up classic reel (one still background, no blur-in, colour-only emphasis, dissolves, a progress bar, a matching end card) | Built and sampled 2026-10-20 at Ian's request. His verdict: worse than the original, which itself was "very meh". Reverted the same day; reels went 3D instead | Not planned |
 | A "light", gently witty tone lane for ideas | Retired 2026-10-20 with the posts2 look: the account should read clinical | Not planned |

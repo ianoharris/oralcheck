@@ -1032,6 +1032,24 @@ as Google's own guidance lists. For that month use Vercel Analytics (Vercel
 dashboard, Analytics tab; the free plan keeps 31 days), and don't compare GA
 numbers across 22 September or 21 October.
 
+**Two more cautions, found 30 October 2026.** First, until then the
+development copies of the site (the ones that run on a laptop while it is being
+built, at `localhost`) reported to the same Google Analytics as the real site.
+In the 90 days to 30 October that was 376 of 1,321 page views, most of them one
+tab left open on 21 October. GA can filter by host name, so the real figures
+are still recoverable: look at host `oralcheck.org` only. From the next deploy
+only `oralcheck.org` reports at all, and any browser can be told not to count
+itself by opening the site once with `?notrack=1` on the end of the address
+(`?notrack=0` undoes it). Do this on your own phone and laptop.
+
+Second, the site's offline cache (the part that lets the Learn pages open
+without signal) was keeping returning visitors on the copy of the home page,
+Learn and About they saw on their first visit, indefinitely. Those old copies
+blocked Google Analytics and, after later updates, tried to load scripts that
+no longer exist. So GA has undercounted returning visitors, by an amount it
+cannot tell you. From the next deploy pages always come from the network, the
+cache is only used offline, and the old copies are cleared.
+
 **How many people have used it, then?** GA's all-time total on 21 October
 2026 was 847. The month GA missed had about 60 to 110 more, estimated two ways
 from Vercel's counts using the ratios GA showed the month before (285 page

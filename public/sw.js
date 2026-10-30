@@ -1,4 +1,7 @@
-const CACHE_NAME = "oralcheck-v1";
+// Bumped from v1 on 2026-10-30. The activate handler deletes every other
+// cache, which is the only way to reach visitors already stuck on stale pages
+// (see the fetch handler).
+const CACHE_NAME = "oralcheck-v2";
 
 // Pages to pre-cache for offline access
 const PRECACHE_URLS = [
@@ -57,17 +60,16 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  // Educational + static pages: stale-while-revalidate
-  if (
-    url.pathname === "/" ||
-    url.pathname.startsWith("/learn") ||
-    url.pathname === "/about"
-  ) {
-    event.respondWith(staleWhileRevalidate(request));
-    return;
-  }
-
-  // Everything else: network first with offline fallback
+  // Pages and everything else: network first, cache only as the offline
+  // fallback. "/", /learn and /about used to be stale-while-revalidate, which
+  // was wrong twice over. Its background refresh was never passed to
+  // event.waitUntil, so the browser stopped the worker before the fresh copy
+  // was saved and a returning visitor got the page as it was on their first
+  // visit, indefinitely. And a stale page is not just old text: it carries the
+  // old response headers (the pre-21-Oct security policy, which blocks Google
+  // Analytics) and points at JavaScript chunks that later deploys removed, so
+  // its scripts fail to load. Found 2026-10-30 when GA showed returning
+  // visitors' pageviews going missing.
   event.respondWith(networkFirst(request));
 });
 
@@ -82,18 +84,6 @@ async function cacheFirst(request) {
     cache.put(request, response.clone());
   }
   return response;
-}
-
-async function staleWhileRevalidate(request) {
-  const cache = await caches.open(CACHE_NAME);
-  const cached = await cache.match(request);
-  const fetchPromise = fetch(request)
-    .then((response) => {
-      if (response.ok) cache.put(request, response.clone());
-      return response;
-    })
-    .catch(() => null);
-  return cached ?? (await fetchPromise) ?? offlineFallback();
 }
 
 async function networkFirst(request) {

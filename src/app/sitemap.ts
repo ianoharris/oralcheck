@@ -1,5 +1,10 @@
 import type { MetadataRoute } from "next";
 import { routing } from "@/i18n/routing";
+import {
+  getAllPublishedArticles,
+  getPublishedArticle,
+  hasTranslation,
+} from "@/lib/articles";
 
 const BASE = "https://oralcheck.org";
 
@@ -50,10 +55,34 @@ function localeUrl(locale: string, path: string) {
     : `${BASE}/${locale}${path}`;
 }
 
+/**
+ * The published SEO articles, which this file used to leave out: Google had to
+ * find them through /learn, yet they are what organic search actually lands on
+ * (a symptom comparison is the top search landing page after the home page).
+ * Only English and real Spanish translations are listed. Portuguese serves the
+ * English text and canonicals to the English page, so listing it would point
+ * crawlers at a page that disowns itself.
+ */
+function articleEntries(): MetadataRoute.Sitemap {
+  return getAllPublishedArticles().map(({ slug, date }) => {
+    const path = `/learn/${slug}`;
+    const updated = getPublishedArticle(slug)?.updated || date;
+    const languages: Record<string, string> = { en: localeUrl("en", path) };
+    if (hasTranslation(slug, "es")) languages.es = localeUrl("es", path);
+    return {
+      url: localeUrl(routing.defaultLocale, path),
+      lastModified: updated ? new Date(`${updated}T00:00:00Z`) : undefined,
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+      alternates: { languages },
+    };
+  });
+}
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const today = new Date("2026-08-27");
 
-  return PAGES.map(({ path, changeFrequency, priority }) => ({
+  const pages = PAGES.map(({ path, changeFrequency, priority }) => ({
     url: localeUrl(routing.defaultLocale, path),
     lastModified: today,
     changeFrequency,
@@ -64,4 +93,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       ),
     },
   }));
+
+  return [...pages, ...articleEntries()];
 }

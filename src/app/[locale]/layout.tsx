@@ -11,6 +11,8 @@ import ServiceWorkerRegistration from "@/components/ServiceWorkerRegistration";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { Analytics } from "@vercel/analytics/next";
 
+const GA_ID = "G-9DPR4C91FM";
+
 const dmSerif = DM_Serif_Display({
   variable: "--font-dm-serif",
   subsets: ["latin"],
@@ -166,6 +168,18 @@ export default async function RootLayout({ children, params }: Props) {
       className={`${dmSerif.variable} ${sourceSans.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
       <head>
+        {/* Keeps development and Ian's own visits out of GA. Dev servers
+            shared the live property: 376 of 1,321 pageviews in the 90 days to
+            30 Oct came from localhost, 242 of them one /pt tab on 21 Oct, which
+            outnumbered every real visitor that month. So only oralcheck.org
+            reports, and a browser opened once with ?notrack=1 stops counting
+            itself on the live site too (?notrack=0 undoes it). It has to run
+            before gtag loads, which is why it is inline here. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{var q=new URLSearchParams(location.search).get("notrack");if(q==="1")localStorage.setItem("oralcheck:notrack","1");if(q==="0")localStorage.removeItem("oralcheck:notrack");if(localStorage.getItem("oralcheck:notrack")==="1"||!/(^|\\.)oralcheck\\.org$/.test(location.hostname))window["ga-disable-${GA_ID}"]=true}catch(e){}`,
+          }}
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -179,7 +193,7 @@ export default async function RootLayout({ children, params }: Props) {
           <Footer />
         </NextIntlClientProvider>
       </body>
-      <GoogleAnalytics gaId="G-9DPR4C91FM" />
+      <GoogleAnalytics gaId={GA_ID} />
       <Analytics />
     </html>
   );
