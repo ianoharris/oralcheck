@@ -287,7 +287,7 @@
       "network": "linkedin",
       "media_type": "carousel",
       "when": "2026-11-03T16:00:00+00:00",
-      "status": "approved",
+      "status": "scheduled",
       "idea": {
         "title": "The two-week rule for a sore in your mouth",
         "hook": "Most mouth sores heal on their own within two weeks.",
@@ -326,7 +326,9 @@
       "version": 2,
       "notes": [
         "26 Oct: stock end card replaced with a closing slide written for this post (Ian asked for closes that follow each carousel's focus)."
-      ]
+      ],
+      "publora_id": "6ae6258d33575169fb3ea283",
+      "scheduled_at": "2026-10-31T17:29:41.493498+00:00"
     },
     {
       "id": "2026-11-06_in_reel",
