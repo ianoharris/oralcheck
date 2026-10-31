@@ -200,7 +200,7 @@
       "network": "instagram",
       "media_type": "carousel",
       "when": "2026-10-31T22:00:00+00:00",
-      "status": "approved",
+      "status": "posted",
       "idea": {
         "title": "Halloween: what looks scary in your mouth, and what quietly matters",
         "hook": "Some things in your mouth look frightening and are not. One looks like nothing and is.",
@@ -241,7 +241,9 @@
       ],
       "notes": [
         "26 Oct: stock end card replaced with a closing slide written for this post (Ian asked for closes that follow each carousel's focus)."
-      ]
+      ],
+      "ig_media_id": "18065547638717293",
+      "posted_at": "2026-10-31T22:47:59.286487+00:00"
     },
     {
       "id": "2026-11-03_in_image",
