@@ -522,6 +522,10 @@ Update both together. See `AGENTS.md`.
         a Learn page and could merge; the white-patch disclaimer is not lifted
         into the page disclaimer box.
       - The Spanish site mixes tú and usted (102 to 41).
+      - The draft `2026-11-02-leukoplakia-vs-thrush` was written by the
+        pipeline a few hours before its new rules were pushed, and still has
+        the old template (a "Most people" opener, a closing CTA). Clean it up
+        before publishing it.
 
 - [x] **Decided 2026-10-30, Ian: drop the AI summary. Done locally, not yet
       pushed. The site said answers never leave the device, but they did (found
