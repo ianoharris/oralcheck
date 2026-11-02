@@ -34,7 +34,7 @@
     "cankerSoreVsCancer": "Afta ou Câncer?",
     "disclaimerHeading": "Aviso Legal",
     "disclaimerBody": "O OralCheck não é um diagnóstico médico. É uma ferramenta educativa. Consulte um profissional de saúde qualificado sobre qualquer sintoma ou dúvida.",
-    "disclaimerScoring": "Pontuação de risco baseada nas diretrizes clínicas da ACS, do NCI e da Oral Cancer Foundation.",
+    "disclaimerScoring": "Pontuação de risco ponderada a partir de estudos publicados. Veja a metodologia de pontuação.",
     "copyright": "© {year} OralCheck",
     "methods": "Métodos",
     "privacy": "Privacidade",
@@ -1304,31 +1304,31 @@
   },
   "MethodsPage": {
     "back": "← OralCheck",
-    "heading": "Metodologia de Pontuação",
+    "heading": "Metodologia de pontuação",
     "intro": "O OralCheck atribui um peso de risco a cada resposta com base em razões de chances publicadas. Esta página documenta como essa pontuação funciona, em quais fontes ela se baseia e onde o modelo possui limitações conhecidas.",
-    "weightDerivationHeading": "Derivação dos Pesos",
+    "weightDerivationHeading": "Derivação dos pesos",
     "weightP1": "Cada fator de risco recebe um peso proporcional ao logaritmo natural de sua razão de chances (OR) publicada, escalonado por uma constante <i>k</i>:",
     "weightFormula": "peso = arredondar( ln(OR) × k )",
-    "weightP2": "A constante de escalonamento <i>k = 4,47</i> foi escolhida para que o uso diário de tabaco (o fator modificável com maior peso, OR 6,0× segundo Gandini et al. 2008) corresponda a um peso de 8. Isso ancora todos os demais pesos em uma escala ordinal consistente, baseada no mesmo conjunto de evidências.",
-    "weightP3": "Quando os estudos relatam uma faixa de OR, é usado o ponto médio ou uma estimativa conservadora. Sintomas como eritroplasia, leucoplasia e úlceras que não cicatrizam são tratados de duas formas ao mesmo tempo: somam à pontuação e também elevam automaticamente o nível para Consulte um Dentista em Breve, independentemente do total. Esses sintomas são mais bem compreendidos como possível patologia in situ do que como exposições de risco na população em geral, portanto um sintoma relatado sempre gera a mesma recomendação, mesmo quando todos os outros fatores são baixos.",
-    "factorTableHeading": "Pesos dos Fatores de Risco",
+    "weightP2": "A constante de escala <i>k = 4,47</i> foi escolhida para que o uso diário de tabaco corresponda a um peso de 8, usando o topo do seu intervalo publicado (OR 6,0×, Gandini et al. 2008). Isso ancora todos os outros pesos a uma mesma escala ordinal, com base na mesma evidência.",
+    "weightP3": "A maioria dos pesos segue a fórmula no ponto médio do intervalo publicado. Sintomas como uma mancha vermelha ou branca, um caroço ou uma ferida que não cicatrizou são tratados de duas formas ao mesmo tempo: somam pontos e também levam o resultado ao nível mais alto, Procure um dentista em breve, qualquer que seja o total. São mais bem entendidos como possível doença já presente do que como exposições de risco populacionais, então um sintoma relatado sempre leva à mesma recomendação, mesmo quando todos os outros fatores são baixos.",
+    "factorTableHeading": "Pesos dos fatores de risco",
     "colFactor": "Fator",
     "colOR": "OR Publicada",
     "colWeight": "Peso",
     "colSource": "Fonte",
-    "interactionHeading": "Termo de Interação Tabaco + Álcool",
+    "interactionHeading": "Interação entre tabaco e álcool",
     "interactionP1Rest": "Quando o uso de tabaco e álcool está presente em níveis significativos (diário ou semanal), o modelo adiciona um bônus de interação de <b>+3 pontos</b>.",
     "interactionP2": "O motivo é que tabaco e álcool juntos elevam o risco mais do que o produto de seus efeitos isolados. Como cada peso é proporcional ao logaritmo de uma razão de chances, somar os pesos do tabaco e do álcool já pressupõe que os dois se multiplicam. Dados combinados de 17 estudos mostraram que o efeito conjunto é ainda maior, cerca de duas vezes o que a multiplicação sozinha prevê (parâmetro de interação de 2,15 para câncer de cabeça e pescoço em geral e 3,09 para câncer da cavidade bucal). Nesta escala, um fator de 2,15 vale 3 pontos, então +3 é a leitura conservadora. Nos mesmos dados, quem fumava mais de um maço por dia e tomava três ou mais doses por dia tinha chances de câncer da cavidade bucal cerca de 15 vezes maiores do que quem não fazia nenhum dos dois.",
     "interactionSourcesLabel": "Fontes:",
-    "tierThresholdsHeading": "Limites dos Níveis de Risco",
+    "tierThresholdsHeading": "Limites dos níveis de risco",
     "tierLow": "Baixo",
     "tierModerate": "Moderado",
     "tierElevated": "Elevado",
     "tierHigh": "Alto",
     "tierP1": "A pontuação máxima possível é 61 (todas as respostas de maior risco mais o bônus de interação). Alguns pontos de referência: um fumante diário sozinho pontua 8 (moderado); tabaco + álcool + interação chegam a 16 (elevado); bétel + tabaco + álcool + interação alcançam 25 (alto). Sexo masculino ao nascer sozinho pontua 3, o que ainda é baixo.",
-    "tierP2Bold": "Alto",
-    "tierP2Rest": "Independentemente da pontuação, qualquer sintoma com duração de 2 semanas ou mais (uma ferida persistente, mancha vermelha ou branca, caroço sem explicação, ou dificuldade para engolir) eleva o nível para {bold} e indica a necessidade de avaliação imediata.",
-    "limitationsHeading": "Limitações Conhecidas",
+    "tierP2Bold": "Procure um dentista em breve",
+    "tierP2Rest": "Qualquer que seja a pontuação, relatar um sintoma atual (uma ferida persistente, uma mancha vermelha ou branca, um caroço sem explicação ou dificuldade para engolir), ou responder que não tem certeza, leva o resultado a {bold} e pede uma avaliação nesta semana.",
+    "limitationsHeading": "Limitações conhecidas",
     "limitations": [
       "O OralCheck não foi validado com base em um conjunto de dados de desfechos clínicos. Os pesos são fundamentados na literatura publicada, mas não foram calibrados em relação a uma coorte prospectiva.",
       "Os pesos foram reunidos a partir de estudos conduzidos em populações diferentes e, em seguida, aplicados a qualquer pessoa que acesse a página. O valor referente ao tabaco vem de uma metanálise de coortes de fumantes, o do bétel de populações do sul e sudeste asiático onde o uso é comum, e o do HPV de um estudo de caso-controle realizado nos Estados Unidos. Somar log-odds entre eles pressupõe que esses tamanhos de efeito se aplicam à pessoa que está respondendo, e essa suposição não foi testada. Essa é a maior fonte de incerteza na pontuação, maior do que qualquer peso individual estar ligeiramente errado.",
@@ -1389,7 +1389,7 @@
     },
     "thresholdAnchorNote": "Os limites são ancorados nesses perfis de referência, e não reescalonados sempre que a pontuação máxima muda. A inclusão das perguntas sobre sexo e histórico imunológico em agosto de 2026 elevou a pontuação máxima de 53 para 61, e um reescalonamento proporcional teria deslocado o limite da categoria Alto para 26, rebaixando silenciosamente um perfil inalterado de bétel + tabaco + álcool de Alto para Elevado. Uma nova pergunta não deve fazer um perfil existente parecer mais seguro, por isso os limites foram mantidos onde estavam.",
     "rationaleHeading": "Por que cada pergunta é feita",
-    "rationaleIntro": "Cada pergunta justifica sua presença ao alterar a pontuação de uma forma respaldada pela literatura publicada. Este é o raciocínio por trás de cada uma delas, incluindo as duas em que as evidências são mais fracas.",
+    "rationaleIntro": "Cada pergunta conquista seu lugar ao mudar a pontuação de uma forma que a literatura publicada sustenta. Este é o raciocínio por trás de cada uma, incluindo onde a evidência é mais fraca.",
     "rationale": [
       {
         "id": "age",
@@ -1449,7 +1449,7 @@
       {
         "id": "dental",
         "title": "Cuidados odontológicos",
-        "body": "Não é um fator de risco, e a página é explícita sobre isso. É um indicador indireto de atraso no diagnóstico. Mais de 60% dos cânceres bucais são descobertos no estágio III ou IV, e o exame visual de dois minutos que os detecta mais cedo acontece em uma consulta odontológica. Seu peso vem de raciocínio clínico, e não de uma razão de chances, sendo a única entrada na tabela para a qual isso é verdade."
+        "body": "Não é um fator de risco. É um indicador de atraso na detecção: cerca de dois terços dos cânceres bucais só são encontrados depois de se espalharem, e é na consulta odontológica de rotina que acontece o breve exame visual que os encontra mais cedo. Seu peso vem do raciocínio clínico, não de uma razão de chances, assim como as respostas sobre sintomas e \"prefiro não dizer\" para sexo."
       }
     ],
     "cannotHeading": "O que esta ferramenta não pode dizer",
@@ -1457,18 +1457,15 @@
     "cannot": [
       "Ela não pode dizer se você tem câncer bucal. Ela nunca vê sua boca. Ela apenas retorna as exposições que você relatou, e nada mais.",
       "Um resultado baixo não é um atestado de saúde. Aproximadamente um quarto dos cânceres bucais ocorre em pessoas sem nenhum dos fatores de risco convencionais que este rastreador avalia, então uma pontuação baixa associada a um sintoma ainda significa que você deve consultar um dentista.",
-      "Ela não pode distinguir câncer da cavidade bucal de câncer de orofaringe. São doenças epidemiologicamente distintas, com causas predominantes diferentes, e a pontuação única as mistura.",
-      "Ela não pode levar em conta o que você não relatou ou não sabia. O uso de tabaco e álcool é consistentemente subestimado em questionários autoaplicados.",
-      "Ela não foi validada com base em um conjunto de dados de desfechos clínicos. Cada peso é derivado da literatura publicada, mas o instrumento como um todo nunca foi calibrado com base em uma coorte prospectiva, e não deve ser descrito como validado.",
       "A pontuação não é uma probabilidade. É uma estratificação ordinal, portanto uma pontuação de 20 não representa o dobro do risco de uma pontuação de 10 e não corresponde a uma porcentagem de chance de desenvolver qualquer doença.",
       "Ela não pode substituir o exame. O rastreamento real do câncer bucal é um exame visual e tátil rápido realizado por um dentista ou médico. O único propósito desta ferramenta é tornar mais provável que essa consulta aconteça."
     ],
     "reviewHeading": "Revisão e manutenção",
     "lastReviewedLabel": "Última revisão",
-    "lastReviewedDate": "Agosto de 2026",
-    "reviewBody": "A lista de fatores, os pesos, os limites e as fontes desta página foram verificados pela última vez com base na literatura atual em agosto de 2026 e revisados após avaliação externa por um patologista bucal e maxilofacial em exercício. Essa revisão foi o que adicionou a pergunta sobre histórico imunológico e de radioterapia, incluiu crescimento gengival e mobilidade dentária recente nas orientações sobre sintomas, e motivou a observação de que uma parcela significativa dos cânceres bucais ocorre sem nenhum fator de risco convencional.",
+    "lastReviewedDate": "Setembro de 2026",
+    "reviewBody": "A lista de fatores, os pesos, os limites e as fontes desta página foram conferidos novamente com a literatura atual em agosto de 2026 e depois revisados após a avaliação de um patologista oral e maxilofacial em atividade em agosto de 2026 e de um cirurgião de cabeça e pescoço em setembro de 2026. A primeira avaliação acrescentou a pergunta sobre histórico imunológico e de radiação, acrescentou o crescimento gengival e a mobilidade dentária recente à orientação sobre sintomas e motivou o aviso de que uma parcela considerável dos cânceres bucais ocorre sem nenhum fator de risco convencional. A segunda motivou a limitação sobre combinar estudos de populações diferentes, a explicação de onde vieram os limites dos níveis e a seção sobre uma pontuação que cobre duas doenças.",
     "reviewCadence": "Esta página é revisada pelo menos uma vez por ano e sempre que uma pergunta é adicionada, removida ou reajustada em peso. Se você identificar um erro em uma citação ou em um peso, vale a pena reportar: as correções são feitas diretamente e a data de revisão é atualizada.",
-    "seerHeading": "Os Índices de Sobrevivência Citados Neste Site",
+    "seerHeading": "Os índices de sobrevivência citados neste site",
     "seerIntro": "Várias páginas citam a sobrevivência em 5 anos por estágio, porque a diferença entre encontrar o câncer bucal cedo e encontrá-lo tarde é exatamente o motivo pelo qual esta ferramenta existe. Estes são os números atuais e o que eles significam, e o que não significam.",
     "seerRows": [
       {
@@ -1505,7 +1502,9 @@
     "siteHeading": "Uma pontuação, duas doenças",
     "siteBody": "Os dois clínicos que revisaram esta ferramenta levantaram a mesma questão de forma independente: o câncer da cavidade oral e o câncer de orofaringe têm causas dominantes diferentes, e uma pontuação única combinada não serve bem a nenhum dos dois. Duas correções óbvias foram consideradas e descartadas. Dividir o resultado em duas pontuações construiria a de orofaringe sobre uma única pergunta, e uma pontuação de uma pergunta não é uma pontuação. Restringir a ferramenta à cavidade oral e remover a pergunta sobre HPV eliminaria a parte de crescimento mais rápido da doença, o que é o oposto do útil para pessoas abaixo dos 50 anos, que são as mais afetadas.",
     "siteBody2": "Assim, a pontuação permaneceu única e a explicação foi alterada. Cada pergunta é identificada com a doença a que realmente se refere: tabaco, álcool, bétel, dieta e exposição solar apontam para a cavidade oral; HPV aponta para a orofaringe. Idade, sexo, histórico familiar, histórico imunológico, sintomas e frequência de consultas odontológicas aumentam o risco em ambos os sítios, portanto são excluídos da comparação para não puxar todos os perfis em direção ao sítio com mais perguntas associadas. Um sítio é nomeado apenas quando seu peso é pelo menos o dobro do outro; abaixo disso, a página indica que o perfil abrange ambos, pois criar uma inclinação a partir de uma diferença de um ponto seria pior do que não dizer nada.",
-    "siteBody3": "Essa é uma mudança no que a ferramenta explica, não no que ela calcula. Os pesos não foram alterados, e a questão em aberto, que cabe aos clínicos e não a esta página, é se o peso do HPV deveria aumentar agora que o leitor pode ver que a pontuação é combinada entre os sítios."
+    "siteBody3": "Essa é uma mudança no que a ferramenta explica, não no que ela calcula. Os pesos não foram alterados, e a questão em aberto, que cabe aos clínicos e não a esta página, é se o peso do HPV deveria aumentar agora que o leitor pode ver que a pontuação é combinada entre os sítios.",
+    "weightDepartures": "Quatro pesos se afastam da fórmula, e a tabela mostra ao lado de cada um o valor que a fórmula dá. O bétel atual usa o limite inferior do seu intervalo de 7 a 10×: 9, quando o ponto médio dá 10. O histórico de HPV tem peso 5, não 6, porque o estado vacinal e o histórico relatado são indicadores comportamentais, não o resultado de um exame. Os dois pesos de exposição ao sol são metade do valor da fórmula (2 e 1, não 4 e 2), porque a razão de chances descreve apenas o câncer de lábio, uma pequena parte dos cânceres que esta pontuação cobre. Os quatro foram definidos por julgamento e estão na lista para a próxima revisão clínica. Algumas linhas não têm razão de chances: as respostas sobre sintomas (uma substituição), a frequência de visitas ao dentista (um indicador de detecção) e \"prefiro não dizer\" para sexo (uma média populacional).",
+    "formulaGives": "fórmula: {n}"
   },
   "ContactForm": {
     "sentTitle": "Mensagem recebida, obrigado pelo contato.",

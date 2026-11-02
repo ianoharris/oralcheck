@@ -184,6 +184,16 @@ ln(3.0)  = 1.0986
 round    = 5 points
 ```
 
+**Four weights do not follow the formula,** and since 2 November 2026 `/methods`
+says so beside each one: current betel quid (9, where the midpoint of 7 to 10×
+gives 10), HPV history (5, where the formula gives 6, because vaccination and
+history are proxies, not a test), and the two sun answers (2 and 1, half the
+formula's 4 and 2, because that odds ratio is for lip cancer alone). All four
+were set by judgment, and they are on the list for the next clinical review.
+If a clinician asks "does every weight come from the formula?", the answer is
+"all but four, and the page names them". The weights table on `/methods` now
+reads its numbers from the screener itself, so the two can no longer disagree.
+
 ### 3.2 The full pipeline
 
 ```mermaid
@@ -195,7 +205,7 @@ flowchart LR
     D -->|no| F["no bonus"]
     E --> G["Total score<br/>0 to 61"]
     F --> G
-    G --> H{"Symptom lasting<br/>2+ weeks?"}
+    G --> H{"Symptom reported,<br/>or unsure?"}
     H -->|yes| I["OVERRIDE:<br/>top tier regardless"]
     H -->|no| J["Band by score"]
     I --> K["Result page"]

@@ -1,0 +1,128 @@
+<!--@background-->
+    <section>
+      <h2>Background</h2>
+      <p class="lede">Oral cavity and pharynx cancer is far more survivable when found before it spreads, yet most cases are found later.</p>
+      <div class="stats">
+        <div class="stat"><div class="n">60,480</div><div class="l">estimated new US cases, 2026</div></div>
+        <div class="stat c"><div class="n">13,150</div><div class="l">estimated US deaths, 2026</div></div>
+        <div class="stat"><div class="n">88.7%</div><div class="l">5-year relative survival while still <b>localized</b></div></div>
+        <div class="stat c"><div class="n">36.0%</div><div class="l">once spread to <b>distant</b> sites</div></div>
+      </div>
+      <figure class="tight">
+        {{FIG_SHARE}}
+        <figcaption><b>Figure 1.</b> Cases by SEER <i>summary</i> stage at diagnosis, 2016–2022 <span class="ref">[14]</span>.</figcaption>
+      </figure>
+      <p>The gap is one of timing, not treatment. A dentist can examine the mouth in minutes, but people who do not know their risk factors have little reason to ask. The term also covers two diseases: <b>oral cavity</b> cancer, driven by tobacco, alcohol and betel quid, and <b>oropharyngeal</b> cancer, driven largely by HPV-16 <span class="ref">[3, 10]</span>. One dental exam covers both.</p>
+    </section>
+<!--@objective-->
+    <section>
+      <h2>Objective</h2>
+      <p>Design a free, brief, private questionnaire that identifies which published risk factors a person carries, ranks them on a transparent scale derived from the literature, and turns the result into one action: <b>raise it with a dentist.</b></p>
+      <p>It is a risk-assessment questionnaire, not a screening test. The screening test is the clinical exam; the tool’s job is to make that exam more likely.</p>
+    </section>
+<!--@design-->
+    <section>
+      <h2>Design</h2>
+      <ul>
+        <li><b>12 questions</b>, about two minutes, no account; English, Spanish and Portuguese.</li>
+        <li>Scored <b>in the browser</b>; answers are not stored.</li>
+        <li>Output is a <b>tier and a next step</b>, never a probability, which would need a model validated on outcomes.</li>
+      </ul>
+    </section>
+<!--@pipeline-->
+    <section>
+      <figure>
+        {{FIG_PIPE}}
+        <figcaption><b>Figure 2.</b> Scoring. A symptom adds points and also overrides the tier, since it suggests possible existing disease, not exposure <span class="ref">[5]</span>.</figcaption>
+      </figure>
+    </section>
+<!--@formula-->
+    <section>
+      <h2>How weights are set</h2>
+      <div class="formula">
+        <div class="eq">weight = round(ln(OR) × <i>k</i>)</div>
+        <div class="sub"><i>k</i> = 4.47, chosen so daily tobacco, OR 6.0 (top of its 2.5–6.0 range [1]), scores 8</div>
+      </div>
+      <p>Summing log-odds treats risk factors as multiplying. Example: daily alcohol, OR 3.0 <span class="ref">[2]</span>: ln 3.0 × 4.47 = 4.91, so <b>5</b> points.</p>
+      <p><b>Interaction.</b> Pooled INHANCE data found the joint effect of tobacco and alcohol greater than multiplicative, interaction parameter 2.15 <span class="ref">[8]</span>. round(ln 2.15 × 4.47) = <b>+3</b> when both are current. The oral-cavity value, 3.09, would give 5, so 3 is the conservative choice.</p>
+    </section>
+<!--@deriv-->
+    <section>
+      <figure>
+        {{FIG_DERIV}}
+        <figcaption><b>Figure 3.</b> Assigned points against odds ratio, ranges at their midpoint. <b style="color:#095458">Teal</b>: on the formula (×<i>n</i> = answers sharing a point). <b style="color:#c84d35">Coral</b>: formula value (ring) and the weight set by judgment (diamond).</figcaption>
+      </figure>
+    </section>
+<!--@depart-->
+    <section>
+      <div class="callout">
+        <h3>Where the formula is not followed</h3>
+        <ul>
+          <li><b>Betel quid, current: 9</b>, from the low end of its 7–10× range; the midpoint gives 10 <span class="ref">[4]</span>.</li>
+          <li><b>HPV history: 5</b>, not 6, because vaccination and history are behavioural proxies, not serostatus <span class="ref">[3, 10]</span>.</li>
+          <li><b>Lip sun exposure: 2 and 1</b>, half the formula’s 4 and 2, set by judgment because the OR is for lip cancer alone <span class="ref">[11]</span>.</li>
+          <li><b>Not from an OR at all:</b> dental-visit recency (detection proxy), “sex not stated” (population average), and the symptom answers (override).</li>
+        </ul>
+      </div>
+    </section>
+<!--@table-->
+    <section>
+      <h2>Scoring table</h2>
+      <table>
+        <tbody>{{TABLE}}</tbody>
+      </table>
+      <div class="key"><b>Table 1.</b> Maximum 58 + 3 = <b>61</b>. <span class="chip dep">Coral</span> set by judgment; <span class="chip non">dashed</span> not OR-derived. *Below the SEER rate ratio because tobacco and alcohol are scored separately <span class="ref">[7, 14]</span>.</div>
+    </section>
+<!--@tiers-->
+    <section>
+      <h2>Risk tiers</h2>
+      <figure>
+        {{FIG_TIERS}}
+        <ul class="tierlist">
+          <li><span class="sc" style="background:#3d7346">3</span><span>Male sex alone: <b>Low</b></span></li>
+          <li><span class="sc" style="background:#8a5f12">8</span><span>Daily smoker alone: <b>Moderate</b></span></li>
+          <li><span class="sc" style="background:#a8541c">16</span><span>Tobacco + alcohol + 3: <b>Elevated</b></span></li>
+          <li><span class="sc" style="background:#b5432d">25</span><span>Betel + tobacco + alcohol + 3: <b>High</b></span></li>
+        </ul>
+        <div class="override"><b>Override:</b> a current symptom, yes or unsure, returns the top result, “See a dentist soon”, at any score.</div>
+        <figcaption><b>Figure 4.</b> Tiers and reference profiles, 0 to 61 scale (axis broken above 30).</figcaption>
+      </figure>
+      <p class="after">Cutoffs were <b>set by judgment</b> against these profiles, not derived. They stayed put when the maximum rose from 53 to 61, so no unchanged profile looks safer.</p>
+    </section>
+<!--@review-->
+    <section>
+      <h2>Clinical review</h2>
+      <p>Reviewed by a board-certified oral and maxillofacial pathologist (August 2026) and a head-and-neck surgeon (September 2026). What changed:</p>
+      <ul>
+        <li>Added the <b>immune and radiation question</b> <span class="ref">[12, 13]</span>.</li>
+        <li>Added <b>gum growth and tooth mobility</b> to symptom guidance.</li>
+        <li>Added a caveat that many cancers occur with <b>no conventional risk factor</b>: a low score with a symptom still means go.</li>
+        <li>Stated the <b>pooled-populations</b> limitation and the <b>provenance of the tier cutoffs</b>.</li>
+        <li><b>Oral cavity vs oropharynx</b>: results now name which site a person’s factors point to, and say when an HPV-driven profile is likely understated. A split score was rejected: it would rest on one question.</li>
+      </ul>
+    </section>
+<!--@limits-->
+    <section>
+      <h2>Limitations</h2>
+      <ul>
+        <li><b>Not validated</b> against outcomes: no sensitivity, specificity or ROC. The score ranks; it is not a probability.</li>
+        <li>ORs come from <b>different populations</b> and are applied to anyone; transportability is untested and is the largest uncertainty.</li>
+        <li>One score covers <b>two diseases</b>; the HPV weight is a blended compromise.</li>
+        <li><b>Self-report</b>: tobacco and alcohol are often under-reported.</li>
+        <li>The <b>anchor</b> OR, 6.0, sits above pooled estimates for current smoking and oral cavity cancer.</li>
+      </ul>
+    </section>
+<!--@next-->
+    <section>
+      <h2>Next steps</h2>
+      <ul>
+        <li><b>Validation</b> needs outcome data and a <b>biostatistician</b>; clinical review cannot establish it.</li>
+        <li>A <b>prospective pilot in dental offices</b>, pairing the questionnaire with the clinical exam.</li>
+        <li><b>Clinician re-review</b> of the weights that depart from the formula, and of the tobacco anchor.</li>
+      </ul>
+    </section>
+<!--@refs-->
+    <section>
+      <h2>References</h2>
+      <ol class="refs">{{REFS}}</ol>
+    </section>

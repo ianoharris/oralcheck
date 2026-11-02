@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=4608">
+<title>OralCheck Design Poster</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  /* 48 x 36 in landscape. 1in = 96px, so the sheet is 4608 x 3456 px.
+     Body text is 39px = 29pt; nothing on the sheet is below 28pt except the
+     reference list (26pt) and figure axis numerals. */
+  @page { size: 48in 36in; margin: 0; }
+  :root {
+    --teal: #0d7377; --teal-dark: #095458; --teal-soft: #e0f0f0;
+    --coral: #e8634a; --coral-dark: #c84d35;
+    --warm: #faf9f6; --warm-dim: #f0eee8;
+    --ink: #2d2d2d; --ink-soft: #5f5f5f;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 48in; height: 36in; background: var(--warm); }
+  body {
+    font-family: "Source Sans 3", "Source Sans Pro", system-ui, sans-serif;
+    font-size: 38px; line-height: 1.3; color: var(--ink);
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    overflow: hidden;
+  }
+  .sheet { width: 48in; height: 36in; display: flex; flex-direction: column; }
+
+  /* title band */
+  header {
+    background: var(--teal); color: #fff; height: 5.25in;
+    padding: 0.4in 0.8in 0.4in 0.8in;
+    display: flex; align-items: center; gap: 0.8in;
+    border-bottom: 0.22in solid var(--coral);
+  }
+  header .titles { flex: 1; }
+  header .kicker {
+    font-size: 40px; letter-spacing: 0.12em; text-transform: uppercase;
+    font-weight: 700; color: #bfe3e3; margin-bottom: 18px;
+  }
+  header h1 {
+    font-family: "DM Serif Display", Georgia, serif; font-weight: 400;
+    font-size: 132px; line-height: 1.04; letter-spacing: -0.005em;
+  }
+  header .author { margin-top: 26px; font-size: 54px; font-weight: 600; }
+  header .author span { font-weight: 400; color: #d6eeee; }
+  header .qrbox {
+    background: #fff; border-radius: 24px; padding: 26px 26px 18px;
+    display: flex; flex-direction: column; align-items: center; color: var(--ink);
+  }
+  header .qrbox svg { width: 3.55in; height: 3.55in; display: block; }
+  header .qrbox .url { font-size: 52px; font-weight: 700; color: var(--teal-dark); margin-top: 6px; }
+  header .qrbox .cap { font-size: 34px; color: var(--ink-soft); }
+
+  main {
+    flex: 1; display: grid;
+    grid-template-columns: 1fr 1fr 1.08fr 1fr;
+    gap: 0.6in; padding: 0.45in 0.8in 0.4in;
+    min-height: 0;
+  }
+  .col { display: flex; flex-direction: column; gap: 0.3in; min-height: 0; }
+  section h2 {
+    font-family: "DM Serif Display", Georgia, serif; font-weight: 400;
+    font-size: 80px; line-height: 1.05; color: var(--teal-dark);
+    padding-bottom: 10px; margin-bottom: 18px;
+    border-bottom: 6px solid var(--coral);
+  }
+  section h3 { font-size: 44px; font-weight: 700; color: var(--teal-dark); margin: 18px 0 8px; }
+  p + p { margin-top: 16px; }
+  ul { padding-left: 1.05em; }
+  li { margin-top: 10px; }
+  li::marker { color: var(--coral); }
+  b, strong { font-weight: 700; }
+  .lede { font-size: 43px; line-height: 1.26; }
+  p.after { margin-top: 18px; }
+  figure.tight { padding: 18px 22px 16px; margin: 18px 0; }
+
+  .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin: 6px 0 16px; }
+  .stat { background: var(--warm-dim); border-radius: 18px; padding: 16px 24px; }
+  .stat .n { font-family: "DM Serif Display", Georgia, serif; font-size: 84px; line-height: 1; color: var(--teal-dark); }
+  .stat.c .n { color: var(--coral-dark); }
+  .stat .l { font-size: 36px; line-height: 1.22; margin-top: 8px; }
+
+  figure { background: #fff; border: 3px solid #e4e1da; border-radius: 18px; padding: 26px 28px 22px; }
+  figure svg { display: block; font-family: "Source Sans 3", system-ui, sans-serif; }
+  figcaption { font-size: 32px; line-height: 1.28; color: var(--ink-soft); margin-top: 14px; }
+  figcaption b { color: var(--ink); }
+
+  .formula {
+    background: var(--teal); color: #fff; border-radius: 18px;
+    padding: 22px 30px; text-align: center; margin: 4px 0 14px;
+  }
+  .formula .eq { font-family: "DM Serif Display", Georgia, serif; font-size: 68px; line-height: 1.1; }
+  .formula .sub { font-size: 34px; color: #d6eeee; margin-top: 6px; }
+
+  .callout {
+    border-left: 14px solid var(--coral); background: #fdf0ec;
+    padding: 20px 26px; border-radius: 0 18px 18px 0;
+  }
+  .callout h3 { margin-top: 0; color: var(--coral-dark); }
+  .callout ul { margin-top: 4px; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 38px; line-height: 1.2; }
+  thead th { text-align: left; font-size: 34px; color: var(--ink-soft); font-weight: 700; padding: 0 10px 10px; border-bottom: 4px solid var(--ink); }
+  tbody th { text-align: left; font-weight: 700; vertical-align: top; padding: 8px 10px 8px 0; width: 27%; }
+  tbody td { padding: 5px 0 8px 6px; vertical-align: top; }
+  tbody tr { border-bottom: 2px solid #e4e1da; }
+  tbody tr.int { border-bottom: 4px solid var(--ink); }
+  .chip {
+    display: inline-block; background: var(--teal-soft); color: var(--teal-dark);
+    border-radius: 10px; padding: 1px 12px; margin: 2px 6px 2px 0; white-space: nowrap;
+  }
+  .chip b { color: var(--ink); }
+  .chip.zero { background: var(--warm-dim); color: var(--ink-soft); }
+  .chip.dep { background: var(--coral); color: #fff; }
+  .chip.dep b { color: #fff; }
+  .chip.non { background: #fff; color: var(--ink-soft); outline: 3px dashed #9a968e; outline-offset: -3px; }
+  .orb { font-size: 33px; color: var(--ink-soft); margin-top: 0; }
+  .ref { color: var(--teal-dark); font-weight: 600; }
+  .key { font-size: 32px; color: var(--ink-soft); margin-top: 14px; line-height: 1.5; }
+  .key .chip { font-size: 30px; }
+
+  .refs { font-size: 30px; line-height: 1.2; padding-left: 1.6em; }
+  .refs li { margin-top: 3px; }
+  .refs li::marker { color: var(--teal-dark); font-weight: 700; }
+
+  .note { font-size: 34px; color: var(--ink-soft); }
+.tierlist { list-style: none; padding: 0; margin-top: 10px; font-size: 37px; }
+  .tierlist li { margin-top: 6px; display: flex; gap: 16px; align-items: baseline; }
+  .tierlist .sc { display: inline-block; min-width: 2.1em; text-align: center; font-weight: 700; color: #fff; border-radius: 10px; padding: 0 8px; }
+  .override { margin-top: 16px; border: 4px solid #b5432d; border-radius: 14px; padding: 12px 20px; font-size: 36px; background: #fff; }
+  .override b { color: #b5432d; }
+</style>
+</head>
+<body>
+<div class="sheet">
+<header>
+  <div class="titles">
+    <div class="kicker">Design of a public-health tool</div>
+    <h1>OralCheck: a free, private oral cancer risk questionnaire with weights drawn mainly from published odds ratios</h1>
+    <div class="author">Ian Harris, OralCheck (independent project) <span>&nbsp;·&nbsp; [email]</span></div>
+  </div>
+  <div class="qrbox">
+    <svg class="qr" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 29 29" width="560" height="560" shape-rendering="crispEdges" role="img" aria-label="QR code linking to https://oralcheck.org"><rect width="29" height="29" fill="#ffffff"/><path fill="#2d2d2d" d="M2 2h1v1h-1zM3 2h1v1h-1zM4 2h1v1h-1zM5 2h1v1h-1zM6 2h1v1h-1zM7 2h1v1h-1zM8 2h1v1h-1zM10 2h1v1h-1zM11 2h1v1h-1zM16 2h1v1h-1zM18 2h1v1h-1zM20 2h1v1h-1zM21 2h1v1h-1zM22 2h1v1h-1zM23 2h1v1h-1zM24 2h1v1h-1zM25 2h1v1h-1zM26 2h1v1h-1zM2 3h1v1h-1zM8 3h1v1h-1zM10 3h1v1h-1zM13 3h1v1h-1zM18 3h1v1h-1zM20 3h1v1h-1zM26 3h1v1h-1zM2 4h1v1h-1zM4 4h1v1h-1zM5 4h1v1h-1zM6 4h1v1h-1zM8 4h1v1h-1zM10 4h1v1h-1zM11 4h1v1h-1zM12 4h1v1h-1zM14 4h1v1h-1zM15 4h1v1h-1zM18 4h1v1h-1zM20 4h1v1h-1zM22 4h1v1h-1zM23 4h1v1h-1zM24 4h1v1h-1zM26 4h1v1h-1zM2 5h1v1h-1zM4 5h1v1h-1zM5 5h1v1h-1zM6 5h1v1h-1zM8 5h1v1h-1zM11 5h1v1h-1zM15 5h1v1h-1zM17 5h1v1h-1zM18 5h1v1h-1zM20 5h1v1h-1zM22 5h1v1h-1zM23 5h1v1h-1zM24 5h1v1h-1zM26 5h1v1h-1zM2 6h1v1h-1zM4 6h1v1h-1zM5 6h1v1h-1zM6 6h1v1h-1zM8 6h1v1h-1zM10 6h1v1h-1zM12 6h1v1h-1zM13 6h1v1h-1zM14 6h1v1h-1zM15 6h1v1h-1zM16 6h1v1h-1zM18 6h1v1h-1zM20 6h1v1h-1zM22 6h1v1h-1zM23 6h1v1h-1zM24 6h1v1h-1zM26 6h1v1h-1zM2 7h1v1h-1zM8 7h1v1h-1zM11 7h1v1h-1zM14 7h1v1h-1zM15 7h1v1h-1zM16 7h1v1h-1zM20 7h1v1h-1zM26 7h1v1h-1zM2 8h1v1h-1zM3 8h1v1h-1zM4 8h1v1h-1zM5 8h1v1h-1zM6 8h1v1h-1zM7 8h1v1h-1zM8 8h1v1h-1zM10 8h1v1h-1zM12 8h1v1h-1zM14 8h1v1h-1zM16 8h1v1h-1zM18 8h1v1h-1zM20 8h1v1h-1zM21 8h1v1h-1zM22 8h1v1h-1zM23 8h1v1h-1zM24 8h1v1h-1zM25 8h1v1h-1zM26 8h1v1h-1zM11 9h1v1h-1zM15 9h1v1h-1zM17 9h1v1h-1zM2 10h1v1h-1zM5 10h1v1h-1zM6 10h1v1h-1zM7 10h1v1h-1zM8 10h1v1h-1zM9 10h1v1h-1zM10 10h1v1h-1zM12 10h1v1h-1zM13 10h1v1h-1zM14 10h1v1h-1zM16 10h1v1h-1zM17 10h1v1h-1zM18 10h1v1h-1zM19 10h1v1h-1zM22 10h1v1h-1zM24 10h1v1h-1zM25 10h1v1h-1zM26 10h1v1h-1zM4 11h1v1h-1zM5 11h1v1h-1zM6 11h1v1h-1zM9 11h1v1h-1zM10 11h1v1h-1zM13 11h1v1h-1zM14 11h1v1h-1zM17 11h1v1h-1zM19 11h1v1h-1zM21 11h1v1h-1zM22 11h1v1h-1zM23 11h1v1h-1zM24 11h1v1h-1zM25 11h1v1h-1zM3 12h1v1h-1zM4 12h1v1h-1zM5 12h1v1h-1zM7 12h1v1h-1zM8 12h1v1h-1zM9 12h1v1h-1zM10 12h1v1h-1zM12 12h1v1h-1zM13 12h1v1h-1zM14 12h1v1h-1zM15 12h1v1h-1zM16 12h1v1h-1zM17 12h1v1h-1zM18 12h1v1h-1zM19 12h1v1h-1zM20 12h1v1h-1zM21 12h1v1h-1zM23 12h1v1h-1zM26 12h1v1h-1zM2 13h1v1h-1zM3 13h1v1h-1zM4 13h1v1h-1zM6 13h1v1h-1zM10 13h1v1h-1zM13 13h1v1h-1zM14 13h1v1h-1zM19 13h1v1h-1zM21 13h1v1h-1zM22 13h1v1h-1zM23 13h1v1h-1zM24 13h1v1h-1zM25 13h1v1h-1zM26 13h1v1h-1zM4 14h1v1h-1zM5 14h1v1h-1zM6 14h1v1h-1zM7 14h1v1h-1zM8 14h1v1h-1zM10 14h1v1h-1zM11 14h1v1h-1zM13 14h1v1h-1zM17 14h1v1h-1zM18 14h1v1h-1zM20 14h1v1h-1zM21 14h1v1h-1zM26 14h1v1h-1zM2 15h1v1h-1zM4 15h1v1h-1zM5 15h1v1h-1zM6 15h1v1h-1zM7 15h1v1h-1zM11 15h1v1h-1zM12 15h1v1h-1zM14 15h1v1h-1zM15 15h1v1h-1zM16 15h1v1h-1zM17 15h1v1h-1zM18 15h1v1h-1zM22 15h1v1h-1zM25 15h1v1h-1zM2 16h1v1h-1zM3 16h1v1h-1zM5 16h1v1h-1zM6 16h1v1h-1zM7 16h1v1h-1zM8 16h1v1h-1zM9 16h1v1h-1zM10 16h1v1h-1zM11 16h1v1h-1zM16 16h1v1h-1zM17 16h1v1h-1zM18 16h1v1h-1zM20 16h1v1h-1zM22 16h1v1h-1zM23 16h1v1h-1zM24 16h1v1h-1zM25 16h1v1h-1zM26 16h1v1h-1zM2 17h1v1h-1zM4 17h1v1h-1zM5 17h1v1h-1zM7 17h1v1h-1zM9 17h1v1h-1zM10 17h1v1h-1zM11 17h1v1h-1zM14 17h1v1h-1zM18 17h1v1h-1zM19 17h1v1h-1zM20 17h1v1h-1zM21 17h1v1h-1zM23 17h1v1h-1zM24 17h1v1h-1zM26 17h1v1h-1zM2 18h1v1h-1zM6 18h1v1h-1zM8 18h1v1h-1zM9 18h1v1h-1zM10 18h1v1h-1zM13 18h1v1h-1zM14 18h1v1h-1zM16 18h1v1h-1zM18 18h1v1h-1zM19 18h1v1h-1zM20 18h1v1h-1zM21 18h1v1h-1zM22 18h1v1h-1zM24 18h1v1h-1zM25 18h1v1h-1zM10 19h1v1h-1zM13 19h1v1h-1zM18 19h1v1h-1zM22 19h1v1h-1zM24 19h1v1h-1zM25 19h1v1h-1zM2 20h1v1h-1zM3 20h1v1h-1zM4 20h1v1h-1zM5 20h1v1h-1zM6 20h1v1h-1zM7 20h1v1h-1zM8 20h1v1h-1zM10 20h1v1h-1zM12 20h1v1h-1zM14 20h1v1h-1zM15 20h1v1h-1zM16 20h1v1h-1zM18 20h1v1h-1zM20 20h1v1h-1zM22 20h1v1h-1zM26 20h1v1h-1zM2 21h1v1h-1zM8 21h1v1h-1zM10 21h1v1h-1zM12 21h1v1h-1zM13 21h1v1h-1zM15 21h1v1h-1zM16 21h1v1h-1zM17 21h1v1h-1zM18 21h1v1h-1zM22 21h1v1h-1zM25 21h1v1h-1zM26 21h1v1h-1zM2 22h1v1h-1zM4 22h1v1h-1zM5 22h1v1h-1zM6 22h1v1h-1zM8 22h1v1h-1zM10 22h1v1h-1zM13 22h1v1h-1zM15 22h1v1h-1zM17 22h1v1h-1zM18 22h1v1h-1zM19 22h1v1h-1zM20 22h1v1h-1zM21 22h1v1h-1zM22 22h1v1h-1zM25 22h1v1h-1zM26 22h1v1h-1zM2 23h1v1h-1zM4 23h1v1h-1zM5 23h1v1h-1zM6 23h1v1h-1zM8 23h1v1h-1zM10 23h1v1h-1zM14 23h1v1h-1zM15 23h1v1h-1zM16 23h1v1h-1zM17 23h1v1h-1zM19 23h1v1h-1zM20 23h1v1h-1zM25 23h1v1h-1zM26 23h1v1h-1zM2 24h1v1h-1zM4 24h1v1h-1zM5 24h1v1h-1zM6 24h1v1h-1zM8 24h1v1h-1zM13 24h1v1h-1zM15 24h1v1h-1zM17 24h1v1h-1zM19 24h1v1h-1zM22 24h1v1h-1zM23 24h1v1h-1zM24 24h1v1h-1zM25 24h1v1h-1zM26 24h1v1h-1zM2 25h1v1h-1zM8 25h1v1h-1zM12 25h1v1h-1zM13 25h1v1h-1zM14 25h1v1h-1zM15 25h1v1h-1zM21 25h1v1h-1zM22 25h1v1h-1zM24 25h1v1h-1zM25 25h1v1h-1zM26 25h1v1h-1zM2 26h1v1h-1zM3 26h1v1h-1zM4 26h1v1h-1zM5 26h1v1h-1zM6 26h1v1h-1zM7 26h1v1h-1zM8 26h1v1h-1zM10 26h1v1h-1zM12 26h1v1h-1zM13 26h1v1h-1zM14 26h1v1h-1zM15 26h1v1h-1zM18 26h1v1h-1zM19 26h1v1h-1zM20 26h1v1h-1zM23 26h1v1h-1zM26 26h1v1h-1z"/></svg>
+    <div class="url">oralcheck.org</div>
+    <div class="cap">Free, no account, nothing stored</div>
+  </div>
+</header>
+
+
+<main>
+<div class="col">
+    <section id="background">
+      <h2>Background</h2>
+      <p class="lede">Oral cavity and pharynx cancer is far more survivable when found before it spreads, yet most cases are found later.</p>
+      <div class="stats">
+        <div class="stat"><div class="n">60,480</div><div class="l">estimated new US cases, 2026</div></div>
+        <div class="stat c"><div class="n">13,150</div><div class="l">estimated US deaths, 2026</div></div>
+        <div class="stat"><div class="n">88.7%</div><div class="l">5-year relative survival while still <b>localized</b></div></div>
+        <div class="stat c"><div class="n">36.0%</div><div class="l">once spread to <b>distant</b> sites</div></div>
+      </div>
+      <figure class="tight">
+        <svg viewBox="0 0 1000 150" width="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Share of cases by SEER summary stage at diagnosis"><rect x="0.0" y="0" width="258.6" height="84" fill="#0d7377"/><text x="129.3" y="56" font-size="38" font-weight="700" fill="#ffffff" text-anchor="middle">26%</text><text x="129.3" y="130" font-size="34" fill="#5f5f5f" text-anchor="middle">Localized</text><rect x="262.6" y="0" width="551.6" height="84" fill="#5c9ea0"/><text x="538.4" y="56" font-size="38" font-weight="700" fill="#ffffff" text-anchor="middle">55%</text><text x="538.4" y="130" font-size="34" fill="#5f5f5f" text-anchor="middle">Regional</text><rect x="818.2" y="0" width="117.2" height="84" fill="#e8634a"/><text x="876.8" y="56" font-size="38" font-weight="700" fill="#ffffff" text-anchor="middle">12%</text><text x="876.8" y="130" font-size="34" fill="#5f5f5f" text-anchor="middle">Distant</text><rect x="939.4" y="0" width="56.6" height="84" fill="#c9c5bc"/><text x="967.7" y="56" font-size="38" font-weight="700" fill="#2d2d2d" text-anchor="middle">6%</text><text x="967.7" y="130" font-size="34" fill="#5f5f5f" text-anchor="middle">Unk.</text></svg>
+        <figcaption><b>Figure 1.</b> Cases by SEER <i>summary</i> stage at diagnosis, 2016–2022 <span class="ref">[14]</span>.</figcaption>
+      </figure>
+      <p>The gap is one of timing, not treatment. A dentist can examine the mouth in minutes, but people who do not know their risk factors have little reason to ask. The term also covers two diseases: <b>oral cavity</b> cancer, driven by tobacco, alcohol and betel quid, and <b>oropharyngeal</b> cancer, driven largely by HPV-16 <span class="ref">[3, 10]</span>. One dental exam covers both.</p>
+    </section>
+
+    <section id="objective">
+      <h2>Objective</h2>
+      <p>Design a free, brief, private questionnaire that identifies which published risk factors a person carries, ranks them on a transparent scale derived from the literature, and turns the result into one action: <b>raise it with a dentist.</b></p>
+      <p>It is a risk-assessment questionnaire, not a screening test. The screening test is the clinical exam; the tool’s job is to make that exam more likely.</p>
+    </section>
+
+    <section id="design">
+      <h2>Design</h2>
+      <ul>
+        <li><b>12 questions</b>, about two minutes, no account; English, Spanish and Portuguese.</li>
+        <li>Scored <b>in the browser</b>; answers are not stored.</li>
+        <li>Output is a <b>tier and a next step</b>, never a probability, which would need a model validated on outcomes.</li>
+      </ul>
+    </section>
+
+    <section id="pipeline">
+      <figure>
+        <svg viewBox="0 0 1060 520" width="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Scoring pipeline from twelve answers to a recommendation"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#2d2d2d"/></marker></defs><rect x="0" y="0" width="270" height="170" rx="14" fill="#f0eee8" stroke="#0d7377" stroke-width="4"/><text x="135.0" y="75.9" font-size="38" font-weight="700" fill="#2d2d2d" text-anchor="middle">12</text><text x="135.0" y="120.7" font-size="38" font-weight="700" fill="#2d2d2d" text-anchor="middle">answers</text><line x1="272" y1="85" x2="318" y2="85" stroke="#2d2d2d" stroke-width="4" marker-end="url(#ah)"/><rect x="322" y="0" width="290" height="170" rx="14" fill="#f0eee8" stroke="#0d7377" stroke-width="4"/><text x="467.0" y="75.9" font-size="38" font-weight="400" fill="#2d2d2d" text-anchor="middle">Sum the</text><text x="467.0" y="120.7" font-size="38" font-weight="400" fill="#2d2d2d" text-anchor="middle">weights</text><line x1="614" y1="85" x2="660" y2="85" stroke="#2d2d2d" stroke-width="4" marker-end="url(#ah)"/><rect x="664" y="0" width="396" height="170" rx="14" fill="#fdf0ec" stroke="#e8634a" stroke-width="4"/><text x="862.0" y="55.1" font-size="36" font-weight="400" fill="#2d2d2d" text-anchor="middle">+3 if tobacco</text><text x="862.0" y="97.6" font-size="36" font-weight="400" fill="#2d2d2d" text-anchor="middle">and alcohol are</text><text x="862.0" y="140.1" font-size="36" font-weight="400" fill="#2d2d2d" text-anchor="middle">both current</text><path d="M862 172 V 214 H 135 V 262" fill="none" stroke="#2d2d2d" stroke-width="4" marker-end="url(#ah)"/><rect x="0" y="266" width="270" height="170" rx="14" fill="#0d7377" stroke="#0d7377" stroke-width="4"/><text x="135.0" y="341.9" font-size="38" font-weight="700" fill="#ffffff" text-anchor="middle">Score</text><text x="135.0" y="386.7" font-size="38" font-weight="700" fill="#ffffff" text-anchor="middle">0 to 61</text><line x1="272" y1="351" x2="318" y2="351" stroke="#2d2d2d" stroke-width="4" marker-end="url(#ah)"/><path d="M470 226.0 L620.0 351 L470 476.0 L320.0 351 Z" fill="#ffffff" stroke="#e8634a" stroke-width="4"/><text x="470" y="343" font-size="36" fill="#2d2d2d" text-anchor="middle">Current</text><text x="470" y="387" font-size="36" fill="#2d2d2d" text-anchor="middle">symptom?</text><path d="M620.0 351 H 650 V 311 H 676" fill="none" stroke="#2d2d2d" stroke-width="4" marker-end="url(#ah)"/><path d="M650 351 V 448 H 676" fill="none" stroke="#2d2d2d" stroke-width="4" marker-end="url(#ah)"/><rect x="680" y="250" width="380" height="122" rx="14" fill="#b5432d" stroke="#b5432d" stroke-width="4"/><text x="870.0" y="302.6" font-size="35" font-weight="700" fill="#ffffff" text-anchor="middle">Yes or unsure:</text><text x="870.0" y="343.9" font-size="35" font-weight="700" fill="#ffffff" text-anchor="middle">See a dentist soon</text><rect x="680" y="398" width="380" height="100" rx="14" fill="#f0eee8" stroke="#0d7377" stroke-width="4"/><text x="870.0" y="460.6" font-size="36" font-weight="400" fill="#2d2d2d" text-anchor="middle">No: tier by score</text></svg>
+        <figcaption><b>Figure 2.</b> Scoring. A symptom adds points and also overrides the tier, since it suggests possible existing disease, not exposure <span class="ref">[5]</span>.</figcaption>
+      </figure>
+    </section>
+</div>
+<div class="col">
+    <section id="formula">
+      <h2>How weights are set</h2>
+      <div class="formula">
+        <div class="eq">weight = round(ln(OR) × <i>k</i>)</div>
+        <div class="sub"><i>k</i> = 4.47, chosen so daily tobacco, OR 6.0 (top of its 2.5–6.0 range [1]), scores 8</div>
+      </div>
+      <p>Summing log-odds treats risk factors as multiplying. Example: daily alcohol, OR 3.0 <span class="ref">[2]</span>: ln 3.0 × 4.47 = 4.91, so <b>5</b> points.</p>
+      <p><b>Interaction.</b> Pooled INHANCE data found the joint effect of tobacco and alcohol greater than multiplicative, interaction parameter 2.15 <span class="ref">[8]</span>. round(ln 2.15 × 4.47) = <b>+3</b> when both are current. The oral-cavity value, 3.09, would give 5, so 3 is the conservative choice.</p>
+    </section>
+
+    <section id="deriv">
+      <figure>
+        <svg viewBox="0 0 1060 1150" width="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Assigned weight against odds ratio on a log scale, with the formula line"><line x1="110" y1="1030.0" x2="1030" y2="1030.0" stroke="#e4e1da" stroke-width="2"/><text x="92" y="1042.0" font-size="32" fill="#5f5f5f" text-anchor="end">0</text><line x1="110" y1="839.4" x2="1030" y2="839.4" stroke="#e4e1da" stroke-width="2"/><text x="92" y="851.4" font-size="32" fill="#5f5f5f" text-anchor="end">2</text><line x1="110" y1="648.9" x2="1030" y2="648.9" stroke="#e4e1da" stroke-width="2"/><text x="92" y="660.9" font-size="32" fill="#5f5f5f" text-anchor="end">4</text><line x1="110" y1="458.3" x2="1030" y2="458.3" stroke="#e4e1da" stroke-width="2"/><text x="92" y="470.3" font-size="32" fill="#5f5f5f" text-anchor="end">6</text><line x1="110" y1="267.7" x2="1030" y2="267.7" stroke="#e4e1da" stroke-width="2"/><text x="92" y="279.7" font-size="32" fill="#5f5f5f" text-anchor="end">8</text><line x1="110" y1="77.2" x2="1030" y2="77.2" stroke="#e4e1da" stroke-width="2"/><text x="92" y="89.2" font-size="32" fill="#5f5f5f" text-anchor="end">10</text><line x1="110.0" y1="1030" x2="110.0" y2="1042" stroke="#2d2d2d" stroke-width="3"/><text x="110.0" y="1082" font-size="32" fill="#5f5f5f" text-anchor="middle">1</text><line x1="272.0" y1="1030" x2="272.0" y2="1042" stroke="#2d2d2d" stroke-width="3"/><text x="272.0" y="1082" font-size="32" fill="#5f5f5f" text-anchor="middle">1.5</text><line x1="386.9" y1="1030" x2="386.9" y2="1042" stroke="#2d2d2d" stroke-width="3"/><text x="386.9" y="1082" font-size="32" fill="#5f5f5f" text-anchor="middle">2</text><line x1="549.0" y1="1030" x2="549.0" y2="1042" stroke="#2d2d2d" stroke-width="3"/><text x="549.0" y="1082" font-size="32" fill="#5f5f5f" text-anchor="middle">3</text><line x1="663.9" y1="1030" x2="663.9" y2="1042" stroke="#2d2d2d" stroke-width="3"/><text x="663.9" y="1082" font-size="32" fill="#5f5f5f" text-anchor="middle">4</text><line x1="825.9" y1="1030" x2="825.9" y2="1042" stroke="#2d2d2d" stroke-width="3"/><text x="825.9" y="1082" font-size="32" fill="#5f5f5f" text-anchor="middle">6</text><line x1="1030.0" y1="1030" x2="1030.0" y2="1042" stroke="#2d2d2d" stroke-width="3"/><text x="1030.0" y="1082" font-size="32" fill="#5f5f5f" text-anchor="middle">10</text><line x1="110" y1="1030" x2="1030" y2="1030" stroke="#2d2d2d" stroke-width="3"/><line x1="110" y1="20" x2="110" y2="1030" stroke="#2d2d2d" stroke-width="3"/><text x="570.0" y="1136" font-size="34" fill="#2d2d2d" text-anchor="middle">Odds ratio (log scale)</text><text transform="translate(36 525.0) rotate(-90)" font-size="34" fill="#2d2d2d" text-anchor="middle">Points</text><line x1="110.0" y1="1030.0" x2="1030.0" y2="49.3" stroke="#0d7377" stroke-width="4" stroke-dasharray="14 10"/><text x="220.9" y="439.2" font-size="34" font-weight="700" fill="#095458">4.47 × ln(OR)</text><circle cx="182.8" cy="934.7" r="21" fill="#0d7377" stroke="#ffffff" stroke-width="3"/><text x="155.8" y="917.7" font-size="30" fill="#095458" text-anchor="end" font-weight="700">×3</text><circle cx="214.8" cy="934.7" r="18" fill="#0d7377" stroke="#ffffff" stroke-width="3"/><text x="214.8" y="906.7" font-size="30" fill="#095458" text-anchor="middle" font-weight="700">×2</text><circle cx="272.0" cy="839.4" r="21" fill="#0d7377" stroke="#ffffff" stroke-width="3"/><text x="245.0" y="822.4" font-size="30" fill="#095458" text-anchor="end" font-weight="700">×3</text><circle cx="386.9" cy="744.2" r="24" fill="#0d7377" stroke="#ffffff" stroke-width="3"/><text x="356.9" y="724.2" font-size="30" fill="#095458" text-anchor="end" font-weight="700">×4</text><circle cx="415.8" cy="744.2" r="15" fill="#0d7377" stroke="#ffffff" stroke-width="3"/><circle cx="476.1" cy="648.9" r="18" fill="#0d7377" stroke="#ffffff" stroke-width="3"/><text x="452.1" y="634.9" font-size="30" fill="#095458" text-anchor="end" font-weight="700">×2</text><circle cx="549.0" cy="553.6" r="21" fill="#0d7377" stroke="#ffffff" stroke-width="3"/><text x="522.0" y="536.6" font-size="30" fill="#095458" text-anchor="end" font-weight="700">×3</text><circle cx="663.9" cy="458.3" r="15" fill="#0d7377" stroke="#ffffff" stroke-width="3"/><circle cx="825.9" cy="267.7" r="15" fill="#0d7377" stroke="#ffffff" stroke-width="3"/><text x="797.9" y="279.7" font-size="32" font-weight="700" fill="#095458" text-anchor="end">Anchor: daily tobacco, 8</text><circle cx="965.1" cy="77.2" r="15" fill="#ffffff" stroke="#e8634a" stroke-width="4"/><line x1="965.1" y1="94.2" x2="965.1" y2="153.5" stroke="#e8634a" stroke-width="4"/><rect x="950.1" y="157.5" width="30" height="30" fill="#e8634a" transform="rotate(45 965.1 172.5)"/><text x="937.1" y="88.2" font-size="32" font-weight="700" fill="#c84d35" text-anchor="end">Betel, current: 9 (formula 10)</text><circle cx="663.9" cy="458.3" r="15" fill="#ffffff" stroke="#e8634a" stroke-width="4"/><line x1="663.9" y1="475.3" x2="663.9" y2="534.6" stroke="#e8634a" stroke-width="4"/><rect x="648.9" y="538.6" width="30" height="30" fill="#e8634a" transform="rotate(45 663.9 553.6)"/><text x="689.9" y="564.6" font-size="32" font-weight="700" fill="#c84d35">HPV history: 5 (formula 6)</text><circle cx="476.1" cy="648.9" r="15" fill="#ffffff" stroke="#e8634a" stroke-width="4"/><line x1="476.1" y1="665.9" x2="476.1" y2="820.4" stroke="#e8634a" stroke-width="4"/><rect x="461.1" y="824.4" width="30" height="30" fill="#e8634a" transform="rotate(45 476.1 839.4)"/><text x="502.1" y="850.4" font-size="32" font-weight="700" fill="#c84d35">Sun, daily: 2 (formula 4)</text><circle cx="272.0" cy="839.4" r="15" fill="#ffffff" stroke="#e8634a" stroke-width="4"/><line x1="272.0" y1="856.4" x2="272.0" y2="915.7" stroke="#e8634a" stroke-width="4"/><rect x="257.0" y="919.7" width="30" height="30" fill="#e8634a" transform="rotate(45 272.0 934.7)"/><text x="298.0" y="945.7" font-size="32" font-weight="700" fill="#c84d35">Sun, regular: 1 (formula 2)</text></svg>
+        <figcaption><b>Figure 3.</b> Assigned points against odds ratio, ranges at their midpoint. <b style="color:#095458">Teal</b>: on the formula (×<i>n</i> = answers sharing a point). <b style="color:#c84d35">Coral</b>: formula value (ring) and the weight set by judgment (diamond).</figcaption>
+      </figure>
+    </section>
+
+    <section id="depart">
+      <div class="callout">
+        <h3>Where the formula is not followed</h3>
+        <ul>
+          <li><b>Betel quid, current: 9</b>, from the low end of its 7–10× range; the midpoint gives 10 <span class="ref">[4]</span>.</li>
+          <li><b>HPV history: 5</b>, not 6, because vaccination and history are behavioural proxies, not serostatus <span class="ref">[3, 10]</span>.</li>
+          <li><b>Lip sun exposure: 2 and 1</b>, half the formula’s 4 and 2, set by judgment because the OR is for lip cancer alone <span class="ref">[11]</span>.</li>
+          <li><b>Not from an OR at all:</b> dental-visit recency (detection proxy), “sex not stated” (population average), and the symptom answers (override).</li>
+        </ul>
+      </div>
+    </section>
+</div>
+<div class="col">
+    <section id="table">
+      <h2>Scoring table</h2>
+      <table>
+        <tbody><tr><th scope="row">Age</th><td><span class="chip zero">&lt;35 <b>0</b></span><span class="chip">35–54 <b>2</b></span><span class="chip">55–64 <b>4</b></span><span class="chip">65+ <b>6</b></span><div class="orb">OR 1.5 / 2.5 / 4.0, adjusted <span class="ref">[7]</span></div></td></tr><tr><th scope="row">Sex at birth</th><td><span class="chip">Male <b>3</b></span><span class="chip zero">Female <b>0</b></span><span class="chip non">Not stated <b>2</b></span><div class="orb">OR 2.0 (SEER ratio 2.6)* <span class="ref">[7]</span></div></td></tr><tr><th scope="row">Tobacco</th><td><span class="chip">Daily <b>8</b></span><span class="chip">Occasional <b>5</b></span><span class="chip">Former <b>2</b></span><span class="chip zero">Never <b>0</b></span><div class="orb">OR 6.0 / 3.0 / 1.5 <span class="ref">[1]</span></div></td></tr><tr><th scope="row">Alcohol</th><td><span class="chip">Daily <b>5</b></span><span class="chip">Weekly <b>3</b></span><span class="chip">Rarely <b>1</b></span><span class="chip zero">Never <b>0</b></span><div class="orb">OR 3.0 / 2.0 / 1.2 <span class="ref">[2]</span></div></td></tr><tr><th scope="row">HPV</th><td><span class="chip dep">History <b>5</b></span><span class="chip">Unvaccinated <b>2</b></span><span class="chip">Unsure <b>1</b></span><span class="chip zero">Vaccinated <b>0</b></span><div class="orb">OR 3–5 / 1.5 / 1.2, proxies <span class="ref">[3, 10]</span></div></td></tr><tr><th scope="row">Lip sun exposure</th><td><span class="chip dep">Daily <b>2</b></span><span class="chip dep">Regular <b>1</b></span><span class="chip zero">Minimal <b>0</b></span><div class="orb">OR 2–3 / 1.5, lip only <span class="ref">[11]</span></div></td></tr><tr><th scope="row">Current symptom, 2+ wk</th><td><span class="chip non">Yes <b>6</b></span><span class="chip non">Unsure <b>3</b></span><span class="chip zero">No <b>0</b></span><div class="orb">Override, not an OR <span class="ref">[5]</span></div></td></tr><tr><th scope="row">Family history</th><td><span class="chip">Close <b>3</b></span><span class="chip">Distant <b>1</b></span><span class="chip zero">No / unsure <b>0</b></span><div class="orb">OR 2.0 / 1.3 <span class="ref">[9]</span></div></td></tr><tr><th scope="row">Immune or radiation</th><td><span class="chip">Yes <b>5</b></span><span class="chip">Unsure <b>1</b></span><span class="chip zero">No <b>0</b></span><div class="orb">OR 2–4 blended / 1.2 <span class="ref">[12, 13]</span></div></td></tr><tr><th scope="row">Fruit and vegetables</th><td><span class="chip zero">Daily <b>0</b></span><span class="chip">Weekly <b>1</b></span><span class="chip">Rarely <b>3</b></span><div class="orb">OR 1.3 / 2.0 (low intake) <span class="ref">[6]</span></div></td></tr><tr><th scope="row">Last dental visit</th><td><span class="chip zero">&lt;1 yr <b>0</b></span><span class="chip non">1–3 yr <b>1</b></span><span class="chip non">3+ yr <b>2</b></span><span class="chip non">Never <b>3</b></span><div class="orb">Detection proxy, not an OR <span class="ref">[14]</span></div></td></tr><tr><th scope="row">Betel quid / paan</th><td><span class="chip dep">Current <b>9</b></span><span class="chip">Past <b>4</b></span><span class="chip zero">Never <b>0</b></span><div class="orb">OR 7–10 / 2.5 <span class="ref">[4]</span></div></td></tr><tr class="int"><th scope="row">Tobacco and alcohol</th><td><span class="chip">Both current <b>+3</b></span><div class="orb">Interaction parameter 2.15 <span class="ref">[8]</span></div></td></tr></tbody>
+      </table>
+      <div class="key"><b>Table 1.</b> Maximum 58 + 3 = <b>61</b>. <span class="chip dep">Coral</span> set by judgment; <span class="chip non">dashed</span> not OR-derived. *Below the SEER rate ratio because tobacco and alcohol are scored separately <span class="ref">[7, 14]</span>.</div>
+    </section>
+
+    <section id="tiers">
+      <h2>Risk tiers</h2>
+      <figure>
+        <svg viewBox="0 0 1000 330" width="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Score scale from 0 to 61 with four tiers and four reference profiles"><rect x="4.0" y="96" width="147.0" height="130" fill="#7ba882"/><text x="79.0" y="152" font-size="36" font-weight="700" fill="#ffffff" text-anchor="middle">Low</text><text x="79.0" y="200" font-size="36" fill="#ffffff" text-anchor="middle">0–4</text><rect x="154.0" y="96" width="267.0" height="130" fill="#d4a03c"/><text x="289.0" y="152" font-size="36" font-weight="700" fill="#ffffff" text-anchor="middle">Moderate</text><text x="289.0" y="200" font-size="36" fill="#ffffff" text-anchor="middle">5–13</text><rect x="424.0" y="96" width="267.0" height="130" fill="#e0874a"/><text x="559.0" y="152" font-size="36" font-weight="700" fill="#ffffff" text-anchor="middle">Elevated</text><text x="559.0" y="200" font-size="36" fill="#ffffff" text-anchor="middle">14–22</text><rect x="694.0" y="96" width="297.0" height="130" fill="#e8634a"/><text x="844.0" y="152" font-size="36" font-weight="700" fill="#ffffff" text-anchor="middle">High</text><text x="844.0" y="200" font-size="36" fill="#ffffff" text-anchor="middle">23+</text><rect x="942.0" y="90" width="32" height="142" fill="#ffffff"/><line x1="938.0" y1="236" x2="958.0" y2="86" stroke="#2d2d2d" stroke-width="4"/><line x1="958.0" y1="236" x2="978.0" y2="86" stroke="#2d2d2d" stroke-width="4"/><line x1="4.0" y1="226" x2="4.0" y2="242" stroke="#2d2d2d" stroke-width="3"/><text x="18.0" y="282" font-size="34" fill="#5f5f5f" text-anchor="middle">0</text><line x1="154.0" y1="226" x2="154.0" y2="242" stroke="#2d2d2d" stroke-width="3"/><text x="154.0" y="282" font-size="34" fill="#5f5f5f" text-anchor="middle">5</text><line x1="424.0" y1="226" x2="424.0" y2="242" stroke="#2d2d2d" stroke-width="3"/><text x="424.0" y="282" font-size="34" fill="#5f5f5f" text-anchor="middle">14</text><line x1="694.0" y1="226" x2="694.0" y2="242" stroke="#2d2d2d" stroke-width="3"/><text x="694.0" y="282" font-size="34" fill="#5f5f5f" text-anchor="middle">23</text><text x="994" y="282" font-size="34" fill="#5f5f5f" text-anchor="end">61</text><path d="M93.0 70 L125.0 70 L109.0 94 Z" fill="#2d2d2d"/><text x="109.0" y="58" font-size="40" font-weight="700" fill="#2d2d2d" text-anchor="middle">3</text><path d="M243.0 70 L275.0 70 L259.0 94 Z" fill="#2d2d2d"/><text x="259.0" y="58" font-size="40" font-weight="700" fill="#2d2d2d" text-anchor="middle">8</text><path d="M483.0 70 L515.0 70 L499.0 94 Z" fill="#2d2d2d"/><text x="499.0" y="58" font-size="40" font-weight="700" fill="#2d2d2d" text-anchor="middle">16</text><path d="M753.0 70 L785.0 70 L769.0 94 Z" fill="#2d2d2d"/><text x="769.0" y="58" font-size="40" font-weight="700" fill="#2d2d2d" text-anchor="middle">25</text></svg>
+        <ul class="tierlist">
+          <li><span class="sc" style="background:#3d7346">3</span><span>Male sex alone: <b>Low</b></span></li>
+          <li><span class="sc" style="background:#8a5f12">8</span><span>Daily smoker alone: <b>Moderate</b></span></li>
+          <li><span class="sc" style="background:#a8541c">16</span><span>Tobacco + alcohol + 3: <b>Elevated</b></span></li>
+          <li><span class="sc" style="background:#b5432d">25</span><span>Betel + tobacco + alcohol + 3: <b>High</b></span></li>
+        </ul>
+        <div class="override"><b>Override:</b> a current symptom, yes or unsure, returns the top result, “See a dentist soon”, at any score.</div>
+        <figcaption><b>Figure 4.</b> Tiers and reference profiles, 0 to 61 scale (axis broken above 30).</figcaption>
+      </figure>
+      <p class="after">Cutoffs were <b>set by judgment</b> against these profiles, not derived. They stayed put when the maximum rose from 53 to 61, so no unchanged profile looks safer.</p>
+    </section>
+</div>
+<div class="col">
+    <section id="review">
+      <h2>Clinical review</h2>
+      <p>Reviewed by a board-certified oral and maxillofacial pathologist (August 2026) and a head-and-neck surgeon (September 2026). What changed:</p>
+      <ul>
+        <li>Added the <b>immune and radiation question</b> <span class="ref">[12, 13]</span>.</li>
+        <li>Added <b>gum growth and tooth mobility</b> to symptom guidance.</li>
+        <li>Added a caveat that many cancers occur with <b>no conventional risk factor</b>: a low score with a symptom still means go.</li>
+        <li>Stated the <b>pooled-populations</b> limitation and the <b>provenance of the tier cutoffs</b>.</li>
+        <li><b>Oral cavity vs oropharynx</b>: results now name which site a person’s factors point to, and say when an HPV-driven profile is likely understated. A split score was rejected: it would rest on one question.</li>
+      </ul>
+    </section>
+
+    <section id="limits">
+      <h2>Limitations</h2>
+      <ul>
+        <li><b>Not validated</b> against outcomes: no sensitivity, specificity or ROC. The score ranks; it is not a probability.</li>
+        <li>ORs come from <b>different populations</b> and are applied to anyone; transportability is untested and is the largest uncertainty.</li>
+        <li>One score covers <b>two diseases</b>; the HPV weight is a blended compromise.</li>
+        <li><b>Self-report</b>: tobacco and alcohol are often under-reported.</li>
+        <li>The <b>anchor</b> OR, 6.0, sits above pooled estimates for current smoking and oral cavity cancer.</li>
+      </ul>
+    </section>
+
+    <section id="next">
+      <h2>Next steps</h2>
+      <ul>
+        <li><b>Validation</b> needs outcome data and a <b>biostatistician</b>; clinical review cannot establish it.</li>
+        <li>A <b>prospective pilot in dental offices</b>, pairing the questionnaire with the clinical exam.</li>
+        <li><b>Clinician re-review</b> of the weights that depart from the formula, and of the tobacco anchor.</li>
+      </ul>
+    </section>
+
+    <section id="refs">
+      <h2>References</h2>
+      <ol class="refs"><li>Gandini S, Botteri E, Iodice S, et al. Int J Cancer. 2008;122(1):155–164.</li><li>Bagnardi V, Rota M, Botteri E, et al. Br J Cancer. 2015;112(3):580–593.</li><li>Gillison ML, D’Souza G, Westra W, et al. J Natl Cancer Inst. 2008;100(6):407–420.</li><li>International Agency for Research on Cancer. IARC Monograph 85: Betel-quid and areca-nut chewing. Lyon: IARC; 2004.</li><li>Napier SS, Speight PM. J Oral Pathol Med. 2008;37(1):1–10.</li><li>Pavia M, Pileggi C, Nobile CG, Angelillo IF. Am J Clin Nutr. 2006;83(5):1126–1134.</li><li>National Cancer Institute. SEER Cancer Statistics Review 1975–2021.</li><li>Hashibe M, Brennan P, Chuang SC, et al. Cancer Epidemiol Biomarkers Prev. 2009;18(2):541–550.</li><li>Negri E, Boffetta P, Berthiller J, et al. Int J Cancer. 2009;124(2):394–401.</li><li>D’Souza G, Kreimer AR, Viscidi R, et al. N Engl J Med. 2007;356(19):1944–1956.</li><li>Perea-Milla López E, Minarro-Del Moral RM, Martinez-Garcia C, et al. Br J Cancer. 2003;88(11):1702–1707.</li><li>Engels EA, Pfeiffer RM, Fraumeni JF Jr, et al. JAMA. 2011;306(17):1891–1901.</li><li>Grulich AE, van Leeuwen MT, Falster MO, Vajdic CM. Lancet. 2007;370(9581):59–67.</li><li>National Cancer Institute. SEER Cancer Stat Facts: Oral Cavity and Pharynx Cancer. Accessed 30 August 2026.</li></ol>
+    </section>
+</div>
+</main>
+</div>
+</body>
+</html>

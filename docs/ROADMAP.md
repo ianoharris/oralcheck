@@ -502,18 +502,35 @@ Update both together. See `AGENTS.md`.
 
 ### Product and credibility
 
+- [ ] **Research poster and abstract: built 2026-11-02, blocked on Ian.**
+      `docs/poster/` holds a 48 × 36 in poster (PDF, preview PNG, HTML) and a
+      246-word abstract, describing how the screener was designed. It makes no
+      outcome claims, names no reviewer and no institution, and says plainly
+      that four weights depart from the formula. Rebuild with
+      `docs/poster/src/`. **Left for Ian:** put your email in place of
+      `[email]`; pick a venue and check its abstract format and deadline; and
+      before presenting anywhere connected to UW-Madison, settle the question
+      Brant raised (whether UW must *determine* this is not a UW project, see
+      the owner's guide). Rawal and Brant stay unnamed until each agrees in
+      writing.
+
+- [ ] **Clinical review: four weights that depart from the formula (found
+      2026-11-02, blocked on the next clinician review).** Current betel quid
+      is 9 (the midpoint gives 10), HPV history 5 (formula 6), sun unprotected
+      2 (formula 4) and sun regular 1 (formula 2). Each was set by judgment;
+      `/methods` now says so beside each and promises they are on this list.
+      Ask the reviewers whether to keep, raise or document them. Related: the
+      sensitivity analysis found the tobacco anchor (OR 6.0) sits above the
+      oral-cavity estimate of about 3.4, and `/methods` still presents 6.0 as
+      the top of the published range.
+
 - [ ] **Left open from the 30 Oct audit (not picked on 2 Nov, or found while
       fixing).** Each is specified in `docs/audits/2026-10-30-*.md`.
-      - Methods still says "Over 60%… stage III or IV" (AJCC, against the house
-        rule). Proposed: "About two-thirds of cases are found after the cancer
-        has spread, to nearby lymph nodes (55%) or to distant sites (12%)."
-        Methods also names one reviewer, then says "both clinicians".
       - The flyer keeps "FREE · PRIVATE · EVIDENCE-BASED"; the flyer headline's
         third line is now filler ("No account needed.") because the layout has
         three slots. "2 minutes" is still used for the dentist's exam on
         Prevention and Results.
-      - The desktop hero photo is blurred by CSS and upscaled; the hero button
-        is white on coral at 3.3:1 (needs 4.5). Primary buttons are built six
+      - The hero button is white on coral at 3.3:1 (needs 4.5). Primary buttons are built six
         ways. Long mobile footer, stacked disclaimers, card-on-card layout.
       - The Portuguese tobacco advice now points to the SUS stop-smoking
         programme (it named the CVV, an emotional-support line). Worth a
@@ -785,6 +802,22 @@ Update both together. See `AGENTS.md`.
 ## Shipped
 
 Newest first.
+
+### 2026-11-02 (later): the Methods page, rebuilt
+
+- One column width throughout; the weights table is grouped by question, reads
+  its weights from the screener (it used to restate them by hand), and keeps
+  its sources on phones instead of scrolling them off-screen.
+- The four weights that depart from the formula are named beside the weight
+  and explained; "highest-weighted modifiable factor", "the two where the
+  evidence is weakest", "the only entry" and "stage III or IV" are gone.
+- Both reviews (August pathologist, September surgeon) are described; last
+  reviewed reads September 2026. The symptom override reads "See a dentist
+  soon" everywhere and includes "unsure". The reader-facing "cannot tell you"
+  list no longer repeats three of the known limitations.
+- References aligned, tier boxes in the gauge's colours, sentence-case
+  headings, the male incidence rates read from `seerStats.ts`, and the footer
+  no longer claims the scoring follows ACS, NCI and OCF guidelines.
 
 ### 2026-11-02: the site audit, fixed
 
@@ -1819,6 +1852,7 @@ Newest first.
 
 | Idea | Why | Revisit when |
 |---|---|---|
+| Un-blurring the desktop hero photo | Flagged by the 30 Oct visual audit as looking out of focus. Ian, 2 Nov: the blur is intentional | Not planned |
 | AI image diagnosis ("upload a photo of your mouth") | Moves the product into clinical decision support, with a far heavier regulatory and validation burden. Current strength is the low-risk awareness → education → professional care model. | Never, without a clinical partner and a validation study |
 | Paying dentists per patient | Wrong incentive; makes a health tool feel commercial | Not planned |
 | Buffer as a second scheduler | Free tier has no open API, so posts would be pasted in by hand anyway. No better than the Telegram handoff, plus a second dashboard. | If Buffer reopens API access |

@@ -34,7 +34,7 @@
     "cankerSoreVsCancer": "Afta vs cáncer",
     "disclaimerHeading": "Aviso",
     "disclaimerBody": "OralCheck no es un diagnóstico médico. Es una herramienta educativa. Consulta a un profesional de la salud calificado sobre cualquier síntoma o inquietud.",
-    "disclaimerScoring": "La puntuación de riesgo se basa en las guías clínicas de la ACS, el NCI y la Oral Cancer Foundation.",
+    "disclaimerScoring": "Puntuación de riesgo ponderada a partir de estudios publicados. Consulte la metodología de puntuación.",
     "copyright": "© {year} OralCheck",
     "methods": "Metodología",
     "privacy": "Privacidad",
@@ -1309,14 +1309,14 @@
     "weightDerivationHeading": "Derivación de los pesos",
     "weightP1": "A cada factor de riesgo se le asigna un peso proporcional al logaritmo natural de su razón de momios (OR) publicada, escalado por una constante <i>k</i>:",
     "weightFormula": "peso = round( ln(OR) × k )",
-    "weightP2": "La constante de escala <i>k = 4.47</i> se eligió para que el uso diario de tabaco (el factor modificable con mayor peso, OR 6.0× según Gandini et al. 2008) corresponda a un peso de 8. Eso ancla todos los demás pesos a una escala ordinal consistente basada en la misma evidencia.",
-    "weightP3": "Cuando los estudios reportan un rango de OR, usamos el punto medio o una estimación conservadora. Síntomas como la eritroplasia, la leucoplasia y las úlceras que no sanan se tratan de dos formas a la vez: suman al puntaje y además anulan el nivel a Consulta a un dentista pronto sin importar el total. Se entienden mejor como posible patología in situ que como exposiciones de riesgo a nivel poblacional, por lo que un síntoma reportado siempre genera la misma recomendación, incluso cuando todos los demás factores son bajos.",
+    "weightP2": "La constante de escala <i>k = 4,47</i> se eligió para que el consumo diario de tabaco equivalga a un peso de 8, usando el extremo superior de su rango publicado (OR 6,0×, Gandini et al. 2008). Eso ancla todos los demás pesos a una misma escala ordinal basada en la misma evidencia.",
+    "weightP3": "La mayoría de los pesos siguen la fórmula en el punto medio del rango publicado. Los síntomas, como una mancha roja o blanca, un bulto o una llaga que no ha sanado, se tratan de dos maneras a la vez: suman a la puntuación y además llevan el resultado al nivel más alto, Consulte pronto a un dentista, sea cual sea el total. Se entienden mejor como posible enfermedad ya presente que como exposiciones de riesgo a nivel de población, así que un síntoma reportado siempre lleva a la misma recomendación, aunque todos los demás factores sean bajos.",
     "factorTableHeading": "Pesos de los factores de riesgo",
     "colFactor": "Factor",
     "colOR": "OR publicada",
     "colWeight": "Peso",
     "colSource": "Fuente",
-    "interactionHeading": "Término de interacción tabaco + alcohol",
+    "interactionHeading": "Interacción entre tabaco y alcohol",
     "interactionP1Rest": "Cuando el uso de tabaco y alcohol están presentes en niveles significativos (diario o semanal), el modelo agrega un bono de interacción de <b>+3 puntos</b>.",
     "interactionP2": "La razón es que el tabaco y el alcohol juntos elevan el riesgo más que el producto de sus efectos por separado. Como cada peso es proporcional al logaritmo de una razón de momios, sumar los pesos del tabaco y del alcohol ya supone que los dos se multiplican. Los datos combinados de 17 estudios mostraron que el efecto conjunto es aún mayor, unas dos veces lo que predice la multiplicación sola (parámetro de interacción 2.15 para el cáncer de cabeza y cuello en general, 3.09 para el cáncer de cavidad oral). En esta escala, un factor de 2.15 equivale a 3 puntos, así que +3 es la lectura conservadora. En esos mismos datos, quienes fumaban más de un paquete al día y tomaban tres o más bebidas al día tenían unas 15 veces las probabilidades de cáncer de cavidad oral de quienes no hacían ninguna de las dos cosas.",
     "interactionSourcesLabel": "Fuentes:",
@@ -1326,8 +1326,8 @@
     "tierElevated": "Elevado",
     "tierHigh": "Alto",
     "tierP1": "La puntuación máxima posible es 61 (todas las respuestas de mayor riesgo más el bono por interacción). Algunos puntos de referencia: una persona que fuma a diario obtiene 8 puntos sola (riesgo moderado); tabaco + alcohol + interacción llega a 16 (riesgo elevado); betel + tabaco + alcohol + interacción alcanza 25 (riesgo alto). El sexo masculino al nacer por sí solo suma 3 puntos, lo que sigue siendo bajo.",
-    "tierP2Bold": "Alto",
-    "tierP2Rest": "Sin importar el puntaje, cualquier síntoma que dure 2 semanas o más (una llaga persistente, una mancha roja o blanca, un bulto inexplicable o dificultad para tragar) anula el nivel a {bold} y activa una indicación de evaluación inmediata.",
+    "tierP2Bold": "Consulte pronto a un dentista",
+    "tierP2Rest": "Sea cual sea la puntuación, reportar un síntoma actual (una llaga persistente, una mancha roja o blanca, un bulto sin explicación o dificultad para tragar), o responder que no está seguro, lleva el resultado a {bold} y pide una evaluación esta semana.",
     "limitationsHeading": "Limitaciones conocidas",
     "limitations": [
       "OralCheck no ha sido validado con un conjunto de datos de resultados clínicos. Los pesos se basan en literatura publicada, pero no han sido calibrados con una cohorte prospectiva.",
@@ -1389,7 +1389,7 @@
     },
     "thresholdAnchorNote": "Los umbrales están anclados a esos perfiles de referencia y no se reescalan cada vez que cambia el máximo. La incorporación de las preguntas sobre sexo e historial inmunológico en agosto de 2026 elevó el máximo de 53 a 61, y una reescalación proporcional habría movido el límite de la categoría Alta a 26, lo que habría reclasificado silenciosamente un perfil sin cambios de betel + tabaco + alcohol de Alta a Elevada. Una pregunta nueva no debería hacer que un perfil existente parezca más seguro, por lo que los límites se mantuvieron donde estaban.",
     "rationaleHeading": "Por qué se hace cada pregunta",
-    "rationaleIntro": "Cada pregunta justifica su lugar al modificar la puntuación de una manera respaldada por la literatura publicada. Este es el razonamiento detrás de cada una, incluidas las dos donde la evidencia es más débil.",
+    "rationaleIntro": "Cada pregunta se gana su lugar cambiando la puntuación de una manera que respalda la literatura publicada. Este es el razonamiento detrás de cada una, incluido dónde la evidencia es más débil.",
     "rationale": [
       {
         "id": "age",
@@ -1449,7 +1449,7 @@
       {
         "id": "dental",
         "title": "Atención dental",
-        "body": "No es un factor de riesgo en absoluto, y la página es explícita sobre eso. Es un indicador indirecto de retraso en la detección. Más del 60% de los cánceres orales se detectan en etapa III o IV, y el examen visual de dos minutos que los encuentra antes ocurre en una visita dental. Su peso proviene de fundamentos clínicos, no de una razón de probabilidades, y es el único elemento de la tabla para el que esto es así."
+        "body": "No es un factor de riesgo. Es un indicador del retraso en la detección: cerca de dos tercios de los cánceres orales se detectan solo después de haberse extendido, y en una visita dental de rutina se hace el breve examen visual que los encuentra antes. Su peso viene del razonamiento clínico, no de un odds ratio, igual que las respuestas sobre síntomas y \"prefiero no decirlo\" en sexo."
       }
     ],
     "cannotHeading": "Lo que esta herramienta no puede decirle",
@@ -1457,16 +1457,13 @@
     "cannot": [
       "No puede decirle si tiene cáncer oral. Nunca ve su boca. Solo refleja las exposiciones que usted reportó y nada más.",
       "Un resultado bajo no es un certificado de buena salud. Alrededor de una cuarta parte de los cánceres orales ocurren en personas sin ninguno de los factores de riesgo convencionales que este evaluador pregunta, por lo que una puntuación baja junto con un síntoma sigue siendo motivo para consultar a un dentista.",
-      "No puede distinguir entre cáncer de cavidad oral y cáncer de orofaringe. Son enfermedades epidemiológicamente distintas con diferentes causas predominantes, y la puntuación única las combina.",
-      "No puede tener en cuenta lo que usted no reportó o no sabía. El consumo de tabaco y alcohol suele ser subnotificado en cuestionarios autoadministrados.",
-      "No ha sido validado con un conjunto de datos de resultados clínicos. Cada peso se deriva de literatura publicada, pero el instrumento como conjunto nunca ha sido calibrado con una cohorte prospectiva y no debe describirse como validado.",
       "La puntuación no es una probabilidad. Es una estratificación ordinal, por lo que una puntuación de 20 no representa el doble del riesgo de una puntuación de 10 y no corresponde a un porcentaje de probabilidad de desarrollar nada.",
       "No puede reemplazar el examen. La detección real del cáncer oral es un examen visual y táctil breve realizado por un dentista o médico. El propósito completo de esta herramienta es hacer más probable que esa consulta ocurra."
     ],
     "reviewHeading": "Revisión y mantenimiento",
     "lastReviewedLabel": "Última revisión",
-    "lastReviewedDate": "Agosto de 2026",
-    "reviewBody": "La lista de factores, los pesos, los umbrales y las fuentes de esta página fueron verificados nuevamente con la literatura actual en agosto de 2026 y revisados tras una evaluación externa por parte de un patólogo oral y maxilofacial en ejercicio. Esa revisión fue la que incorporó la pregunta sobre historial inmunológico y de radiación, añadió el crecimiento de encías y la movilidad dental reciente a la orientación sobre síntomas, y motivó la aclaración de que una parte considerable de los cánceres orales ocurre sin ningún factor de riesgo convencional.",
+    "lastReviewedDate": "Septiembre de 2026",
+    "reviewBody": "La lista de factores, los pesos, los umbrales y las fuentes de esta página se volvieron a comprobar con la literatura actual en agosto de 2026 y luego se revisaron tras la evaluación de un patólogo oral y maxilofacial en ejercicio en agosto de 2026 y de un cirujano de cabeza y cuello en septiembre de 2026. La primera evaluación añadió la pregunta sobre antecedentes inmunitarios y de radiación, añadió el crecimiento de las encías y la movilidad dental reciente a la guía de síntomas, y motivó la advertencia de que una parte considerable de los cánceres orales aparece sin ningún factor de riesgo convencional. La segunda motivó la limitación sobre combinar estudios de poblaciones distintas, la explicación de dónde salieron los límites de los niveles y la sección sobre una puntuación que cubre dos enfermedades.",
     "reviewCadence": "Esta página se revisa al menos una vez al año y cada vez que se agrega, elimina o reponde una pregunta. Si detecta un error en una cita o en un peso, vale la pena reportarlo: las correcciones se aplican directamente y la fecha de revisión se actualiza.",
     "seerHeading": "Las cifras de supervivencia que cita este sitio",
     "seerIntro": "Varias páginas citan la supervivencia a cinco años según la etapa, porque la diferencia entre detectar el cáncer oral a tiempo o tarde es precisamente la razón por la que existe esta herramienta. Estas son las cifras actuales y lo que significan, y lo que no significan.",
@@ -1505,7 +1502,9 @@
     "siteHeading": "Una puntuación, dos enfermedades",
     "siteBody": "Los dos médicos que revisaron esto señalaron de forma independiente lo mismo: el cáncer de la cavidad oral y el cáncer orofaríngeo tienen causas predominantes distintas, y una sola puntuación combinada no sirve bien para ninguno de los dos. Se consideraron dos soluciones obvias y se descartaron. Dividir el resultado en dos puntuaciones construiría la del cáncer orofaríngeo sobre una sola pregunta, y una puntuación de una sola pregunta no es una puntuación. Limitar la herramienta a la cavidad oral y eliminar la pregunta sobre el VPH suprimiría la parte de la enfermedad de crecimiento más rápido, lo cual es lo contrario de útil para las personas menores de 50 años a quienes más afecta.",
     "siteBody2": "Por eso la puntuación se mantuvo completa y la explicación cambió. Cada pregunta está etiquetada según la enfermedad a la que realmente corresponde: tabaco, alcohol, betel, dieta y exposición solar a la cavidad oral; VPH a la orofaringe. La edad, el sexo, los antecedentes familiares, el historial inmunitario, los síntomas y la asistencia al dentista aumentan el riesgo en ambos sitios, por lo que se excluyen de la comparación en su totalidad, en lugar de inclinar todos los perfiles hacia el sitio que tenga más preguntas asociadas. Se nombra un sitio solo cuando su peso es al menos el doble del otro; por debajo de eso, la página indica que el perfil abarca ambos, porque fabricar una inclinación a partir de una diferencia de un punto sería peor que no decir nada.",
-    "siteBody3": "Este es un cambio en lo que la herramienta explica, no en lo que calcula. Los pesos no se modificaron, y la pregunta abierta, que corresponde a los médicos y no a esta página, es si el peso del VPH debería aumentar ahora que quien lee puede ver que la puntuación combina ambos sitios."
+    "siteBody3": "Este es un cambio en lo que la herramienta explica, no en lo que calcula. Los pesos no se modificaron, y la pregunta abierta, que corresponde a los médicos y no a esta página, es si el peso del VPH debería aumentar ahora que quien lee puede ver que la puntuación combina ambos sitios.",
+    "weightDepartures": "Cuatro pesos se apartan de la fórmula, y la tabla muestra junto a cada uno el valor que da la fórmula. El betel actual usa el extremo inferior de su rango de 7 a 10×: 9, cuando el punto medio da 10. Los antecedentes de VPH tienen un peso de 5, no de 6, porque el estado de vacunación y los antecedentes reportados son indicadores de conducta, no el resultado de una prueba. Los dos pesos de exposición al sol son la mitad del valor de la fórmula (2 y 1, no 4 y 2), porque el odds ratio describe solo el cáncer de labio, una parte pequeña de los cánceres que cubre esta puntuación. Los cuatro se fijaron por criterio y figuran en la lista para la próxima revisión clínica. Algunas filas no tienen odds ratio: las respuestas sobre síntomas (una anulación), la frecuencia de visitas al dentista (un indicador de detección) y \"prefiero no decirlo\" en sexo (un promedio de la población).",
+    "formulaGives": "fórmula: {n}"
   },
   "ContactForm": {
     "sentTitle": "Recibido, gracias por escribir.",
