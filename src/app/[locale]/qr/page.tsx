@@ -58,7 +58,7 @@ export default function QRPage() {
 
   return (
     <>
-      {/* Print styles — hide everything except the card */}
+      {/* Print styles: hide everything except the card */}
       <style>{`
         @media print {
           body > * { display: none !important; }
@@ -88,7 +88,7 @@ export default function QRPage() {
             value={source}
             onChange={(e) => setSource(e.target.value)}
             placeholder="e.g. Marquette Dental"
-            className="w-full min-h-11 rounded-full border border-ink/15 px-4 py-2 text-sm bg-white"
+            className="w-full min-h-11 rounded-full border border-ink/15 px-4 py-2 text-sm bg-warm text-ink placeholder:text-ink-soft"
           />
           <p className="mt-2 text-xs text-ink-soft leading-relaxed">
             {slug ? (
@@ -106,7 +106,7 @@ export default function QRPage() {
         {/* Card, this is what gets printed */}
         <div
           id="print-card"
-          className="flex flex-col items-center bg-white rounded-3xl border border-warm-dim p-10 sm:p-14 shadow-sm"
+          className="surface-light flex flex-col items-center bg-white rounded-3xl border border-warm-dim p-10 sm:p-14 shadow-sm"
         >
           <div className="text-brand font-serif text-3xl font-bold mb-1">
             OralCheck
@@ -126,7 +126,7 @@ export default function QRPage() {
           </div>
 
           <p className="mt-8 font-serif text-2xl sm:text-3xl text-ink leading-snug max-w-xs">
-            2 minutes could save your life.
+            Check your oral cancer risk factors in about two minutes.
           </p>
           {/* The printed URL stays clean so it is typeable. Only the QR carries
               the source tag. */}
@@ -148,7 +148,7 @@ export default function QRPage() {
           </button>
           <button
             onClick={handleDownload}
-            className="bg-white hover:bg-warm-dim text-ink font-semibold px-7 py-3 rounded-full border border-warm-dim transition-colors"
+            className="bg-warm hover:bg-warm-dim text-ink font-semibold px-7 py-3 rounded-full border border-ink/15 transition-colors"
           >
             Download PNG
           </button>
@@ -163,15 +163,15 @@ export default function QRPage() {
                 alert("Link copied!");
               }
             }}
-            className="bg-white hover:bg-warm-dim text-ink font-semibold px-7 py-3 rounded-full border border-warm-dim transition-colors"
+            className="bg-warm hover:bg-warm-dim text-ink font-semibold px-7 py-3 rounded-full border border-ink/15 transition-colors"
           >
             Share link
           </button>
         </div>
 
         <p className="mt-10 text-xs text-ink-soft leading-relaxed max-w-sm mx-auto">
-          This tool provides general health education only — not medical
-          advice or diagnosis. Encourage anyone with concerns to see a
+          This tool provides general health education only. It is not medical
+          advice or a diagnosis. Encourage anyone with concerns to see a
           clinician.
         </p>
       </div>

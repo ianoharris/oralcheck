@@ -455,7 +455,6 @@ either baked in at build time or computed in the visitor's browser.
 | Animation | **Framer Motion** | The screener transitions |
 | Maps | **Leaflet** | The find-care map. Free, no Google Maps billing |
 | Email | **Resend** | Sends the "email me my result" copy |
-| AI summary | **Anthropic SDK** | The personalised paragraph on the results page |
 | Analytics | **Google Analytics 4** + Vercel Analytics | |
 | Hosting | **Vercel** | |
 
@@ -478,8 +477,9 @@ either baked in at build time or computed in the visitor's browser.
 clinician reads before deciding whether to take you seriously.
 
 **The home page's third number is live.** Under the hero, the three figures
-are new US cases a year, survival when caught early, and **people reached since
-launch**, which the site reads from Google Analytics every hour
+are new US cases a year, survival when caught early, and **visitors since
+launch** (labelled "people reached" until 2 November 2026; it counts GA users,
+not completed screeners, and the label now says so), which the site reads from Google Analytics every hour
 (`src/lib/reach.ts`, using the `GA_PROPERTY_ID` and `GA_SERVICE_ACCOUNT_KEY`
 values stored on Vercel). The home page itself is rebuilt in the background at
 most once an hour, the first time someone visits after the hour is up. For its
@@ -539,11 +539,10 @@ papers, not to a guide for patients.
 
 ### 8.3 The server-side bits
 
-There are only seven, and most are tiny:
+There are only six, and most are tiny:
 
 | Route | Does | Protected by |
 |---|---|---|
-| `/api/summary` | The AI paragraph on results | Rate limit 10/window + daily AI budget |
 | `/api/email-result` | Emails a result copy | Rate limit 3/hour |
 | `/api/contact` | Feedback form | Rate limit 3/hour |
 | `/api/clinics` | Clinic search | Rate limit 10/window |
@@ -1037,8 +1036,9 @@ development copies of the site (the ones that run on a laptop while it is being
 built, at `localhost`) reported to the same Google Analytics as the real site.
 In the 90 days to 30 October that was 376 of 1,321 page views, most of them one
 tab left open on 21 October. GA can filter by host name, so the real figures
-are still recoverable: look at host `oralcheck.org` only. From the next deploy
-only `oralcheck.org` reports at all, and any browser can be told not to count
+are still recoverable: look at host `oralcheck.org` only. Since 30 October
+only `oralcheck.org` reports at all (the Google tag is not even loaded anywhere
+else, `src/components/AnalyticsGate.tsx`), and any browser can be told not to count
 itself by opening the site once with `?notrack=1` on the end of the address
 (`?notrack=0` undoes it). Do this on your own phone and laptop.
 
@@ -1047,8 +1047,22 @@ without signal) was keeping returning visitors on the copy of the home page,
 Learn and About they saw on their first visit, indefinitely. Those old copies
 blocked Google Analytics and, after later updates, tried to load scripts that
 no longer exist. So GA has undercounted returning visitors, by an amount it
-cannot tell you. From the next deploy pages always come from the network, the
+cannot tell you. Since 30 October pages always come from the network, the
 cache is only used offline, and the old copies are cleared.
+
+**The 2 November 2026 clean-up, so you can answer for it.** An outside-eyes
+audit (`docs/audits/2026-10-30-*.md`) found the site and articles reading as
+machine-made. What changed: the home headline is now "Check your oral cancer
+risk factors in about two minutes" (the old "2 minutes could save your life"
+promised something the screener cannot do, since it does not detect cancer);
+the logo strip is labelled "Practices and groups that have shared OralCheck
+with patients", so only show a logo there if that is true of it; the two-week
+rule is one sentence, word for word, everywhere ("If a sore, patch or lump in
+your mouth hasn't cleared up in two weeks, have a dentist or doctor look at
+it."), where nine articles used to say two to three weeks; and the 12 articles
+lost their templated openings and endings and now link to real pages. The
+results gauge also changed: each band owns a quarter of the dial, so the
+needle always points into the colour of the band named under it.
 
 **How many people have used it, then?** GA's all-time total on 21 October
 2026 was 847. The month GA missed had about 60 to 110 more, estimated two ways
@@ -1165,7 +1179,15 @@ thing that fixes it is two minutes in a dental chair.
 
 **Q9. "Do you store my answers?"**
 No. The score is computed in your browser and nothing is transmitted or kept.
-There's no account and no database.
+There's no account and no database. The one exception is the visitor's own
+choice: if they ask for an emailed copy, their answers go to the email service
+to send that one message.
+
+Until 30 October 2026 this answer was not true. The results page sent the
+band and every answer to Anthropic's API to write a personalised paragraph,
+while the site said answers never leave the device. Nothing identified the
+visitor, but the promise was wrong, so the paragraph was dropped and every
+result now shows the written summary for its band.
 
 **Q10. "What if I get a low score?"**
 It means the risk factors this tool asks about don't stand out for you. It does
@@ -1195,7 +1217,6 @@ code generator, and copy-paste embed code.
 | Site shows old content | Deploy failed | Check Vercel dashboard for a red build |
 | Results page shows English on `/es` or `/pt` | A translation key missing | Run `node scripts/i18n-sync.mjs` |
 | Results page shows a raw key like `MethodsPage.foo` | English shipped before translations | Same: run the sync |
-| AI summary paragraph missing | Anthropic credits exhausted, or rate limit | Check the workspace spend limit — the workspace cap is separate from the org one |
 | Idea flow "succeeds" but nothing arrives | Used to be a silent API failure | Now sends a Telegram message with the reason and exits red |
 | No Monday idea batch at all, no failed run either | GitHub dropped the cron | A backup cron fires at 19:00 UTC the same Monday. If that misses too, dispatch it by hand |
 | Two idea batches on the same Monday | The backup cron ran while the first was still waiting on you | Fixed 2026-09-14: the guard now also skips when another run today is still going |

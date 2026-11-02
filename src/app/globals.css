@@ -13,6 +13,15 @@
   --color-low: #7ba882;
   --color-mid: #d4a03c;
   --color-high: #e8634a;
+  /* Elevated sat between amber and coral but borrowed amber, so Moderate and
+     Elevated looked identical on the results page. */
+  --color-elevated: #e0874a;
+  /* Pill fills that carry white text. The tints above failed contrast as
+     backgrounds (2.4 to 3.3:1); these measure 5.3 to 5.6:1 with white. */
+  --color-low-strong: #3d7346;
+  --color-mid-strong: #8a5f12;
+  --color-elevated-strong: #a8541c;
+  --color-high-strong: #b5432d;
 
   --font-serif: var(--font-dm-serif), Georgia, serif;
   --font-sans: var(--font-source-sans), system-ui, sans-serif;
@@ -58,6 +67,31 @@ html[data-theme="dark"] {
   --hero-photo-fade: linear-gradient(to right, #111110 0%, rgba(17,17,16,0.80) 21%, transparent 60%);
   --hero-photo-bottom: linear-gradient(to top, rgba(17,17,16,0.5) 0%, transparent 100%);
 }
+
+/* Print previews (the clinician flyer, the QR card) stay light in dark mode.
+   They are white surfaces by design, but their text used the theme tokens, so
+   in dark mode the flyer headline, form labels and two buttons turned pale on
+   white and disappeared. */
+.surface-light {
+  --color-warm: #faf9f6;
+  --color-warm-dim: #f0eee8;
+  --color-ink: #2d2d2d;
+  --color-ink-soft: #6b6b6b;
+  --color-brand-soft: #e0f0f0;
+  color-scheme: light;
+  color: var(--color-ink);
+}
+
+/* Teal text measured 3.4:1 on the dark page and 2.8:1 on dark cards, under
+   the 4.5:1 text needs. Articles already used this lighter teal for links;
+   the rest of the site never did. Button fills keep #0d7377, since white on
+   the lighter teal would fail instead. */
+html[data-theme="dark"] .text-brand,
+html[data-theme="dark"] .hover\:text-brand:hover,
+html[data-theme="dark"] .group:hover .group-hover\:text-brand { color: #4fb3b6; }
+html[data-theme="dark"] .hover\:text-brand-dark:hover { color: #7fcbcd; }
+html[data-theme="dark"] .border-brand { border-color: #4fb3b6; }
+html[data-theme="dark"] .surface-light .text-brand { color: #0d7377; }
 
 body {
   font-family: var(--font-sans);

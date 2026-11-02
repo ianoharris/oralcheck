@@ -43,21 +43,8 @@
     "terms": "Términos"
   },
   "HeroSectionPhoto": {
-    "headlineLine1": [
-      "2",
-      "minutos"
-    ],
-    "headlineLine2a": [
-      "podrían"
-    ],
-    "headlineLine2b": [
-      "salvar"
-    ],
-    "headlineLine3": [
-      "tu",
-      "vida."
-    ],
-    "overline": "Gratis · Privado · Basado en evidencia",
+    "headlineLead": "Revisa tus factores de riesgo de cáncer oral en unos",
+    "headlineAccent": "dos minutos.",
     "body": "El cáncer oral es uno de los cánceres con menos diagnóstico temprano, en gran parte porque sus primeros síntomas parecen algo común. OralCheck te ayuda a entender tu riesgo en minutos y te guía hacia la atención adecuada.",
     "startScreening": "Evalúa tu riesgo →",
     "learnSigns": "Conoce las señales",
@@ -86,6 +73,7 @@
     "shareHeading": "Imprímelo. Publícalo. Pásalo.",
     "shareBody": "La mayoría de las personas que necesitan esto nunca lo van a buscar. Un código QR en la pared de una sala de espera, un tablón comunitario o la sala de descanso llega a personas que un sitio web no puede alcanzar. Es gratis para imprimir, y puedes marcar cada copia para ver qué lugares realmente atraen visitantes.",
     "shareCta": "Obtén un código QR para imprimir",
+    "logoStripLabel": "Consultorios y organizaciones que han compartido OralCheck con sus pacientes",
     "disclaimerLine": "OralCheck es una herramienta educativa, no un diagnóstico médico. No puede detectar ni descartar cáncer. Siempre consulte a un profesional dental o médico sobre cualquier síntoma que le preocupe.",
     "disclaimerTermsLink": "Términos de uso",
     "disclaimerPrivacyLink": "Privacidad"
@@ -156,7 +144,7 @@
   },
   "SelfExamPage": {
     "tag": "Cómo hacerlo",
-    "heading": "Cómo hacer un autoexamen de 2 minutos",
+    "heading": "Cómo revisar tu propia boca",
     "introRest": "Hazlo una vez al mes. Solo necesitas un espejo, buena iluminación y las manos limpias. Si notas algo que dura 2 semanas o más, consulta a un dentista. ¿No sabes qué buscar?",
     "introLink": "Consulta la guía de señales de advertencia.",
     "steps": [
@@ -215,7 +203,7 @@
     "tag": "Prevención",
     "heading": "Cómo prevenir el cáncer oral",
     "introLink": "El cáncer oral",
-    "introRest": "no es completamente prevenible, algunos factores de riesgo, como la edad y la genética, no están bajo tu control. Pero los más importantes sí lo están. Esto es lo que realmente respalda la evidencia.",
+    "introRest": "no es completamente prevenible. Algunos factores de riesgo, como la edad y la genética, no están bajo tu control. Pero los más importantes sí lo están. Esto es lo que realmente respalda la evidencia.",
     "steps": [
       {
         "number": "01",
@@ -227,7 +215,7 @@
       {
         "number": "02",
         "heading": "Limite el alcohol, especialmente junto con el tabaco",
-        "body": "El consumo excesivo de alcohol es un factor de riesgo independiente, pero la combinación de tabaco y alcohol no solo suma los riesgos, los multiplica. Si bebe, mantenerse en niveles moderados (hasta 1 bebida al día para mujeres, 2 para hombres) reduce su riesgo de manera significativa en comparación con el consumo excesivo.",
+        "body": "El consumo excesivo de alcohol es un factor de riesgo independiente, pero la combinación de tabaco y alcohol no solo suma los riesgos: los multiplica. Si bebe, mantenerse en niveles moderados (hasta 1 bebida al día para mujeres, 2 para hombres) reduce su riesgo de manera significativa en comparación con el consumo excesivo.",
         "ctaLabel": null,
         "ctaHref": null
       },
@@ -255,7 +243,7 @@
       {
         "number": "06",
         "heading": "Hágase un autoexamen mensual",
-        "body": "La prevención no se trata solo de evitar los factores de riesgo, también implica detectar cambios temprano. Un autoexamen mensual de 2 minutos de la boca y la garganta permite notar cualquier cosa inusual antes de que se vuelva grave. La mayoría de las personas nunca se ha hecho uno.",
+        "body": "La prevención no se trata solo de evitar los factores de riesgo. También implica detectar cambios temprano. Un autoexamen mensual de 2 minutos de la boca y la garganta permite notar cualquier cosa inusual antes de que se vuelva grave. La mayoría de las personas nunca se ha hecho uno.",
         "ctaLabel": "Aprenda cómo hacer un autoexamen →",
         "ctaHref": "/learn/self-exam"
       }
@@ -304,9 +292,9 @@
     "statHeading": "El VPH ahora es la causa #1",
     "statBody": "El virus del papiloma humano (VPH) ha superado al tabaco como la principal causa de cánceres orofaríngeos: cánceres de las amígdalas, la base de la lengua y el fondo de la garganta. Los casos positivos para VPH aumentaron un 225% entre 1988 y 2004 (Chaturvedi et al., 2011).",
     "whatIsHeading": "¿Qué es el cáncer oral relacionado con el VPH?",
-    "whatIsP1Start": "El VPH es un virus de transmisión sexual común. La mayoría de las infecciones se eliminan por sí solas sin síntomas. En algunas personas, sin embargo, ciertas cepas, especialmente el",
+    "whatIsP1Start": "El VPH es un virus de transmisión sexual común. La mayoría de las infecciones se eliminan por sí solas sin síntomas. En algunas personas, sin embargo, ciertas cepas causan cambios en el ADN celular que con el tiempo pueden derivar en cáncer, y el",
     "whatIsP1Bold": "VPH-16",
-    "whatIsP1End": ", causan cambios en el ADN celular que eventualmente pueden derivar en cáncer.",
+    "whatIsP1End": "es la cepa que los provoca con más frecuencia.",
     "whatIsP2Start": "Los cánceres orales relacionados con el VPH suelen desarrollarse en la",
     "whatIsP2Bold": "orofaringe",
     "whatIsP2End": ": las amígdalas, la base de la lengua y la pared posterior de la garganta. Esto es diferente de los cánceres orales tradicionales, que tienden a formarse en los labios, las encías, la punta de la lengua y el piso de la boca.",
@@ -345,13 +333,13 @@
     "whoP1Start": "El cáncer orofaríngeo relacionado con el VPH afecta con mayor frecuencia a",
     "whoP1Bold": "hombres de entre 40 y 60 años",
     "whoP1End": "sin antecedentes de tabaquismo. Esto es una de las razones por las que es fácil pasarlo por alto: la gente asume que el cáncer oral es una enfermedad de fumadores.",
-    "whoP2": "Un mayor número de parejas sexuales orales a lo largo de la vida se asocia con un mayor riesgo, ya que el VPH se transmite principalmente por contacto sexual. Sin embargo, el VPH es extremadamente común, la mayoría de los adultos sexualmente activos han estado expuestos en algún momento, y la gran mayoría de las infecciones nunca derivan en cáncer.",
+    "whoP2": "Un mayor número de parejas sexuales orales a lo largo de la vida se asocia con un mayor riesgo, ya que el VPH se transmite principalmente por contacto sexual. Sin embargo, el VPH es extremadamente común. La mayoría de los adultos sexualmente activos han estado expuestos en algún momento, y la gran mayoría de las infecciones nunca derivan en cáncer.",
     "whoP3": "El uso de tabaco y alcohol junto con la infección por VPH aumenta aún más el riesgo. Las condiciones que comprometen el sistema inmunológico (como el VIH) también reducen la capacidad del cuerpo para eliminar el VPH de forma natural.",
     "vaccineHeading": "La vacuna contra el VPH",
     "vaccineP1Bold": "Gardasil 9",
     "vaccineP1Rest": "protege contra el VPH-16 y el VPH-18, las dos cepas responsables de la mayoría de los cánceres relacionados con el VPH. Está aprobada por la FDA para personas de",
     "vaccineP1Ages": "9 a 45 años",
-    "vaccineP2": "La vacuna es más eficaz cuando se aplica antes de la exposición al VPH, por lo que se recomienda de forma rutinaria para preadolescentes. Pero los adultos que no se vacunaron antes aún pueden beneficiarse, habla con tu médico.",
+    "vaccineP2": "La vacuna es más eficaz cuando se aplica antes de la exposición al VPH, por lo que se recomienda de forma rutinaria para preadolescentes. Pero los adultos que no se vacunaron antes aún pueden beneficiarse. Habla con tu médico.",
     "vaccineP3": "La vacuna no puede tratar una infección de VPH ya existente, pero las investigaciones muestran que ya ha comenzado a reducir las tasas de cáncer relacionado con el VPH en las poblaciones vacunadas.",
     "faqHeading": "Preguntas frecuentes",
     "faqs": [
@@ -389,7 +377,7 @@
   "CankerPage": {
     "tag": "Guía",
     "heading": "Afta vs. cáncer oral",
-    "intro": "La principal diferencia es el tiempo. Las aftas sanan en 7 a 14 días, el cáncer oral no. Así es como diferenciarlos, y exactamente cuándo dejar de esperar y consultar a un médico.",
+    "intro": "La principal diferencia es el tiempo. Las aftas sanan en 7 a 14 días. El cáncer oral no. Así es como diferenciarlos, y exactamente cuándo dejar de esperar y consultar a un médico.",
     "quickAnswerHeading": "La respuesta rápida",
     "quickAnswerP1Start": "Si ha estado ahí",
     "quickAnswerP1Bold1": "menos de 2 semanas",
@@ -455,10 +443,10 @@
       }
     ],
     "twoWeekHeading": "La regla de las 2 semanas",
-    "twoWeekP1Start": "Cualquier llaga, mancha, bulto o cambio en tu boca que no se haya resuelto después de",
-    "twoWeekBold": "2 semanas",
-    "twoWeekP1End": "debe ser evaluado por un dentista o médico. La mayoría de las veces resulta ser algo sin importancia, pero esa tranquilidad vale la pena con una cita de 10 minutos. El cáncer oral detectado mientras aún está localizado tiene una tasa de supervivencia relativa a 5 años del 89%.",
-    "whenToSeeHeading": "Cuándo consultar a un médico, no esperes si:",
+    "twoWeekP1Start": "Si una llaga, mancha o bulto en su boca no ha desaparecido en",
+    "twoWeekBold": "dos semanas, que se lo revise un dentista o un médico.",
+    "twoWeekP1End": "La mayoría de las veces resulta ser algo sin importancia, pero esa tranquilidad vale una cita de 10 minutos. El cáncer oral detectado mientras aún está localizado tiene una tasa de supervivencia relativa a 5 años del 89%.",
+    "whenToSeeHeading": "No espere para consultar a un médico si:",
     "whenToSee": [
       {
         "title": "Lleva más de 2 semanas presente",
@@ -466,7 +454,7 @@
       },
       {
         "title": "Es indolora",
-        "desc": "El cáncer oral temprano a menudo es indoloro. Eso no es tranquilizador, es una razón para hacerse revisar."
+        "desc": "El cáncer oral temprano a menudo es indoloro. Eso no es tranquilizador. Es una razón para hacerse revisar."
       },
       {
         "title": "Sangra fácilmente al tacto",
@@ -489,7 +477,7 @@
     "faqs": [
       {
         "q": "¿Cómo sé si una llaga en la boca es cáncer?",
-        "a": "El indicador más confiable es el tiempo. Las aftas sanan en 7 a 14 días. Si una llaga, mancha o bulto no ha desaparecido después de 2 semanas, consulte a un dentista o médico. Otras señales de alerta: sangra fácilmente, es indolora, tiene bordes irregulares, está creciendo o está acompañada de un bulto en el cuello."
+        "a": "El indicador más confiable es el tiempo. Las aftas sanan en 7 a 14 días. Si una llaga, mancha o bulto en su boca no ha desaparecido en dos semanas, que se lo revise un dentista o un médico. Otras señales de alerta: sangra fácilmente, es indolora, tiene bordes irregulares, está creciendo o está acompañada de un bulto en el cuello."
       },
       {
         "q": "¿Una afta puede convertirse en cáncer oral?",
@@ -523,9 +511,9 @@
     "heading": "Factores de riesgo del cáncer oral",
     "intro": "El cáncer oral tiene causas claras y bien entendidas. La mayoría son modificables. Entender tus factores de riesgo específicos es el primer paso para hacer algo al respecto.",
     "twoFactorHeading": "La regla de los dos factores",
-    "twoFactorP1": "El tabaco y el alcohol elevan cada uno de forma independiente el riesgo de cáncer oral. Usados juntos, sus efectos son",
-    "twoFactorBold1": "sinérgicos, no aditivos",
-    "twoFactorP2": "alguien que fuma más de un paquete al día y toma tres o más bebidas al día puede enfrentar un aumento de",
+    "twoFactorP1": "El tabaco y el alcohol elevan cada uno de forma independiente el riesgo de cáncer oral. Usados juntos,",
+    "twoFactorBold1": "cada uno multiplica el efecto del otro",
+    "twoFactorP2": "por lo que alguien que fuma más de un paquete al día y toma tres o más bebidas al día puede enfrentar un aumento de",
     "twoFactorBold2": "unas 15 veces",
     "twoFactorP3": "en el riesgo, comparado con alguien que no hace ninguna de las dos cosas. Si usas ambos, reducir o eliminar cualquiera de los dos reduce significativamente tu riesgo.",
     "learnMore": "Aprende más →",
@@ -640,7 +628,7 @@
       },
       {
         "title": "Conozca las señales de advertencia",
-        "desc": "Cualquier llaga, mancha o bulto que no haya desaparecido en 2 semanas debe ser evaluado."
+        "desc": "Si una llaga, mancha o bulto en su boca no ha desaparecido en dos semanas, que se lo revise un dentista o un médico."
       }
     ],
     "faqHeading": "Preguntas frecuentes",
@@ -777,9 +765,9 @@
     "seeFullLink": "guía completa de señales de advertencia",
     "seeFullEnd": "para descripciones detalladas y fotos.",
     "twoWeekHeading": "La regla de las 2 semanas",
-    "twoWeekP1Start": "Cualquier llaga, mancha, bulto o cambio en tu boca que no haya sanado o se haya resuelto después de",
-    "twoWeekBold": "2 semanas",
-    "twoWeekP1End": "debe ser evaluado por un dentista o médico. La mayoría de las veces resulta no ser algo grave, pero detectar el cáncer oral a tiempo lo cambia todo.",
+    "twoWeekP1Start": "Si una llaga, mancha o bulto en tu boca no ha desaparecido en",
+    "twoWeekBold": "dos semanas, que te lo revise un dentista o un médico.",
+    "twoWeekP1End": "La mayoría de las veces resulta no ser algo grave, pero detectar el cáncer oral a tiempo lo cambia todo.",
     "faqHeading": "Preguntas frecuentes",
     "faqs": [
       {
@@ -822,9 +810,9 @@
     "introLink": "cánceres orales",
     "introEnd": "tempranos son completamente indoloros. Por eso muchos casos se detectan tarde. Estos son los cambios que vale la pena conocer, especialmente si algo dura más de 2 semanas.",
     "twoWeekHeading": "La regla de las 2 semanas",
-    "twoWeekP1Start": "Cualquier llaga, mancha, bulto o cambio inusual en tu boca que",
-    "twoWeekBold": "no se haya resuelto después de 2 semanas",
-    "twoWeekP1End": "debe ser evaluado por un dentista o médico. Las aftas sanan en 7 a 14 días. El cáncer oral no. No necesitas esperar a ver si empeora, 2 semanas es el límite.",
+    "twoWeekP1Start": "Si una llaga, mancha o bulto en su boca",
+    "twoWeekBold": "no ha desaparecido en dos semanas,",
+    "twoWeekP1End": "que se lo revise un dentista o un médico. Las aftas sanan en 7 a 14 días. El cáncer oral no. No necesita esperar a ver si empeora: dos semanas es el límite.",
     "signsHeading": "Señales de advertencia",
     "highPriority": "Alta prioridad",
     "signs": [
@@ -855,7 +843,7 @@
       },
       {
         "title": "Dientes flojos sin explicación dental",
-        "detail": "Si los dientes se aflojan sin una causa obvia, sin diagnóstico de enfermedad de las encías, sin lesión, sin problema dental, puede ser señal de que un tumor está afectando el hueso o el tejido blando que sostiene los dientes. Esto es especialmente relevante para las lesiones en la encía (carcinoma gingival), que puede imitar la enfermedad periodontal y pasar desapercibido durante meses.",
+        "detail": "Si los dientes se aflojan sin una causa obvia (sin diagnóstico de enfermedad de las encías, sin lesión, sin problema dental), puede ser señal de que un tumor está afectando el hueso o el tejido blando que sostiene los dientes. Esto es especialmente relevante para las lesiones en la encía (carcinoma gingival), que pueden imitar la enfermedad periodontal y pasar desapercibidas durante meses.",
         "urgent": false
       },
       {
@@ -981,11 +969,11 @@
       },
       {
         "q": "¿El cáncer oral puede ser indoloro?",
-        "a": "Sí, el cáncer oral temprano a menudo es completamente indoloro. Por eso importan las revisiones dentales de rutina y los autoexámenes mensuales. El dolor tiende a aparecer con la enfermedad más avanzada, no en las lesiones de etapa temprana."
+        "a": "Sí. El cáncer oral temprano a menudo es completamente indoloro. Por eso importan las revisiones dentales de rutina y los autoexámenes mensuales. El dolor tiende a aparecer con la enfermedad más avanzada, no en las lesiones de etapa temprana."
       },
       {
         "q": "¿Qué es la regla de las 2 semanas?",
-        "a": "Cualquier llaga, mancha, bulto o cambio en la boca que no haya desaparecido después de 2 semanas debe ser evaluado por un profesional. Las aftas sanan en 7 a 14 días. Cualquier cosa que dure más merece la evaluación de un dentista."
+        "a": "Si una llaga, mancha o bulto en su boca no ha desaparecido en dos semanas, que se lo revise un dentista o un médico. Las aftas sanan en 7 a 14 días. Cualquier cosa que dure más merece la evaluación de un dentista."
       },
       {
         "q": "¿Dónde se desarrolla más comúnmente el cáncer oral?",
@@ -1008,11 +996,11 @@
   "SignsVisualGuide": {
     "eyebrow": "Guía interactiva",
     "heading": "Qué buscar",
-    "subheading": "Toca las señales que vale la pena conocer. Cada una comienza como un diagrama simple; cuando existe una foto clínica con licencia abierta, puedes elegir verla. Lo que todas tienen en común: si no ha desaparecido en unas 2 semanas, revísalo con un profesional.",
+    "subheading": "Toca las señales que vale la pena conocer. Cada una comienza como un diagrama simple; cuando existe una foto clínica con licencia abierta, puedes elegir verla. Lo que todas tienen en común: si no ha desaparecido en dos semanas, revísalo con un profesional.",
     "watchAction": "Cuándo actuar.",
     "higherAction": "Merece atención pronta.",
     "twoWeekBold": "La regla de las 2 semanas:",
-    "twoWeekRest": "cualquier cosa en tu boca o en tus labios que no haya sanado en dos semanas merece una revisión profesional. El cáncer oral temprano rara vez duele, así que no esperes a que aparezca el dolor.",
+    "twoWeekRest": "si una llaga, mancha o bulto en tu boca no ha desaparecido en dos semanas, que te lo revise un dentista o un médico. El cáncer oral temprano rara vez duele, así que no esperes a que aparezca el dolor.",
     "signs": [
       {
         "name": "Mancha blanca",
@@ -1083,7 +1071,7 @@
     },
     "selfExam": {
       "tag": "Cómo hacerlo",
-      "title": "Cómo hacer un autoexamen de 2 minutos",
+      "title": "Cómo revisar tu propia boca",
       "description": "Paso a paso: labios, encías, lengua, piso de la boca, paladar, garganta. Solo necesitas un espejo."
     },
     "facts": {
@@ -1146,13 +1134,13 @@
   },
   "ForCliniciansMeta": {
     "title": "Para profesionales dentales",
-    "description": "Ayuda a tus pacientes a tomarse 2 minutos que podrían salvarles la vida. Folleto imprimible gratuito para sala de espera, código QR y materiales educativos, sin necesidad de iniciar sesión."
+    "description": "Una evaluación gratuita del riesgo de cáncer oral que tus pacientes pueden hacer en su teléfono en unos dos minutos. Folleto imprimible para la sala de espera, código QR y materiales educativos para pacientes. No hace falta iniciar sesión."
   },
   "ForCliniciansPage": {
     "heading": "Para profesionales dentales",
-    "subheading": "Una herramienta gratuita que puedes poner en tu sala de espera hoy mismo. Los pacientes hacen una evaluación privada de 2 minutos en su teléfono, sin inicio de sesión, sin datos recopilados, sin costo.",
+    "subheading": "Una herramienta gratuita que puedes poner en tu sala de espera hoy mismo. Los pacientes hacen una evaluación privada de 2 minutos en su teléfono: sin inicio de sesión, sin datos recopilados, sin costo.",
     "flyerHeading": "Folleto para sala de espera",
-    "flyerSub": "Personalízalo con el nombre de tu consultorio e imprímelo, tamaño carta, vertical.",
+    "flyerSub": "Personalízalo con el nombre de tu consultorio e imprímelo. Tamaño carta, vertical.",
     "whyHeading": "Por qué OralCheck",
     "whyPoints": [
       {
@@ -1212,14 +1200,14 @@
     "printFlyer": "Imprimir folleto",
     "copyLink": "Copiar enlace para compartir",
     "linkCopied": "Enlace copiado",
-    "shareLinkNote": "Comparte el enlace de arriba, cualquiera que lo abra verá el mismo folleto personalizado.",
+    "shareLinkNote": "Comparte el enlace de arriba. Cualquiera que lo abra verá el mismo folleto personalizado.",
     "presentedBy": "Presentado por",
     "tagline": "GRATIS · PRIVADO · BASADO EN EVIDENCIA",
     "eyebrow": "CONCIENTIZACIÓN SOBRE EL CÁNCER ORAL",
-    "headlineLine1": "2 minutos",
-    "headlineCould": "podrían",
-    "headlineSave": "salvar",
-    "headlineLine3": "tu vida.",
+    "headlineLine1": "Revisa tus factores",
+    "headlineCould": "de riesgo de cáncer oral en unos",
+    "headlineSave": "dos minutos.",
+    "headlineLine3": "Sin necesidad de cuenta.",
     "flyerBody": "El cáncer oral es uno de los cánceres con menos diagnóstico temprano, en gran parte porque sus primeros síntomas parecen algo común. Haz una evaluación de riesgo gratuita y privada mientras esperas.",
     "scanToStart": "↑ ESCANEA PARA COMENZAR",
     "warningSignsLabel": "SEÑALES DE ADVERTENCIA",
@@ -1233,7 +1221,7 @@
     "features": [
       {
         "title": "Algunas preguntas rápidas",
-        "desc": "Basadas en factores de riesgo clínicos reales, toma alrededor de 2 minutos en su teléfono."
+        "desc": "Basadas en factores de riesgo clínicos reales. Toma alrededor de 2 minutos en su teléfono."
       },
       {
         "title": "Completamente privado",
@@ -1504,7 +1492,7 @@
       {
         "stage": "Todas las etapas",
         "survival": "69.9%",
-        "share": "—",
+        "share": "Todos los casos",
         "note": "Todas las personas diagnosticadas, incluido el 6% cuya etapa se desconoce."
       }
     ],
@@ -1526,9 +1514,9 @@
     "messageLabel": "Mensaje",
     "messagePlaceholder": "Un error que encontraste, algo que podría estar más claro, una pregunta, lo que sea.",
     "emailLabel": "Correo electrónico",
-    "emailOptional": "(opcional, déjalo en blanco para mantenerte en el anonimato)",
+    "emailOptional": "(opcional: déjalo en blanco para mantenerte en el anonimato)",
     "emailPlaceholder": "tu@ejemplo.com",
-    "error": "Algo salió mal, por favor inténtalo de nuevo.",
+    "error": "Algo salió mal. Por favor, inténtalo de nuevo.",
     "sending": "Enviando…",
     "send": "Enviar mensaje"
   },
@@ -1557,7 +1545,7 @@
     "startScreener": "Comenzar la evaluación →",
     "findCare": "Encontrar atención",
     "getInTouchHeading": "Ponte en contacto",
-    "getInTouchBody": "¿Encontraste un error, tienes una sugerencia o simplemente quieres decir algo? Lo leo todo. El correo es opcional, déjalo en blanco si prefieres mantenerte en el anonimato.",
+    "getInTouchBody": "¿Encontraste un error, tienes una sugerencia o simplemente quieres decir algo? Lo leo todo. El correo es opcional. Déjalo en blanco si prefieres mantenerte en el anonimato.",
     "linkedin": "Conéctate en LinkedIn",
     "reviewHeading": "Deje una reseña",
     "reviewBody": "Si el cuestionario le resultó útil, una reseña breve ayuda a que otras personas confíen lo suficiente en él para revisar su propio riesgo."
@@ -1566,7 +1554,7 @@
     "cases": "nuevos casos de cáncer oral y orofaríngeo en EE. UU. cada año",
     "survival": "de supervivencia a cinco años cuando se detecta a tiempo",
     "screeningTime": "es lo que toma una evaluación dental",
-    "reach": "personas alcanzadas desde el lanzamiento",
+    "reach": "visitantes desde el lanzamiento",
     "live": "En vivo, se actualiza cada hora"
   },
   "RiskGauge": {
@@ -1620,7 +1608,6 @@
     "startScreener": "Comenzar evaluación →",
     "urgentBannerBold": "Mencionaste un síntoma que ha durado 2 semanas o más.",
     "urgentBannerRest": "Esto no es algo para esperar. Por favor, programa una visita dental o médica esta semana.",
-    "personalizing": "Personalizando tu resumen…",
     "howScored": "Cómo se calcula este puntaje",
     "drivingHeading": "Qué está impulsando tu riesgo",
     "nextStepsHeading": "Tus próximos pasos",
@@ -1628,7 +1615,7 @@
     "read": "Leer →",
     "linkCopied": "Enlace copiado",
     "shareCta": "Comparte con alguien que te importa",
-    "shareText": "Acabo de usar OralCheck para entender mi riesgo de cáncer oral. 2 minutos podrían salvar tu vida. {url}",
+    "shareText": "Acabo de revisar mis factores de riesgo de cáncer oral con OralCheck. Toma unos dos minutos y no se guarda nada. {url}",
     "emailSentTitle": "Enviado. Revisa tu bandeja de entrada.",
     "emailSentDesc": "Tu resultado y próximos pasos están en camino. No guardamos tus respuestas.",
     "emailKeepCopy": "Guarda una copia de tu resultado",
@@ -1648,7 +1635,7 @@
       "low": "Encuentra un dentista para tu próxima evaluación →",
       "moderate": "Encontrar atención cerca de ti →",
       "elevated": "Programar una visita dental →",
-      "high": "Encontrar atención, reserva esta semana →"
+      "high": "Encuentra atención y reserva esta semana →"
     },
     "nextSteps": {
       "low": [
@@ -1748,7 +1735,7 @@
       },
       "dental": {
         "tag": "Cómo hacerlo",
-        "title": "Cómo hacer un autoexamen de 2 minutos"
+        "title": "Cómo revisar tu propia boca"
       },
       "other": {
         "tag": "Prevención",
@@ -1908,7 +1895,7 @@
     "categoryGuidance": {
       "demographics": "La edad es el factor de riesgo no modificable más importante. A partir de los 40 años, hacerse una revisión en cada visita dental es especialmente importante: el cáncer oral detectado mientras aún está localizado tiene una supervivencia a cinco años del 89%, frente al 36% una vez que se ha extendido a sitios distantes.",
       "sex": "El sexo al nacer no es algo sobre lo que se pueda actuar, por lo que conviene considerarlo de la misma manera que la edad: como una razón para asegurarse de que el examen oral de dos minutos realmente se realice y no se omita. Los hombres reciben diagnósticos de cáncer de cavidad oral y faringe aproximadamente 2,6 veces más que las mujeres, y además tienen menos probabilidades de visitar al dentista con regularidad, que es el aspecto que sí está dentro de su control. En la próxima visita, solicite específicamente una revisión de detección de cáncer oral, en lugar de asumir que ya estaba incluida.",
-      "tobacco": "Dejar de fumar reduce el riesgo en aproximadamente un 50% dentro de los 5 años posteriores. La terapia de reemplazo de nicotina duplica las tasas de éxito a largo plazo. Pregunta a tu dentista o médico sobre programas gratuitos para dejar de fumar; la línea Wisconsin Tobacco Quit Line está disponible en 1-800-QUIT-NOW.",
+      "tobacco": "Dejar de fumar reduce el riesgo en aproximadamente un 50% dentro de los 5 años posteriores. La terapia de reemplazo de nicotina duplica las tasas de éxito a largo plazo. Pregunta a tu dentista o médico sobre programas gratuitos para dejar de fumar, o llama al 1-800-QUIT-NOW para comunicarte con la línea gratuita para dejar de fumar de tu estado.",
       "alcohol": "El riesgo disminuye al reducir el consumo. En personas que usan tabaco y alcohol, dejar el tabaco tiene el mayor impacto individual. Incluso reducir el consumo de diario a ocasional disminuye significativamente la exposición de la mucosa a carcinógenos.",
       "hpv": "La vacuna contra el VPH (Gardasil 9) está aprobada por la FDA hasta los 45 años y es muy eficaz contra el VPH-16, la cepa más relacionada con el cáncer orofaríngeo. Pregunta a tu médico si la vacunación es adecuada para ti.",
       "sun": "El carcinoma de células escamosas del labio inferior es altamente prevenible con el uso constante de protector labial con FPS y sombreros de ala ancha. A diferencia del cáncer de piel, el cáncer de labio a menudo pasa desapercibido; revisa tus labios durante cualquier autoexamen oral mensual.",
@@ -2213,5 +2200,12 @@
     "checkRisk": "Evalúa tu riesgo",
     "seeAllSigns": "Ver todas las señales de alerta",
     "findDentist": "Encuentra atención cerca de ti"
+  },
+  "NotFound": {
+    "title": "Página no encontrada",
+    "body": "La página que buscas no existe. Elige abajo por dónde seguir.",
+    "screener": "Hacer la evaluación →",
+    "learn": "Explorar Aprender",
+    "home": "Ir al inicio"
   }
 }

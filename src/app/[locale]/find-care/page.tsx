@@ -190,7 +190,7 @@ export default function FindCarePage() {
         <button
           type="submit"
           disabled={loading || !query.trim()}
-          className="bg-brand hover:bg-brand-dark disabled:bg-warm-dim disabled:text-ink-soft text-white font-semibold px-6 py-3 rounded-xl transition-colors"
+          className="bg-brand hover:bg-brand-dark disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold px-6 py-3 rounded-xl transition-colors"
         >
           {loading ? t("searching") : t("search")}
         </button>
@@ -198,7 +198,7 @@ export default function FindCarePage() {
           type="button"
           onClick={useMyLocation}
           disabled={loading}
-          className="bg-warm-dim hover:bg-warm-dim text-ink font-semibold px-6 py-3 rounded-xl transition-colors border border-warm-dim"
+          className="bg-warm text-ink font-semibold px-6 py-3 rounded-xl transition-colors border border-ink/15 hover:border-brand/40"
         >
           {t("useMyLocation")}
         </button>

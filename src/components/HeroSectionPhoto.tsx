@@ -3,7 +3,7 @@
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { useRef } from "react";
+import { Fragment, useRef } from "react";
 
 const PHOTO_URL =
   "https://images.unsplash.com/photo-1489278353717-f64c6ee8a4d2?w=1200&q=85&fit=crop";
@@ -15,29 +15,34 @@ function WordBlur({
   words,
   startDelay = 0,
   color,
+  wrap = false,
 }: {
   words: string[];
   startDelay?: number;
   color?: string;
+  wrap?: boolean;
 }) {
   const reduced = useReducedMotion();
   return (
-    // inline-flex + gap keeps words properly spaced regardless of display context
-    <span style={{ display: "inline-flex", gap: "0.24em", flexWrap: "nowrap" }}>
+    // Words are inline-blocks separated by ordinary spaces, so a long run
+    // wraps like normal text. Without `wrap` the group is held on one line.
+    <span style={{ whiteSpace: wrap ? "normal" : "nowrap" }}>
       {words.map((word, i) => (
-        <motion.span
-          key={`${word}-${i}`}
-          style={{ display: "inline-block", color }}
-          initial={reduced ? false : { opacity: 0, y: 28, filter: "blur(10px)" }}
-          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          transition={{
-            duration: 0.65,
-            delay: startDelay + i * 0.09,
-            ease: EXPO,
-          }}
-        >
-          {word}
-        </motion.span>
+        <Fragment key={`${word}-${i}`}>
+          {i > 0 && " "}
+          <motion.span
+            style={{ display: "inline-block", color }}
+            initial={reduced ? false : { opacity: 0, y: 28, filter: "blur(10px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            transition={{
+              duration: 0.65,
+              delay: startDelay + i * 0.09,
+              ease: EXPO,
+            }}
+          >
+            {word}
+          </motion.span>
+        </Fragment>
       ))}
     </span>
   );
@@ -63,52 +68,35 @@ export default function HeroSectionPhoto() {
         className="flex flex-col px-6 sm:px-10 lg:px-20 pt-16 pb-12 flex-shrink-0 w-full lg:w-[46%]"
         style={{ minHeight: "100dvh" }}
       >
-        {/* Overline */}
-        <motion.p
-          style={{
-            fontSize: "10px",
-            fontWeight: 700,
-            letterSpacing: "0.22em",
-            textTransform: "uppercase",
-            color: "var(--color-ink-soft)",
-            marginBottom: "2rem",
-          }}
-          initial={reduced ? false : { opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.05 }}
-        >
-          {t("overline")}
-        </motion.p>
-
-        {/* Headline — word-blur stagger.
+        {/* Headline, word-blur stagger.
             A <p>, not an <h1>: the page already carries a descriptive h1
             ("Free Oral Cancer Risk Screener") and two h1s on one document is a
-            hierarchy error. This line is display type selling the idea, and
-            "2 minutes could save your life" is a worse document heading than
-            the one it was competing with. */}
+            hierarchy error. It says what the tool does rather than making a
+            promise it cannot keep: the screener cannot find cancer, so it
+            cannot "save your life". The line is long, so it wraps freely, and
+            only the accent phrase is held together on one line. */}
         <p
           className="font-serif"
           style={{
-            fontSize: "clamp(3.2rem, 6.8vw, 6.2rem)",
+            fontSize: "clamp(2.5rem, 4.4vw, 4.25rem)",
             letterSpacing: "-0.02em",
-            lineHeight: 1.05,
+            lineHeight: 1.08,
             color: "var(--color-ink)",
             marginBottom: "2.5rem",
+            marginTop: "1rem",
           }}
         >
-          {/* Line 1 */}
-          <span style={{ display: "block" }}>
-            <WordBlur words={t.raw("headlineLine1")} startDelay={0.15} color="var(--color-ink)" />
-          </span>
-          {/* Line 2 — mixed colors, flex row keeps spacing */}
-          <span style={{ display: "flex", gap: "0.24em" }}>
-            <WordBlur words={t.raw("headlineLine2a")} startDelay={0.32} color="var(--color-ink)" />
-            <WordBlur words={t.raw("headlineLine2b")} startDelay={0.41} color="#e8634a" />
-          </span>
-          {/* Line 3 */}
-          <span style={{ display: "block" }}>
-            <WordBlur words={t.raw("headlineLine3")} startDelay={0.52} color="#0d7377" />
-          </span>
+          <WordBlur
+            words={t("headlineLead").split(" ")}
+            startDelay={0.15}
+            color="var(--color-ink)"
+            wrap
+          />{" "}
+          <WordBlur
+            words={t("headlineAccent").split(" ")}
+            startDelay={0.15 + t("headlineLead").split(" ").length * 0.09}
+            color="#0d7377"
+          />
         </p>
 
         {/* Rule */}

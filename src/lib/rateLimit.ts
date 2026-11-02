@@ -7,8 +7,8 @@
  * instance is recycled. It stops a single client hammering one warm instance.
  * It does not stop a distributed flood, and it is not a spend cap.
  *
- * The routes it guards spend real money per call (Anthropic on /api/summary,
- * Google Places on /api/clinics, Resend on the mail routes), so the durable
+ * The routes it guards spend real money per call (Google Places on
+ * /api/clinics, Resend on the mail routes), so the durable
  * protections are the provider-side quotas and budgets, with this as the cheap
  * first line. Swap the Map for Redis (@upstash/ratelimit) to make the limits
  * mean exactly what they say.

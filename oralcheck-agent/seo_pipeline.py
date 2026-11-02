@@ -132,6 +132,26 @@ def slugify(keyword: str) -> str:
     return keyword.lower().replace(" ", "-").replace("/", "-").replace("'", "")
 
 
+# The site's one threshold, word for word. The articles used to say "two to
+# three weeks" and "three weeks" while every other page said two (audit
+# 2026-10-30). The Spanish is the translation used in content/published/es.
+TWO_WEEK_RULE    = "If a sore, patch or lump in your mouth hasn't cleared up in two weeks, have a dentist or doctor look at it."
+TWO_WEEK_RULE_ES = "Si una llaga, mancha o bulto en su boca no ha desaparecido en dos semanas, pida a un dentista o a un médico que lo revise."
+
+# Hand-built Learn pages. Articles are served at /learn/<slug> as well, and are
+# added to this list from content/published at run time (see _internal_links).
+LEARN_PAGES = {
+    "/learn/oral-cancer":                 "Oral cancer overview",
+    "/learn/signs":                       "Signs and symptoms of oral cancer",
+    "/learn/risk-factors":                "Oral cancer risk factors",
+    "/learn/hpv":                         "HPV and oral cancer",
+    "/learn/self-exam":                   "How to check your own mouth",
+    "/learn/prevention":                  "Preventing oral cancer",
+    "/learn/canker-sore-vs-oral-cancer":  "Canker sore vs oral cancer",
+    "/learn/white-and-red-patches":       "White and red patches in the mouth",
+    "/learn/facts":                       "Oral cancer facts and figures",
+}
+
 # Rules the articles broke before 2026-10-21: a "stage I vs stage IV" survival
 # comparison and a case count (54,000) that matched nothing on the site.
 ARTICLE_RULES = (
@@ -145,11 +165,60 @@ ARTICLE_RULES = (
     "- Where evidence is limited or mixed, say so plainly rather than overstating it.\n"
 )
 
+# The template tells the 2026-10-30 audit found in all 12 published articles,
+# which made them read as generated: "Most people..." and "This article walks
+# through..." openers, a closing CTA section on top of the one the page
+# template already adds, a "## Conclusion", kicker last lines, Title Case
+# headings, a --- rule between every section, and in-text links that all
+# pointed at the home page.
+STYLE_RULES = (
+    "Style:\n"
+    "- Open with the single most useful fact on this keyword, stated plainly. Never open with\n"
+    "  'Most people' and never write a sentence about the article itself ('This article focuses on',\n"
+    "  'breaks down', 'walks through', 'is about', 'This guide').\n"
+    "- No closing call-to-action section and no 'Conclusion' or summary heading. The page already\n"
+    "  adds its own link to the screener, so do not mention the screener or oralcheck.org at all.\n"
+    "- End on the last substantive point. No kicker or moral as the final line.\n"
+    "- Headings in sentence case ('Why the lower lip is affected more'), never Title Case.\n"
+    "- No horizontal rules (---) anywhere in the body.\n"
+    "- No em dashes and no '--'. Use commas, colons or periods, and do not leave comma splices.\n"
+    "- Never write 'we', 'our' or 'us'.\n"
+    "- Go easy on 'Understanding...' sentence openers, 'warrant(s)', and 'significantly',\n"
+    "  'substantially', 'dramatically', 'meaningfully'. Use them only where they carry meaning.\n"
+    f"- The waiting threshold is two weeks, never 'two to three weeks' or 'three weeks'. Where the\n"
+    f"  article states it, use this sentence word for word: \"{TWO_WEEK_RULE}\"\n"
+)
+
 
 def _sources_block() -> str:
     lines = "\n".join(f"- {name}: {url}" for name, url in topics.CITES.values())
     return ("Sources you may cite (link them exactly; cite nothing else; a source must actually\n"
             f"support the sentence that cites it):\n{lines}\n")
+
+
+def _internal_links() -> dict[str, str]:
+    """Every page an article may link to, as {relative path: title}: the fixed
+    Learn pages plus each published article (slug = filename minus the date)."""
+    links = dict(LEARN_PAGES)
+    if PUBLISHED_DIR.exists():
+        for p in sorted(PUBLISHED_DIR.glob("*.md")):
+            slug = re.sub(r"^\d{4}-\d{2}-\d{2}-", "", p.stem)
+            links[f"/learn/{slug}"] = _frontmatter(p.read_text()).get("title", slug)
+    return links
+
+
+def _links_block() -> str:
+    lines = "\n".join(f"- {path}: {title}" for path, title in _internal_links().items())
+    return ("Pages on this site you may link to (relative path exactly as given; link no other\n"
+            "oralcheck.org page, and never link the home page):\n"
+            f"{lines}\n")
+
+
+def _strip_fence(md: str) -> str:
+    """The model sometimes wraps the whole article in ```markdown ... ```, which
+    renders as one code block (the alcohol-tobacco draft was saved like that)."""
+    m = re.match(r"^\s*```[a-z]*\n(.*?)\n```\s*$", md, re.S)
+    return m.group(1) if m else md
 
 
 def generate_article(keyword: str, covered: list[dict] | None = None) -> str:
@@ -177,7 +246,7 @@ def generate_article(keyword: str, covered: list[dict] | None = None) -> str:
             "a free oral cancer risk screener. Write evidence-based, accurate content. "
             "Brand voice: direct, calm, never alarmist. No em dashes. No exclamation marks. "
             "Always recommend professional medical consultation.\n\n"
-            + topics.SEER_FACTS + "\n" + ARTICLE_RULES
+            + topics.SEER_FACTS + "\n" + ARTICLE_RULES + "\n" + STYLE_RULES
         ),
         "messages": [
             {
@@ -186,13 +255,14 @@ def generate_article(keyword: str, covered: list[dict] | None = None) -> str:
                     f"Write a 900-1100 word SEO blog article targeting the keyword: \"{keyword}\"\n\n"
                     "Structure:\n"
                     "- H1 title that naturally includes the keyword\n"
-                    "- Intro paragraph: hook + why this matters\n"
-                    "- 3-4 H2 sections with substantive content\n"
-                    "- Conclusion with a soft CTA to take the free screener at oralcheck.org\n"
+                    "- Intro paragraph that opens with the most useful fact (see Style)\n"
+                    "- 3-4 H2 sections with substantive content; the last one ends the article\n"
                     "- A '## Sources' section listing, as markdown links, every source you drew on\n"
                     "  (only from the list below; omit the section if you used none)\n"
-                    "- Medical disclaimer at the bottom\n\n"
+                    "- Medical disclaimer at the bottom, one italic paragraph starting\n"
+                    "  '*Medical Disclaimer:'\n\n"
                     f"{_sources_block()}\n"
+                    f"{_links_block()}\n"
                     f"{differentiate}\n\n"
                     "Output valid markdown only. No preamble."
                 ),
@@ -214,7 +284,7 @@ def generate_article(keyword: str, covered: list[dict] | None = None) -> str:
     data = resp.json()
     if data.get("stop_reason") == "max_tokens":
         raise RuntimeError("article was cut off at the token limit; not saving a truncated draft")
-    return data["content"][0]["text"]
+    return _strip_fence(data["content"][0]["text"])
 
 
 def translate_article_to_spanish(article_md: str, title: str, keyword: str) -> str:
@@ -232,9 +302,11 @@ def translate_article_to_spanish(article_md: str, title: str, keyword: str) -> s
             "general US Hispanic public (not clinicians). Keep the same brand voice: direct, "
             "calm, never alarmist, no exclamation marks, no em dashes (use commas or periods "
             "instead). Preserve the markdown structure exactly: same heading levels, same "
-            "number of sections, same H1. Do not add or remove content, this is a translation, "
+            "number of sections, same H1. Do not add or remove content. This is a translation, "
             "not a rewrite. Medical terms should read the way a Spanish-speaking patient would "
-            "expect to see them, not overly clinical."
+            "expect to see them, not overly clinical. Address the reader as usted. Headings in "
+            "sentence case. Wherever the English has the sentence "
+            f"\"{TWO_WEEK_RULE}\" use exactly \"{TWO_WEEK_RULE_ES}\""
         ),
         "messages": [
             {
@@ -257,7 +329,9 @@ def translate_article_to_spanish(article_md: str, title: str, keyword: str) -> s
         timeout=120,
     )
     resp.raise_for_status()
-    return resp.json()["content"][0]["text"]
+    es = _strip_fence(resp.json()["content"][0]["text"])
+    # Internal links point at the Spanish pages.
+    return re.sub(r"\]\(/learn/", "](/es/learn/", es)
 
 
 def extract_title(article: str) -> str:

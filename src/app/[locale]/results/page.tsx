@@ -36,8 +36,6 @@ export default function ResultsPage() {
   const locale = useLocale();
   const [result, setResult] = useState<RiskResult | null>(null);
   const [loaded, setLoaded] = useState(false);
-  const [claudeSummary, setClaudeSummary] = useState<string>("");
-  const [summaryLoading, setSummaryLoading] = useState(false);
   const [copied, setCopied] = useState(false);
   const [email, setEmail] = useState("");
   const [emailStatus, setEmailStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
@@ -52,7 +50,6 @@ export default function ResultsPage() {
         const answers = JSON.parse(raw);
         const risk = computeRisk(answers, locale);
         setResult(risk);
-        fetchClaudeSummary(risk);
         // Count a completion once per finished screener, not once per view of
         // this page. Results renders from sessionStorage, so a refresh, a back
         // navigation, or reopening the tab used to re-fire this: completions
@@ -79,11 +76,11 @@ export default function ResultsPage() {
   }, []);
 
   // Offer the emailed copy as a dialog rather than a block at the foot of the
-  // page, which most people never scrolled to. It waits for the personalised
-  // summary to finish so it doesn't cover the result the moment it appears,
-  // and it fires at most once per session so a retake isn't nagged.
+  // page, which most people never scrolled to. The delay keeps it from
+  // covering the result the moment it appears, and it fires at most once per
+  // session so a retake isn't nagged.
   useEffect(() => {
-    if (!result || summaryLoading || emailStatus === "sent") return;
+    if (!result || emailStatus === "sent") return;
     let prompted = false;
     try {
       prompted = sessionStorage.getItem("oralcheck:emailPrompted") === "1";
@@ -98,45 +95,7 @@ export default function ResultsPage() {
       gaEvent("email_prompt_shown", { risk_tier: result.tier });
     }, 1200);
     return () => clearTimeout(timer);
-  }, [result, summaryLoading, emailStatus]);
-
-  async function fetchClaudeSummary(risk: RiskResult) {
-    setSummaryLoading(true);
-    try {
-      const res = await fetch("/api/summary", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          tier: risk.tier,
-          tierLabel: risk.tierLabel,
-          factors: risk.factors.map((f) => ({
-            label: f.label,
-            answerLabel: f.answerLabel,
-          })),
-          hasUrgentSymptom: risk.hasUrgentSymptom,
-          locale,
-        }),
-      });
-      if (!res.ok || !res.body) return;
-      const reader = res.body.getReader();
-      const decoder = new TextDecoder();
-      let text = "";
-      // Drain the stream into a buffer and commit it once, rather than setting
-      // state per chunk. Streaming still avoids the request timeout on a slow
-      // generation, but the reader sees the skeleton resolve into finished
-      // prose instead of watching it type itself out.
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        text += decoder.decode(value, { stream: true });
-      }
-      setClaudeSummary(text);
-    } catch {
-      // fall through — static summary shown as fallback
-    } finally {
-      setSummaryLoading(false);
-    }
-  }
+  }, [result, emailStatus]);
 
   const handleShare = async () => {
     if (!result) return;
@@ -332,25 +291,13 @@ export default function ResultsPage() {
               {result.headline}
             </h1>
 
-            {/* Summary with skeleton loading state. The bars were warm-dim on
-                a warm-dim card, so the loading state was invisible. */}
-            {summaryLoading && !claudeSummary ? (
-              <div className="space-y-2 mt-4" aria-live="polite">
-                <div className="flex items-center gap-1.5 mb-3">
-                  <span className="inline-block w-1.5 h-1.5 rounded-full bg-brand animate-pulse" />
-                  <span className="text-xs text-ink-soft font-medium">
-                    {t("personalizing")}
-                  </span>
-                </div>
-                <div className="h-3 bg-ink/10 rounded-full w-full animate-pulse" />
-                <div className="h-3 bg-ink/10 rounded-full w-5/6 animate-pulse" />
-                <div className="h-3 bg-ink/10 rounded-full w-4/6 animate-pulse" />
-              </div>
-            ) : (
-              <p className="mt-4 text-ink-soft leading-relaxed">
-                {claudeSummary || result.summary}
-              </p>
-            )}
+            {/* The summary is the written one for the band. It used to be
+                replaced by a paragraph from Anthropic's API, which meant the
+                answers left the device while the site promised they never do.
+                Dropped 2026-10-30 at Ian's call. */}
+            <p className="mt-4 text-ink-soft leading-relaxed">
+              {result.summary}
+            </p>
 
             {/* Shown on the reassuring tiers only, and only when no urgent
                 symptom was reported.

@@ -43,21 +43,8 @@
     "terms": "Termos"
   },
   "HeroSectionPhoto": {
-    "headlineLine1": [
-      "2",
-      "minutos"
-    ],
-    "headlineLine2a": [
-      "podem"
-    ],
-    "headlineLine2b": [
-      "salvar"
-    ],
-    "headlineLine3": [
-      "sua",
-      "vida."
-    ],
-    "overline": "Gratuito · Privado · Baseado em evidências",
+    "headlineLead": "Verifique seus fatores de risco de câncer bucal em cerca de",
+    "headlineAccent": "dois minutos.",
     "body": "O câncer bucal é um dos cânceres mais subdiagnosticados, em grande parte porque os sintomas iniciais parecem comuns. O OralCheck ajuda você a entender seu risco em minutos e indica o caminho para o atendimento adequado.",
     "startScreening": "Verifique seu risco →",
     "learnSigns": "Conheça os sinais",
@@ -86,6 +73,7 @@
     "shareHeading": "Imprima. Publique. Repasse.",
     "shareBody": "A maioria das pessoas que precisa disso nunca vai pesquisar sobre o assunto. Um QR code na parede de uma sala de espera, num mural comunitário ou na área de descanso de um trabalho alcança quem um site não consegue alcançar. Gratuito para imprimir, e é possível identificar cada cópia para saber quais locais realmente trazem pessoas.",
     "shareCta": "Obter um QR code para impressão",
+    "logoStripLabel": "Consultórios e organizações que compartilharam o OralCheck com pacientes",
     "disclaimerLine": "O OralCheck é uma ferramenta educativa, não um diagnóstico médico. Não é capaz de detectar ou descartar câncer. Sempre consulte um dentista ou profissional de saúde sobre qualquer sintoma que cause preocupação.",
     "disclaimerTermsLink": "Termos de Uso",
     "disclaimerPrivacyLink": "Privacidade"
@@ -156,7 +144,7 @@
   },
   "SelfExamPage": {
     "tag": "Como fazer",
-    "heading": "Como Fazer um Autoexame de 2 Minutos",
+    "heading": "Como examinar a própria boca",
     "introRest": "Faça isso uma vez por mês. Basta um espelho, boa iluminação e mãos limpas. Se notar algo que dure 2 semanas ou mais, consulte um dentista. Não sabe bem o que procurar?",
     "introLink": "Veja o guia de sinais de alerta.",
     "steps": [
@@ -215,7 +203,7 @@
     "tag": "Prevenção",
     "heading": "Como Prevenir o Câncer Bucal",
     "introLink": "O câncer bucal",
-    "introRest": "não é totalmente evitável, alguns fatores de risco, como idade e genética, estão fora do controle de cada pessoa. Mas os maiores fatores são controláveis. Veja o que as evidências realmente apoiam.",
+    "introRest": "não é totalmente evitável. Alguns fatores de risco, como idade e genética, estão fora do controle de cada pessoa. Mas os maiores fatores são controláveis. Veja o que as evidências realmente apoiam.",
     "steps": [
       {
         "number": "01",
@@ -227,7 +215,7 @@
       {
         "number": "02",
         "heading": "Limite o consumo de álcool, especialmente junto com tabaco",
-        "body": "O consumo excessivo de álcool é um fator de risco independente, mas a combinação de tabaco e álcool não apenas soma os riscos, ela os multiplica. Se você bebe, manter um consumo moderado (até 1 dose por dia para mulheres, 2 para homens) reduz significativamente o risco em comparação ao uso excessivo.",
+        "body": "O consumo excessivo de álcool é um fator de risco independente, mas a combinação de tabaco e álcool não apenas soma os riscos: ela os multiplica. Se você bebe, manter um consumo moderado (até 1 dose por dia para mulheres, 2 para homens) reduz significativamente o risco em comparação ao uso excessivo.",
         "ctaLabel": null,
         "ctaHref": null
       },
@@ -255,7 +243,7 @@
       {
         "number": "06",
         "heading": "Faça um autoexame mensal",
-        "body": "Prevenção não é apenas evitar fatores de risco, é também detectar mudanças cedo. Um autoexame mensal de 2 minutos da boca e da garganta permite notar qualquer alteração antes que ela se torne algo sério. A maioria das pessoas nunca fez esse exame.",
+        "body": "Prevenção não é apenas evitar fatores de risco. É também detectar mudanças cedo. Um autoexame mensal de 2 minutos da boca e da garganta permite notar qualquer alteração antes que ela se torne algo sério. A maioria das pessoas nunca fez esse exame.",
         "ctaLabel": "Aprenda como fazer um autoexame →",
         "ctaHref": "/learn/self-exam"
       }
@@ -278,7 +266,7 @@
       },
       {
         "q": "Com que frequência devo fazer um rastreamento de câncer bucal?",
-        "a": "Para a maioria das pessoas, uma ou duas vezes por ano em uma consulta odontológica de rotina é suficiente, o rastreamento está incluído sem custo adicional. Pessoas com fatores de risco elevados (tabaco, consumo excessivo de álcool, histórico de HPV) podem se beneficiar de consultas mais frequentes."
+        "a": "Para a maioria das pessoas, uma ou duas vezes por ano em uma consulta odontológica de rotina é suficiente. O rastreamento está incluído sem custo adicional. Pessoas com fatores de risco elevados (tabaco, consumo excessivo de álcool, histórico de HPV) podem se beneficiar de consultas mais frequentes."
       },
       {
         "q": "A exposição ao sol causa câncer bucal?",
@@ -302,11 +290,11 @@
     "introLink": "câncer bucal",
     "introEnd": "quem está em risco e o que é possível fazer.",
     "statHeading": "O HPV é agora a causa número 1",
-    "statBody": "O Papilomavírus Humano (HPV) superou o tabaco como principal causa de cânceres de orofaringe, cânceres das amígdalas, base da língua e parede posterior da garganta. Os casos positivos para HPV aumentaram 225% entre 1988 e 2004 (Chaturvedi et al., 2011).",
+    "statBody": "O Papilomavírus Humano (HPV) superou o tabaco como principal causa de cânceres de orofaringe: cânceres das amígdalas, base da língua e parede posterior da garganta. Os casos positivos para HPV aumentaram 225% entre 1988 e 2004 (Chaturvedi et al., 2011).",
     "whatIsHeading": "O que é o câncer bucal relacionado ao HPV?",
-    "whatIsP1Start": "O HPV é um vírus sexualmente transmissível muito comum. A maioria das infecções desaparece sozinha, sem causar sintomas. Em algumas pessoas, porém, certas cepas, especialmente o",
+    "whatIsP1Start": "O HPV é um vírus sexualmente transmissível muito comum. A maioria das infecções desaparece sozinha, sem causar sintomas. Em algumas pessoas, porém, certas cepas provocam alterações no DNA das células que podem levar ao câncer com o tempo, e o",
     "whatIsP1Bold": "HPV-16",
-    "whatIsP1End": "provocam alterações no DNA das células que podem levar ao câncer com o tempo.",
+    "whatIsP1End": "é a cepa responsável com mais frequência.",
     "whatIsP2Start": "Os cânceres bucais relacionados ao HPV costumam se desenvolver na",
     "whatIsP2Bold": "orofaringe",
     "whatIsP2End": ": as amígdalas, a base da língua e a parede posterior da garganta. Isso é diferente dos cânceres bucais tradicionais, que tendem a se formar nos lábios, gengivas, ponta da língua e assoalho da boca.",
@@ -389,7 +377,7 @@
   "CankerPage": {
     "tag": "Guia",
     "heading": "Afta ou Câncer Bucal",
-    "intro": "A principal diferença é o tempo. Aftas curam em 7 a 14 dias, o câncer bucal não. Veja como diferenciá-los e quando parar de esperar e consultar um dentista.",
+    "intro": "A principal diferença é o tempo. Aftas curam em 7 a 14 dias. O câncer bucal não. Veja como diferenciá-los e quando parar de esperar e consultar um dentista.",
     "quickAnswerHeading": "A resposta rápida",
     "quickAnswerP1Start": "Se a ferida está há",
     "quickAnswerP1Bold1": "menos de 2 semanas",
@@ -455,10 +443,10 @@
       }
     ],
     "twoWeekHeading": "A regra das 2 semanas",
-    "twoWeekP1Start": "Qualquer ferida, mancha, caroço ou alteração na boca que não tenha desaparecido após",
-    "twoWeekBold": "2 semanas",
-    "twoWeekP1End": "deve ser avaliado por um dentista ou médico. Na maioria das vezes não é nada grave, mas essa tranquilidade vale uma consulta de 10 minutos. O câncer bucal encontrado enquanto ainda está localizado tem uma taxa de sobrevivência relativa em 5 anos de 89%.",
-    "whenToSeeHeading": "Quando consultar um médico ou dentista, não espere se:",
+    "twoWeekP1Start": "Se uma ferida, mancha ou caroço na sua boca não tiver sumido em",
+    "twoWeekBold": "duas semanas, mostre a um dentista ou médico.",
+    "twoWeekP1End": "Na maioria das vezes não é nada grave, mas essa tranquilidade vale uma consulta de 10 minutos. O câncer bucal encontrado enquanto ainda está localizado tem uma taxa de sobrevivência relativa em 5 anos de 89%.",
+    "whenToSeeHeading": "Não espere para consultar um médico ou dentista se:",
     "whenToSee": [
       {
         "title": "A ferida está há mais de 2 semanas",
@@ -466,7 +454,7 @@
       },
       {
         "title": "É indolor",
-        "desc": "O câncer bucal inicial costuma ser indolor. Isso não é tranquilizador, é um motivo para se consultar."
+        "desc": "O câncer bucal inicial costuma ser indolor. Isso não é tranquilizador. É um motivo para se consultar."
       },
       {
         "title": "Sangra com facilidade ao toque",
@@ -489,7 +477,7 @@
     "faqs": [
       {
         "q": "Como saber se uma ferida na boca é câncer?",
-        "a": "O indicador mais confiável é o tempo. Aftas cicatrizam em 7 a 14 dias. Se uma ferida, mancha ou caroço não desapareceu após 2 semanas, consulte um dentista ou médico. Outros sinais de alerta: sangra com facilidade, é indolor, tem bordas irregulares, está crescendo ou vem acompanhado de um caroço no pescoço."
+        "a": "O indicador mais confiável é o tempo. Aftas cicatrizam em 7 a 14 dias. Se uma ferida, mancha ou caroço na sua boca não tiver sumido em duas semanas, mostre a um dentista ou médico. Outros sinais de alerta: sangra com facilidade, é indolor, tem bordas irregulares, está crescendo ou vem acompanhado de um caroço no pescoço."
       },
       {
         "q": "Uma afta pode se transformar em câncer bucal?",
@@ -523,9 +511,9 @@
     "heading": "Fatores de Risco para o Câncer Bucal",
     "intro": "O câncer bucal tem causas claras e bem compreendidas. A maioria delas pode ser modificada. Entender seus fatores de risco específicos é o primeiro passo para agir em relação a eles.",
     "twoFactorHeading": "A regra dos dois fatores",
-    "twoFactorP1": "O tabaco e o álcool, cada um por si só, aumentam o risco de câncer bucal. Usados juntos, seus efeitos são",
-    "twoFactorBold1": "sinérgicos, não aditivos",
-    "twoFactorP2": "alguém que fuma mais de um maço por dia e toma três ou mais doses por dia pode enfrentar um",
+    "twoFactorP1": "O tabaco e o álcool, cada um por si só, aumentam o risco de câncer bucal. Usados juntos,",
+    "twoFactorBold1": "um multiplica o efeito do outro",
+    "twoFactorP2": "então alguém que fuma mais de um maço por dia e toma três ou mais doses por dia pode enfrentar um",
     "twoFactorBold2": "aumento de cerca de 15 vezes",
     "twoFactorP3": "no risco em comparação com alguém que não faz nenhum dos dois. Se você usa ambos, reduzir ou eliminar qualquer um deles diminui significativamente o seu risco.",
     "learnMore": "Saiba mais →",
@@ -640,7 +628,7 @@
       },
       {
         "title": "Conheça os sinais de alerta",
-        "desc": "Qualquer ferida, mancha ou caroço que não desapareça em 2 semanas deve ser avaliado."
+        "desc": "Se uma ferida, mancha ou caroço na sua boca não tiver sumido em duas semanas, mostre a um dentista ou médico."
       }
     ],
     "faqHeading": "Perguntas frequentes",
@@ -742,7 +730,7 @@
     "causes": [
       {
         "factor": "Uso de tabaco",
-        "detail": "Cigarros, charutos, cachimbos, tabaco de mascar e rapé são, de longe, o maior fator de risco modificável para os cânceres bucais tradicionais (lábios, língua, assoalho da boca). O risco é proporcional à quantidade usada, quanto maior o consumo, maior o risco, e diminui significativamente após parar de fumar."
+        "detail": "Cigarros, charutos, cachimbos, tabaco de mascar e rapé são, de longe, o maior fator de risco modificável para os cânceres bucais tradicionais (lábios, língua, assoalho da boca). O risco é proporcional à quantidade usada (quanto maior o consumo, maior o risco) e diminui significativamente após parar de fumar."
       },
       {
         "factor": "Álcool",
@@ -777,9 +765,9 @@
     "seeFullLink": "guia completo de sinais de alerta",
     "seeFullEnd": "para descrições detalhadas e fotos.",
     "twoWeekHeading": "A regra das 2 semanas",
-    "twoWeekP1Start": "Qualquer ferida, mancha, caroço ou alteração na boca que não tenha cicatrizado ou desaparecido após",
-    "twoWeekBold": "2 semanas",
-    "twoWeekP1End": "deve ser avaliada por um dentista ou médico. Na maioria das vezes não é nada grave, mas detectar o câncer bucal cedo faz toda a diferença.",
+    "twoWeekP1Start": "Se uma ferida, mancha ou caroço na sua boca não tiver sumido em",
+    "twoWeekBold": "duas semanas, mostre a um dentista ou médico.",
+    "twoWeekP1End": "Na maioria das vezes não é nada grave, mas detectar o câncer bucal cedo faz toda a diferença.",
     "faqHeading": "Perguntas frequentes",
     "faqs": [
       {
@@ -822,9 +810,9 @@
     "introLink": "cânceres bucais",
     "introEnd": "em estágio inicial é completamente indolor. Por isso, tantos casos são detectados tarde. Estas são as alterações que vale conhecer, especialmente se alguma delas durar mais de 2 semanas.",
     "twoWeekHeading": "A regra das 2 semanas",
-    "twoWeekP1Start": "Qualquer ferida, mancha, caroço ou alteração incomum na boca que",
-    "twoWeekBold": "não tenha desaparecido após 2 semanas",
-    "twoWeekP1End": "deve ser avaliada por um dentista ou médico. As aftas cicatrizam em 7 a 14 dias. O câncer bucal não. Não é necessário esperar para ver se piora, 2 semanas é o limite.",
+    "twoWeekP1Start": "Se uma ferida, mancha ou caroço na sua boca",
+    "twoWeekBold": "não tiver sumido em duas semanas,",
+    "twoWeekP1End": "mostre a um dentista ou médico. As aftas cicatrizam em 7 a 14 dias. O câncer bucal não. Não é preciso esperar para ver se piora: duas semanas é o limite.",
     "signsHeading": "Sinais de alerta",
     "highPriority": "Alta prioridade",
     "signs": [
@@ -855,7 +843,7 @@
       },
       {
         "title": "Dentes amolecendo sem causa odontológica",
-        "detail": "Se os dentes ficam moles sem uma causa aparente, sem diagnóstico de doença gengival, sem trauma, sem problema odontológico, isso pode indicar que um tumor está afetando o osso ou o tecido mole que sustenta os dentes. Isso é especialmente relevante para lesões na gengiva (carcinoma gengival), que podem imitar a doença periodontal e passar despercebidas por meses.",
+        "detail": "Se os dentes ficam moles sem uma causa aparente (sem diagnóstico de doença gengival, sem trauma, sem problema odontológico), isso pode indicar que um tumor está afetando o osso ou o tecido mole que sustenta os dentes. Isso é especialmente relevante para lesões na gengiva (carcinoma gengival), que podem imitar a doença periodontal e passar despercebidas por meses.",
         "urgent": false
       },
       {
@@ -874,7 +862,7 @@
     "locations": [
       {
         "site": "Língua",
-        "note": "Laterais e parte inferior, local mais comum no geral. Fácil de ignorar sem um autoexame.",
+        "note": "Laterais e parte inferior: o local mais comum no geral. Fácil de ignorar sem um autoexame.",
         "risk": "Altíssimo"
       },
       {
@@ -981,11 +969,11 @@
       },
       {
         "q": "O câncer bucal pode ser indolor?",
-        "a": "Sim, o câncer bucal inicial é frequentemente completamente indolor. É por isso que as triagens odontológicas de rotina e o autoexame mensal são importantes. A dor tende a aparecer em doenças mais avançadas, não em lesões em estágio inicial."
+        "a": "Sim. O câncer bucal inicial costuma ser completamente indolor. É por isso que as triagens odontológicas de rotina e o autoexame mensal são importantes. A dor tende a aparecer em doenças mais avançadas, não em lesões em estágio inicial."
       },
       {
         "q": "O que é a regra das 2 semanas?",
-        "a": "Qualquer ferida, mancha, caroço ou alteração na boca que não tenha desaparecido após 2 semanas deve ser avaliada por um profissional de saúde. As aftas cicatrizam em 7 a 14 dias. Qualquer coisa que dure mais tempo merece uma avaliação do dentista."
+        "a": "Se uma ferida, mancha ou caroço na sua boca não tiver sumido em duas semanas, mostre a um dentista ou médico. As aftas cicatrizam em 7 a 14 dias. Qualquer coisa que dure mais tempo merece uma avaliação do dentista."
       },
       {
         "q": "Onde o câncer bucal se desenvolve com mais frequência?",
@@ -1008,11 +996,11 @@
   "SignsVisualGuide": {
     "eyebrow": "Guia interativo",
     "heading": "O que observar",
-    "subheading": "Navegue pelos sinais que vale a pena conhecer. Cada um começa como um diagrama simples; quando existe uma foto clínica com licença aberta disponível, é possível escolher visualizá-la. O que todos têm em comum: se não tiver desaparecido em cerca de 2 semanas, procure um profissional para avaliação.",
+    "subheading": "Navegue pelos sinais que vale a pena conhecer. Cada um começa como um diagrama simples; quando existe uma foto clínica com licença aberta disponível, é possível escolher visualizá-la. O que todos têm em comum: se não tiver sumido em duas semanas, procure um profissional para avaliação.",
     "watchAction": "Quando agir.",
     "higherAction": "Merece atenção em breve.",
     "twoWeekBold": "A regra das 2 semanas:",
-    "twoWeekRest": "qualquer coisa na boca ou nos lábios que não tenha cicatrizado em duas semanas merece uma avaliação profissional. O câncer bucal inicial raramente dói, então não espere sentir dor.",
+    "twoWeekRest": "se uma ferida, mancha ou caroço na sua boca não tiver sumido em duas semanas, mostre a um dentista ou médico. O câncer bucal inicial raramente dói, então não espere sentir dor.",
     "signs": [
       {
         "name": "Mancha branca",
@@ -1069,21 +1057,21 @@
     "riskFactors": {
       "tag": "Fatores de Risco",
       "title": "Fatores de Risco do Câncer Bucal",
-      "description": "Tabaco, álcool, HPV-16, idade, exposição ao sol e outros fatores que aumentam o risco e como cada um deles age."
+      "description": "Tabaco, álcool, HPV-16, idade, exposição ao sol e mais: o que aumenta o risco e como cada fator age."
     },
     "oralCancer": {
       "tag": "Visão Geral",
       "title": "O Que É Câncer Bucal?",
-      "description": "Definição, tipos, principais estatísticas, causas e sinais de alerta, uma visão geral em linguagem acessível."
+      "description": "Uma visão geral em linguagem acessível: definição, tipos, principais estatísticas, causas e como são os sinais de alerta."
     },
     "signs": {
       "tag": "Sintomas",
       "title": "Sinais e Sintomas de Alerta",
-      "description": "Manchas vermelhas e brancas, feridas que não cicatrizam, caroços e dormência, o que observar e quando agir."
+      "description": "Manchas vermelhas e brancas, feridas que não cicatrizam, caroços e dormência: o que observar e quando agir."
     },
     "selfExam": {
       "tag": "Passo a Passo",
-      "title": "Como Fazer um Autoexame em 2 Minutos",
+      "title": "Como examinar a própria boca",
       "description": "Passo a passo: lábios, gengivas, língua, assoalho da boca, palato, garganta. Você só precisa de um espelho."
     },
     "facts": {
@@ -1146,13 +1134,13 @@
   },
   "ForCliniciansMeta": {
     "title": "Para Profissionais de Odontologia",
-    "description": "Ajude seus pacientes a dedicar 2 minutos que podem salvar uma vida. Folheto gratuito para sala de espera, código QR e materiais de educação ao paciente, sem necessidade de cadastro."
+    "description": "Uma triagem gratuita de risco de câncer bucal que seus pacientes podem fazer no celular em cerca de dois minutos. Folheto para sala de espera, código QR e materiais de educação ao paciente. Sem necessidade de cadastro."
   },
   "ForCliniciansPage": {
     "heading": "Para Profissionais de Odontologia",
-    "subheading": "Uma ferramenta gratuita para colocar na sua sala de espera hoje mesmo. Os pacientes fazem uma triagem de risco privada de 2 minutos no celular, sem login, sem coleta de dados, sem custo.",
+    "subheading": "Uma ferramenta gratuita para colocar na sua sala de espera hoje mesmo. Os pacientes fazem uma triagem de risco privada de 2 minutos no celular: sem login, sem coleta de dados, sem custo.",
     "flyerHeading": "Folheto para sala de espera",
-    "flyerSub": "Personalize com o nome do seu consultório e imprima, tamanho carta, orientação retrato.",
+    "flyerSub": "Personalize com o nome do seu consultório e imprima. Tamanho carta, orientação retrato.",
     "whyHeading": "Por que o OralCheck",
     "whyPoints": [
       {
@@ -1198,7 +1186,7 @@
   },
   "EmbedBlock": {
     "heading": "Incorpore ao site do seu consultório",
-    "body": "Cole este código em qualquer página do seu site, uma página de educação ao paciente, uma página de preparo para consultas ou sua página inicial. Ele funciona inteiramente no navegador, nenhum dado chega ao seu servidor.",
+    "body": "Cole este código em qualquer página do seu site: uma página de educação ao paciente, uma página de preparo para consultas ou sua página inicial. Ele funciona inteiramente no navegador; nenhum dado chega ao seu servidor.",
     "copy": "Copiar código de incorporação",
     "copied": "Copiado"
   },
@@ -1212,14 +1200,14 @@
     "printFlyer": "Imprimir folheto",
     "copyLink": "Copiar link para compartilhar",
     "linkCopied": "Link copiado",
-    "shareLinkNote": "Compartilhe o link acima, qualquer pessoa que o abrir verá o mesmo folheto personalizado.",
+    "shareLinkNote": "Compartilhe o link acima. Qualquer pessoa que o abrir verá o mesmo folheto personalizado.",
     "presentedBy": "Apresentado por",
     "tagline": "GRATUITO · PRIVADO · BASEADO EM EVIDÊNCIAS",
     "eyebrow": "CONSCIENTIZAÇÃO SOBRE CÂNCER BUCAL",
-    "headlineLine1": "2 minutos",
-    "headlineCould": "podem",
-    "headlineSave": "salvar",
-    "headlineLine3": "sua vida.",
+    "headlineLine1": "Verifique seus fatores",
+    "headlineCould": "de risco de câncer bucal em cerca de",
+    "headlineSave": "dois minutos.",
+    "headlineLine3": "Sem necessidade de cadastro.",
     "flyerBody": "O câncer bucal é um dos cânceres mais subdiagnosticados, em grande parte porque os sintomas iniciais parecem comuns. Faça uma triagem de risco gratuita e privada enquanto aguarda.",
     "scanToStart": "↑ ESCANEIE PARA COMEÇAR",
     "warningSignsLabel": "SINAIS DE ALERTA",
@@ -1233,7 +1221,7 @@
     "features": [
       {
         "title": "Algumas perguntas rápidas",
-        "desc": "Baseadas em fatores de risco clínicos reais, leva cerca de 2 minutos no seu celular."
+        "desc": "Baseadas em fatores de risco clínicos reais. Leva cerca de 2 minutos no seu celular."
       },
       {
         "title": "Completamente privado",
@@ -1291,7 +1279,7 @@
       },
       {
         "heading": "Google Analytics",
-        "body": "Este site usa o Google Analytics para entender como as pessoas encontram e utilizam o OralCheck, quais páginas são visitadas, quanto tempo duram as sessões e de qual país os visitantes são. O Google Analytics coleta dados de uso anônimos, incluindo sua localização aproximada, tipo de navegador e dispositivo. Ele não recebe suas respostas do rastreador.",
+        "body": "Este site usa o Google Analytics para entender como as pessoas encontram e utilizam o OralCheck: quais páginas são visitadas, quanto tempo duram as sessões e de qual país os visitantes são. O Google Analytics coleta dados de uso anônimos, incluindo sua localização aproximada, tipo de navegador e dispositivo. Ele não recebe suas respostas do rastreador.",
         "linkLabel": "Desativar o Google Analytics →"
       },
       {
@@ -1312,7 +1300,7 @@
   },
   "MethodsMeta": {
     "title": "Metodologia de Pontuação de Risco de Câncer Bucal",
-    "description": "Como o OralCheck calcula as pontuações de risco de câncer bucal, fontes, derivação dos pesos, termos de interação e limitações."
+    "description": "Como o OralCheck calcula as pontuações de risco de câncer bucal: fontes, derivação dos pesos, termos de interação e limitações."
   },
   "MethodsPage": {
     "back": "← OralCheck",
@@ -1504,7 +1492,7 @@
       {
         "stage": "Todos os estágios",
         "survival": "69,9%",
-        "share": "—",
+        "share": "Todos os casos",
         "note": "Todos os diagnosticados, incluindo os 6% cujo estágio é desconhecido."
       }
     ],
@@ -1526,9 +1514,9 @@
     "messageLabel": "Mensagem",
     "messagePlaceholder": "Um erro que encontrou, algo que poderia ser mais claro, uma dúvida, qualquer coisa.",
     "emailLabel": "E-mail",
-    "emailOptional": "(opcional, deixe em branco para permanecer anônimo)",
+    "emailOptional": "(opcional: deixe em branco para permanecer anônimo)",
     "emailPlaceholder": "voce@exemplo.com",
-    "error": "Algo deu errado, tente novamente.",
+    "error": "Algo deu errado. Tente novamente.",
     "sending": "Enviando…",
     "send": "Enviar mensagem"
   },
@@ -1542,9 +1530,9 @@
     "whoBuiltHeading": "Quem desenvolveu",
     "founderName": "Ian Harris",
     "founderTitle": "Fundador · Estudante de pré-odontologia, UW–Madison",
-    "bio1": "O OralCheck foi desenvolvido por Ian Harris, estudante de pré-odontologia na Universidade de Wisconsin-Madison. Saúde comunitária e encontrar formas de fazer diferença com o conhecimento adquirido na faculdade são temas que importam muito.",
-    "bio2": "Há alguns anos, foi diagnosticada uma condição crônica de saúde que afetou significativamente o dia a dia. Passar por isso mostrou o quanto a saúde pode pegar a gente de surpresa quando não estamos prestando atenção. Mostrou também como é importante ter acesso a boas informações e não ignorar os sinais. Essa experiência é um dos grandes motivos para seguir a odontologia e para criar esta ferramenta.",
-    "bio3": "Acredita-se que deixar a comunidade mais saudável e bem informada, mesmo uma pessoa por vez, vale a pena. O câncer bucal é algo em que muita gente nunca sequer pensou, e ele é muito mais tratável quando detectado cedo. A ideia foi criar algo que pudesse ajudar com isso.",
+    "bio1": "O OralCheck foi desenvolvido por Ian Harris, estudante de pré-odontologia na Universidade de Wisconsin-Madison. Eu me importo muito com saúde comunitária e com encontrar formas de fazer diferença com o conhecimento que estou adquirindo na faculdade.",
+    "bio2": "Há alguns anos fui diagnosticado com uma condição crônica de saúde que afetou significativamente o meu dia a dia. Passar por isso me mostrou o quanto a saúde pode pegar a gente de surpresa quando não estamos prestando atenção. Também me mostrou como é importante ter acesso a boas informações e não ignorar os sinais. Essa experiência é um dos grandes motivos pelos quais quero seguir a odontologia e pelos quais criei esta ferramenta.",
+    "bio3": "Acredito de verdade que deixar a comunidade mais saudável e bem informada, mesmo uma pessoa por vez, vale a pena. O câncer bucal é algo em que muita gente nunca sequer pensou, e ele é muito mais tratável quando detectado cedo. Eu quis criar algo que pudesse ajudar com isso.",
     "howItWorksHeading": "Como funciona",
     "point1Bold": "Suas respostas ficam no seu dispositivo.",
     "point1Rest": "Nada é salvo em servidor. Sem cadastro. Sem rastreamento de respostas.",
@@ -1557,7 +1545,7 @@
     "startScreener": "Iniciar o rastreador →",
     "findCare": "Encontrar atendimento",
     "getInTouchHeading": "Entre em contato",
-    "getInTouchBody": "Encontrou um erro, tem uma sugestão ou quer dizer algo? Tudo é lido. O e-mail é opcional, deixe em branco se preferir permanecer anônimo.",
+    "getInTouchBody": "Encontrou um erro, tem uma sugestão ou quer dizer algo? Leio tudo. O e-mail é opcional. Deixe em branco se preferir permanecer anônimo.",
     "linkedin": "Conectar no LinkedIn",
     "reviewHeading": "Deixe uma avaliação",
     "reviewBody": "Se o rastreador foi útil, uma avaliação rápida ajuda outras pessoas a confiar o suficiente para verificar o próprio risco."
@@ -1566,7 +1554,7 @@
     "cases": "novos casos de câncer bucal e de orofaringe por ano nos EUA",
     "survival": "sobrevida em cinco anos quando detectado precocemente",
     "screeningTime": "é o tempo necessário para uma triagem odontológica",
-    "reach": "pessoas alcançadas desde o lançamento",
+    "reach": "visitantes desde o lançamento",
     "live": "Ao vivo, atualizado a cada hora"
   },
   "RiskGauge": {
@@ -1620,7 +1608,6 @@
     "startScreener": "Iniciar rastreamento →",
     "urgentBannerBold": "Você mencionou um sintoma que dura 2 semanas ou mais.",
     "urgentBannerRest": "Isso não deve ser ignorado. Agende uma consulta odontológica ou médica esta semana.",
-    "personalizing": "Personalizando seu resumo…",
     "howScored": "Como essa pontuação é calculada",
     "drivingHeading": "O que está influenciando seu risco",
     "nextStepsHeading": "Próximos passos",
@@ -1628,7 +1615,7 @@
     "read": "Ler →",
     "linkCopied": "Link copiado",
     "shareCta": "Compartilhe com alguém importante para você",
-    "shareText": "Acabei de usar o OralCheck para entender meu risco de câncer bucal. 2 minutos podem salvar sua vida. {url}",
+    "shareText": "Acabei de verificar meus fatores de risco de câncer bucal com o OralCheck. Leva cerca de dois minutos e nada fica salvo. {url}",
     "emailSentTitle": "Enviado. Verifique sua caixa de entrada.",
     "emailSentDesc": "Seu resultado e próximos passos estão a caminho. Suas respostas não foram armazenadas.",
     "emailKeepCopy": "Guarde uma cópia do seu resultado",
@@ -1654,7 +1641,7 @@
       "low": [
         {
           "title": "Mantenha sua consulta odontológica anual",
-          "desc": "O rastreamento de câncer bucal já faz parte de uma limpeza de rotina, leva 2 minutos e está incluído sem custo adicional."
+          "desc": "O rastreamento de câncer bucal já faz parte de uma limpeza de rotina. Leva 2 minutos e está incluído sem custo adicional."
         },
         {
           "title": "Faça um autoexame mensal",
@@ -1748,7 +1735,7 @@
       },
       "dental": {
         "tag": "Passo a passo",
-        "title": "Como fazer um autoexame em 2 minutos"
+        "title": "Como examinar a própria boca"
       },
       "other": {
         "tag": "Prevenção",
@@ -1908,11 +1895,11 @@
     "categoryGuidance": {
       "demographics": "A idade é o principal fator de risco não modificável. A partir dos 40 anos, a triagem em cada consulta odontológica é especialmente importante: o câncer bucal encontrado enquanto ainda está localizado tem uma sobrevivência em 5 anos de 89%, contra 36% após a disseminação para locais distantes.",
       "sex": "O sexo ao nascer não é algo que se pode mudar, portanto deve ser tratado da mesma forma que a idade: como um motivo para garantir que o exame bucal de dois minutos realmente aconteça em vez de ser ignorado. Homens são diagnosticados com câncer de cavidade oral e faringe em uma taxa aproximadamente 2,6 vezes maior do que mulheres, e também têm menos probabilidade de consultar um dentista regularmente, que é a parte que está ao alcance de cada um. Peça uma avaliação para rastreamento de câncer bucal pelo nome na próxima consulta, em vez de presumir que ela já foi realizada.",
-      "tobacco": "Parar de fumar reduz o risco em aproximadamente 50% nos primeiros 5 anos após a cessação. A terapia de reposição de nicotina dobra as taxas de sucesso a longo prazo. Consulte seu dentista ou médico sobre programas gratuitos de cessação tabágica, o CVV e o INCA oferecem apoio para quem quer parar de fumar.",
+      "tobacco": "Parar de fumar reduz o risco em aproximadamente 50% nos primeiros 5 anos após a cessação. A terapia de reposição de nicotina dobra as taxas de sucesso a longo prazo. Consulte seu dentista ou médico sobre programas gratuitos de cessação. O SUS oferece tratamento gratuito para quem quer parar de fumar.",
       "alcohol": "O risco diminui com a redução do consumo. Para pessoas que usam tabaco e álcool ao mesmo tempo, parar de fumar tem o maior impacto individual. Mesmo reduzir o consumo de álcool de diário para ocasional diminui significativamente a exposição da mucosa a substâncias cancerígenas.",
       "hpv": "A vacina contra o HPV (Gardasil 9) é aprovada para uso até os 45 anos e é altamente eficaz contra o HPV-16, o subtipo mais fortemente associado ao câncer de orofaringe. Consulte seu médico ou dentista para saber se a vacinação é indicada para você.",
-      "sun": "O carcinoma espinocelular do lábio inferior é altamente prevenível com o uso consistente de protetor labial com FPS e chapéu de abas largas. Ao contrário do câncer de pele, o câncer de lábio muitas vezes passa despercebido, verifique seus lábios durante o autoexame bucal mensal.",
-      "symptoms": "Manchas vermelhas persistentes (eritroplasia), manchas brancas (leucoplasia), feridas que não cicatrizam, caroços sem explicação aparente ou dificuldade para engolir com duração de 2 semanas ou mais são sinais de alerta clínicos bem estabelecidos. Esses sinais não devem ser aguardados, eles exigem avaliação profissional ainda esta semana, não em uma consulta futura.",
+      "sun": "O carcinoma espinocelular do lábio inferior é altamente prevenível com o uso consistente de protetor labial com FPS e chapéu de abas largas. Ao contrário do câncer de pele, o câncer de lábio muitas vezes passa despercebido. Verifique seus lábios durante o autoexame bucal mensal.",
+      "symptoms": "Manchas vermelhas persistentes (eritroplasia), manchas brancas (leucoplasia), feridas que não cicatrizam, caroços sem explicação aparente ou dificuldade para engolir com duração de 2 semanas ou mais são sinais de alerta clínicos bem estabelecidos. Esses sinais não devem ser aguardados. Eles exigem avaliação profissional ainda esta semana, não em uma consulta futura.",
       "family": "Informe seu dentista sobre o histórico familiar. Ele pode recomendar rastreamentos mais frequentes para câncer bucal ou encaminhamento a um especialista em medicina oral. O aconselhamento genético está disponível na maioria dos centros médicos universitários.",
       "diet": "Procure consumir 5 ou mais porções diárias de frutas e verduras coloridas. As evidências indicam que dietas ricas em vitaminas A, C e E reduzem a displasia epitelial oral. O consumo de carnes processadas também foi associado a maior risco de câncer de cabeça e pescoço em alguns estudos de coorte.",
       "dental": "Agende uma consulta odontológica o quanto antes. A triagem visual de câncer bucal leva cerca de 2 minutos e é realizada como parte de uma consulta de rotina. Apenas cerca de 1 em cada 4 cânceres bucais é detectado enquanto ainda está localizado, e o acompanhamento odontológico regular é o que muda esse cenário.",
@@ -2193,7 +2180,7 @@
       },
       {
         "q": "Não dói. Isso é um bom sinal?",
-        "a": "Não, e esse é o ponto mais importante desta página. Leucoplasia e eritroplasia geralmente são indolores. O sinal de alerta não é a dor, é a persistência."
+        "a": "Não, e esse é o ponto mais importante desta página. Leucoplasia e eritroplasia geralmente são indolores. O sinal de alerta não é a dor. É a persistência."
       },
       {
         "q": "Parei de fumar. A mancha vai desaparecer?",
@@ -2213,5 +2200,12 @@
     "checkRisk": "Verifique seu risco",
     "seeAllSigns": "Ver todos os sinais de alerta",
     "findDentist": "Encontre atendimento perto de você"
+  },
+  "NotFound": {
+    "title": "Página não encontrada",
+    "body": "A página que você procura não existe. Escolha abaixo por onde continuar.",
+    "screener": "Fazer a triagem →",
+    "learn": "Ver Saiba Mais",
+    "home": "Ir para o início"
   }
 }

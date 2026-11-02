@@ -10,7 +10,7 @@ The running list. Two rules:
    named. This is the list's whole purpose: the things that come up once, sound
    good, and are never mentioned again.
 
-Last updated: 2026-10-30
+Last updated: 2026-11-02
 
 **Mirrored to an artifact Ian reads:**
 https://claude.ai/code/artifact/cc490e4b-1ee3-4062-bc56-eada066f1003
@@ -502,6 +502,73 @@ Update both together. See `AGENTS.md`.
 
 ### Product and credibility
 
+- [ ] **Left open from the 30 Oct audit (not picked on 2 Nov, or found while
+      fixing).** Each is specified in `docs/audits/2026-10-30-*.md`.
+      - Methods still says "Over 60%… stage III or IV" (AJCC, against the house
+        rule). Proposed: "About two-thirds of cases are found after the cancer
+        has spread, to nearby lymph nodes (55%) or to distant sites (12%)."
+        Methods also names one reviewer, then says "both clinicians".
+      - The flyer keeps "FREE · PRIVATE · EVIDENCE-BASED"; the flyer headline's
+        third line is now filler ("No account needed.") because the layout has
+        three slots. "2 minutes" is still used for the dentist's exam on
+        Prevention and Results.
+      - The desktop hero photo is blurred by CSS and upscaled; the hero button
+        is white on coral at 3.3:1 (needs 4.5). Primary buttons are built six
+        ways. Long mobile footer, stacked disclaimers, card-on-card layout.
+      - The Portuguese tobacco advice now points to the SUS stop-smoking
+        programme (it named the CVV, an emotional-support line). Worth a
+        native speaker's check.
+      - Articles: no AI-assistance note (Ian chose none); six articles overlap
+        a Learn page and could merge; the white-patch disclaimer is not lifted
+        into the page disclaimer box.
+      - The Spanish site mixes tú and usted (102 to 41).
+
+- [x] **Decided 2026-10-30, Ian: drop the AI summary. Done locally, not yet
+      pushed. The site said answers never leave the device, but they did (found
+      2026-10-30, confirmed in code).** At least three strings in
+      `messages/en.json` say "Nothing is saved or sent anywhere" or "Answers
+      never leave the patient's device. No HIPAA concerns", and the owner's
+      guide tells Ian to say nothing is transmitted. The results page POSTs the
+      tier and every answer label to `/api/summary`, which sends them to
+      Anthropic's API to write the personalised paragraph, and the privacy page
+      never mentions it. Nothing identifies the visitor, but the promise as
+      written is false, on the claim the whole tool leans on. **Decision for
+      Ian:** drop the AI-written paragraph (the auditor found the static
+      summaries already cover it, and the AI copy once contradicted the page's
+      own timing advice), or keep it, label it, and rewrite every privacy
+      claim. **Done:** `/api/summary`, `aiBudget.ts` and the Anthropic SDK are
+      removed; every result shows the written summary for its band, so the
+      privacy strings are true again (the emailed copy is the visitor's own
+      choice). Checked locally: no request leaves the results page.
+
+- [x] **Shipped 2026-11-02 (Ian picked 1, 2, 4 and the home page; 3 left open below): UI audit, 30 Oct: copy fixes.** Two auditors
+      (full reports in `docs/audits/2026-10-30-*.md`):
+      1. Articles read as generated (7 of 12 open "Most people", 12 of 12 close
+         "It takes only a few minutes", one `## Conclusion`, 15 in-text links to
+         the home page). Proposed: rewrite openers and closers, sentence-case
+         headings, real internal links, an AI-assistance note on each, and the
+         same rules added to `seo_pipeline.py`.
+      2. Two weeks vs "two to three weeks" (9 articles) and a "three-week rule"
+         in `tongue`. Proposed: one sentence, word for word, everywhere.
+      3. Methods says "stage III or IV" (AJCC). Proposed: "About two-thirds of
+         cases are found after the cancer has spread, to nearby lymph nodes
+         (55%) or to distant sites (12%)", from `seerStats.ts`.
+      4. About 25 comma splices left by the em-dash sweep, in all three
+         languages. Proposed: rewrite each with a period or colon.
+      5. Home page in the stock AI landing layout, including an unlabelled logo
+         strip with "Michael S. Harris DMD PA". **Ian to say** whether that
+         practice is family, and what each logo's relationship to OralCheck is.
+
+- [x] **Shipped 2026-11-02 (all four Ian picked; the rest are listed in the open item below): UI audit, 30 Oct: visual problems.** With
+      "Reduce motion" on, `/learn` renders blank and the home page loses
+      sections (`FadeUp.tsx`, `AnimatedLearnCards.tsx`). The results gauge
+      places the needle by score/61 while the bands cut at 4, 13 and 22, so an
+      Elevated result shows green; the band pills fail contrast. Dark mode hides
+      text on `/for-clinicians` and `/qr`. Unknown URLs get the bare Next.js
+      404. Search and "Use my location" on `/find-care` and "Send message" on
+      `/about` look like plain text. Primary buttons are built six ways.
+      Not started; fixes are specified in the visual report.
+
 - [ ] **Pages with fade-in animations can render blank for visitors who turn
       on "reduce motion" (found 2026-10-21, while testing the learn page).**
       With reduced motion on, `FadeUp` and the learn cards render differently
@@ -714,6 +781,30 @@ Update both together. See `AGENTS.md`.
 ## Shipped
 
 Newest first.
+
+### 2026-11-02: the site audit, fixed
+
+- **AI-written results paragraph removed** (Ian, 30 Oct). Answers no longer
+  leave the device, so the privacy promise is true again. `/api/summary`,
+  `aiBudget.ts` and the Anthropic SDK are gone from the site.
+- **Copy:** home headline is "Check your oral cancer risk factors in about two
+  minutes" (slogan and eyebrow gone, also from the share text, QR card, flyer
+  and clinician page); logo strip labelled "Practices and groups that have
+  shared OralCheck with patients"; live count reads "visitors since launch";
+  one two-week sentence everywhere; about 50 run-on sentences rewritten in
+  three languages; the tobacco tip points to 1-800-QUIT-NOW, not a Wisconsin
+  line; self-exam heading "How to check your own mouth".
+- **Articles (12, English and Spanish):** fact-first openings, no closing CTA
+  or "Conclusion", sentence-case headings, real internal links, the betel
+  classification corrected. `seo_pipeline.py` now enforces the same rules.
+- **Visual:** Reduce motion no longer blanks /learn and the home page; the
+  results gauge points into its own band and Elevated has its own colour;
+  band labels pass contrast; dark mode readable on the flyer and QR pages;
+  teal text lightened in dark mode; Find Care and contact buttons visible;
+  unknown addresses get the branded, translated 404.
+- **Analytics:** the Google tag only loads on oralcheck.org and respects
+  `?notrack=1` on every page, including 404s (the inline-script version leaked
+  there).
 
 ### 2026-10-30: analytics you can trust again
 

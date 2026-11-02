@@ -1,17 +1,14 @@
 ---
 title: "Cómo hacer un autoexamen de cáncer oral (y qué buscar)"
 date: "2026-07-20"
+updated: "2026-11-02"
 keyword: "oral cancer self exam"
 status: "published"
 ---
 
 # Cómo hacer un autoexamen de cáncer oral (y qué buscar)
 
-La mayoría de las personas visita al dentista dos veces al año, lo que significa que hay aproximadamente 363 días en los que ningún profesional revisa su boca. El autoexamen de cáncer oral es un hábito sencillo y gratuito que puede ayudarle a notar cambios entre esas citas. Cuando el cáncer oral se detecta mientras sigue localizado, la tasa de supervivencia relativa a cinco años es de aproximadamente 89 por ciento. Una vez que se ha extendido a sitios distantes, ese número cae al 36 por ciento (SEER, 2016 a 2022). La diferencia suele depender de qué tan rápido se nota y se evalúa un cambio.
-
-Esta guía le explica cómo realizar un autoexamen de cáncer oral en casa, qué hallazgos vale la pena vigilar y cuándo comunicarse con un proveedor de salud.
-
----
+Entre dos visitas de rutina al dentista al año, pasan aproximadamente 363 días sin que ningún profesional revise su boca. El autoexamen de cáncer oral es un hábito sencillo y gratuito que puede ayudarle a notar cambios en ese intervalo. Cuando el cáncer oral se detecta mientras sigue localizado, la tasa de supervivencia relativa a cinco años es de aproximadamente 89 por ciento. Una vez que se ha extendido a sitios distantes, ese número cae al 36 por ciento (SEER, 2016 a 2022). La diferencia suele depender de qué tan rápido se nota y se evalúa un cambio.
 
 ## Lo que necesita antes de comenzar
 
@@ -20,8 +17,6 @@ No necesita ningún equipo especial. Un espejo de baño bien iluminado, un espej
 Reserve unos cinco minutos en un lugar fijo. Hacer el examen a la misma hora cada mes, por ejemplo el primer día del mes, facilita recordarlo y le ayuda a notar cambios graduales que de otro modo podrían pasar desapercibidos.
 
 Antes de comenzar, retire cualquier dentadura postiza o aparato dental removible. Estos pueden ocultar el tejido que hay debajo y que necesita ser examinado.
-
----
 
 ## El autoexamen de cáncer oral paso a paso
 
@@ -41,13 +36,11 @@ Realice el examen siguiendo un orden sistemático para no omitir ninguna área. 
 
 **Cuello y mandíbula.** Por último, palpe ambos lados del cuello, debajo de la mandíbula y a lo largo de la línea de la mandíbula. Está buscando cualquier bulto, ganglio linfático inflamado o área sensible que no estuviera antes.
 
----
-
 ## Qué cambios deben motivar una visita al médico
 
 No todo hallazgo inusual en la boca es cáncer. Las aftas, la irritación leve por alimentos y la inflamación temporal son comunes y generalmente desaparecen en una o dos semanas. La distinción clave es la persistencia y la progresión.
 
-Comuníquese con un dentista o médico si nota alguno de los siguientes y no desaparece en dos semanas:
+Si una llaga, mancha o bulto en su boca no ha desaparecido en dos semanas, pida a un dentista o a un médico que lo revise. Lo mismo aplica a cualquiera de los siguientes que dure dos semanas:
 
 - Una llaga o úlcera que no sana
 - Una mancha blanca (leucoplasia) o mancha roja (eritroplasia) que no se puede limpiar
@@ -59,24 +52,12 @@ Comuníquese con un dentista o médico si nota alguno de los siguientes y no des
 
 Las manchas rojas se consideran de mayor riesgo que las manchas blancas y deben evaluarse con prontitud. Cualquier combinación de tejido rojo y blanco también es razón para buscar una evaluación profesional sin demora.
 
----
-
 ## Factores de riesgo que hacen más importantes los autoexámenes regulares
 
-Conocer su nivel de riesgo personal le ayuda a decidir qué tan atento debe estar. Los factores de riesgo más importantes para el cáncer oral incluyen el uso de tabaco en cualquier forma, incluyendo cigarrillos, puros, pipas y tabaco sin humo. El consumo excesivo de alcohol es otro factor importante, y la combinación de tabaco y alcohol aumenta el riesgo considerablemente más que cualquiera de los dos por separado.
+Conocer su nivel de riesgo personal le ayuda a decidir qué tan atento debe estar. Los factores de riesgo más importantes para el cáncer oral incluyen el uso de tabaco en cualquier forma, incluyendo cigarrillos, puros, pipas y tabaco sin humo. El consumo excesivo de alcohol es otro factor importante, y la combinación de tabaco y alcohol aumenta el riesgo mucho más que cualquiera de los dos por separado.
 
 El virus del papiloma humano (VPH), específicamente el VPH-16, es reconocido actualmente como una causa principal de los cánceres orofaríngeos, que afectan la parte posterior de la garganta, la base de la lengua y las amígdalas. Esto significa que el cáncer oral ya no se limita a adultos mayores que fuman. Las personas jóvenes que no fuman pueden desarrollar, y de hecho desarrollan, cánceres orales relacionados con el VPH.
 
 Otros factores de riesgo incluyen la exposición prolongada al sol en los labios, antecedentes personales o familiares de cáncer oral, un sistema inmunitario debilitado y una nutrición deficiente. Si tiene uno o más de estos factores de riesgo, los autoexámenes mensuales son especialmente valiosos, y puede considerar pedirle a su dentista una revisión profesional de cáncer oral en cada visita.
-
----
-
-## Dé el siguiente paso con OralCheck
-
-El autoexamen de cáncer oral es un hábito valioso, pero funciona mejor como parte de un enfoque más amplio para vigilar su riesgo. Si desea tener una imagen más clara de su nivel de riesgo personal, OralCheck ofrece un evaluador de riesgo de cáncer oral gratuito y basado en evidencia en [oralcheck.org](https://oralcheck.org). Solo toma unos minutos y puede ayudarle a entender si su perfil de riesgo justifica una mayor atención o una conversación con su proveedor de salud.
-
-La conciencia temprana no se trata de generar ansiedad. Se trata de darse la mejor oportunidad posible de tener un buen resultado.
-
----
 
 *Aviso médico: Este artículo tiene fines informativos generales únicamente y no constituye consejo médico, diagnóstico ni tratamiento. Consulte siempre a un profesional de salud calificado sobre cualquier pregunta que tenga acerca de una condición médica o síntomas que esté experimentando.*

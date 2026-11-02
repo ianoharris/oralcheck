@@ -10,8 +10,8 @@ import InstagramFeed from "@/components/InstagramFeed";
 
 type Props = { params: Promise<{ locale: string }> };
 
-// The page is prerendered at build, so without this the live "people reached"
-// stat froze at whatever GA said on the day of the last deploy. Rebuild it in
+// The page is prerendered at build, so without this the live "visitors since
+// launch" stat froze at whatever GA said on the day of the last deploy. Rebuild it in
 // the background at most once an hour, matching the GA cache in lib/reach.ts.
 export const revalidate = 3600;
 
@@ -142,8 +142,10 @@ export default async function Home({ params }: Props) {
         </section>
       </FadeUp>
 
-      {/* Logo marquee */}
-      <LogoMarquee />
+      {/* Logo marquee. Labelled, because an unlabelled logo row reads as an
+          endorsement, and these are places that have shared the tool, not
+          bodies that have reviewed or endorsed it. */}
+      <LogoMarquee label={t("logoStripLabel")} />
 
       {/* Instagram feed */}
       {process.env.NEXT_PUBLIC_BEHOLD_WIDGET_ID && (

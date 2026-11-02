@@ -19,6 +19,20 @@ export type RiskFactor = {
   guidance: string;
 };
 
+/**
+ * Score range of each tier, inclusive. The thresholds below read from here, and
+ * so does the results gauge, which places its needle within the active tier's
+ * quarter of the dial. It used to place it by score / maxScore, which put the
+ * whole High tier past 38% of the dial: an Elevated result showed green and a
+ * High one pointed at the amber middle.
+ */
+export const TIER_BOUNDS = {
+  low: [0, 4],
+  moderate: [5, 13],
+  elevated: [14, 22],
+  high: [23, 61],
+} as const satisfies Record<RiskTier, readonly [number, number]>;
+
 export type RiskResult = {
   score: number;
   maxScore: number;
@@ -275,20 +289,22 @@ export function computeRisk(answers: Answers, locale: string = "en"): RiskResult
     tierLabel = t("tier.seeADentist");
     tierColor = "high";
     headline = t("tier.urgentHeadline");
-  } else if (score <= 4) {
+  } else if (score <= TIER_BOUNDS.low[1]) {
     tier = "low";
     tierLabel = t("tier.low.label");
     tierColor = "low";
     headline = t("tier.low.headline");
-  } else if (score <= 13) {
+  } else if (score <= TIER_BOUNDS.moderate[1]) {
     tier = "moderate";
     tierLabel = t("tier.moderate.label");
     tierColor = "mid";
     headline = t("tier.moderate.headline");
-  } else if (score <= 22) {
+  } else if (score <= TIER_BOUNDS.elevated[1]) {
     tier = "elevated";
     tierLabel = t("tier.elevated.label");
-    tierColor = "mid";
+    // Its own colour: Moderate and Elevated used to share "mid" and looked
+    // identical on the results page.
+    tierColor = "elevated";
     headline = t("tier.elevated.headline");
   } else {
     tier = "high";

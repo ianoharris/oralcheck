@@ -162,7 +162,7 @@ export default function PrintableFlyer() {
   return (
     <>
       {/* Controls — hidden on print */}
-      <div className="print:hidden mb-8 bg-white rounded-2xl border border-warm-dim p-6 sm:p-8">
+      <div className="surface-light print:hidden mb-8 bg-white rounded-2xl border border-warm-dim p-6 sm:p-8">
         <h2 className="font-serif text-2xl text-ink mb-1">{t("customizeHeading")}</h2>
         <p className="text-sm text-ink-soft mb-5">{t("customizeSub")}</p>
         <div className="space-y-3 mb-5">
@@ -230,7 +230,7 @@ export default function PrintableFlyer() {
       <div>
         <div
           id="flyer-inner"
-          className="bg-white w-full max-w-[800px] mx-auto shadow-sm border border-warm-dim overflow-hidden rounded-2xl"
+          className="surface-light bg-white w-full max-w-[800px] mx-auto shadow-sm border border-warm-dim overflow-hidden rounded-2xl"
         >
           {/* Top teal bar */}
           <div className="h-2 bg-brand" />

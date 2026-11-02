@@ -1,19 +1,16 @@
 ---
 title: "How to Do an Oral Cancer Self Exam (And What to Look For)"
 date: "2026-07-20"
+updated: "2026-11-02"
 keyword: "oral cancer self exam"
 status: "published"
 ---
 
 # How to Do an Oral Cancer Self Exam (And What to Look For)
 
-Most people visit a dentist twice a year, which means there are roughly 363 days when no professional is checking your mouth. An oral cancer self exam is a simple, free habit that can help you notice changes between those appointments. When oral cancer is caught while still localized, the five-year relative survival rate is about 89 percent. Once it has spread to distant sites, that number drops to 36 percent (SEER, 2016 to 2022). The difference often comes down to how quickly a change is noticed and evaluated.
+Between two routine dental visits a year, roughly 363 days go by with no professional looking in your mouth. An oral cancer self exam is a simple, free habit that can help you notice changes in that gap. When oral cancer is caught while still localized, the five-year relative survival rate is about 89 percent. Once it has spread to distant sites, that number drops to 36 percent (SEER, 2016 to 2022). The difference often comes down to how quickly a change is noticed and evaluated.
 
-This guide walks you through how to perform an oral cancer self exam at home, what findings are worth monitoring, and when to contact a healthcare provider.
-
----
-
-## What You Need Before You Start
+## What you need before you start
 
 You do not need any special equipment. A well-lit bathroom mirror, a small handheld mirror, and a clean finger or two are sufficient. Some people find a small flashlight helpful for seeing the back of the mouth more clearly.
 
@@ -21,9 +18,7 @@ Set aside about five minutes in a consistent location. Doing the exam at the sam
 
 Before you begin, remove any dentures or removable dental appliances. These can hide tissue underneath that needs to be examined.
 
----
-
-## A Step-by-Step Oral Cancer Self Exam
+## A step-by-step oral cancer self exam
 
 Work through the exam in a systematic order so you do not miss any area. Oral cancers can develop on the lips, tongue, floor of the mouth, cheeks, gums, the roof of the mouth, and the back of the throat.
 
@@ -41,13 +36,11 @@ Work through the exam in a systematic order so you do not miss any area. Oral ca
 
 **Neck and jaw.** Finally, feel along both sides of your neck, under your jaw, and along the jawline itself. You are checking for any lumps, swollen lymph nodes, or areas of tenderness that were not there before.
 
----
-
-## What Changes Should Prompt a Doctor Visit
+## What changes should prompt a doctor visit
 
 Not every unusual finding in your mouth is cancer. Canker sores, minor irritation from food, and temporary inflammation are common and usually resolve within one to two weeks. The key distinction is persistence and progression.
 
-Contact a dentist or physician if you notice any of the following and they do not resolve within two weeks:
+If a sore, patch or lump in your mouth hasn't cleared up in two weeks, have a dentist or doctor look at it. The same applies to any of the following that last two weeks:
 
 - A sore or ulcer that does not heal
 - A white patch (leukoplakia) or red patch (erythroplakia) that cannot be wiped off
@@ -59,24 +52,12 @@ Contact a dentist or physician if you notice any of the following and they do no
 
 Red patches are considered higher risk than white patches and should be evaluated promptly. Any combination of red and white tissue is also a reason to seek professional assessment without delay.
 
----
+## Risk factors that make regular self exams more important
 
-## Risk Factors That Make Regular Self Exams More Important
-
-Understanding your personal risk level helps you decide how vigilant to be. The most significant risk factors for oral cancer include tobacco use in any form, including cigarettes, cigars, pipes, and smokeless tobacco. Heavy alcohol use is another major factor, and the combination of tobacco and alcohol increases risk substantially more than either alone.
+Your personal risk level helps you decide how closely to watch. The biggest risk factors for oral cancer include tobacco use in any form, including cigarettes, cigars, pipes, and smokeless tobacco. Heavy alcohol use is another major factor, and the combination of tobacco and alcohol raises risk far more than either alone.
 
 Human papillomavirus (HPV), specifically HPV-16, is now recognized as a leading cause of oropharyngeal cancers, which affect the back of the throat, base of the tongue, and tonsils. This means oral cancer is no longer limited to older adults who smoke. Younger, non-smoking individuals can and do develop HPV-related oral cancers.
 
 Additional risk factors include prolonged sun exposure to the lips, a personal or family history of oral cancer, a weakened immune system, and poor nutrition. If you have one or more of these risk factors, monthly self exams are especially worthwhile, and you may want to ask your dentist about a professional oral cancer screening at each visit.
-
----
-
-## Take the Next Step With OralCheck
-
-An oral cancer self exam is a valuable habit, but it works best as part of a broader approach to monitoring your risk. If you want a clearer picture of your personal risk level, OralCheck offers a free, evidence-based oral cancer risk screener at [oralcheck.org](https://oralcheck.org). It takes only a few minutes and can help you understand whether your risk profile warrants closer attention or a conversation with your healthcare provider.
-
-Early awareness is not about creating anxiety. It is about giving yourself the best possible chance at a good outcome.
-
----
 
 *Medical Disclaimer: This article is intended for general informational purposes only and does not constitute medical advice, diagnosis, or treatment. Always consult a qualified healthcare professional regarding any questions you may have about a medical condition or symptoms you are experiencing.*

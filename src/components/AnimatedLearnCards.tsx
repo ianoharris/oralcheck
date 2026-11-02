@@ -3,21 +3,22 @@
 import { useTranslations } from "next-intl";
 import Icon from "@/components/Icon";
 import { Link } from "@/i18n/navigation";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import { LEARN_INDEX_HIDDEN_HREFS, useLearnArticles } from "@/lib/learnArticles";
 
 export default function AnimatedLearnCards() {
   const t = useTranslations("LearnCards");
   const articles = useLearnArticles().filter((a) => !LEARN_INDEX_HIDDEN_HREFS.has(a.href));
-  const reduced = useReducedMotion();
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
       {articles.map(({ href, tag, title, description, icon }, i) => (
         <motion.div
           key={href}
-          initial={reduced ? false : { opacity: 0, y: 24 }}
-          whileInView={reduced ? {} : { opacity: 1, y: 0 }}
+          // No reduced-motion branch here: it changed the markup between server
+          // and client and left the cards at opacity 0. MotionProvider handles it.
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.45, ease: "easeOut" as const, delay: i * 0.07 }}
         >
