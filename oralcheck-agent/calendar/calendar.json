@@ -251,7 +251,7 @@
       "network": "instagram",
       "media_type": "image",
       "when": "2026-11-02T16:00:00+00:00",
-      "status": "approved",
+      "status": "posted",
       "idea": {
         "title": "Six HPV throat cancer symptoms worth knowing",
         "hook": "Six symptoms can point toward HPV-related throat cancer.",
@@ -281,7 +281,9 @@
       ],
       "review_note": "",
       "version": 4,
-      "uploaded": true
+      "uploaded": true,
+      "ig_media_id": "18648225472041427",
+      "posted_at": "2026-11-02T18:12:59.271639+00:00"
     },
     {
       "id": "2026-11-04_li_carousel",
