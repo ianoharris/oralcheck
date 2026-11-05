@@ -632,7 +632,7 @@
       "network": "instagram",
       "media_type": "reel",
       "when": "2026-11-19T16:00:00+00:00",
-      "status": "built",
+      "status": "approved",
       "idea": {
         "title": "Oral cancer by age: how the rate climbs from your 20s",
         "hook": "How common is oral cancer at 25? At 45? At 65?",
@@ -664,7 +664,7 @@
         "26 Oct: built from Ian's idea ('oral cancer incidence by age by 20-30, 30-40'). SEER publishes five-year groups; the chart labels them as such rather than presenting averaged decades.",
         "5 Nov 2026: Ian's redo note ('Turn this into an animated video'). Rebuilt as an animated reel in the anim/ house style (anim/age.html, voiced by anim.py). The previous version is in previous/."
       ],
-      "review_note": "Turn this into an animated video"
+      "review_note": ""
     },
     {
       "id": "2026-11-24_in_reel",
@@ -846,7 +846,7 @@
       "network": "instagram",
       "media_type": "reel",
       "when": "2026-12-01T16:00:00+00:00",
-      "status": "built",
+      "status": "approved",
       "idea": {
         "title": "Gardasil 9 approved through age 45, most effective earlier",
         "hook": "The vaccine works best before exposure. It's still available after.",
@@ -874,7 +874,7 @@
       "files": [
         "reel.mp4"
       ],
-      "review_note": "turn this into a video",
+      "review_note": "",
       "version": 8,
       "uploaded": false,
       "notes": [
