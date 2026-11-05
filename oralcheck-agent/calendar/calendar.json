@@ -340,7 +340,7 @@
       "network": "instagram",
       "media_type": "reel",
       "when": "2026-11-05T16:00:00+00:00",
-      "status": "built",
+      "status": "approved",
       "idea": {
         "title": "Painless patches: the warning sign that feels like nothing",
         "hook": "No pain, no problem. That logic does not apply here.",
@@ -368,9 +368,9 @@
       "files": [
         "reel.mp4"
       ],
-      "review_note": "The background audio is too loud and there are no patches shown, it just points to the areas",
+      "review_note": "",
       "version": 4,
-      "uploaded": false,
+      "uploaded": true,
       "notes": [
         "26 Oct: Ian said music too loud and no patches shown. Re-rendered: patches drawn on the cheek and tongue, music 24 dB under voice."
       ]
@@ -457,7 +457,7 @@
       "network": "instagram",
       "media_type": "carousel",
       "when": "2026-11-12T16:00:00+00:00",
-      "status": "built",
+      "status": "approved",
       "idea": {
         "title": "Your lower lip gets more sun than you think",
         "hook": "Sunscreen on your face, nothing on your lips.",
@@ -492,9 +492,9 @@
         "slide_07.jpg",
         "preview.jpg"
       ],
-      "review_note": "This idea is dumb and also just sounds weird. people know how to check the sides of their tongues. swap the idea for something more interesting or like a did you know. (Swapped 26 Oct to the lower lip and sun, an unused topic.)",
+      "review_note": "",
       "version": 5,
-      "uploaded": false,
+      "uploaded": true,
       "notes": [
         "26 Oct: stock end card replaced with a closing slide written for this post (Ian asked for closes that follow each carousel's focus)."
       ]
@@ -628,7 +628,7 @@
       "id": "2026-11-19_in_carousel",
       "date": "2026-11-19",
       "network": "instagram",
-      "media_type": "carousel",
+      "media_type": "reel",
       "when": "2026-11-19T16:00:00+00:00",
       "status": "built",
       "idea": {
@@ -640,11 +640,11 @@
         "hook_style": "question",
         "tone": "calm",
         "pillar": "stats",
-        "media_type": "carousel",
+        "media_type": "reel",
         "slug": "oral-cancer-by-age"
       },
       "folder": "2026-11-19_in_carousel",
-      "version": 2,
+      "version": 3,
       "uploaded": false,
       "hook": "How common is oral cancer at 25? At 45? At 65?",
       "caption": "Oral cancer is rare in your 20s and common by your 60s, and the climb between them is steep. In people aged 20 to 24, about 0.6 in 100,000 are diagnosed each year. At 50 to 54 it is 18.8. From your 20s to your 50s the rate nearly doubles every five years, then keeps rising into the 70s before it levels off.\n\nThat is why 94% of new cases are in people 45 and older. It is also why the other 6% are easy to miss: a sore that will not heal looks like nothing at 30.\n\nAge is one factor, not a verdict. Tobacco, alcohol, HPV and sun on the lips all change the picture. A sore, patch or lump that lasts more than two weeks is worth a check at any age. Check your own risk, free and private, at oralcheck.org.\n\nSources:\nRates by age: NCI SEER*Explorer, SEER 21, 2019 to 2023. https://seer.cancer.gov/statistics-network/explorer/\nShare of new cases by age: NCI SEER Cancer Stat Facts, Oral Cavity and Pharynx Cancer. https://seer.cancer.gov/statfacts/html/oralcav.html",
@@ -656,18 +656,13 @@
         "oralcheck"
       ],
       "files": [
-        "slide_01.jpg",
-        "slide_02.jpg",
-        "slide_03.jpg",
-        "slide_04.jpg",
-        "slide_05.jpg",
-        "slide_06.jpg",
-        "slide_07.jpg",
-        "preview.jpg"
+        "reel.mp4"
       ],
       "notes": [
-        "26 Oct: built from Ian's idea ('oral cancer incidence by age by 20-30, 30-40'). SEER publishes five-year groups; the chart labels them as such rather than presenting averaged decades."
-      ]
+        "26 Oct: built from Ian's idea ('oral cancer incidence by age by 20-30, 30-40'). SEER publishes five-year groups; the chart labels them as such rather than presenting averaged decades.",
+        "5 Nov 2026: Ian's redo note ('Turn this into an animated video'). Rebuilt as an animated reel in the anim/ house style (anim/age.html, voiced by anim.py). The previous version is in previous/."
+      ],
+      "review_note": "Turn this into an animated video"
     },
     {
       "id": "2026-11-24_in_reel",
@@ -713,7 +708,7 @@
       "network": "linkedin",
       "media_type": "image",
       "when": "2026-11-24T16:00:00+00:00",
-      "status": "built",
+      "status": "approved",
       "idea": {
         "title": "Five common mouth findings that are not oral cancer",
         "hook": "Five things in your mouth that look worrying but probably aren't.",
@@ -741,9 +736,9 @@
       "files": [
         "image.jpg"
       ],
-      "review_note": "it looks low quality, and I dont see the 5 things being listed anywhere",
+      "review_note": "",
       "version": 3,
-      "uploaded": false
+      "uploaded": true
     },
     {
       "id": "2026-11-26_in_carousel",
@@ -751,7 +746,7 @@
       "network": "instagram",
       "media_type": "carousel",
       "when": "2026-11-26T23:00:00+00:00",
-      "status": "built",
+      "status": "approved",
       "idea": {
         "title": "Thanksgiving: a two-minute check worth passing around the table",
         "hook": "Before the leftovers, two minutes and a mirror.",
@@ -768,10 +763,10 @@
       "event": {
         "name": "Thanksgiving"
       },
-      "review_note": "Same as the halloween, the last slide is not same theme and is low quality Fixed 26 Oct: the last slide now uses the holiday theme; the rest of the deck is unchanged.",
+      "review_note": "",
       "folder": "2026-11-26_in_carousel",
       "version": 3,
-      "uploaded": false,
+      "uploaded": true,
       "hook": "Before the leftovers, two minutes and a mirror.",
       "caption": "Before the second round of pie, take two minutes with a mirror.\n\nThe people gathered around your table this week are often the ones best placed to notice a change in your face or neck. But a monthly self-exam means you can spot something first.\n\nStart at your lips and work inward: cheeks, gums, tongue (top, sides, and underneath), the floor of your mouth, the roof of your mouth, your throat, and then both sides of your neck. You're looking for anything new: a patch, a sore, a lump, or a change in colour.\n\nThe two-week rule is worth knowing. Early oral cancer often doesn't hurt, so pain isn't a reliable guide. If something new is still there after fourteen days, that's the moment to call a dentist or doctor and have it looked at.\n\nShare this with someone at the table who might not have heard of the two-week rule. And for a step-by-step illustrated guide, oralcheck.org/learn/self-exam is there whenever you're ready.\n\nWhich part of the mouth do you think most people skip when they check?\n\n3D anatomy: Z-Anatomy (CC BY-SA 4.0), from BodyParts3D, DBCLS",
       "hashtags": [
@@ -847,7 +842,7 @@
       "id": "2026-12-01_in_image",
       "date": "2026-12-01",
       "network": "instagram",
-      "media_type": "image",
+      "media_type": "reel",
       "when": "2026-12-01T16:00:00+00:00",
       "status": "built",
       "idea": {
@@ -859,14 +854,14 @@
         "hook_style": "contrast",
         "tone": "calm",
         "pillar": "hpv_connection",
-        "media_type": "image",
+        "media_type": "reel",
         "calendar_ref": null,
         "slug": "gardasil-9-approved-through-age-45-most-effective-earlier"
       },
       "event": null,
       "folder": "2026-12-01_in_image",
       "hook": "The vaccine works best before exposure. It's still available after.",
-      "caption": "Gardasil 9 targets HPV-16 and HPV-18, the strains responsible for most HPV-related cancers, and it's FDA-approved for anyone between 9 and 45. The recommended window is early, ideally before any exposure, which is why preteens are the primary target. That said, adults who weren't vaccinated earlier may still get meaningful protection, and a doctor can help weigh whether it makes sense for your situation. One thing it can't do is treat an infection that's already there. If you're unsure where you stand, start at oralcheck.org/learn/hpv.",
+      "caption": "Gardasil 9 protects against HPV-16 and HPV-18, the types behind most HPV-related cancers, and it is FDA-approved from age 9 through 45. It works best before any exposure, which is why the CDC recommends it at 11 or 12. Anyone who missed it is recommended to catch up through 26, and from 27 to 45 it is a decision to make with your clinician. One thing it cannot do is treat an infection that is already there. More at oralcheck.org/learn/hpv.\n\nSources:\nCDC, HPV Vaccination Considerations. https://www.cdc.gov/hpv/hcp/vaccination-considerations/index.html",
       "hashtags": [
         "hpvvaccine",
         "hpvprevention",
@@ -875,11 +870,14 @@
         "oralcheck"
       ],
       "files": [
-        "image.jpg"
+        "reel.mp4"
       ],
-      "review_note": "make the background white the same color as the background of the vial image's white Fixed 26 Oct: the card's ground is now the vial photo's own white.",
-      "version": 7,
-      "uploaded": false
+      "review_note": "turn this into a video",
+      "version": 8,
+      "uploaded": false,
+      "notes": [
+        "5 Nov 2026: Ian's redo note ('turn this into a video'). Rebuilt as an animated reel in the anim/ house style (anim/hpvvax.html, voiced by anim.py). The previous version is in previous/."
+      ]
     },
     {
       "id": "2026-12-02_li_carousel",

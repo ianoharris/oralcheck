@@ -468,7 +468,10 @@ def apply_decisions(rows: list[dict]) -> dict:
     counts: dict[str, int] = {}
     for r in rows:
         e = by_id.get(r.get("id"))
-        if not e or e["status"] == "scheduled" or r.get("decision") not in ("approve", "redo", "cut"):
+        # Scheduled and posted posts are past review. Re-applying the page's old
+        # "approve" to a posted one flipped it back to approved (found 5 Nov
+        # 2026 on the 3 Nov image), which could have published it twice.
+        if not e or e["status"] in ("scheduled", "posted") or r.get("decision") not in ("approve", "redo", "cut"):
             continue
         if (r.get("v") or 1) != e.get("version", 1):
             continue  # a decision about a version that has since been rebuilt

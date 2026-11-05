@@ -65,6 +65,33 @@ SCRIPTS = {
         credit="Source: American Cancer Society, What Are Oral Cavity and Oropharyngeal Cancers? · "
                "3D anatomy: Z-Anatomy (CC BY-SA 4.0), from BodyParts3D, DBCLS · Cells: illustration, not to scale in number",
     ),
+    # Calendar 19 Nov 2026 (Ian's redo of the age carousel). SEER_BY_AGE and
+    # newCaseShareByAge in src/lib/seerStats.ts: SEER 21, 2019 to 2023.
+    "age": dict(
+        lines=[
+            {"key": "hook", "say": "How common is oral cancer at 25? At 45? At 65?", "eyebrow": "Oral cancer by age"},
+            {"key": "at25", "say": "At 25, it is rare: about one new case per 100,000 people a year.", "eyebrow": "Age 25 to 29"},
+            {"key": "double", "say": "From there, the rate roughly doubles every five years, into your fifties.", "eyebrow": "Age 30 to 54"},
+            {"key": "by65", "say": "By 65, it is about 45 per 100,000, and it peaks near 51.", "eyebrow": "Age 65 and up"},
+            {"key": "share", "say": "Ninety-four of every hundred new cases are in people 45 and older.", "eyebrow": "Share of new cases"},
+            {"key": "any", "say": "But rare is not zero. A sore that lasts two weeks needs a look, at any age.", "eyebrow": "At any age"},
+        ],
+        credit="Source: National Cancer Institute, SEER*Explorer and Cancer Stat Facts, SEER 21, 2019 to 2023. "
+               "Rates per 100,000 people a year, in five-year age groups",
+    ),
+    # Calendar 1 Dec 2026 (Ian's redo of the Gardasil image). topics.py
+    # hpv_vaccine; CDC, HPV Vaccination Considerations, checked 5 Nov 2026.
+    "hpvvax": dict(
+        lines=[
+            {"key": "hook", "say": "The HPV vaccine works best before exposure. But it is still available after.", "eyebrow": "The HPV vaccine"},
+            {"key": "range", "say": "Gardasil 9 is approved from age 9 through 45.", "eyebrow": "Who can get it"},
+            {"key": "strains", "say": "It protects against HPV 16 and 18, the types behind most HPV-related cancers.", "eyebrow": "What it covers"},
+            {"key": "routine", "say": "It is recommended at 11 or 12, ideally before any exposure.", "eyebrow": "The best time"},
+            {"key": "adults", "say": "Through 26, catch-up is recommended. From 27 to 45, ask your clinician.", "eyebrow": "If you missed it"},
+            {"key": "limits", "say": "It prevents new infections. It cannot treat one you already have.", "eyebrow": "What it cannot do"},
+        ],
+        credit="Source: CDC, HPV Vaccination Considerations",
+    ),
 }
 CTA = {"key": "cta", "say": "Check your own risk, free, at oralcheck.org.", "eyebrow": ""}
 
