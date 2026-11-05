@@ -662,7 +662,8 @@
       ],
       "notes": [
         "26 Oct: built from Ian's idea ('oral cancer incidence by age by 20-30, 30-40'). SEER publishes five-year groups; the chart labels them as such rather than presenting averaged decades.",
-        "5 Nov 2026: Ian's redo note ('Turn this into an animated video'). Rebuilt as an animated reel in the anim/ house style (anim/age.html, voiced by anim.py). The previous version is in previous/."
+        "5 Nov 2026: Ian's redo note ('Turn this into an animated video'). Rebuilt as an animated reel in the anim/ house style (anim/age.html, voiced by anim.py). The previous version is in previous/.",
+        "5 Nov 2026: re-rendered with word-aligned captions (faster-whisper) and re-uploaded."
       ],
       "review_note": ""
     },
@@ -878,7 +879,8 @@
       "version": 8,
       "uploaded": true,
       "notes": [
-        "5 Nov 2026: Ian's redo note ('turn this into a video'). Rebuilt as an animated reel in the anim/ house style (anim/hpvvax.html, voiced by anim.py). The previous version is in previous/."
+        "5 Nov 2026: Ian's redo note ('turn this into a video'). Rebuilt as an animated reel in the anim/ house style (anim/hpvvax.html, voiced by anim.py). The previous version is in previous/.",
+        "5 Nov 2026: re-rendered with word-aligned captions (faster-whisper) and re-uploaded."
       ]
     },
     {
