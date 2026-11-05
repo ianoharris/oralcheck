@@ -340,7 +340,7 @@
       "network": "instagram",
       "media_type": "reel",
       "when": "2026-11-05T16:00:00+00:00",
-      "status": "approved",
+      "status": "posted",
       "idea": {
         "title": "Painless patches: the warning sign that feels like nothing",
         "hook": "No pain, no problem. That logic does not apply here.",
@@ -373,7 +373,9 @@
       "uploaded": true,
       "notes": [
         "26 Oct: Ian said music too loud and no patches shown. Re-rendered: patches drawn on the cheek and tongue, music 24 dB under voice."
-      ]
+      ],
+      "ig_media_id": "18116464877039723",
+      "posted_at": "2026-11-05T18:53:06.963556+00:00"
     },
     {
       "id": "2026-11-10_in_reel",
