@@ -647,7 +647,7 @@
       },
       "folder": "2026-11-19_in_carousel",
       "version": 3,
-      "uploaded": false,
+      "uploaded": true,
       "hook": "How common is oral cancer at 25? At 45? At 65?",
       "caption": "Oral cancer is rare in your 20s and common by your 60s, and the climb between them is steep. In people aged 20 to 24, about 0.6 in 100,000 are diagnosed each year. At 50 to 54 it is 18.8. From your 20s to your 50s the rate nearly doubles every five years, then keeps rising into the 70s before it levels off.\n\nThat is why 94% of new cases are in people 45 and older. It is also why the other 6% are easy to miss: a sore that will not heal looks like nothing at 30.\n\nAge is one factor, not a verdict. Tobacco, alcohol, HPV and sun on the lips all change the picture. A sore, patch or lump that lasts more than two weeks is worth a check at any age. Check your own risk, free and private, at oralcheck.org.\n\nSources:\nRates by age: NCI SEER*Explorer, SEER 21, 2019 to 2023. https://seer.cancer.gov/statistics-network/explorer/\nShare of new cases by age: NCI SEER Cancer Stat Facts, Oral Cavity and Pharynx Cancer. https://seer.cancer.gov/statfacts/html/oralcav.html",
       "hashtags": [
@@ -876,7 +876,7 @@
       ],
       "review_note": "",
       "version": 8,
-      "uploaded": false,
+      "uploaded": true,
       "notes": [
         "5 Nov 2026: Ian's redo note ('turn this into a video'). Rebuilt as an animated reel in the anim/ house style (anim/hpvvax.html, voiced by anim.py). The previous version is in previous/."
       ]
