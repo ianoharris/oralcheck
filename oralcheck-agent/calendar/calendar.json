@@ -422,7 +422,7 @@
       "network": "linkedin",
       "media_type": "image",
       "when": "2026-11-10T16:00:00+00:00",
-      "status": "approved",
+      "status": "scheduled",
       "idea": {
         "title": "The floor of your mouth is the hardest spot to self-check",
         "hook": "Lift your tongue to the roof of your mouth right now.",
@@ -451,7 +451,9 @@
         "image.jpg"
       ],
       "review_note": "",
-      "uploaded": true
+      "uploaded": true,
+      "publora_id": "6aef66318653ba60c77e3055",
+      "scheduled_at": "2026-11-07T17:55:54.023917+00:00"
     },
     {
       "id": "2026-11-13_in_carousel",
