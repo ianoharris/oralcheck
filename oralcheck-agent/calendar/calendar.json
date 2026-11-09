@@ -383,7 +383,7 @@
       "network": "instagram",
       "media_type": "reel",
       "when": "2026-11-09T16:00:00+00:00",
-      "status": "approved",
+      "status": "posted",
       "idea": {
         "title": "The two-week rule, place by place",
         "hook": "Anything new in your mouth gets two weeks. Here is where to look.",
@@ -414,7 +414,9 @@
       "review_note": "",
       "swapped": "Was 'Lower lip sun exposure risk: what outdoor workers should know' (lower lip). The 3D model has no lips, so the reel moved to the two-week rule on 21 Oct.",
       "version": 2,
-      "uploaded": true
+      "uploaded": true,
+      "ig_media_id": "18349269949267589",
+      "posted_at": "2026-11-09T20:40:22.733483+00:00"
     },
     {
       "id": "2026-11-11_li_image",
