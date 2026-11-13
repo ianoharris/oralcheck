@@ -54,7 +54,14 @@ async function accessToken(key: Key): Promise<string> {
   return (await res.json()).access_token;
 }
 
-async function fetchReach(): Promise<number | null> {
+// Only the real site counts. Development servers once reported to the same GA
+// property (376 of 1,321 page views in the 90 days to 30 Oct 2026), which put
+// the homepage count about 24 people above the truth.
+const LIVE_HOSTS = {
+  filter: { fieldName: "hostName", inListFilter: { values: ["oralcheck.org", "www.oralcheck.org"] } },
+};
+
+async function runReport(body: Record<string, unknown>): Promise<{ rows?: { dimensionValues?: { value: string }[]; metricValues: { value: string }[] }[] } | null> {
   const key = readKey();
   const property = process.env.GA_PROPERTY_ID?.trim();
   if (!key || !property) return null;
@@ -63,20 +70,61 @@ async function fetchReach(): Promise<number | null> {
     const res = await fetch(`https://analyticsdata.googleapis.com/v1beta/properties/${property}:runReport`, {
       method: "POST",
       headers: { authorization: `Bearer ${token}`, "content-type": "application/json" },
-      body: JSON.stringify({
-        dateRanges: [{ startDate: "2020-01-01", endDate: "today" }],
-        metrics: [{ name: "totalUsers" }],
-      }),
+      body: JSON.stringify({ dateRanges: [{ startDate: "2020-01-01", endDate: "today" }], limit: 500, ...body }),
       cache: "no-store",
     });
     if (!res.ok) throw new Error(`runReport ${res.status}`);
-    const value = Number((await res.json()).rows?.[0]?.metricValues?.[0]?.value);
-    return Number.isFinite(value) && value > 0 ? value : null;
+    return await res.json();
   } catch (err) {
     console.error("reach: GA read failed", err);
     return null;
   }
 }
+
+async function fetchReach(): Promise<number | null> {
+  const data = await runReport({ metrics: [{ name: "totalUsers" }], dimensionFilter: LIVE_HOSTS });
+  const value = Number(data?.rows?.[0]?.metricValues?.[0]?.value);
+  return Number.isFinite(value) && value > 0 ? value : null;
+}
+
+/** How many distinct values of a dimension real visitors have, "(not set)" excluded. */
+async function countDistinct(dimension: string, extra?: Record<string, unknown>): Promise<number | null> {
+  const filters: Record<string, unknown>[] = [LIVE_HOSTS];
+  if (extra) filters.push(extra);
+  const data = await runReport({
+    dimensions: [{ name: dimension }],
+    metrics: [{ name: "totalUsers" }],
+    dimensionFilter: { andGroup: { expressions: filters } },
+  });
+  if (!data) return null;
+  return (data.rows ?? []).filter((r) => r.dimensionValues?.[0]?.value && r.dimensionValues[0].value !== "(not set)").length;
+}
+
+/**
+ * The figures the 1,000-visitor post is built from, read the morning it goes
+ * out (oralcheck-agent/milestone.py, via /api/reach). "Finished" is people who
+ * reached a results page in any language: a floor, like every GA number.
+ */
+async function fetchMilestone() {
+  const [users, countries, states, finishedData] = await Promise.all([
+    fetchReach(),
+    countDistinct("country"),
+    countDistinct("region", { filter: { fieldName: "country", stringFilter: { value: "United States" } } }),
+    runReport({
+      metrics: [{ name: "totalUsers" }],
+      dimensionFilter: {
+        andGroup: {
+          expressions: [LIVE_HOSTS, { filter: { fieldName: "pagePath", inListFilter: { values: ["/results", "/es/results", "/pt/results"] } } }],
+        },
+      },
+    }),
+  ]);
+  const finished = Number(finishedData?.rows?.[0]?.metricValues?.[0]?.value);
+  if (!users || countries === null || states === null || !Number.isFinite(finished)) return null;
+  return { users, countries, states, finished, asOf: new Date().toISOString() };
+}
+
+export const getMilestoneStats = unstable_cache(fetchMilestone, ["ga-milestone"], { revalidate: 3600 });
 
 const cachedReach = unstable_cache(fetchReach, ["ga-total-users"], { revalidate: 3600 });
 

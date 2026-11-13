@@ -489,7 +489,9 @@ clinician reads before deciding whether to take you seriously.
 **The home page's third number is live.** Under the hero, the three figures
 are new US cases a year, survival when caught early, and **visitors since
 launch** (labelled "people reached" until 2 November 2026; it counts GA users,
-not completed screeners, and the label now says so), which the site reads from Google Analytics every hour
+not completed screeners, and the label now says so; since 12 November it counts
+only oralcheck.org itself, which took it from 963 to 907, because test copies of
+the site had been included), which the site reads from Google Analytics every hour
 (`src/lib/reach.ts`, using the `GA_PROPERTY_ID` and `GA_SERVICE_ACCOUNT_KEY`
 values stored on Vercel). The home page itself is rebuilt in the background at
 most once an hour, the first time someone visits after the hour is up. For its

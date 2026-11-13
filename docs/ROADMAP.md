@@ -10,7 +10,7 @@ The running list. Two rules:
    named. This is the list's whole purpose: the things that come up once, sound
    good, and are never mentioned again.
 
-Last updated: 2026-11-02
+Last updated: 2026-11-12
 
 **Mirrored to an artifact Ian reads:**
 https://claude.ai/code/artifact/cc490e4b-1ee3-4062-bc56-eada066f1003
@@ -711,6 +711,18 @@ Update both together. See `AGENTS.md`.
       more content.
 
 ### Distribution
+
+- [ ] **The 1,000-visitor reel posts itself (set up 2026-11-12, waiting on
+      the count).** Ian's request. `milestone.py` runs in the daily calendar
+      job and reads `oralcheck.org/api/reach` (GitHub holds no Analytics key).
+      The first morning the live-site count is 1,000 or more, it renders the
+      reel (`anim/milestone.html`) with that day's countries, states and
+      finished screeners, adds approved Instagram and LinkedIn entries for the
+      next free 10am Central slot, uploads them, and messages Ian on Telegram.
+      On 12 Nov the count was 907 (43 countries, 43 states, about 230
+      finished). The reel deliberately says "visited", not "checked their
+      risk": only about a quarter reach a result. Test render:
+      `oralcheck-agent/anim/samples/milestone-test.mp4`.
 
 - [ ] **Link Search Console to GA4 (blocked on Ian, five minutes, no code).**
       Raised by GA's own insights panel, 2026-10-28. The domain is already

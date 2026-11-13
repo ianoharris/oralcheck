@@ -1,0 +1,99 @@
+<!doctype html>
+<!--
+  The 1,000-visitor reel (built and posted by milestone.py the morning the
+  site's own count passes 1,000). 2D in the house style: one dot per visitor,
+  counting up; the ones who reached a result turn teal; the most-searched
+  question; the two-week answer takes the reel's one coral beat.
+  Numbers arrive in PLAN.data from /api/reach (Google Analytics, live site
+  only), read the day it renders, so nothing on screen is typed by hand.
+-->
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="house.css">
+<style>
+  #stage svg{display:block;width:1080px;height:1000px}
+  .big{font:400 92px "DM Serif Display",serif;fill:#15201f}
+  .mid{font:400 54px "DM Serif Display",serif;fill:#15201f}
+  .small{font:600 30px "Source Sans 3",sans-serif;fill:#4a5958}
+  .day{font:600 26px "Source Sans 3",sans-serif;fill:#8a9796}
+</style></head>
+<body>
+<div id="stage"><svg viewBox="0 0 1080 1000"></svg></div>
+<script type="module">
+import {PLAN, at, label, readout, frame, span, ease, lerp} from "./house.js";
+const NS = "http://www.w3.org/2000/svg";
+const svg = document.querySelector("#stage svg");
+const el = (tag, attrs, parent = svg) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent.appendChild(e); return e; };
+const D = Object.assign({users: 1000, countries: 43, states: 44, finished: 240}, PLAN.data || {});
+
+// ---- one dot per visitor: a 40 x 25 grid --------------------------------------
+const COLS = 40, ROWS = 25, GX = 90, GY = 170, STEP = 22.5;
+const dots = [];
+const dotsG = el("g", {});
+// a fixed shuffle so the teal ones are scattered, not a block
+let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+const order = Array.from({length: COLS * ROWS}, (_, i) => i).sort(() => rnd() - 0.5);
+for (let i = 0; i < COLS * ROWS; i++) {
+  const c = i % COLS, r = Math.floor(i / COLS);
+  dots.push(el("circle", {cx: GX + c * STEP, cy: GY + r * STEP, r: 0, fill: "#c9d1d1"}, dotsG));
+}
+const rank = new Array(COLS * ROWS); order.forEach((d, k) => { rank[d] = k; });
+
+// ---- the question and the two weeks --------------------------------------------
+const qG = el("g", {opacity: 0});
+const q1 = el("text", {x: 540, y: 420, "text-anchor": "middle", class: "mid"}, qG); q1.textContent = "Is this a canker sore,";
+const q2 = el("text", {x: 540, y: 500, "text-anchor": "middle", class: "mid"}, qG); q2.textContent = "or something worse?";
+const wG = el("g", {opacity: 0});
+const days = Array.from({length: 14}, (_, i) => {
+  const x = 120 + (i % 7) * 122, y = 380 + Math.floor(i / 7) * 150;
+  const r = el("rect", {x, y, width: 100, height: 100, rx: 18, fill: "#e6ebea"}, wG);
+  const t = el("text", {x: x + 50, y: y + 62, "text-anchor": "middle", class: "day"}, wG); t.textContent = i + 1;
+  return {r, t};
+});
+
+const T = Object.fromEntries(PLAN.shots.map(s => [s.key, s.t0]));
+const show = (e, k) => { e.style.opacity = k; e.style.display = k > 0.001 ? "" : "none"; };
+
+window.render = (t) => {
+  const {sh, local} = at(t);
+  // dots: appear in the hook, counting; teal for the finished ones; step aside for the question
+  const shown = Math.round(D.users * ease(span(t, 0.2, T.where - 0.3)));
+  const tealK = span(t, T.finished + 0.3, T.finished + 2.2);
+  const nTeal = Math.round(Math.min(D.finished, COLS * ROWS) * tealK);
+  const away = span(t, T.question - 0.2, T.question + 0.8) * (1 - span(t, T.thanks, T.thanks + 1.0));
+  const drift = 1 + 0.01 * Math.sin(t * 0.8);
+  dotsG.setAttribute("transform", `translate(540 ${GY + ROWS * STEP / 2}) scale(${drift}) translate(-540 ${-(GY + ROWS * STEP / 2)})`);
+  for (let i = 0; i < dots.length; i++) {
+    const k = rank[i];
+    const on = k < shown;
+    // every dot breathes a little so the field is never still
+    const pulse = 1 + 0.12 * Math.sin(t * 2 + i * 0.37);
+    // "where": a wave sweeps left to right across the field, as if lighting up the map
+    const col = i % COLS, wave = Math.exp(-Math.pow((t - T.where - 0.3) * 14 - col, 2) / 18) * (t > T.where && t < T.finished ? 1 : 0);
+    dots[i].setAttribute("r", on ? 6.5 * (pulse + 0.7 * wave) * (1 - 0.6 * away) : 0);
+    dots[i].setAttribute("fill", k < nTeal || wave > 0.5 ? "#0d7377" : "#c9d1d1");
+    dots[i].style.opacity = 1 - 0.85 * away;
+  }
+
+  show(qG, span(t, T.question + 0.4, T.question + 1.1) * (1 - span(t, T.answer - 0.2, T.answer + 0.4)));
+  qG.setAttribute("transform", `translate(0 ${-14 * Math.sin(t * 0.5)})`);
+  show(wG, span(t, T.answer, T.answer + 0.6) * (1 - span(t, T.thanks - 0.2, T.thanks + 0.5)));
+  days.forEach((d, i) => {
+    const k = span(t, T.answer + 0.4 + i * 0.16, T.answer + 0.7 + i * 0.16);
+    const coral = i === 13 ? span(t, T.answer + 3.0, T.answer + 3.5) : 0;
+    const base = [230, 235, 234], tl = [13, 115, 119], co = [232, 99, 74];
+    const c = base.map((v, j) => Math.round(lerp(lerp(v, tl[j], k * 0.9), co[j], coral)));
+    d.r.setAttribute("fill", `rgb(${c.join(",")})`);
+    d.t.setAttribute("fill", k > 0.5 ? "#fff" : "#8a9796");
+  });
+
+  // readout and labels
+  if (sh.key === "hook") readout(shown.toLocaleString("en-US"), "people have visited OralCheck", 0, span(local, 0.1, 0.5));
+  else if (sh.key === "where") readout(`${D.countries} countries`, `and ${D.states} US states`, 0, span(local, 0.3, 0.8));
+  else if (sh.key === "finished") readout(`About ${Math.round(D.finished / 10) * 10}`, "made it all the way to a result", 0, span(local, 0.3, 0.8));
+  else if (sh.key === "thanks") readout(`${D.users.toLocaleString("en-US")}+`, "thank you", 0, span(local, 0.2, 0.7));
+  else readout("", "", 0, 0);
+  if (sh.key === "answer") label({k: "The answer is time", t: "Two weeks", d: "Not healed by then: see a dentist"}, 120 + 6 * 122 + 50, 230 + 380 + 150 + 50, "left", local, 300);
+  else label(null);
+  return frame(t);
+};
+</script>
+</body></html>

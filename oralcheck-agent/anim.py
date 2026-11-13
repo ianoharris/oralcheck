@@ -93,6 +93,27 @@ SCRIPTS = {
         credit="Source: CDC, HPV Vaccination Considerations",
     ),
 }
+
+
+def milestone_spec(d: dict) -> dict:
+    """The 1,000-visitor reel, written around the numbers /api/reach returns the
+    day it renders (milestone.py). Nothing here is typed by hand."""
+    finished = int(round(d["finished"] / 10.0) * 10)
+    return dict(
+        lines=[
+            {"key": "hook", "say": "A thousand people have now visited OralCheck.", "eyebrow": "1,000"},
+            {"key": "where", "say": f"They came from {d['countries']} countries and {d['states']} states.", "eyebrow": "Where"},
+            {"key": "finished", "say": f"About {finished} of them made it all the way to a result.", "eyebrow": "Finished"},
+            {"key": "question", "say": "The question that brought the most people here from search: is this a canker sore, or something worse?",
+             "eyebrow": "Most searched"},
+            {"key": "answer", "say": "The answer is time. A sore that hasn't healed in two weeks needs a dentist.", "eyebrow": "The answer"},
+            {"key": "thanks", "say": "Thank you for checking, and for sending it on.", "eyebrow": "Thank you"},
+        ],
+        credit="Counts: Google Analytics for oralcheck.org, a floor, since some visits are never counted",
+        data={"users": max(1000, int(d["users"])), "countries": d["countries"], "states": d["states"], "finished": finished},
+    )
+
+
 CTA = {"key": "cta", "say": "Check your own risk, free, at oralcheck.org.", "eyebrow": ""}
 
 
@@ -154,8 +175,9 @@ def render(scene: str, plan: dict, total: float, out_mp4: str, fps: int = FPS) -
         raise RuntimeError("ffmpeg failed encoding frames")
 
 
-def build(scene: str, out_path: str, *, tts, music: str | None = None, workdir: str | None = None) -> str:
-    spec = SCRIPTS[scene]
+def build(scene: str, out_path: str, *, tts, music: str | None = None, workdir: str | None = None,
+          spec: dict | None = None) -> str:
+    spec = spec or SCRIPTS[scene]
     lines = spec["lines"] + [CTA]
     workdir = workdir or tempfile.mkdtemp(prefix=f"anim_{scene}_")
     wavs = [tts(l["say"]) for l in lines]
@@ -172,7 +194,7 @@ def build(scene: str, out_path: str, *, tts, music: str | None = None, workdir: 
     shots = [{"key": l["key"], "eyebrow": l["eyebrow"], "t0": round(t0, 3), "len": round(n, 3), "words": w}
              for l, (t0, n), w in zip(lines, timing, words)]
     plan = {"shots": shots, "cta_t0": shots[-1]["t0"], "credit": spec["credit"], "foot": spec.get("foot", ""),
-            "foot_on": spec.get("foot_on", [])}
+            "foot_on": spec.get("foot_on", []), "data": spec.get("data", {})}
     events = [("glide", max(0.0, s["t0"] - 0.15)) for s in shots[1:]] + [("settle", shots[-1]["t0"] + 0.1)]
     video = os.path.join(workdir, "video.mp4")
     render(scene, plan, total, video)
