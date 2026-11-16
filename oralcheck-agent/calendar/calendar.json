@@ -513,7 +513,7 @@
       "network": "instagram",
       "media_type": "image",
       "when": "2026-11-16T16:00:00+00:00",
-      "status": "approved",
+      "status": "posted",
       "idea": {
         "title": "Men diagnosed with oral cancer 2.6 times more than women",
         "hook": "2.6 times. That's how much more often men are diagnosed.",
@@ -542,7 +542,9 @@
         "image.jpg"
       ],
       "review_note": "",
-      "uploaded": true
+      "uploaded": true,
+      "ig_media_id": "18142414888625086",
+      "posted_at": "2026-11-16T18:22:20.055833+00:00"
     },
     {
       "id": "2026-11-20_in_reel",
