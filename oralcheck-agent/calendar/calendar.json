@@ -552,7 +552,7 @@
       "network": "instagram",
       "media_type": "reel",
       "when": "2026-11-17T16:00:00+00:00",
-      "status": "approved",
+      "status": "posted",
       "idea": {
         "title": "Painless neck lump as a first sign of HPV throat cancer",
         "hook": "Have you felt a lump in your neck that just will not go away?",
@@ -581,7 +581,9 @@
         "reel.mp4"
       ],
       "review_note": "",
-      "uploaded": true
+      "uploaded": true,
+      "ig_media_id": "18250564537311618",
+      "posted_at": "2026-11-17T19:47:39.616678+00:00"
     },
     {
       "id": "2026-11-18_li_carousel",
