@@ -723,6 +723,8 @@ Update both together. See `AGENTS.md`.
       finished). The reel deliberately says "visited", not "checked their
       risk": only about a quarter reach a result. Test render:
       `oralcheck-agent/anim/samples/milestone-test.mp4`.
+      18 Nov: the count now also includes oralcheck.vercel.app (launch-week
+      visitors), so it read 958, 42 to go.
 
 - [ ] **Link Search Console to GA4 (blocked on Ian, five minutes, no code).**
       Raised by GA's own insights panel, 2026-10-28. The domain is already
@@ -812,6 +814,14 @@ Update both together. See `AGENTS.md`.
 ---
 
 ## Shipped
+
+- **2026-11-18: Homepage visitor count fixed.** Ian saw about 990 in Google
+  Analytics and about 920 on the site. GA's 988 counted every address that
+  ever reported to it: oralcheck.org 932, oralcheck.vercel.app 26 (real
+  launch-week visitors, several from Reddit, in April), localhost 24 (Ian's
+  laptop), and six preview deploys. The 12 Nov filter kept only oralcheck.org,
+  which wrongly dropped the vercel.app visitors. It now counts those too: 958.
+  The roughly 30 left out are Ian's own test traffic.
 
 Newest first.
 

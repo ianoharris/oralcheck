@@ -54,11 +54,16 @@ async function accessToken(key: Key): Promise<string> {
   return (await res.json()).access_token;
 }
 
-// Only the real site counts. Development servers once reported to the same GA
-// property (376 of 1,321 page views in the 90 days to 30 Oct 2026), which put
-// the homepage count about 24 people above the truth.
+// Only the real site counts: oralcheck.org, plus oralcheck.vercel.app, which was
+// the public address at launch in April 2026 (about 26 real visitors, several
+// from Reddit, before the domain took over). Left out: localhost (Ian's laptop,
+// about 24) and the per-deploy preview URLs (one each). GA's own "all users"
+// figure includes those, so it reads about 30 above this.
 const LIVE_HOSTS = {
-  filter: { fieldName: "hostName", inListFilter: { values: ["oralcheck.org", "www.oralcheck.org"] } },
+  filter: {
+    fieldName: "hostName",
+    inListFilter: { values: ["oralcheck.org", "www.oralcheck.org", "oralcheck.vercel.app"] },
+  },
 };
 
 async function runReport(body: Record<string, unknown>): Promise<{ rows?: { dimensionValues?: { value: string }[]; metricValues: { value: string }[] }[] } | null> {

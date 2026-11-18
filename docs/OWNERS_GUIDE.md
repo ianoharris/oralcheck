@@ -490,8 +490,10 @@ clinician reads before deciding whether to take you seriously.
 are new US cases a year, survival when caught early, and **visitors since
 launch** (labelled "people reached" until 2 November 2026; it counts GA users,
 not completed screeners, and the label now says so; since 12 November it counts
-only oralcheck.org itself, which took it from 963 to 907, because test copies of
-the site had been included), which the site reads from Google Analytics every hour
+only the real site, meaning oralcheck.org plus oralcheck.vercel.app, the address
+the site had at launch in April. On 18 November that was 958. Google Analytics'
+own "users" figure reads about 30 higher, 988 that day, because it also counts
+your laptop's test copy and the preview copies Vercel makes for each deploy), which the site reads from Google Analytics every hour
 (`src/lib/reach.ts`, using the `GA_PROPERTY_ID` and `GA_SERVICE_ACCOUNT_KEY`
 values stored on Vercel). The home page itself is rebuilt in the background at
 most once an hour, the first time someone visits after the hour is up. For its
