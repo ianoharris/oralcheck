@@ -129,9 +129,9 @@ async function fetchMilestone() {
   return { users, countries, states, finished, asOf: new Date().toISOString() };
 }
 
-export const getMilestoneStats = unstable_cache(fetchMilestone, ["ga-milestone"], { revalidate: 3600 });
+export const getMilestoneStats = unstable_cache(fetchMilestone, ["ga-milestone-v2"], { revalidate: 3600 });
 
-const cachedReach = unstable_cache(fetchReach, ["ga-total-users"], { revalidate: 3600 });
+const cachedReach = unstable_cache(fetchReach, ["ga-total-users-v2"], { revalidate: 3600 });
 
 /** People who have used the site: GA's total, never below the hand-read floor. */
 export async function getReach(): Promise<{ users: number; live: boolean }> {
