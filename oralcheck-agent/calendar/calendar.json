@@ -644,7 +644,7 @@
       "network": "instagram",
       "media_type": "reel",
       "when": "2026-11-19T16:00:00+00:00",
-      "status": "approved",
+      "status": "posted",
       "idea": {
         "title": "Oral cancer by age: how the rate climbs from your 20s",
         "hook": "How common is oral cancer at 25? At 45? At 65?",
@@ -677,7 +677,9 @@
         "5 Nov 2026: Ian's redo note ('Turn this into an animated video'). Rebuilt as an animated reel in the anim/ house style (anim/age.html, voiced by anim.py). The previous version is in previous/.",
         "5 Nov 2026: re-rendered with word-aligned captions (faster-whisper) and re-uploaded."
       ],
-      "review_note": ""
+      "review_note": "",
+      "ig_media_id": "18117304808329290",
+      "posted_at": "2026-11-19T18:38:37.947893+00:00"
     },
     {
       "id": "2026-11-24_in_reel",
