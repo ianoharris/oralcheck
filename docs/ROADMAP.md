@@ -712,6 +712,18 @@ Update both together. See `AGENTS.md`.
 
 ### Distribution
 
+- [ ] **Instagram reels lose 80% of viewers in three seconds (found 2026-11-20).**
+      Full audit: `docs/audits/2026-11-20-instagram-growth.md`. Skip rate 66 to
+      86%, average watch 3 to 5 s on 24 to 38 s reels, about one site visit a day
+      from Instagram. The opening frames are a still picture with small, half-grey
+      text; the niche opens on motion with big centred words. Ready to build:
+      a new first second for the house style and reel templates (hook shown in
+      full, large and centred, something moving, no repeated opener), blunt
+      opening lines, and a 7 to 12 s format to test against the long reels.
+      Ian's call: whether to allow hands or a face on screen (the house style
+      currently says no faces). Measure with the read-only insights export
+      (`oralcheck-agent/ig_insights.py`, workflow "Export Instagram insights").
+
 - [ ] **The 1,000-visitor reel posts itself (set up 2026-11-12, waiting on
       the count).** Ian's request. `milestone.py` runs in the daily calendar
       job and reads `oralcheck.org/api/reach` (GitHub holds no Analytics key).
