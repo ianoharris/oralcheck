@@ -1,0 +1,45 @@
+name: Export Instagram insights
+
+# Read-only: per-post Instagram insights for growth analysis. The repo is
+# public, so the output is encrypted to the public key given at dispatch
+# (RSA-wrapped AES key) and only the ciphertext is uploaded, kept for one day.
+on:
+  workflow_dispatch:
+    inputs:
+      pubkey:
+        description: "PEM public key, base64 on one line"
+        required: true
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: oralcheck-agent
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install httpx
+      - name: Export and encrypt
+        env:
+          INSTAGRAM_USER_ID: ${{ secrets.INSTAGRAM_USER_ID }}
+          INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
+          META_GRAPH_HOST: ${{ vars.META_GRAPH_HOST }}
+          PUBKEY_B64: ${{ inputs.pubkey }}
+        run: |
+          set -euo pipefail
+          umask 077
+          python ig_insights.py /tmp/ins.json
+          echo "$PUBKEY_B64" | base64 -d > /tmp/pub.pem
+          mkdir -p /tmp/out
+          openssl rand -hex 32 > /tmp/k.bin
+          openssl enc -aes-256-cbc -pbkdf2 -salt -in /tmp/ins.json -out /tmp/out/ins.enc -pass file:/tmp/k.bin
+          openssl pkeyutl -encrypt -pubin -inkey /tmp/pub.pem -in /tmp/k.bin -out /tmp/out/key.enc
+          shred -u /tmp/ins.json /tmp/k.bin
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ig-insights
+          path: /tmp/out/
+          retention-days: 1
