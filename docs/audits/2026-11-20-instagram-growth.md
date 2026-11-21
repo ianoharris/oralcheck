@@ -35,10 +35,11 @@ from the paid Instagram ads in May).
 
 ## What the numbers say about your own posts
 
-**The best performer is a carousel people sent to someone.** 24 July, "Your dentist
-is doing more than checking for cavities", reached 496 views and was **shared 14
-times**. No other post has more than 2 shares. It is practical, about the reader's
-own next appointment, and easy to forward to a parent.
+**The most-shared post is not evidence of anything.** 24 July, "Your dentist is
+doing more than checking for cavities", reached 496 views and 14 shares, but Ian
+says (20 Nov) that came from a family friend reposting it twice to help. Read it
+as one helpful person, not as what strangers share. No other post has more than
+2 shares, so there is no organic sharing signal yet.
 
 **The reel with the lowest skip rate had the bluntest opening line.** 5 November,
 "No pain, no problem. That logic does not apply here.": 66% skip, 282 views, the
@@ -96,9 +97,10 @@ neither, by design (the house style says no faces).
    sentence. The script writer should lead with the claim a viewer would argue with.
 3. **Test a 7 to 12 second format.** One statement, one visual, the two-week rule,
    the address. Alternate with the longer animated reels and compare skip rates.
-4. **Make more things worth sending.** The one post people shared was practical
-   ("what your dentist checks"). More of those: what to ask at a cleaning, how to
-   check a parent's mouth, what a two-week sore looks like on day 14.
+4. **Write some posts to be sent, and see if anyone does.** No post has been shared
+   by strangers yet (the 24 July shares were a family friend reposting), so this is a
+   test, not a finding: practical posts such as how to check a parent's mouth or what
+   to ask at a cleaning, with shares as the number to watch.
 5. **Give people a tap to the site.** Today the only route is the bio link, and it
    gets about two taps a day. Comment-to-DM (already on the tracker) turns each reel
    into a link; a Story with a link sticker on the day each reel posts is the free

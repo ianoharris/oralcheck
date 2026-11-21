@@ -721,7 +721,8 @@ Update both together. See `AGENTS.md`.
       full, large and centred, something moving, no repeated opener), blunt
       opening lines, and a 7 to 12 s format to test against the long reels.
       Ian's call: whether to allow hands or a face on screen (the house style
-      currently says no faces). Measure with the read-only insights export
+      currently says no faces). 20 Nov: Ian allows hands, not himself. The 24 Jul
+      carousel's 14 shares were a family friend reposting, not organic. Measure with the read-only insights export
       (`oralcheck-agent/ig_insights.py`, workflow "Export Instagram insights").
 
 - [ ] **The 1,000-visitor reel posts itself (set up 2026-11-12, waiting on
