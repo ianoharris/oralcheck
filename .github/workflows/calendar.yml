@@ -42,12 +42,16 @@ jobs:
           grep -q "would build now" milestone.txt && echo "build=1" >> "$GITHUB_OUTPUT" || true
       - name: Install render tools
         if: steps.milestone.outputs.build == '1'
+        # never let the milestone (e.g. a voice service outage) stop the day's posts
+        continue-on-error: true
         run: |
           sudo apt-get install -y ffmpeg
           pip install faster-whisper
           python -m playwright install chromium --with-deps
       - name: Build and schedule the milestone reel
         if: steps.milestone.outputs.build == '1'
+        # never let the milestone (e.g. a voice service outage) stop the day's posts
+        continue-on-error: true
         env:
           PYTHONUNBUFFERED: '1'
           GH_TOKEN: ${{ github.token }}
