@@ -862,7 +862,7 @@ Update both together. See `AGENTS.md`.
 
 Newest first.
 
-### 2026-11-21: the smokeless tobacco and HPV citations, actually on the site
+### 2026-11-21: the smokeless tobacco and HPV citations, actually live
 
 - **The 8 Oct fix for the last two mismatched screener citations was never
   on the live site.** It was committed on 2026-10-08 (b6b421f) on the side
@@ -870,8 +870,10 @@ Newest first.
   roadmap and tracker called it done while oralcheck.org kept the old text
   for six weeks. Found 2026-11-21. Re-applied onto master the same day; the
   `/methods` table had been rebuilt since (weights now read from the screener
-  itself), so the HPV source was changed in the new table by hand. Not yet
-  pushed: live once Ian says to push.
+  itself), so the HPV source was changed in the new table by hand. Pushed
+  on Ian's go 2026-11-21 (master cbc1eb3) and live on oralcheck.org the same
+  day, checked on the production `/methods` and screener pages in English,
+  Spanish and Portuguese.
   - **Smokeless tobacco.** The tobacco question said smokeless users face
     "4 to 5x" and credited Gandini 2008, a meta-analysis of smoking only. The
     global meta-analysis (Asthana et al. 2019, *Nicotine & Tobacco Research*,
