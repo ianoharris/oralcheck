@@ -728,7 +728,7 @@
       "network": "linkedin",
       "media_type": "image",
       "when": "2026-11-24T16:00:00+00:00",
-      "status": "approved",
+      "status": "scheduled",
       "idea": {
         "title": "Five common mouth findings that are not oral cancer",
         "hook": "Five things in your mouth that look worrying but probably aren't.",
@@ -758,7 +758,9 @@
       ],
       "review_note": "",
       "version": 3,
-      "uploaded": true
+      "uploaded": true,
+      "publora_id": "6b01f70bc132391001379916",
+      "scheduled_at": "2026-11-21T19:54:42.715963+00:00"
     },
     {
       "id": "2026-11-26_in_carousel",
