@@ -716,8 +716,11 @@
         "reel.mp4"
       ],
       "review_note": "",
-      "version": 2,
-      "uploaded": true
+      "version": 3,
+      "uploaded": true,
+      "notes": [
+        "20 Nov 2026: new cold open from the Instagram audit (skip rate about 80%): the whole first line large on frame 0 over a moving picture, opening framing varied per reel."
+      ]
     },
     {
       "id": "2026-11-25_li_image",
@@ -890,11 +893,12 @@
         "reel.mp4"
       ],
       "review_note": "",
-      "version": 8,
+      "version": 9,
       "uploaded": true,
       "notes": [
         "5 Nov 2026: Ian's redo note ('turn this into a video'). Rebuilt as an animated reel in the anim/ house style (anim/hpvvax.html, voiced by anim.py). The previous version is in previous/.",
-        "5 Nov 2026: re-rendered with word-aligned captions (faster-whisper) and re-uploaded."
+        "5 Nov 2026: re-rendered with word-aligned captions (faster-whisper) and re-uploaded.",
+        "20 Nov 2026: new cold open from the Instagram audit (skip rate about 80%): the whole first line large on frame 0 over a moving picture, opening framing varied per reel."
       ]
     },
     {
@@ -979,7 +983,11 @@
         "reel.mp4"
       ],
       "review_note": "",
-      "uploaded": true
+      "uploaded": true,
+      "version": 2,
+      "notes": [
+        "20 Nov 2026: new cold open from the Instagram audit (skip rate about 80%): the whole first line large on frame 0 over a moving picture, opening framing varied per reel. Rebuilt in the drawn style; the 3D jaw it used is retired, and the script now separates thrush (wipes away) from leukoplakia (does not)."
+      ]
     },
     {
       "id": "2026-12-09_li_image",

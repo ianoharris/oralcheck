@@ -87,7 +87,7 @@ window.render = (t) => {
   view(box);
 
   // shield: draws itself in the hook, rides to the start of the band, comes back big at the end
-  const draw = ease(span(t, 0.1, 1.6));
+  const draw = 0.4 + 0.6 * ease(span(t, 0, 1.2));   // part-drawn on frame 0: the cold open is never an empty stage
   shLine.setAttribute("stroke-dashoffset", shLen * (1 - draw));
   shFill.style.opacity = span(t, 1.0, 1.8);
   const toLine = ease(span(t, T.range - 0.2, T.range + 1.0)), back = ease(span(t, T.limits, T.limits + 1.0));

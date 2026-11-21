@@ -20,6 +20,7 @@ const UI = `
   <div id="tap"></div>
   <div id="readout"><div class="v" id="rv"></div><div class="u" id="ru"></div><div class="bar" id="rb"></div></div>
   <div id="cap"></div>
+  <div id="hook"></div>
   <div class="scrub"><i id="scrub"></i></div>
   <div id="foot"></div>
   <div id="credit"></div>
@@ -66,6 +67,23 @@ export function readout(value, unit, bar, opacity) {
   $("readout").style.opacity = opacity;
 }
 
+const HOOK_WORDS = (PLAN.shots[0] && PLAN.shots[0].words) || [];
+{ const n = HOOK_WORDS.map(w => w.text).join(" ").length; $("hook").style.fontSize = (n < 34 ? 112 : n < 60 ? 96 : 82) + "px"; }
+/** The cold open: the first line in full from frame 0, over the caption band. */
+function hookCard(t) {
+  const sh0 = PLAN.shots[0], el = $("hook");
+  if (!sh0 || !HOOK_WORDS.length) { el.style.display = "none"; return; }
+  const end = sh0.t0 + sh0.len;
+  let now = -1; HOOK_WORDS.forEach((w, j) => { if (t >= w.start) now = j; });
+  el.innerHTML = HOOK_WORDS.map((w, j) => `<span class="${j === now && t < end - 0.3 ? "now" : ""}">${w.text}</span>`).join(" ");
+  const out = span(t, end - 0.35, end + 0.15);
+  el.style.top = (230 + 1000 + 40 - el.offsetHeight / 2 + out * 60) + "px";
+  el.style.opacity = 1 - out;
+  el.style.transform = `scale(${(1 + 0.012 * Math.sin(t * 2.2)) * (1 - 0.06 * out)})`;
+  el.style.visibility = out >= 1 ? "hidden" : "visible";
+  if (t < end - 0.1) $("cap").style.visibility = "hidden";
+}
+
 /** Chrome, captions, progress, footers and the end card. Call last in render(t). */
 export function frame(t) {
   const {sh} = at(t);
@@ -77,5 +95,6 @@ export function frame(t) {
   $("cta").style.opacity = ck; $("cta").style.transform = `translateY(${(1 - ck) * 24}px)`;
   $("cap").style.opacity = 1 - ck;
   for (const id of ["cap", "scrub", "eyebrow", "readout"]) $(id).style.visibility = ck > 0.6 ? "hidden" : "visible";
+  hookCard(t);
   return true;
 }

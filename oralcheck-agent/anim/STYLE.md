@@ -53,6 +53,25 @@ A label (a teal sentence-case line over a serif title) with a solid dot and a
 thin leader line marks the subject. Scenes draw only the stage. The calendar
 reels (`reel2d/scene.html`) use the same frame.
 
+## The first three seconds
+
+Added 20 Nov 2026 after the Instagram audit (`docs/audits/2026-11-20-instagram-growth.md`):
+reels were losing about 80% of viewers inside three seconds, and their first
+frame was a still plate under a mostly grey caption.
+
+- **The hook is on screen in full at frame 0**, large (DM Serif, 82 to 112 px by
+  length), centred over the caption band, with the word being spoken in teal
+  (`#hook` in `house.css` and `reel2d/scene.html`). Captions take over when the
+  first line ends.
+- **The stage is moving at frame 0.** Illustrated reels open close in on a part
+  of the plate chosen from the hook's own text and pull back over 1.6 s; nothing
+  turns teal for it. Animated scenes start part-drawn, never empty.
+- **No two reels in a row open on the same picture.** The script writer no
+  longer opens on the whole-mouth overview.
+- **The first line is the claim, not the topic.** "No pain, no problem" had the
+  best skip rate (66%); topic sentences ran 82 to 86%.
+- **No people.** No faces, and no hands (Ian, 20 Nov).
+
 ## Motion
 
 - Ease out (quartic). No bounce, no spin for its own sake.

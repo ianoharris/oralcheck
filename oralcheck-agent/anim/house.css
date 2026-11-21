@@ -53,3 +53,12 @@ svg#lead{position:absolute;inset:0;width:1080px;height:1920px}
 #cta .h{font-family:"DM Serif Display",serif;font-size:104px;line-height:1.0;margin-top:18px}
 #cta .u{font-weight:700;font-size:80px;color:var(--teal);margin-top:44px}
 #cta .s{font-size:34px;color:var(--ink-soft);margin-top:18px}
+
+/* Cold open (20 Nov 2026 audit: about 80% of viewers swiped away within three
+   seconds). The whole first line is on screen at frame 0, large, over the
+   caption band; the word being spoken turns teal; it settles away when the
+   first line ends. Scenes must also be moving on frame 0. */
+#hook{position:absolute;left:64px;right:64px;top:0;text-align:center;font-family:"DM Serif Display",serif;color:var(--ink);
+      line-height:1.04;letter-spacing:-.01em;padding:30px 34px 36px;border-radius:28px;background:rgba(245,243,240,.9);
+      box-shadow:0 10px 50px rgba(21,32,31,.10)}
+#hook span.now{color:var(--teal)}

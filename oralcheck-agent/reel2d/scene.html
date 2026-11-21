@@ -52,6 +52,16 @@
   #cta .s{font-size:34px;color:#4a5958;margin-top:18px}
   #foot{position:absolute;left:72px;right:72px;top:1530px;font-size:24px;color:#5b6766;opacity:0}
   #credit{position:absolute;left:72px;right:72px;top:1576px;font-size:19px;line-height:1.45;color:#98a3a2}
+  /* Cold open (20 Nov 2026 audit: about 80% of viewers swiped away in the first three
+     seconds while frame 0 was a still plate under a mostly grey caption). The whole
+     first line is on screen at frame 0, large and centred over the stage; the word
+     being spoken turns teal; it settles away when the first line ends. */
+  #hook{position:absolute;left:64px;right:64px;top:0;text-align:center;font-family:"DM Serif Display",serif;color:#15201f;
+        line-height:1.04;letter-spacing:-.01em;padding:30px 34px 36px;border-radius:28px;background:rgba(245,243,240,.9);
+        box-shadow:0 10px 50px rgba(21,32,31,.10)}
+  #hook span{transition:none}
+  #hook span.now{color:#0d7377}
+  body.still #hook{display:none}
   /* Stills for image posts and carousel slides: only the plate and its label. */
   body.still .chrome, body.still .rule, body.still .view, body.still #cap, body.still .scrub,
   body.still #cta, body.still #credit, body.still #foot, body.still #tap, body.still #tapdot{display:none}
@@ -67,6 +77,7 @@
   <div id="label"><div class="k" id="lk"></div><div class="t" id="lt"></div><div class="d" id="ld"></div></div>
   <div id="tap"></div><div id="tapdot"></div>
   <div id="cap"></div>
+  <div id="hook"></div>
   <div class="scrub"><i id="scrub"></i></div>
   <div id="cta"><div class="k">Free, private, no account</div><div class="h">Check your risk in two minutes.</div>
     <div class="u">oralcheck.org</div><div class="s">A risk check, not a diagnosis. A sore that lasts two weeks still means a dentist.</div></div>
@@ -144,6 +155,39 @@ function labelLeft(i, sh) {
   return sideCache.get(i);
 }
 
+
+// ---- cold open ----------------------------------------------------------------
+// The first shot opens closer in on a part of the plate picked from the hook's
+// own text (so two reels in a row do not open on the same picture) and pulls
+// back fast, so the frame is moving from frame 0. Nothing turns teal for it.
+const OPEN_SPOTS = {a: [[450, 610], [330, 590], [460, 760], [540, 760], [440, 490], [500, 600]],
+                    b: [[700, 650], [660, 670], [640, 740], [700, 610]]};
+const HOOK = PLAN.still ? null : (PLAN.shots[0].words || []).map(w => w.text).join(" ");
+let hookSeed = 0; for (const ch of HOOK || "") hookSeed = (hookSeed * 31 + ch.charCodeAt(0)) >>> 0;
+function openBox(sh, box, local) {
+  const spots = OPEN_SPOTS[sh.plate], [sx, sy] = spots[hookSeed % spots.length];
+  const k = ease(Math.min(1, local / 1.6));
+  return [lerp(sx, box[0], k), lerp(sy, box[1], k), lerp(box[2] * 0.5, box[2], k)];
+}
+if (HOOK) {
+  const n = HOOK.length;
+  $("hook").style.fontSize = (n < 34 ? 112 : n < 60 ? 96 : 82) + "px";
+}
+function hookCard(t) {
+  if (!HOOK) return;
+  const sh0 = PLAN.shots[0], end = sh0.t0 + sh0.len, words = sh0.words || [];
+  // the word now being spoken: the last one whose start has passed
+  let now = -1; words.forEach((w, j) => { if (t >= w.start) now = j; });
+  $("hook").innerHTML = words.map((w, j) => `<span class="${j === now && t < end - 0.3 ? "now" : ""}">${w.text}</span>`).join(" ");
+  const out = span(t, end - 0.35, end + 0.15);
+  const el = $("hook"), h = el.offsetHeight;
+  el.style.top = (TOP + SH + 40 - h / 2 + out * 60) + "px";   // over the caption band, clear of the subject
+  el.style.opacity = 1 - out;
+  el.style.transform = `scale(${(1.0 + 0.012 * Math.sin(t * 2.2)) * (1 - 0.06 * out)})`;
+  el.style.visibility = out >= 1 ? "hidden" : "visible";
+  $("cap").style.visibility = t < end - 0.1 ? "hidden" : $("cap").style.visibility;
+}
+
 window.render = (t) => {
   const shots = PLAN.shots;
   let i = shots.length - 1; while (i > 0 && t < shots[i].t0) i--;
@@ -155,6 +199,7 @@ window.render = (t) => {
   // camera: drift within the shot; glide from the last shot on the same
   // plate, or cross-fade when the plate changes
   let box = boxAt(sh, local / sh.len);
+  if (i === 0 && !PLAN.still) box = openBox(sh, box, local);
   const cross = prev && prev.plate !== sh.plate && local < FADE;
   if (prev && prev.plate === sh.plate && local < MOVE) {
     const k = ease(local / MOVE), from = boxAt(prev, 1);
@@ -207,6 +252,7 @@ window.render = (t) => {
   $("cta").style.opacity = ck; $("cta").style.transform = `translateY(${(1 - ck) * 24}px)`;
   $("cap").style.opacity = 1 - ck;
   for (const id of ["cap", "scrub", "view"]) $(id).style.visibility = ck > 0.6 ? "hidden" : "visible";
+  hookCard(t);
   return true;
 };
 </script>
