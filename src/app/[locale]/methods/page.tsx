@@ -55,7 +55,7 @@ const factors: FactorRow[] = [
   { id: "alcoholRarely", q: "alcohol", opt: "rarely", or: "~1.2×", source: "Bagnardi et al., Br J Cancer, 2015" },
   { id: "betelCurrent", q: "betel", opt: "current", or: "7 – 10×", source: "IARC Monograph 85, 2004", formula: 10 },
   { id: "betelPast", q: "betel", opt: "past", or: "~2.5×", source: "IARC Monograph 85, 2004" },
-  { id: "hpvHistory", q: "hpv", opt: "history", or: "3 – 5× (blended)", source: "Gillison et al., J Natl Cancer Inst, 2008", formula: 6 },
+  { id: "hpvHistory", q: "hpv", opt: "history", or: "3 – 5× (blended)", source: "D'Souza et al., NEJM, 2007", formula: 6 },
   { id: "hpvUnvaccinated", q: "hpv", opt: "neither", or: "~1.5× (proxy)", source: "D'Souza et al., NEJM, 2007; population exposure estimate" },
   { id: "hpvUnknown", q: "hpv", opt: "unknown", or: "~1.2× (proxy)", source: "D'Souza et al., NEJM, 2007; population exposure estimate" },
   { id: "sunExposure", q: "sun", opt: "daily", or: "2 – 3×", source: "Perea-Milla López et al., Br J Cancer, 2003", formula: 4 },
@@ -107,6 +107,7 @@ const refs = [
     id: 3,
     citation: "Gillison ML, D'Souza G, Westra W, et al. Distinct risk factor profiles for human papillomavirus type 16–positive and human papillomavirus type 16–negative head and neck cancers. Journal of the National Cancer Institute. 2008;100(6):407–420.",
     url: "https://pubmed.ncbi.nlm.nih.gov/18334711/",
+    note: "HPV-16-positive cancers were associated with sexual behavior and marijuana use, not cumulative tobacco or alcohol; the basis for treating them as a different disease profile",
   },
   {
     id: 4,
@@ -146,7 +147,7 @@ const refs = [
     id: 10,
     citation: "D'Souza G, Kreimer AR, Viscidi R, et al. Case-control study of human papillomavirus and oropharyngeal cancer. New England Journal of Medicine. 2007;356(19):1944–1956.",
     url: "https://pubmed.ncbi.nlm.nih.gov/17494927/",
-    note: "HPV-16 seropositivity OR 32.2× for oropharyngeal cancer; behavioral exposure proxies used in screener",
+    note: "Oral HPV-16 infection OR 14.6× and HPV-16 seropositivity OR 32.2× for oropharyngeal cancer; behavioral exposure proxies used in screener, so the weight is blended well below either",
   },
   {
     id: 11,
@@ -171,6 +172,12 @@ const refs = [
     citation: "Blot WJ, McLaughlin JK, Winn DM, et al. Smoking and drinking in relation to oral and pharyngeal cancer. Cancer Research. 1988;48(11):3282–3287.",
     url: "https://pubmed.ncbi.nlm.nih.gov/3365707/",
     note: "The often-quoted \"more than 35-fold\" figure: oral and pharyngeal cancer combined, two or more packs and more than four drinks a day. Not used here: Hashibe 2009 is larger, pooled, and reports the oral cavity separately",
+  },
+  {
+    id: 15,
+    citation: "Asthana S, Labani S, Kailash U, Sinha DN, Mehrotra R. Association of smokeless tobacco use and oral cancer: a systematic global review and meta-analysis. Nicotine & Tobacco Research. 2019;21(9):1162–1171.",
+    url: "https://pubmed.ncbi.nlm.nih.gov/29790998/",
+    note: "37 studies. Risk depends on the product: gutka 8.67, oral snuff 4.18, South-East Asia region overall 4.44, Swedish snus 0.86 (no significant increase)",
   },
 ] as const;
 

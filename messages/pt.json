@@ -1627,7 +1627,7 @@
     "emailGenericError": "Não foi possível enviar. Tente novamente.",
     "retake": "↻ Refazer o rastreamento",
     "evidenceBasisLabel": "Base de evidências:",
-    "evidenceBasisBody": "Os pesos dos fatores de risco são baseados em evidências epidemiológicas publicadas, incluindo as classificações de carcinógenos do Grupo 1 da IARC para tabaco (Gandini et al., <i>International Journal of Cancer</i>, 2008), álcool (Bagnardi et al., <i>British Journal of Cancer</i>, 2015) e noz de areca com bétel (IARC Monograph 85), além de razões de chances para HPV-16 no câncer de orofaringe (Gillison et al., <i>Journal of the National Cancer Institute</i>, 2008) e dados de incidência por idade do SEER. O termo de interação tabaco-álcool reflete um risco carcinogênico multiplicativo documentado, não apenas aditivo (Hashibe et al., <i>Cancer Epidemiology, Biomarkers & Prevention</i>, 2009). As taxas de transformação de leucoplasia e eritroplasia são provenientes de Napier & Speight, <i>Journal of Oral Pathology & Medicine</i>, 2008.",
+    "evidenceBasisBody": "Os pesos dos fatores de risco são baseados em evidências epidemiológicas publicadas, incluindo as classificações de carcinógenos do Grupo 1 da IARC para tabaco (Gandini et al., <i>International Journal of Cancer</i>, 2008), álcool (Bagnardi et al., <i>British Journal of Cancer</i>, 2015) e noz de areca com bétel (IARC Monograph 85), além de razões de chances para HPV-16 no câncer de orofaringe (D'Souza et al., <i>New England Journal of Medicine</i>, 2007) e dados de incidência por idade do SEER. O termo de interação tabaco-álcool reflete um risco carcinogênico multiplicativo documentado, não apenas aditivo (Hashibe et al., <i>Cancer Epidemiology, Biomarkers & Prevention</i>, 2009). As taxas de transformação de leucoplasia e eritroplasia são provenientes de Napier & Speight, <i>Journal of Oral Pathology & Medicine</i>, 2008.",
     "disclaimerLabel": "Aviso:",
     "disclaimerBody": "O OralCheck é um questionário de avaliação de risco, não um teste de rastreamento nem um instrumento diagnóstico. Ele não foi validado em relação a um conjunto de dados de desfechos clínicos. O teste de rastreamento para câncer bucal é um breve exame visual e tátil realizado por um dentista ou médico, e este resultado é apenas um motivo para realizar esse exame. Ele não constitui aconselhamento médico, diagnóstico ou tratamento. Consulte sempre um dentista ou médico qualificado em caso de qualquer preocupação com a saúde bucal.",
     "primaryCTA": {
@@ -1795,7 +1795,7 @@
     },
     "tobacco": {
       "title": "Você usa tabaco?",
-      "subtitle": "O tabaco é o principal fator de risco isolado para o câncer da cavidade bucal e é classificado como carcinógeno do Grupo 1 pela IARC. Fumantes diários têm risco de 2 a 6 vezes maior, e usuários de tabaco sem fumaça têm risco de 4 a 5 vezes maior (Gandini et al., International Journal of Cancer, 2008).",
+      "subtitle": "O tabaco é o principal fator de risco isolado para o câncer da cavidade bucal e é classificado como carcinógeno do Grupo 1 pela IARC. Fumantes diários têm risco de 2 a 6 vezes maior (Gandini et al., International Journal of Cancer, 2008). No tabaco sem fumaça, depende do produto: cerca de 4 vezes para o rapé oral e para os produtos usados no sul da Ásia, cerca de 9 vezes para o gutka, e nenhum aumento claro nos estudos do snus sueco (Asthana et al., Nicotine & Tobacco Research, 2019).",
       "options": {
         "daily": "Sim, diariamente",
         "occasional": "Sim, ocasionalmente",
@@ -1815,7 +1815,7 @@
     },
     "hpv": {
       "title": "Situação em relação ao HPV",
-      "subtitle": "O HPV-16 é o principal responsável pelo câncer de orofaringe (amígdalas e base da língua), com uma razão de chances cerca de 15 vezes maior em pessoas infectadas (Gillison et al., Journal of the National Cancer Institute, 2008). Sua associação com o câncer bucal é menor, mas ainda representa um fator de risco relevante. A vacinação reduz significativamente esse risco.",
+      "subtitle": "O HPV-16 é o principal responsável pelo câncer de orofaringe (amígdalas e base da língua), e pessoas com infecção oral por HPV-16 tinham chances cerca de 15 vezes maiores de desenvolvê-lo (D'Souza et al., New England Journal of Medicine, 2007). Sua associação com o câncer bucal é menor, mas ainda representa um fator de risco relevante. A vacinação reduz significativamente esse risco.",
       "options": {
         "vaccinated": "Vacinado contra o HPV",
         "neither": "Não vacinado e sem histórico conhecido",

@@ -1627,7 +1627,7 @@
     "emailGenericError": "No se pudo enviar. Inténtalo de nuevo.",
     "retake": "↻ Repetir la evaluación",
     "evidenceBasisLabel": "Base de evidencia:",
-    "evidenceBasisBody": "Los pesos de los factores de riesgo se basan en evidencia epidemiológica publicada, incluidas las clasificaciones de carcinógenos del Grupo 1 de la IARC para el tabaco (Gandini et al., <i>International Journal of Cancer</i>, 2008), el alcohol (Bagnardi et al., <i>British Journal of Cancer</i>, 2015) y el quid de betel (Monografía 85 de la IARC), así como las razones de momios del VPH-16 para el cáncer orofaríngeo (Gillison et al., <i>Journal of the National Cancer Institute</i>, 2008) y los datos de incidencia por edad de SEER. El término de interacción tabaco-alcohol refleja un riesgo carcinogénico documentado como multiplicativo, no simplemente aditivo (Hashibe et al., <i>Cancer Epidemiology, Biomarkers & Prevention</i>, 2009). Las tasas de transformación de leucoplasia y eritroplasia provienen de Napier & Speight, <i>Journal of Oral Pathology & Medicine</i>, 2008.",
+    "evidenceBasisBody": "Los pesos de los factores de riesgo se basan en evidencia epidemiológica publicada, incluidas las clasificaciones de carcinógenos del Grupo 1 de la IARC para el tabaco (Gandini et al., <i>International Journal of Cancer</i>, 2008), el alcohol (Bagnardi et al., <i>British Journal of Cancer</i>, 2015) y el quid de betel (Monografía 85 de la IARC), así como las razones de momios del VPH-16 para el cáncer orofaríngeo (D'Souza et al., <i>New England Journal of Medicine</i>, 2007) y los datos de incidencia por edad de SEER. El término de interacción tabaco-alcohol refleja un riesgo carcinogénico documentado como multiplicativo, no simplemente aditivo (Hashibe et al., <i>Cancer Epidemiology, Biomarkers & Prevention</i>, 2009). Las tasas de transformación de leucoplasia y eritroplasia provienen de Napier & Speight, <i>Journal of Oral Pathology & Medicine</i>, 2008.",
     "disclaimerLabel": "Aviso:",
     "disclaimerBody": "OralCheck es un cuestionario de evaluación de riesgo, no una prueba de detección ni un instrumento de diagnóstico. No ha sido validado con un conjunto de datos de resultados clínicos. La prueba de detección del cáncer oral es un breve examen visual y táctil realizado por un dentista o médico, y este resultado es únicamente una razón para acudir a dicho examen. No constituye consejo médico, diagnóstico ni tratamiento. Consulte siempre a un profesional dental o médico calificado ante cualquier inquietud sobre su salud bucal.",
     "primaryCTA": {
@@ -1795,7 +1795,7 @@
     },
     "tobacco": {
       "title": "¿Usas tabaco?",
-      "subtitle": "El tabaco es el factor de riesgo individual más fuerte para el cáncer de cavidad oral, un carcinógeno del Grupo 1 según la IARC. Quienes fuman a diario tienen un riesgo de 2 a 6 veces mayor; quienes usan tabaco sin humo tienen un riesgo de 4 a 5 veces mayor (Gandini et al., International Journal of Cancer, 2008).",
+      "subtitle": "El tabaco es el factor de riesgo individual más fuerte para el cáncer de cavidad oral, un carcinógeno del Grupo 1 según la IARC. Quienes fuman a diario tienen un riesgo de 2 a 6 veces mayor (Gandini et al., International Journal of Cancer, 2008). En el tabaco sin humo depende del producto: unas 4 veces para el rapé oral y para los productos que se usan en el sur de Asia, unas 9 veces para el gutka, y ningún aumento claro en los estudios del snus sueco (Asthana et al., Nicotine & Tobacco Research, 2019).",
       "options": {
         "daily": "Sí, a diario",
         "occasional": "Sí, ocasionalmente",
@@ -1815,7 +1815,7 @@
     },
     "hpv": {
       "title": "Estado de VPH",
-      "subtitle": "El VPH-16 es el principal impulsor del cáncer orofaríngeo (amígdalas, base de la lengua), con una razón de momios de ~15 veces en personas infectadas (Gillison et al., Journal of the National Cancer Institute, 2008). Está menos relacionado con el cáncer de cavidad oral, pero sigue siendo un factor de riesgo importante. La vacunación reduce considerablemente el riesgo.",
+      "subtitle": "El VPH-16 es el principal impulsor del cáncer orofaríngeo (amígdalas, base de la lengua), y las personas con una infección oral por VPH-16 tenían unas 15 veces más probabilidades de padecerlo (D'Souza et al., New England Journal of Medicine, 2007). Está menos relacionado con el cáncer de cavidad oral, pero sigue siendo un factor de riesgo importante. La vacunación reduce considerablemente el riesgo.",
       "options": {
         "vaccinated": "Vacunado(a) contra el VPH",
         "neither": "No vacunado(a), sin antecedentes conocidos",

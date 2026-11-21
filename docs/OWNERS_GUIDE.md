@@ -143,7 +143,7 @@ exposure than without. OR 6 means roughly six times the odds.
 | Betel quid / paan / gutka | 7–10x | IARC Group 1 carcinogen, works with or without tobacco |
 | Tobacco, daily | 2.5–6x | Direct mucosal carcinogen exposure |
 | Alcohol, daily | ~3x | Acetaldehyde, ethanol's metabolite, is the actual carcinogen |
-| HPV-related history | ~15x for oropharynx specifically | HPV-16 integrates into host cells |
+| HPV-related history | ~15x for oropharynx specifically (oral HPV-16 infection, D'Souza 2007) | HPV-16 integrates into host cells |
 | Tobacco **and** alcohol together | ~15x for the heaviest users | More than multiplicative. Alcohol appears to increase mucosal permeability to tobacco carcinogens. The figure is for more than a pack a day plus three or more drinks a day, oral cavity, from a pool of 17 studies (Hashibe 2009). You will see "35-fold" quoted too: see Q6a |
 | Age 65+ | ~4x | Cumulative exposure plus age-related immune change |
 | Immunosuppression / transplant / prior head-and-neck radiation | ~2–4x | Reduced immune surveillance of the mucosa |
@@ -288,7 +288,7 @@ symptom always wins.
 |---|---|---|
 | 1 | Age | Strongest non-modifiable predictor. Also a proxy for cumulative exposure to everything else |
 | 2 | Sex at birth | Men diagnosed ~2.6x more. Weighted from a conservative OR 2.0, not 2.6 — see 6.2 |
-| 3 | Tobacco | The anchor for the whole scale. Combustible and smokeless both count |
+| 3 | Tobacco | The anchor for the whole scale. Combustible and smokeless both count, though smokeless risk depends heavily on the product: about 9x for gutka, about 4x for oral snuff, no clear increase for Swedish snus (Asthana 2019). The question does not ask which product, so smokeless use is scored like smoking |
 | 4 | Alcohol | Group 1 carcinogen, clear dose-response. Frequency matters more than what's drunk |
 | 5 | HPV | Leading cause of oropharyngeal cancer under 50. Asked as a proxy — see 6.3 |
 | 6 | Sun exposure | Lower **lip** specifically, not inside the mouth |
@@ -1258,6 +1258,7 @@ code generator, and copy-paste embed code.
 | A calendar date passes and nothing posts | The post was never approved on the review page, or was approved after its date, or its media never reached the release (found 26 Oct 2026: nothing had been uploaded, so nothing was scheduled) | Approve in time; approved posts are uploaded with `post_calendar.py upload` |
 | The Monday run ends "cancelled" | GitHub's 6-hour cap per job, found 2026-10-20 | Why the Monday schedule is paused and the calendar is used instead |
 | Every route 404s locally | Stale Turbopack cache | `rm -rf .next` |
+| The roadmap says a fix shipped, but the live site still has the old text | The fix was committed on a side branch (each Claude session works on its own) and never merged into master. Found 21 Nov 2026: the smokeless tobacco and HPV citation fix sat on a side branch for six weeks | Before calling something shipped, check the live page itself, and check that `git branch --contains <commit>` lists master |
 
 **A recurring trap:** the Anthropic **workspace** spend limit is enforced
 separately from the organisation limit. Raising the org limit alone does nothing.

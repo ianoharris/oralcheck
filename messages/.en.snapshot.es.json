@@ -1627,7 +1627,7 @@
     "emailGenericError": "Couldn't send. Try again.",
     "retake": "↻ Retake the screener",
     "evidenceBasisLabel": "Evidence basis:",
-    "evidenceBasisBody": "Risk factor weights are informed by published epidemiological evidence, including IARC Group 1 carcinogen classifications for tobacco (Gandini et al., <i>International Journal of Cancer</i>, 2008), alcohol (Bagnardi et al., <i>British Journal of Cancer</i>, 2015), and betel quid (IARC Monograph 85), as well as HPV-16 odds ratios for oropharyngeal cancer (Gillison et al., <i>Journal of the National Cancer Institute</i>, 2008) and SEER age-incidence data. The tobacco-alcohol interaction term reflects documented multiplicative, not merely additive, carcinogenic risk (Hashibe et al., <i>Cancer Epidemiology, Biomarkers & Prevention</i>, 2009). Leukoplakia and erythroplakia transformation rates are drawn from Napier & Speight, <i>Journal of Oral Pathology & Medicine</i>, 2008.",
+    "evidenceBasisBody": "Risk factor weights are informed by published epidemiological evidence, including IARC Group 1 carcinogen classifications for tobacco (Gandini et al., <i>International Journal of Cancer</i>, 2008), alcohol (Bagnardi et al., <i>British Journal of Cancer</i>, 2015), and betel quid (IARC Monograph 85), as well as HPV-16 odds ratios for oropharyngeal cancer (D'Souza et al., <i>New England Journal of Medicine</i>, 2007) and SEER age-incidence data. The tobacco-alcohol interaction term reflects documented multiplicative, not merely additive, carcinogenic risk (Hashibe et al., <i>Cancer Epidemiology, Biomarkers & Prevention</i>, 2009). Leukoplakia and erythroplakia transformation rates are drawn from Napier & Speight, <i>Journal of Oral Pathology & Medicine</i>, 2008.",
     "disclaimerLabel": "Disclaimer:",
     "disclaimerBody": "OralCheck is a risk-assessment questionnaire, not a screening test and not a diagnostic instrument. It has not been validated against a clinical outcome dataset. The screening test for oral cancer is a short visual and tactile examination by a dentist or physician, and this result is only a reason to go and have one. It does not constitute medical advice, diagnosis, or treatment. Always consult a qualified dental or medical provider regarding any oral health concerns.",
     "primaryCTA": {
@@ -1795,7 +1795,7 @@
     },
     "tobacco": {
       "title": "Do you use tobacco?",
-      "subtitle": "Tobacco is the single strongest risk factor for oral cavity cancer, an IARC Group 1 carcinogen. Daily smokers face 2–6× higher risk; smokeless tobacco users face 4–5× higher risk (Gandini et al., International Journal of Cancer, 2008).",
+      "subtitle": "Tobacco is the single strongest risk factor for oral cavity cancer, an IARC Group 1 carcinogen. Daily smokers face 2–6× higher risk (Gandini et al., International Journal of Cancer, 2008). For smokeless tobacco it depends on the product: about 4× for oral snuff and for products used across South Asia, about 9× for gutka, and no clear increase in studies of Swedish snus (Asthana et al., Nicotine & Tobacco Research, 2019).",
       "options": {
         "daily": "Yes, daily",
         "occasional": "Yes, occasionally",
@@ -1815,7 +1815,7 @@
     },
     "hpv": {
       "title": "HPV status",
-      "subtitle": "HPV-16 is the primary driver of oropharyngeal cancer (tonsils, tongue base), with an odds ratio ~15× in infected individuals (Gillison et al., Journal of the National Cancer Institute, 2008). It is less strongly linked to oral cavity cancer but remains a significant risk factor. Vaccination substantially lowers risk.",
+      "subtitle": "HPV-16 is the primary driver of oropharyngeal cancer (tonsils, tongue base), and people with an oral HPV-16 infection had about 15× the odds of it (D'Souza et al., New England Journal of Medicine, 2007). It is less strongly linked to oral cavity cancer but remains a significant risk factor. Vaccination substantially lowers risk.",
       "options": {
         "vaccinated": "Vaccinated against HPV",
         "neither": "Not vaccinated, no known history",

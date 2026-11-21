@@ -34,7 +34,7 @@ A log-linear model was chosen deliberately: it means that the sum of weights app
 | Betel quid / paan / gutka, current | 7 to 10x | 9 | IARC Monograph 85, 2004 |
 | Tobacco, occasional | ~3.0x | 5 | Gandini et al., Int J Cancer, 2008 |
 | Alcohol, daily | ~3.0x | 5 | Bagnardi et al., Br J Cancer, 2015 |
-| HPV-related condition (history) | 3 to 5x blended | 5 | Gillison et al., J Natl Cancer Inst, 2008 |
+| HPV-related condition (history) | 3 to 5x blended | 5 | D'Souza et al., NEJM, 2007 |
 | Immunosuppression, transplant, or prior head/neck radiation | 2 to 4x blended | 5 | Engels et al., JAMA, 2011; Grulich et al., Lancet, 2007 |
 | Male sex at birth | ~2.0x conservative | 3 | NCI SEER (17.5 vs 6.6 per 100,000) |
 | Age 65+ | ~4.0x adjusted | 6 | NCI SEER, multivariable-adjusted |
@@ -48,7 +48,7 @@ A log-linear model was chosen deliberately: it means that the sum of weights app
 | HPV, unvaccinated / no known history | ~1.5x proxy | 2 | D'Souza et al., NEJM, 2007; population exposure estimate |
 | Sun exposure, lips unprotected | 2 to 3x | 2 | Perea-Milla Lopez et al., Br J Cancer, 2003 |
 
-**HPV scoring note:** The screener asks about HPV in three tiers: vaccinated (0 pts), unvaccinated with no known history (2 pts), and prior HPV-related condition (5 pts). The 5-point tier uses Gillison et al., 2008 as its basis, blended conservatively across oral cavity and oropharyngeal sites. The 2-point tier for unvaccinated status is a behavioral proxy for elevated HPV-16 exposure probability, not a serostatus measure, and is cited accordingly. The distinction between oral cavity cancer (tobacco-dominant) and oropharyngeal cancer (HPV-dominant) is acknowledged in the limitations section.
+**HPV scoring note:** The screener asks about HPV in three tiers: vaccinated (0 pts), unvaccinated with no known history (2 pts), and prior HPV-related condition (5 pts). The 5-point tier starts from D'Souza et al., 2007 (oral HPV-16 infection, OR 14.6 for oropharyngeal cancer), blended conservatively across oral cavity and oropharyngeal sites. The 2-point tier for unvaccinated status is a behavioral proxy for elevated HPV-16 exposure probability, not a serostatus measure, and is cited accordingly. The distinction between oral cavity cancer (tobacco-dominant) and oropharyngeal cancer (HPV-dominant) is acknowledged in the limitations section.
 
 **Symptom override:** Any persistent symptom lasting 2+ weeks (red or white patch, non-healing ulcer, unexplained lump, difficulty swallowing) overrides the total score and triggers the highest tier regardless of points accumulated. These represent possible in-situ pathology rather than population-level risk exposures and are treated as clinical flags, not additive weights.
 

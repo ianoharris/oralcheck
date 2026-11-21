@@ -176,7 +176,8 @@ export function computeMaxScore(): number {
  *   Tobacco:   Gandini et al., Int J Cancer, 2008         (OR 2.5–6.0×)
  *   Alcohol:   Bagnardi et al., Br J Cancer, 2015         (OR 2.0–3.0×)
  *   Betel:     IARC Monograph 85, 2004                    (OR 7–10×)
- *   HPV:       Gillison et al., J Natl Cancer Inst, 2008  (OR ~15× oropharyngeal;
+ *   HPV:       D'Souza et al., NEJM, 2007                 (OR ~15× oropharyngeal,
+ *              oral HPV-16 infection;
  *              conservative OR ~3–5× blended for oral+oropharyngeal)
  *   Age:       SEER incidence data, multivariable-adjusted ORs (~1.5–4× by decade)
  *   Symptoms:  Napier & Speight, J Oral Pathol Med, 2008  (leukoplakia 5–17%,

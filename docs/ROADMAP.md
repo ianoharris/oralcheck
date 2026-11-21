@@ -10,7 +10,7 @@ The running list. Two rules:
    named. This is the list's whole purpose: the things that come up once, sound
    good, and are never mentioned again.
 
-Last updated: 2026-11-12
+Last updated: 2026-11-21
 
 **Mirrored to an artifact Ian reads:**
 https://claude.ai/code/artifact/cc490e4b-1ee3-4062-bc56-eada066f1003
@@ -598,16 +598,17 @@ Update both together. See `AGENTS.md`.
       oralcheck.org as well as locally. Needs a check in a real browser with the
       system setting on, then a fix in `src/components/FadeUp.tsx` and
       `AnimatedLearnCards.tsx`. Not blocked.
-- [ ] **Two more screener citations that do not match their source (found
-      2026-10-08, while fixing the figures below).** Same pattern as the ones
-      fixed that day, but the fix is a judgment about the number, not just a
-      journal name, so it was left for its own pass. (1) The tobacco question
-      says smokeless tobacco carries 4 to 5x risk and credits Gandini 2008,
-      which is a meta-analysis of *smoking* only. (2) The HPV question says
-      "OR ~15x" and credits Gillison 2008; the ~15x figure looks like D'Souza
-      2007's oral HPV-16 infection result (OR 14.6). Both need the source read
-      and either the number or the citation changed, in all three languages.
-      Not blocked.
+- [x] **Two more screener citations that do not match their source (found
+      2026-10-08).** Smokeless tobacco "4 to 5x" credited to Gandini 2008, and
+      HPV "~15x" credited to Gillison 2008. Fixed 2026-10-08 but the commit was
+      stranded on a side branch until 2026-11-21; see Shipped, 2026-11-21.
+- [ ] **The social topic bank says every form of tobacco raises oral cancer
+      risk, snuff included, and credits Gandini 2008 (found 2026-11-21, while
+      re-applying the smokeless fix).** `oralcheck-agent/topics.py`,
+      `tobacco_all_forms`. Gandini is smoking only, and the site now says
+      studies of Swedish snus show no clear increase (Asthana 2019). Needs the
+      fact reworded (smokeless risk depends on the product) and Asthana added
+      as its source, so posts do not contradict the screener. Not blocked.
 - [ ] **Was `OralCheck_ADA_Briefing_v2.md` sent to anyone?** On Ian. Its
       reference list had the same wrong journals as `/methods` (Gandini, Bagnardi,
       Gillison, Pavia) and it said the combined tobacco plus alcohol OR was
@@ -860,6 +861,36 @@ Update both together. See `AGENTS.md`.
   The roughly 30 left out are Ian's own test traffic.
 
 Newest first.
+
+### 2026-11-21: the smokeless tobacco and HPV citations, actually on the site
+
+- **The 8 Oct fix for the last two mismatched screener citations was never
+  on the live site.** It was committed on 2026-10-08 (b6b421f) on the side
+  branch `claude/distracted-wu-11d568` and never merged into master, so the
+  roadmap and tracker called it done while oralcheck.org kept the old text
+  for six weeks. Found 2026-11-21. Re-applied onto master the same day; the
+  `/methods` table had been rebuilt since (weights now read from the screener
+  itself), so the HPV source was changed in the new table by hand. Not yet
+  pushed: live once Ian says to push.
+  - **Smokeless tobacco.** The tobacco question said smokeless users face
+    "4 to 5x" and credited Gandini 2008, a meta-analysis of smoking only. The
+    global meta-analysis (Asthana et al. 2019, *Nicotine & Tobacco Research*,
+    37 studies) shows no single figure is honest: gutka 8.67, oral snuff 4.18,
+    South-East Asia region overall 4.44, Swedish snus 0.86 (no significant
+    increase). The question now says it depends on the product and gives those
+    figures. Gandini stays on the smoking clause it does support. Asthana is
+    reference 15 on `/methods`. No weight changed: the question does not ask
+    which product, so smokeless use is still scored like smoking, which the
+    owner's guide says.
+  - **HPV "~15x".** Credited to Gillison 2008 (*JNCI*), which compares HPV-
+    positive and HPV-negative cancers' risk factors and reports no infection
+    odds ratio. The figure is D'Souza et al. 2007 (*NEJM*): oral HPV-16
+    infection, OR 14.6 for oropharyngeal cancer. Re-attributed in the HPV
+    question, the results page evidence note, the `/methods` table, the risk
+    engine comment and the ADA briefing. Gillison stays in the reference list
+    for what it does show: HPV-positive cancers follow sexual behavior and
+    marijuana use, not tobacco or alcohol.
+  - English, Spanish and Portuguese, with the i18n snapshots advanced.
 
 ### 2026-11-02 (later): the Methods page, rebuilt
 
