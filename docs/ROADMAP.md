@@ -718,12 +718,12 @@ Update both together. See `AGENTS.md`.
       "Mouth Notes"): guess-then-reveal quiz (`anim/quiz.html`), levels ranking of
       risk multiples (`anim/levels.html`), how-it-works HPV clearance zoom
       (`anim/hpvclear.html`), silent text story (`anim/silent.html`, no voice).
-      Calm with a little wit. Samples in `oralcheck-agent/anim/samples/formats/`
+      Calm with a little wit. All four voiced 21 Nov. Samples in `oralcheck-agent/anim/samples/formats/`
       (local only). Winners replace some reels from mid-December. Overlaps to
       decide: the HPV sample covers the 14 Dec image's topic; the ranking touches
       the 17 Dec tobacco-plus-alcohol reel.
 
-- [ ] **fal.ai balance exhausted (blocked on Ian, found 2026-11-21).** fal returns
+- [x] **fal.ai balance exhausted (found 2026-11-21, topped up by Ian the same day).** fal returns
       "User is locked. Reason: Exhausted balance". Voice and generated music for
       every new reel come from fal, and so does the 1,000-visitor reel's
       automatic build in the daily job: if the count passes 1,000 before a top-up,
