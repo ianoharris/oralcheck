@@ -14,6 +14,7 @@ const $ = id => document.getElementById(id);
 const UI = `
 <div id="ui">
   <div class="brand"><span class="dot"></span>OralCheck</div>
+  <div id="series"></div>
   <div id="eyebrow"></div>
   <svg id="lead"><line id="ln" stroke="#0d7377" stroke-width="2" stroke-linecap="round"/><circle id="lc" r="7" fill="#0d7377"/></svg>
   <div id="label"><div class="k" id="lk"></div><div class="t" id="lt"></div><div class="d" id="ld"></div></div>
@@ -31,6 +32,7 @@ const UI = `
 export const PLAN = window.PLAN;
 document.body.insertAdjacentHTML("beforeend", UI);
 $("credit").textContent = PLAN.credit || "";
+if (PLAN.series) $("series").innerHTML = `${PLAN.series.name}<b>${PLAN.series.ep || ""}</b>`;
 $("foot").textContent = PLAN.foot || "";
 
 /** The shot at time t: {i, sh, prev, local, k} where k runs 0..1 through the shot. */

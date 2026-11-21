@@ -712,6 +712,23 @@ Update both together. See `AGENTS.md`.
 
 ### Distribution
 
+- [ ] **New reel formats: four samples, waiting on Ian's pick (2026-11-21).** Ian:
+      "all those videos look the same". Prototyped under one series (working name
+      "Mouth Notes"): guess-then-reveal quiz (`anim/quiz.html`), levels ranking of
+      risk multiples (`anim/levels.html`), how-it-works HPV clearance zoom
+      (`anim/hpvclear.html`), silent text story (`anim/silent.html`, no voice).
+      Calm with a little wit. Samples in `oralcheck-agent/anim/samples/formats/`
+      (local only). Winners replace some reels from mid-December. Overlaps to
+      decide: the HPV sample covers the 14 Dec image's topic; the ranking touches
+      the 17 Dec tobacco-plus-alcohol reel.
+
+- [ ] **fal.ai balance exhausted (blocked on Ian, found 2026-11-21).** fal returns
+      "User is locked. Reason: Exhausted balance". Voice and generated music for
+      every new reel come from fal, and so does the 1,000-visitor reel's
+      automatic build in the daily job: if the count passes 1,000 before a top-up,
+      that build fails (it fails soft: nothing posts, Telegram is not sent).
+      Already-built, uploaded reels are unaffected. Top up at fal.ai/dashboard/billing.
+
 - [ ] **Instagram reels lose 80% of viewers in three seconds (found 2026-11-20).**
       Full audit: `docs/audits/2026-11-20-instagram-growth.md`. Skip rate 66 to
       86%, average watch 3 to 5 s on 24 to 38 s reels, about one site visit a day

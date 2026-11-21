@@ -1,0 +1,130 @@
+<!doctype html>
+<!--
+  Format sample: how it works (20 Nov 2026). Why most HPV infections never
+  become cancer. A sheet of lining cells with the virus already drifting in on
+  frame 0; out to plate A for where HPV-related throat cancers start (tonsils,
+  base of the tongue); back in as the body clears most infected cells; one
+  HPV-16 cell stays and takes the coral beat; a shield for the vaccine.
+  Facts: topics.py hpv_is_common (very common; most clear on their own without
+  symptoms; HPV-16 can cause DNA changes that lead to cancer in some people),
+  throat_hpv_site (tonsils and base of tongue), hpv_vaccine (Gardasil 9 covers
+  HPV-16; most effective before exposure). Cells and virus are an illustration,
+  not to scale. Plate: Z-Anatomy / BodyParts3D, CC BY-SA.
+-->
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="house.css">
+<style>
+  #stage > svg{display:block;width:1080px;height:1000px;position:absolute;left:0;top:0}
+  #cells{position:absolute;left:0;top:0}
+</style></head>
+<body>
+<div id="stage"><!--PLATE_A--><svg id="cells" viewBox="0 0 1080 1000"></svg></div>
+<script type="module">
+import {PLAN, at, label, readout, frame, span, ease, lerp} from "./house.js";
+const NS = "http://www.w3.org/2000/svg";
+const $ = id => document.getElementById(id);
+const plate = document.querySelector("#stage > svg:not(#cells)");
+const cs = $("cells");
+const el = (tag, attrs, parent = cs) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent.appendChild(e); return e; };
+
+// ---- plate: the tonsils turn teal ------------------------------------------------
+const tons = $("a-tonsils");
+const tTeal = tons.cloneNode(true); tTeal.removeAttribute("id"); tTeal.removeAttribute("filter");
+tTeal.setAttribute("fill", "#0d7377"); tTeal.setAttribute("stroke", "#0b5d60");
+tTeal.querySelectorAll("*").forEach(n => { n.setAttribute("fill", "#0d7377"); n.removeAttribute("filter"); });
+tons.after(tTeal);
+const pview = ([cx, cy, w]) => { const h = w * 1000 / 1080; plate.setAttribute("viewBox", [cx - w / 2, cy - h / 2, w, h].map(v => v.toFixed(1)).join(" ")); };
+
+// ---- cells ----------------------------------------------------------------------
+// a seeded jitter so the sheet looks grown, not tiled
+let seed = 11; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+const world = el("g", {});
+const COLS = 9, ROWS = 9, R = 70;
+const cells = [];
+for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) {
+  const x = 60 + c * R * 1.6 + (r % 2) * R * 0.8 + (rnd() - 0.5) * 14, y = 40 + r * R * 1.38 + (rnd() - 0.5) * 14;
+  const pts = Array.from({length: 7}, (_, j) => { const a = j / 7 * Math.PI * 2 + rnd() * 0.3, rr = R * (0.78 + rnd() * 0.12);
+    return [x + Math.cos(a) * rr, y + Math.sin(a) * rr]; });
+  const d = "M" + pts.map(p => p.map(v => v.toFixed(1)).join(",")).join(" L") + " Z";
+  const body = el("path", {d, fill: "#f1c9cf", stroke: "#b86a78", "stroke-width": 3, "stroke-linejoin": "round"}, world);
+  const nuc = el("ellipse", {cx: x + (rnd() - 0.5) * 10, cy: y + (rnd() - 0.5) * 10, rx: 20, ry: 16, fill: "#c98593"}, world);
+  cells.push({x, y, body, nuc, ph: rnd() * 6});
+}
+// which cells catch the virus, which clear in what order, and the one that stays
+const order = cells.map((_, i) => i).sort(() => rnd() - 0.5);
+const infected = order.slice(0, 16), STAY = order[3];
+const virus = infected.map((ci, k) => {
+  const g = el("g", {}, world);
+  el("circle", {r: 13, fill: "#0d7377"}, g);
+  for (let j = 0; j < 8; j++) { const a = j / 8 * Math.PI * 2; el("circle", {cx: Math.cos(a) * 18, cy: Math.sin(a) * 18, r: 4, fill: "#0d7377"}, g); }
+  return {g, ci, k, from: [rnd() * 1080, 60 - rnd() * 260]};
+});
+// daughter cells for the one that stays: coral copies that bud off
+const kids = [0, 1, 2].map(j => el("path", {d: cells[STAY].body.getAttribute("d"), fill: "#e8634a", stroke: "#b3432f", "stroke-width": 3, opacity: 0}, world));
+const shield = el("path", {d: "M0,-150 C70,-120 120,-115 150,-110 C150,0 110,95 0,150 C-110,95 -150,0 -150,-110 C-120,-115 -70,-120 0,-150 Z",
+  fill: "rgba(224,240,240,.55)", stroke: "#0d7377", "stroke-width": 10, "stroke-linejoin": "round", opacity: 0});
+
+const T = Object.fromEntries(PLAN.shots.map(s => [s.key, s.t0]));
+const CC = [540, 500];
+window.render = (t) => {
+  const {sh, local} = at(t);
+  // which world is on screen: cells, out to the plate for "site", then back to cells
+  const toPlate = span(t, T.site - 0.1, T.site + 0.6), back = span(t, T.land - 0.2, T.land + 0.5);
+  const plateK = toPlate * (1 - back);
+  plate.style.opacity = plateK; cs.style.opacity = 1 - plateK;
+  if (plateK > 0) {
+    // from the whole mouth in towards the left tonsil
+    const k = ease(span(t, T.site, T.land));
+    pview([lerp(500, 360, k), lerp(545, 485, k), lerp(1040, 560, k)]);
+    tTeal.style.opacity = span(t, T.site + 0.5, T.site + 1.1);
+    const tx = lerp(1040, 560, k);
+    if (sh.key === "site") label({k: "Where it starts", t: "Tonsils", d: "and the base of the tongue"}, 540 + (344 - lerp(500, 360, k)) / tx * 1080, 230 + 500 + (480 - lerp(545, 485, k)) / tx * 1080, "right", local);
+  }
+  if (sh.key !== "site") label(null);
+
+  // camera over the cell sheet: a slow drift, closer on the cell that stays
+  const stayK = ease(span(t, T.stay, T.stay + 1.4)) * (1 - ease(span(t, T.vax, T.vax + 1.0)));
+  const c = cells[STAY], zx = lerp(CC[0], c.x, stayK), zy = lerp(CC[1], c.y, stayK), zs = lerp(1, 1.9, stayK) * (1 + 0.015 * Math.sin(t * 0.7));
+  world.setAttribute("transform", `translate(540 500) scale(${zs}) translate(${-zx + 8 * Math.sin(t * 0.4)} ${-zy})`);
+
+  // the virus: drifting in from frame 0, landing on its cell; cleared ones fade as their cell recovers
+  virus.forEach(v => {
+    const cell = cells[v.ci];
+    const land = ease(span(t, -0.4 + v.k * 0.18, 1.6 + v.k * 0.18));
+    const clearAt = T.clear + 0.2 + (v.ci === STAY ? 999 : (v.k % 15) * 0.18);
+    const gone = span(t, clearAt, clearAt + 0.5);
+    const x = lerp(v.from[0], cell.x + 26, land), y = lerp(v.from[1], cell.y - 30, land) + 6 * Math.sin(t * 2 + v.k);
+    v.g.setAttribute("transform", `translate(${x},${y}) rotate(${t * 40 + v.k * 20}) scale(${1.5 * (1 - gone)})`);
+    v.g.style.opacity = 1 - gone;
+    // the cell shows the infection (teal tint) once the virus is in, until it clears
+    const inf = span(t, T.land + 0.3 + v.k * 0.08, T.land + 0.9 + v.k * 0.08) * (1 - gone);
+    const base = [241, 201, 207], tl = [190, 226, 226], co = [232, 99, 74];
+    const coral = v.ci === STAY ? span(t, T.stay + 0.4, T.stay + 1.0) : 0;
+    const rgb = base.map((b, j) => Math.round(lerp(lerp(b, tl[j], inf), co[j], coral)));
+    cell.body.setAttribute("fill", `rgb(${rgb.join(",")})`);
+    if (v.ci === STAY) {
+      // the nucleus goes irregular: a quiet visual stand-in for the DNA changing
+      const w = coral * (0.35 + 0.15 * Math.sin(t * 3));
+      cell.nuc.setAttribute("rx", 20 * (1 + w)); cell.nuc.setAttribute("ry", 16 * (1 - w * 0.5));
+      cell.nuc.setAttribute("fill", coral > 0.5 ? "#8e2f22" : "#c98593");
+    }
+  });
+  // the cell that stays begins to copy itself
+  kids.forEach((kd, j) => {
+    const k = ease(span(t, T.stay + 1.6 + j * 0.7, T.stay + 2.4 + j * 0.7)) * (1 - span(t, T.vax, T.vax + 0.6));
+    const a = [-0.6, 0.9, 2.4][j];
+    kd.setAttribute("transform", `translate(${Math.cos(a) * 90 * k} ${Math.sin(a) * 90 * k})`);
+    kd.setAttribute("opacity", k * 0.9);
+  });
+  // vaccine: a shield settles over a healthy cell and the virus turns away
+  const vk = ease(span(t, T.vax + 0.3, T.vax + 1.1));
+  shield.setAttribute("opacity", vk);
+  shield.setAttribute("transform", `translate(${cells[40].x} ${cells[40].y}) scale(${0.6 + 0.1 * vk})`);
+
+  // readout: words, not a count, so the picture is not read as a real proportion
+  if (sh.key === "clear") readout("Most", "clear on their own, without symptoms", 0, span(local, 0.1, 0.5));
+  else if (sh.key === "stay") readout("Rarely", "one stays and changes the cell", 0, span(local, 0.1, 0.5));
+  else readout("", "", 0, 0);
+  return frame(t);
+};
+</script>
+</body></html>

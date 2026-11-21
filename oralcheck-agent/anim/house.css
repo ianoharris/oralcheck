@@ -62,3 +62,7 @@ svg#lead{position:absolute;inset:0;width:1080px;height:1920px}
       line-height:1.04;letter-spacing:-.01em;padding:30px 34px 36px;border-radius:28px;background:rgba(245,243,240,.9);
       box-shadow:0 10px 50px rgba(21,32,31,.10)}
 #hook span.now{color:var(--teal)}
+
+/* Series tag (formats test, 20 Nov 2026): the series name and episode, top right. */
+#series{position:absolute;top:112px;right:72px;font-family:"DM Serif Display",serif;font-size:34px;color:var(--teal)}
+#series b{font-family:"Source Sans 3",sans-serif;font-weight:600;font-size:24px;color:var(--muted);margin-left:10px}

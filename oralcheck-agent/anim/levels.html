@@ -1,0 +1,85 @@
+<!doctype html>
+<!--
+  Format sample: levels / ranking (20 Nov 2026). Five habits climb a ladder,
+  each with its risk multiple drawn as a range on a log scale (1x to 20x), so
+  overlapping ranges show as overlapping. The top level takes the coral beat.
+  Figures exactly as the screener states them (messages/en.json Questions):
+  moderate drinking nearly doubles (Bagnardi 2015); daily smoking 2 to 6x
+  (Gandini 2008); heavy drinking about 5x (Bagnardi 2015); betel 7 to 10x
+  (IARC Monograph 85); heavy smoking with heavy drinking about 15x (Hashibe 2009).
+-->
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="house.css">
+<style>
+  #stage svg{display:block;width:1080px;height:1000px}
+  .lv{font:600 30px "Source Sans 3",sans-serif;fill:#0d7377}
+  .nm{font:400 54px "DM Serif Display",serif;fill:#15201f}
+  .vx{font:400 54px "DM Serif Display",serif;fill:#15201f}
+  .ax{font:500 26px "Source Sans 3",sans-serif;fill:#8a9796}
+  .q{font:400 84px "DM Serif Display",serif;fill:#9fb8b8}
+</style></head>
+<body>
+<div id="stage"><svg viewBox="0 0 1080 1000"></svg></div>
+<script type="module">
+import {PLAN, at, frame, span, ease, lerp} from "./house.js";
+const NS = "http://www.w3.org/2000/svg";
+const svg = document.querySelector("#stage svg");
+const el = (tag, attrs, parent = svg) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent.appendChild(e); return e; };
+
+const ROWS = [
+  {key: "l1", name: "Moderate drinking", lo: 1.8, hi: 2.2, v: "about 2×"},
+  {key: "l2", name: "Daily smoking", lo: 2, hi: 6, v: "2 to 6×"},
+  {key: "l3", name: "Heavy drinking", lo: 4.6, hi: 5.4, v: "about 5×"},
+  {key: "l4", name: "Betel, paan, gutka", lo: 7, hi: 10, v: "7 to 10×"},
+  {key: "l5", name: "Heavy smoking + drinking", lo: 13.5, hi: 16.5, v: "about 15×"},
+];
+const X0 = 80, X1 = 1000, LMAX = Math.log(20);
+const xOf = v => X0 + (X1 - X0) * Math.log(v) / LMAX;
+const STEP = 190, BASE = 900;          // row i sits at BASE - i * STEP (world units)
+const world = el("g", {});
+// the axis: 1x to 20x, log scale, at the foot of the ladder
+const axis = el("g", {}, world);
+for (const v of [1, 2, 5, 10, 20]) {
+  el("line", {x1: xOf(v), y1: -200, x2: xOf(v), y2: BASE + 40, stroke: "#e4e8e7", "stroke-width": 2}, axis);
+  el("text", {x: xOf(v), y: BASE + 76, "text-anchor": "middle", class: "ax"}, axis).textContent = v + "×";
+}
+el("text", {x: X0, y: BASE + 112, class: "ax"}, axis).textContent = "times the risk of someone who does neither (log scale)";
+const rows = ROWS.map((r, i) => {
+  const g = el("g", {transform: `translate(0 ${BASE - i * STEP})`}, world);
+  const ghost = el("text", {x: X0, y: -30, class: "q"}, g); ghost.textContent = "?";
+  const lv = el("text", {x: X0, y: -92, class: "lv"}, g); lv.textContent = `Level ${i + 1}`;
+  const nm = el("text", {x: X0, y: -38, class: "nm"}, g); nm.textContent = r.name;
+  const track = el("rect", {x: X0, y: 0, width: X1 - X0, height: 34, rx: 17, fill: "#e6ebea"}, g);
+  const bar = el("rect", {x: xOf(r.lo), y: 0, width: 0, height: 34, rx: 17, fill: i === 4 ? "#e8634a" : "#0d7377"}, g);
+  const vx = el("text", {x: X1, y: -38, "text-anchor": "end", class: "vx"}, g); vx.textContent = r.v;
+  return {g, ghost, lv, nm, track, bar, vx, r};
+});
+
+const T = Object.fromEntries(PLAN.shots.map(s => [s.key, s.t0]));
+window.render = (t) => {
+  const {sh} = at(t);
+  // how many levels are in: a level arrives as its line starts
+  rows.forEach((o, i) => {
+    const t0 = T[o.r.key], k = ease(span(t, t0, t0 + 0.8));
+    const w = (xOf(o.r.hi) - xOf(o.r.lo)) * ease(span(t, t0 + 0.3, t0 + 1.3));
+    o.bar.setAttribute("width", Math.max(0, w));
+    for (const e of [o.lv, o.nm, o.vx]) e.style.opacity = k;
+    o.g.style.opacity = 1;
+    o.ghost.style.opacity = (1 - k) * (0.7 + 0.3 * Math.sin(t * 3 + i));
+    o.track.style.opacity = 0.4 + 0.6 * k;
+    o.nm.setAttribute("transform", `translate(${(1 - k) * 40} 0)`);
+  });
+  // camera: the current level sits low in the frame with the empty rungs above it, so the
+  // ladder is visibly climbing from frame 0; the last line pulls back to all five
+  const rowY = i => BASE - i * STEP;
+  let focusY = rowY(0) + 120 * (1 - ease(Math.min(1, t / 2.2)));
+  rows.forEach((o, i) => { if (i) focusY = lerp(focusY, rowY(i), ease(span(t, T[o.r.key], T[o.r.key] + 1.0))); });
+  let ty = 140 - (focusY - 500) + 12 * Math.sin(t * 0.6), sc = 1;
+  const all = ease(span(t, T.down, T.down + 1.2));
+  ty = lerp(ty, -80, all); sc = lerp(1, 0.82, all);
+  world.setAttribute("transform", `translate(540 ${500 + ty}) scale(${sc}) translate(-540 -500)`);
+  // the way down: every bar breathes back towards 1x a little, shown as a pulse, not a number
+  rows.forEach(o => o.bar.style.opacity = t >= T.down ? 0.55 + 0.45 * Math.abs(Math.cos((t - T.down) * 2.2)) : 1);
+  return frame(t);
+};
+</script>
+</body></html>

@@ -1,0 +1,92 @@
+<!doctype html>
+<!--
+  Format sample: silent text story (20 Nov 2026). No voice: built to be read
+  with the sound off. Four questions to ask before searching a spot in your
+  mouth, down a flow line; "two weeks" takes the coral beat.
+  Facts (topics.py): canker_vs_cancer (canker sores usually painful), painless
+  (early cancer often does not hurt), wipe_test (thrush wipes away; a patch that
+  stays put does not), lookalikes (frictional causes settle once removed),
+  two_week_rule.
+-->
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="house.css">
+<style>
+  #stage svg{display:block;width:1080px;height:1000px}
+  #txt{position:absolute;left:150px;right:70px;top:0;height:1000px}
+  .q{position:absolute;left:0;right:0;font-family:"DM Serif Display",serif;font-size:96px;line-height:1.02;color:#15201f}
+  .q span{display:inline-block}
+  .a{position:absolute;left:0;right:0;font-weight:600;font-size:54px;line-height:1.22;color:#4a5958}
+  .a b{color:#0d7377;font-weight:700}
+  .coral{color:#e8634a}
+  .hook{font-size:104px}
+  .pic{position:absolute;left:0;width:400px;height:400px;border-radius:36px;overflow:hidden;box-shadow:0 14px 40px rgba(21,32,31,.16)}
+  .pic img{width:100%;height:100%;object-fit:cover}
+</style></head>
+<body>
+<div id="stage"><svg viewBox="0 0 1080 1000"></svg><div id="txt"></div></div>
+<script type="module">
+import {PLAN, at, frame, span, ease, lerp} from "./house.js";
+const NS = "http://www.w3.org/2000/svg";
+const svg = document.querySelector("#stage svg"), txt = document.getElementById("txt");
+const el = (tag, attrs, parent = svg) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent.appendChild(e); return e; };
+
+const CARDS = {
+  hook: {q: "Before you google that spot in your mouth.", a: "Ask four things first.", hook: true},
+  q1: {pic: "q/a.png", q: "Does it hurt?", a: "Canker sores usually do. <b>Early cancer often does not.</b>"},
+  q2: {pic: "q/b.png", q: "Does it wipe off?", a: "Thrush wipes away. <b>A patch that stays put does not.</b>"},
+  q3: {q: "Is there a cause?", a: "A sharp tooth, a burn, a bite: <b>those settle once the cause is gone.</b>"},
+  q4: {pic: "q/c.png", q: "Has it been there <span class='coral'>two weeks</span>?", a: "<b>Then it is worth a dentist's look,</b> whatever it is."},
+};
+const KEYS = Object.keys(CARDS);
+const nodes = {};
+for (const k of KEYS) {
+  const q = document.createElement("div"); q.className = "q" + (CARDS[k].hook ? " hook" : "");
+  q.innerHTML = CARDS[k].q.replace(/(<span[^>]*>.*?<\/span>)|(\S+)/g, (m, sp, w) => sp ? `<span>${sp}</span>` : `<span>${w}</span>`);
+  const a = document.createElement("div"); a.className = "a"; a.innerHTML = CARDS[k].a;
+  let pic = null;
+  if (CARDS[k].pic) { pic = document.createElement("div"); pic.className = "pic"; pic.innerHTML = `<img src="${CARDS[k].pic}">`; txt.append(pic); }
+  txt.append(q, a); nodes[k] = {q, a, pic, words: q.querySelectorAll(":scope > span")};
+}
+// the flow line down the left, one node per question
+const line = el("line", {x1: 80, y1: 140, x2: 80, y2: 900, stroke: "#dfe3e2", "stroke-width": 6, "stroke-linecap": "round"});
+const fill = el("line", {x1: 80, y1: 140, x2: 80, y2: 140, stroke: "#0d7377", "stroke-width": 6, "stroke-linecap": "round"});
+const dots = [1, 2, 3, 4].map(i => el("circle", {cx: 80, cy: 140 + (i - 1) * 253, r: 18, fill: "#f5f3f0", stroke: "#c9d1d1", "stroke-width": 5}));
+
+const T = Object.fromEntries(PLAN.shots.map(s => [s.key, s.t0])), L = Object.fromEntries(PLAN.shots.map(s => [s.key, s.len]));
+window.render = (t) => {
+  const {sh} = at(t);
+  KEYS.forEach((k, i) => {
+    const n = nodes[k], t0 = T[k], t1 = t0 + L[k];
+    const on = k === "hook" ? 1 : span(t, t0 - 0.05, t0 + 0.25);
+    const off = span(t, t1 - 0.3, t1);
+    // words rise in one after another; the hook is fully up on frame 0
+    n.words.forEach((w, j) => {
+      const wk = k === "hook" ? 1 : ease(span(t, t0 + j * 0.08, t0 + 0.4 + j * 0.08));
+      w.style.transform = `translateY(${(1 - wk) * 60 - off * 80}px)`; w.style.opacity = wk * (1 - off);
+    });
+    n.q.style.top = "60px"; n.q.style.opacity = on * (1 - off) > 0.001 ? 1 : 0;
+    n.q.style.transform = `translateY(${6 * Math.sin(t * 1.1)}px)`;
+    const ak = ease(span(t, t0 + (k === "hook" ? 0.5 : 0.9), t0 + (k === "hook" ? 1.0 : 1.5)));
+    n.a.style.top = (60 + n.q.offsetHeight + 36) + "px";
+    if (n.pic) {
+      const pk = ease(span(t, t0 + 0.4, t0 + 1.2));
+      n.pic.style.top = (60 + n.q.offsetHeight + 36 + n.a.offsetHeight + 50) + "px";
+      n.pic.style.opacity = pk * (1 - off);
+      n.pic.style.transform = `translateY(${(1 - pk) * 80}px) rotate(${-2 + 1.5 * Math.sin(t * 0.9)}deg) scale(${1 + 0.02 * Math.sin(t * 1.3)})`;
+    }
+    n.a.style.opacity = ak * (1 - off); n.a.style.transform = `translateX(${(1 - ak) * 40}px)`;
+  });
+  // the flow line fills to the current question; its node fills teal (coral on the last)
+  const step = Math.max(0, KEYS.indexOf(sh.key));          // 0 on the hook, 1 to 4 on the questions
+  const prog = step === 0 ? 0 : (step - 2) + span(t, T[sh.key], T[sh.key] + 0.6);
+  fill.setAttribute("y2", 140 + Math.max(0, prog) * 253);
+  dots.forEach((d, i) => {
+    const lit = step > 0 && i <= step - 1 && (i < step - 1 || span(t, T[sh.key], T[sh.key] + 0.6) > 0.95);
+    d.setAttribute("fill", lit ? (i === 3 ? "#e8634a" : "#0d7377") : "#f5f3f0");
+    d.setAttribute("stroke", lit ? (i === 3 ? "#e8634a" : "#0d7377") : "#c9d1d1");
+    d.setAttribute("r", 18 + (lit && i === step - 1 ? 4 * Math.sin(t * 5) ** 2 : 0));
+  });
+  for (const e of [line, fill, ...dots]) e.style.opacity = span(t, 0, 0.4) * (1 - span(t, PLAN.cta_t0, PLAN.cta_t0 + 0.4));
+  return frame(t);
+};
+</script>
+</body></html>

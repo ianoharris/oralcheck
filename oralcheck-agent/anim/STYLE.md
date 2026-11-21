@@ -72,6 +72,21 @@ frame was a still plate under a mostly grey caption.
   best skip rate (66%); topic sentences ran 82 to 86%.
 - **No people.** No faces, and no hands (Ian, 20 Nov).
 
+## Formats (samples, 20 Nov 2026)
+
+Ian found the reels "all look the same" and chose four formats to test under
+one named series (working name "Mouth Notes", `anim.SERIES`, shown top right
+with the format and episode). Tone: calm with a little wit, no scare tactics.
+
+| Format | Scene | Shape |
+|---|---|---|
+| Guess, then reveal | `quiz.html` | three pictured options, a 3-second countdown asking for a letter in the comments, the answer takes the coral beat |
+| Levels | `levels.html` | items climb a ladder, each with its figure as a range on a log scale, so overlapping ranges look overlapping |
+| How it works | `hpvclear.html` | one mechanism, from the mouth down to cells and back; cells and virus are an illustration, words not counts on the readout |
+| Read it (silent) | `silent.html` | no voice; big type down a flow line, a small drawing per card, music and the cut sounds only (`anim.build_silent`) |
+
+Quiz pictures are plate stills (`reel2d.still`) saved in `anim/q/`.
+
 ## Motion
 
 - Ease out (quartic). No bounce, no spin for its own sake.

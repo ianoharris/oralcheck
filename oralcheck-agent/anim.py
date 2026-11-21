@@ -37,6 +37,10 @@ MIN_LINE = 3.0
 CTA_HOLD = 2.2
 PLATES = "Illustration based on Z-Anatomy (CC BY-SA 4.0) and BodyParts3D (CC BY-SA 2.1 JP). Shared under CC BY-SA 4.0."
 
+# The formats test (Ian, 20 Nov 2026: "all those videos look the same"). One
+# named series across four formats; the name is Ian's to pick.
+SERIES = "Mouth Notes"
+
 SCRIPTS = {
     # NIDCR, "The Oral Cancer Exam" (NIH Pub. 20-5032), step 6; topics.py tongue_sides.
     "gauze": dict(
@@ -64,6 +68,65 @@ SCRIPTS = {
         ],
         credit="Source: American Cancer Society, What Are Oral Cavity and Oropharyngeal Cancers? · "
                "3D anatomy: Z-Anatomy (CC BY-SA 4.0), from BodyParts3D, DBCLS · Cells: illustration, not to scale in number",
+    ),
+    # Format sample: guess, then reveal. topics.py canker_vs_cancer, wipe_test, red_patch.
+    "quiz": dict(
+        lines=[
+            {"key": "hook", "say": "Three spots in a mouth. Only one is a reason to book a dentist now.", "eyebrow": "Guess"},
+            {"key": "optA", "say": "A: a painful, round sore, three days old.", "eyebrow": "A"},
+            {"key": "optB", "say": "B: a white coating that wipes away.", "eyebrow": "B"},
+            {"key": "optC", "say": "C: a red patch that does not hurt, there for three weeks.", "eyebrow": "C"},
+            {"key": "count", "say": "Comment your letter. Three, two, one.", "eyebrow": "Your guess"},
+            {"key": "answer", "say": "It is C. A red patch that will not go away is the most concerning thing you can find.", "eyebrow": "The answer"},
+            {"key": "why", "say": "A canker sore heals in one to two weeks. Thrush wipes off. That red patch did neither.", "eyebrow": "Why"},
+        ],
+        credit="Sources: NHS, mouth ulcers; oralcheck.org/learn/white-and-red-patches · " + PLATES,
+        foot="Illustration for education, not real cases. Not reviewed by a clinician.", foot_on=["optA", "optB", "optC", "answer", "why"],
+        series={"name": SERIES, "ep": "Guess · 01"},
+    ),
+    # Format sample: levels. Figures as the screener states them (messages/en.json,
+    # Questions.alcohol / tobacco / betel): Bagnardi 2015, Gandini 2008, IARC 85, Hashibe 2009.
+    "levels": dict(
+        lines=[
+            {"key": "hook", "say": "Five habits, ranked by how much they multiply your risk of oral cancer.", "eyebrow": "Ranked"},
+            {"key": "l1", "say": "Level one: moderate drinking. Nearly double the risk.", "eyebrow": "Level 1"},
+            {"key": "l2", "say": "Level two: smoking every day. Two to six times.", "eyebrow": "Level 2"},
+            {"key": "l3", "say": "Level three: heavy drinking, more than about four a day. About five times.", "eyebrow": "Level 3"},
+            {"key": "l4", "say": "Level four: betel quid, paan or gutka. Seven to ten times, even without tobacco.", "eyebrow": "Level 4"},
+            {"key": "l5", "say": "Level five: heavy smoking and heavy drinking together. About fifteen times.", "eyebrow": "Level 5"},
+            {"key": "down", "say": "The good news: every level comes down when you cut back or quit.", "eyebrow": "The way down"},
+        ],
+        credit="Sources: Bagnardi et al. 2015; Gandini et al. 2008; IARC Monograph 85; Hashibe et al. 2009. "
+               "Compared with people who do neither; ranges overlap.",
+        series={"name": SERIES, "ep": "Ranked · 01"},
+    ),
+    # Format sample: how it works. topics.py hpv_is_common, throat_hpv_site, hpv_vaccine.
+    "hpvclear": dict(
+        lines=[
+            {"key": "hook", "say": "Most adults catch HPV. Almost none get cancer from it. Here is why.", "eyebrow": "How it works"},
+            {"key": "site", "say": "HPV-related throat cancers start at the tonsils and the base of the tongue.", "eyebrow": "Tonsils · base of tongue"},
+            {"key": "land", "say": "When the virus reaches the cells lining this area, the body usually deals with it.", "eyebrow": "Lining cells"},
+            {"key": "clear", "say": "Most infections clear on their own, without a single symptom.", "eyebrow": "Most clear"},
+            {"key": "stay", "say": "Rarely, a type like HPV-16 stays, and changes a cell's DNA.", "eyebrow": "A few stay"},
+            {"key": "vax", "say": "Gardasil 9 protects against HPV-16. It works best before exposure.", "eyebrow": "Prevention"},
+        ],
+        credit="Sources: CDC, HPV and cancer; CDC, HPV Vaccination Considerations · Cells and virus: illustration, not to scale · " + PLATES,
+        series={"name": SERIES, "ep": "How it works · 01"},
+    ),
+    # Format sample: silent text story, no voice. topics.py canker_vs_cancer, painless,
+    # wipe_test, lookalikes, two_week_rule. `len` is each card's time on screen.
+    "silent": dict(
+        silent=True,
+        lines=[
+            {"key": "hook", "say": "Before you google that spot in your mouth. Ask four things first.", "len": 3.4},
+            {"key": "q1", "say": "Does it hurt? Canker sores usually do. Early cancer often does not.", "len": 4.2},
+            {"key": "q2", "say": "Does it wipe off? Thrush wipes away. A patch that stays put does not.", "len": 4.2},
+            {"key": "q3", "say": "Is there a cause? A sharp tooth, a burn, a bite: those settle once the cause is gone.", "len": 4.6},
+            {"key": "q4", "say": "Has it been there two weeks? Then it is worth a dentist's look, whatever it is.", "len": 4.4},
+            {"key": "cta", "say": "", "len": 3.6},
+        ],
+        credit="Sources: NHS, mouth ulcers; oralcheck.org/learn",
+        series={"name": SERIES, "ep": "Read it · 01"},
     ),
     # Calendar 19 Nov 2026 (Ian's redo of the age carousel). SEER_BY_AGE and
     # newCaseShareByAge in src/lib/seerStats.ts: SEER 21, 2019 to 2023.
@@ -135,7 +198,8 @@ def _serve(scene: str):
                 break
         else:
             return route.fulfill(status=404, body="")
-        ctype = {".css": "text/css", ".js": "text/javascript", ".ttf": "font/ttf", ".glb": "model/gltf-binary"}.get(path.suffix, "application/octet-stream")
+        ctype = {".css": "text/css", ".js": "text/javascript", ".ttf": "font/ttf", ".glb": "model/gltf-binary",
+                 ".png": "image/png", ".jpg": "image/jpeg"}.get(path.suffix, "application/octet-stream")
         route.fulfill(status=200, body=path.read_bytes(), headers={"Content-Type": ctype})
     return serve
 
@@ -194,7 +258,7 @@ def build(scene: str, out_path: str, *, tts, music: str | None = None, workdir: 
     shots = [{"key": l["key"], "eyebrow": l["eyebrow"], "t0": round(t0, 3), "len": round(n, 3), "words": w}
              for l, (t0, n), w in zip(lines, timing, words)]
     plan = {"shots": shots, "cta_t0": shots[-1]["t0"], "credit": spec["credit"], "foot": spec.get("foot", ""),
-            "foot_on": spec.get("foot_on", []), "data": spec.get("data", {})}
+            "foot_on": spec.get("foot_on", []), "data": spec.get("data", {}), "series": spec.get("series")}
     events = [("glide", max(0.0, s["t0"] - 0.15)) for s in shots[1:]] + [("settle", shots[-1]["t0"] + 0.1)]
     video = os.path.join(workdir, "video.mp4")
     render(scene, plan, total, video)
@@ -206,6 +270,36 @@ def build(scene: str, out_path: str, *, tts, music: str | None = None, workdir: 
     return out_path
 
 
+def build_silent(scene: str, out_path: str, *, music: str | None, workdir: str | None = None) -> str:
+    """A reel with no voice (spec `silent`): each line holds for its `len`, the
+    scene draws all the text, and the sound is the music bed plus the glide on
+    each cut, mixed to the same loudness as the voiced reels."""
+    spec = SCRIPTS[scene]
+    workdir = workdir or tempfile.mkdtemp(prefix=f"anim_{scene}_")
+    t, shots = 0.0, []
+    for l in spec["lines"]:
+        shots.append({"key": l["key"], "eyebrow": l.get("eyebrow", ""), "t0": round(t, 3), "len": l["len"], "words": []})
+        t += l["len"]
+    total = t
+    plan = {"shots": shots, "cta_t0": shots[-1]["t0"], "credit": spec["credit"], "foot": spec.get("foot", ""),
+            "foot_on": spec.get("foot_on", []), "data": spec.get("data", {}), "series": spec.get("series")}
+    video = os.path.join(workdir, "video.mp4")
+    render(scene, plan, total, video)
+    events = [("glide", max(0.0, s["t0"] - 0.15)) for s in shots[1:]] + [("settle", shots[-1]["t0"] + 0.1)]
+    sfx = reel3d._sfx_track(events, total, workdir)
+    inputs = ["-i", sfx] + (["-i", music] if music else [])
+    mix = "[0:a][1:a]amix=inputs=2:duration=first:weights='0.5 1'" if music else "[0:a]anull"
+    audio = os.path.join(workdir, "audio.m4a")
+    reel2._run(["ffmpeg", "-y", *inputs, "-filter_complex",
+                f"{mix},atrim=0:{total:.2f},afade=t=out:st={max(0, total - 1.2):.2f}:d=1.2,loudnorm=I=-14:TP=-1.5[a]",
+                "-map", "[a]", "-c:a", "aac", "-b:a", "192k", audio])
+    reel2._run(["ffmpeg", "-y", "-i", video, "-i", audio, "-map", "0:v", "-map", "1:a", "-c:v", "copy", "-c:a", "copy",
+                "-shortest", "-movflags", "+faststart", out_path])
+    (Path(out_path).with_suffix(".json")).write_text(json.dumps(plan, indent=1))
+    log.info("%s (silent): %.1fs -> %s", scene, total, out_path)
+    return out_path
+
+
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
     import oralcheck_agent as A
@@ -213,4 +307,7 @@ if __name__ == "__main__":
     music = A._generate_music_bed(40, f"anim-{scene}")
     if music is None and A.REEL_MUSIC.exists():
         music = A._loop_music_seamless(str(A.REEL_MUSIC), 42)
-    build(scene, out, tts=A._fal_tts, music=music)
+    if SCRIPTS.get(scene, {}).get("silent"):
+        build_silent(scene, out, music=music)
+    else:
+        build(scene, out, tts=A._fal_tts, music=music)

@@ -1,0 +1,95 @@
+<!doctype html>
+<!--
+  Format sample: guess, then reveal (20 Nov 2026). Three spots, one of which
+  is a reason to book a dentist now. A countdown asks for a letter in the
+  comments; the answer takes the reel's one coral beat.
+  Facts (topics.py): canker_vs_cancer (round, painful, heal in 7 to 14 days),
+  wipe_test (thrush wipes away), red_patch (a persistent red patch is the most
+  concerning thing you can find; usually painless). Pictures: plate A stills
+  (reel2d.still), anim/q/*.png. Illustration, not real cases.
+-->
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="house.css">
+<style>
+  #stage svg{display:block;width:1080px;height:1000px}
+  .let{font:400 64px "DM Serif Display",serif;fill:#fff}
+  .desc{font:600 30px "Source Sans 3",sans-serif;fill:#15201f}
+  .num{font:400 260px "DM Serif Display",serif;fill:#0d7377}
+  .ask{font:600 34px "Source Sans 3",sans-serif;fill:#4a5958}
+  .tag{font:600 26px "Source Sans 3",sans-serif;fill:#0d7377}
+</style></head>
+<body>
+<div id="stage"><svg viewBox="0 0 1080 1000"></svg></div>
+<script type="module">
+import {PLAN, at, frame, span, ease, lerp} from "./house.js";
+const NS = "http://www.w3.org/2000/svg";
+const svg = document.querySelector("#stage svg");
+const el = (tag, attrs, parent = svg) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent.appendChild(e); return e; };
+svg.insertAdjacentHTML("afterbegin", `<defs>
+  <clipPath id="r"><rect x="-150" y="-150" width="300" height="300" rx="34"/></clipPath>
+  <filter id="sh" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#15201f" flood-opacity=".14"/></filter></defs>`);
+
+const CARDS = [
+  {k: "A", img: "q/a.png", d: ["Painful, round,", "3 days old"], t: "Canker sore: heals in 1 to 2 weeks"},
+  {k: "B", img: "q/b.png", d: ["White coating,", "wipes away"], t: "Thrush: a yeast infection"},
+  {k: "C", img: "q/c.png", d: ["Red, painless,", "3 weeks old"], t: ""},
+];
+const X = [190, 540, 890], Y = 420;
+const cards = CARDS.map((c, i) => {
+  const g = el("g", {});
+  const inner = el("g", {filter: "url(#sh)"}, g);
+  el("image", {href: c.img, x: -150, y: -150, width: 300, height: 300, "clip-path": "url(#r)", preserveAspectRatio: "xMidYMid slice"}, inner);
+  const ring = el("rect", {x: -150, y: -150, width: 300, height: 300, rx: 34, fill: "none", stroke: "#e8634a", "stroke-width": 10, opacity: 0}, g);
+  const badge = el("circle", {cx: -112, cy: -112, r: 46, fill: "#0d7377"}, g);
+  el("text", {x: -112, y: -90, "text-anchor": "middle", class: "let"}, g).textContent = c.k;
+  c.d.forEach((line, j) => { el("text", {x: 0, y: 210 + j * 38, "text-anchor": "middle", class: "desc"}, g).textContent = line; });
+  const tag = el("text", {x: 0, y: 300, "text-anchor": "middle", class: "tag", opacity: 0}, g);
+  tag.textContent = c.t;
+  return {g, ring, badge, tag};
+});
+const num = el("text", {x: 540, y: 935, "text-anchor": "middle", class: "num", opacity: 0});
+const ask = el("text", {x: 540, y: 700, "text-anchor": "middle", class: "ask", opacity: 0});
+ask.textContent = "Comment A, B or C";
+// the countdown ring
+const RR = 120, CIRC = 2 * Math.PI * RR;
+const ringBg = el("circle", {cx: 540, cy: 850, r: RR, fill: "none", stroke: "#dfe3e2", "stroke-width": 10, opacity: 0});
+const ringFg = el("circle", {cx: 540, cy: 850, r: RR, fill: "none", stroke: "#0d7377", "stroke-width": 10, "stroke-linecap": "round",
+  transform: "rotate(-90 540 850)", "stroke-dasharray": CIRC, opacity: 0});
+
+const T = Object.fromEntries(PLAN.shots.map(s => [s.key, s.t0]));
+const ORDER = ["optA", "optB", "optC"];
+
+window.render = (t) => {
+  const {sh, local} = at(t);
+  const focus = ORDER.indexOf(sh.key);
+  const answer = t >= T.answer, why = t >= T.why;
+  cards.forEach((c, i) => {
+    // already sliding in on frame 0, staggered; then a slow bob so nothing is still
+    const k = ease(Math.min(1, (t + 0.5 - i * 0.18) / 1.1));
+    let s = 0.92 + 0.08 * k, dim = 1, dy = 0;
+    if (focus >= 0) { s = i === focus ? 1.1 : 0.9; dim = i === focus ? 1 : 0.45; }
+    if (sh.key === "count") s = 1 + 0.03 * Math.sin(t * 6 + i);
+    if (answer) {
+      const a = span(t, T.answer, T.answer + 0.6);
+      s = i === 2 ? lerp(1, 1.22, a) : lerp(1, 0.86, a);
+      dim = i === 2 ? 1 : lerp(1, why ? 0.95 : 0.4, a);
+      dy = i === 2 ? -40 * a : 0;
+    }
+    const x = lerp(X[i] + (i - 1) * 260, X[i], k), y = Y + 220 * (1 - k) + dy + 6 * Math.sin(t * 1.3 + i * 1.7);
+    c.g.setAttribute("transform", `translate(${x},${y}) scale(${s})`);
+    c.g.style.opacity = dim * Math.min(1, k * 1.4);
+    c.ring.setAttribute("opacity", i === 2 ? span(t, T.answer + 0.2, T.answer + 0.7) : 0);
+    c.badge.setAttribute("fill", answer && i === 2 ? "#e8634a" : "#0d7377");
+    c.tag.setAttribute("opacity", why && i < 2 ? span(t, T.why + 0.3 + i * 0.4, T.why + 0.8 + i * 0.4) : 0);
+  });
+  // countdown: the ring empties over three seconds while 3, 2, 1 tick down
+  const cOn = sh.key === "count" ? span(local, 0, 0.3) : 0;
+  const ck = Math.max(0, Math.min(1, (local - 0.4) / 3));
+  ask.setAttribute("opacity", cOn);
+  ringBg.setAttribute("opacity", cOn); ringFg.setAttribute("opacity", cOn);
+  ringFg.setAttribute("stroke-dashoffset", CIRC * ck);
+  num.setAttribute("opacity", cOn);
+  num.textContent = ck >= 1 ? "" : String(3 - Math.floor(ck * 3));
+  return frame(t);
+};
+</script>
+</body></html>
