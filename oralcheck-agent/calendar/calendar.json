@@ -812,6 +812,46 @@
       ]
     },
     {
+      "id": "2026-11-28_in_short",
+      "date": "2026-11-28",
+      "network": "instagram",
+      "media_type": "reel",
+      "when": "2026-11-28T16:00:00+00:00",
+      "status": "built",
+      "idea": {
+        "title": "Short: the part of your tongue you never look at",
+        "hook": "Oral cancer often starts on a part of your tongue you never look at.",
+        "brief": "Short-format test (20 Nov 2026 audit): one blunt line, one instruction, the address, about 12 s. Four Saturdays, compared against the long reels on skip rate and watch time.",
+        "topic": "tongue_sides",
+        "shape": "short",
+        "hook_style": "statement",
+        "tone": "calm",
+        "pillar": "self_exam",
+        "media_type": "reel",
+        "calendar_ref": null,
+        "slug": "2026-11-28_in_short"
+      },
+      "folder": "2026-11-28_in_short",
+      "version": 1,
+      "uploaded": false,
+      "hook": "Oral cancer often starts on a part of your tongue you never look at.",
+      "caption": "The sides of the tongue are among the most common places for oral cancer to start, and you cannot see them without sticking your tongue out and turning it.\n\nOnce a month, in good light: tongue out, look at the left side, then the right side. Anything new that is still there after two weeks gets a dentist's look.\n\nFree, private risk check: oralcheck.org",
+      "hashtags": [
+        "oralcancer",
+        "oralhealth",
+        "earlydetection",
+        "selfexam",
+        "oralcheck"
+      ],
+      "files": [
+        "reel.mp4"
+      ],
+      "review_note": "",
+      "notes": [
+        "20 Nov 2026: short-format test, one of four Saturdays."
+      ]
+    },
+    {
       "id": "2026-11-27_in_carousel",
       "date": "2026-11-30",
       "network": "instagram",
@@ -946,6 +986,46 @@
       "uploaded": true,
       "notes": [
         "26 Oct: stock end card replaced with a closing slide written for this post (Ian asked for closes that follow each carousel's focus)."
+      ]
+    },
+    {
+      "id": "2026-12-05_in_short",
+      "date": "2026-12-05",
+      "network": "instagram",
+      "media_type": "reel",
+      "when": "2026-12-05T16:00:00+00:00",
+      "status": "built",
+      "idea": {
+        "title": "Short: the riskiest spot is under your tongue",
+        "hook": "One of the riskiest spots for mouth cancer is one you never see.",
+        "brief": "Short-format test (20 Nov 2026 audit): one blunt line, one instruction, the address, about 12 s. Four Saturdays, compared against the long reels on skip rate and watch time.",
+        "topic": "floor_of_mouth",
+        "shape": "short",
+        "hook_style": "statement",
+        "tone": "calm",
+        "pillar": "self_exam",
+        "media_type": "reel",
+        "calendar_ref": null,
+        "slug": "2026-12-05_in_short"
+      },
+      "folder": "2026-12-05_in_short",
+      "version": 1,
+      "uploaded": false,
+      "hook": "One of the riskiest spots for mouth cancer is one you never see.",
+      "caption": "The floor of the mouth, the U-shaped tissue under your tongue, is one of the highest-risk sites for oral cancer, and it is hidden unless you lift your tongue.\n\nA small growth there can go months without causing any discomfort. To check: lift the tip of your tongue and look at the floor of your mouth underneath it.\n\nFree, private risk check: oralcheck.org",
+      "hashtags": [
+        "oralcancer",
+        "oralhealth",
+        "earlydetection",
+        "selfexam",
+        "oralcheck"
+      ],
+      "files": [
+        "reel.mp4"
+      ],
+      "review_note": "",
+      "notes": [
+        "20 Nov 2026: short-format test, one of four Saturdays."
       ]
     },
     {
@@ -1112,6 +1192,46 @@
       ]
     },
     {
+      "id": "2026-12-12_in_short",
+      "date": "2026-12-12",
+      "network": "instagram",
+      "media_type": "reel",
+      "when": "2026-12-12T16:00:00+00:00",
+      "status": "built",
+      "idea": {
+        "title": "Short: a sore on your outer lip is not a canker sore",
+        "hook": "A sore on the outside of your lip is not a canker sore.",
+        "brief": "Short-format test (20 Nov 2026 audit): one blunt line, one instruction, the address, about 12 s. Four Saturdays, compared against the long reels on skip rate and watch time.",
+        "topic": "canker_vs_cancer",
+        "shape": "short",
+        "hook_style": "statement",
+        "tone": "calm",
+        "pillar": "self_exam",
+        "media_type": "reel",
+        "calendar_ref": null,
+        "slug": "2026-12-12_in_short"
+      },
+      "folder": "2026-12-12_in_short",
+      "version": 1,
+      "uploaded": false,
+      "hook": "A sore on the outside of your lip is not a canker sore.",
+      "caption": "Canker sores appear inside the mouth only, never on the outer lip, and heal on their own in 7 to 14 days.\n\nSo a sore on the outside of your lip is something else. Often it is a cold sore, which also heals. A sore anywhere in or on the mouth that has not healed in two weeks is worth a dentist's or doctor's look.\n\nFree, private risk check: oralcheck.org",
+      "hashtags": [
+        "oralcancer",
+        "oralhealth",
+        "earlydetection",
+        "selfexam",
+        "oralcheck"
+      ],
+      "files": [
+        "reel.mp4"
+      ],
+      "review_note": "",
+      "notes": [
+        "20 Nov 2026: short-format test, one of four Saturdays."
+      ]
+    },
+    {
       "id": "2026-12-15_in_image",
       "date": "2026-12-14",
       "network": "instagram",
@@ -1218,6 +1338,46 @@
       },
       "event": null,
       "error": "Connection error."
+    },
+    {
+      "id": "2026-12-19_in_short",
+      "date": "2026-12-19",
+      "network": "instagram",
+      "media_type": "reel",
+      "when": "2026-12-19T16:00:00+00:00",
+      "status": "built",
+      "idea": {
+        "title": "Short: nobody can tell by looking",
+        "hook": "Nobody can tell a harmless patch from a dangerous one by looking.",
+        "brief": "Short-format test (20 Nov 2026 audit): one blunt line, one instruction, the address, about 12 s. Four Saturdays, compared against the long reels on skip rate and watch time.",
+        "topic": "biopsy",
+        "shape": "short",
+        "hook_style": "statement",
+        "tone": "calm",
+        "pillar": "self_exam",
+        "media_type": "reel",
+        "calendar_ref": null,
+        "slug": "2026-12-19_in_short"
+      },
+      "folder": "2026-12-19_in_short",
+      "version": 1,
+      "uploaded": false,
+      "hook": "Nobody can tell a harmless patch from a dangerous one by looking.",
+      "caption": "Not a clinician and not a photograph can tell a harmless patch from a dangerous one by eye. The answer comes from a biopsy: a small sample, usually taken under local anaesthetic and looked at under a microscope.\n\nIt sounds bigger than it is. It is a short appointment, and it is the only thing that turns a worry into an answer.\n\nFree, private risk check: oralcheck.org",
+      "hashtags": [
+        "oralcancer",
+        "oralhealth",
+        "earlydetection",
+        "selfexam",
+        "oralcheck"
+      ],
+      "files": [
+        "reel.mp4"
+      ],
+      "review_note": "",
+      "notes": [
+        "20 Nov 2026: short-format test, one of four Saturdays."
+      ]
     },
     {
       "id": "2026-12-22_in_reel",
