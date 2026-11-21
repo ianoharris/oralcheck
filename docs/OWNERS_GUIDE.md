@@ -666,10 +666,26 @@ small jobs hand each approved post on removes the deadline entirely.
 goes out at 10am Central on a Monday, Tuesday or Thursday, because that is when
 your followers are most active (9am to noon on those days, from your Instagram
 insights, 22 October). Planned batches put Instagram on Monday and Thursday and
-LinkedIn on Tuesday. One reel a week. Holiday posts keep their own day and time:
+LinkedIn on Tuesday. One reel a week, plus, from 28 November for four weeks, a
+short reel (about 12 seconds: one blunt line, one instruction, the address) on
+Saturday at 10am, to compare against the long reels. Holiday posts keep their own day and time:
 Halloween (Saturday 31 October, 5pm), the Great American Smokeout (its
 LinkedIn post goes the day before, since it says "tomorrow"), Thanksgiving
 (Thursday 26 November, 5pm) and the new year.
+
+**What the first three seconds do (20 November).** The Instagram audit
+(`docs/audits/2026-11-20-instagram-growth.md`) found about four in five people
+shown a reel swiped past within three seconds, and that the reels opened on a
+still drawing with a small, half-grey sentence. Every reel now opens with its
+whole first line in big type over a picture that is already moving, and no two
+reels in a row open on the same picture. The first line is the claim someone
+would argue with, not the topic. You allowed neither a face nor hands on
+screen, so the reels stay fully drawn.
+
+**Comment-to-DM (set up by you, switched on by a variable).** Someone comments
+CHECK and gets the link in a DM. The steps are in `docs/COMMENT_TO_DM.md`. The
+captions only start asking for the comment once the repo variable
+`COMMENT_DM_KEYWORD` is set, so nobody is asked before the DM works.
 
 **You are still the approval gate.** Nothing is scheduled unless you marked it
 Approve on the review page. A post you send back with Redo is rewritten with

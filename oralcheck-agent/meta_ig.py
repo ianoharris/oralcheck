@@ -191,7 +191,15 @@ def full_caption(manifest: dict) -> str:
     """The caption as posted: text, then the hashtags. Instagram caps a caption
     at 2,200 characters and 30 hashtags."""
     tags = manifest.get("hashtags", [])[:30]
-    text = manifest.get("caption", "") + ("\n\n" + " ".join(f"#{h}" for h in tags) if tags else "")
+    body = manifest.get("caption", "")
+    # Comment-to-DM (20 Nov 2026): once Ian has connected the DM tool and set the
+    # repo variable COMMENT_DM_KEYWORD, every post opens with the ask, since
+    # Instagram cuts captions after the first line or two. Unset, nothing changes,
+    # so no one is told to comment for a link that never arrives.
+    kw = os.environ.get("COMMENT_DM_KEYWORD", "").strip().upper()
+    if kw and kw not in body:
+        body = f"Comment {kw} and the link to the free risk check comes straight to your DMs.\n\n" + body
+    text = body + ("\n\n" + " ".join(f"#{h}" for h in tags) if tags else "")
     if len(text) > 2200:
         raise MetaError(f"Caption is {len(text)} characters; Instagram allows 2,200")
     return text

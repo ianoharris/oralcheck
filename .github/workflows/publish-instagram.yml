@@ -35,6 +35,7 @@ jobs:
         env:
           PYTHONUNBUFFERED: '1'
           IG_DIRECT: ${{ vars.IG_DIRECT }}
+          COMMENT_DM_KEYWORD: ${{ vars.COMMENT_DM_KEYWORD }}
           META_GRAPH_HOST: ${{ vars.META_GRAPH_HOST }}
           GH_TOKEN: ${{ github.token }}
           INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}

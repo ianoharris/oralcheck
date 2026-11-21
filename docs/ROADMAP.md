@@ -722,7 +722,13 @@ Update both together. See `AGENTS.md`.
       opening lines, and a 7 to 12 s format to test against the long reels.
       Ian's call: whether to allow hands or a face on screen (the house style
       currently says no faces). 20 Nov: Ian allows hands, not himself. The 24 Jul
-      carousel's 14 shares were a family friend reposting, not organic. Measure with the read-only insights export
+      carousel's 14 shares were a family friend reposting, not organic.
+      **Done 20 Nov:** the cold open is in both renderers and the script writer
+      (no more overview opener); 23 Nov, 1 Dec and 7 Dec re-cut and uploaded (7
+      Dec rebuilt in the drawn style, off the retired 3D jaw). Four 12 s short
+      reels for Saturdays 28 Nov to 19 Dec, waiting on Ian's review.
+      **Blocked on Ian:** comment-to-DM signup (`docs/COMMENT_TO_DM.md`), then
+      set `COMMENT_DM_KEYWORD`. Measure with the read-only insights export
       (`oralcheck-agent/ig_insights.py`, workflow "Export Instagram insights").
 
 - [ ] **The 1,000-visitor reel posts itself (set up 2026-11-12, waiting on

@@ -66,6 +66,7 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           IMGBB_API_KEY: ${{ secrets.IMGBB_API_KEY }}
           IG_DIRECT: ${{ vars.IG_DIRECT }}
+          COMMENT_DM_KEYWORD: ${{ vars.COMMENT_DM_KEYWORD }}
         run: python post_calendar.py drip
       - name: Save calendar state
         working-directory: .
