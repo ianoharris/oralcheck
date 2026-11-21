@@ -1,0 +1,65 @@
+<!doctype html>
+<!--
+  Mouth Notes ep. 11, This or that 01: worry or wait, five rounds (21 Nov 2026).
+  One picture per round, two choices, the answer lands about a second and a
+  half after the question. "Get it checked" answers are ink, "wait" answers
+  teal: no coral, since five answers would be five coral beats.
+  Facts (topics.py): canker_vs_cancer (heal in 7 to 14 days), wipe_test (thrush
+  wipes away), red_patch, neck_lump (more than two weeks without an infection),
+  white_patch (does not rub off). Pictures: plate stills, anim/q/. Illustrations,
+  not real cases.
+-->
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="house.css">
+<style>
+  #stage{overflow:hidden}
+  .card{position:absolute;left:190px;top:40px;width:700px;height:520px;border-radius:40px;overflow:hidden;box-shadow:0 16px 46px rgba(21,32,31,.16)}
+  .card img{width:100%;height:100%;object-fit:cover}
+  .q{position:absolute;left:90px;right:90px;top:600px;text-align:center;font-family:"DM Serif Display",serif;font-size:58px;line-height:1.06;color:#15201f}
+  .opts{position:absolute;left:150px;right:150px;top:790px;display:flex;gap:40px}
+  .opt{flex:1;text-align:center;padding:22px 0;border-radius:999px;border:4px solid #c9d1d1;font-weight:700;font-size:40px;color:#4a5958;background:#f5f3f0}
+  .opt.wait.on{background:#0d7377;border-color:#0d7377;color:#fff}
+  .opt.check.on{background:#15201f;border-color:#15201f;color:#fff}
+  .rd{position:absolute;right:72px;top:-60px;font-family:"DM Serif Display",serif;font-size:40px;color:#0d7377}
+</style></head>
+<body>
+<div id="stage"><div class="rd" id="rd"></div></div>
+<script type="module">
+import {PLAN, at, frame, span, ease} from "./house.js";
+const stage = document.getElementById("stage");
+const R = [
+  {key: "r1", img: "q/a.png", q: "Hurts, and shrinking after a week?", a: "wait", wait: "Wait", check: "Get it checked"},
+  {key: "r2", img: "q/b.png", q: "White coating that wipes off?", a: "wait", wait: "Usually thrush", check: "Get it checked"},
+  {key: "r3", img: "q/c.png", q: "Red, painless, three weeks old?", a: "check", wait: "Wait", check: "Get it checked"},
+  {key: "r4", img: "q/e.png", q: "Lump in your neck for a month, no cold?", a: "check", wait: "Wait", check: "Get it checked"},
+  {key: "r5", img: "q/d.png", q: "White patch that won't rub off?", a: "check", wait: "Wait", check: "Get it checked"},
+];
+const rounds = R.map(r => {
+  const g = document.createElement("div"); g.style.position = "absolute"; g.style.inset = "0";
+  g.innerHTML = `<div class="card"><img src="${r.img}"></div><div class="q">${r.q}</div>
+    <div class="opts"><div class="opt wait">${r.wait}</div><div class="opt check">${r.check}</div></div>`;
+  stage.appendChild(g); return {r, g, w: g.querySelector(".wait"), c: g.querySelector(".check"), card: g.querySelector(".card")};
+});
+const T = Object.fromEntries(PLAN.shots.map(x => [x.key, x.t0]));
+window.render = (t) => {
+  const {sh} = at(t);
+  // the hook shows round one's picture already sliding in
+  rounds.forEach((o, i) => {
+    const t0 = i === 0 ? Math.min(T.r1, 0) : T[o.r.key], next = i < 4 ? T[R[i + 1].key] : T.cta;
+    const inK = i === 0 ? 1 : ease(span(t, t0 - 0.3, t0 + 0.3)), outK = span(t, next - 0.3, next + 0.1);
+    o.g.style.opacity = inK * (1 - outK);
+    o.g.style.transform = `translateX(${(1 - inK) * 260 - outK * 260}px)`;
+    o.card.style.transform = `rotate(${(i % 2 ? 1.5 : -1.5) * Math.sin(t * 0.9)}deg) scale(${1 + 0.02 * Math.sin(t * 1.3)})`;
+    const reveal = t > T[o.r.key] + 1.6;
+    o.w.classList.toggle("on", reveal && o.r.a === "wait");
+    o.c.classList.toggle("on", reveal && o.r.a === "check");
+    o.w.style.opacity = reveal && o.r.a !== "wait" ? .35 : 1; o.c.style.opacity = reveal && o.r.a !== "check" ? .35 : 1;
+    // in the hook, round one's question waits under the hook card; its options stay hidden
+    o.g.querySelector(".q").style.opacity = sh.key === "hook" ? 0 : 1;
+    o.g.querySelector(".opts").style.opacity = sh.key === "hook" ? 0 : 1;
+  });
+  const k = R.findIndex(r => r.key === sh.key);
+  document.getElementById("rd").textContent = k >= 0 ? `Round ${k + 1} of 5` : "";
+  return frame(t);
+};
+</script>
+</body></html>

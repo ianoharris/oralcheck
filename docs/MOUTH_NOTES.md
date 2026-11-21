@@ -5,6 +5,14 @@ four sample formats, add eight more, call it Mouth Notes, lean into anatomy and
 "how it works", draw cell-scale scenes in 2D, and post twice a week (Monday and
 Thursday at 10am Central), in place of one carousel or image a week.
 
+**Accuracy (Ian, 21 Nov: "make sure it's anatomically and biologically accurate").**
+Every anatomical and biological detail is checked against a source before it is drawn:
+HPV is drawn as a smooth icosahedral shell with no spikes; the powers-of-ten zoom lands
+on a basal cell, where dysplasia begins; severe dysplasia stops in the top third (full
+thickness is carcinoma in situ); the lingual nerve runs close under the floor of the
+mouth, so no episode says the nerves sit deep. Cell-scale episodes say on screen that
+they are illustrations not reviewed by a clinician, until one is.
+
 Every episode: the hook line whole on frame 0 over a moving picture; no faces, no
 hands; calm with a little wit; every fact from `oralcheck-agent/topics.py`,
 `src/lib/seerStats.ts`, the screener's own cited figures, or a source listed here,
@@ -32,11 +40,12 @@ Replaced posts are marked cut in the calendar with a note, not deleted.
 
 ## Scripts and sources (new episodes)
 
+The exact spoken lines live in `oralcheck-agent/anim.py` (`SCRIPTS`, one entry per scene); the summaries below are the plan they were written from, with the accuracy corrections of 21 Nov applied.
+
 **3. Powers of ten.** "Let's zoom from your smile to a single strand of DNA." /
 "Ten times closer: the side of the tongue, the most common place it starts." /
 "A hundred times: the surface is a lining, many cells deep." / "A thousand
-times: one flat squamous cell. Almost all oral cancers start in cells like
-this." / "Ten thousand times: the nucleus, where the cell keeps its DNA." /
+times: one cell from the lining. Almost all oral cancers start in this lining." / "Ten thousand times: the nucleus, where the cell keeps its DNA." /
 "Cancer starts when changes to that DNA let a cell stop following the rules."
 Sources: ACS, What Are Oral Cavity and Oropharyngeal Cancers?; NCI, What Is
 Cancer?; topics `tongue_sides`. Magnifications are labels, not measurements.
@@ -44,8 +53,8 @@ Cancer?; topics `tongue_sides`. Magnifications are labels, not measurements.
 **5. Life of a mouth cell.** "Your cheek lining replaces itself about every two
 weeks." / "New cells are made at the bottom layer." / "They rise, flatten out,
 and are shed at the surface." / "When a cell's DNA is damaged, it can keep
-dividing instead." / "Those extra cells are what a patch that will not shed or
-heal can be." Sources: StatPearls, Histology, Oral Mucosa (NCBI Bookshelf
+dividing instead of moving on." / "Enough of them can build into a growth you can
+see or feel." Sources: StatPearls, Histology, Oral Mucosa (NCBI Bookshelf
 NBK572115: buccal mucosa turnover about 14 days; 14 to 21 days for oral
 epithelium); NCI, What Is Cancer?
 
@@ -75,9 +84,10 @@ Monograph 90 (HPV particles about 55 nm); cytomorphometry of normal buccal cells
 
 **10. Cutaway: under your tongue.** "What is under your tongue? Let's peel it
 back." / "First, the lining: thin, smooth, and where oral cancer starts." /
-"Under it, salivary glands that keep your mouth wet." / "Then the tongue's own
-muscle." / "Pain usually comes from nerves deeper down, so early changes often
-do not hurt." / "Lift your tongue and look at the floor of your mouth once a
+"Under it, a salivary gland, and the nerve that gives your tongue feeling." /
+"Then the muscles that form the floor of your mouth." / "Pain usually starts
+only when a growth reaches a nerve or breaks open, so early changes often do
+not hurt." / "Lift your tongue and look at the floor of your mouth once a
 month." Sources: ACS (lining, squamous cells); topics `floor_of_mouth`,
 `painless`, `monthly_self_exam`. Schematic layers, not to scale.
 

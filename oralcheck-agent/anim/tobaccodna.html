@@ -1,0 +1,107 @@
+<!doctype html>
+<!--
+  Mouth Notes ep. 8, How it works 05: how tobacco damages DNA (21 Nov 2026).
+  Tobacco chemicals drift into the lining; inside a cell, some attach to DNA
+  (adducts); repair enzymes remove most; one that slips through changes a
+  tumour-suppressor gene (e.g. TP53) and takes the coral beat; quitting stops
+  new damage arriving.
+  Sources: Hecht, Nature Reviews Cancer 2003, "Tobacco carcinogens, their
+  biomarkers and tobacco-induced cancer" (over 60 carcinogens in smoke;
+  metabolic activation; DNA adducts; repair removes many; persistent adducts
+  cause mutations in genes such as TP53); topics.py quitting. Illustration,
+  not to scale.
+-->
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="house.css">
+<style>#stage svg{display:block;width:1080px;height:1000px}
+.gl{font:600 30px "Source Sans 3",sans-serif;fill:#0d7377}</style></head>
+<body>
+<div id="stage"><svg viewBox="0 0 1080 1000"></svg></div>
+<script type="module">
+import {PLAN, at, label, readout, frame, span, ease} from "./house.js";
+import {makeLining, el, mix, lerp} from "./epi.js";
+const svg = document.querySelector("#stage svg");
+let s = 13; const rnd = () => (s = (s * 16807) % 2147483647) / 2147483647;
+
+// ---- world 1: the lining with chemicals drifting in ---------------------------------
+const w1 = el("g", {}, svg);
+const L = makeLining(w1, {cols: 11, rows: 7, floor: 900, top: 420, seed: 5});
+const smoke = Array.from({length: 46}, () => ({x: rnd() * 1080, y0: -rnd() * 900, sp: 60 + rnd() * 70, r: 5 + rnd() * 6,
+  e: el("circle", {fill: "#7c8b8a", opacity: .7}, w1)}));
+
+// ---- world 2: a strand of DNA inside one nucleus ------------------------------------
+const w2 = el("g", {}, svg);
+el("rect", {x: -50, y: 120, width: 1180, height: 760, rx: 380, fill: "#e0f0f0", stroke: "#0d7377", "stroke-width": 6}, w2);
+const sA = el("path", {fill: "none", stroke: "#0d7377", "stroke-width": 12, "stroke-linecap": "round"}, w2);
+const sB = el("path", {fill: "none", stroke: "#5aa8a9", "stroke-width": 12, "stroke-linecap": "round"}, w2);
+const N = 22, X0 = 80, DX = 42;
+const rungs = Array.from({length: N}, () => el("line", {stroke: "#9ccfcf", "stroke-width": 8, "stroke-linecap": "round"}, w2));
+// the gene: a stretch of the strand, bracketed and named
+const GENE = [12, 17];
+const gBar = el("rect", {x: X0 + GENE[0] * DX - 16, y: 300, width: (GENE[1] - GENE[0]) * DX + 32, height: 400, rx: 20, fill: "none", stroke: "#0d7377", "stroke-width": 3, "stroke-dasharray": "10 8"}, w2);
+const gTxt = el("text", {x: X0 + (GENE[0] + GENE[1]) / 2 * DX, y: 280, "text-anchor": "middle", class: "gl"}, w2); gTxt.textContent = "tumour-suppressor gene";
+// adducts: chemicals stuck to the DNA at these rungs; all but one get repaired
+const SITES = [2, 5, 8, 10, 14, 19], STAY = 14;
+const adducts = SITES.map(i => ({i, e: el("circle", {r: 15, fill: "#7c8b8a", stroke: "#4a5958", "stroke-width": 2}, w2)}));
+const repair = SITES.filter(i => i !== STAY).map(i => ({i, e: el("path", {d: "M-26,0 A26,26 0 1,1 26,0 L14,0 A14,14 0 1,0 -14,0 Z", fill: "#0d7377"}, w2)}));
+
+const T = Object.fromEntries(PLAN.shots.map(x => [x.key, x.t0]));
+const helixY = (i, t, side) => 500 + side * 150 * Math.sin((X0 + i * DX) / 110 + t * 0.9);
+window.render = (t) => {
+  const {sh, local} = at(t);
+  const into = span(t, T.stick - 0.4, T.stick + 0.6);
+  // world 1: drifting chemicals settle into the cells; the camera pushes in to one cell
+  const quit = span(t, T.quit, T.quit + 1.0);
+  smoke.forEach((p, k) => {
+    const y = ((p.y0 + t * p.sp) % 1000 + 1000) % 1000 - 80;
+    p.e.setAttribute("cx", p.x + 14 * Math.sin(t + k)); p.e.setAttribute("cy", y); p.e.setAttribute("r", p.r);
+    p.e.setAttribute("opacity", 0.7 * (1 - quit) * (y > 0 ? 1 : 0));
+  });
+  L.cells.forEach((c, k) => c.el.setAttribute("fill", mix("#f1c9cf", "#e3cfd1", 0.4 * span(t, 0, 4) * (1 - quit))));
+  const push = ease(into);
+  w1.setAttribute("transform", `translate(540 700) scale(${1 + 5 * push}) translate(-540 -700)`);
+  w1.style.opacity = (1 - span(t, T.stick + 0.1, T.stick + 0.6)) + span(t, T.quit + 0.2, T.quit + 0.9);
+  if (t > T.quit) w1.setAttribute("transform", `translate(540 600) scale(${1 + 0.02 * Math.sin(t)}) translate(-540 -600)`);
+  w2.style.opacity = span(t, T.stick + 0.1, T.stick + 0.6) * (1 - span(t, T.quit + 0.2, T.quit + 0.9));
+  w2.setAttribute("transform", `translate(${6 * Math.sin(t * 0.4)} 0)`);
+
+  // the helix
+  const A = [], B = [];
+  for (let x = X0 - 60; x <= X0 + N * DX + 20; x += 8) { const ph = x / 110 + t * 0.9; A.push(`${x},${500 + 150 * Math.sin(ph)}`); B.push(`${x},${500 - 150 * Math.sin(ph)}`); }
+  sA.setAttribute("d", "M" + A.join(" L")); sB.setAttribute("d", "M" + B.join(" L"));
+  const bad = span(t, T.slip + 0.6, T.slip + 1.3);
+  rungs.forEach((r, i) => {
+    const x = X0 + i * DX;
+    r.setAttribute("x1", x); r.setAttribute("x2", x); r.setAttribute("y1", helixY(i, t, 1)); r.setAttribute("y2", helixY(i, t, -1));
+    r.setAttribute("stroke", i === STAY ? mix("#9ccfcf", "#e8634a", bad) : "#9ccfcf");
+    r.setAttribute("stroke-width", i === STAY ? 8 + 8 * bad : 8);
+  });
+  // adducts land one after another, then repair enzymes travel in and lift all but one
+  adducts.forEach((a, k) => {
+    const land = ease(span(t, T.stick + 0.8 + k * 0.35, T.stick + 1.3 + k * 0.35));
+    const fixed = a.i === STAY ? 0 : span(t, T.repair + 0.5 + k * 0.4, T.repair + 1.0 + k * 0.4);
+    // adducts form on the bases (the rungs), not the backbone
+    const x = X0 + a.i * DX, y = lerp(helixY(a.i, t, 1), 500, 0.4);
+    a.e.setAttribute("cx", x); a.e.setAttribute("cy", lerp(-60, y, land) - fixed * 160);
+    a.e.setAttribute("opacity", land * (1 - fixed));
+  });
+  repair.forEach((r, k) => {
+    const go = ease(span(t, T.repair + k * 0.4, T.repair + 0.5 + k * 0.4)), leave = span(t, T.repair + 1.0 + k * 0.4, T.repair + 1.6 + k * 0.4);
+    const x = X0 + r.i * DX, y = lerp(helixY(r.i, t, 1), 500, 0.4);
+    r.e.setAttribute("transform", `translate(${lerp(x + 300, x, go)} ${y - 6 - leave * 170}) rotate(${-30 + 30 * go})`);
+    r.e.setAttribute("opacity", go * (1 - leave));
+  });
+  const geneOff = span(t, T.slip + 1.0, T.slip + 1.8);
+  gBar.setAttribute("stroke", geneOff > 0.5 ? "#e8634a" : "#0d7377"); gTxt.setAttribute("fill", geneOff > 0.5 ? "#e8634a" : "#0d7377");
+  gTxt.textContent = geneOff > 0.5 ? "tumour-suppressor gene: switched off" : "tumour-suppressor gene";
+  gBar.setAttribute("opacity", span(t, T.slip, T.slip + 0.5)); gTxt.setAttribute("opacity", span(t, T.slip, T.slip + 0.5));
+
+  if (sh.key === "hook") readout("Dozens", "of cancer-causing chemicals", 0, span(local, 0.3, 0.8));
+  else if (sh.key === "repair") readout("Most", "damage repaired", 0, span(local, 0.6, 1.1));
+  else if (sh.key === "quit") readout("A few years", "for the risk to drop measurably", 0, span(local, 0.5, 1.0));
+  else readout("", "", 0, 0);
+  if (sh.key === "stick") label({k: "Adduct", t: "A chemical stuck to DNA", d: "illustration, not to scale"}, X0 + SITES[1] * DX, 230 + lerp(helixY(SITES[1], t, 1), 500, 0.4), "right", local, 260);
+  else label(null);
+  return frame(t);
+};
+</script>
+</body></html>

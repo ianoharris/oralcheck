@@ -54,8 +54,12 @@ const order = cells.map((_, i) => i).sort(() => rnd() - 0.5);
 const infected = order.slice(0, 16), STAY = order[3];
 const virus = infected.map((ci, k) => {
   const g = el("g", {}, world);
-  el("circle", {r: 13, fill: "#0d7377"}, g);
-  for (let j = 0; j < 8; j++) { const a = j / 8 * Math.PI * 2; el("circle", {cx: Math.cos(a) * 18, cy: Math.sin(a) * 18, r: 4, fill: "#0d7377"}, g); }
+  // HPV is non-enveloped: an icosahedral shell of 72 capsomers, no spikes (IARC Monograph 90).
+  // Drawn as a faceted ball with pentamer bumps set into its surface.
+  el("polygon", {points: Array.from({length: 10}, (_, j) => { const a = j / 10 * Math.PI * 2; return `${(Math.cos(a) * 17).toFixed(1)},${(Math.sin(a) * 17).toFixed(1)}`; }).join(" "),
+    fill: "#0d7377", stroke: "#0b5d60", "stroke-width": 1.5}, g);
+  for (const [bx, by] of [[0, 0], [8, -8], [-8, -8], [10, 5], [-10, 5], [0, 11], [0, -12], [-13, -1], [13, -1]])
+    el("circle", {cx: bx, cy: by, r: 3.1, fill: "#5aa8a9"}, g);
   return {g, ci, k, from: [rnd() * 1080, 60 - rnd() * 260]};
 });
 // daughter cells for the one that stays: coral copies that bud off

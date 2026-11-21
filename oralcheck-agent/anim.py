@@ -111,6 +111,7 @@ SCRIPTS = {
             {"key": "vax", "say": "Gardasil 9 protects against HPV-16. It works best before exposure.", "eyebrow": "Prevention"},
         ],
         credit="Sources: CDC, HPV and cancer; CDC, HPV Vaccination Considerations · Cells and virus: illustration, not to scale · " + PLATES,
+        foot="Illustration for education. Not reviewed by a clinician.", foot_on=["land", "clear", "stay", "vax"],
         series={"name": SERIES, "ep": "How it works · 01"},
     ),
     # Format sample: silent text story, no voice. topics.py canker_vs_cancer, painless,
@@ -127,6 +128,113 @@ SCRIPTS = {
         ],
         credit="Sources: NHS, mouth ulcers; oralcheck.org/learn",
         series={"name": SERIES, "ep": "Read it · 01"},
+    ),
+    # Mouth Notes ep. 3 (docs/MOUTH_NOTES.md). ACS; NCI, What Is Cancer?; topics.py tongue_sides.
+    "powers": dict(
+        lines=[
+            {"key": "hook", "say": "Let's zoom from your smile to a single strand of DNA.", "eyebrow": "Powers of ten"},
+            {"key": "x10", "say": "Ten times closer: the side of the tongue, the most common place it starts.", "eyebrow": "×10"},
+            {"key": "x100", "say": "A hundred times: the surface is a lining, many cells deep.", "eyebrow": "×100"},
+            {"key": "x1000", "say": "A thousand times: one cell from the lining. Almost all oral cancers start in this lining.", "eyebrow": "×1,000"},
+            {"key": "x10000", "say": "Ten thousand times: the nucleus, where the cell keeps its DNA.", "eyebrow": "×10,000"},
+            {"key": "dna", "say": "Cancer starts when changes to that DNA let a cell stop following the rules.", "eyebrow": "DNA"},
+        ],
+        credit="Sources: American Cancer Society, What Are Oral Cavity and Oropharyngeal Cancers?; NCI, What Is Cancer? · "
+               "Lining, cell, nucleus and DNA: illustration, not to scale · " + PLATES,
+        foot="Illustration for education. Not reviewed by a clinician.", foot_on=["x10", "x100", "x1000", "x10000", "dna"],
+        series={"name": SERIES, "ep": "How it works · 02"},
+    ),
+    # Mouth Notes ep. 5 (docs/MOUTH_NOTES.md). StatPearls NBK572115; NCI, What Is Cancer?
+    "lifecell": dict(
+        lines=[
+            {"key": "hook", "say": "Your cheek lining replaces itself about every two weeks.", "eyebrow": "Life of a mouth cell"},
+            {"key": "born", "say": "New cells are made in the bottom layer.", "eyebrow": "Basal layer"},
+            {"key": "rise", "say": "They rise, flatten out, and are shed at the surface.", "eyebrow": "Rise and shed"},
+            {"key": "damage", "say": "When a cell's DNA is damaged, it can keep dividing instead of moving on.", "eyebrow": "A damaged cell"},
+            {"key": "patch", "say": "Enough of them can build into a growth you can see or feel.", "eyebrow": "A growth"},
+        ],
+        credit="Sources: StatPearls, Histology, Oral Mucosa (NCBI Bookshelf NBK572115); NCI, What Is Cancer? · Illustration, not to scale; the conveyor is sped up",
+        foot="Illustration for education. Not reviewed by a clinician.", foot_on=["born", "rise", "damage", "patch"],
+        series={"name": SERIES, "ep": "How it works · 03"},
+    ),
+    # Mouth Notes ep. 7 (docs/MOUTH_NOTES.md). NCI Dictionary: oral epithelial dysplasia; invasive cancer.
+    "microscope": dict(
+        lines=[
+            {"key": "hook", "say": "What does a biopsy actually look for? Layers.", "eyebrow": "Under the microscope"},
+            {"key": "normal", "say": "Normal lining: new cells at the bottom, flat ones on top, in order.", "eyebrow": "Normal"},
+            {"key": "mild", "say": "Mild dysplasia: abnormal cells, only in the lowest layers.", "eyebrow": "Mild"},
+            {"key": "severe", "say": "Moderate, then severe: they climb higher.", "eyebrow": "Moderate, severe"},
+            {"key": "cancer", "say": "Cancer: they break through the floor, into the tissue beneath.", "eyebrow": "Invasive"},
+            {"key": "worth", "say": "Dysplasia is not cancer, but it can become cancer. That is why it is worth finding.", "eyebrow": "Why it matters"},
+        ],
+        credit="Sources: NCI Dictionary of Cancer Terms, oral epithelial dysplasia and invasive cancer; grading by thirds of the lining (WHO) · Illustration, not a real slide",
+        foot="Illustration for education. Not reviewed by a clinician.", foot_on=["normal", "mild", "severe", "cancer", "worth"],
+        series={"name": SERIES, "ep": "How it works · 04"},
+    ),
+    # Mouth Notes ep. 8. Hecht, Nat Rev Cancer 2003; topics.py quitting.
+    "tobaccodna": dict(
+        lines=[
+            {"key": "hook", "say": "Tobacco carries dozens of cancer-causing chemicals. Here is what they do.", "eyebrow": "How it works"},
+            {"key": "stick", "say": "In the cells lining your mouth, some of them stick to DNA.", "eyebrow": "Adducts"},
+            {"key": "repair", "say": "The cell's repair systems fix most of that damage.", "eyebrow": "Repair"},
+            {"key": "slip", "say": "Not all of it. A mistake that slips through can switch off a gene that stops tumours.", "eyebrow": "A mistake"},
+            {"key": "quit", "say": "Quit, and the risk drops measurably within a few years.", "eyebrow": "Quitting"},
+        ],
+        credit="Sources: Hecht, Nature Reviews Cancer 2003, tobacco carcinogens and DNA adducts; oralcheck.org prevention · Illustration, not to scale",
+        foot="Illustration for education. Not reviewed by a clinician.", foot_on=["stick", "repair", "slip"],
+        series={"name": SERIES, "ep": "How it works · 05"},
+    ),
+    # Mouth Notes ep. 9. IARC Monograph 90; buccal cell cytomorphometry (Asian J Med Sci 2023); topics.py hpv_is_common.
+    "sized": dict(
+        lines=[
+            {"key": "hook", "say": "How small is HPV? Let's shrink.", "eyebrow": "Sized"},
+            {"key": "rice", "say": "Start with a grain of rice.", "eyebrow": "Rice"},
+            {"key": "cell", "say": "One cell from your cheek: about a twentieth of a millimetre.", "eyebrow": "A cheek cell"},
+            {"key": "hpv", "say": "HPV: about fifty-five nanometres. Nearly a thousand would fit across that one cell.", "eyebrow": "HPV"},
+            {"key": "clear", "say": "Far too small to see, and most of the time the body clears it anyway.", "eyebrow": "Most clear"},
+        ],
+        credit="Sources: IARC Monograph 90 (HPV about 55 nm); normal buccal cell diameter about 49.5 µm (Asian Journal of Medical Sciences, 2023); CDC · Illustration",
+        series={"name": SERIES, "ep": "Sized · 01"},
+    ),
+    # Mouth Notes ep. 10. StatPearls: sublingual gland; mylohyoid; topics.py floor_of_mouth, painless.
+    "cutaway": dict(
+        lines=[
+            {"key": "hook", "say": "What is under your tongue? Let's peel it back.", "eyebrow": "Cutaway"},
+            {"key": "lining", "say": "First, the lining: thin, smooth, and where oral cancer starts.", "eyebrow": "Layer 1"},
+            {"key": "gland", "say": "Under it, a salivary gland, and the nerve that gives your tongue feeling.", "eyebrow": "Layer 2"},
+            {"key": "muscle", "say": "Then the muscle that forms the floor of your mouth.", "eyebrow": "Layer 3"},
+            {"key": "pain", "say": "Pain usually starts only when a growth reaches a nerve or breaks open, so early changes often do not hurt.", "eyebrow": "Why it is quiet"},
+            {"key": "look", "say": "Lift your tongue and look at the floor of your mouth once a month.", "eyebrow": "Your turn"},
+        ],
+        credit="Sources: StatPearls, Anatomy, Sublingual Gland; StatPearls, Mylohyoid; oralcheck.org/learn · Schematic, not to scale",
+        foot="Illustration for education. Not reviewed by a clinician.", foot_on=["lining", "gland", "muscle", "pain"],
+        series={"name": SERIES, "ep": "Cutaway · 01"},
+    ),
+    # Mouth Notes ep. 11. topics.py canker_vs_cancer, wipe_test, red_patch, neck_lump, white_patch.
+    "thisorthat": dict(
+        lines=[
+            {"key": "hook", "say": "Five rounds. Worry or wait? Answer before the reveal.", "eyebrow": "This or that"},
+            {"key": "r1", "say": "A sore that hurts, and is shrinking after a week? Wait.", "eyebrow": "Round 1"},
+            {"key": "r2", "say": "A white coating that wipes off? Usually thrush, not cancer.", "eyebrow": "Round 2"},
+            {"key": "r3", "say": "A painless red patch, three weeks old? Get it checked.", "eyebrow": "Round 3"},
+            {"key": "r4", "say": "A lump in your neck for a month, with no cold? Get it checked.", "eyebrow": "Round 4"},
+            {"key": "r5", "say": "A white patch that will not rub off? Get it checked.", "eyebrow": "Round 5"},
+        ],
+        credit="Sources: NHS, mouth ulcers; oralcheck.org/learn · " + PLATES,
+        foot="Illustrations for education, not real cases. Not reviewed by a clinician.", foot_on=["r1", "r2", "r3", "r4", "r5"],
+        series={"name": SERIES, "ep": "This or that · 01"},
+    ),
+    # Mouth Notes ep. 12. topics.py throat_hpv_site, hpv_throat_symptoms.
+    "myth": dict(
+        lines=[
+            {"key": "hook", "say": "Myth: if the mirror shows nothing, there is nothing there.", "eyebrow": "Myth"},
+            {"key": "where", "say": "Some oral cancers start where a mirror cannot reach: the base of the tongue and the tonsils.", "eyebrow": "Out of reach"},
+            {"key": "nothing", "say": "There is often nothing to see at all.", "eyebrow": "Nothing visible"},
+            {"key": "signs", "say": "The signs are different: a sore throat that lasts, a lump in the neck, ear pain on one side.", "eyebrow": "The signs"},
+            {"key": "check", "say": "Any of those for more than two weeks gets checked.", "eyebrow": "Two weeks"},
+        ],
+        credit="Sources: oralcheck.org/learn (HPV-related throat cancer) · " + PLATES,
+        series={"name": SERIES, "ep": "Myth · 01"},
     ),
     # Calendar 19 Nov 2026 (Ian's redo of the age carousel). SEER_BY_AGE and
     # newCaseShareByAge in src/lib/seerStats.ts: SEER 21, 2019 to 2023.
@@ -184,6 +292,8 @@ def _page(scene: str) -> str:
     html = (HERE / f"{scene}.html").read_text()
     if "<!--PLATE_A-->" in html:
         html = html.replace("<!--PLATE_A-->", reel2d._scoped((reel2d.HERE / "plate_a.svg").read_text(), "a-"))
+    if "<!--PLATE_B-->" in html:
+        html = html.replace("<!--PLATE_B-->", reel2d._scoped((reel2d.HERE / "plate_b.svg").read_text(), "b-"))
     return html
 
 

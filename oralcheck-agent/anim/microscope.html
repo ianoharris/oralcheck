@@ -1,0 +1,80 @@
+<!doctype html>
+<!--
+  Mouth Notes ep. 7, How it works 04: under the microscope (21 Nov 2026).
+  What a biopsy looks for: abnormal cells and how far up the lining they reach.
+  Mild: the lowest third; moderate, then severe: higher; cancer: through the
+  floor (the basement membrane) into the tissue beneath. Seen through a round
+  microscope field. Illustration, not a real slide.
+  Sources: NCI Dictionary of Cancer Terms, "oral epithelial dysplasia" (abnormal
+  cells; not cancer but may become cancer) and "invasive cancer" (has spread
+  beyond the layer of tissue where it developed); grading by thirds of the
+  epithelium as in the WHO scheme.
+-->
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="house.css">
+<style>#stage svg{display:block;width:1080px;height:1000px}</style></head>
+<body>
+<div id="stage"><svg viewBox="0 0 1080 1000"></svg></div>
+<script type="module">
+import {PLAN, at, label, readout, frame, span, ease} from "./house.js";
+import {makeLining, el, mix, lerp, PINK, NUC, CORAL, TEAL, floorY} from "./epi.js";
+const svg = document.querySelector("#stage svg");
+svg.insertAdjacentHTML("afterbegin", `<defs><clipPath id="field"><circle cx="540" cy="500" r="470"/></clipPath>
+  <radialGradient id="vig" cx="50%" cy="50%" r="50%"><stop offset="78%" stop-color="#f5f3f0" stop-opacity="0"/><stop offset="100%" stop-color="#f5f3f0" stop-opacity=".9"/></radialGradient></defs>`);
+const field = el("g", {"clip-path": "url(#field)"}, svg);
+const world = el("g", {}, field);
+const L = makeLining(world, {cols: 13, rows: 9, floor: 760, top: 250, seed: 9});
+el("circle", {cx: 540, cy: 500, r: 470, fill: "url(#vig)"}, svg);
+const ring = el("circle", {cx: 540, cy: 500, r: 470, fill: "none", stroke: "#15201f", "stroke-width": 10, opacity: .85}, svg);
+// invading cells: drawn below the floor, shown only in the cancer shot
+let s = 21; const rnd = () => (s = (s * 16807) % 2147483647) / 2147483647;
+const invade = Array.from({length: 16}, () => {
+  const x = 380 + rnd() * 320, depth = 30 + rnd() * 180;
+  return {x, depth, e: el("ellipse", {cx: x, cy: floorY(x, 760) + depth, rx: 22 + rnd() * 10, ry: 18 + rnd() * 8, fill: CORAL, stroke: "#b3432f", "stroke-width": 2, opacity: 0}, world),
+          n: el("ellipse", {cx: x + 3, cy: floorY(x, 760) + depth, rx: 10, ry: 8, fill: "#8e2f22", opacity: 0}, world)};
+});
+
+const T = Object.fromEntries(PLAN.shots.map(s => [s.key, s.t0]));
+// how high the abnormal cells reach, as a share of the lining's height (0 none, 1 full)
+function reach(t) {
+  let r = 0;
+  r = lerp(r, 0.34, ease(span(t, T.mild, T.mild + 1.2)));
+  r = lerp(r, 0.67, ease(span(t, T.severe, T.severe + 1.0)));
+  r = lerp(r, 0.86, ease(span(t, T.severe + 2.2, T.severe + 3.2)));   // severe: into the top third (full thickness would be carcinoma in situ)
+  return r;
+}
+window.render = (t) => {
+  const {sh, local} = at(t);
+  const r = reach(t), inv = ease(span(t, T.cancer + 0.3, T.cancer + 2.0));
+  const wob = s => Math.sin(t * 2 + s) * 0.5 + 0.5;
+  L.cells.forEach((c, i) => {
+    // abnormal: big dark irregular nuclei, cells out of order, coloured towards coral
+    const ab = Math.max(0, Math.min(1, (r - c.k) * 6)) * (Math.abs(c.x - 540) < 330 ? 1 : Math.max(0, 1 - (Math.abs(c.x - 540) - 330) / 120));
+    c.el.setAttribute("fill", mix("#f1c9cf", "#f4a493", ab));
+    c.nuc.setAttribute("fill", mix("#c98593", "#8e2f22", ab));
+    c.nuc.setAttribute("rx", (lerp(10, 6, c.k) * (1 + 0.9 * ab)).toFixed(1));
+    c.nuc.setAttribute("ry", (lerp(10, 3.5, c.k) * (1 + 1.6 * ab) * (0.85 + 0.3 * wob(i))).toFixed(1));
+    c.el.setAttribute("transform", ab > 0.3 ? `rotate(${(i % 7 - 3) * 4 * ab} ${c.x} ${c.y})` : "");
+  });
+  invade.forEach((v, i) => {
+    const k = Math.max(0, Math.min(1, inv * 1.6 - (v.depth / 210) * 0.8));
+    v.e.setAttribute("opacity", k); v.n.setAttribute("opacity", k);
+    v.e.setAttribute("cy", floorY(v.x, 760) + v.depth * k);
+    v.n.setAttribute("cy", floorY(v.x, 760) + v.depth * k);
+  });
+  L.floorPath.setAttribute("stroke", inv > 0.05 ? mix("#b86a78", "#e8634a", Math.min(1, inv * 2)) : "#b86a78");
+  L.floorPath.setAttribute("stroke-dasharray", inv > 0.2 ? "28 10" : "none");
+  // the slide drifts and the focus breathes, as if someone is at the eyepiece
+  world.setAttribute("transform", `translate(${18 * Math.sin(t * 0.35)} ${10 * Math.cos(t * 0.3)}) scale(${1.02 + 0.015 * Math.sin(t * 0.5)})`);
+  world.style.filter = `blur(${Math.max(0, 2.2 - t * 2).toFixed(2)}px)`;   // racks into focus on the hook
+
+  const stage = sh.key === "mild" ? ["Mild", "abnormal cells in the lowest third"]
+    : sh.key === "severe" ? [r > 0.75 ? "Severe" : "Moderate", r > 0.75 ? "into the top third" : "into the middle third"]
+    : sh.key === "cancer" ? ["Invasive", "through the floor, into the tissue beneath"]
+    : sh.key === "normal" ? ["Normal", "new cells low, flat cells on top"] : null;
+  if (stage) readout(stage[0], stage[1], 0, span(local, 0.2, 0.6)); else readout("", "", 0, 0);
+  if (sh.key === "cancer") label({k: "The floor", t: "Basement membrane", d: "breached"}, 540, 230 + 770, "left", local, 300);
+  else label(null);
+  return frame(t);
+};
+</script>
+</body></html>

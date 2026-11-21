@@ -1,0 +1,90 @@
+<!doctype html>
+<!--
+  Mouth Notes ep. 5, How it works 03: life of a mouth cell (21 Nov 2026). The
+  lining as a slow conveyor: cells are made at the bottom, rise, flatten and are
+  shed, so the sheet is moving on frame 0. One teal cell is followed to the
+  surface; then one damaged cell (coral) keeps dividing instead of rising.
+  Sources: StatPearls, Histology, Oral Mucosa (NCBI Bookshelf NBK572115):
+  buccal mucosa turnover about 14 days, 14 to 21 days for oral epithelium;
+  NCI, What Is Cancer? (damaged cells can grow and multiply when they should
+  not). Illustration, not to scale.
+-->
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="house.css">
+<style>#stage svg{display:block;width:1080px;height:1000px}</style></head>
+<body>
+<div id="stage"><svg viewBox="0 0 1080 1000"></svg></div>
+<script type="module">
+import {PLAN, at, label, readout, frame, span, ease} from "./house.js";
+import {el, mix, lerp, floorY} from "./epi.js";
+const svg = document.querySelector("#stage svg");
+const world = el("g", {}, svg);
+const FLOOR = 800, TOP = 240, H = FLOOR - TOP;
+el("rect", {x: -300, y: FLOOR, width: 1700, height: 600, fill: "#f7e6e3"}, world);
+const fp = []; for (let x = -300; x <= 1400; x += 12) fp.push(`${x},${floorY(x, FLOOR).toFixed(1)}`);
+el("path", {d: "M" + fp.join(" L"), fill: "none", stroke: "#b86a78", "stroke-width": 5}, world);
+// a conveyor: each column holds cells at evenly spaced phases; phase 0 is born at the floor, 1 is shed
+const COLS = 19, PER = 15, SPEED = 0.03;   // packed tight: lining is cell against cell      // phase per second (illustrative, not the real two weeks)
+let s = 4; const rnd = () => (s = (s * 16807) % 2147483647) / 2147483647;
+const colX = Array.from({length: COLS}, (_, c) => -30 + c * 1140 / (COLS - 1));
+const cells = [];
+for (let c = 0; c < COLS; c++) for (let j = 0; j < PER; j++) {
+  const e = el("ellipse", {fill: "#f1c9cf", stroke: "#b86a78", "stroke-width": 2}, world);
+  const n = el("ellipse", {fill: "#c98593"}, world);
+  cells.push({c, j, e, n, jit: (rnd() - .5) * 14, off: rnd() * 0.06});
+}
+const FOLLOW = cells.find(x => x.c === 9 && x.j === 0);
+const clone = Array.from({length: 24}, (_, i) => ({e: el("ellipse", {fill: "#e8634a", stroke: "#b3432f", "stroke-width": 2, opacity: 0}, world),
+  n: el("ellipse", {fill: "#8e2f22", opacity: 0}, world), i}));
+
+const T = Object.fromEntries(PLAN.shots.map(s => [s.key, s.t0]));
+window.render = (t) => {
+  const {sh, local} = at(t);
+  const dmg = span(t, T.damage, T.damage + 0.8);
+  cells.forEach(cl => {
+    let ph = ((t * SPEED + cl.j / PER + cl.off) % 1 + 1) % 1;
+    let follow = cl === FOLLOW && t >= T.born - 0.5 && t < T.damage;
+    if (cl === FOLLOW) {
+      // the followed cell: born on the "born" line, rides up through "rise"
+      ph = Math.max(0, Math.min(1.08, ease(span(t, T.born + 0.4, T.damage - 0.2)) * 1.08));
+    }
+    const k = Math.min(1, ph);
+    const x = colX[cl.c] + cl.jit * 0.4 + (cl.c % 2 ? 1 : -1) * 4 * Math.sin(ph * 6) + (cl.j % 2) * 14;
+    const y = lerp(floorY(x, FLOOR) - 22, TOP, k) - (ph > 1 ? (ph - 1) * 600 : 0);
+    const w = lerp(60, 118, k), h = lerp(44, 17, k);
+    // near the centre, after the damage, the conveyor stalls: the coral clone takes the space
+    // normal cells give way only where the abnormal ones are: low down, near the centre
+    const nClone = Math.round(Math.pow(2, Math.min(4.6, Math.max(0, (t - T.damage - 0.6) / 1.1))));
+    const cloneTop = FLOOR - 26 - Math.ceil(nClone / 6) * 44 - 20;
+    const crowd = dmg * (Math.abs(x - 540) < 175 && y > cloneTop ? 1 : 0);
+    const vis = (ph > 1 ? Math.max(0, 1 - (ph - 1) * 12) : Math.min(1, ph * 12)) * (1 - crowd);
+    cl.e.setAttribute("cx", x); cl.e.setAttribute("cy", y); cl.e.setAttribute("rx", w / 2); cl.e.setAttribute("ry", h / 2);
+    cl.n.setAttribute("cx", x); cl.n.setAttribute("cy", y); cl.n.setAttribute("rx", lerp(9, 6, k)); cl.n.setAttribute("ry", lerp(9, 3, k));
+    const teal = cl === FOLLOW ? span(t, T.born, T.born + 0.6) * (1 - span(t, T.damage - 0.3, T.damage + 0.2)) : 0;
+    cl.e.setAttribute("fill", mix("#f1c9cf", "#7fc1c2", teal)); cl.e.setAttribute("stroke", teal > .5 ? "#0d7377" : "#b86a78");
+    cl.e.style.opacity = cl.n.style.opacity = cl === FOLLOW && t >= T.born ? 1 : vis;
+  });
+  // the damaged cell divides: 1, 2, 4, 8... filling the space it should have left
+  const n = Math.round(Math.pow(2, Math.min(4.6, Math.max(0, (t - T.damage - 0.6) / 1.1))));
+  clone.forEach((c, i) => {
+    const on = i < n && t > T.damage ? span(t, T.damage + 0.6 + Math.log2(i + 1) * 1.1, T.damage + 1.2 + Math.log2(i + 1) * 1.1) : 0;
+    const row = Math.floor(i / 6), colI = i % 6;
+    const x = 540 + (colI - 2.5) * 52 + (row % 2) * 20, y = floorY(x, FLOOR) - 26 - row * 44;
+    c.e.setAttribute("cx", x); c.e.setAttribute("cy", y); c.e.setAttribute("rx", 26); c.e.setAttribute("ry", 22);
+    c.n.setAttribute("cx", x + 2); c.n.setAttribute("cy", y); c.n.setAttribute("rx", 11); c.n.setAttribute("ry", 9);
+    c.e.setAttribute("opacity", on); c.n.setAttribute("opacity", on);
+  });
+  // camera: a slow push towards the followed cell, back out for the patch
+  const push = ease(span(t, T.born, T.born + 1.4)) * (1 - ease(span(t, T.patch - 0.2, T.patch + 1.2)));
+  const sc = 1 + 0.35 * push + 0.01 * Math.sin(t * 0.7);
+  world.setAttribute("transform", `translate(540 520) scale(${sc}) translate(-540 ${-520 + 6 * Math.sin(t * 0.5)})`);
+
+  if (sh.key === "hook") readout("~14 days", "for the cheek lining to replace itself", 0, span(local, 0.2, 0.7));
+  else if (sh.key === "damage") readout(`${n}`, n === 1 ? "damaged cell" : "copies, and counting", 0, span(local, 0.3, 0.7));
+  else readout("", "", 0, 0);
+  if (sh.key === "born") label({k: "Basal layer", t: "Where cells are made", d: "the bottom row"}, 540, 230 + 520 + (FLOOR - 40 - 520) * sc, "right", local, 280);
+  else if (sh.key === "patch") label({k: "Not shedding", t: "Cells that stay", d: "illustration, not to scale"}, 540, 230 + 520 + (FLOOR - 120 - 520), "left", local, 280);
+  else label(null);
+  return frame(t);
+};
+</script>
+</body></html>

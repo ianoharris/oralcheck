@@ -1508,7 +1508,7 @@
       "status": "planned",
       "idea": {
         "title": "Mouth Notes: powers of ten, smile to DNA",
-        "hook": "",
+        "hook": "Let's zoom from your smile to a single strand of DNA.",
         "brief": "Mouth Notes ep. 3, How it works \u00b7 02. Scene anim/powers.html; script and sources in docs/MOUTH_NOTES.md.",
         "topic": "tongue_sides",
         "shape": "mouth_notes",
@@ -1525,8 +1525,8 @@
       "folder": "2026-12-21_in_mn03",
       "version": 1,
       "uploaded": false,
-      "hook": "",
-      "caption": "",
+      "hook": "Let's zoom from your smile to a single strand of DNA.",
+      "caption": "Mouth Notes, how it works: from your smile to a single strand of DNA, ten times closer each step.\n\nThe side of the tongue is the most common place oral cancer starts. Almost all oral cancers start in the mouth's lining, a sheet of squamous cells many cells deep, and the earliest changes begin in its bottom layer. Cancer starts when changes to a cell's DNA let it stop following the rules.\n\nIllustration for education, not to scale.\n\nSources: American Cancer Society; National Cancer Institute, What Is Cancer?\n\nFree, private risk check: oralcheck.org",
       "hashtags": [
         "oralcancer",
         "oralhealth",
@@ -1669,7 +1669,7 @@
       "status": "planned",
       "idea": {
         "title": "Mouth Notes: life of a mouth cell",
-        "hook": "",
+        "hook": "Your cheek lining replaces itself about every two weeks.",
         "brief": "Mouth Notes ep. 5, How it works \u00b7 03. Scene anim/lifecell.html; script and sources in docs/MOUTH_NOTES.md.",
         "topic": "white_patch",
         "shape": "mouth_notes",
@@ -1686,8 +1686,8 @@
       "folder": "2026-12-28_in_mn05",
       "version": 1,
       "uploaded": false,
-      "hook": "",
-      "caption": "",
+      "hook": "Your cheek lining replaces itself about every two weeks.",
+      "caption": "Mouth Notes, how it works: your cheek lining replaces itself about every two weeks.\n\nNew cells are made in the bottom layer, rise, flatten and are shed at the surface. When a cell's DNA is damaged, it can keep dividing instead of moving on, and enough of those cells can build into a growth you can see or feel.\n\nIllustration for education, sped up and not to scale.\n\nSources: StatPearls, Histology, Oral Mucosa (NCBI Bookshelf); National Cancer Institute, What Is Cancer?\n\nFree, private risk check: oralcheck.org",
       "hashtags": [
         "oralcancer",
         "oralhealth",
@@ -1820,7 +1820,7 @@
       "status": "planned",
       "idea": {
         "title": "Mouth Notes: under the microscope",
-        "hook": "",
+        "hook": "What does a biopsy actually look for? Layers.",
         "brief": "Mouth Notes ep. 7, How it works \u00b7 04. Scene anim/microscope.html; script and sources in docs/MOUTH_NOTES.md.",
         "topic": "biopsy",
         "shape": "mouth_notes",
@@ -1837,8 +1837,8 @@
       "folder": "2027-01-04_in_mn07",
       "version": 1,
       "uploaded": false,
-      "hook": "",
-      "caption": "",
+      "hook": "What does a biopsy actually look for? Layers.",
+      "caption": "Mouth Notes, how it works: what a biopsy looks for is how far abnormal cells reach up the lining.\n\nMild dysplasia: the lowest third. Moderate: into the middle third. Severe: into the top third. Invasive cancer: through the basement membrane into the tissue beneath. Dysplasia is not cancer, but it can become cancer, which is why it is worth finding.\n\nIllustration, not a real slide.\n\nSources: National Cancer Institute, Dictionary of Cancer Terms (oral epithelial dysplasia; invasive cancer).\n\nFree, private risk check: oralcheck.org",
       "hashtags": [
         "oralcancer",
         "oralhealth",
@@ -1863,7 +1863,7 @@
       "status": "planned",
       "idea": {
         "title": "Mouth Notes: how tobacco damages DNA",
-        "hook": "",
+        "hook": "Tobacco carries dozens of cancer-causing chemicals. Here is what they do.",
         "brief": "Mouth Notes ep. 8, How it works \u00b7 05. Scene anim/tobaccodna.html; script and sources in docs/MOUTH_NOTES.md.",
         "topic": "quitting",
         "shape": "mouth_notes",
@@ -1880,8 +1880,8 @@
       "folder": "2027-01-07_in_mn08",
       "version": 1,
       "uploaded": false,
-      "hook": "",
-      "caption": "",
+      "hook": "Tobacco carries dozens of cancer-causing chemicals. Here is what they do.",
+      "caption": "Mouth Notes, how it works: tobacco and tobacco smoke carry dozens of cancer-causing chemicals.\n\nIn the cells lining the mouth, some of them attach to DNA. The cell's repair systems remove most of that damage, but a mistake that slips through can switch off a gene that normally stops tumours. Quit, and the risk drops measurably within a few years.\n\nIllustration, not to scale.\n\nSource: Hecht, Nature Reviews Cancer, 2003.\n\nFree, private risk check: oralcheck.org",
       "hashtags": [
         "oralcancer",
         "oralhealth",
@@ -1906,7 +1906,7 @@
       "status": "planned",
       "idea": {
         "title": "Mouth Notes: how small is HPV?",
-        "hook": "",
+        "hook": "How small is HPV? Let's shrink.",
         "brief": "Mouth Notes ep. 9, Sized \u00b7 01. Scene anim/sized.html; script and sources in docs/MOUTH_NOTES.md.",
         "topic": "hpv_is_common",
         "shape": "mouth_notes",
@@ -1923,8 +1923,8 @@
       "folder": "2027-01-11_in_mn09",
       "version": 1,
       "uploaded": false,
-      "hook": "",
-      "caption": "",
+      "hook": "How small is HPV? Let's shrink.",
+      "caption": "Mouth Notes, sized: how small is HPV?\n\nOne cell from the inside of your cheek is about a twentieth of a millimetre across. One HPV particle is about 55 nanometres, so nearly a thousand would fit side by side across that one cell. Far too small to see, and most infections are cleared by the body without any symptoms.\n\nSources: IARC Monograph 90; cytomorphometry of normal buccal cells, Asian Journal of Medical Sciences, 2023; CDC.\n\nFree, private risk check: oralcheck.org",
       "hashtags": [
         "oralcancer",
         "oralhealth",
@@ -1949,7 +1949,7 @@
       "status": "planned",
       "idea": {
         "title": "Mouth Notes: what is under your tongue",
-        "hook": "",
+        "hook": "What is under your tongue? Let's peel it back.",
         "brief": "Mouth Notes ep. 10, Cutaway \u00b7 01. Scene anim/cutaway.html; script and sources in docs/MOUTH_NOTES.md.",
         "topic": "floor_of_mouth",
         "shape": "mouth_notes",
@@ -1966,8 +1966,8 @@
       "folder": "2027-01-14_in_mn10",
       "version": 1,
       "uploaded": false,
-      "hook": "",
-      "caption": "",
+      "hook": "What is under your tongue? Let's peel it back.",
+      "caption": "Mouth Notes, cutaway: what is under your tongue.\n\nFirst the lining, where oral cancer starts. Under it, the sublingual salivary gland, with the lingual nerve (feeling for the front of your tongue) close beside it. Below that, the mylohyoid muscle, the floor of your mouth. Pain usually starts only when a growth reaches a nerve or breaks open, so early changes often do not hurt. Lift your tongue and look once a month.\n\nSchematic, not to scale.\n\nSources: StatPearls, Anatomy, Sublingual Gland; StatPearls, Mylohyoid.\n\nFree, private risk check: oralcheck.org",
       "hashtags": [
         "oralcancer",
         "oralhealth",
@@ -1992,7 +1992,7 @@
       "status": "planned",
       "idea": {
         "title": "Mouth Notes: worry or wait, five rounds",
-        "hook": "",
+        "hook": "Five rounds. Worry or wait? Answer before the reveal.",
         "brief": "Mouth Notes ep. 11, This or that \u00b7 01. Scene anim/thisorthat.html; script and sources in docs/MOUTH_NOTES.md.",
         "topic": "two_week_rule",
         "shape": "mouth_notes",
@@ -2009,8 +2009,8 @@
       "folder": "2027-01-18_in_mn11",
       "version": 1,
       "uploaded": false,
-      "hook": "",
-      "caption": "",
+      "hook": "Five rounds. Worry or wait? Answer before the reveal.",
+      "caption": "Mouth Notes, this or that: worry or wait? Five rounds.\n\n1. A sore that hurts and is shrinking after a week: wait. Canker sores heal in one to two weeks.\n2. A white coating that wipes off: usually thrush, not cancer.\n3. A painless red patch, three weeks old: get it checked.\n4. A lump in your neck for a month, with no cold: get it checked.\n5. A white patch that will not rub off: get it checked.\n\nIllustrations for education, not real cases.\n\nSource: NHS, mouth ulcers; oralcheck.org/learn\n\nFree, private risk check: oralcheck.org",
       "hashtags": [
         "oralcancer",
         "oralhealth",
@@ -2035,7 +2035,7 @@
       "status": "planned",
       "idea": {
         "title": "Mouth Notes: if I can't see it, it isn't there",
-        "hook": "",
+        "hook": "Myth: if the mirror shows nothing, there is nothing there.",
         "brief": "Mouth Notes ep. 12, Myth \u00b7 01. Scene anim/myth.html; script and sources in docs/MOUTH_NOTES.md.",
         "topic": "throat_hpv_site",
         "shape": "mouth_notes",
@@ -2052,8 +2052,8 @@
       "folder": "2027-01-21_in_mn12",
       "version": 1,
       "uploaded": false,
-      "hook": "",
-      "caption": "",
+      "hook": "Myth: if the mirror shows nothing, there is nothing there.",
+      "caption": "Mouth Notes, myth: if the mirror shows nothing, there is nothing there.\n\nHPV-related throat cancers tend to start at the base of the tongue and the tonsils, where a mirror cannot reach, and there is often nothing visible at all. The signs are different: a sore throat that does not go away, a lump in the neck, or ear pain on one side. Any of those for more than two weeks gets checked.\n\nSource: oralcheck.org/learn\n\nFree, private risk check: oralcheck.org",
       "hashtags": [
         "oralcancer",
         "oralhealth",

@@ -1,0 +1,138 @@
+<!doctype html>
+<!--
+  Mouth Notes ep. 3, How it works 02: powers of ten (21 Nov 2026). One
+  continuous zoom from the open mouth to a strand of DNA, ten times closer per
+  line. Each world is drawn around the stage centre so the next one grows out
+  of it. Magnifications are labels, not measurements; the lining, cell, nucleus
+  and helix are illustrations.
+  Facts: ACS, What Are Oral Cavity and Oropharyngeal Cancers? (almost all are
+  squamous cell carcinomas, cancers of the squamous lining); the zoom lands on a
+  basal cell, where dysplasia begins (NCI, oral epithelial dysplasia; WHO grading); topics.py tongue_sides; NCI, What Is Cancer? (cancer is caused by
+  changes to genes that control how cells grow and divide).
+  Plate: Z-Anatomy / BodyParts3D, CC BY-SA.
+-->
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="house.css">
+<style>
+  #stage > svg{display:block;width:1080px;height:1000px;position:absolute;left:0;top:0}
+</style></head>
+<body>
+<div id="stage"><!--PLATE_A--><svg id="w" viewBox="0 0 1080 1000"></svg></div>
+<script type="module">
+import {PLAN, at, label, readout, frame, span, ease, lerp, smooth} from "./house.js";
+const NS = "http://www.w3.org/2000/svg";
+const $ = id => document.getElementById(id);
+const plate = document.querySelector("#stage > svg:not(#w)");
+const W = $("w");
+const el = (tag, attrs, parent = W) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent.appendChild(e); return e; };
+let seed = 5; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+
+// ---- level 0 and 1: the plate, tongue side in teal --------------------------------
+const tongue = $("a-tongue");
+const tTeal = tongue.cloneNode(true); tTeal.removeAttribute("id");
+tTeal.querySelectorAll("*").forEach(n => { n.removeAttribute("filter"); if (n.getAttribute("fill") && n.getAttribute("fill") !== "none") n.setAttribute("fill", "#0d7377"); });
+tTeal.removeAttribute("filter"); tTeal.setAttribute("opacity", 0);
+tongue.after(tTeal);
+const FOCAL = [368, 640];   // the side of the tongue, plate units
+
+// ---- level 2: the lining in section ---------------------------------------------------
+const lining = el("g", {});
+el("rect", {x: -400, y: 820, width: 1900, height: 600, fill: "#f6e4e2"}, lining);   // tissue beneath
+const bm = "M-400,820 " + Array.from({length: 40}, (_, i) => `Q${-400 + i * 50 + 25},${820 + (i % 2 ? 26 : -26)} ${-400 + (i + 1) * 50},820`).join(" ");
+el("path", {d: bm, fill: "none", stroke: "#b86a78", "stroke-width": 4}, lining);
+for (let row = 0; row < 9; row++) {
+  const y = 790 - row * 40, flat = row / 8;                 // round at the bottom, flat on top
+  const w = lerp(40, 110, flat), h = lerp(38, 12, flat);
+  for (let x = -400 + (row % 2) * w / 2; x < 1500; x += w + 4) {
+    const target = row === 0 && Math.abs(x + w / 2 - 540) < (w + 4) / 2;   // a basal cell: where dysplasia begins
+    el("ellipse", {cx: x + w / 2 + (rnd() - .5) * 6, cy: y + (rnd() - .5) * 4, rx: w / 2, ry: h / 2,
+      fill: target ? "#0d7377" : lerp(0, 1, flat) > .5 ? "#f3d3d6" : "#eec2c8", stroke: target ? "#0b5d60" : "#c3828d", "stroke-width": 2}, lining);
+    el("circle", {cx: x + w / 2, cy: y, r: lerp(9, 4, flat), fill: target ? "#e0f0f0" : "#c98593"}, lining);
+  }
+}
+// shift so the target surface cell sits on the stage centre
+lining.setAttribute("data-off", `0 ${500 - 790}`);   // the basal row on the stage centre
+
+// ---- level 3: one flat squamous cell ------------------------------------------------
+const cell = el("g", {});
+// a basal cell is plump and roughly cuboidal, with a large nucleus
+const cpts = Array.from({length: 9}, (_, j) => { const a = j / 9 * Math.PI * 2, r = 400 * (0.88 + rnd() * 0.12); return [540 + Math.cos(a) * r * 0.95, 500 + Math.sin(a) * r * 0.95]; });
+el("path", {d: "M" + cpts.map(p => p.join(",")).join(" L") + " Z", fill: "#cfe8e8", stroke: "#0d7377", "stroke-width": 6, "stroke-linejoin": "round"}, cell);
+for (let i = 0; i < 26; i++) el("circle", {cx: 540 + (rnd() - .5) * 620, cy: 500 + (rnd() - .5) * 460, r: 4 + rnd() * 6, fill: "#9ccfcf", opacity: .7}, cell);
+el("circle", {cx: 540, cy: 500, r: 130, fill: "#0d7377"}, cell);
+
+// ---- level 4: the nucleus -----------------------------------------------------------
+const nuc = el("g", {});
+el("circle", {cx: 540, cy: 500, r: 460, fill: "#e0f0f0", stroke: "#0d7377", "stroke-width": 8}, nuc);
+for (let i = 0; i < 22; i++) {
+  const x = 540 + (rnd() - .5) * 700, y = 500 + (rnd() - .5) * 700;
+  if (Math.hypot(x - 540, y - 500) > 400) continue;
+  el("path", {d: `M${x},${y} q${30 + rnd() * 40},${-40 + rnd() * 80} ${60 + rnd() * 40},${-20 + rnd() * 40} t${50},${-30 + rnd() * 60}`,
+    fill: "none", stroke: "#5aa8a9", "stroke-width": 7, "stroke-linecap": "round", opacity: .55}, nuc);
+}
+el("circle", {cx: 540, cy: 500, r: 22, fill: "#0d7377"}, nuc);
+
+// ---- level 5: a strand of DNA ---------------------------------------------------------
+const dna = el("g", {});
+const rungs = [], strandA = el("path", {fill: "none", stroke: "#0d7377", "stroke-width": 12, "stroke-linecap": "round"}, dna),
+      strandB = el("path", {fill: "none", stroke: "#5aa8a9", "stroke-width": 12, "stroke-linecap": "round"}, dna);
+for (let i = 0; i < 26; i++) rungs.push(el("line", {stroke: "#9ccfcf", "stroke-width": 8, "stroke-linecap": "round"}, dna));
+const BAD = 14;
+
+const LAYERS = [lining, cell, nuc, dna];   // levels 2, 3, 4, 5
+const T = Object.fromEntries(PLAN.shots.map(s => [s.key, s.t0]));
+// the zoom level: 0 on frame 0 (already creeping in), one power of ten per line
+function level(t) {
+  let L = 0.15 * ease(Math.min(1, t / 2.5));
+  const steps = [["x10", 1], ["x100", 2], ["x1000", 3], ["x10000", 4], ["dna", 5]];
+  for (const [k, v] of steps) L = lerp(L, v, ease(span(t, T[k] - 0.2, T[k] + 1.6)));
+  return L + 0.03 * Math.sin(t * 0.8);
+}
+const pview = ([cx, cy, w]) => { const h = w * 1000 / 1080; plate.setAttribute("viewBox", [cx - w / 2, cy - h / 2, w, h].map(v => v.toFixed(2)).join(" ")); };
+
+window.render = (t) => {
+  const {sh, local} = at(t);
+  const L = level(t);
+  // the plate: whole mouth at L 0, the side of the tongue at L 1, then gone
+  const pz = Math.pow(10, 0.62 * Math.min(L, 2));   // the plate zooms gentler, so x10 still shows the tongue's edge
+  const pk = Math.min(1, L);
+  pview([lerp(500, FOCAL[0], smooth(pk)), lerp(545, FOCAL[1], smooth(pk)), 1040 / pz]);
+  plate.style.opacity = 1 - span(L, 1.35, 1.75);
+  tTeal.setAttribute("opacity", 0.75 * span(t, T.x10 + 0.4, T.x10 + 1.1) * (1 - span(L, 1.3, 1.6)));
+  // each drawn world grows from a speck to full size as L passes its level, then on past
+  LAYERS.forEach((g, i) => {
+    const lv = i + 2, d = L - lv;                 // 0 when this world fills the frame
+    const s = Math.pow(10, d);
+    const off = (g.getAttribute("data-off") || "0 0").split(" ").map(Number);
+    g.setAttribute("transform", `translate(540 500) scale(${s}) translate(${-540 + off[0]} ${-500 + off[1]})`);
+    g.style.opacity = span(d, -0.75, -0.4) * (1 - span(d, 0.35, 0.7));
+    if (lv === 5) g.style.opacity = span(d, -0.75, -0.3);
+  });
+  // DNA: a slowly turning helix; one rung goes coral on the last line
+  const A = [], B = [];
+  for (let i = 0; i <= 120; i++) {
+    const x = -100 + i * 11, ph = x / 120 + t * 1.2;
+    A.push(`${x},${500 + 150 * Math.sin(ph)}`); B.push(`${x},${500 - 150 * Math.sin(ph)}`);
+  }
+  strandA.setAttribute("d", "M" + A.join(" L")); strandB.setAttribute("d", "M" + B.join(" L"));
+  const bad = span(t, T.dna + 1.2, T.dna + 1.8);
+  rungs.forEach((r, i) => {
+    const x = 40 + i * 40, ph = x / 120 + t * 1.2, y1 = 500 + 150 * Math.sin(ph), y2 = 500 - 150 * Math.sin(ph);
+    r.setAttribute("x1", x); r.setAttribute("x2", x); r.setAttribute("y1", y1); r.setAttribute("y2", y2);
+    r.setAttribute("stroke", i === BAD && bad > 0 ? `rgb(${[156, 207, 207].map((c, j) => Math.round(lerp(c, [232, 99, 74][j], bad))).join(",")})` : "#9ccfcf");
+    r.setAttribute("stroke-width", i === BAD ? 8 + 6 * bad : 8);
+  });
+
+  // the readout: how much closer, counting with the zoom
+  // counts with the zoom, and lands exactly on each power of ten
+  const Lr = Math.max(0, Math.min(4, L - 0.03 * Math.sin(t * 0.8)));
+  const near = Math.round(Lr);
+  const raw = Math.pow(10, Lr), sig = Math.pow(10, Math.floor(Math.log10(raw)) - 1);
+  const mag = Math.abs(Lr - near) < 0.04 ? Math.pow(10, near) : Math.round(raw / sig) * sig;
+  readout(`×${mag.toLocaleString("en-US")}`, "closer", 0, span(t, 0.3, 0.8) * (1 - span(t, PLAN.cta_t0, PLAN.cta_t0 + 0.4)));
+  if (sh.key === "x1000") label({k: "Basal layer", t: "One lining cell", d: "new cells are made in this bottom row"}, 540, 230 + 500, "right", local, 260);
+  else if (sh.key === "dna") label({k: "One change", t: "A mistake in the code", d: "illustration, not to scale"}, 600, 230 + 500, "left", local, 260);
+  else label(null);
+  return frame(t);
+};
+</script>
+</body></html>

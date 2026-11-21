@@ -1,0 +1,79 @@
+<!doctype html>
+<!--
+  Mouth Notes ep. 9, Sized 01: how small is HPV? (21 Nov 2026). Shrink from a
+  grain of rice to one cheek cell to one HPV particle, each world growing out
+  of the last; then nearly a thousand particles in a row across one cell.
+  Sources: IARC Monograph 90 (HPV: non-enveloped icosahedral particles about
+  55 nm across, 72 capsomers); normal buccal cell diameter about 49.5 µm (Asian
+  Journal of Medical Sciences, 2023, cytomorphometry of normal subjects);
+  topics.py hpv_is_common. 49.5 µm / 55 nm is about 900. Not to scale between
+  shots; sizes are given on the readout.
+-->
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="house.css">
+<style>#stage svg{display:block;width:1080px;height:1000px}</style></head>
+<body>
+<div id="stage"><svg viewBox="0 0 1080 1000"></svg></div>
+<script type="module">
+import {PLAN, at, label, readout, frame, span, ease, lerp} from "./house.js";
+import {el} from "./epi.js";
+const svg = document.querySelector("#stage svg");
+let s = 17; const rnd = () => (s = (s * 16807) % 2147483647) / 2147483647;
+const W = (cls) => el("g", {}, svg);
+
+// grain of rice: a long-grain kernel, ivory
+const rice = W();
+el("ellipse", {cx: 540, cy: 500, rx: 420, ry: 150, fill: "#f4efe2", stroke: "#d8cfb8", "stroke-width": 6}, rice);
+el("path", {d: "M200,470 C400,430 700,430 880,470", fill: "none", stroke: "#e6dcc4", "stroke-width": 10, "stroke-linecap": "round"}, rice);
+// one cheek cell: flat, polygonal, with a nucleus
+const cell = W();
+const cp = Array.from({length: 8}, (_, j) => { const a = j / 8 * Math.PI * 2 + 0.2, r = 400 * (0.88 + rnd() * 0.12); return [540 + Math.cos(a) * r * 1.1, 500 + Math.sin(a) * r * 0.9]; });
+el("path", {d: "M" + cp.map(p => p.join(",")).join(" L") + " Z", fill: "#f3d3d6", stroke: "#b86a78", "stroke-width": 6, "stroke-linejoin": "round"}, cell);
+el("ellipse", {cx: 560, cy: 480, rx: 70, ry: 56, fill: "#c98593"}, cell);
+// the row of particles across the cell: drawn as a fine teal line of dots
+const row = el("g", {}, cell);
+// 900 dots, the true count across one cell (49.5 µm / 55 nm), so the row is really a fine line
+for (let i = 0; i < 900; i++) el("circle", {cx: 100 + i * 880 / 899, cy: 700, r: 0.5, fill: "#0d7377"}, row);
+// one HPV particle: an icosahedral shell of capsomers, no spikes
+const hpv = W();
+el("polygon", {points: Array.from({length: 10}, (_, j) => { const a = j / 10 * Math.PI * 2; return `${540 + Math.cos(a) * 330},${500 + Math.sin(a) * 330}`; }).join(" "),
+  fill: "#0d7377", stroke: "#0b5d60", "stroke-width": 8}, hpv);
+for (let ring = 0; ring < 4; ring++) {
+  const n = ring === 0 ? 1 : ring * 6, rr = ring * 85;
+  for (let j = 0; j < n; j++) { const a = j / n * Math.PI * 2 + ring * 0.3;
+    el("polygon", {points: Array.from({length: 5}, (_, q) => { const b = q / 5 * Math.PI * 2; return `${540 + Math.cos(a) * rr + Math.cos(b) * 34},${500 + Math.sin(a) * rr + Math.sin(b) * 34}`; }).join(" "),
+      fill: "#5aa8a9", stroke: "#0b5d60", "stroke-width": 3}, hpv); }
+}
+const WORLDS = [rice, cell, hpv];
+
+const T = Object.fromEntries(PLAN.shots.map(x => [x.key, x.t0]));
+window.render = (t) => {
+  const {sh, local} = at(t);
+  // level: 0 rice, 1 cell, 2 HPV, then back to the cell for the row and the end
+  let L = 0;
+  L = lerp(L, 1, ease(span(t, T.cell - 0.3, T.cell + 1.3)));
+  L = lerp(L, 2, ease(span(t, T.hpv - 0.3, T.hpv + 1.3)));
+  L = lerp(L, 1, ease(span(t, T.hpv + 2.6, T.hpv + 3.8)));
+  WORLDS.forEach((g, i) => {
+    const d = L - i, sc = Math.pow(8, d) * (1 + 0.015 * Math.sin(t * 0.8 + i));
+    g.setAttribute("transform", `translate(540 500) rotate(${i === 2 ? t * 6 : 0}) scale(${sc}) translate(-540 -500)`);
+    g.style.opacity = span(d, -0.8, -0.35) * (1 - span(d, 0.35, 0.75));
+  });
+  // on frame 0 the grain is already turning slowly
+  rice.setAttribute("transform", rice.getAttribute("transform") + ` rotate(${-8 + 4 * Math.sin(t * 0.6)} 540 500)`);
+  row.style.opacity = span(t, T.hpv + 3.2, T.hpv + 3.9);
+  row.setAttribute("transform", `translate(0 0) scale(${span(t, T.hpv + 3.2, T.hpv + 4.6)} 1)`);
+  row.setAttribute("transform-origin", "100 700");
+  row.style.opacity *= 1 - span(t, T.clear + 0.6, T.clear + 1.6) * 0.85;   // most are cleared anyway
+
+  if (sh.key === "rice") readout("A grain", "of rice", 0, span(local, 0.2, 0.6));
+  else if (sh.key === "cell") readout("0.05 mm", "one cell from your cheek", 0, span(local, 0.3, 0.8));
+  else if (sh.key === "hpv" && t < T.hpv + 2.8) readout("55 nm", "one HPV particle (0.000055 mm)", 0, span(local, 0.3, 0.8));
+  else if (sh.key === "hpv" || sh.key === "clear") readout("≈ 900", "HPV particles across one cell", 0, 1);
+  else readout("", "", 0, 0);
+  if (sh.key === "hpv" && t < T.hpv + 2.8) label({k: "No spikes", t: "A shell of 72 parts", d: "IARC; illustration"}, 540 + 200, 230 + 380, "right", local, 260);
+  else if ((sh.key === "hpv" && t > T.hpv + 3.6) || sh.key === "clear") label({k: "This line", t: "About 900 HPV, side by side", d: "across one cheek cell"}, 700, 230 + 700, "right", t - T.hpv - 3.6, 260);
+  else label(null);
+  return frame(t);
+};
+</script>
+</body></html>

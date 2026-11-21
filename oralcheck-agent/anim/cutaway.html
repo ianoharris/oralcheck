@@ -1,0 +1,72 @@
+<!doctype html>
+<!--
+  Mouth Notes ep. 10, Cutaway 01: what is under your tongue (21 Nov 2026). A
+  schematic block of the floor of the mouth, peeled a layer at a time: the
+  lining (mucosa); the sublingual salivary gland, with the lingual nerve running
+  beside it close under the lining; the mylohyoid muscle, which forms the floor.
+  Then a small early change (coral) that stays in the lining and has not reached
+  a nerve.
+  Sources: StatPearls, Anatomy, Head and Neck, Sublingual Gland (the gland lies
+  beneath the floor-of-mouth mucosa, resting on the mylohyoid; the lingual nerve
+  is at risk in its excision); StatPearls, Mylohyoid (separates the sublingual
+  and submandibular regions); lingual nerve: general sensation to the front two
+  thirds of the tongue (CN V3); topics.py floor_of_mouth, painless,
+  monthly_self_exam. Schematic, not to scale.
+-->
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="house.css">
+<style>#stage svg{display:block;width:1080px;height:1000px}</style></head>
+<body>
+<div id="stage"><svg viewBox="0 0 1080 1000"></svg></div>
+<script type="module">
+import {PLAN, at, label, readout, frame, span, ease, lerp} from "./house.js";
+import {el} from "./epi.js";
+const svg = document.querySelector("#stage svg");
+let s = 23; const rnd = () => (s = (s * 16807) % 2147483647) / 2147483647;
+// an isometric slab: top face, front face; each layer is a slab of its own thickness
+const DX = 160, DY = -110;   // depth offset of the back edge
+function slab(g, x, y, w, h, top, front, side) {
+  el("path", {d: `M${x},${y} L${x + w},${y} L${x + w + DX},${y + DY} L${x + DX},${y + DY} Z`, fill: top, stroke: "#15201f", "stroke-opacity": .25, "stroke-width": 2}, g);
+  el("path", {d: `M${x},${y} L${x + w},${y} L${x + w},${y + h} L${x},${y + h} Z`, fill: front, stroke: "#15201f", "stroke-opacity": .25, "stroke-width": 2}, g);
+  el("path", {d: `M${x + w},${y} L${x + w + DX},${y + DY} L${x + w + DX},${y + DY + h} L${x + w},${y + h} Z`, fill: side, stroke: "#15201f", "stroke-opacity": .25, "stroke-width": 2}, g);
+}
+const X = 160, Wd = 620;
+// bottom up, so the upper layers draw over the lower ones
+const muscle = el("g", {}, svg);
+slab(muscle, X, 640, Wd, 110, "#c9545e", "#b3434e", "#9e3944");
+for (let i = 0; i < 14; i++) el("line", {x1: X + 20 + i * 44, y1: 652, x2: X + 34 + i * 44, y2: 742, stroke: "#8f3039", "stroke-width": 3, opacity: .6}, muscle);   // muscle fibres
+const gland = el("g", {}, svg);
+slab(gland, X, 520, Wd, 120, "#f1e3c8", "#e6d2ad", "#d9c398");
+for (let i = 0; i < 22; i++) el("circle", {cx: X + 40 + rnd() * (Wd - 60), cy: 540 + rnd() * 90, r: 14 + rnd() * 10, fill: "#eadbb9", stroke: "#cdb789", "stroke-width": 2}, gland);   // lobules
+// the lingual nerve runs within the sublingual space, beside the gland and under the lining: it stays inside the block
+const nerve = el("path", {d: `M${X + 6},556 C${X + 200},540 ${X + 420},575 ${X + Wd - 6},548`, fill: "none", stroke: "#e2b93b", "stroke-width": 12, "stroke-linecap": "round"}, gland);
+const lining = el("g", {}, svg);
+slab(lining, X, 480, Wd, 40, "#f1c9cf", "#e9b4bc", "#dba1aa");
+const patch = el("ellipse", {cx: X + 260 + DX * 0.5, cy: 480 + DY * 0.5, rx: 46, ry: 18, fill: "#e8634a", opacity: 0}, lining);
+
+const T = Object.fromEntries(PLAN.shots.map(x => [x.key, x.t0]));
+window.render = (t) => {
+  const {sh, local} = at(t);
+  // peel: the lining lifts and swings away for "gland", the gland for "muscle"; all return for "pain"
+  const back = ease(span(t, T.pain - 0.2, T.pain + 1.0));
+  const l1 = ease(span(t, T.gland - 0.2, T.gland + 1.0)) * (1 - back);
+  const l2 = ease(span(t, T.muscle - 0.2, T.muscle + 1.0)) * (1 - back);
+  const corner = 0.06 + 0.04 * Math.sin(t * 1.6);   // on frame 0 the top layer is already lifting at one corner
+  lining.setAttribute("transform", `translate(${l1 * 260} ${-l1 * 300 - (1 - l1) * corner * 120}) rotate(${-l1 * 12 - corner * 6} ${X} 480)`);
+  lining.style.opacity = 1 - 0.75 * l1;
+  gland.setAttribute("transform", `translate(${l2 * 300} ${-l2 * 260}) rotate(${-l2 * 10} ${X} 520)`);
+  gland.style.opacity = 1 - 0.75 * l2;
+  nerve.setAttribute("stroke-width", sh.key === "gland" ? 12 + 3 * Math.sin(t * 4) ** 2 : 12);
+  patch.setAttribute("opacity", span(t, T.pain + 0.8, T.pain + 1.4));
+  // camera drift
+  svg.setAttribute("viewBox", `${-10 + 14 * Math.sin(t * 0.3)} ${-20 + 8 * Math.cos(t * 0.4)} 1080 1000`);
+
+  if (sh.key === "lining") label({k: "Layer 1", t: "The lining", d: "where oral cancer starts"}, X + 300, 230 + 470, "right", local, 260);
+  else if (sh.key === "gland") label({k: "Layer 2", t: "Salivary gland", d: "and the lingual nerve (yellow), close beside it"}, X + 380, 230 + 575, "right", local, 260);
+  else if (sh.key === "muscle") label({k: "Layer 3", t: "Mylohyoid muscle", d: "the floor of your mouth"}, X + 300, 230 + 650, "right", local, 260);
+  else if (sh.key === "pain") label({k: "Early change", t: "Still in the lining", d: "not reaching a nerve, often painless"}, X + 260 + DX * 0.5, 230 + 480 + DY * 0.5, "right", local, 260);
+  else label(null);
+  if (sh.key === "look") readout("Once a month", "lift your tongue and look", 0, span(local, 0.2, 0.7)); else readout("", "", 0, 0);
+  return frame(t);
+};
+</script>
+</body></html>

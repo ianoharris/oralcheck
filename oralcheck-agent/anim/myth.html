@@ -1,0 +1,68 @@
+<!doctype html>
+<!--
+  Mouth Notes ep. 12, Myth 01: "if the mirror shows nothing, there is nothing
+  there" (21 Nov 2026). The front view in a mirror frame; then the side section
+  (plate B) with the base of the tongue and the tonsils in teal, behind where a
+  mirror's view reaches; then the three signs that matter instead.
+  Facts (topics.py): throat_hpv_site (HPV-related cancers tend to start at the
+  base of the tongue and the tonsils; often no visible lesion; hard to see in a
+  mirror), hpv_throat_symptoms (sore throat that does not resolve in two weeks,
+  painless neck lump, one-sided ear pain, among others).
+  Plates: Z-Anatomy / BodyParts3D, CC BY-SA.
+-->
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="house.css">
+<style>
+  #stage > svg{display:block;width:1080px;height:1000px;position:absolute;left:0;top:0}
+  #mirror{position:absolute;left:170px;top:40px;width:740px;height:780px;border-radius:370px 370px 60px 60px;overflow:hidden;border:18px solid #d9d4ca;box-shadow:0 18px 50px rgba(21,32,31,.18);background:#f5f3f0}
+  #mirror svg{width:100%;height:100%}
+  .sign{position:absolute;left:110px;right:110px;height:150px;border-radius:30px;background:#fbf9f5;box-shadow:0 10px 30px rgba(21,32,31,.12);display:flex;align-items:center;padding:0 40px;gap:30px}
+  .sign b{font-family:"DM Serif Display",serif;font-weight:400;font-size:54px;color:#0d7377;width:70px}
+  .sign span{font-weight:600;font-size:44px;color:#15201f;line-height:1.1}
+  #crit{position:absolute;left:0;right:0;top:640px;text-align:center;font-family:"DM Serif Display",serif;font-size:200px;color:#0d7377}
+</style></head>
+<body>
+<div id="stage"><div id="mirror"><!--PLATE_A--></div><!--PLATE_B-->
+  <div class="sign" id="s1"><b>1</b><span>A sore throat that won't go away</span></div>
+  <div class="sign" id="s2"><b>2</b><span>A lump in your neck</span></div>
+  <div class="sign" id="s3"><b>3</b><span>Ear pain, on one side</span></div>
+</div>
+<script type="module">
+import {PLAN, at, label, readout, frame, span, ease, lerp} from "./house.js";
+const $ = id => document.getElementById(id);
+const mirror = $("mirror"), pa = mirror.querySelector("svg");
+const pb = document.querySelector("#stage > svg");
+const NS = "http://www.w3.org/2000/svg";
+// teal over the base of the tongue and the tonsils (plate B's own zones)
+const zones = $("b-zones"); if (zones) zones.setAttribute("opacity", 1);
+const Z = ["b-zone-base", "b-zone-tonsil"].map(id => $(id)).filter(Boolean);
+Z.forEach(z => z.setAttribute("opacity", 0));
+document.querySelectorAll("[id^='b-zone-']").forEach(z => { if (!Z.includes(z)) z.setAttribute("opacity", 0); });
+const signs = ["s1", "s2", "s3"].map($);
+const T = Object.fromEntries(PLAN.shots.map(x => [x.key, x.t0]));
+const view = (svg, [cx, cy, w], aspect) => { const h = w * aspect; svg.setAttribute("viewBox", [cx - w / 2, cy - h / 2, w, h].map(v => v.toFixed(1)).join(" ")); };
+window.render = (t) => {
+  const {sh, local} = at(t);
+  // the mirror: the front view, drifting as if someone is tilting it; nothing to see
+  const mOut = span(t, T.where - 0.2, T.where + 0.6);
+  mirror.style.opacity = 1 - mOut;
+  mirror.style.transform = `rotate(${1.5 * Math.sin(t * 0.8)}deg) scale(${1 - 0.06 * mOut})`;
+  view(pa, [500 + 30 * Math.sin(t * 0.5), 560, 900 - 60 * ease(Math.min(1, t / 3))], 780 / 740);
+  // the side section, closing in on the back of the throat
+  const k = ease(span(t, T.where, T.where + 2.2));
+  pb.style.opacity = span(t, T.where - 0.1, T.where + 0.6) * (1 - span(t, T.signs - 0.2, T.signs + 0.4));
+  view(pb, [lerp(560, 640, k), lerp(600, 680, k), lerp(980, 620, k)], 1000 / 1080);
+  const zk = span(t, T.where + 0.8, T.where + 1.5) * (1 - span(t, T.signs - 0.2, T.signs + 0.4));
+  Z.forEach(z => z.setAttribute("opacity", zk));
+  // the three signs stack in, one per phrase
+  signs.forEach((sg, i) => {
+    const sk = ease(span(t, T.signs + 0.6 + i * 1.3, T.signs + 1.1 + i * 1.3)) * (1 - span(t, T.cta - 0.2, T.cta + 0.3));
+    sg.style.top = (120 + i * 190) + "px"; sg.style.opacity = sk; sg.style.transform = `translateX(${(1 - sk) * 120}px)`;
+  });
+  if (sh.key === "where" || sh.key === "nothing")
+    label({k: "Out of a mirror's reach", t: "Base of tongue, tonsils", d: "where HPV-related cancers tend to start"}, 640, 230 + 560, "left", t - T.where, 260);
+  else label(null);
+  if (sh.key === "check") readout("2 weeks", "any of these, that long: get it checked", 0, span(local, 0.2, 0.6)); else readout("", "", 0, 0);
+  return frame(t);
+};
+</script>
+</body></html>
