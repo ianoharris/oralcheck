@@ -1239,7 +1239,7 @@
       "network": "instagram",
       "media_type": "image",
       "when": "2026-12-14T16:00:00+00:00",
-      "status": "built",
+      "status": "cut",
       "idea": {
         "title": "HPV exposure is common and most infections clear",
         "hook": "Have you ever thought about whether you've been exposed to HPV?",
@@ -1269,7 +1269,53 @@
       "files": [
         "image.jpg"
       ],
-      "review_note": "This picture is super unrelated"
+      "review_note": "This picture is super unrelated",
+      "notes": [
+        "21 Nov 2026: replaced by Mouth Notes ep. 1 (Mouth Notes: why most HPV never becomes cancer); Ian chose Mouth Notes twice a week."
+      ]
+    },
+    {
+      "id": "2026-12-14_in_mn01",
+      "date": "2026-12-14",
+      "network": "instagram",
+      "media_type": "reel",
+      "when": "2026-12-14T16:00:00+00:00",
+      "status": "approved",
+      "idea": {
+        "title": "Mouth Notes: why most HPV never becomes cancer",
+        "hook": "Most adults catch HPV. Almost none get cancer from it. Here is why.",
+        "brief": "Mouth Notes ep. 1, How it works \u00b7 01. Scene anim/hpvclear.html; script and sources in docs/MOUTH_NOTES.md.",
+        "topic": "hpv_is_common",
+        "shape": "mouth_notes",
+        "hook_style": "statement",
+        "tone": "calm",
+        "pillar": "education",
+        "media_type": "reel",
+        "calendar_ref": null,
+        "slug": "2026-12-14_in_mn01",
+        "series": "Mouth Notes",
+        "episode": "How it works \u00b7 01",
+        "scene": "hpvclear"
+      },
+      "folder": "2026-12-14_in_mn01",
+      "version": 1,
+      "uploaded": true,
+      "hook": "Most adults catch HPV. Almost none get cancer from it. Here is why.",
+      "caption": "Mouth Notes, how it works: most sexually active adults are exposed to HPV at some point, and most infections clear on their own without a single symptom.\n\nRarely, a high-risk type such as HPV-16 stays and causes DNA changes that can lead to cancer, most often at the tonsils and the base of the tongue. Gardasil 9 protects against HPV-16 and works best before exposure.\n\nSource: CDC, HPV and cancer; CDC, HPV Vaccination Considerations.\n\nFree, private risk check: oralcheck.org",
+      "hashtags": [
+        "oralcancer",
+        "oralhealth",
+        "mouthnotes",
+        "howitworks",
+        "oralcheck"
+      ],
+      "files": [
+        "reel.mp4"
+      ],
+      "review_note": "",
+      "notes": [
+        "21 Nov 2026: Mouth Notes ep. 1. Ian kept this sample ('keep ... all of them')."
+      ]
     },
     {
       "id": "2026-12-16_li_carousel",
@@ -1324,7 +1370,7 @@
       "network": "instagram",
       "media_type": "reel",
       "when": "2026-12-17T16:00:00+00:00",
-      "status": "planned",
+      "status": "cut",
       "idea": {
         "title": "Tobacco plus alcohol together multiply oral cancer risk",
         "hook": "Do you smoke and drink? The combined risk is not what you might expect.",
@@ -1339,7 +1385,53 @@
         "slug": "tobacco-plus-alcohol-together-multiply-oral-cancer-risk"
       },
       "event": null,
-      "error": "Connection error."
+      "error": "Connection error.",
+      "notes": [
+        "21 Nov 2026: replaced by Mouth Notes ep. 2 (Mouth Notes: five habits ranked by how much they multiply risk); Ian chose Mouth Notes twice a week."
+      ]
+    },
+    {
+      "id": "2026-12-17_in_mn02",
+      "date": "2026-12-17",
+      "network": "instagram",
+      "media_type": "reel",
+      "when": "2026-12-17T16:00:00+00:00",
+      "status": "approved",
+      "idea": {
+        "title": "Mouth Notes: five habits ranked by how much they multiply risk",
+        "hook": "Five habits, ranked by how much they multiply your risk of oral cancer.",
+        "brief": "Mouth Notes ep. 2, Ranked \u00b7 01. Scene anim/levels.html; script and sources in docs/MOUTH_NOTES.md.",
+        "topic": "tobacco_plus_alcohol",
+        "shape": "mouth_notes",
+        "hook_style": "statement",
+        "tone": "calm",
+        "pillar": "education",
+        "media_type": "reel",
+        "calendar_ref": null,
+        "slug": "2026-12-17_in_mn02",
+        "series": "Mouth Notes",
+        "episode": "Ranked \u00b7 01",
+        "scene": "levels"
+      },
+      "folder": "2026-12-17_in_mn02",
+      "version": 1,
+      "uploaded": true,
+      "hook": "Five habits, ranked by how much they multiply your risk of oral cancer.",
+      "caption": "Mouth Notes, ranked: how much each habit multiplies the risk of oral cancer, compared with people who do neither.\n\nModerate drinking: nearly double. Daily smoking: 2 to 6 times. Heavy drinking (more than about four a day): about 5 times. Betel quid, paan or gutka: 7 to 10 times, even without tobacco. Heavy smoking and heavy drinking together: about 15 times.\n\nEvery level comes down when you cut back or quit.\n\nSources: Bagnardi et al. 2015; Gandini et al. 2008; IARC Monograph 85; Hashibe et al. 2009.\n\nFree, private risk check: oralcheck.org",
+      "hashtags": [
+        "oralcancer",
+        "oralhealth",
+        "mouthnotes",
+        "howitworks",
+        "oralcheck"
+      ],
+      "files": [
+        "reel.mp4"
+      ],
+      "review_note": "",
+      "notes": [
+        "21 Nov 2026: Mouth Notes ep. 2. Ian kept this sample ('keep ... all of them')."
+      ]
     },
     {
       "id": "2026-12-19_in_short",
@@ -1387,7 +1479,7 @@
       "network": "instagram",
       "media_type": "reel",
       "when": "2026-12-21T16:00:00+00:00",
-      "status": "planned",
+      "status": "cut",
       "idea": {
         "title": "HPV throat cancer at the base of tongue and tonsils",
         "hook": "You open wide, look in the mirror, and see nothing unusual.",
@@ -1402,7 +1494,53 @@
         "slug": "hpv-throat-cancer-at-the-base-of-tongue-and-tonsils"
       },
       "event": null,
-      "error": "Connection error."
+      "error": "Connection error.",
+      "notes": [
+        "21 Nov 2026: replaced by Mouth Notes ep. 3 (Mouth Notes: powers of ten, smile to DNA); Ian chose Mouth Notes twice a week."
+      ]
+    },
+    {
+      "id": "2026-12-21_in_mn03",
+      "date": "2026-12-21",
+      "network": "instagram",
+      "media_type": "reel",
+      "when": "2026-12-21T16:00:00+00:00",
+      "status": "planned",
+      "idea": {
+        "title": "Mouth Notes: powers of ten, smile to DNA",
+        "hook": "",
+        "brief": "Mouth Notes ep. 3, How it works \u00b7 02. Scene anim/powers.html; script and sources in docs/MOUTH_NOTES.md.",
+        "topic": "tongue_sides",
+        "shape": "mouth_notes",
+        "hook_style": "statement",
+        "tone": "calm",
+        "pillar": "education",
+        "media_type": "reel",
+        "calendar_ref": null,
+        "slug": "2026-12-21_in_mn03",
+        "series": "Mouth Notes",
+        "episode": "How it works \u00b7 02",
+        "scene": "powers"
+      },
+      "folder": "2026-12-21_in_mn03",
+      "version": 1,
+      "uploaded": false,
+      "hook": "",
+      "caption": "",
+      "hashtags": [
+        "oralcancer",
+        "oralhealth",
+        "mouthnotes",
+        "howitworks",
+        "oralcheck"
+      ],
+      "files": [
+        "reel.mp4"
+      ],
+      "review_note": "",
+      "notes": [
+        "21 Nov 2026: Mouth Notes ep. 3."
+      ]
     },
     {
       "id": "2026-12-23_li_image",
@@ -1433,7 +1571,7 @@
       "network": "instagram",
       "media_type": "carousel",
       "when": "2026-12-24T16:00:00+00:00",
-      "status": "planned",
+      "status": "cut",
       "idea": {
         "title": "Red patch in your mouth: what it means",
         "hook": "Pull your cheek aside and look at the inner lining.",
@@ -1448,7 +1586,53 @@
         "slug": "red-patch-in-your-mouth-what-it-means"
       },
       "event": null,
-      "error": "Connection error."
+      "error": "Connection error.",
+      "notes": [
+        "21 Nov 2026: replaced by Mouth Notes ep. 4 (Mouth Notes: three spots, one reason to book now); Ian chose Mouth Notes twice a week."
+      ]
+    },
+    {
+      "id": "2026-12-24_in_mn04",
+      "date": "2026-12-24",
+      "network": "instagram",
+      "media_type": "reel",
+      "when": "2026-12-24T16:00:00+00:00",
+      "status": "approved",
+      "idea": {
+        "title": "Mouth Notes: three spots, one reason to book now",
+        "hook": "Three spots in a mouth. Only one is a reason to book a dentist now.",
+        "brief": "Mouth Notes ep. 4, Guess \u00b7 01. Scene anim/quiz.html; script and sources in docs/MOUTH_NOTES.md.",
+        "topic": "red_patch",
+        "shape": "mouth_notes",
+        "hook_style": "statement",
+        "tone": "calm",
+        "pillar": "education",
+        "media_type": "reel",
+        "calendar_ref": null,
+        "slug": "2026-12-24_in_mn04",
+        "series": "Mouth Notes",
+        "episode": "Guess \u00b7 01",
+        "scene": "quiz"
+      },
+      "folder": "2026-12-24_in_mn04",
+      "version": 1,
+      "uploaded": true,
+      "hook": "Three spots in a mouth. Only one is a reason to book a dentist now.",
+      "caption": "Mouth Notes, guess: three spots, and only one is a reason to book a dentist now. Comment your letter before you read on.\n\n\n\nIt is C. A canker sore is painful, round and heals on its own in one to two weeks. Thrush is a yeast infection that wipes away. A red patch that does not hurt and has stayed for three weeks is the most concerning thing you can find in your own mouth, and it gets checked.\n\nThe drawings are illustrations for education, not real cases.\n\nSource: NHS, mouth ulcers; oralcheck.org/learn/white-and-red-patches\n\nFree, private risk check: oralcheck.org",
+      "hashtags": [
+        "oralcancer",
+        "oralhealth",
+        "mouthnotes",
+        "howitworks",
+        "oralcheck"
+      ],
+      "files": [
+        "reel.mp4"
+      ],
+      "review_note": "",
+      "notes": [
+        "21 Nov 2026: Mouth Notes ep. 4. Ian kept this sample ('keep ... all of them')."
+      ]
     },
     {
       "id": "2026-12-29_in_image",
@@ -1456,7 +1640,7 @@
       "network": "instagram",
       "media_type": "image",
       "when": "2026-12-28T16:00:00+00:00",
-      "status": "planned",
+      "status": "cut",
       "idea": {
         "title": "60,480 new oral cancer cases expected in the US this year",
         "hook": "How many Americans will be diagnosed with oral cancer this year?",
@@ -1471,7 +1655,53 @@
         "slug": "60-480-new-oral-cancer-cases-expected-in-the-us-this-year"
       },
       "event": null,
-      "error": "Connection error."
+      "error": "Connection error.",
+      "notes": [
+        "21 Nov 2026: replaced by Mouth Notes ep. 5 (Mouth Notes: life of a mouth cell); Ian chose Mouth Notes twice a week."
+      ]
+    },
+    {
+      "id": "2026-12-28_in_mn05",
+      "date": "2026-12-28",
+      "network": "instagram",
+      "media_type": "reel",
+      "when": "2026-12-28T16:00:00+00:00",
+      "status": "planned",
+      "idea": {
+        "title": "Mouth Notes: life of a mouth cell",
+        "hook": "",
+        "brief": "Mouth Notes ep. 5, How it works \u00b7 03. Scene anim/lifecell.html; script and sources in docs/MOUTH_NOTES.md.",
+        "topic": "white_patch",
+        "shape": "mouth_notes",
+        "hook_style": "statement",
+        "tone": "calm",
+        "pillar": "education",
+        "media_type": "reel",
+        "calendar_ref": null,
+        "slug": "2026-12-28_in_mn05",
+        "series": "Mouth Notes",
+        "episode": "How it works \u00b7 03",
+        "scene": "lifecell"
+      },
+      "folder": "2026-12-28_in_mn05",
+      "version": 1,
+      "uploaded": false,
+      "hook": "",
+      "caption": "",
+      "hashtags": [
+        "oralcancer",
+        "oralhealth",
+        "mouthnotes",
+        "howitworks",
+        "oralcheck"
+      ],
+      "files": [
+        "reel.mp4"
+      ],
+      "review_note": "",
+      "notes": [
+        "21 Nov 2026: Mouth Notes ep. 5."
+      ]
     },
     {
       "id": "2026-12-30_li_carousel",
@@ -1495,6 +1725,49 @@
       },
       "event": null,
       "error": "Connection error."
+    },
+    {
+      "id": "2026-12-31_in_mn06",
+      "date": "2026-12-31",
+      "network": "instagram",
+      "media_type": "reel",
+      "when": "2026-12-31T16:00:00+00:00",
+      "status": "approved",
+      "idea": {
+        "title": "Mouth Notes: before you google that spot",
+        "hook": "Before you google that spot in your mouth.",
+        "brief": "Mouth Notes ep. 6, Read it \u00b7 01. Scene anim/silent.html; script and sources in docs/MOUTH_NOTES.md.",
+        "topic": "lookalikes",
+        "shape": "mouth_notes",
+        "hook_style": "statement",
+        "tone": "calm",
+        "pillar": "education",
+        "media_type": "reel",
+        "calendar_ref": null,
+        "slug": "2026-12-31_in_mn06",
+        "series": "Mouth Notes",
+        "episode": "Read it \u00b7 01",
+        "scene": "silent"
+      },
+      "folder": "2026-12-31_in_mn06",
+      "version": 1,
+      "uploaded": true,
+      "hook": "Before you google that spot in your mouth.",
+      "caption": "Mouth Notes, read it: four questions before you search that spot in your mouth.\n\nDoes it hurt? Canker sores usually do. Early cancer often does not.\nDoes it wipe off? Thrush wipes away. A patch that stays put does not.\nIs there a cause? A sharp tooth, a burn or a bite settle once the cause is gone.\nHas it been there two weeks? Then it is worth a dentist's look, whatever it is.\n\nSource: NHS, mouth ulcers; oralcheck.org/learn\n\nFree, private risk check: oralcheck.org",
+      "hashtags": [
+        "oralcancer",
+        "oralhealth",
+        "mouthnotes",
+        "howitworks",
+        "oralcheck"
+      ],
+      "files": [
+        "reel.mp4"
+      ],
+      "review_note": "",
+      "notes": [
+        "21 Nov 2026: Mouth Notes ep. 6. Ian kept this sample ('keep ... all of them')."
+      ]
     },
     {
       "id": "2027-01-01_in_reel",
@@ -1537,6 +1810,264 @@
         "reel.mp4"
       ],
       "review_note": "Rebuilt on the illustrated plates; the 3D model is retired. A line about feeling under the jaw shows the neck."
+    },
+    {
+      "id": "2027-01-04_in_mn07",
+      "date": "2027-01-04",
+      "network": "instagram",
+      "media_type": "reel",
+      "when": "2027-01-04T16:00:00+00:00",
+      "status": "planned",
+      "idea": {
+        "title": "Mouth Notes: under the microscope",
+        "hook": "",
+        "brief": "Mouth Notes ep. 7, How it works \u00b7 04. Scene anim/microscope.html; script and sources in docs/MOUTH_NOTES.md.",
+        "topic": "biopsy",
+        "shape": "mouth_notes",
+        "hook_style": "statement",
+        "tone": "calm",
+        "pillar": "education",
+        "media_type": "reel",
+        "calendar_ref": null,
+        "slug": "2027-01-04_in_mn07",
+        "series": "Mouth Notes",
+        "episode": "How it works \u00b7 04",
+        "scene": "microscope"
+      },
+      "folder": "2027-01-04_in_mn07",
+      "version": 1,
+      "uploaded": false,
+      "hook": "",
+      "caption": "",
+      "hashtags": [
+        "oralcancer",
+        "oralhealth",
+        "mouthnotes",
+        "howitworks",
+        "oralcheck"
+      ],
+      "files": [
+        "reel.mp4"
+      ],
+      "review_note": "",
+      "notes": [
+        "21 Nov 2026: Mouth Notes ep. 7."
+      ]
+    },
+    {
+      "id": "2027-01-07_in_mn08",
+      "date": "2027-01-07",
+      "network": "instagram",
+      "media_type": "reel",
+      "when": "2027-01-07T16:00:00+00:00",
+      "status": "planned",
+      "idea": {
+        "title": "Mouth Notes: how tobacco damages DNA",
+        "hook": "",
+        "brief": "Mouth Notes ep. 8, How it works \u00b7 05. Scene anim/tobaccodna.html; script and sources in docs/MOUTH_NOTES.md.",
+        "topic": "quitting",
+        "shape": "mouth_notes",
+        "hook_style": "statement",
+        "tone": "calm",
+        "pillar": "education",
+        "media_type": "reel",
+        "calendar_ref": null,
+        "slug": "2027-01-07_in_mn08",
+        "series": "Mouth Notes",
+        "episode": "How it works \u00b7 05",
+        "scene": "tobaccodna"
+      },
+      "folder": "2027-01-07_in_mn08",
+      "version": 1,
+      "uploaded": false,
+      "hook": "",
+      "caption": "",
+      "hashtags": [
+        "oralcancer",
+        "oralhealth",
+        "mouthnotes",
+        "howitworks",
+        "oralcheck"
+      ],
+      "files": [
+        "reel.mp4"
+      ],
+      "review_note": "",
+      "notes": [
+        "21 Nov 2026: Mouth Notes ep. 8."
+      ]
+    },
+    {
+      "id": "2027-01-11_in_mn09",
+      "date": "2027-01-11",
+      "network": "instagram",
+      "media_type": "reel",
+      "when": "2027-01-11T16:00:00+00:00",
+      "status": "planned",
+      "idea": {
+        "title": "Mouth Notes: how small is HPV?",
+        "hook": "",
+        "brief": "Mouth Notes ep. 9, Sized \u00b7 01. Scene anim/sized.html; script and sources in docs/MOUTH_NOTES.md.",
+        "topic": "hpv_is_common",
+        "shape": "mouth_notes",
+        "hook_style": "statement",
+        "tone": "calm",
+        "pillar": "education",
+        "media_type": "reel",
+        "calendar_ref": null,
+        "slug": "2027-01-11_in_mn09",
+        "series": "Mouth Notes",
+        "episode": "Sized \u00b7 01",
+        "scene": "sized"
+      },
+      "folder": "2027-01-11_in_mn09",
+      "version": 1,
+      "uploaded": false,
+      "hook": "",
+      "caption": "",
+      "hashtags": [
+        "oralcancer",
+        "oralhealth",
+        "mouthnotes",
+        "howitworks",
+        "oralcheck"
+      ],
+      "files": [
+        "reel.mp4"
+      ],
+      "review_note": "",
+      "notes": [
+        "21 Nov 2026: Mouth Notes ep. 9."
+      ]
+    },
+    {
+      "id": "2027-01-14_in_mn10",
+      "date": "2027-01-14",
+      "network": "instagram",
+      "media_type": "reel",
+      "when": "2027-01-14T16:00:00+00:00",
+      "status": "planned",
+      "idea": {
+        "title": "Mouth Notes: what is under your tongue",
+        "hook": "",
+        "brief": "Mouth Notes ep. 10, Cutaway \u00b7 01. Scene anim/cutaway.html; script and sources in docs/MOUTH_NOTES.md.",
+        "topic": "floor_of_mouth",
+        "shape": "mouth_notes",
+        "hook_style": "statement",
+        "tone": "calm",
+        "pillar": "education",
+        "media_type": "reel",
+        "calendar_ref": null,
+        "slug": "2027-01-14_in_mn10",
+        "series": "Mouth Notes",
+        "episode": "Cutaway \u00b7 01",
+        "scene": "cutaway"
+      },
+      "folder": "2027-01-14_in_mn10",
+      "version": 1,
+      "uploaded": false,
+      "hook": "",
+      "caption": "",
+      "hashtags": [
+        "oralcancer",
+        "oralhealth",
+        "mouthnotes",
+        "howitworks",
+        "oralcheck"
+      ],
+      "files": [
+        "reel.mp4"
+      ],
+      "review_note": "",
+      "notes": [
+        "21 Nov 2026: Mouth Notes ep. 10."
+      ]
+    },
+    {
+      "id": "2027-01-18_in_mn11",
+      "date": "2027-01-18",
+      "network": "instagram",
+      "media_type": "reel",
+      "when": "2027-01-18T16:00:00+00:00",
+      "status": "planned",
+      "idea": {
+        "title": "Mouth Notes: worry or wait, five rounds",
+        "hook": "",
+        "brief": "Mouth Notes ep. 11, This or that \u00b7 01. Scene anim/thisorthat.html; script and sources in docs/MOUTH_NOTES.md.",
+        "topic": "two_week_rule",
+        "shape": "mouth_notes",
+        "hook_style": "statement",
+        "tone": "calm",
+        "pillar": "education",
+        "media_type": "reel",
+        "calendar_ref": null,
+        "slug": "2027-01-18_in_mn11",
+        "series": "Mouth Notes",
+        "episode": "This or that \u00b7 01",
+        "scene": "thisorthat"
+      },
+      "folder": "2027-01-18_in_mn11",
+      "version": 1,
+      "uploaded": false,
+      "hook": "",
+      "caption": "",
+      "hashtags": [
+        "oralcancer",
+        "oralhealth",
+        "mouthnotes",
+        "howitworks",
+        "oralcheck"
+      ],
+      "files": [
+        "reel.mp4"
+      ],
+      "review_note": "",
+      "notes": [
+        "21 Nov 2026: Mouth Notes ep. 11."
+      ]
+    },
+    {
+      "id": "2027-01-21_in_mn12",
+      "date": "2027-01-21",
+      "network": "instagram",
+      "media_type": "reel",
+      "when": "2027-01-21T16:00:00+00:00",
+      "status": "planned",
+      "idea": {
+        "title": "Mouth Notes: if I can't see it, it isn't there",
+        "hook": "",
+        "brief": "Mouth Notes ep. 12, Myth \u00b7 01. Scene anim/myth.html; script and sources in docs/MOUTH_NOTES.md.",
+        "topic": "throat_hpv_site",
+        "shape": "mouth_notes",
+        "hook_style": "statement",
+        "tone": "calm",
+        "pillar": "education",
+        "media_type": "reel",
+        "calendar_ref": null,
+        "slug": "2027-01-21_in_mn12",
+        "series": "Mouth Notes",
+        "episode": "Myth \u00b7 01",
+        "scene": "myth"
+      },
+      "folder": "2027-01-21_in_mn12",
+      "version": 1,
+      "uploaded": false,
+      "hook": "",
+      "caption": "",
+      "hashtags": [
+        "oralcancer",
+        "oralhealth",
+        "mouthnotes",
+        "howitworks",
+        "oralcheck"
+      ],
+      "files": [
+        "reel.mp4"
+      ],
+      "review_note": "",
+      "notes": [
+        "21 Nov 2026: Mouth Notes ep. 12."
+      ]
     }
   ]
 }
