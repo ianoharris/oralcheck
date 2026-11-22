@@ -105,3 +105,31 @@ cannot reach: the base of the tongue and the tonsils." / "There is often nothing
 to see at all." / "The signs are different: a sore throat that lasts, a lump in
 the neck, ear pain on one side." / "Any of those for more than two weeks gets
 checked." Sources: topics `throat_hpv_site`, `hpv_throat_symptoms`.
+
+## Season 2: two lanes (planned 22 Nov 2026)
+
+Ian (22 Nov): "Zack D Films type, 3Blue1Brown type", more posts, more views; four
+Instagram posts a week with the calendar running further ahead; ask him for any real
+photo a post needs (not video).
+
+- **3D lane (Blender, `oralcheck-agent/blender/`)**: stylized, toy-like 3D with real
+  lighting and camera moves, for "what happens if", "why does your body", "how it's
+  done" and "you vs. the thing". Not the realistic head model Ian found uncanny.
+- **Math lane (Manim, `oralcheck-agent/manim/`)**: 3Blue1Brown-style graphs and
+  shapes that transform, for numbers and mechanisms.
+
+What Instagram itself says it ranks Reels on: watch time, likes per reach and sends
+per reach (Adam Mosseri, January 2025). So: a payoff worth watching to the end, and a
+fact worth sending to someone.
+
+| Idea | Lane | Source | Real image needed |
+|---|---|---|---|
+| The HPV vaccine is a virus with nothing inside (L1 shells, antibodies) | 3D, prototype | NCI, HPV vaccines (virus-like particles, no viral genes); 360 L1 copies | your Gardasil vial photo (have) |
+| Quit smoking: your mouth at 1, 5 to 10 and 20 years | Manim, prototype | CDC, Benefits of Quitting (risk halves in 5 to 10 years; near a non-smoker at 20) | a cigarette or pack on plain background |
+| Why does your tongue look furry? (papillae) | 3D | StatPearls, tongue anatomy | a real coated-tongue photo |
+| Why your tongue has a map (geographic tongue, harmless) | 3D | StatPearls, geographic tongue | a real geographic-tongue photo |
+| How a biopsy is taken, from inside the mouth | 3D | topics `biopsy` | none |
+| A white blood cell vs HPV | 3D | CDC (most infections clear) | none |
+| What a year of vaping does in your mouth: what is known and what is not | 3D | to research (ACS, CDC) | a vape on plain background |
+| How much spit you make, and why dry mouth matters | Manim | to research (NIDCR) | none |
+| Why "about 15 times" is multiplication, not addition | Manim | Hashibe 2009 (needs the single-habit figures first) | none |
