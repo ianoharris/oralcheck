@@ -2319,11 +2319,11 @@
       "network": "instagram",
       "media_type": "reel",
       "when": "2027-01-25T16:00:00+00:00",
-      "status": "planned",
+      "status": "built",
       "idea": {
         "title": "Mouth Notes: the HPV vaccine is a virus with nothing inside",
-        "hook": "",
-        "brief": "Mouth Notes, season 2 (docs/MOUTH_NOTES.md).",
+        "hook": "The HPV vaccine is a virus with nothing inside.",
+        "brief": "Mouth Notes, How it works 06. Blender lane, blender/vlp.py. Source: NCI, Preventing Cervical Cancer: The Development of HPV Vaccines.",
         "topic": "hpv_vaccine",
         "shape": "mouth_notes",
         "hook_style": "statement",
@@ -2336,8 +2336,25 @@
         "scene": "vlp"
       },
       "notes": [
-        "22 Nov 2026: extend(), four posts a week."
-      ]
+        "22 Nov 2026: extend(), four posts a week.",
+        "22 Nov 2026: built (Blender lane prototype)."
+      ],
+      "folder": "2027-01-25_in_mn13",
+      "version": 1,
+      "uploaded": false,
+      "hook": "The HPV vaccine is a virus with nothing inside.",
+      "caption": "Mouth Notes, how it works: the HPV vaccine is a virus with nothing inside.\n\nA real HPV is a shell of 72 parts wrapped around its DNA. Scientists found that one protein from that shell, called L1, builds the shell by itself when it is made on its own. The copy looks like the virus from the outside but carries no viral DNA, so it cannot infect anyone. Your immune system learns its shape and makes antibodies that fit it, so if real HPV shows up later they are already there. HPV is now the main cause of throat cancers at the back of the mouth.\n\nSource: National Cancer Institute, Preventing Cervical Cancer: The Development of HPV Vaccines. Illustration for education, not to scale.\n\nFree, private risk check: oralcheck.org",
+      "hashtags": [
+        "hpv",
+        "hpvvaccine",
+        "oralcancer",
+        "mouthnotes",
+        "oralcheck"
+      ],
+      "files": [
+        "reel.mp4"
+      ],
+      "review_note": ""
     },
     {
       "id": "2027-01-27_in_image",
@@ -2369,11 +2386,11 @@
       "network": "instagram",
       "media_type": "reel",
       "when": "2027-01-28T16:00:00+00:00",
-      "status": "planned",
+      "status": "built",
       "idea": {
         "title": "Mouth Notes: your mouth after you quit, the curve",
-        "hook": "",
-        "brief": "Mouth Notes, season 2 (docs/MOUTH_NOTES.md).",
+        "hook": "Quit smoking, and your risk of mouth cancer starts to fall. Here is the curve.",
+        "brief": "Mouth Notes, The math 01. Manim lane, manim/quit.py. Source: CDC, Benefits of Quitting Smoking.",
         "topic": "quitting",
         "shape": "mouth_notes",
         "hook_style": "statement",
@@ -2386,8 +2403,25 @@
         "scene": "quit"
       },
       "notes": [
-        "22 Nov 2026: extend(), four posts a week."
-      ]
+        "22 Nov 2026: extend(), four posts a week.",
+        "22 Nov 2026: built (Manim lane prototype)."
+      ],
+      "folder": "2027-01-28_in_mn14",
+      "version": 1,
+      "uploaded": false,
+      "hook": "Quit smoking, and your risk of mouth cancer starts to fall. Here is the curve.",
+      "caption": "Mouth Notes, the math: what happens to your mouth cancer risk after you quit smoking.\n\nThe CDC puts it in two points. Five to ten years after quitting, the extra risk of cancers of the mouth, throat and voice box drops by half. By twenty years it is close to that of someone who never smoked. The points are the CDC's; the smooth curve between them is drawn to show the shape, not measured.\n\nSource: CDC, Benefits of Quitting Smoking (cdc.gov/tobacco/about/benefits-of-quitting.html)\n\nFree help to quit: 1-800-QUIT-NOW. Free, private risk check: oralcheck.org",
+      "hashtags": [
+        "oralcancer",
+        "quitsmoking",
+        "mouthnotes",
+        "oralhealth",
+        "oralcheck"
+      ],
+      "files": [
+        "reel.mp4"
+      ],
+      "review_note": ""
     },
     {
       "id": "2027-01-30_in_short",

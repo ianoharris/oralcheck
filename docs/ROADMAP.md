@@ -720,7 +720,9 @@ Update both together. See `AGENTS.md`.
       without spikes, the zoom lands on a basal cell, severe dysplasia stops in the top
       third, the lingual nerve runs close under the lining. Season 2 (Ian, 22 Nov):
       Zack D. Films-style 3D in Blender and 3Blue1Brown-style Manim, both wired into
-      `anim.py`; prototypes `vlp` (HPV vaccine) and `quit` (CDC quitting curve). The
+      `anim.py`; first episode in each lane built and voiced 22 Nov: `vlp` (the HPV
+      vaccine is a shell with nothing inside, 3D, Mon 25 Jan) and `quit` (the CDC
+      quitting curve, Manim, Thu 28 Jan), both waiting on Ian's review. The
       calendar now runs four Instagram posts a week to 27 March (`post_calendar.py
       extend`); six generated Wednesday and Saturday ideas are flagged to replace
       (repeats, or stale 2026 figures). **Blocked on Ian:** review the eight episodes;
@@ -874,6 +876,12 @@ Update both together. See `AGENTS.md`.
   The roughly 30 left out are Ian's own test traffic.
 
 Newest first.
+
+### 2026-11-22: Mouth Notes season 2, first 3D and math episodes
+
+- The two new lanes produced their first finished episodes, voiced and checked frame by frame. **3D (Blender):** the HPV vaccine as an empty copy of the virus. A real HPV shell of 72 five-sided parts is shown cut open around its DNA, the shell protein then builds the same shell with nothing inside, and Y-shaped antibodies bind to it (NCI). Capsomer placement is an even spread, not the exact lattice, and the on-screen source says so. **Math (Manim):** the extra mouth and throat cancer risk from smoking after quitting, through the CDC's two points (half by 5 to 10 years, close to a never-smoker by 20). The curve between those points is drawn, and a note on screen says it is illustrative.
+- In the calendar as built: Mon 25 Jan and Thu 28 Jan. A 34-second 3D episode takes about 25 minutes to render on the laptop.
+- The calendar runs four Instagram posts a week to 27 Mar 2027.
 
 ### 2026-11-21: the smokeless tobacco and HPV citations, actually live
 
