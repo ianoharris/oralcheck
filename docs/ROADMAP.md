@@ -713,6 +713,19 @@ Update both together. See `AGENTS.md`.
 
 ### Distribution
 
+- [ ] **Mouth Notes, season 1 built; season 2 lanes started (2026-11-22).** Twelve
+      episodes, 14 Dec to 21 Jan, Monday and Thursday: four approved (14, 17, 24, 31
+      Dec), eight built and waiting on Ian's review. Every anatomical and biological
+      detail checked against a source after Ian asked for accuracy (21 Nov): HPV drawn
+      without spikes, the zoom lands on a basal cell, severe dysplasia stops in the top
+      third, the lingual nerve runs close under the lining. Season 2 (Ian, 22 Nov):
+      Zack D. Films-style 3D in Blender and 3Blue1Brown-style Manim, both wired into
+      `anim.py`; prototypes `vlp` (HPV vaccine) and `quit` (CDC quitting curve). The
+      calendar now runs four Instagram posts a week to 27 March (`post_calendar.py
+      extend`); six generated Wednesday and Saturday ideas are flagged to replace
+      (repeats, or stale 2026 figures). **Blocked on Ian:** review the eight episodes;
+      real photos for the season 2 episodes (list in docs/MOUTH_NOTES.md).
+
 - [ ] **New reel formats: four samples, waiting on Ian's pick (2026-11-21).** Ian:
       "all those videos look the same". Prototyped under one series (working name
       "Mouth Notes"): guess-then-reveal quiz (`anim/quiz.html`), levels ranking of

@@ -666,9 +666,13 @@ small jobs hand each approved post on removes the deadline entirely.
 goes out at 10am Central on a Monday, Tuesday or Thursday, because that is when
 your followers are most active (9am to noon on those days, from your Instagram
 insights, 22 October). Planned batches put Instagram on Monday and Thursday and
-LinkedIn on Tuesday. One reel a week, plus, from 28 November for four weeks, a
-short reel (about 12 seconds: one blunt line, one instruction, the address) on
-Saturday at 10am, to compare against the long reels. Holiday posts keep their own day and time:
+LinkedIn on Tuesday. From 14 December, four Instagram posts a week: Mouth Notes
+(the animated series) on Monday and Thursday, a carousel or image on Wednesday,
+and a short reel (about 12 seconds) on Saturday, all at 10am Central. Mouth Notes
+has two looks: drawn 2D, and from January stylized 3D made in Blender (in the
+spirit of Zack D. Films) and graph-and-shape animation made in Manim (the tool
+3Blue1Brown uses). Every detail in them is checked against a source, and the
+cell-scale ones say on screen that a clinician has not reviewed them. Holiday posts keep their own day and time:
 Halloween (Saturday 31 October, 5pm), the Great American Smokeout (its
 LinkedIn post goes the day before, since it says "tomorrow"), Thanksgiving
 (Thursday 26 November, 5pm) and the new year.
