@@ -1298,7 +1298,7 @@
         "scene": "hpvclear"
       },
       "folder": "2026-12-14_in_mn01",
-      "version": 1,
+      "version": 2,
       "uploaded": true,
       "hook": "Most adults catch HPV. Almost none get cancer from it. Here is why.",
       "caption": "Mouth Notes, how it works: most sexually active adults are exposed to HPV at some point, and most infections clear on their own without a single symptom.\n\nRarely, a high-risk type such as HPV-16 stays and causes DNA changes that can lead to cancer, most often at the tonsils and the base of the tongue. Gardasil 9 protects against HPV-16 and works best before exposure.\n\nSource: CDC, HPV and cancer; CDC, HPV Vaccination Considerations.\n\nFree, private risk check: oralcheck.org",
@@ -1314,7 +1314,8 @@
       ],
       "review_note": "",
       "notes": [
-        "21 Nov 2026: Mouth Notes ep. 1. Ian kept this sample ('keep ... all of them')."
+        "21 Nov 2026: Mouth Notes ep. 1. Ian kept this sample ('keep ... all of them').",
+        "21 Nov 2026: re-rendered for accuracy: HPV drawn as a spikeless icosahedral capsid (IARC), on-screen clinician-review footer added."
       ]
     },
     {
@@ -1505,7 +1506,7 @@
       "network": "instagram",
       "media_type": "reel",
       "when": "2026-12-21T16:00:00+00:00",
-      "status": "planned",
+      "status": "built",
       "idea": {
         "title": "Mouth Notes: powers of ten, smile to DNA",
         "hook": "Let's zoom from your smile to a single strand of DNA.",
@@ -1666,7 +1667,7 @@
       "network": "instagram",
       "media_type": "reel",
       "when": "2026-12-28T16:00:00+00:00",
-      "status": "planned",
+      "status": "built",
       "idea": {
         "title": "Mouth Notes: life of a mouth cell",
         "hook": "Your cheek lining replaces itself about every two weeks.",
@@ -1817,7 +1818,7 @@
       "network": "instagram",
       "media_type": "reel",
       "when": "2027-01-04T16:00:00+00:00",
-      "status": "planned",
+      "status": "built",
       "idea": {
         "title": "Mouth Notes: under the microscope",
         "hook": "What does a biopsy actually look for? Layers.",
@@ -1860,7 +1861,7 @@
       "network": "instagram",
       "media_type": "reel",
       "when": "2027-01-07T16:00:00+00:00",
-      "status": "planned",
+      "status": "built",
       "idea": {
         "title": "Mouth Notes: how tobacco damages DNA",
         "hook": "Tobacco carries dozens of cancer-causing chemicals. Here is what they do.",
@@ -1903,7 +1904,7 @@
       "network": "instagram",
       "media_type": "reel",
       "when": "2027-01-11T16:00:00+00:00",
-      "status": "planned",
+      "status": "built",
       "idea": {
         "title": "Mouth Notes: how small is HPV?",
         "hook": "How small is HPV? Let's shrink.",
@@ -1946,7 +1947,7 @@
       "network": "instagram",
       "media_type": "reel",
       "when": "2027-01-14T16:00:00+00:00",
-      "status": "planned",
+      "status": "built",
       "idea": {
         "title": "Mouth Notes: what is under your tongue",
         "hook": "What is under your tongue? Let's peel it back.",
@@ -1989,7 +1990,7 @@
       "network": "instagram",
       "media_type": "reel",
       "when": "2027-01-18T16:00:00+00:00",
-      "status": "planned",
+      "status": "built",
       "idea": {
         "title": "Mouth Notes: worry or wait, five rounds",
         "hook": "Five rounds. Worry or wait? Answer before the reveal.",
@@ -2032,7 +2033,7 @@
       "network": "instagram",
       "media_type": "reel",
       "when": "2027-01-21T16:00:00+00:00",
-      "status": "planned",
+      "status": "built",
       "idea": {
         "title": "Mouth Notes: if I can't see it, it isn't there",
         "hook": "Myth: if the mirror shows nothing, there is nothing there.",
