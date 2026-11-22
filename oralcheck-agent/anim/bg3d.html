@@ -1,0 +1,30 @@
+<!doctype html>
+<!--
+  The house frame over a Blender render (Mouth Notes 3D lane, 22 Nov 2026).
+  anim.py renders the stage band in Blender first (blender/<name>.py, keyed to
+  the narration's timing) into anim/_frames/<scene>/f0001.png ...; this page
+  shows the frame for t and draws captions, hook card, labels and end card.
+-->
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="house.css">
+<style>#stage img{display:block;width:1080px;height:1000px}</style></head>
+<body>
+<div id="stage"><img id="bg" alt=""></div>
+<script type="module">
+import {PLAN, at, label, readout, frame, span} from "./house.js";
+const bg = document.getElementById("bg");
+const FPS = 30, N = PLAN.frames_n || 1;
+const L = PLAN.labels || {};   // {shotKey: {k, t, d, x, y, side}}
+const R = PLAN.readouts || {}; // {shotKey: [value, unit]}
+window.render = async (t) => {
+  const i = Math.min(N, Math.max(1, 1 + Math.round(t * FPS)));
+  const src = `${PLAN.frames}/f${String(i).padStart(4, "0")}.png`;
+  if (bg.getAttribute("src") !== src) { bg.src = src; try { await bg.decode(); } catch (e) {} }
+  const {sh, local} = at(t);
+  const lb = L[sh.key];
+  if (lb) label(lb, lb.x, 230 + lb.y, lb.side || "right", local, lb.top || 260); else label(null);
+  const rd = R[sh.key];
+  if (rd) readout(rd[0], rd[1], 0, span(local, 0.3, 0.8)); else readout("", "", 0, 0);
+  return frame(t);
+};
+</script>
+</body></html>

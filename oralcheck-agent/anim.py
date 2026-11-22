@@ -236,6 +236,38 @@ SCRIPTS = {
         credit="Sources: oralcheck.org/learn (HPV-related throat cancer) · " + PLATES,
         series={"name": SERIES, "ep": "Myth · 01"},
     ),
+    # Mouth Notes, 3D lane prototype (22 Nov 2026). NCI, Preventing Cervical Cancer: The Development of HPV Vaccines.
+    "vlp": dict(
+        blender="vlp",
+        lines=[
+            {"key": "hook", "say": "The HPV vaccine is a virus with nothing inside.", "eyebrow": "How it works"},
+            {"key": "real", "say": "A real HPV is a shell of seventy-two parts, wrapped around its DNA.", "eyebrow": "Real HPV"},
+            {"key": "build", "say": "Scientists found the shell protein can build that shell by itself, with no virus at all.", "eyebrow": "L1 protein"},
+            {"key": "empty", "say": "The copy is empty. No DNA, so it cannot infect anyone.", "eyebrow": "Virus-like particle"},
+            {"key": "immune", "say": "Your immune system learns its shape and makes antibodies that fit it.", "eyebrow": "Antibodies"},
+            {"key": "later", "say": "If real HPV ever shows up, those antibodies are already waiting.", "eyebrow": "Protected"},
+        ],
+        labels={"real": {"k": "Inside", "t": "Its DNA", "d": "what makes it a virus", "x": 540, "y": 500, "side": "right"},
+                "empty": {"k": "Inside", "t": "Nothing", "d": "no viral DNA", "x": 540, "y": 500, "side": "right"},
+                "immune": {"k": "Y-shaped", "t": "Antibodies", "d": "they fit the shell", "x": 700, "y": 330, "side": "right"}},
+        readouts={"real": ["72", "parts in the shell"], "build": ["360", "copies of one protein, L1"]},
+        credit="Sources: National Cancer Institute, Preventing Cervical Cancer: The Development of HPV Vaccines; CDC · Stylized 3D, not to scale",
+        foot="Illustration for education. Not reviewed by a clinician.", foot_on=["real", "build", "empty", "immune", "later"],
+        series={"name": SERIES, "ep": "How it works · 06"},
+    ),
+    # Mouth Notes, math lane prototype (22 Nov 2026). CDC, Benefits of Quitting Smoking.
+    "quit": dict(
+        manim=("quit.py", "Quit"),
+        lines=[
+            {"key": "hook", "say": "Quit smoking, and your risk of mouth cancer starts to fall. Here is the curve.", "eyebrow": "Quitting"},
+            {"key": "axes", "say": "Start with the extra risk smoking adds, on the day you quit.", "eyebrow": "Day one"},
+            {"key": "half", "say": "Five to ten years later, that extra risk has dropped by half.", "eyebrow": "5 to 10 years"},
+            {"key": "twenty", "say": "By twenty years, it is close to someone who never smoked.", "eyebrow": "20 years"},
+            {"key": "never", "say": "It is never too late for it to count.", "eyebrow": "Never too late"},
+        ],
+        credit="Source: CDC, Benefits of Quitting Smoking (mouth, throat and voice box cancers) · Curve shape between the CDC's points is illustrative",
+        series={"name": SERIES, "ep": "The math · 01"},
+    ),
     # Calendar 19 Nov 2026 (Ian's redo of the age carousel). SEER_BY_AGE and
     # newCaseShareByAge in src/lib/seerStats.ts: SEER 21, 2019 to 2023.
     "age": dict(
@@ -371,7 +403,40 @@ def build(scene: str, out_path: str, *, tts, music: str | None = None, workdir: 
             "foot_on": spec.get("foot_on", []), "data": spec.get("data", {}), "series": spec.get("series")}
     events = [("glide", max(0.0, s["t0"] - 0.15)) for s in shots[1:]] + [("settle", shots[-1]["t0"] + 0.1)]
     video = os.path.join(workdir, "video.mp4")
-    render(scene, plan, total, video)
+    page = scene
+    if spec.get("blender"):
+        # 3D lane: Blender renders the stage band keyed to these timings, bg3d.html frames it
+        fdir = HERE / "_frames" / scene
+        if fdir.exists():
+            for f in fdir.glob("f*.png"):
+                f.unlink()
+        fdir.mkdir(parents=True, exist_ok=True)
+        pj = os.path.join(workdir, "plan3d.json")
+        Path(pj).write_text(json.dumps({**plan, "total": total}))
+        subprocess.run(["blender", "-b", "--factory-startup", "-P", str(Path(__file__).parent / "blender" / f"{spec['blender']}.py"),
+                        "--", pj, str(fdir) + "/"], check=True, stdout=subprocess.DEVNULL)
+        plan.update(frames=f"_frames/{scene}", frames_n=len(list(fdir.glob("f*.png"))),
+                    labels=spec.get("labels", {}), readouts=spec.get("readouts", {}))
+        page = "bg3d"
+    elif spec.get("manim"):
+        # math lane: Manim renders the stage band keyed to these timings; frames extracted for bg3d.html
+        fdir = HERE / "_frames" / scene
+        if fdir.exists():
+            for f in fdir.glob("f*.png"):
+                f.unlink()
+        fdir.mkdir(parents=True, exist_ok=True)
+        pj = os.path.join(workdir, "plan2d.json")
+        Path(pj).write_text(json.dumps({**plan, "total": total}))
+        mfile, mscene = spec["manim"]
+        subprocess.run(["manim", "-r", "1080,1000", "--fps", "30", "--media_dir", workdir, "-o", "m.mp4",
+                        str(Path(__file__).parent / "manim" / mfile), mscene],
+                       check=True, env={**os.environ, "MN_PLAN": pj}, stdout=subprocess.DEVNULL)
+        mp4 = next(Path(workdir).rglob("m.mp4"))
+        subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", str(mp4), "-vf", "fps=30", str(fdir / "f%04d.png")], check=True)
+        plan.update(frames=f"_frames/{scene}", frames_n=len(list(fdir.glob("f*.png"))),
+                    labels=spec.get("labels", {}), readouts=spec.get("readouts", {}))
+        page = "bg3d"
+    render(page, plan, total, video)
     audio = reel2._final_audio(voice, reel3d._sfx_track(events, total, workdir), music, total, workdir)
     reel2._run(["ffmpeg", "-y", "-i", video, "-i", audio, "-map", "0:v", "-map", "1:a", "-c:v", "copy",
                 "-c:a", "aac", "-b:a", "192k", "-shortest", "-movflags", "+faststart", out_path])

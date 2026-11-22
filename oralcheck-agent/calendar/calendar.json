@@ -1567,6 +1567,30 @@
       "error": "Connection error."
     },
     {
+      "id": "2026-12-23_in_carousel",
+      "date": "2026-12-23",
+      "network": "instagram",
+      "media_type": "carousel",
+      "when": "2026-12-23T16:00:00+00:00",
+      "status": "planned",
+      "idea": {
+        "title": "What the OralCheck screener can and cannot tell you",
+        "hook": "A low score on the screener is not a clean bill of health.",
+        "brief": "Slide 1 states the myth plainly: a low-risk result means you're fine. Slide 2 corrects it: the screener reads back the exposures you report, takes two minutes, needs no account, and never sees your mouth. It cannot tell you whether you have cancer. Slide 3 delivers the practical rule: if something in your mouth looks or feels wrong, that symptom means see a dentist regardless of your score. End card links to oralcheck.org/methods.",
+        "topic": "screener_limits",
+        "shape": "myth_fact",
+        "hook_style": "plain",
+        "tone": "calm",
+        "pillar": "screener_cta",
+        "media_type": "carousel",
+        "calendar_ref": null,
+        "slug": "what-the-oralcheck-screener-can-and-cannot-tell-you"
+      },
+      "notes": [
+        "22 Nov 2026: extend(), four posts a week."
+      ]
+    },
+    {
       "id": "2026-12-25_in_carousel",
       "date": "2026-12-24",
       "network": "instagram",
@@ -1633,6 +1657,30 @@
       "review_note": "",
       "notes": [
         "21 Nov 2026: Mouth Notes ep. 4. Ian kept this sample ('keep ... all of them')."
+      ]
+    },
+    {
+      "id": "2026-12-26_in_short",
+      "date": "2026-12-26",
+      "network": "instagram",
+      "media_type": "reel",
+      "when": "2026-12-26T16:00:00+00:00",
+      "status": "planned",
+      "idea": {
+        "title": "Where in your mouth would a tumour have room to hide?",
+        "hook": "When did you last look at the inside of your cheek?",
+        "brief": "The reel moves through four sites in the mouth, one spoken line and one label per shot: the floor of the mouth, the sides of the tongue, the cheek lining, and the tonsil area. At each stop, one sentence notes how visible that site is in a mirror. The closing line ties it together: only about 26% of oral cancers are found while still localized, and the rest have already reached nearby tissue by diagnosis. End card: oralcheck.org/learn/facts.",
+        "topic": "found_late",
+        "shape": "tour",
+        "hook_style": "question",
+        "tone": "calm",
+        "pillar": "stats",
+        "media_type": "reel",
+        "calendar_ref": null,
+        "slug": "where-in-your-mouth-would-a-tumour-have-room-to-hide"
+      },
+      "notes": [
+        "22 Nov 2026: extend(), four posts a week. Short reel (about 12 s)."
       ]
     },
     {
@@ -1728,6 +1776,30 @@
       "error": "Connection error."
     },
     {
+      "id": "2026-12-30_in_image",
+      "date": "2026-12-30",
+      "network": "instagram",
+      "media_type": "image",
+      "when": "2026-12-30T16:00:00+00:00",
+      "status": "planned",
+      "idea": {
+        "title": "Risk factors you were born with still matter for screening",
+        "hook": "Put your hand on your jaw for a moment.",
+        "brief": "The image shows an older adult looking thoughtfully at their own reflection, cropped close on face and jaw. The question over the photo: 'Your age, sex and family history all affect your oral cancer risk. Are you adjusting what you can control to match?' The caption explains that these factors are fixed, but having several of them is a reason to be more careful about the ones that aren't, and to ask your dentist how often you should be screened. Closes with oralcheck.org/learn/prevention.",
+        "topic": "cant_control",
+        "shape": "question",
+        "hook_style": "instruction",
+        "tone": "calm",
+        "pillar": "screener_cta",
+        "media_type": "image",
+        "calendar_ref": null,
+        "slug": "risk-factors-you-were-born-with-still-matter-for-screening"
+      },
+      "notes": [
+        "22 Nov 2026: extend(), four posts a week."
+      ]
+    },
+    {
       "id": "2026-12-31_in_mn06",
       "date": "2026-12-31",
       "network": "instagram",
@@ -1813,6 +1885,31 @@
       "review_note": "Rebuilt on the illustrated plates; the 3D model is retired. A line about feeling under the jaw shows the neck."
     },
     {
+      "id": "2027-01-02_in_short",
+      "date": "2027-01-02",
+      "network": "instagram",
+      "media_type": "reel",
+      "when": "2027-01-02T16:00:00+00:00",
+      "status": "planned",
+      "idea": {
+        "title": "Self-check for the floor of your mouth under your tongue",
+        "hook": "You're brushing your teeth and you notice something you haven't seen before.",
+        "brief": "Shot 1: viewer is prompted to lift their tongue to the roof of their mouth. Shot 2: the camera labels the U-shaped tissue underneath as the floor of the mouth, noting it's one of the highest-risk sites. Shot 3: the viewer is guided to look at that tissue in a mirror while holding the position. The final line notes that a small tumour here can grow for months before causing any discomfort, which is why this check exists. Closes with oralcheck.org/learn/signs.",
+        "topic": "floor_of_mouth",
+        "shape": "self_check",
+        "hook_style": "scenario",
+        "tone": "calm",
+        "pillar": "self_exam",
+        "media_type": "reel",
+        "calendar_ref": null,
+        "slug": "self-check-for-the-floor-of-your-mouth-under-your-tongue"
+      },
+      "notes": [
+        "22 Nov 2026: extend(), four posts a week. Short reel (about 12 s).",
+        "22 Nov 2026: REPLACE before building: repeats the 5 Dec floor-of-mouth short."
+      ]
+    },
+    {
       "id": "2027-01-04_in_mn07",
       "date": "2027-01-04",
       "network": "instagram",
@@ -1853,6 +1950,30 @@
       "review_note": "",
       "notes": [
         "21 Nov 2026: Mouth Notes ep. 7."
+      ]
+    },
+    {
+      "id": "2027-01-06_in_carousel",
+      "date": "2027-01-06",
+      "network": "instagram",
+      "media_type": "carousel",
+      "when": "2027-01-06T16:00:00+00:00",
+      "status": "planned",
+      "idea": {
+        "title": "Every tobacco form raises oral cancer risk, not just cigarettes",
+        "hook": "Switching to chewing tobacco is not a safer option for your mouth.",
+        "brief": "The carousel is built as a saved-reference card. Slide 1 corrects the opening belief: the list covers every form, cigarettes, cigars, pipes, chewing tobacco, snuff and vaping products. Slide 2 states the proportion plainly: tobacco accounts for roughly 75% of traditional oral cavity cancers. Slide 3 adds the dose relationship: risk scales with how much and for how long. Final slide is a plain save-this card with the full list and oralcheck.org/learn/risk-factors.",
+        "topic": "tobacco_all_forms",
+        "shape": "reference_card",
+        "hook_style": "correction",
+        "tone": "calm",
+        "pillar": "myth_busting",
+        "media_type": "carousel",
+        "calendar_ref": null,
+        "slug": "every-tobacco-form-raises-oral-cancer-risk-not-just-cigarett"
+      },
+      "notes": [
+        "22 Nov 2026: extend(), four posts a week."
       ]
     },
     {
@@ -1899,6 +2020,31 @@
       ]
     },
     {
+      "id": "2027-01-09_in_short",
+      "date": "2027-01-09",
+      "network": "instagram",
+      "media_type": "reel",
+      "when": "2027-01-09T16:00:00+00:00",
+      "status": "planned",
+      "idea": {
+        "title": "Two-week rule: what heals and what does not",
+        "hook": "A canker sore hurts and clears up. Oral cancer often does neither.",
+        "brief": "The reel opens on that contrast, then names the warning sign: anything in the mouth that hasn't healed or gone away in two weeks. It then moves through the places that sign most often appears, the floor of the mouth, the sides of the tongue, the inner cheek, and the gumline, one spoken line per location. The closing note is practical: painless, persistent, bleeds easily, or simply unusual are all reasons to get it looked at. Closes with oralcheck.org/learn/signs.",
+        "topic": "two_week_rule",
+        "shape": "what_to_watch",
+        "hook_style": "contrast",
+        "tone": "calm",
+        "pillar": "self_exam",
+        "media_type": "reel",
+        "calendar_ref": null,
+        "slug": "two-week-rule-what-heals-and-what-does-not"
+      },
+      "notes": [
+        "22 Nov 2026: extend(), four posts a week. Short reel (about 12 s).",
+        "22 Nov 2026: REPLACE before building: repeats the two-week rule (played out)."
+      ]
+    },
+    {
       "id": "2027-01-11_in_mn09",
       "date": "2027-01-11",
       "network": "instagram",
@@ -1939,6 +2085,30 @@
       "review_note": "",
       "notes": [
         "21 Nov 2026: Mouth Notes ep. 9."
+      ]
+    },
+    {
+      "id": "2027-01-13_in_image",
+      "date": "2027-01-13",
+      "network": "instagram",
+      "media_type": "image",
+      "when": "2027-01-13T16:00:00+00:00",
+      "status": "planned",
+      "idea": {
+        "title": "Alcohol is a direct carcinogen in the mouth and risk rises with amount",
+        "hook": "You pour a drink after work and don't give your mouth a second thought.",
+        "brief": "The image shows a half-finished drink on a table, slightly out of focus, with a person's hand nearby. The single caption sentence reads: 'Alcohol is a direct carcinogen in the mouth, and the risk rises with how much and how often you drink.' The body of the caption adds the specific threshold: heavy drinking, more than three to four drinks a day, carries the highest risk, while keeping to moderate levels meaningfully lowers it compared to heavy use. Closes with oralcheck.org/learn/risk-factors.",
+        "topic": "alcohol",
+        "shape": "statement",
+        "hook_style": "scenario",
+        "tone": "calm",
+        "pillar": "myth_busting",
+        "media_type": "image",
+        "calendar_ref": null,
+        "slug": "alcohol-is-a-direct-carcinogen-in-the-mouth-and-risk-rises-w"
+      },
+      "notes": [
+        "22 Nov 2026: extend(), four posts a week."
       ]
     },
     {
@@ -1985,6 +2155,30 @@
       ]
     },
     {
+      "id": "2027-01-16_in_short",
+      "date": "2027-01-16",
+      "network": "instagram",
+      "media_type": "reel",
+      "when": "2027-01-16T16:00:00+00:00",
+      "status": "planned",
+      "idea": {
+        "title": "What you're looking for during a monthly mouth self-exam",
+        "hook": "You're standing at the bathroom mirror before bed with good light.",
+        "brief": "Starting from that moment, the reel walks through one structure in detail: the floor of the mouth. It places it anatomically, describes what the tissue looks like when it's healthy, and says clearly what to watch for: a new patch, sore, lump, or change in colour that wasn't there last month. The final line pulls back to the broader habit: the full self-exam covers the same ground, once a month, and takes a couple of minutes. Closes with oralcheck.org/learn/self-exam.",
+        "topic": "monthly_self_exam",
+        "shape": "close_look",
+        "hook_style": "scenario",
+        "tone": "calm",
+        "pillar": "self_exam",
+        "media_type": "reel",
+        "calendar_ref": null,
+        "slug": "what-you-re-looking-for-during-a-monthly-mouth-self-exam"
+      },
+      "notes": [
+        "22 Nov 2026: extend(), four posts a week. Short reel (about 12 s)."
+      ]
+    },
+    {
       "id": "2027-01-18_in_mn11",
       "date": "2027-01-18",
       "network": "instagram",
@@ -2028,6 +2222,30 @@
       ]
     },
     {
+      "id": "2027-01-20_in_carousel",
+      "date": "2027-01-20",
+      "network": "instagram",
+      "media_type": "carousel",
+      "when": "2027-01-20T16:00:00+00:00",
+      "status": "planned",
+      "idea": {
+        "title": "Two differences between a canker sore and a cancer lesion",
+        "hook": "Here are two things worth knowing before you decide to wait it out.",
+        "brief": "The carousel is addressed precisely: slide 1 names the reader as someone who has a sore or patch in their mouth right now and isn't sure what it is. Slide 2 describes the canker sore: round or oval, white or yellow centre, red rim, painful, appears inside the mouth only, and heals on its own in 7 to 14 days. Slide 3 describes the oral cancer lesion: often painless early, irregular or raised edges, may bleed easily, does not heal. Slide 4 gives one instruction: if it's still there at two weeks, get it looked at, and links to oralcheck.org/learn/canker-sore-vs-oral-cancer.",
+        "topic": "canker_vs_cancer",
+        "shape": "for_you_if",
+        "hook_style": "count",
+        "tone": "calm",
+        "pillar": "myth_busting",
+        "media_type": "carousel",
+        "calendar_ref": null,
+        "slug": "two-differences-between-a-canker-sore-and-a-cancer-lesion"
+      },
+      "notes": [
+        "22 Nov 2026: extend(), four posts a week."
+      ]
+    },
+    {
       "id": "2027-01-21_in_mn12",
       "date": "2027-01-21",
       "network": "instagram",
@@ -2068,6 +2286,934 @@
       "review_note": "",
       "notes": [
         "21 Nov 2026: Mouth Notes ep. 12."
+      ]
+    },
+    {
+      "id": "2027-01-23_in_short",
+      "date": "2027-01-23",
+      "network": "instagram",
+      "media_type": "reel",
+      "when": "2027-01-23T16:00:00+00:00",
+      "status": "planned",
+      "idea": {
+        "title": "Checking the sides of your tongue, the most common cancer site",
+        "hook": "Stick your tongue out as far as it goes and look to your left.",
+        "brief": "The reel opens on that instruction and holds there. The warning sign named is a persistent red or white patch, a sore, or a thickened area on the side or underside of the tongue. The reel then shows the two places it most often appears: the lateral border on each side, guiding the viewer to tilt their tongue and check each one. The final line is direct: the sides and underside are the most common site for oral cancer overall, and they're easy to miss without this check. Closes with oralcheck.org/learn/signs.",
+        "topic": "tongue_sides",
+        "shape": "what_to_watch",
+        "hook_style": "instruction",
+        "tone": "calm",
+        "pillar": "self_exam",
+        "media_type": "reel",
+        "calendar_ref": null,
+        "slug": "checking-the-sides-of-your-tongue-the-most-common-cancer-sit"
+      },
+      "notes": [
+        "22 Nov 2026: extend(), four posts a week. Short reel (about 12 s).",
+        "22 Nov 2026: REPLACE before building: repeats the 28 Nov tongue-sides short."
+      ]
+    },
+    {
+      "id": "2027-01-25_in_mn13",
+      "date": "2027-01-25",
+      "network": "instagram",
+      "media_type": "reel",
+      "when": "2027-01-25T16:00:00+00:00",
+      "status": "planned",
+      "idea": {
+        "title": "Mouth Notes: the HPV vaccine is a virus with nothing inside",
+        "hook": "",
+        "brief": "Mouth Notes, season 2 (docs/MOUTH_NOTES.md).",
+        "topic": "hpv_vaccine",
+        "shape": "mouth_notes",
+        "hook_style": "statement",
+        "tone": "calm",
+        "pillar": "education",
+        "media_type": "reel",
+        "calendar_ref": null,
+        "slug": "2027-01-25_in_mn13",
+        "series": "Mouth Notes",
+        "scene": "vlp"
+      },
+      "notes": [
+        "22 Nov 2026: extend(), four posts a week."
+      ]
+    },
+    {
+      "id": "2027-01-27_in_image",
+      "date": "2027-01-27",
+      "network": "instagram",
+      "media_type": "image",
+      "when": "2027-01-27T16:00:00+00:00",
+      "status": "planned",
+      "idea": {
+        "title": "Men are diagnosed with oral cancer 2.6 times more than women",
+        "hook": "2.6 times. That's how much more often men are diagnosed with oral cancer than women.",
+        "brief": "The image shows two men in conversation outdoors, candid and relaxed, mid-forties. The figure sits large over the photo. The caption unpacks what it means without alarm: the gap in incidence is real and consistent across SEER data, and HPV-related throat cancer in particular most often affects men aged 40 to 60, well before the median diagnosis age. The closing line is a direct prompt to check risk and closes with oralcheck.org/learn/facts.",
+        "topic": "men_vs_women",
+        "shape": "number",
+        "hook_style": "number",
+        "tone": "calm",
+        "pillar": "stats",
+        "media_type": "image",
+        "calendar_ref": null,
+        "slug": "men-are-diagnosed-with-oral-cancer-2-6-times-more-than-women"
+      },
+      "notes": [
+        "22 Nov 2026: extend(), four posts a week."
+      ]
+    },
+    {
+      "id": "2027-01-28_in_mn14",
+      "date": "2027-01-28",
+      "network": "instagram",
+      "media_type": "reel",
+      "when": "2027-01-28T16:00:00+00:00",
+      "status": "planned",
+      "idea": {
+        "title": "Mouth Notes: your mouth after you quit, the curve",
+        "hook": "",
+        "brief": "Mouth Notes, season 2 (docs/MOUTH_NOTES.md).",
+        "topic": "quitting",
+        "shape": "mouth_notes",
+        "hook_style": "statement",
+        "tone": "calm",
+        "pillar": "education",
+        "media_type": "reel",
+        "calendar_ref": null,
+        "slug": "2027-01-28_in_mn14",
+        "series": "Mouth Notes",
+        "scene": "quit"
+      },
+      "notes": [
+        "22 Nov 2026: extend(), four posts a week."
+      ]
+    },
+    {
+      "id": "2027-01-30_in_short",
+      "date": "2027-01-30",
+      "network": "instagram",
+      "media_type": "reel",
+      "when": "2027-01-30T16:00:00+00:00",
+      "status": "planned",
+      "idea": {
+        "title": "Why a biopsy is the only way to know what a mouth patch is",
+        "hook": "A patch looks harmless, so you decide to keep an eye on it.",
+        "brief": "The reel corrects that instinct at the start: nobody can tell a harmless patch from a dangerous one by looking at it, not a clinician, not a photograph. It then walks the viewer through what a biopsy actually is, one step per shot: a short appointment, a small sample taken under local anaesthetic, and a look at that sample under a microscope. The final shot makes the size of it plain: it's the only thing that turns a worry into an answer. Closes with oralcheck.org/learn/white-and-red-patches.",
+        "topic": "biopsy",
+        "shape": "self_check",
+        "hook_style": "correction",
+        "tone": "calm",
+        "pillar": "self_exam",
+        "media_type": "reel",
+        "calendar_ref": null,
+        "slug": "why-a-biopsy-is-the-only-way-to-know-what-a-mouth-patch-is"
+      },
+      "notes": [
+        "22 Nov 2026: extend(), four posts a week. Short reel (about 12 s)."
+      ]
+    },
+    {
+      "id": "2027-02-01_in_mn15",
+      "date": "2027-02-01",
+      "network": "instagram",
+      "media_type": "reel",
+      "when": "2027-02-01T16:00:00+00:00",
+      "status": "planned",
+      "idea": {
+        "title": "Mouth Notes: why does your tongue look furry?",
+        "hook": "",
+        "brief": "Mouth Notes, season 2 (docs/MOUTH_NOTES.md).",
+        "topic": "lookalikes",
+        "shape": "mouth_notes",
+        "hook_style": "statement",
+        "tone": "calm",
+        "pillar": "education",
+        "media_type": "reel",
+        "calendar_ref": null,
+        "slug": "2027-02-01_in_mn15",
+        "series": "Mouth Notes",
+        "scene": "furry"
+      },
+      "notes": [
+        "22 Nov 2026: extend(), four posts a week."
+      ]
+    },
+    {
+      "id": "2027-02-03_in_carousel",
+      "date": "2027-02-03",
+      "network": "instagram",
+      "media_type": "carousel",
+      "when": "2027-02-03T16:00:00+00:00",
+      "status": "planned",
+      "idea": {
+        "title": "White patch that wipes away versus one that stays put",
+        "hook": "One white patch rubs off. The other one doesn't. That difference matters.",
+        "brief": "Slide 1 opens on that contrast and asks the reader one question: have you ever noticed a white patch in your mouth and tried to rub it away? Slide 2 explains that oral thrush, a yeast infection, wipes away and often leaves a red sore area underneath. Slide 3 explains that a leukoplakia patch stays put when rubbed. Slide 4 delivers the shared rule: neither can be confirmed by eye, and any patch that persists for two weeks gets checked by a dentist. Closes with oralcheck.org/learn/white-and-red-patches.",
+        "topic": "wipe_test",
+        "shape": "question",
+        "hook_style": "contrast",
+        "tone": "calm",
+        "pillar": "self_exam",
+        "media_type": "carousel",
+        "calendar_ref": null,
+        "slug": "white-patch-that-wipes-away-versus-one-that-stays-put"
+      },
+      "notes": [
+        "22 Nov 2026: extend(), four posts a week."
+      ]
+    },
+    {
+      "id": "2027-02-04_in_mn16",
+      "date": "2027-02-04",
+      "network": "instagram",
+      "media_type": "reel",
+      "when": "2027-02-04T16:00:00+00:00",
+      "status": "planned",
+      "idea": {
+        "title": "Mouth Notes: why your tongue has a map",
+        "hook": "",
+        "brief": "Mouth Notes, season 2 (docs/MOUTH_NOTES.md).",
+        "topic": "lookalikes",
+        "shape": "mouth_notes",
+        "hook_style": "statement",
+        "tone": "calm",
+        "pillar": "education",
+        "media_type": "reel",
+        "calendar_ref": null,
+        "slug": "2027-02-04_in_mn16",
+        "series": "Mouth Notes",
+        "scene": "geotongue"
+      },
+      "notes": [
+        "22 Nov 2026: extend(), four posts a week."
+      ]
+    },
+    {
+      "id": "2027-02-06_in_short",
+      "date": "2027-02-06",
+      "network": "instagram",
+      "media_type": "reel",
+      "when": "2027-02-06T16:00:00+00:00",
+      "status": "planned",
+      "idea": {
+        "title": "How oral cancer risk changes after quitting tobacco",
+        "hook": "Have you used tobacco in the past, even if you stopped years ago?",
+        "brief": "The reel moves through three moments in a quitting timeline, one spoken line and one label per shot. First stop: active use, where tobacco is the single biggest modifiable risk factor for oral cancer. Second stop: a few years after quitting, where risk has already dropped measurably. Third stop: long-term ex-users, where risk approaches that of people who never used tobacco. The closing line is plain: it's never too late for it to count. Closes with oralcheck.org/learn/prevention.",
+        "topic": "quitting",
+        "shape": "tour",
+        "hook_style": "question",
+        "tone": "calm",
+        "pillar": "myth_busting",
+        "media_type": "reel",
+        "calendar_ref": null,
+        "slug": "how-oral-cancer-risk-changes-after-quitting-tobacco"
+      },
+      "notes": [
+        "22 Nov 2026: extend(), four posts a week. Short reel (about 12 s).",
+        "22 Nov 2026: REPLACE before building: overlaps Mouth Notes 28 Jan (quitting curve)."
+      ]
+    },
+    {
+      "id": "2027-02-08_in_mn17",
+      "date": "2027-02-08",
+      "network": "instagram",
+      "media_type": "reel",
+      "when": "2027-02-08T16:00:00+00:00",
+      "status": "planned",
+      "idea": {
+        "title": "Mouth Notes: how a biopsy is taken",
+        "hook": "",
+        "brief": "Mouth Notes, season 2 (docs/MOUTH_NOTES.md).",
+        "topic": "biopsy",
+        "shape": "mouth_notes",
+        "hook_style": "statement",
+        "tone": "calm",
+        "pillar": "education",
+        "media_type": "reel",
+        "calendar_ref": null,
+        "slug": "2027-02-08_in_mn17",
+        "series": "Mouth Notes",
+        "scene": "biopsy3d"
+      },
+      "notes": [
+        "22 Nov 2026: extend(), four posts a week."
+      ]
+    },
+    {
+      "id": "2027-02-10_in_image",
+      "date": "2027-02-10",
+      "network": "instagram",
+      "media_type": "image",
+      "when": "2027-02-10T16:00:00+00:00",
+      "status": "planned",
+      "idea": {
+        "title": "Median oral cancer diagnosis age is 65, with one important caveat",
+        "hook": "The median age at oral cancer diagnosis is 65.",
+        "brief": "The image shows an adult in their mid-forties at a routine health appointment, seated and calm. The caption carries the fact forward without alarm: HPV-related throat cancers are appearing more often in middle-aged adults, so age alone isn't a reason to dismiss a symptom or skip a check. The closing line is direct: if something in your mouth hasn't healed in two weeks, it's worth getting looked at regardless of how old you are. Closes with oralcheck.org/learn/facts.",
+        "topic": "median_age",
+        "shape": "number",
+        "hook_style": "plain",
+        "tone": "calm",
+        "pillar": "stats",
+        "media_type": "image",
+        "calendar_ref": null,
+        "slug": "median-oral-cancer-diagnosis-age-is-65-with-one-important-ca"
+      },
+      "notes": [
+        "22 Nov 2026: extend(), four posts a week."
+      ]
+    },
+    {
+      "id": "2027-02-11_in_mn18",
+      "date": "2027-02-11",
+      "network": "instagram",
+      "media_type": "reel",
+      "when": "2027-02-11T16:00:00+00:00",
+      "status": "planned",
+      "idea": {
+        "title": "Mouth Notes: a white blood cell vs HPV",
+        "hook": "",
+        "brief": "Mouth Notes, season 2 (docs/MOUTH_NOTES.md).",
+        "topic": "hpv_is_common",
+        "shape": "mouth_notes",
+        "hook_style": "statement",
+        "tone": "calm",
+        "pillar": "education",
+        "media_type": "reel",
+        "calendar_ref": null,
+        "slug": "2027-02-11_in_mn18",
+        "series": "Mouth Notes",
+        "scene": "wbc"
+      },
+      "notes": [
+        "22 Nov 2026: extend(), four posts a week."
+      ]
+    },
+    {
+      "id": "2027-02-13_in_short",
+      "date": "2027-02-13",
+      "network": "instagram",
+      "media_type": "reel",
+      "when": "2027-02-13T16:00:00+00:00",
+      "status": "planned",
+      "idea": {
+        "title": "Gum cancer can look exactly like gum disease",
+        "hook": "Sore, receding gums usually mean gum disease. Not always.",
+        "brief": "The reel opens on that correction, then moves into a close look at the gumline: where it sits, what healthy gum tissue looks like, and what warrants attention. The key clue named on screen is teeth that have become loose without a clear dental cause. The final line is calm and specific: gum cancer can mimic gum disease closely enough that people wait, so anything that isn't responding to treatment or doesn't have an explanation should be mentioned to a dentist. Closes with oralcheck.org/learn/signs.",
+        "topic": "gums_mimic",
+        "shape": "close_look",
+        "hook_style": "correction",
+        "tone": "calm",
+        "pillar": "self_exam",
+        "media_type": "reel",
+        "calendar_ref": null,
+        "slug": "gum-cancer-can-look-exactly-like-gum-disease"
+      },
+      "notes": [
+        "22 Nov 2026: extend(), four posts a week. Short reel (about 12 s)."
+      ]
+    },
+    {
+      "id": "2027-02-15_in_mn19",
+      "date": "2027-02-15",
+      "network": "instagram",
+      "media_type": "reel",
+      "when": "2027-02-15T16:00:00+00:00",
+      "status": "planned",
+      "idea": {
+        "title": "Mouth Notes: a year of vaping, what is known and what is not",
+        "hook": "",
+        "brief": "Mouth Notes, season 2 (docs/MOUTH_NOTES.md).",
+        "topic": "tobacco_all_forms",
+        "shape": "mouth_notes",
+        "hook_style": "statement",
+        "tone": "calm",
+        "pillar": "education",
+        "media_type": "reel",
+        "calendar_ref": null,
+        "slug": "2027-02-15_in_mn19",
+        "series": "Mouth Notes",
+        "scene": "vaping"
+      },
+      "notes": [
+        "22 Nov 2026: extend(), four posts a week."
+      ]
+    },
+    {
+      "id": "2027-02-17_in_carousel",
+      "date": "2027-02-17",
+      "network": "instagram",
+      "media_type": "carousel",
+      "when": "2027-02-17T16:00:00+00:00",
+      "status": "planned",
+      "idea": {
+        "title": "What your dentist checks for during a routine visit",
+        "hook": "Open your mouth and tilt toward the light.",
+        "brief": "Slide 1 opens with the instruction and names the six sites a dentist examines: lips, gums, tongue, cheeks, palate, throat. Slide 2 explains that most early-stage oral cancers are found during exactly this kind of routine check, and that the exam takes only a minute or two. Slide 3 notes that people who skip dental care are more likely to have cancer caught at a later stage, when outcomes are worse, and directs viewers to oralcheck.org/learn/prevention to learn what to watch for between visits.",
+        "topic": "dentist_screening",
+        "shape": "self_check",
+        "hook_style": "instruction",
+        "tone": "calm",
+        "pillar": "screener_cta",
+        "media_type": "carousel",
+        "calendar_ref": null,
+        "slug": "what-your-dentist-checks-for-during-a-routine-visit"
+      },
+      "notes": [
+        "22 Nov 2026: extend(), four posts a week.",
+        "22 Nov 2026: REPLACE before building: what the dentist checks (played out)."
+      ]
+    },
+    {
+      "id": "2027-02-18_in_mn20",
+      "date": "2027-02-18",
+      "network": "instagram",
+      "media_type": "reel",
+      "when": "2027-02-18T16:00:00+00:00",
+      "status": "planned",
+      "idea": {
+        "title": "Mouth Notes: how much spit you make, and why dry mouth matters",
+        "hook": "",
+        "brief": "Mouth Notes, season 2 (docs/MOUTH_NOTES.md).",
+        "topic": "monthly_self_exam",
+        "shape": "mouth_notes",
+        "hook_style": "statement",
+        "tone": "calm",
+        "pillar": "education",
+        "media_type": "reel",
+        "calendar_ref": null,
+        "slug": "2027-02-18_in_mn20",
+        "series": "Mouth Notes",
+        "scene": "saliva"
+      },
+      "notes": [
+        "22 Nov 2026: extend(), four posts a week."
+      ]
+    },
+    {
+      "id": "2027-02-20_in_short",
+      "date": "2027-02-20",
+      "network": "instagram",
+      "media_type": "reel",
+      "when": "2027-02-20T16:00:00+00:00",
+      "status": "planned",
+      "idea": {
+        "title": "HPV throat cancer starts where you can't see it",
+        "hook": "HPV-related cancers tend to start at the base of the tongue.",
+        "brief": "The reel opens on a simple anatomical diagram or close-up illustration of the oropharynx, with a voiceover naming the two sites: the base of the tongue and the tonsils. A second beat explains that there is often no visible lesion in a mirror, so self-checks can miss these entirely. The reel closes on the reason this matters: because the area is out of sight, these cancers are frequently caught later than others, and a dentist or clinician is the right person to examine it. CTA directs to oralcheck.org/learn/hpv.",
+        "topic": "throat_hpv_site",
+        "shape": "close_look",
+        "hook_style": "plain",
+        "tone": "calm",
+        "pillar": "hpv_connection",
+        "media_type": "reel",
+        "calendar_ref": null,
+        "slug": "hpv-throat-cancer-starts-where-you-can-t-see-it"
+      },
+      "notes": [
+        "22 Nov 2026: extend(), four posts a week. Short reel (about 12 s)."
+      ]
+    },
+    {
+      "id": "2027-02-22_in_mn21",
+      "date": "2027-02-22",
+      "network": "instagram",
+      "media_type": "reel",
+      "when": "2027-02-22T16:00:00+00:00",
+      "status": "planned",
+      "idea": {
+        "title": "Mouth Notes: why about 15 times is multiplication, not addition",
+        "hook": "",
+        "brief": "Mouth Notes, season 2 (docs/MOUTH_NOTES.md).",
+        "topic": "tobacco_plus_alcohol",
+        "shape": "mouth_notes",
+        "hook_style": "statement",
+        "tone": "calm",
+        "pillar": "education",
+        "media_type": "reel",
+        "calendar_ref": null,
+        "slug": "2027-02-22_in_mn21",
+        "series": "Mouth Notes",
+        "scene": "multiply"
+      },
+      "notes": [
+        "22 Nov 2026: extend(), four posts a week."
+      ]
+    },
+    {
+      "id": "2027-02-24_in_image",
+      "date": "2027-02-24",
+      "network": "instagram",
+      "media_type": "image",
+      "when": "2027-02-24T16:00:00+00:00",
+      "status": "planned",
+      "idea": {
+        "title": "White patch in your mouth that won't scrape off",
+        "hook": "Have you ever noticed a white patch inside your mouth?",
+        "brief": "A single real close-up photo of the inside of a mouth, with the question set in clean type over it. The caption explains that leukoplakia is a white patch that can't be scraped off and isn't explained by anything obvious, and that it's usually painless, which is why it goes unnoticed for months. It notes that most are benign but that a share can become malignant if left untreated, and closes with a prompt to visit oralcheck.org/learn/white-and-red-patches if a patch has been present for more than two weeks.",
+        "topic": "white_patch",
+        "shape": "question",
+        "hook_style": "question",
+        "tone": "calm",
+        "pillar": "self_exam",
+        "media_type": "image",
+        "calendar_ref": null,
+        "slug": "white-patch-in-your-mouth-that-won-t-scrape-off"
+      },
+      "notes": [
+        "22 Nov 2026: extend(), four posts a week."
+      ]
+    },
+    {
+      "id": "2027-02-25_in_mn22",
+      "date": "2027-02-25",
+      "network": "instagram",
+      "media_type": "reel",
+      "when": "2027-02-25T16:00:00+00:00",
+      "status": "planned",
+      "idea": {
+        "title": "Mouth Notes: open slot (pick from the idea bank)",
+        "hook": "",
+        "brief": "Mouth Notes, season 2 (docs/MOUTH_NOTES.md).",
+        "topic": null,
+        "shape": "mouth_notes",
+        "hook_style": "statement",
+        "tone": "calm",
+        "pillar": "education",
+        "media_type": "reel",
+        "calendar_ref": null,
+        "slug": "2027-02-25_in_mn22",
+        "series": "Mouth Notes",
+        "scene": null
+      },
+      "notes": [
+        "22 Nov 2026: extend(), four posts a week."
+      ]
+    },
+    {
+      "id": "2027-02-27_in_short",
+      "date": "2027-02-27",
+      "network": "instagram",
+      "media_type": "reel",
+      "when": "2027-02-27T16:00:00+00:00",
+      "status": "planned",
+      "idea": {
+        "title": "Painless neck lump as a first sign of throat cancer",
+        "hook": "Have you felt a lump in your neck that wasn't there before?",
+        "brief": "The reel uses a tour format with three labeled stops. Stop one: the neck, with a spoken line explaining that a painless lump there is often the first visible sign of HPV-related throat cancer, caused by lymph node involvement. Stop two: the tonsils, noting this is where many of these cancers begin, often without any surface lesion. Stop three: the throat, with the closing line that a swollen neck node lasting more than two weeks without an obvious infection is worth getting checked. CTA points to oralcheck.org/learn/hpv.",
+        "topic": "neck_lump",
+        "shape": "tour",
+        "hook_style": "question",
+        "tone": "calm",
+        "pillar": "hpv_connection",
+        "media_type": "reel",
+        "calendar_ref": null,
+        "slug": "painless-neck-lump-as-a-first-sign-of-throat-cancer"
+      },
+      "notes": [
+        "22 Nov 2026: extend(), four posts a week. Short reel (about 12 s)."
+      ]
+    },
+    {
+      "id": "2027-03-01_in_mn23",
+      "date": "2027-03-01",
+      "network": "instagram",
+      "media_type": "reel",
+      "when": "2027-03-01T16:00:00+00:00",
+      "status": "planned",
+      "idea": {
+        "title": "Mouth Notes: open slot (pick from the idea bank)",
+        "hook": "",
+        "brief": "Mouth Notes, season 2 (docs/MOUTH_NOTES.md).",
+        "topic": null,
+        "shape": "mouth_notes",
+        "hook_style": "statement",
+        "tone": "calm",
+        "pillar": "education",
+        "media_type": "reel",
+        "calendar_ref": null,
+        "slug": "2027-03-01_in_mn23",
+        "series": "Mouth Notes",
+        "scene": null
+      },
+      "notes": [
+        "22 Nov 2026: extend(), four posts a week."
+      ]
+    },
+    {
+      "id": "2027-03-03_in_carousel",
+      "date": "2027-03-03",
+      "network": "instagram",
+      "media_type": "carousel",
+      "when": "2027-03-03T16:00:00+00:00",
+      "status": "planned",
+      "idea": {
+        "title": "HPV overtook tobacco as the top cause of throat cancer",
+        "hook": "HPV is now the leading cause of oropharyngeal cancers in the US.",
+        "brief": "Slide 1 carries the headline figure: HPV-positive oropharyngeal cancers rose 225% from 1988 to 2004, while HPV-negative ones fell by half (Chaturvedi et al., 2011). Slide 2 adds the geographic precision: this shift applies to the oropharynx, the tonsils, base of tongue and back of the throat, and tobacco remains the dominant driver of cancers in the mouth itself. Slide 3 addresses what to do with this information, directing viewers to oralcheck.org/learn/hpv to understand their own risk factors and to take the free screener.",
+        "topic": "hpv_overtook_tobacco",
+        "shape": "by_the_numbers",
+        "hook_style": "plain",
+        "tone": "calm",
+        "pillar": "hpv_connection",
+        "media_type": "carousel",
+        "calendar_ref": null,
+        "slug": "hpv-overtook-tobacco-as-the-top-cause-of-throat-cancer"
+      },
+      "notes": [
+        "22 Nov 2026: extend(), four posts a week."
+      ]
+    },
+    {
+      "id": "2027-03-04_in_mn24",
+      "date": "2027-03-04",
+      "network": "instagram",
+      "media_type": "reel",
+      "when": "2027-03-04T16:00:00+00:00",
+      "status": "planned",
+      "idea": {
+        "title": "Mouth Notes: open slot (pick from the idea bank)",
+        "hook": "",
+        "brief": "Mouth Notes, season 2 (docs/MOUTH_NOTES.md).",
+        "topic": null,
+        "shape": "mouth_notes",
+        "hook_style": "statement",
+        "tone": "calm",
+        "pillar": "education",
+        "media_type": "reel",
+        "calendar_ref": null,
+        "slug": "2027-03-04_in_mn24",
+        "series": "Mouth Notes",
+        "scene": null
+      },
+      "notes": [
+        "22 Nov 2026: extend(), four posts a week."
+      ]
+    },
+    {
+      "id": "2027-03-06_in_short",
+      "date": "2027-03-06",
+      "network": "instagram",
+      "media_type": "reel",
+      "when": "2027-03-06T16:00:00+00:00",
+      "status": "planned",
+      "idea": {
+        "title": "Speckled red-and-white patch carries the highest risk",
+        "hook": "A red patch and a white patch don't carry the same risk.",
+        "brief": "The reel opens on that contrast and then focuses on the one type that sits above both: the mixed red-and-white speckled patch, which carries the highest malignant potential of any patch type. A second beat introduces the single most important physical test: if it doesn't rub or scrape off, it needs professional assessment. The reel closes by naming the places these patches most often appear, the tongue, the floor of the mouth and the inside of the cheeks, and directs viewers to oralcheck.org/learn/white-and-red-patches.",
+        "topic": "speckled_patch",
+        "shape": "what_to_watch",
+        "hook_style": "contrast",
+        "tone": "calm",
+        "pillar": "self_exam",
+        "media_type": "reel",
+        "calendar_ref": null,
+        "slug": "speckled-red-and-white-patch-carries-the-highest-risk"
+      },
+      "notes": [
+        "22 Nov 2026: extend(), four posts a week. Short reel (about 12 s)."
+      ]
+    },
+    {
+      "id": "2027-03-08_in_mn25",
+      "date": "2027-03-08",
+      "network": "instagram",
+      "media_type": "reel",
+      "when": "2027-03-08T16:00:00+00:00",
+      "status": "planned",
+      "idea": {
+        "title": "Mouth Notes: open slot (pick from the idea bank)",
+        "hook": "",
+        "brief": "Mouth Notes, season 2 (docs/MOUTH_NOTES.md).",
+        "topic": null,
+        "shape": "mouth_notes",
+        "hook_style": "statement",
+        "tone": "calm",
+        "pillar": "education",
+        "media_type": "reel",
+        "calendar_ref": null,
+        "slug": "2027-03-08_in_mn25",
+        "series": "Mouth Notes",
+        "scene": null
+      },
+      "notes": [
+        "22 Nov 2026: extend(), four posts a week."
+      ]
+    },
+    {
+      "id": "2027-03-10_in_image",
+      "date": "2027-03-10",
+      "network": "instagram",
+      "media_type": "image",
+      "when": "2027-03-10T16:00:00+00:00",
+      "status": "planned",
+      "idea": {
+        "title": "Irregular edges and a sore that bleeds when touched",
+        "hook": "Some warning signs are about texture and shape, not colour.",
+        "brief": "A single real close-up photo anchors the post, showing the inside of a mouth in a way that makes texture visible. The caption names three physical signs in plain language: irregular, raised or hardened edges on a sore; a sore that bleeds easily when touched; and a new lump or thickening in the cheek, tongue, gum or floor of the mouth that feels firm, like a pea under the skin. It closes by directing viewers to oralcheck.org/learn/signs if any of these has been present for two weeks or more.",
+        "topic": "edges_and_bleeding",
+        "shape": "statement",
+        "hook_style": "plain",
+        "tone": "calm",
+        "pillar": "self_exam",
+        "media_type": "image",
+        "calendar_ref": null,
+        "slug": "irregular-edges-and-a-sore-that-bleeds-when-touched"
+      },
+      "notes": [
+        "22 Nov 2026: extend(), four posts a week."
+      ]
+    },
+    {
+      "id": "2027-03-11_in_mn26",
+      "date": "2027-03-11",
+      "network": "instagram",
+      "media_type": "reel",
+      "when": "2027-03-11T16:00:00+00:00",
+      "status": "planned",
+      "idea": {
+        "title": "Mouth Notes: open slot (pick from the idea bank)",
+        "hook": "",
+        "brief": "Mouth Notes, season 2 (docs/MOUTH_NOTES.md).",
+        "topic": null,
+        "shape": "mouth_notes",
+        "hook_style": "statement",
+        "tone": "calm",
+        "pillar": "education",
+        "media_type": "reel",
+        "calendar_ref": null,
+        "slug": "2027-03-11_in_mn26",
+        "series": "Mouth Notes",
+        "scene": null
+      },
+      "notes": [
+        "22 Nov 2026: extend(), four posts a week."
+      ]
+    },
+    {
+      "id": "2027-03-13_in_short",
+      "date": "2027-03-13",
+      "network": "instagram",
+      "media_type": "reel",
+      "when": "2027-03-13T16:00:00+00:00",
+      "status": "planned",
+      "idea": {
+        "title": "No pain doesn't mean no problem in early oral cancer",
+        "hook": "You notice a small pale patch on the inside of your cheek.",
+        "brief": "The reel opens in second person: the patch has been there a few weeks, it doesn't hurt, so it hasn't felt urgent. A second beat names the warning signs that most often appear without pain: red patches, white patches and early ulcers, and walks through the places they tend to show up, the tongue, the cheeks, the floor of the mouth. The closing beat explains that pain, when it does arrive, often signals nerve involvement or ulceration and a later stage, which is exactly why the two-week rule exists. CTA points to oralcheck.org/learn/signs.",
+        "topic": "painless",
+        "shape": "what_to_watch",
+        "hook_style": "scenario",
+        "tone": "calm",
+        "pillar": "myth_busting",
+        "media_type": "reel",
+        "calendar_ref": null,
+        "slug": "no-pain-doesn-t-mean-no-problem-in-early-oral-cancer"
+      },
+      "notes": [
+        "22 Nov 2026: extend(), four posts a week. Short reel (about 12 s)."
+      ]
+    },
+    {
+      "id": "2027-03-15_in_mn27",
+      "date": "2027-03-15",
+      "network": "instagram",
+      "media_type": "reel",
+      "when": "2027-03-15T15:00:00+00:00",
+      "status": "planned",
+      "idea": {
+        "title": "Mouth Notes: open slot (pick from the idea bank)",
+        "hook": "",
+        "brief": "Mouth Notes, season 2 (docs/MOUTH_NOTES.md).",
+        "topic": null,
+        "shape": "mouth_notes",
+        "hook_style": "statement",
+        "tone": "calm",
+        "pillar": "education",
+        "media_type": "reel",
+        "calendar_ref": null,
+        "slug": "2027-03-15_in_mn27",
+        "series": "Mouth Notes",
+        "scene": null
+      },
+      "notes": [
+        "22 Nov 2026: extend(), four posts a week."
+      ]
+    },
+    {
+      "id": "2027-03-17_in_carousel",
+      "date": "2027-03-17",
+      "network": "instagram",
+      "media_type": "carousel",
+      "when": "2027-03-17T15:00:00+00:00",
+      "status": "planned",
+      "idea": {
+        "title": "How tobacco and alcohol multiply risk when used together",
+        "hook": "Press one finger to your lower lip and hold it there.",
+        "brief": "Slide 1 uses that opening gesture to anchor the reader in the mouth itself, then introduces the core fact: tobacco and alcohol together don't add their risks, they multiply them. Slide 2 puts the specific finding in frame: people who smoke more than a pack a day and drink three or more drinks a day carry about 15 times the oral cancer risk of people who do neither, from a pooled analysis of 17 studies (Hashibe 2009), and explains that alcohol may help tobacco carcinogens cross into the cells lining the mouth. Slide 3 closes with the most actionable point: cutting back on either one, not necessarily both, significantly lowers risk, with a CTA to oralcheck.org/learn/risk-factors.",
+        "topic": "tobacco_plus_alcohol",
+        "shape": "compare",
+        "hook_style": "instruction",
+        "tone": "calm",
+        "pillar": "myth_busting",
+        "media_type": "carousel",
+        "calendar_ref": null,
+        "slug": "how-tobacco-and-alcohol-multiply-risk-when-used-together"
+      },
+      "notes": [
+        "22 Nov 2026: extend(), four posts a week."
+      ]
+    },
+    {
+      "id": "2027-03-18_in_mn28",
+      "date": "2027-03-18",
+      "network": "instagram",
+      "media_type": "reel",
+      "when": "2027-03-18T15:00:00+00:00",
+      "status": "planned",
+      "idea": {
+        "title": "Mouth Notes: open slot (pick from the idea bank)",
+        "hook": "",
+        "brief": "Mouth Notes, season 2 (docs/MOUTH_NOTES.md).",
+        "topic": null,
+        "shape": "mouth_notes",
+        "hook_style": "statement",
+        "tone": "calm",
+        "pillar": "education",
+        "media_type": "reel",
+        "calendar_ref": null,
+        "slug": "2027-03-18_in_mn28",
+        "series": "Mouth Notes",
+        "scene": null
+      },
+      "notes": [
+        "22 Nov 2026: extend(), four posts a week."
+      ]
+    },
+    {
+      "id": "2027-03-20_in_short",
+      "date": "2027-03-20",
+      "network": "instagram",
+      "media_type": "reel",
+      "when": "2027-03-20T15:00:00+00:00",
+      "status": "planned",
+      "idea": {
+        "title": "Betel quid raises oral cancer risk even without tobacco",
+        "hook": "Paan without tobacco is safer for your mouth. It isn't.",
+        "brief": "The reel opens by naming that belief plainly and correcting it: betel quid, areca nut, paan and gutka are all classified as Group 1 carcinogens for oral cancer by the WHO's cancer agency (IARC), regardless of whether tobacco is added. A tour of three labeled sites follows: the cheek lining where the quid typically sits, the floor of the mouth and the gums, each with a spoken line about what changes to look for. The reel closes by noting that the OralCheck screener asks about betel quid use specifically for this reason, and directs viewers to oralcheck.org/screener.",
+        "topic": "betel_quid",
+        "shape": "tour",
+        "hook_style": "correction",
+        "tone": "calm",
+        "pillar": "myth_busting",
+        "media_type": "reel",
+        "calendar_ref": null,
+        "slug": "betel-quid-raises-oral-cancer-risk-even-without-tobacco"
+      },
+      "notes": [
+        "22 Nov 2026: extend(), four posts a week. Short reel (about 12 s)."
+      ]
+    },
+    {
+      "id": "2027-03-22_in_mn29",
+      "date": "2027-03-22",
+      "network": "instagram",
+      "media_type": "reel",
+      "when": "2027-03-22T15:00:00+00:00",
+      "status": "planned",
+      "idea": {
+        "title": "Mouth Notes: open slot (pick from the idea bank)",
+        "hook": "",
+        "brief": "Mouth Notes, season 2 (docs/MOUTH_NOTES.md).",
+        "topic": null,
+        "shape": "mouth_notes",
+        "hook_style": "statement",
+        "tone": "calm",
+        "pillar": "education",
+        "media_type": "reel",
+        "calendar_ref": null,
+        "slug": "2027-03-22_in_mn29",
+        "series": "Mouth Notes",
+        "scene": null
+      },
+      "notes": [
+        "22 Nov 2026: extend(), four posts a week."
+      ]
+    },
+    {
+      "id": "2027-03-24_in_image",
+      "date": "2027-03-24",
+      "network": "instagram",
+      "media_type": "image",
+      "when": "2027-03-24T15:00:00+00:00",
+      "status": "planned",
+      "idea": {
+        "title": "Where to find low-cost oral cancer screening near you",
+        "hook": "Type your zip code into the search bar at oralcheck.org/find-care.",
+        "brief": "A real photo of a community health clinic or dental school setting anchors the post, showing a patient in a chair rather than a clinical setup. The caption opens by naming the instruction directly, then explains what comes back: HRSA-funded community health centers that charge on a sliding scale, dental schools offering lower-cost care, and free clinics in many areas. It closes by affirming that not having a dentist or insurance isn't a reason to skip a check, and that the tool at oralcheck.org/find-care is free to use.",
+        "topic": "low_cost_care",
+        "shape": "question",
+        "hook_style": "instruction",
+        "tone": "calm",
+        "pillar": "screener_cta",
+        "media_type": "image",
+        "calendar_ref": null,
+        "slug": "where-to-find-low-cost-oral-cancer-screening-near-you"
+      },
+      "notes": [
+        "22 Nov 2026: extend(), four posts a week."
+      ]
+    },
+    {
+      "id": "2027-03-25_in_mn30",
+      "date": "2027-03-25",
+      "network": "instagram",
+      "media_type": "reel",
+      "when": "2027-03-25T15:00:00+00:00",
+      "status": "planned",
+      "idea": {
+        "title": "Mouth Notes: open slot (pick from the idea bank)",
+        "hook": "",
+        "brief": "Mouth Notes, season 2 (docs/MOUTH_NOTES.md).",
+        "topic": null,
+        "shape": "mouth_notes",
+        "hook_style": "statement",
+        "tone": "calm",
+        "pillar": "education",
+        "media_type": "reel",
+        "calendar_ref": null,
+        "slug": "2027-03-25_in_mn30",
+        "series": "Mouth Notes",
+        "scene": null
+      },
+      "notes": [
+        "22 Nov 2026: extend(), four posts a week."
+      ]
+    },
+    {
+      "id": "2027-03-27_in_short",
+      "date": "2027-03-27",
+      "network": "instagram",
+      "media_type": "reel",
+      "when": "2027-03-27T15:00:00+00:00",
+      "status": "planned",
+      "idea": {
+        "title": "60,480 diagnoses and 13,150 deaths: the 2026 US numbers",
+        "hook": "Put your tongue to the roof of your mouth and hold it.",
+        "brief": "The reel opens with that physical anchor, then moves through a tour of four labeled sites with a figure attached to each stop to build toward the full picture. Stop one: the lips and oral cavity, described as the most visible sites. Stop two: the base of the tongue and tonsils, the oropharynx. Stop three: the throat and pharynx. Stop four: the full count, 60,480 Americans expected to be diagnosed in 2026 and about 13,150 expected to die of it, per SEER estimates. The closing line is plain: knowing what to look for is the first step, and the OralCheck screener at oralcheck.org/learn/facts is free.",
+        "topic": "yearly_numbers",
+        "shape": "tour",
+        "hook_style": "instruction",
+        "tone": "calm",
+        "pillar": "stats",
+        "media_type": "reel",
+        "calendar_ref": null,
+        "slug": "60-480-diagnoses-and-13-150-deaths-the-2026-us-numbers"
+      },
+      "notes": [
+        "22 Nov 2026: extend(), four posts a week. Short reel (about 12 s).",
+        "22 Nov 2026: REPLACE before building: 2026 SEER figures will be stale by March 2027: use the 2027 estimates."
       ]
     }
   ]

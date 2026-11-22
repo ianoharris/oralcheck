@@ -189,6 +189,88 @@ def plan(start: date, weeks: int) -> dict:
     return cal
 
 
+# Mouth Notes episodes still to be built, in order (docs/MOUTH_NOTES.md, season 2).
+# extend() puts them on Mondays and Thursdays; Wednesday gets a carousel or image and
+# Saturday a short reel, both written from the topic rotation.
+MN_QUEUE = [
+    ("vlp", "Mouth Notes: the HPV vaccine is a virus with nothing inside", "hpv_vaccine"),
+    ("quit", "Mouth Notes: your mouth after you quit, the curve", "quitting"),
+    ("furry", "Mouth Notes: why does your tongue look furry?", "lookalikes"),
+    ("geotongue", "Mouth Notes: why your tongue has a map", "lookalikes"),
+    ("biopsy3d", "Mouth Notes: how a biopsy is taken", "biopsy"),
+    ("wbc", "Mouth Notes: a white blood cell vs HPV", "hpv_is_common"),
+    ("vaping", "Mouth Notes: a year of vaping, what is known and what is not", "tobacco_all_forms"),
+    ("saliva", "Mouth Notes: how much spit you make, and why dry mouth matters", "monthly_self_exam"),
+    ("multiply", "Mouth Notes: why about 15 times is multiplication, not addition", "tobacco_plus_alcohol"),
+]
+
+
+def extend(start: date, weeks: int) -> int:
+    """Append `weeks` weeks at four Instagram posts a week (Ian, 22 Nov 2026), without
+    touching existing entries: Mouth Notes Monday and Thursday (MN_QUEUE, then open
+    Mouth Notes slots), a carousel or image Wednesday, a short reel Saturday. Wednesday
+    and Saturday ideas come from the topic rotation and the idea writer, as plan() does."""
+    import ideas
+    import oralcheck_agent as A
+    import topics
+
+    cal = load()
+    have = {e["id"] for e in cal["entries"]}
+    ig_days = {e["date"] for e in cal["entries"] if e["network"] == "instagram" and e["status"] != "cut"}
+    monday = start - timedelta(days=start.weekday())
+    mn_used = {e["idea"].get("scene") for e in cal["entries"] if e["idea"].get("series") == "Mouth Notes"}
+    queue = [q for q in MN_QUEUE if q[0] not in mn_used]
+    n_mn = sum(1 for e in cal["entries"] if e["idea"].get("series") == "Mouth Notes")
+    slots, written_slots = [], []
+    for w in range(weeks):
+        wk = monday + timedelta(weeks=w)
+        for d in (0, 3):
+            day = wk + timedelta(days=d)
+            if day.isoformat() in ig_days:
+                continue
+            n_mn += 1
+            scene, title, topic = queue.pop(0) if queue else (None, "Mouth Notes: open slot (pick from the idea bank)", None)
+            eid = f"{day.isoformat()}_in_mn{n_mn:02d}"
+            if eid in have:
+                continue
+            cal["entries"].append({"id": eid, "date": day.isoformat(), "network": "instagram", "media_type": "reel",
+                "when": _at(day, IG_HOUR_CT), "status": "planned",
+                "idea": {"title": title, "hook": "", "brief": "Mouth Notes, season 2 (docs/MOUTH_NOTES.md).", "topic": topic,
+                         "shape": "mouth_notes", "hook_style": "statement", "tone": "calm", "pillar": "education",
+                         "media_type": "reel", "calendar_ref": None, "slug": eid, "series": "Mouth Notes", "scene": scene},
+                "notes": ["22 Nov 2026: extend(), four posts a week."]})
+        wed = wk + timedelta(days=2)
+        sat = wk + timedelta(days=5)
+        if wed.isoformat() not in ig_days:
+            slots.append({"date": wed.isoformat(), "network": "instagram", "media_type": "carousel" if w % 2 == 0 else "image", "when": _at(wed, IG_HOUR_CT)})
+        if sat.isoformat() not in ig_days:
+            slots.append({"date": sat.isoformat(), "network": "instagram", "media_type": "reel", "when": _at(sat, IG_HOUR_CT), "short": True})
+    ledger = ideas.load_ledger()
+    assigned = topics.plan_slots(ledger, [s["media_type"] for s in slots])
+    common = dict(api_key=A.ANTHROPIC_API_KEY, model=A.CONTENT_MODEL, system_prompt=A.SYSTEM_PROMPT,
+                  pillar_briefs=A.PILLAR_BRIEFS, ledger=ledger)
+    got = ideas.generate_ideas(len(assigned), calendar_events=[], slots=assigned, **common)
+    by_topic = {g["topic"]: g for g in got}
+    added = 0
+    for s_, a in zip(slots, assigned):
+        idea = by_topic.get(a["topic"])
+        eid = f"{s_['date']}_in_{'short' if s_.get('short') else s_['media_type']}"
+        if not idea or eid in have:
+            continue
+        cal["entries"].append({"id": eid, "date": s_["date"], "network": "instagram", "media_type": s_["media_type"], "when": s_["when"],
+            "status": "planned", "idea": {k: idea.get(k) for k in ("title", "hook", "brief", "topic", "shape", "hook_style",
+                                                                    "tone", "pillar", "media_type", "calendar_ref", "slug")},
+            "notes": ["22 Nov 2026: extend(), four posts a week." + (" Short reel (about 12 s)." if s_.get("short") else "")]})
+        written_slots.append({**idea, "media_type": s_["media_type"]}); added += 1
+    cal["entries"].sort(key=lambda e: e["when"])
+    save(cal)
+    ledger = ideas.record_suggested(ledger, written_slots)
+    for rec in ledger["ideas"][-len(written_slots):]:
+        rec["status"] = "selected"
+    ideas.save_ledger(ledger)
+    return added
+
+
 def build(only: str | None = None) -> None:
     """Render every planned post. Resumable: built posts are skipped."""
     import os
@@ -492,6 +574,7 @@ def main() -> None:
     pu = sub.add_parser("publish"); pu.add_argument("--dry-run", action="store_true")
     sub.add_parser("review")
     sub.add_parser("upload")
+    ex = sub.add_parser("extend"); ex.add_argument("--start", required=True); ex.add_argument("--weeks", type=int, default=9)
     args = ap.parse_args()
     if args.cmd == "plan":
         cal = plan(date.fromisoformat(args.start), args.weeks)
@@ -503,6 +586,8 @@ def main() -> None:
         print(review_page())
     elif args.cmd == "upload":
         print(f"uploaded {upload_approved()} post(s)")
+    elif args.cmd == "extend":
+        print(f"added {extend(date.fromisoformat(args.start), args.weeks)} Wednesday and Saturday post(s)")
     elif args.cmd == "publish":
         print(publish(dry_run=args.dry_run))
     else:
