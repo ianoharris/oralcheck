@@ -2369,7 +2369,7 @@
       "network": "instagram",
       "media_type": "reel",
       "when": "2027-01-25T16:00:00+00:00",
-      "status": "built",
+      "status": "approved",
       "idea": {
         "title": "Mouth Notes: the HPV vaccine is a virus with nothing inside",
         "hook": "The HPV vaccine is a virus with nothing inside.",
@@ -2387,7 +2387,8 @@
       },
       "notes": [
         "22 Nov 2026: extend(), four posts a week.",
-        "22 Nov 2026: built (Blender lane prototype)."
+        "22 Nov 2026: built (Blender lane prototype).",
+        "23 Nov 2026: approved in the Studio."
       ],
       "folder": "2027-01-25_in_mn13",
       "version": 1,
@@ -2404,7 +2405,8 @@
       "files": [
         "reel.mp4"
       ],
-      "review_note": ""
+      "review_note": "",
+      "approved_at": "2026-11-23T18:00:09.468892+00:00"
     },
     {
       "id": "2027-01-27_in_image",
