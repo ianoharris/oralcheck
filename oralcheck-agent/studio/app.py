@@ -63,7 +63,15 @@ for d in (DATA, PHOTOS, THUMBS, KEYS):
 
 LOCK = threading.RLock()          # one git operation at a time
 STATE = {"last_pull": None, "pull_error": None, "ideas_run": None, "insights_run": None}
-app = FastAPI(title="OralCheck Studio")
+from contextlib import asynccontextmanager
+
+
+@asynccontextmanager
+async def _life(_app):
+    threading.Thread(target=_puller, daemon=True).start()   # pulls every two minutes
+    yield
+
+app = FastAPI(title="OralCheck Studio", lifespan=_life)
 
 
 # ---- git ----------------------------------------------------------------------------------
@@ -625,9 +633,6 @@ def insights_refresh():
     return {"ok": True}
 
 
-@app.on_event("startup")
-def _start() -> None:
-    threading.Thread(target=_puller, daemon=True).start()
 
 
 if __name__ == "__main__":

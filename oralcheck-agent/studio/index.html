@@ -199,20 +199,21 @@ function askBox(e,a){
     <div class="drop" data-drop="1" data-eid="${esc(e.id)}" data-aid="${esc(a.id)}">Drop photos here, paste (⌘V), or tap to choose</div>
     ${files.length?`<div class="thumbs">${files.map(n=>`<figure><img src="/photo/${encodeURIComponent(e.id)}/${encodeURIComponent(n)}" alt=""><button title="Remove" data-rm="${esc(n)}" data-eid="${esc(e.id)}" data-aid="${esc(a.id)}">×</button></figure>`).join("")}</div>`:""}</div>`;
 }
-function stats(i){
-  if(!i) return `<p class="hook">No numbers yet. Press Refresh numbers.</p>`;
+function stats(i, e){
+  if(!i) return `<p class="hook">${e.network!=="instagram"?"LinkedIn numbers are not tracked here yet.":S.insights_at?"No match in the latest Instagram numbers.":"No numbers yet. Press Refresh numbers."}</p>`;
   const sec = v => v==null?"–":(v/1000).toFixed(1)+"s", pct = v => v==null?"–":(v>1? v: v*100).toFixed(0)+"%", n = v => v==null?"–":Number(v).toLocaleString();
   const cells=[["Views",n(i.views)],["Reach",n(i.reach)],["Avg watch",sec(i.ig_reels_avg_watch_time)],["Skipped",pct(i.reels_skip_rate)],["Shares",n(i.shares)],["Saves",n(i.saved)],["Follows",n(i.follows)]];
   return `<div class="stats">${cells.filter(c=>c[1]!=="–"||["Views","Shares","Saves"].includes(c[0])).map(([k,v])=>`<div class="stat"><b>${v}</b><span>${k}</span></div>`).join("")}</div>${i.permalink?`<a href="${esc(i.permalink)}" target="_blank" rel="noopener">Open on Instagram</a>`:""}`;
 }
 function card(e){
   const wants=e.needs.length>0;
-  const chips=[`<span class="chip ${e.status}">${e.status==="built"?"to review":e.status}</span>`, e.series?`<span class="chip series">${esc(e.series)}</span>`:""].join("");
+  const shown = e.lane==="posted" ? "posted" : e.status==="built" ? "to review" : e.status;
+  const chips=[`<span class="chip ${e.status}">${shown}</span>`, e.series?`<span class="chip series">${esc(e.series)}</span>`:""].join("");
   let body=`<div class="meta">${chips}<span>${esc(e.when_ct)}</span><span>· ${esc(e.media_type)} · ${esc(e.network)}</span>${e.version>1?`<span>· v${e.version}</span>`:""}</div>
     <h3>${esc(e.title)}</h3>${e.hook?`<p class="hook">${esc(e.hook)}</p>`:""}`;
   if(e.lane==="redo") body+=`<div class="note"><b>Waiting for Claude.</b> ${esc(e.review_note||"")} <span style="color:var(--muted)">· sent ${ago(e.redo_at)}</span></div>`;
   if(e.lane==="cut") body+=`<div class="note">${esc(e.cut_reason||"Cut")}</div>`;
-  if(e.lane==="posted") body+=stats(e.insights);
+  if(e.lane==="posted") body+=stats(e.insights, e);
   if(e.asks.length && e.lane==="upcoming") body+=`<div class="needs">${e.asks.map(a=>askBox(e,a)).join("")}</div>`;
   if(e.caption) body+=`<details><summary>Caption</summary><pre>${esc(e.caption)}</pre></details>`;
   const acts=[];
