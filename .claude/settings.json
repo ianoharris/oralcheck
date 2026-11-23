@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd \"$CLAUDE_PROJECT_DIR/oralcheck-agent\" && echo 'OralCheck Studio queue (redos, answers and photos Ian left in the Studio; photos arrive with: python3 post_calendar.py studio-sync):' && python3 post_calendar.py queue --remote 2>/dev/null || true",
+            "timeout": 30
+          }
+        ]
+      }
+    ]
+  }
+}

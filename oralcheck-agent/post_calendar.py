@@ -283,6 +283,8 @@ def build(only: str | None = None) -> None:
             continue
         if e["status"] not in ("planned", "redo"):
             continue
+        if e["idea"].get("shape") == "mouth_notes":
+            continue          # animated episodes are scripted and rendered with anim.py, in a Claude session
         log.info("Building %s: %s", e["id"], e["idea"]["title"])
         idea = dict(e["idea"])
         if e["status"] == "redo" and e.get("review_note"):
@@ -305,6 +307,60 @@ def build(only: str | None = None) -> None:
         e.pop("error", None)
         save(cal)
         log.info("Built %s", e["id"])
+    studio_sync(quiet=True)
+
+
+# ---- OralCheck Studio (the posting app on the PC hub, oralcheck-agent/studio/) ----------
+STUDIO_HOST = "ianoharris@ianspc"
+STUDIO_HOME = "oralcheck-studio"
+PHOTO_INBOX = HERE / "assets" / "photos_from_ian" / "studio"   # gitignored with its parent
+
+
+def studio_sync(quiet: bool = False) -> bool:
+    """Copy built media to the Studio, and the photos Ian dropped in back to the Mac.
+
+    Media and photos never go through git (the repo is public). Best effort: the
+    PC may be asleep, and a build must not fail over it."""
+    import subprocess
+    cmds = [
+        ["rsync", "-az", "--timeout=30", "--exclude=calendar.json", "--exclude=review/", "--exclude=*__*",
+         f"{CAL_DIR}/", f"{STUDIO_HOST}:{STUDIO_HOME}/repo/oralcheck-agent/calendar/"],
+        ["rsync", "-az", "--timeout=30", f"{STUDIO_HOST}:{STUDIO_HOME}/photos/", f"{PHOTO_INBOX}/"],
+    ]
+    PHOTO_INBOX.mkdir(parents=True, exist_ok=True)
+    ok = True
+    for c in cmds:
+        r = subprocess.run(c, capture_output=True, text=True)
+        if r.returncode != 0:
+            ok = False
+            if not quiet:
+                log.warning("Studio sync step failed (%s): %s", c[-1], r.stderr.strip()[-300:])
+    return ok
+
+
+def studio_queue(remote: bool = False) -> str:
+    """What Ian has asked for in the Studio: redos, answered questions, new photos.
+    remote=True reads GitHub's copy (git fetch, no merge), for the session-start hook."""
+    import subprocess
+    if remote:
+        subprocess.run(["git", "fetch", "-q", "origin", "master"], cwd=HERE, capture_output=True, timeout=20)
+        r = subprocess.run(["git", "show", "origin/master:oralcheck-agent/calendar/calendar.json"], cwd=HERE,
+                           capture_output=True, text=True)
+        cal = json.loads(r.stdout) if r.returncode == 0 else load()
+    else:
+        cal = load()
+    out = []
+    redo = [e for e in cal["entries"] if e["status"] == "redo"]
+    for e in redo:
+        out.append(f"REDO  {e['date']}  {e['idea']['title']}\n      note: {e.get('review_note') or '(none)'}")
+    for e in cal["entries"]:
+        for a in e.get("asks", []):
+            if a.get("answer") is not None and not a.get("handled"):
+                out.append(f"ANSWER  {e['date']}  {e['idea']['title']}\n      {a['q']} -> {a['answer']}")
+            if a.get("kind") == "photo" and a.get("files") and not a.get("handled"):
+                out.append(f"PHOTOS  {e['date']}  {e['idea']['title']}\n      {a['q']}: {len(a['files'])} file(s) in "
+                           f"{PHOTO_INBOX.relative_to(HERE)}/{e['id']}/")
+    return "\n".join(out) if out else "Studio queue is empty."
 
 
 def _gh(*args: str) -> None:
@@ -575,7 +631,12 @@ def main() -> None:
     sub.add_parser("review")
     sub.add_parser("upload")
     ex = sub.add_parser("extend"); ex.add_argument("--start", required=True); ex.add_argument("--weeks", type=int, default=9)
+    sub.add_parser("studio-sync"); q = sub.add_parser("queue"); q.add_argument("--remote", action="store_true")
     args = ap.parse_args()
+    if args.cmd == "studio-sync":
+        print("synced" if studio_sync() else "sync incomplete (see warnings)"); return
+    if args.cmd == "queue":
+        print(studio_queue(args.remote)); return
     if args.cmd == "plan":
         cal = plan(date.fromisoformat(args.start), args.weeks)
         for e in cal["entries"]:

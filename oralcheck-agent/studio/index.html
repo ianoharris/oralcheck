@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>OralCheck Studio</title>
+<meta name="theme-color" content="#f4f1ea">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Source+Sans+3:wght@400;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+:root{
+  --paper:#f4f1ea; --card:#fbf9f5; --ink:#14201f; --soft:#3f5453; --muted:#7c8b8a; --hair:#ded7c8;
+  --teal:#0d7377; --teal-soft:#e0f0f0; --coral:#c9502c; --coral-soft:#f7e3dc; --done:#5c7a5e; --done-soft:#e6ede4;
+  --shadow:0 1px 2px rgba(20,32,31,.05),0 10px 28px -14px rgba(20,32,31,.18);
+}
+@media (prefers-color-scheme:dark){:root{
+  --paper:#0d1a1b; --card:#132526; --ink:#e8e4de; --soft:#b8cfd1; --muted:#6d8f91; --hair:#21393b;
+  --teal:#4fc3c7; --teal-soft:#10302f; --coral:#f08163; --coral-soft:#33201c; --done:#8fb78f; --done-soft:#16261a;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 28px -14px rgba(0,0,0,.6);
+}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.5 "Source Sans 3",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+button,input,textarea,select{font:inherit;color:inherit}
+a{color:var(--teal);font-weight:600;text-decoration:none}
+header{padding:22px clamp(16px,4vw,40px) 10px;display:flex;flex-wrap:wrap;gap:10px 20px;align-items:flex-end;justify-content:space-between;max-width:1180px;margin:0 auto}
+h1{font:400 clamp(28px,4vw,38px)/1.05 "DM Serif Display",Georgia,serif;margin:0}
+h1 span{color:var(--teal)}
+.sync{display:flex;gap:8px;align-items:center;font-size:13px;color:var(--muted);flex-wrap:wrap}
+.sync .dot{width:8px;height:8px;border-radius:50%;background:var(--done)}
+.sync .dot.bad{background:var(--coral)}
+nav{position:sticky;top:0;z-index:5;background:color-mix(in oklab,var(--paper) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--hair)}
+nav .in{max-width:1180px;margin:0 auto;padding:0 clamp(16px,4vw,40px);display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
+nav button{border:0;background:none;padding:12px 12px 11px;font-weight:600;color:var(--muted);border-bottom:2px solid transparent;white-space:nowrap;cursor:pointer}
+nav button.on{color:var(--ink);border-bottom-color:var(--teal)}
+nav .n{display:inline-block;min-width:20px;padding:0 6px;margin-left:6px;border-radius:10px;background:var(--hair);color:var(--soft);font-size:12px;line-height:20px;text-align:center}
+nav .n.hot{background:var(--coral);color:#fff}
+main{max-width:1180px;margin:0 auto;padding:18px clamp(16px,4vw,40px) 80px}
+.week{font:600 12px/1 "JetBrains Mono",ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:26px 0 10px}
+.week:first-child{margin-top:4px}
+.empty{color:var(--muted);padding:40px 0;text-align:center}
+.card{background:var(--card);border:1px solid var(--hair);border-radius:16px;box-shadow:var(--shadow);display:grid;grid-template-columns:168px 1fr;gap:18px;padding:14px;margin-bottom:12px}
+.card.wants{border-color:color-mix(in oklab,var(--coral) 55%,var(--hair))}
+.media{position:relative;width:168px;aspect-ratio:9/16;border-radius:10px;overflow:hidden;background:var(--hair);cursor:pointer}
+.media.sq{aspect-ratio:4/5}
+.media img,.media video{width:100%;height:100%;object-fit:cover;display:block}
+.media .play{position:absolute;inset:auto 8px 8px auto;background:rgba(20,32,31,.72);color:#fff;border-radius:999px;font-size:12px;padding:3px 9px}
+.media .none{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:12px;font-size:13px;color:var(--muted)}
+.meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;font-size:13px;color:var(--muted)}
+.chip{font:600 10.5px/1 "JetBrains Mono",ui-monospace,monospace;letter-spacing:.07em;text-transform:uppercase;padding:5px 7px;border-radius:6px;background:var(--hair);color:var(--soft)}
+.chip.built{background:var(--coral-soft);color:var(--coral)}
+.chip.approved,.chip.scheduled{background:var(--done-soft);color:var(--done)}
+.chip.redo{background:var(--teal-soft);color:var(--teal)}
+.chip.series{background:var(--teal-soft);color:var(--teal)}
+h3{font:400 22px/1.2 "DM Serif Display",Georgia,serif;margin:6px 0 4px}
+.hook{color:var(--soft);margin:0 0 8px}
+details{margin:6px 0;font-size:14px;color:var(--soft)}
+details summary{cursor:pointer;color:var(--muted);font-weight:600}
+details pre{white-space:pre-wrap;font:inherit;margin:8px 0 0}
+.needs{display:grid;gap:8px;margin:10px 0}
+.need{border:1px dashed color-mix(in oklab,var(--coral) 60%,var(--hair));background:var(--coral-soft);border-radius:12px;padding:10px 12px}
+.need.ok{border-style:solid;border-color:var(--hair);background:transparent}
+.need b{display:block;font-size:13px;color:var(--coral);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px}
+.need.ok b{color:var(--done)}
+.drop{margin-top:8px;border-radius:10px;border:1.5px dashed var(--muted);padding:14px;text-align:center;font-size:14px;color:var(--soft);cursor:pointer;background:var(--card)}
+.drop.over,.drop.target{border-color:var(--teal);background:var(--teal-soft);color:var(--teal)}
+.thumbs{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.thumbs figure{margin:0;position:relative}
+.thumbs img{width:72px;height:72px;object-fit:cover;border-radius:8px;display:block}
+.thumbs button{position:absolute;top:-6px;right:-6px;width:22px;height:22px;border-radius:50%;border:0;background:var(--ink);color:var(--paper);font-size:13px;line-height:22px;cursor:pointer}
+.row{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.btn{border:1px solid var(--hair);background:var(--card);border-radius:10px;padding:8px 14px;font-weight:600;cursor:pointer}
+.btn:hover{border-color:var(--muted)}
+.btn.go{background:var(--teal);border-color:var(--teal);color:#fff}
+.btn.warn{color:var(--coral)}
+.btn:disabled{opacity:.5;cursor:default}
+.btn.small{padding:5px 10px;font-size:14px}
+.form{margin-top:10px;display:none}
+.form.open{display:block}
+textarea,input[type=text],input[type=date],select{width:100%;border:1px solid var(--hair);background:var(--paper);border-radius:10px;padding:9px 11px}
+textarea{min-height:76px;resize:vertical}
+.note{font-size:14px;background:var(--teal-soft);border-radius:10px;padding:9px 12px;margin:8px 0;color:var(--ink)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(92px,1fr));gap:8px;margin:10px 0}
+.stat{background:var(--paper);border-radius:10px;padding:8px 10px}
+.stat b{font:400 22px/1 "DM Serif Display",Georgia,serif;display:block}
+.stat span{font-size:12px;color:var(--muted)}
+.ideabar{background:var(--card);border:1px solid var(--hair);border-radius:16px;padding:16px;box-shadow:var(--shadow);margin-bottom:18px;display:grid;gap:10px}
+.ideabar .opts{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:15px;align-items:center}
+.ideabar label{display:flex;gap:6px;align-items:center;cursor:pointer}
+.running{display:flex;gap:10px;align-items:center;color:var(--teal);font-weight:600}
+.spin{width:16px;height:16px;border-radius:50%;border:2px solid var(--teal-soft);border-top-color:var(--teal);animation:s 1s linear infinite}
+@keyframes s{to{transform:rotate(360deg)}}
+.idea{background:var(--card);border:1px solid var(--hair);border-radius:16px;padding:16px;margin-bottom:12px;box-shadow:var(--shadow)}
+.idea .hookbig{font:400 24px/1.2 "DM Serif Display",Georgia,serif;margin:6px 0}
+.idea ol{margin:6px 0 6px 20px;padding:0;color:var(--soft)}
+.idea .why{font-size:14px;color:var(--soft)}
+.idea .src{font-size:13px;color:var(--muted);margin-top:6px}
+.idea.done{opacity:.55}
+.toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:10px 16px;border-radius:12px;font-weight:600;font-size:15px;max-width:min(560px,92vw);z-index:20;box-shadow:var(--shadow);display:none}
+.toast.show{display:block}
+@media (max-width:640px){
+  .card{grid-template-columns:96px 1fr;gap:12px;padding:12px}
+  .card>div:last-child{min-width:0}
+  .media{width:96px}
+  .media .none{font-size:11px;padding:6px}
+  .media.playing{grid-column:1/-1;width:100%;max-width:340px;margin:0 auto}
+  h3{font-size:19px}
+  .needs,.card .row,.card .form,.card details{grid-column:1/-1}
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>OralCheck <span>Studio</span></h1>
+  <div class="sync"><span class="dot" id="dot"></span><span id="syncText">Loading</span>
+    <button class="btn small" id="syncBtn">Sync now</button>
+    <button class="btn small" id="numsBtn" title="Fetch the latest Instagram numbers">Refresh numbers</button></div>
+</header>
+<nav><div class="in" id="tabs"></div></nav>
+<main id="main"></main>
+<div class="toast" id="toast"></div>
+<input type="file" id="picker" accept="image/*" multiple hidden>
+
+<script>
+const TABS = [["needs","Needs you"],["upcoming","Coming up"],["redo","Redo queue"],["posted","Posted"],["cut","Cut"],["ideas","Ideas"]];
+let S = null, tab = (()=>{try{return localStorage.getItem("tab")||"needs"}catch{return "needs"}})();
+let pasteTarget = null;          // {eid, aid} of the last photo box touched
+const $ = (s, el=document) => el.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+function toast(msg, ms=3200){ const t=$("#toast"); t.textContent=msg; t.classList.add("show"); clearTimeout(t._h); t._h=setTimeout(()=>t.classList.remove("show"), ms); }
+async function api(path, opts={}){
+  const r = await fetch(path, {headers: opts.body && !(opts.body instanceof FormData) ? {"content-type":"application/json"} : {}, ...opts});
+  let j = {}; try { j = await r.json(); } catch {}
+  if (!r.ok) throw new Error(j.detail || `Error ${r.status}`);
+  return j;
+}
+const post = (p, body) => api(p, {method:"POST", body: body instanceof FormData ? body : JSON.stringify(body||{})});
+
+function ago(iso){ if(!iso) return "never"; const s=(Date.now()-new Date(iso))/1000; if(s<90) return "just now"; if(s<3600) return Math.round(s/60)+" min ago"; if(s<86400) return Math.round(s/3600)+" h ago"; return Math.round(s/86400)+" d ago"; }
+function weekOf(d){ const x=new Date(d+"T12:00:00"); const day=(x.getDay()+6)%7; x.setDate(x.getDate()-day); return x.toLocaleDateString("en-US",{day:"numeric",month:"short"}); }
+
+async function load(force){
+  const busy = document.activeElement && ["TEXTAREA","INPUT","SELECT"].includes(document.activeElement.tagName);
+  const playing = [...document.querySelectorAll("video")].some(v=>!v.paused);
+  S = await api("/api/state");
+  if (force || (!busy && !playing)) render();
+  header();
+}
+function header(){
+  const st=S.state, bad=!!st.pull_error;
+  $("#dot").classList.toggle("bad", bad);
+  $("#syncText").textContent = bad ? "Sync problem: "+st.pull_error : `Synced ${ago(st.last_pull)} · ${S.head.split(" ")[0]}`;
+  const ir=st.insights_run; $("#numsBtn").disabled = ir && ir.status==="running";
+  $("#numsBtn").textContent = ir && ir.status==="running" ? "Fetching numbers…" : "Refresh numbers";
+}
+function counts(){
+  const e=S.entries; return {
+    needs: e.filter(x=>x.needs.length).length, upcoming: e.filter(x=>x.lane==="upcoming").length,
+    redo: e.filter(x=>x.lane==="redo").length, posted: e.filter(x=>x.lane==="posted").length,
+    cut: e.filter(x=>x.lane==="cut").length, ideas: S.ideas.filter(i=>i.state==="new").length };
+}
+function renderTabs(){
+  const c=counts();
+  $("#tabs").innerHTML = TABS.map(([k,l])=>`<button class="${k===tab?"on":""}" data-tab="${k}">${l}<span class="n ${k==="needs"&&c.needs?"hot":""}">${c[k]}</span></button>`).join("");
+}
+function render(){
+  renderTabs();
+  const m=$("#main");
+  if (tab==="ideas") return renderIdeas(m);
+  let list = S.entries.filter(e => tab==="needs" ? e.needs.length : e.lane===tab);
+  if (tab==="posted" || tab==="cut") list = list.slice().reverse();
+  if (!list.length){ m.innerHTML = `<p class="empty">${{needs:"Nothing needs you right now.",upcoming:"Nothing coming up.",redo:"No redos waiting. Send one back from any post.",posted:"Nothing posted yet.",cut:"Nothing cut."}[tab]}</p>`; return; }
+  let html="", wk="";
+  for (const e of list){
+    const w = weekOf(e.date);
+    if (tab!=="cut" && w!==wk){ html += `<div class="week">Week of ${w}</div>`; wk=w; }
+    html += card(e);
+  }
+  m.innerHTML = html;
+}
+
+function mediaBox(e){
+  const f=e.media[0], sq = e.media_type!=="reel";
+  if(!f) return `<div class="media ${sq?"sq":""}"><div class="none">${e.status==="planned"?"Not built yet":"Media is on the Mac; it arrives at the next sync"}</div></div>`;
+  const isVid=/\.(mp4|mov|m4v)$/i.test(f);
+  return `<div class="media ${sq?"sq":""}" data-play="${esc(e.id)}" data-file="${esc(f)}" data-vid="${isVid?1:0}">
+    <img loading="lazy" src="/thumb/${encodeURIComponent(e.id)}.jpg?v=${e.version||0}" alt="">
+    <span class="play">${isVid?"▶ Play":(e.media.length>1?e.media.length+" slides":"View")}</span></div>`;
+}
+function askBox(e,a){
+  if(a.kind==="yesno"){
+    const done=a.answer!=null;
+    return `<div class="need ${done?"ok":""}"><b>${done?"Answered":"Decide"}</b>${esc(a.q)}
+      <div class="row">${["yes","no"].map(v=>`<button class="btn small ${a.answer===v?"go":""}" data-ans="${v}" data-eid="${esc(e.id)}" data-aid="${esc(a.id)}">${v==="yes"?"Yes":"No"}</button>`).join("")}</div></div>`;
+  }
+  const files=a.files||[], done=files.length>0;
+  return `<div class="need ${done?"ok":""}"><b>${done?files.length+" photo"+(files.length>1?"s":"")+" in":"Photo needed"}</b>${esc(a.q)}
+    <div class="drop" data-drop="1" data-eid="${esc(e.id)}" data-aid="${esc(a.id)}">Drop photos here, paste (⌘V), or tap to choose</div>
+    ${files.length?`<div class="thumbs">${files.map(n=>`<figure><img src="/photo/${encodeURIComponent(e.id)}/${encodeURIComponent(n)}" alt=""><button title="Remove" data-rm="${esc(n)}" data-eid="${esc(e.id)}" data-aid="${esc(a.id)}">×</button></figure>`).join("")}</div>`:""}</div>`;
+}
+function stats(i){
+  if(!i) return `<p class="hook">No numbers yet. Press Refresh numbers.</p>`;
+  const sec = v => v==null?"–":(v/1000).toFixed(1)+"s", pct = v => v==null?"–":(v>1? v: v*100).toFixed(0)+"%", n = v => v==null?"–":Number(v).toLocaleString();
+  const cells=[["Views",n(i.views)],["Reach",n(i.reach)],["Avg watch",sec(i.ig_reels_avg_watch_time)],["Skipped",pct(i.reels_skip_rate)],["Shares",n(i.shares)],["Saves",n(i.saved)],["Follows",n(i.follows)]];
+  return `<div class="stats">${cells.filter(c=>c[1]!=="–"||["Views","Shares","Saves"].includes(c[0])).map(([k,v])=>`<div class="stat"><b>${v}</b><span>${k}</span></div>`).join("")}</div>${i.permalink?`<a href="${esc(i.permalink)}" target="_blank" rel="noopener">Open on Instagram</a>`:""}`;
+}
+function card(e){
+  const wants=e.needs.length>0;
+  const chips=[`<span class="chip ${e.status}">${e.status==="built"?"to review":e.status}</span>`, e.series?`<span class="chip series">${esc(e.series)}</span>`:""].join("");
+  let body=`<div class="meta">${chips}<span>${esc(e.when_ct)}</span><span>· ${esc(e.media_type)} · ${esc(e.network)}</span>${e.version>1?`<span>· v${e.version}</span>`:""}</div>
+    <h3>${esc(e.title)}</h3>${e.hook?`<p class="hook">${esc(e.hook)}</p>`:""}`;
+  if(e.lane==="redo") body+=`<div class="note"><b>Waiting for Claude.</b> ${esc(e.review_note||"")} <span style="color:var(--muted)">· sent ${ago(e.redo_at)}</span></div>`;
+  if(e.lane==="cut") body+=`<div class="note">${esc(e.cut_reason||"Cut")}</div>`;
+  if(e.lane==="posted") body+=stats(e.insights);
+  if(e.asks.length && e.lane==="upcoming") body+=`<div class="needs">${e.asks.map(a=>askBox(e,a)).join("")}</div>`;
+  if(e.caption) body+=`<details><summary>Caption</summary><pre>${esc(e.caption)}</pre></details>`;
+  const acts=[];
+  if(e.status==="built") acts.push(`<button class="btn go" data-act="approve" data-eid="${esc(e.id)}">Approve</button>`);
+  if(e.status==="approved") acts.push(`<button class="btn" data-act="undo" data-eid="${esc(e.id)}">Take back approval</button>`);
+  if(["built","approved","planned"].includes(e.status)) acts.push(`<button class="btn" data-open="redo" data-eid="${esc(e.id)}">Redo…</button>`);
+  if(e.lane==="upcoming"||e.lane==="redo") acts.push(`<button class="btn warn" data-open="cut" data-eid="${esc(e.id)}">Cut…</button>`);
+  if(e.lane==="cut") acts.push(`<button class="btn" data-act="restore" data-eid="${esc(e.id)}">Restore</button>`);
+  if(acts.length) body+=`<div class="row">${acts.join("")}</div>
+    <div class="form" data-form="redo" data-eid="${esc(e.id)}"><textarea placeholder="What should change? e.g. music lower, hook punchier, swap the photo">${""}</textarea><div class="row"><button class="btn go" data-act="redo" data-eid="${esc(e.id)}">Send to Claude</button></div></div>
+    <div class="form" data-form="cut" data-eid="${esc(e.id)}"><textarea placeholder="Why cut it? (kept, so the idea is not pitched again)"></textarea><div class="row"><button class="btn warn" data-act="cut" data-eid="${esc(e.id)}">Cut this post</button></div></div>`;
+  return `<article class="card ${wants?"wants":""}">${mediaBox(e)}<div>${body}</div></article>`;
+}
+
+function renderIdeas(m){
+  const run=S.state.ideas_run, running=run&&run.status==="running";
+  const fresh=S.ideas.filter(i=>i.state==="new"), old=S.ideas.filter(i=>i.state!=="new").slice(0,20);
+  m.innerHTML = `<section class="ideabar">
+      <textarea id="ideaPrompt" placeholder="Optional: what should these be about? e.g. vaping for college students, or something for Valentine's Day">${esc(sessionStorage.getItem("ideaPrompt")||"")}</textarea>
+      <div class="opts"><label><input type="checkbox" id="uNum" checked> My numbers</label><label><input type="checkbox" id="uTr" checked> Trends in the niche</label><label><input type="checkbox" id="uDt" checked> Dates and news</label>
+        <label>How many <select id="iCount" style="width:auto">${[5,8,10].map(n=>`<option ${n===8?"selected":""}>${n}</option>`).join("")}</select></label></div>
+      <div class="row" style="margin:0">${running?`<span class="running"><span class="spin"></span>Claude is researching on the PC. This takes a few minutes; you can leave this page.</span>`
+        :`<button class="btn go" id="runIdeas">Pitch ideas</button>`}
+        ${run&&run.status==="failed"?`<span style="color:var(--coral)">Last run failed: ${esc(run.error)}</span>`:""}</div></section>
+    ${fresh.length?fresh.map(idea).join(""):`<p class="empty">No new pitches. Press Pitch ideas.</p>`}
+    ${old.length?`<div class="week">Earlier pitches</div>${old.map(idea).join("")}`:""}`;
+}
+function idea(i){
+  const done=i.state!=="new";
+  return `<article class="idea ${done?"done":""}"><div class="meta"><span class="chip ${i.series?"series":""}">${esc(i.format||i.lane||"")}</span>${i.length_s?`<span>${i.length_s}s</span>`:""}${done?`<span class="chip">${esc(i.state)}</span>`:""}</div>
+    <div class="hookbig">${esc(i.hook)}</div><h3 style="font-size:17px;font-family:inherit;font-weight:700">${esc(i.title)}</h3>
+    ${(i.script||[]).length?`<ol>${i.script.map(l=>`<li>${esc(l)}</li>`).join("")}</ol>`:""}
+    <p class="why"><b>Why it should work:</b> ${esc(i.why)}</p>
+    ${(i.needs||[]).length?`<div class="needs">${i.needs.map(a=>`<div class="need"><b>${a.kind==="photo"?"Will need a photo":"Will ask you"}</b>${esc(a.q)}</div>`).join("")}</div>`:""}
+    ${(i.sources||[]).length?`<div class="src">Sources: ${i.sources.map(s=>s.url?`<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.name)}</a>`:esc(s.name)).join(" · ")}</div>`:""}
+    ${done?(i.reason?`<p class="src">${esc(i.reason)}</p>`:""):`<div class="row"><input type="date" value="${esc(i.suggested_date||"")}" data-idate="${esc(i.id)}" style="width:auto">
+      <button class="btn go" data-iacc="${esc(i.id)}">Add to calendar</button><button class="btn" data-irej="${esc(i.id)}">Not this…</button></div>
+      <div class="form" data-iform="${esc(i.id)}"><textarea placeholder="Why not? (helps the next pitches)"></textarea><div class="row"><button class="btn warn" data-irejgo="${esc(i.id)}">Reject</button></div></div>`}
+  </article>`;
+}
+
+// ---- photo upload: drop, paste, choose ----
+async function upload(eid, aid, files){
+  files=[...files].filter(f=>f.type.startsWith("image/")||/\.(heic|heif)$/i.test(f.name));
+  if(!files.length) return toast("Only photos can go here.");
+  const fd=new FormData(); files.forEach((f,i)=>fd.append("files", f, f.name||`pasted-${i}.png`));
+  toast(`Uploading ${files.length} photo${files.length>1?"s":""}…`, 20000);
+  try{ await post(`/api/entry/${encodeURIComponent(eid)}/photo/${encodeURIComponent(aid)}`, fd); toast("Photo saved. Claude picks it up next session."); await load(true); }
+  catch(err){ toast(err.message, 6000); }
+}
+function setTarget(el){ document.querySelectorAll(".drop.target").forEach(x=>x.classList.remove("target")); if(el){ el.classList.add("target"); pasteTarget={eid:el.dataset.eid, aid:el.dataset.aid}; } }
+document.addEventListener("paste", ev=>{
+  const files=[...(ev.clipboardData?.files||[])]; if(!files.length) return;
+  let t=pasteTarget; if(!t){ const d=document.querySelectorAll(".drop"); if(d.length===1) t={eid:d[0].dataset.eid, aid:d[0].dataset.aid}; }
+  if(!t) return toast("Tap the photo box you mean first, then paste.");
+  ev.preventDefault(); upload(t.eid, t.aid, files);
+});
+document.addEventListener("dragover", ev=>{ const d=ev.target.closest?.(".drop"); if(d){ ev.preventDefault(); d.classList.add("over"); } });
+document.addEventListener("dragleave", ev=>{ const d=ev.target.closest?.(".drop"); if(d) d.classList.remove("over"); });
+document.addEventListener("drop", ev=>{ const d=ev.target.closest?.(".drop"); if(!d) return; ev.preventDefault(); d.classList.remove("over"); setTarget(d); upload(d.dataset.eid, d.dataset.aid, ev.dataTransfer.files); });
+$("#picker").addEventListener("change", ev=>{ if(pasteTarget) upload(pasteTarget.eid, pasteTarget.aid, ev.target.files); ev.target.value=""; });
+
+// ---- clicks ----
+document.addEventListener("click", async ev=>{
+  const t=ev.target.closest("button,[data-play],.drop"); if(!t) return;
+  try{
+    if(t.dataset.tab){ tab=t.dataset.tab; try{localStorage.setItem("tab",tab)}catch{}; render(); window.scrollTo(0,0); return; }
+    if(t.classList.contains("drop")){ setTarget(t); $("#picker").click(); return; }
+    if(t.dataset.play){
+      const f=t.dataset.file, url=`/media/${encodeURIComponent(t.dataset.play)}/${encodeURIComponent(f)}`;
+      if(t.dataset.vid==="1"){ t.innerHTML=`<video src="${url}" controls autoplay playsinline></video>`; t.removeAttribute("data-play"); t.classList.add("playing"); }
+      else window.open(url,"_blank");
+      return;
+    }
+    if(t.dataset.open){ const f=document.querySelector(`.form[data-form="${t.dataset.open}"][data-eid="${CSS.escape(t.dataset.eid)}"]`); f.classList.toggle("open"); f.querySelector("textarea")?.focus(); return; }
+    if(t.dataset.ans){ t.disabled=true; await post(`/api/entry/${encodeURIComponent(t.dataset.eid)}/ask/${encodeURIComponent(t.dataset.aid)}`,{answer:t.dataset.ans}); toast("Answer saved."); return load(true); }
+    if(t.dataset.rm){ if(!confirm("Remove this photo?")) return; await api(`/api/entry/${encodeURIComponent(t.dataset.eid)}/photo/${encodeURIComponent(t.dataset.aid)}/${encodeURIComponent(t.dataset.rm)}`,{method:"DELETE"}); return load(true); }
+    const act=t.dataset.act, eid=t.dataset.eid;
+    if(act){
+      t.disabled=true; let r;
+      if(act==="approve"){ r=await post(`/api/entry/${encodeURIComponent(eid)}/approve`); toast(r.upload, 5000); }
+      else if(act==="undo"){ await post(`/api/entry/${encodeURIComponent(eid)}/undo`); toast("Approval taken back."); }
+      else if(act==="restore"){ await post(`/api/entry/${encodeURIComponent(eid)}/restore`); toast("Restored."); }
+      else if(act==="redo"||act==="cut"){
+        const txt=document.querySelector(`.form[data-form="${act}"][data-eid="${CSS.escape(eid)}"] textarea`).value;
+        await post(`/api/entry/${encodeURIComponent(eid)}/${act}`, act==="redo"?{note:txt}:{reason:txt});
+        toast(act==="redo"?"Sent back. It waits in the Redo queue for Claude.":"Cut. It's in the Cut tab.");
+      }
+      return load(true);
+    }
+    if(t.id==="runIdeas"){
+      const prompt=$("#ideaPrompt").value; try{sessionStorage.setItem("ideaPrompt",prompt)}catch{}
+      const use=[["uNum","numbers"],["uTr","trends"],["uDt","dates"]].filter(([i])=>$("#"+i).checked).map(x=>x[1]);
+      await post("/api/ideas/run",{prompt,use,count:+$("#iCount").value}); toast("Started. Pitches appear here when Claude is done."); return load(true);
+    }
+    if(t.dataset.iacc){ const d=document.querySelector(`[data-idate="${CSS.escape(t.dataset.iacc)}"]`).value; t.disabled=true;
+      const r=await post(`/api/ideas/${t.dataset.iacc}/accept`,{date:d}); toast("Added to the calendar as planned. Anything it needs from you is on the card."); return load(true); }
+    if(t.dataset.irej){ document.querySelector(`[data-iform="${CSS.escape(t.dataset.irej)}"]`).classList.toggle("open"); return; }
+    if(t.dataset.irejgo){ const txt=document.querySelector(`[data-iform="${CSS.escape(t.dataset.irejgo)}"] textarea`).value;
+      await post(`/api/ideas/${t.dataset.irejgo}/reject`,{reason:txt}); toast("Noted. It won't be pitched again."); return load(true); }
+    if(t.id==="syncBtn"){ t.disabled=true; const r=await post("/api/sync"); toast(r.ok?"Up to date.":"Sync problem: "+r.error); t.disabled=false; return load(true); }
+    if(t.id==="numsBtn"){ await post("/api/insights/refresh"); toast("Fetching numbers from Instagram. About two minutes."); return load(); }
+  }catch(err){ toast(err.message, 6000); t.disabled=false; }
+});
+
+load(true).catch(err=>{ $("#main").innerHTML=`<p class="empty">Could not reach the Studio: ${esc(err.message)}</p>`; });
+setInterval(()=>load().catch(()=>{}), 30000);
+</script>
+</body>
+</html>
