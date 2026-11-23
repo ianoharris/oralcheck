@@ -34,7 +34,7 @@ After=network-online.target
 WorkingDirectory=$HOME_DIR/repo/oralcheck-agent/studio
 Environment=STUDIO_HOME=$HOME_DIR
 Environment=STUDIO_PORT=$PORT
-Environment=PATH=$HOME/.local/bin:/usr/local/bin:/usr/bin:/bin
+Environment=PATH=$HOME/.local/bin:/snap/bin:/usr/local/bin:/usr/bin:/bin
 ExecStart=$HOME_DIR/venv/bin/python app.py
 Restart=always
 RestartSec=3
