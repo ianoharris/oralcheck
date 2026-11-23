@@ -1860,7 +1860,7 @@
       "network": "instagram",
       "media_type": "reel",
       "when": "2027-01-01T23:00:00+00:00",
-      "status": "built",
+      "status": "approved",
       "idea": {
         "title": "Two-minute oral self-exam you can do right now",
         "hook": "Get a mirror and find a light source.",
@@ -1894,7 +1894,11 @@
       "files": [
         "reel.mp4"
       ],
-      "review_note": "Rebuilt on the illustrated plates; the 3D model is retired. A line about feeling under the jaw shows the neck."
+      "review_note": "Rebuilt on the illustrated plates; the 3D model is retired. A line about feeling under the jaw shows the neck.",
+      "approved_at": "2026-11-23T17:51:30.399402+00:00",
+      "notes": [
+        "23 Nov 2026: approved in the Studio."
+      ]
     },
     {
       "id": "2027-01-02_in_short",
