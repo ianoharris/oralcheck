@@ -181,9 +181,22 @@ def insights_by_entry(cal: dict) -> dict:
         return {}
     data = json.loads(INSIGHTS.read_text())
     by_id = {m["id"]: m for m in data.get("media", [])}
+    # posts that went out through Publora never recorded their Instagram id: match on day and kind
+    kind = {"REELS": "reel", "CAROUSEL_ALBUM": "carousel", "IMAGE": "image"}
+    by_day: dict[tuple, list] = {}
+    for m in data.get("media", []):
+        k = "reel" if m.get("media_product_type") == "REELS" else kind.get(m.get("media_type"), "image")
+        day = datetime.fromisoformat(m["timestamp"].replace("+0000", "+00:00")).astimezone(CT).date().isoformat()
+        by_day.setdefault((day, k), []).append(m)
+    claimed = {str(e.get("ig_media_id")) for e in cal["entries"] if e.get("ig_media_id")}
     out = {}
     for e in cal["entries"]:
         m = by_id.get(str(e.get("ig_media_id") or ""))
+        if not m and e["network"] == "instagram" and lane(e) == "posted":
+            k = "reel" if e["media_type"] in ("reel", "animated") else e["media_type"]
+            cands = [x for x in by_day.get((e["date"], k), []) if x["id"] not in claimed]
+            if len(cands) == 1:
+                m = cands[0]; claimed.add(m["id"])
         if not m:
             continue
         # ig_insights.metric gives a number, None, or {"error": ...} when Meta does not offer it
