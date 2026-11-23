@@ -885,7 +885,7 @@ Newest first.
 - The app writes to `calendar.json` and pushes, starting from a fresh fetch each time, so it never overwrites the posting bot or a Claude session. Media and photos never enter git: the Mac copies built media to the PC (`post_calendar.py studio-sync`, also run after every build), and photos come back the same way.
 - Instagram numbers come from the existing encrypted ig-insights workflow, decrypted on the PC with its own key. 10 of 14 posted items matched (the other 4 are LinkedIn).
 - Found and fixed on the way: the three Mouth Notes episodes built by hand on 22 Nov had no manifest.json, so approving them would have failed to upload; `post_calendar.py build` would have regenerated Mouth Notes episodes sent back for a redo with the generic engine; it now leaves them for a Claude session.
-- **Blocked on Ian:** one command to put it on the tailnet (needs sudo on the PC).
+- On the tailnet since 23 Nov (Ian ran `sudo tailscale serve --bg --https=8797 http://127.0.0.1:8797` on the PC): https://ianspc.tailed990a.ts.net:8797.
 
 ### 2026-11-22: Mouth Notes season 2, first 3D and math episodes
 
