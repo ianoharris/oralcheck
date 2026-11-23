@@ -1906,7 +1906,7 @@
       "network": "instagram",
       "media_type": "reel",
       "when": "2027-01-02T16:00:00+00:00",
-      "status": "built",
+      "status": "approved",
       "idea": {
         "title": "Mouth Notes: drunk cigs (only smoking when you drink)",
         "hook": "Only smoke when you drink? Your mouth is still counting.",
@@ -1926,7 +1926,8 @@
         "22 Nov 2026: extend(), four posts a week. Short reel (about 12 s).",
         "22 Nov 2026: REPLACE before building: repeats the 5 Dec floor-of-mouth short.",
         "22 Nov 2026: replaced with the drunk cigs episode at Ian's request (3D; the myth and the count; posts the Saturday after New Year's Eve). About 35 s, so not part of the short-length test.",
-        "22 Nov 2026: built, 37 s."
+        "22 Nov 2026: built, 37 s.",
+        "23 Nov 2026: approved in the Studio."
       ],
       "folder": "2027-01-02_in_short",
       "version": 1,
@@ -1943,7 +1944,8 @@
       "files": [
         "reel.mp4"
       ],
-      "review_note": ""
+      "review_note": "",
+      "approved_at": "2026-11-23T17:51:39.901054+00:00"
     },
     {
       "id": "2027-01-04_in_mn07",
