@@ -2022,7 +2022,7 @@
       "network": "instagram",
       "media_type": "reel",
       "when": "2027-01-07T16:00:00+00:00",
-      "status": "built",
+      "status": "approved",
       "idea": {
         "title": "Mouth Notes: how tobacco damages DNA",
         "hook": "Tobacco carries dozens of cancer-causing chemicals. Here is what they do.",
@@ -2056,8 +2056,10 @@
       ],
       "review_note": "",
       "notes": [
-        "21 Nov 2026: Mouth Notes ep. 8."
-      ]
+        "21 Nov 2026: Mouth Notes ep. 8.",
+        "23 Nov 2026: approved in the Studio."
+      ],
+      "approved_at": "2026-11-23T17:59:03.997749+00:00"
     },
     {
       "id": "2027-01-09_in_short",
