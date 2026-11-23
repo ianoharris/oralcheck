@@ -1203,7 +1203,7 @@
       "network": "instagram",
       "media_type": "reel",
       "when": "2026-12-12T16:00:00+00:00",
-      "status": "built",
+      "status": "approved",
       "idea": {
         "title": "Short: a sore on your outer lip is not a canker sore",
         "hook": "A sore on the outside of your lip is not a canker sore.",
@@ -1234,8 +1234,10 @@
       ],
       "review_note": "",
       "notes": [
-        "20 Nov 2026: short-format test, one of four Saturdays."
-      ]
+        "20 Nov 2026: short-format test, one of four Saturdays.",
+        "23 Nov 2026: approved in the Studio."
+      ],
+      "approved_at": "2026-11-23T17:51:00.920084+00:00"
     },
     {
       "id": "2026-12-15_in_image",
