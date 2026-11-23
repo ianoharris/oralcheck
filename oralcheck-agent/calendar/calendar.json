@@ -1514,7 +1514,7 @@
       "network": "instagram",
       "media_type": "reel",
       "when": "2026-12-21T16:00:00+00:00",
-      "status": "built",
+      "status": "approved",
       "idea": {
         "title": "Mouth Notes: powers of ten, smile to DNA",
         "hook": "Let's zoom from your smile to a single strand of DNA.",
@@ -1548,8 +1548,10 @@
       ],
       "review_note": "",
       "notes": [
-        "21 Nov 2026: Mouth Notes ep. 3."
-      ]
+        "21 Nov 2026: Mouth Notes ep. 3.",
+        "23 Nov 2026: approved in the Studio."
+      ],
+      "approved_at": "2026-11-23T17:51:15.890865+00:00"
     },
     {
       "id": "2026-12-23_li_image",
