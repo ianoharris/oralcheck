@@ -625,11 +625,12 @@ three a week, built all at once and reviewed on one page.
 ```mermaid
 flowchart TB
     PLAN["post_calendar.py plan<br/>30 dates, topic, shape, idea"] --> BUILD["build<br/>renders every post on a laptop"]
-    BUILD --> PAGE["Review page<br/>(a private claude.ai artifact)"]
+    BUILD --> PAGE["OralCheck Studio<br/>(an app on your PC, phone and Mac via Tailscale)"]
     PAGE --> YOU{"You mark each one"}
     YOU -->|Approve| REL["Media uploaded to a<br/>GitHub release"]
-    YOU -->|Redo + note| BUILD
-    YOU -->|Cut| GONE["Dropped from the calendar"]
+    YOU -->|Redo + note| QUEUE["Redo queue<br/>(the next Claude session picks it up)"]
+    QUEUE --> BUILD
+    YOU -->|Cut| GONE["Cut tab, with your reason"]
     REL --> NET{"Which network?"}
     NET -->|Instagram| META["Half-hourly job sends it<br/>straight to Meta at its time"]
     NET -->|LinkedIn| DRIP["Daily job schedules it<br/>in Publora 3 days ahead"]
@@ -691,10 +692,36 @@ CHECK and gets the link in a DM. The steps are in `docs/COMMENT_TO_DM.md`. The
 captions only start asking for the comment once the repo variable
 `COMMENT_DM_KEYWORD` is set, so nobody is asked before the DM works.
 
-**You are still the approval gate.** Nothing is scheduled unless you marked it
-Approve on the review page. A post you send back with Redo is rewritten with
-your note added to its brief, and comes back to the page as a fresh, undecided
-version. An approved post whose date has already passed is skipped, not
+**You are still the approval gate, and the gate is now an app.** Since 23 November
+2026 the calendar lives in **OralCheck Studio**, a small web app that runs on your
+PC hub (ianspc) and opens at https://ianspc.tailed990a.ts.net:8797 on any device
+signed in to your Tailscale: Mac, phone, anything. Nobody outside your tailnet can
+reach it. It replaced the review-page artifact, which only showed a frozen snapshot.
+
+How it works, in plain terms:
+
+- The PC keeps its own copy of the project and checks GitHub every two minutes.
+  When the posting job puts something live, it leaves "Coming up" and moves to
+  **Posted** by itself, with its Instagram numbers once you press Refresh numbers
+  (views, average watch time, how many skipped, shares, saves).
+- **Needs you** lists every post waiting on you: watch and approve, a photo it
+  needs (drag it in, paste it, or tap to choose, on the phone too), or a yes/no
+  decision. Your photos stay on the PC and never go into the public repo.
+- **Approve** means it posts: the app uploads it and the daily job sends it on its
+  date. You can take an approval back until the morning it is scheduled.
+- **Redo** with a note puts it in the **Redo queue**. Every redo waits for a Claude
+  session (your choice), and each session here starts by printing that queue.
+- **Cut** with a reason moves it to the **Cut** tab. Nothing is deleted, and the
+  reason stops the same idea being pitched again.
+- **Ideas** pitches new videos only when you press the button. It runs the Claude
+  Code app already installed on the PC (your subscription, not paid API calls),
+  using your own numbers, what is working in the niche, and upcoming dates.
+  Adding a pitch puts it on the calendar with whatever it will need from you.
+- Videos are rendered on the Mac (Blender needs a graphics chip the PC lacks) and
+  copied to the PC after each build, so the app always shows the latest version.
+
+If the app ever looks stale, the dot by "Synced" turns orange with the reason.
+The service restarts itself on a crash or when its own code changes. An approved post whose date has already passed is skipped, not
 posted late. Reels still get the Telegram reminder to reshare them to a Story.
 
 **The weekly Telegram flow** below still exists and still works, but its
@@ -1259,7 +1286,7 @@ code generator, and copy-paste embed code.
 | "The Publora connection ... has expired" | Publora's login to that network lapsed (LinkedIn did, 26 Oct 2026) | Reconnect it in Publora, then run the calendar job again |
 | An Instagram post did not go out, Telegram says it failed | Meta refused it, or the token expired | The message carries Meta's reason. It retries twice more; run "Diagnose Instagram Token" to see the connection's state |
 | Instagram posts go out late | GitHub started the half-hourly job late | Nothing to fix per post. If it is often more than an hour, tell Claude: the publishing job can move somewhere with a reliable clock |
-| A calendar date passes and nothing posts | The post was never approved on the review page, or was approved after its date, or its media never reached the release (found 26 Oct 2026: nothing had been uploaded, so nothing was scheduled) | Approve in time; approved posts are uploaded with `post_calendar.py upload` |
+| A calendar date passes and nothing posts | The post was never approved in the Studio, or was approved after its date, or its media never reached the release (found 26 Oct 2026: nothing had been uploaded, so nothing was scheduled) | Approve in time; approved posts are uploaded with `post_calendar.py upload` |
 | The Monday run ends "cancelled" | GitHub's 6-hour cap per job, found 2026-10-20 | Why the Monday schedule is paused and the calendar is used instead |
 | Every route 404s locally | Stale Turbopack cache | `rm -rf .next` |
 | The roadmap says a fix shipped, but the live site still has the old text | The fix was committed on a side branch (each Claude session works on its own) and never merged into master. Found 21 Nov 2026: the smokeless tobacco and HPV citation fix sat on a side branch for six weeks | Before calling something shipped, check the live page itself, and check that `git branch --contains <commit>` lists master |

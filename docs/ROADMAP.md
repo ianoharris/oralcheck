@@ -878,6 +878,15 @@ Update both together. See `AGENTS.md`.
 
 Newest first.
 
+### 2026-11-23: OralCheck Studio, the posting calendar as an app
+
+- Ian asked to move the calendar off an artifact into an app on his PC hub that updates itself. Built `oralcheck-agent/studio/` (FastAPI and one page) and installed it on ianspc as a user service on 127.0.0.1:8797, the same pattern as his other PC apps. Tabs: Needs you, Coming up, Redo queue, Posted (with Instagram numbers), Cut, Ideas.
+- His choices: approve means it posts (upload included); every redo waits for a Claude session (a SessionStart hook in `.claude/settings.json` prints the queue); posted and cut posts leave the calendar for their own tabs; the idea suggester runs the Claude Code CLI on the PC, only on demand, never the API; a post can ask for photos (drag, drop, paste) and yes/no decisions.
+- The app writes to `calendar.json` and pushes, starting from a fresh fetch each time, so it never overwrites the posting bot or a Claude session. Media and photos never enter git: the Mac copies built media to the PC (`post_calendar.py studio-sync`, also run after every build), and photos come back the same way.
+- Instagram numbers come from the existing encrypted ig-insights workflow, decrypted on the PC with its own key. 10 of 14 posted items matched (the other 4 are LinkedIn).
+- Found and fixed on the way: the three Mouth Notes episodes built by hand on 22 Nov had no manifest.json, so approving them would have failed to upload; `post_calendar.py build` would have regenerated Mouth Notes episodes sent back for a redo with the generic engine; it now leaves them for a Claude session.
+- **Blocked on Ian:** one command to put it on the tailnet (needs sudo on the PC).
+
 ### 2026-11-22: Mouth Notes season 2, first 3D and math episodes
 
 - The two new lanes produced their first finished episodes, voiced and checked frame by frame. **3D (Blender):** the HPV vaccine as an empty copy of the virus. A real HPV shell of 72 five-sided parts is shown cut open around its DNA, the shell protein then builds the same shell with nothing inside, and Y-shaped antibodies bind to it (NCI). Capsomer placement is an even spread, not the exact lattice, and the on-screen source says so. **Math (Manim):** the extra mouth and throat cancer risk from smoking after quitting, through the CDC's two points (half by 5 to 10 years, close to a never-smoker by 20). The curve between those points is drawn, and a note on screen says it is illustrative.
