@@ -2438,7 +2438,7 @@
       "network": "instagram",
       "media_type": "reel",
       "when": "2027-01-28T16:00:00+00:00",
-      "status": "built",
+      "status": "approved",
       "idea": {
         "title": "Mouth Notes: your mouth after you quit, the curve",
         "hook": "Quit smoking, and your risk of mouth cancer starts to fall. Here is the curve.",
@@ -2456,7 +2456,8 @@
       },
       "notes": [
         "22 Nov 2026: extend(), four posts a week.",
-        "22 Nov 2026: built (Manim lane prototype)."
+        "22 Nov 2026: built (Manim lane prototype).",
+        "23 Nov 2026: approved in the Studio."
       ],
       "folder": "2027-01-28_in_mn14",
       "version": 1,
@@ -2473,7 +2474,8 @@
       "files": [
         "reel.mp4"
       ],
-      "review_note": ""
+      "review_note": "",
+      "approved_at": "2026-11-23T18:00:11.493392+00:00"
     },
     {
       "id": "2027-01-30_in_short",
