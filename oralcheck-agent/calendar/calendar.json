@@ -2299,7 +2299,7 @@
       "network": "instagram",
       "media_type": "reel",
       "when": "2027-01-21T16:00:00+00:00",
-      "status": "built",
+      "status": "approved",
       "idea": {
         "title": "Mouth Notes: if I can't see it, it isn't there",
         "hook": "Myth: if the mirror shows nothing, there is nothing there.",
@@ -2333,8 +2333,10 @@
       ],
       "review_note": "",
       "notes": [
-        "21 Nov 2026: Mouth Notes ep. 12."
-      ]
+        "21 Nov 2026: Mouth Notes ep. 12.",
+        "23 Nov 2026: approved in the Studio."
+      ],
+      "approved_at": "2026-11-23T18:00:02.163096+00:00"
     },
     {
       "id": "2027-01-23_in_short",
