@@ -1892,21 +1892,24 @@
       "when": "2027-01-02T16:00:00+00:00",
       "status": "planned",
       "idea": {
-        "title": "Self-check for the floor of your mouth under your tongue",
-        "hook": "You're brushing your teeth and you notice something you haven't seen before.",
-        "brief": "Shot 1: viewer is prompted to lift their tongue to the roof of their mouth. Shot 2: the camera labels the U-shaped tissue underneath as the floor of the mouth, noting it's one of the highest-risk sites. Shot 3: the viewer is guided to look at that tissue in a mirror while holding the position. The final line notes that a small tumour here can grow for months before causing any discomfort, which is why this check exists. Closes with oralcheck.org/learn/signs.",
-        "topic": "floor_of_mouth",
-        "shape": "self_check",
-        "hook_style": "scenario",
+        "title": "Mouth Notes: drunk cigs (only smoking when you drink)",
+        "hook": "Only smoke when you drink? Your mouth is still counting.",
+        "brief": "Mouth Notes, How it works 07. Blender lane, blender/drunkcigs.py; script and sources in anim.py and docs/MOUTH_NOTES.md.",
+        "topic": "tobacco_plus_alcohol",
+        "shape": "mouth_notes",
+        "hook_style": "question",
         "tone": "calm",
-        "pillar": "self_exam",
+        "pillar": "education",
         "media_type": "reel",
         "calendar_ref": null,
-        "slug": "self-check-for-the-floor-of-your-mouth-under-your-tongue"
+        "slug": "2027-01-02_in_short",
+        "series": "Mouth Notes",
+        "scene": "drunkcigs"
       },
       "notes": [
         "22 Nov 2026: extend(), four posts a week. Short reel (about 12 s).",
-        "22 Nov 2026: REPLACE before building: repeats the 5 Dec floor-of-mouth short."
+        "22 Nov 2026: REPLACE before building: repeats the 5 Dec floor-of-mouth short.",
+        "22 Nov 2026: replaced with the drunk cigs episode at Ian's request (3D; the myth and the count; posts the Saturday after New Year's Eve). About 35 s, so not part of the short-length test."
       ]
     },
     {

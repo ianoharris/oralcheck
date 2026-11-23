@@ -61,3 +61,5 @@ oralcheck-agent/anatomy3d/head.part*.txt
 oralcheck-agent/**/*.mp4
 oralcheck-agent/reel3d_proto/node_modules
 oralcheck-agent/anim/_frames/
+oralcheck-agent/assets/photos_from_ian/*
+!oralcheck-agent/assets/photos_from_ian/README.md

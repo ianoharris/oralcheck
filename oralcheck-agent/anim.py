@@ -255,6 +255,30 @@ SCRIPTS = {
         foot="Illustration for education. Not reviewed by a clinician.", foot_on=["real", "build", "empty", "immune", "later"],
         series={"name": SERIES, "ep": "How it works · 06"},
     ),
+    # Mouth Notes, 3D lane (22 Nov 2026): "drunk cigs", for people who only smoke when they drink.
+    # Berthiller et al., Int J Epidemiol 2016;45(3):835-45 (INHANCE pooled analysis, 19,660 head and
+    # neck cancer cases): >0-3 cigarettes a day (lifetime average) OR 1.52 (1.21-1.90); the excess was
+    # not found among smokers with duration under 20 years. NCI, Alcohol and Cancer Risk: alcohol is
+    # hypothesized to make it easier for the mouth and throat to absorb harmful chemicals such as those
+    # in cigarette smoke; for oral and pharyngeal cancers the combined harm is multiplicative.
+    # Arithmetic: 4 a weekend x 52 = 208 a year, about 10 packs of 20; 20 years about 200 packs.
+    "drunkcigs": dict(
+        blender="drunkcigs",
+        lines=[
+            {"key": "hook", "say": "Only smoke when you drink? Your mouth is still counting.", "eyebrow": "Drunk cigs"},
+            {"key": "count", "say": "Four every weekend is about two hundred cigarettes a year. Ten packs.", "eyebrow": "The count"},
+            {"key": "study", "say": "Across nearly twenty thousand cases, three or fewer a day meant about one and a half times the risk.", "eyebrow": "Light smoking"},
+            {"key": "years", "say": "That risk showed up after twenty years or more. Twenty years of weekends is two hundred packs.", "eyebrow": "The years"},
+            {"key": "drink", "say": "And the drink is not a bystander. Alcohol is thought to make it easier for your mouth to absorb what is in the smoke.", "eyebrow": "Why together"},
+            {"key": "close", "say": "Fewer nights, fewer years. Every one you skip counts.", "eyebrow": "The way out"},
+        ],
+        labels={"drink": {"k": "Cross-section", "t": "Mouth lining", "d": "where the smoke lands", "x": 560, "y": 640, "side": "right"}},
+        readouts={"count": ["10 packs", "four a weekend, for a year"], "study": ["1.5×", "risk at three or fewer a day"],
+                  "years": ["200 packs", "twenty years of weekends"]},
+        credit="Sources: Berthiller et al., Int J Epidemiol 2016 (INHANCE pooled analysis); National Cancer Institute, Alcohol and Cancer Risk · Stylized 3D, not to scale",
+        foot="Illustration for education. Not reviewed by a clinician.", foot_on=["count", "study", "years", "drink"],
+        series={"name": SERIES, "ep": "How it works · 07"},
+    ),
     # Mouth Notes, math lane prototype (22 Nov 2026). CDC, Benefits of Quitting Smoking.
     "quit": dict(
         manim=("quit.py", "Quit"),

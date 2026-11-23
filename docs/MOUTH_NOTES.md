@@ -125,11 +125,19 @@ fact worth sending to someone.
 | Idea | Lane | Source | Real image needed |
 |---|---|---|---|
 | The HPV vaccine is a virus with nothing inside (L1 shells, antibodies) | 3D, prototype | NCI, HPV vaccines (virus-like particles, no viral genes); 360 L1 copies | your Gardasil vial photo (have) |
-| Quit smoking: your mouth at 1, 5 to 10 and 20 years | Manim, prototype | CDC, Benefits of Quitting (risk halves in 5 to 10 years; near a non-smoker at 20) | a cigarette or pack on plain background |
-| Why does your tongue look furry? (papillae) | 3D | StatPearls, tongue anatomy | a real coated-tongue photo |
-| Why your tongue has a map (geographic tongue, harmless) | 3D | StatPearls, geographic tongue | a real geographic-tongue photo |
+| Quit smoking: your mouth at 1, 5 to 10 and 20 years | Manim, prototype | CDC, Benefits of Quitting (risk halves in 5 to 10 years; near a non-smoker at 20) | a cigarette or pack on plain background (have, 22 Nov) |
+| Why does your tongue look furry? (papillae) | 3D | StatPearls, tongue anatomy | a real coated-tongue photo (have, 22 Nov) |
+| Why your tongue has a map (geographic tongue, harmless) | 3D | StatPearls, geographic tongue | a real geographic-tongue photo (still needed: the 22 Nov photo is a fissured tongue) |
 | How a biopsy is taken, from inside the mouth | 3D | topics `biopsy` | none |
 | A white blood cell vs HPV | 3D | CDC (most infections clear) | none |
-| What a year of vaping does in your mouth: what is known and what is not | 3D | to research (ACS, CDC) | a vape on plain background |
+| What a year of vaping does in your mouth: what is known and what is not | 3D | to research (ACS, CDC) | a vape on plain background (have, 22 Nov; blur the printed model name) |
 | How much spit you make, and why dry mouth matters | Manim | to research (NIDCR) | none |
 | Why "about 15 times" is multiplication, not addition | Manim | Hashibe 2009 (needs the single-habit figures first) | none |
+| Drunk cigs: only smoking when you drink (Sat 2 Jan, built 22 Nov) | 3D | Berthiller et al., Int J Epidemiol 2016 (INHANCE, 19,660 cases): >0 to 3 a day, OR 1.52 (1.21 to 1.90), excess seen with 20+ years of smoking; NCI, Alcohol and Cancer Risk (alcohol thought to help the mouth absorb chemicals from smoke; combined harm multiplicative). Arithmetic: 4 a weekend is 208 a year, about 10 packs | your cigarette photo (have) |
+
+## Photos Ian has supplied
+
+Logged in `oralcheck-agent/assets/photos_from_ian/README.md` (the files stay local; the
+repo is public). Two need care: the grooved tongue is fissured, not geographic, and the
+white tongue with red dots is the "white strawberry" pattern seen with scarlet fever,
+so it must never be captioned as a harmless coated tongue.

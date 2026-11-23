@@ -725,8 +725,9 @@ Update both together. See `AGENTS.md`.
       quitting curve, Manim, Thu 28 Jan), both waiting on Ian's review. The
       calendar now runs four Instagram posts a week to 27 March (`post_calendar.py
       extend`); six generated Wednesday and Saturday ideas are flagged to replace
-      (repeats, or stale 2026 figures). **Blocked on Ian:** review the eight episodes;
-      real photos for the season 2 episodes (list in docs/MOUTH_NOTES.md).
+      (repeats, or stale 2026 figures; 2 Jan now replaced by drunk cigs). **Blocked on Ian:** review
+      the eleven episodes; photos still needed: a geographic tongue, and real thrush and
+      leukoplakia for the 3 Feb carousel (six others received 22 Nov).
 
 - [ ] **New reel formats: four samples, waiting on Ian's pick (2026-11-21).** Ian:
       "all those videos look the same". Prototyped under one series (working name
@@ -882,6 +883,8 @@ Newest first.
 - The two new lanes produced their first finished episodes, voiced and checked frame by frame. **3D (Blender):** the HPV vaccine as an empty copy of the virus. A real HPV shell of 72 five-sided parts is shown cut open around its DNA, the shell protein then builds the same shell with nothing inside, and Y-shaped antibodies bind to it (NCI). Capsomer placement is an even spread, not the exact lattice, and the on-screen source says so. **Math (Manim):** the extra mouth and throat cancer risk from smoking after quitting, through the CDC's two points (half by 5 to 10 years, close to a never-smoker by 20). The curve between those points is drawn, and a note on screen says it is illustrative.
 - In the calendar as built: Mon 25 Jan and Thu 28 Jan. A 34-second 3D episode takes about 25 minutes to render on the laptop.
 - The calendar runs four Instagram posts a week to 27 Mar 2027.
+- Ian sent six photos (cleared): two white-coated tongues, a fissured tongue, a cigarette, a vape and the Gardasil 9 vial. Logged in `oralcheck-agent/assets/photos_from_ian/README.md`; the files stay local because the repo is public. Two caught before use: the grooved tongue is fissured, not geographic, and one white tongue shows the "white strawberry" pattern seen with scarlet fever, so it can never be captioned as a harmless coated tongue. The vape's printed model name gets blurred.
+- New at Ian's request, for young people: **drunk cigs** (only smoking when you drink), 3D, the myth and the count, posting Sat 2 Jan in place of a flagged repeat. Four a weekend is about 10 packs a year; three or fewer a day carried about 1.5 times the head and neck cancer risk in the INHANCE pooled analysis (Berthiller 2016), with the excess seen after 20+ years; NCI says alcohol is thought to help the mouth absorb what is in smoke.
 
 ### 2026-11-21: the smokeless tobacco and HPV citations, actually live
 
