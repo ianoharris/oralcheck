@@ -130,13 +130,48 @@ def entry(cal: dict, eid: str) -> dict:
     raise HTTPException(404, f"No post {eid}")
 
 
+LATE_HOURS = 6                     # post_calendar.PUBLISH_LATE_HOURS: later than this, a post is held, not sent
+DISPATCHED = DATA / "dispatched.json"
+
+
+def _dispatch_due() -> None:
+    """Start the Instagram publish job at each approved post's time.
+
+    GitHub's own timer for publish-instagram.yml ('every 30 minutes') has been
+    running 3 or 4 times a day at random hours. On 23 Nov 2026 the gums reel came
+    due between two runs eight hours apart, passed the six-hour limit, and was held.
+    This PC is up all the time, so it starts the job itself; GitHub's timer stays as
+    a backup. A post still approved 20 minutes after a start is started again, until
+    it is sent or passes the limit."""
+    now = now_utc()
+    log = json.loads(DISPATCHED.read_text()) if DISPATCHED.exists() else {}
+    due = []
+    for e in load()["entries"]:
+        if e["network"] != "instagram" or e["status"] != "approved" or e.get("late_warned"):
+            continue
+        when = datetime.fromisoformat(e["when"])
+        if when <= now and now - when < timedelta(hours=LATE_HOURS) and e.get("publish_attempts", 0) < 3:
+            last = log.get(e["id"])
+            if not last or now - datetime.fromisoformat(last) > timedelta(minutes=20):
+                due.append(e["id"])
+    if not due:
+        return
+    r = subprocess.run(["gh", "workflow", "run", "publish-instagram.yml", "--repo", GH_REPO], capture_output=True, text=True)
+    STATE["dispatch"] = {"at": now.isoformat(), "posts": due, "ok": r.returncode == 0, "error": r.stderr.strip()[-200:]}
+    if r.returncode == 0:
+        for i in due:
+            log[i] = now.isoformat()
+        DISPATCHED.write_text(json.dumps(log, indent=1))
+
+
 def _puller() -> None:
     while True:
         try:
             pull()
+            _dispatch_due()
         except Exception as exc:  # noqa: BLE001
             STATE["pull_error"] = str(exc)[:300]
-        time.sleep(PULL_EVERY)
+        time.sleep(60)          # every minute, so a post goes out within a few minutes of its time
 
 
 # ---- derived state ----------------------------------------------------------------------
@@ -169,6 +204,10 @@ def needs(e: dict) -> list[dict]:
             out.append({"kind": "yesno", "id": a["id"], "q": a["q"]})
     if e["status"] == "built":
         out.append({"kind": "approve", "q": "Watch it and approve, redo or cut"})
+    if e["status"] == "approved" and e.get("late_warned"):
+        out.append({"kind": "missed", "q": "It missed its slot and was held. Post it now, or move it to a new time."})
+    elif e["status"] == "approved" and e.get("publish_attempts", 0) >= 3:
+        out.append({"kind": "missed", "q": "Instagram refused it three times: " + (e.get("publish_error") or "")[:200]})
     return out
 
 
@@ -318,6 +357,36 @@ def _upload(eid: str) -> str:
                 git("reset", "-q", "--hard", "origin/master", check=False)
                 return "Uploaded, but saving the upload flag failed; the next upload run will fix it."
     return "Approved and uploaded. It posts on its date."
+
+
+@app.post("/api/entry/{eid}/move")
+async def move(eid: str, request: Request):
+    """Give an approved post a new time ('now' or an ISO local time, Central), clearing a held or failed state."""
+    body = await request.json()
+    raw = (body.get("when") or "").strip()
+    if raw == "now":
+        when = now_utc() + timedelta(minutes=1)
+    else:
+        try:
+            when = datetime.fromisoformat(raw).replace(tzinfo=CT).astimezone(timezone.utc)
+        except ValueError:
+            raise HTTPException(400, "Pick a date and time.")
+        if when < now_utc() - timedelta(minutes=5):
+            raise HTTPException(400, "That time has passed.")
+    def fn(cal):
+        e = entry(cal, eid)
+        if e["status"] not in ("approved", "built", "planned"):
+            raise HTTPException(409, f"A {e['status']} post cannot be moved here.")
+        e["when"] = when.isoformat()
+        e["date"] = when.astimezone(CT).date().isoformat()
+        for k in ("late_warned", "publish_attempts", "publish_error"):
+            e.pop(k, None)
+        e.setdefault("notes", []).append(f"{_stamp()}: moved in the Studio to {when.astimezone(CT):%a %-d %b %-I:%M %p} CT.")
+    mutate(f"move {eid}", fn)
+    if raw == "now":
+        log = json.loads(DISPATCHED.read_text()) if DISPATCHED.exists() else {}
+        log.pop(eid, None); DISPATCHED.write_text(json.dumps(log))
+    return {"ok": True}
 
 
 @app.post("/api/entry/{eid}/undo")

@@ -214,6 +214,10 @@ function card(e){
   if(e.lane==="redo") body+=`<div class="note"><b>Waiting for Claude.</b> ${esc(e.review_note||"")} <span style="color:var(--muted)">· sent ${ago(e.redo_at)}</span></div>`;
   if(e.lane==="cut") body+=`<div class="note">${esc(e.cut_reason||"Cut")}</div>`;
   if(e.lane==="posted") body+=stats(e.insights, e);
+  const missed=e.needs.find(n=>n.kind==="missed");
+  if(missed) body+=`<div class="needs"><div class="need"><b>Missed its slot</b>${esc(missed.q)}
+    <div class="row"><button class="btn go small" data-move="now" data-eid="${esc(e.id)}">Post now</button>
+    <input type="datetime-local" data-movewhen="${esc(e.id)}" style="width:auto"><button class="btn small" data-move="pick" data-eid="${esc(e.id)}">Move to this time</button></div></div></div>`;
   if(e.asks.length && e.lane==="upcoming") body+=`<div class="needs">${e.asks.map(a=>askBox(e,a)).join("")}</div>`;
   if(e.caption) body+=`<details><summary>Caption</summary><pre>${esc(e.caption)}</pre></details>`;
   const acts=[];
@@ -289,6 +293,13 @@ document.addEventListener("click", async ev=>{
       return;
     }
     if(t.dataset.open){ const f=document.querySelector(`.form[data-form="${t.dataset.open}"][data-eid="${CSS.escape(t.dataset.eid)}"]`); f.classList.toggle("open"); f.querySelector("textarea")?.focus(); return; }
+    if(t.dataset.move){
+      const when = t.dataset.move==="now" ? "now" : document.querySelector(`[data-movewhen="${CSS.escape(t.dataset.eid)}"]`).value;
+      if(!when) return toast("Pick a date and time first.");
+      if(when==="now" && !confirm("Post this to Instagram in the next few minutes?")) return;
+      t.disabled=true; await post(`/api/entry/${encodeURIComponent(t.dataset.eid)}/move`,{when});
+      toast(when==="now"?"It goes out in the next few minutes.":"Moved. It posts at the new time."); return load(true);
+    }
     if(t.dataset.ans){ t.disabled=true; await post(`/api/entry/${encodeURIComponent(t.dataset.eid)}/ask/${encodeURIComponent(t.dataset.aid)}`,{answer:t.dataset.ans}); toast("Answer saved."); return load(true); }
     if(t.dataset.rm){ if(!confirm("Remove this photo?")) return; await api(`/api/entry/${encodeURIComponent(t.dataset.eid)}/photo/${encodeURIComponent(t.dataset.aid)}/${encodeURIComponent(t.dataset.rm)}`,{method:"DELETE"}); return load(true); }
     const act=t.dataset.act, eid=t.dataset.eid;
