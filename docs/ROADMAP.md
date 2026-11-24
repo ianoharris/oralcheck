@@ -778,6 +778,8 @@ Update both together. See `AGENTS.md`.
       `oralcheck-agent/anim/samples/milestone-test.mp4`.
       18 Nov: the count now also includes oralcheck.vercel.app (launch-week
       visitors), so it read 958, 42 to go.
+      24 Nov: 998 (50 countries, 44 states, 244 finished), 2 to go. Nothing
+      to do by hand: the next daily run at or over 1,000 builds and schedules it.
 
 - [ ] **Link Search Console to GA4 (blocked on Ian, five minutes, no code).**
       Raised by GA's own insights panel, 2026-10-28. The domain is already
