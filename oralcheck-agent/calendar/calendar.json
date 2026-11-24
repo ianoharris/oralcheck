@@ -720,7 +720,8 @@
       "uploaded": true,
       "notes": [
         "20 Nov 2026: new cold open from the Instagram audit (skip rate about 80%): the whole first line large on frame 0 over a moving picture, opening framing varied per reel."
-      ]
+      ],
+      "late_warned": true
     },
     {
       "id": "2026-11-25_li_image",
