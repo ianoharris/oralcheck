@@ -720,6 +720,8 @@ How it works, in plain terms:
 - Videos are rendered on the Mac (Blender needs a graphics chip the PC lacks) and
   copied to the PC after each build, so the app always shows the latest version.
 
+The Studio also starts the Instagram posting job at each post's time. GitHub's own timer, meant to run every half hour, in practice ran only three or four times a day, and on 23 November 2026 a reel missed its slot because of it. If a post is ever held or Instagram refuses it, it appears in Needs you with Post now and Move to.
+
 If the app ever looks stale, the dot by "Synced" turns orange with the reason.
 The service restarts itself on a crash or when its own code changes. An approved post whose date has already passed is skipped, not
 posted late. Reels still get the Telegram reminder to reshare them to a Story.
@@ -1287,6 +1289,7 @@ code generator, and copy-paste embed code.
 | An Instagram post did not go out, Telegram says it failed | Meta refused it, or the token expired | The message carries Meta's reason. It retries twice more; run "Diagnose Instagram Token" to see the connection's state |
 | Instagram posts go out late | GitHub started the half-hourly job late | Nothing to fix per post. If it is often more than an hour, tell Claude: the publishing job can move somewhere with a reliable clock |
 | A calendar date passes and nothing posts | The post was never approved in the Studio, or was approved after its date, or its media never reached the release (found 26 Oct 2026: nothing had been uploaded, so nothing was scheduled) | Approve in time; approved posts are uploaded with `post_calendar.py upload` |
+| An approved Instagram post shows "Missed its slot" in the Studio | It came due while nothing started the posting job (before 24 Nov 2026, GitHub's timer often ran hours apart) and was more than six hours late, so it was held rather than posted at a strange time | Press Post now, or pick a new time with Move to |
 | The Monday run ends "cancelled" | GitHub's 6-hour cap per job, found 2026-10-20 | Why the Monday schedule is paused and the calendar is used instead |
 | Every route 404s locally | Stale Turbopack cache | `rm -rf .next` |
 | The roadmap says a fix shipped, but the live site still has the old text | The fix was committed on a side branch (each Claude session works on its own) and never merged into master. Found 21 Nov 2026: the smokeless tobacco and HPV citation fix sat on a side branch for six weeks | Before calling something shipped, check the live page itself, and check that `git branch --contains <commit>` lists master |

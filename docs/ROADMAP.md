@@ -878,6 +878,12 @@ Update both together. See `AGENTS.md`.
 
 Newest first.
 
+### 2026-11-24: a missed reel, the posting timer moved to the PC, holiday posts
+
+- **Mon 23 Nov's gums reel never posted.** GitHub's "every 30 minutes" timer for `publish-instagram.yml` has really been running 3 or 4 times a day at random hours (the last 40 runs were 4 to 9 hours apart). The reel came due at 10am Central between runs at 6:16am and 6:16pm, passed the six-hour limit and was held, as designed. Earlier posts also went out hours after their slot. Fix: the Studio on the PC now starts the publish job itself at each post's time (every minute it checks what is due; GitHub's timer stays as a backup), and a held or refused post shows in Needs you with Post now and Move to. **Blocked on Ian:** when the held gums reel should go out.
+- **Happy holidays** (Ian: one pure greeting for Chanukah and Christmas, a short animated reel, mid-December): a silent 20-second reel for Wed 9 Dec, the sixth night of Chanukah (4 to 12 Dec 2026 per Hebcal). A hanukkiah lights (shamash first, eight candles added right to left), a tree's lights come on, then the thank-you; the end card is a greeting, not the risk-check pitch. Built, waiting on Ian.
+- **New Year's**: the approved 1 Jan self-exam reel is re-themed as "the easiest New Year's resolution to keep". The generated rewrite cut the exam to three areas and dropped the sides of the tongue, so it was scripted by hand instead: lips, cheeks, gums, sides of the tongue, floor of the mouth, roof, jaw and neck. Back for Ian's approval.
+
 ### 2026-11-23: OralCheck Studio, the posting calendar as an app
 
 - Ian asked to move the calendar off an artifact into an app on his PC hub that updates itself. Built `oralcheck-agent/studio/` (FastAPI and one page) and installed it on ianspc as a user service on 127.0.0.1:8797, the same pattern as his other PC apps. Tabs: Needs you, Coming up, Redo queue, Posted (with Instagram numbers), Cut, Ideas.
