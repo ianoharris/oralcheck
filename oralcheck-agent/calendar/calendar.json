@@ -764,6 +764,98 @@
       "scheduled_at": "2026-11-21T19:54:42.715963+00:00"
     },
     {
+      "id": "milestone-1000_in_reel",
+      "date": "2026-11-25",
+      "network": "instagram",
+      "media_type": "reel",
+      "when": "2026-11-25T16:00:00+00:00",
+      "status": "approved",
+      "idea": {
+        "title": "1,000 visitors: what they came asking",
+        "hook": "A thousand people have now visited OralCheck.",
+        "brief": "Milestone reel, built automatically by milestone.py from /api/reach on the day the count passed 1,000.",
+        "topic": "milestone",
+        "shape": "story",
+        "hook_style": "statement",
+        "tone": "calm",
+        "pillar": "screener_cta",
+        "media_type": "reel",
+        "calendar_ref": null,
+        "slug": "1000-visitors"
+      },
+      "event": {
+        "slug": "milestone-1000",
+        "name": "1,000 visitors",
+        "date": "2026-11-25"
+      },
+      "folder": "milestone-1000_in_reel",
+      "version": 1,
+      "uploaded": true,
+      "hook": "A thousand people have now visited OralCheck.",
+      "caption": "OralCheck just passed 1,000 visitors.\n\nThey came from 50 countries and 44 US states, and about 240 of them made it all the way through the screener to a result.\n\nThe question that brought the most people here from search was some version of: is this a canker sore, or something worse? The answer is time. Canker sores heal on their own. A sore, patch or lump that hasn't healed in two weeks needs a dentist or doctor to look at it.\n\nThank you to everyone who checked, and to everyone who sent it to someone else. It is free, private and takes about two minutes: oralcheck.org\n\nCounts are from Google Analytics for oralcheck.org. They are a floor: some visits, such as those with ad blockers, are never counted.",
+      "hashtags": [
+        "oralcancer",
+        "oralhealth",
+        "earlydetection",
+        "cancerawareness",
+        "oralcheck"
+      ],
+      "files": [
+        "reel.mp4"
+      ],
+      "review_note": "",
+      "notes": [
+        "Built 24 Nov 2026 from /api/reach: {\"users\": 1003, \"live\": true, \"countries\": 50, \"states\": 44, \"finished\": 244, \"asOf\": \"2026-11-24T18:19:31.274Z\"}"
+      ]
+    },
+    {
+      "id": "milestone-1000_li_reel",
+      "date": "2026-11-25",
+      "network": "linkedin",
+      "media_type": "reel",
+      "when": "2026-11-25T16:00:00+00:00",
+      "status": "scheduled",
+      "idea": {
+        "title": "1,000 visitors: what they came asking",
+        "hook": "A thousand people have now visited OralCheck.",
+        "brief": "Milestone reel, built automatically by milestone.py from /api/reach on the day the count passed 1,000.",
+        "topic": "milestone",
+        "shape": "story",
+        "hook_style": "statement",
+        "tone": "calm",
+        "pillar": "screener_cta",
+        "media_type": "reel",
+        "calendar_ref": null,
+        "slug": "1000-visitors"
+      },
+      "event": {
+        "slug": "milestone-1000",
+        "name": "1,000 visitors",
+        "date": "2026-11-25"
+      },
+      "folder": "milestone-1000_li_reel",
+      "version": 1,
+      "uploaded": true,
+      "hook": "A thousand people have now visited OralCheck.",
+      "caption": "OralCheck just passed 1,000 visitors.\n\nThey came from 50 countries and 44 US states, and about 240 of them made it all the way through the screener to a result.\n\nThe question that brought the most people here from search was some version of: is this a canker sore, or something worse? The answer is time. Canker sores heal on their own. A sore, patch or lump that hasn't healed in two weeks needs a dentist or doctor to look at it.\n\nThank you to everyone who checked, and to everyone who sent it to someone else. It is free, private and takes about two minutes: oralcheck.org\n\nCounts are from Google Analytics for oralcheck.org. They are a floor: some visits, such as those with ad blockers, are never counted.",
+      "hashtags": [
+        "oralcancer",
+        "oralhealth",
+        "earlydetection",
+        "cancerawareness",
+        "oralcheck"
+      ],
+      "files": [
+        "reel.mp4"
+      ],
+      "review_note": "",
+      "notes": [
+        "Built 24 Nov 2026 from /api/reach: {\"users\": 1003, \"live\": true, \"countries\": 50, \"states\": 44, \"finished\": 244, \"asOf\": \"2026-11-24T18:19:31.274Z\"}"
+      ],
+      "publora_id": "6b0616b34e9d16278e2a7443",
+      "scheduled_at": "2026-11-24T22:58:54.221726+00:00"
+    },
+    {
       "id": "2026-11-26_in_carousel",
       "date": "2026-11-26",
       "network": "instagram",
