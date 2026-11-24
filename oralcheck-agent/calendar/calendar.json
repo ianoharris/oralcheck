@@ -1153,6 +1153,46 @@
       "review_note": "This post is super boring"
     },
     {
+      "id": "2026-12-09_in_holidays",
+      "date": "2026-12-09",
+      "network": "instagram",
+      "media_type": "reel",
+      "when": "2026-12-09T16:00:00+00:00",
+      "status": "built",
+      "idea": {
+        "title": "Happy holidays (Chanukah and Christmas)",
+        "hook": "Happy holidays.",
+        "brief": "A pure greeting, silent reel: a hanukkiah lighting (sixth night of Chanukah, 4 to 12 Dec 2026) and a tree's lights coming on, then a thank-you. Scene anim/holidays.html.",
+        "topic": "holiday_greeting",
+        "shape": "greeting",
+        "hook_style": "statement",
+        "tone": "warm",
+        "pillar": "community",
+        "media_type": "reel",
+        "calendar_ref": null,
+        "slug": "2026-12-09_in_holidays"
+      },
+      "folder": "2026-12-09_in_holidays",
+      "version": 1,
+      "uploaded": false,
+      "hook": "Happy holidays.",
+      "caption": "Happy holidays.\n\nTo everyone lighting candles this week, and everyone stringing up lights: thank you for watching, sharing, and looking out for each other. See you in the new year.",
+      "hashtags": [
+        "happyholidays",
+        "hanukkah",
+        "chanukah",
+        "christmas",
+        "oralcheck"
+      ],
+      "files": [
+        "reel.mp4"
+      ],
+      "review_note": "",
+      "notes": [
+        "24 Nov 2026: Ian asked for one happy holidays post for Chanukah and Christmas, a pure greeting, short animated reel, mid-December."
+      ]
+    },
+    {
       "id": "2026-12-11_in_carousel",
       "date": "2026-12-10",
       "network": "instagram",
@@ -1861,11 +1901,11 @@
       "network": "instagram",
       "media_type": "reel",
       "when": "2027-01-01T23:00:00+00:00",
-      "status": "approved",
+      "status": "built",
       "idea": {
-        "title": "Two-minute oral self-exam you can do right now",
-        "hook": "Get a mirror and find a light source.",
-        "brief": "Each shot covers one area in the order a clinician would move through it: face and neck, lips, cheeks, gums, tongue top, tongue sides, tongue underside, floor of the mouth, roof of the mouth, then throat. On screen text for each shot names the area and tells the viewer exactly what to look for: anything new, a patch, a sore, a lump, or a colour change. The final frame holds on a plain slate: once a month, every month, oralcheck.org/learn/self-exam.",
+        "title": "New Year's: the two-minute self-exam, once a month",
+        "hook": "The easiest New Year's resolution to keep: two minutes, once a month.",
+        "brief": "New Year's Day framing: the self-exam as the easiest resolution to keep. First line, on screen from frame 0, exactly: \"The easiest New Year's resolution to keep: two minutes, once a month.\" Then each shot covers one area in the order a clinician would move through it: face and neck, lips, cheeks, gums, tongue top, tongue sides, tongue underside, floor of the mouth, roof of the mouth, then throat; on-screen text names the area and what to look for (anything new: a patch, a sore, a lump, a colour change). Last line: once a month, every month; anything still there after two weeks gets checked. Calm, a little wit, no party clich\u00e9s.",
         "topic": "monthly_self_exam",
         "shape": "self_check",
         "hook_style": "instruction",
@@ -1881,25 +1921,29 @@
         "date": "2027-01-01"
       },
       "folder": "2027-01-01_in_reel",
-      "version": 3,
-      "uploaded": true,
-      "hook": "Get a mirror and find a light source.",
-      "caption": "This takes about two minutes, once a month, with a mirror and a good light. Move through the inside of your cheek, your tongue, the roof of your mouth, and under your jaw, looking for anything that's new: a patch, a sore, a lump, or a colour change. If something stays beyond two weeks, get it checked by a clinician. Learn the full exam at oralcheck.org/learn/self-exam.\n\nIllustration based on Z-Anatomy (CC BY-SA 4.0) and BodyParts3D (CC BY-SA 2.1 JP). Shared under CC BY-SA 4.0.",
+      "version": 5,
+      "uploaded": false,
+      "hook": "The easiest New Year's resolution to keep: two minutes, once a month.",
+      "caption": "The easiest New Year's resolution to keep: two minutes, once a month.\n\nGrab a mirror and a good light. Check your lips, the inside of both cheeks, your gums, both sides of your tongue, the floor of your mouth under it, and the roof of your mouth, then feel along your jaw and neck. You're looking for anything new: a patch, a sore, a lump, or a colour change. Most things are nothing. Anything still there after two weeks gets checked.\n\nThe full exam: oralcheck.org/learn/self-exam\n\nIllustration based on Z-Anatomy (CC BY-SA 4.0) and BodyParts3D (CC BY-SA 2.1 JP). Shared under CC BY-SA 4.0.",
       "hashtags": [
         "oralcancer",
         "oralhealth",
-        "selfexam",
-        "earlydection",
+        "selfcheck",
+        "newyearsresolution",
         "oralcheck"
       ],
       "files": [
         "reel.mp4"
       ],
-      "review_note": "Rebuilt on the illustrated plates; the 3D model is retired. A line about feeling under the jaw shows the neck.",
+      "review_note": "",
       "approved_at": "2026-11-23T17:51:30.399402+00:00",
       "notes": [
-        "23 Nov 2026: approved in the Studio."
-      ]
+        "23 Nov 2026: approved in the Studio.",
+        "24 Nov 2026: re-themed for New Year's at Ian's request; back to review after the rebuild.",
+        "24 Nov 2026: v4 (generated) cut the exam to three areas, so v5 is scripted by hand: all seven areas in order, no lesion drawn. Back for Ian's approval."
+      ],
+      "redo_from": "approved",
+      "redo_at": "2026-11-24T08:00:00+00:00"
     },
     {
       "id": "2027-01-02_in_short",

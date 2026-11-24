@@ -1,0 +1,138 @@
+<!doctype html>
+<!--
+  Happy holidays (24 Nov 2026), a pure greeting for Chanukah and Christmas, posted
+  Wed 9 Dec 2026 (the sixth night of Chanukah, which runs 4 to 12 Dec). Silent: the
+  scene draws all the text; music only.
+  Shots: hook (snow, the greeting); candles (a hanukkiah: eight candles in a row,
+  the shamash set apart and higher, lit first; the eight flames appear right to
+  left, one per night); tree (string lights come on along a stylized tree, star on
+  top); thanks (both together, the thank-you line); cta (the greeting end card).
+  House colours: teal objects, coral and amber light, paper background. No people.
+-->
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="house.css">
+<style>
+  #stage svg{display:block;width:1080px;height:1000px}
+  #txt{position:absolute;left:72px;right:72px;top:1250px;height:560px;pointer-events:none;z-index:3}
+  .line{position:absolute;left:0;right:0;font-family:"DM Serif Display",serif;color:#15201f;line-height:1.04}
+  .line span{display:inline-block;margin-right:.22em}
+  .big{font-size:122px;text-align:center;white-space:nowrap}
+  .mid{font-size:64px}
+</style></head>
+<body>
+<div id="stage"><svg viewBox="0 0 1080 1000"></svg></div><div id="txt"></div>
+<script type="module">
+import {PLAN, at, frame, span, ease, lerp} from "./house.js";
+const NS = "http://www.w3.org/2000/svg";
+const svg = document.querySelector("#stage svg"), txt = document.getElementById("txt");
+const el = (tag, attrs, parent = svg) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent.appendChild(e); return e; };
+const TEAL = "#0d7377", TEAL_L = "#5aa8a9", CORAL = "#e8634a", AMBER = "#f2b24c", IVORY = "#f1ece2", INK = "#15201f";
+let seed = 11; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+
+// glow filter for flames and bulbs
+const defs = el("defs", {});
+const f = el("filter", {id: "glow", x: "-100%", y: "-100%", width: "300%", height: "300%"}, defs);
+el("feGaussianBlur", {stdDeviation: 7, result: "b"}, f);
+const m = el("feMerge", {}, f); el("feMergeNode", {in: "b"}, m); el("feMergeNode", {in: "SourceGraphic"}, m);
+
+// snow, everywhere, all the time
+const snow = [...Array(70)].map(() => ({x: rnd() * 1080, y: rnd() * 1000, r: 3 + rnd() * 6, v: 30 + rnd() * 50, w: rnd() * 6.28,
+  node: el("circle", {r: 4, fill: "#ffffff", stroke: "#dfe3e2", "stroke-width": 1, opacity: .9})}));
+
+// ---- the hanukkiah (left group) ----
+const men = el("g", {});
+const MX = 0, BASE = 760;
+el("path", {d: `M${MX - 70},${BASE + 70} L${MX + 70},${BASE + 70} L${MX + 40},${BASE + 40} L${MX - 40},${BASE + 40} Z`, fill: TEAL}, men);   // foot
+el("rect", {x: MX - 9, y: 560, width: 18, height: BASE - 520, fill: TEAL, rx: 6}, men);                                                   // stem
+el("rect", {x: MX - 330, y: 548, width: 660, height: 22, fill: TEAL, rx: 11}, men);                                                       // bar
+const CANDLE_X = [-300, -230, -160, -90, 90, 160, 230, 300];   // eight in a row, the gap in the middle for the shamash
+const candles = [];
+for (const dx of CANDLE_X) {
+  el("rect", {x: MX + dx - 14, y: 470, width: 28, height: 80, fill: IVORY, stroke: "#d8cfbd", "stroke-width": 2, rx: 4}, men);
+  const fl = el("path", {d: "M0,0 C-14,-18 -10,-38 0,-58 C10,-38 14,-18 0,0 Z", fill: AMBER, filter: "url(#glow)", opacity: 0}, men);
+  candles.push({x: MX + dx, y: 470, fl});
+}
+// the shamash: set apart and higher, in the middle
+el("rect", {x: MX - 12, y: 380, width: 24, height: 180, fill: TEAL, rx: 6}, men);
+el("rect", {x: MX - 15, y: 330, width: 30, height: 70, fill: IVORY, stroke: "#d8cfbd", "stroke-width": 2, rx: 4}, men);
+const shamash = {x: MX, y: 330, fl: el("path", {d: "M0,0 C-14,-18 -10,-38 0,-58 C10,-38 14,-18 0,0 Z", fill: CORAL, filter: "url(#glow)", opacity: 0}, men)};
+
+// ---- the tree (right group) ----
+const tree = el("g", {});
+const TB = 820;
+el("rect", {x: -26, y: TB - 10, width: 52, height: 60, fill: "#8a6a4a", rx: 6}, tree);
+[[0, TB - 10, 260, 230], [0, TB - 180, 210, 210], [0, TB - 330, 160, 190], [0, TB - 460, 110, 170]].forEach(([x, y, w, h], i) =>
+  el("path", {d: `M${x - w},${y} Q${x},${y + 26} ${x + w},${y} L${x},${y - h} Z`, fill: i % 2 ? TEAL : "#0b6266"}, tree));
+const star = el("path", {d: starPath(0, TB - 640, 42, 18), fill: AMBER, filter: "url(#glow)", opacity: 0}, tree);
+// string lights along four swags
+const bulbs = [];
+const swags = [[TB - 90, 210], [TB - 240, 170], [TB - 380, 125], [TB - 505, 80]];
+swags.forEach(([y, w], si) => {
+  const path = el("path", {d: `M${-w},${y - 40} Q0,${y + 30} ${w},${y - 70}`, fill: "none", stroke: "#2e4a49", "stroke-width": 3, opacity: .7}, tree);
+  const n = 7 - si;
+  for (let i = 0; i < n; i++) {
+    const p = path.getPointAtLength(path.getTotalLength() * (i + 0.5) / n);
+    const c = [CORAL, AMBER, IVORY][(i + si) % 3];
+    bulbs.push({node: el("circle", {cx: p.x, cy: p.y + 8, r: 11, fill: c, filter: "url(#glow)", opacity: 0}, tree), order: bulbs.length, ph: rnd() * 6.28});
+  }
+});
+function starPath(cx, cy, R, r) { let d = ""; for (let i = 0; i < 10; i++) { const a = -Math.PI / 2 + i * Math.PI / 5, q = i % 2 ? r : R; d += (i ? "L" : "M") + (cx + q * Math.cos(a)).toFixed(1) + "," + (cy + q * Math.sin(a)).toFixed(1); } return d + "Z"; }
+
+// ---- text ----
+const LINES = {
+  hook: {t: "Happy holidays.", cls: "big", y: 40},
+  candles: {t: "To everyone lighting candles this week,", cls: "mid", y: 20},
+  tree: {t: "and everyone stringing up lights,", cls: "mid", y: 20},
+  thanks: {t: "thank you for watching, sharing, and looking out for each other.", cls: "mid", y: 20},
+};
+const tnodes = {};
+for (const k in LINES) {
+  const d = document.createElement("div"); d.className = "line " + LINES[k].cls; d.style.top = LINES[k].y + "px";
+  d.innerHTML = LINES[k].t.split(" ").map(w => `<span>${w}</span>`).join(""); txt.append(d); tnodes[k] = d;
+}
+
+const T = Object.fromEntries(PLAN.shots.map(s => [s.key, s.t0])), L = Object.fromEntries(PLAN.shots.map(s => [s.key, s.len]));
+window.render = (t) => {
+  // snow drifts down and sways
+  for (const s of snow) {
+    const y = (s.y + t * s.v) % 1040 - 20, x = s.x + 14 * Math.sin(t * 0.8 + s.w);
+    s.node.setAttribute("cx", x); s.node.setAttribute("cy", y); s.node.setAttribute("r", s.r);
+  }
+  // where the two groups stand: together (hook), menorah centre (candles), tree centre (tree), together (thanks)
+  const s1 = ease(span(t, T.candles - 0.3, T.candles + 0.7)), s2 = ease(span(t, T.tree - 0.3, T.tree + 0.7)),
+        s3 = ease(span(t, T.thanks - 0.3, T.thanks + 0.9));
+  const pick = (B, M, Tr) => B.map((_, i) => lerp(lerp(lerp(B[i], M[i], s1), Tr[i], s2), B[i], s3));
+  const [mx, ms] = pick([305, 0.74], [540, 1.22], [-460, 1.22]);
+  const [tx, ts] = pick([800, 0.86], [1620, 1.18], [540, 1.18]);
+  men.setAttribute("transform", `translate(${mx} ${520 - 551 * ms}) scale(${ms})`);
+  tree.setAttribute("transform", `translate(${tx} ${520 - 500 * ts}) scale(${ts})`);
+  const hook = 1 - s1;
+  // shamash first, then the eight, right to left, one per night
+  const c0 = T.candles + 0.4;
+  shamash.fl.setAttribute("opacity", span(t, c0, c0 + 0.3));
+  shamash.fl.setAttribute("transform", `translate(${shamash.x} ${shamash.y}) scale(${1 + 0.06 * Math.sin(t * 9)} ${1 + 0.1 * Math.sin(t * 7)})`);
+  candles.slice().reverse().forEach((c, i) => {
+    const k = span(t, c0 + 0.45 + i * 0.32, c0 + 0.7 + i * 0.32);
+    c.fl.setAttribute("opacity", k);
+    c.fl.setAttribute("transform", `translate(${c.x} ${c.y}) scale(${k * (1 + 0.06 * Math.sin(t * 9 + i))} ${k * (1 + 0.1 * Math.sin(t * 7 + i * 1.7))})`);
+  });
+  // tree lights come on along the string, bottom to top, then twinkle
+  const b0 = T.tree + 0.6;
+  bulbs.forEach(b => {
+    const k = span(t, b0 + b.order * 0.09, b0 + b.order * 0.09 + 0.2);
+    b.node.setAttribute("opacity", k * (0.75 + 0.25 * Math.sin(t * 3 + b.ph)));
+  });
+  star.setAttribute("opacity", span(t, b0 + bulbs.length * 0.09, b0 + bulbs.length * 0.09 + 0.4));
+  // text: each line comes in word by word and leaves before the next
+  for (const k in LINES) {
+    const t0 = T[k], t1 = t0 + L[k], d = tnodes[k];
+    const out = k === "thanks" ? span(t, T.cta - 0.2, T.cta + 0.3) : span(t, t1 - 0.35, t1);
+    d.style.opacity = (k === "hook" ? 1 : span(t, t0 - 0.05, t0 + 0.2)) * (1 - out);
+    d.querySelectorAll("span").forEach((w, j) => {
+      const kk = k === "hook" ? 1 : ease(span(t, t0 + j * 0.07, t0 + j * 0.07 + 0.35));
+      w.style.opacity = kk; w.style.transform = `translateY(${(1 - kk) * 24}px)`;
+    });
+  }
+  return frame(t);
+};
+</script>
+</body></html>

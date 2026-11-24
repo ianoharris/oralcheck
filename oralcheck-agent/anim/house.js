@@ -34,6 +34,11 @@ document.body.insertAdjacentHTML("beforeend", UI);
 $("credit").textContent = PLAN.credit || "";
 if (PLAN.series) $("series").innerHTML = `${PLAN.series.name}<b>${PLAN.series.ep || ""}</b>`;
 $("foot").textContent = PLAN.foot || "";
+if (PLAN.cta) {   // a scene can replace the end card (e.g. a pure greeting with no risk-check pitch)
+  const c = PLAN.cta, card = $("cta");
+  card.querySelector(".k").textContent = c.k || ""; card.querySelector(".h").textContent = c.h || "";
+  card.querySelector(".u").textContent = c.u || ""; card.querySelector(".s").textContent = c.s || "";
+}
 
 /** The shot at time t: {i, sh, prev, local, k} where k runs 0..1 through the shot. */
 export function at(t) {

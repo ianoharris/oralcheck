@@ -279,6 +279,22 @@ SCRIPTS = {
         foot="Illustration for education. Not reviewed by a clinician.", foot_on=["count", "study", "years", "drink"],
         series={"name": SERIES, "ep": "How it works · 07"},
     ),
+    # Happy holidays (24 Nov 2026), Ian's choice: one pure greeting for Chanukah (4 to 12 Dec 2026, Hebcal) and
+    # Christmas, posted Wed 9 Dec (sixth night of Chanukah). No health content; the end card is a greeting.
+    # The hanukkiah is drawn with eight candles in a row and the shamash set apart and higher; candles appear
+    # right to left, the way one is added each night.
+    "holidays": dict(
+        silent=True,
+        lines=[
+            {"key": "hook", "say": "Happy holidays.", "len": 3.0},
+            {"key": "candles", "say": "To everyone lighting candles this week,", "len": 4.4},
+            {"key": "tree", "say": "and everyone stringing up lights,", "len": 4.0},
+            {"key": "thanks", "say": "thank you for watching, sharing, and looking out for each other.", "len": 4.4},
+            {"key": "cta", "say": "", "len": 3.8},
+        ],
+        credit="",
+        cta={"k": "OralCheck", "h": "Happy holidays.", "u": "See you in the new year.", "s": ""},
+    ),
     # Mouth Notes, math lane prototype (22 Nov 2026). CDC, Benefits of Quitting Smoking.
     "quit": dict(
         manim=("quit.py", "Quit"),
@@ -424,7 +440,8 @@ def build(scene: str, out_path: str, *, tts, music: str | None = None, workdir: 
     shots = [{"key": l["key"], "eyebrow": l["eyebrow"], "t0": round(t0, 3), "len": round(n, 3), "words": w}
              for l, (t0, n), w in zip(lines, timing, words)]
     plan = {"shots": shots, "cta_t0": shots[-1]["t0"], "credit": spec["credit"], "foot": spec.get("foot", ""),
-            "foot_on": spec.get("foot_on", []), "data": spec.get("data", {}), "series": spec.get("series")}
+            "foot_on": spec.get("foot_on", []), "data": spec.get("data", {}), "series": spec.get("series"),
+            "cta": spec.get("cta")}
     events = [("glide", max(0.0, s["t0"] - 0.15)) for s in shots[1:]] + [("settle", shots[-1]["t0"] + 0.1)]
     video = os.path.join(workdir, "video.mp4")
     page = scene
@@ -481,7 +498,8 @@ def build_silent(scene: str, out_path: str, *, music: str | None, workdir: str |
         t += l["len"]
     total = t
     plan = {"shots": shots, "cta_t0": shots[-1]["t0"], "credit": spec["credit"], "foot": spec.get("foot", ""),
-            "foot_on": spec.get("foot_on", []), "data": spec.get("data", {}), "series": spec.get("series")}
+            "foot_on": spec.get("foot_on", []), "data": spec.get("data", {}), "series": spec.get("series"),
+            "cta": spec.get("cta")}
     video = os.path.join(workdir, "video.mp4")
     render(scene, plan, total, video)
     events = [("glide", max(0.0, s["t0"] - 0.15)) for s in shots[1:]] + [("settle", shots[-1]["t0"] + 0.1)]
