@@ -30,7 +30,7 @@ jobs:
         with:
           python-version: '3.11'
       - name: Install Python deps
-        run: pip install anthropic httpx pillow python-dotenv playwright && sudo apt-get install -y ffmpeg >/dev/null
+        run: pip install anthropic httpx pillow python-dotenv playwright && sudo apt-get update -qq && sudo apt-get install -y ffmpeg >/dev/null
       - name: Publish what is due
         env:
           PYTHONUNBUFFERED: '1'
