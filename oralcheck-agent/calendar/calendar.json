@@ -61,8 +61,8 @@
       "when": "2026-10-27T15:00:00+00:00",
       "status": "scheduled",
       "idea": {
-        "title": "Banned at the Brewers\u2019 ballpark since 2016",
-        "hook": "One thing has been banned at the Brewers\u2019 ballpark since 2016.",
+        "title": "Banned at the Brewers’ ballpark since 2016",
+        "hook": "One thing has been banned at the Brewers’ ballpark since 2016.",
         "brief": "World Series week (Brewers v Rays). Milwaukee's 2016 smokeless tobacco ban at city sports venues (WUWM), MLB's ban for new players nine days later (SI), why (NCI: causes oral cancer; ACS: leukoplakia often where it is held between teeth and gums), and what to check. Hand-built by Claude at Ian's request, 26 Oct; Ian chose team colours and the logo.",
         "topic": "tobacco_all_forms",
         "shape": "story",
@@ -79,8 +79,8 @@
       "folder": "2026-10-27_in_carousel",
       "version": 1,
       "uploaded": true,
-      "hook": "One thing has been banned at the Brewers\u2019 ballpark since 2016.",
-      "caption": "Since November 2016, smokeless tobacco has been banned at every sports venue in Milwaukee, the Brewers\u2019 ballpark included. The Common Council voted 14 to 1, and the Brewers backed it. Nine days later, Major League Baseball banned it for every new player.\n\nThe reason is in the mouth. Chewing tobacco causes oral cancer. Gray-white patches called leukoplakia are often found where it sits between the teeth and gums, and they can become cancer.\n\nIf you dip, pull your lower lip down and look at that spot. A patch still there after two weeks is worth showing a dentist. Check your own risk, free and private, at oralcheck.org.\n\nGame 4 is tonight. Go Brewers.\n\nNot affiliated with or endorsed by the Milwaukee Brewers or Major League Baseball.\n\nIllustration based on Z-Anatomy (CC BY-SA 4.0) and BodyParts3D (CC BY-SA 2.1 JP). Shared under CC BY-SA 4.0.\n\nSources:\nWUWM, 22 Nov 2016. https://www.wuwm.com/regional/2016-11-22/milwaukee-to-ban-smokeless-tobacco-at-sports-venues-including-miller-park\nSports Illustrated, 1 Dec 2016. https://www.si.com/mlb/2016/12/01/mlb-bans-smokeless-tobacco-new-players-cba\nNational Cancer Institute. https://www.cancer.gov/about-cancer/causes-prevention/risk/tobacco/smokeless-fact-sheet\nAmerican Cancer Society. https://www.cancer.org/cancer/risk-prevention/tobacco/smokeless-tobacco.html",
+      "hook": "One thing has been banned at the Brewers’ ballpark since 2016.",
+      "caption": "Since November 2016, smokeless tobacco has been banned at every sports venue in Milwaukee, the Brewers’ ballpark included. The Common Council voted 14 to 1, and the Brewers backed it. Nine days later, Major League Baseball banned it for every new player.\n\nThe reason is in the mouth. Chewing tobacco causes oral cancer. Gray-white patches called leukoplakia are often found where it sits between the teeth and gums, and they can become cancer.\n\nIf you dip, pull your lower lip down and look at that spot. A patch still there after two weeks is worth showing a dentist. Check your own risk, free and private, at oralcheck.org.\n\nGame 4 is tonight. Go Brewers.\n\nNot affiliated with or endorsed by the Milwaukee Brewers or Major League Baseball.\n\nIllustration based on Z-Anatomy (CC BY-SA 4.0) and BodyParts3D (CC BY-SA 2.1 JP). Shared under CC BY-SA 4.0.\n\nSources:\nWUWM, 22 Nov 2016. https://www.wuwm.com/regional/2016-11-22/milwaukee-to-ban-smokeless-tobacco-at-sports-venues-including-miller-park\nSports Illustrated, 1 Dec 2016. https://www.si.com/mlb/2016/12/01/mlb-bans-smokeless-tobacco-new-players-cba\nNational Cancer Institute. https://www.cancer.gov/about-cancer/causes-prevention/risk/tobacco/smokeless-fact-sheet\nAmerican Cancer Society. https://www.cancer.org/cancer/risk-prevention/tobacco/smokeless-tobacco.html",
       "hashtags": [
         "brewers",
         "worldseries",
@@ -274,7 +274,7 @@
         "hpv",
         "throatcancer",
         "oralhealth",
-        "earlyd\u0435\u0442\u0435\u0441tion"
+        "earlydетесtion"
       ],
       "files": [
         "image.jpg"
@@ -768,7 +768,7 @@
       "date": "2026-11-25",
       "network": "instagram",
       "media_type": "reel",
-      "when": "2026-11-25T16:00:00+00:00",
+      "when": "2026-11-27T00:06:00+00:00",
       "status": "approved",
       "idea": {
         "title": "1,000 visitors: what they came asking",
@@ -806,7 +806,8 @@
       "review_note": "",
       "notes": [
         "Built 24 Nov 2026 from /api/reach: {\"users\": 1003, \"live\": true, \"countries\": 50, \"states\": 44, \"finished\": 244, \"asOf\": \"2026-11-24T18:19:31.274Z\"}"
-      ]
+      ],
+      "publish_attempts": 0
     },
     {
       "id": "milestone-1000_li_reel",
@@ -1313,7 +1314,7 @@
       "hashtags": [
         "oralcancer",
         "oralhealth",
-        "earlyd\u0435\u0442ection",
+        "earlydетection",
         "cancerscreening",
         "oralcheck"
       ],
@@ -1423,7 +1424,7 @@
       "idea": {
         "title": "Mouth Notes: why most HPV never becomes cancer",
         "hook": "Most adults catch HPV. Almost none get cancer from it. Here is why.",
-        "brief": "Mouth Notes ep. 1, How it works \u00b7 01. Scene anim/hpvclear.html; script and sources in docs/MOUTH_NOTES.md.",
+        "brief": "Mouth Notes ep. 1, How it works · 01. Scene anim/hpvclear.html; script and sources in docs/MOUTH_NOTES.md.",
         "topic": "hpv_is_common",
         "shape": "mouth_notes",
         "hook_style": "statement",
@@ -1433,7 +1434,7 @@
         "calendar_ref": null,
         "slug": "2026-12-14_in_mn01",
         "series": "Mouth Notes",
-        "episode": "How it works \u00b7 01",
+        "episode": "How it works · 01",
         "scene": "hpvclear"
       },
       "folder": "2026-12-14_in_mn01",
@@ -1540,7 +1541,7 @@
       "idea": {
         "title": "Mouth Notes: five habits ranked by how much they multiply risk",
         "hook": "Five habits, ranked by how much they multiply your risk of oral cancer.",
-        "brief": "Mouth Notes ep. 2, Ranked \u00b7 01. Scene anim/levels.html; script and sources in docs/MOUTH_NOTES.md.",
+        "brief": "Mouth Notes ep. 2, Ranked · 01. Scene anim/levels.html; script and sources in docs/MOUTH_NOTES.md.",
         "topic": "tobacco_plus_alcohol",
         "shape": "mouth_notes",
         "hook_style": "statement",
@@ -1550,7 +1551,7 @@
         "calendar_ref": null,
         "slug": "2026-12-17_in_mn02",
         "series": "Mouth Notes",
-        "episode": "Ranked \u00b7 01",
+        "episode": "Ranked · 01",
         "scene": "levels"
       },
       "folder": "2026-12-17_in_mn02",
@@ -1651,7 +1652,7 @@
       "idea": {
         "title": "Mouth Notes: powers of ten, smile to DNA",
         "hook": "Let's zoom from your smile to a single strand of DNA.",
-        "brief": "Mouth Notes ep. 3, How it works \u00b7 02. Scene anim/powers.html; script and sources in docs/MOUTH_NOTES.md.",
+        "brief": "Mouth Notes ep. 3, How it works · 02. Scene anim/powers.html; script and sources in docs/MOUTH_NOTES.md.",
         "topic": "tongue_sides",
         "shape": "mouth_notes",
         "hook_style": "statement",
@@ -1661,7 +1662,7 @@
         "calendar_ref": null,
         "slug": "2026-12-21_in_mn03",
         "series": "Mouth Notes",
-        "episode": "How it works \u00b7 02",
+        "episode": "How it works · 02",
         "scene": "powers"
       },
       "folder": "2026-12-21_in_mn03",
@@ -1769,7 +1770,7 @@
       "idea": {
         "title": "Mouth Notes: three spots, one reason to book now",
         "hook": "Three spots in a mouth. Only one is a reason to book a dentist now.",
-        "brief": "Mouth Notes ep. 4, Guess \u00b7 01. Scene anim/quiz.html; script and sources in docs/MOUTH_NOTES.md.",
+        "brief": "Mouth Notes ep. 4, Guess · 01. Scene anim/quiz.html; script and sources in docs/MOUTH_NOTES.md.",
         "topic": "red_patch",
         "shape": "mouth_notes",
         "hook_style": "statement",
@@ -1779,7 +1780,7 @@
         "calendar_ref": null,
         "slug": "2026-12-24_in_mn04",
         "series": "Mouth Notes",
-        "episode": "Guess \u00b7 01",
+        "episode": "Guess · 01",
         "scene": "quiz"
       },
       "folder": "2026-12-24_in_mn04",
@@ -1862,7 +1863,7 @@
       "idea": {
         "title": "Mouth Notes: life of a mouth cell",
         "hook": "Your cheek lining replaces itself about every two weeks.",
-        "brief": "Mouth Notes ep. 5, How it works \u00b7 03. Scene anim/lifecell.html; script and sources in docs/MOUTH_NOTES.md.",
+        "brief": "Mouth Notes ep. 5, How it works · 03. Scene anim/lifecell.html; script and sources in docs/MOUTH_NOTES.md.",
         "topic": "white_patch",
         "shape": "mouth_notes",
         "hook_style": "statement",
@@ -1872,7 +1873,7 @@
         "calendar_ref": null,
         "slug": "2026-12-28_in_mn05",
         "series": "Mouth Notes",
-        "episode": "How it works \u00b7 03",
+        "episode": "How it works · 03",
         "scene": "lifecell"
       },
       "folder": "2026-12-28_in_mn05",
@@ -1954,7 +1955,7 @@
       "idea": {
         "title": "Mouth Notes: before you google that spot",
         "hook": "Before you google that spot in your mouth.",
-        "brief": "Mouth Notes ep. 6, Read it \u00b7 01. Scene anim/silent.html; script and sources in docs/MOUTH_NOTES.md.",
+        "brief": "Mouth Notes ep. 6, Read it · 01. Scene anim/silent.html; script and sources in docs/MOUTH_NOTES.md.",
         "topic": "lookalikes",
         "shape": "mouth_notes",
         "hook_style": "statement",
@@ -1964,7 +1965,7 @@
         "calendar_ref": null,
         "slug": "2026-12-31_in_mn06",
         "series": "Mouth Notes",
-        "episode": "Read it \u00b7 01",
+        "episode": "Read it · 01",
         "scene": "silent"
       },
       "folder": "2026-12-31_in_mn06",
@@ -1997,7 +1998,7 @@
       "idea": {
         "title": "New Year's: the two-minute self-exam, once a month",
         "hook": "The easiest New Year's resolution to keep: two minutes, once a month.",
-        "brief": "New Year's Day framing: the self-exam as the easiest resolution to keep. First line, on screen from frame 0, exactly: \"The easiest New Year's resolution to keep: two minutes, once a month.\" Then each shot covers one area in the order a clinician would move through it: face and neck, lips, cheeks, gums, tongue top, tongue sides, tongue underside, floor of the mouth, roof of the mouth, then throat; on-screen text names the area and what to look for (anything new: a patch, a sore, a lump, a colour change). Last line: once a month, every month; anything still there after two weeks gets checked. Calm, a little wit, no party clich\u00e9s.",
+        "brief": "New Year's Day framing: the self-exam as the easiest resolution to keep. First line, on screen from frame 0, exactly: \"The easiest New Year's resolution to keep: two minutes, once a month.\" Then each shot covers one area in the order a clinician would move through it: face and neck, lips, cheeks, gums, tongue top, tongue sides, tongue underside, floor of the mouth, roof of the mouth, then throat; on-screen text names the area and what to look for (anything new: a patch, a sore, a lump, a colour change). Last line: once a month, every month; anything still there after two weeks gets checked. Calm, a little wit, no party clichés.",
         "topic": "monthly_self_exam",
         "shape": "self_check",
         "hook_style": "instruction",
@@ -2094,7 +2095,7 @@
       "idea": {
         "title": "Mouth Notes: under the microscope",
         "hook": "What does a biopsy actually look for? Layers.",
-        "brief": "Mouth Notes ep. 7, How it works \u00b7 04. Scene anim/microscope.html; script and sources in docs/MOUTH_NOTES.md.",
+        "brief": "Mouth Notes ep. 7, How it works · 04. Scene anim/microscope.html; script and sources in docs/MOUTH_NOTES.md.",
         "topic": "biopsy",
         "shape": "mouth_notes",
         "hook_style": "statement",
@@ -2104,7 +2105,7 @@
         "calendar_ref": null,
         "slug": "2027-01-04_in_mn07",
         "series": "Mouth Notes",
-        "episode": "How it works \u00b7 04",
+        "episode": "How it works · 04",
         "scene": "microscope"
       },
       "folder": "2027-01-04_in_mn07",
@@ -2163,7 +2164,7 @@
       "idea": {
         "title": "Mouth Notes: how tobacco damages DNA",
         "hook": "Tobacco carries dozens of cancer-causing chemicals. Here is what they do.",
-        "brief": "Mouth Notes ep. 8, How it works \u00b7 05. Scene anim/tobaccodna.html; script and sources in docs/MOUTH_NOTES.md.",
+        "brief": "Mouth Notes ep. 8, How it works · 05. Scene anim/tobaccodna.html; script and sources in docs/MOUTH_NOTES.md.",
         "topic": "quitting",
         "shape": "mouth_notes",
         "hook_style": "statement",
@@ -2173,7 +2174,7 @@
         "calendar_ref": null,
         "slug": "2027-01-07_in_mn08",
         "series": "Mouth Notes",
-        "episode": "How it works \u00b7 05",
+        "episode": "How it works · 05",
         "scene": "tobaccodna"
       },
       "folder": "2027-01-07_in_mn08",
@@ -2233,7 +2234,7 @@
       "idea": {
         "title": "Mouth Notes: how small is HPV?",
         "hook": "How small is HPV? Let's shrink.",
-        "brief": "Mouth Notes ep. 9, Sized \u00b7 01. Scene anim/sized.html; script and sources in docs/MOUTH_NOTES.md.",
+        "brief": "Mouth Notes ep. 9, Sized · 01. Scene anim/sized.html; script and sources in docs/MOUTH_NOTES.md.",
         "topic": "hpv_is_common",
         "shape": "mouth_notes",
         "hook_style": "statement",
@@ -2243,7 +2244,7 @@
         "calendar_ref": null,
         "slug": "2027-01-11_in_mn09",
         "series": "Mouth Notes",
-        "episode": "Sized \u00b7 01",
+        "episode": "Sized · 01",
         "scene": "sized"
       },
       "folder": "2027-01-11_in_mn09",
@@ -2302,7 +2303,7 @@
       "idea": {
         "title": "Mouth Notes: what is under your tongue",
         "hook": "What is under your tongue? Let's peel it back.",
-        "brief": "Mouth Notes ep. 10, Cutaway \u00b7 01. Scene anim/cutaway.html; script and sources in docs/MOUTH_NOTES.md.",
+        "brief": "Mouth Notes ep. 10, Cutaway · 01. Scene anim/cutaway.html; script and sources in docs/MOUTH_NOTES.md.",
         "topic": "floor_of_mouth",
         "shape": "mouth_notes",
         "hook_style": "statement",
@@ -2312,7 +2313,7 @@
         "calendar_ref": null,
         "slug": "2027-01-14_in_mn10",
         "series": "Mouth Notes",
-        "episode": "Cutaway \u00b7 01",
+        "episode": "Cutaway · 01",
         "scene": "cutaway"
       },
       "folder": "2027-01-14_in_mn10",
@@ -2371,7 +2372,7 @@
       "idea": {
         "title": "Mouth Notes: worry or wait, five rounds",
         "hook": "Five rounds. Worry or wait? Answer before the reveal.",
-        "brief": "Mouth Notes ep. 11, This or that \u00b7 01. Scene anim/thisorthat.html; script and sources in docs/MOUTH_NOTES.md.",
+        "brief": "Mouth Notes ep. 11, This or that · 01. Scene anim/thisorthat.html; script and sources in docs/MOUTH_NOTES.md.",
         "topic": "two_week_rule",
         "shape": "mouth_notes",
         "hook_style": "statement",
@@ -2381,7 +2382,7 @@
         "calendar_ref": null,
         "slug": "2027-01-18_in_mn11",
         "series": "Mouth Notes",
-        "episode": "This or that \u00b7 01",
+        "episode": "This or that · 01",
         "scene": "thisorthat"
       },
       "folder": "2027-01-18_in_mn11",
@@ -2440,7 +2441,7 @@
       "idea": {
         "title": "Mouth Notes: if I can't see it, it isn't there",
         "hook": "Myth: if the mirror shows nothing, there is nothing there.",
-        "brief": "Mouth Notes ep. 12, Myth \u00b7 01. Scene anim/myth.html; script and sources in docs/MOUTH_NOTES.md.",
+        "brief": "Mouth Notes ep. 12, Myth · 01. Scene anim/myth.html; script and sources in docs/MOUTH_NOTES.md.",
         "topic": "throat_hpv_site",
         "shape": "mouth_notes",
         "hook_style": "statement",
@@ -2450,7 +2451,7 @@
         "calendar_ref": null,
         "slug": "2027-01-21_in_mn12",
         "series": "Mouth Notes",
-        "episode": "Myth \u00b7 01",
+        "episode": "Myth · 01",
         "scene": "myth"
       },
       "folder": "2027-01-21_in_mn12",
