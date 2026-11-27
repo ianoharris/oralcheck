@@ -769,7 +769,7 @@
       "network": "instagram",
       "media_type": "reel",
       "when": "2026-11-27T00:06:00+00:00",
-      "status": "approved",
+      "status": "posted",
       "idea": {
         "title": "1,000 visitors: what they came asking",
         "hook": "A thousand people have now visited OralCheck.",
@@ -807,7 +807,9 @@
       "notes": [
         "Built 24 Nov 2026 from /api/reach: {\"users\": 1003, \"live\": true, \"countries\": 50, \"states\": 44, \"finished\": 244, \"asOf\": \"2026-11-24T18:19:31.274Z\"}"
       ],
-      "publish_attempts": 0
+      "publish_attempts": 0,
+      "ig_media_id": "17903492826391269",
+      "posted_at": "2026-11-27T00:07:49.010114+00:00"
     },
     {
       "id": "milestone-1000_li_reel",
