@@ -765,7 +765,7 @@ Update both together. See `AGENTS.md`.
       set `COMMENT_DM_KEYWORD`. Measure with the read-only insights export
       (`oralcheck-agent/ig_insights.py`, workflow "Export Instagram insights").
 
-- [ ] **The 1,000-visitor reel posts itself (set up 2026-11-12, waiting on
+- [x] **Done 2026-11-26: the 1,000-visitor reel posted itself (set up 2026-11-12, waiting on
       the count).** Ian's request. `milestone.py` runs in the daily calendar
       job and reads `oralcheck.org/api/reach` (GitHub holds no Analytics key).
       The first morning the live-site count is 1,000 or more, it renders the
@@ -780,6 +780,9 @@ Update both together. See `AGENTS.md`.
       visitors), so it read 958, 42 to go.
       24 Nov: 998 (50 countries, 44 states, 244 finished), 2 to go. Nothing
       to do by hand: the next daily run at or over 1,000 builds and schedules it.
+      24 Nov: it passed 1,000 (1,003) that evening and built and scheduled
+      both posts for 25 Nov. LinkedIn went out; Instagram did not (see Shipped,
+      26 Nov). Posted to Instagram 26 Nov, 6:06pm CT.
 
 - [ ] **Link Search Console to GA4 (blocked on Ian, five minutes, no code).**
       Raised by GA's own insights panel, 2026-10-28. The domain is already
@@ -869,6 +872,15 @@ Update both together. See `AGENTS.md`.
 ---
 
 ## Shipped
+
+- **2026-11-26: Instagram posting fixed after two days of failures.** Every
+  Instagram publish run from 25 Nov failed before posting. GitHub's runner
+  image had a stale package list, so installing ffmpeg hit 404s. Both the
+  Studio's on-time trigger and GitHub's backup timer started the job; the job
+  itself died at setup. The 1,000-visitor reel went out on LinkedIn (Publora,
+  no ffmpeg needed) but not Instagram. Fix: refresh the package list first, in
+  the publish, calendar and instagram workflows. The 26 Nov carousel then
+  posted, and the 1,000 reel was moved to 6:06pm CT on 26 Nov and posted.
 
 - **2026-11-18: Homepage visitor count fixed.** Ian saw about 990 in Google
   Analytics and about 920 on the site. GA's 988 counted every address that
